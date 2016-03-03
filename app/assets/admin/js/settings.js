@@ -1,4 +1,18 @@
+var rtMediaAdmin = new Object();
+
+rtMediaAdmin.templates = {
+	rtm_image : wp.template( 'rtm-image' ),
+	rtm_msg_div : wp.template( 'rtm-msg-div' ),
+	rtm_album_favourites_importer : wp.template( 'rtm-album-favourites-importer' ),
+	rtm_map_mapping_failure : wp.template( 'rtm-map-mapping-failure' ),
+	rtm_p_tag : wp.template( 'rtm-p-tag' ),
+	rtm_theme_overlay : wp.template( 'rtm-theme-overlay' )
+};
+
 jQuery( document ).ready( function ( $ ) {
+
+	var support_form_loader_div = document.createElement('div');
+	support_form_loader_div.className = 'support_form_loader';
 
 	// Hide settings saved message
 	if ( $( '.rtm-save-settings-msg' ).length > 0 ) {
@@ -21,7 +35,10 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( '#bp-media-settings-boxes' ).on( 'change', '#select-request', function () {
 		if ( jQuery( this ).val() ) {
 			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html();
-			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( '<div class="support_form_loader"></div>' );
+
+			//'<div class="support_form_loader"></div>'
+
+			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( support_form_loader_div );
 			var data = {
 				action: 'rtmedia_select_request',
 				form: jQuery( this ).val()
@@ -39,7 +56,10 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( '#bp-media-settings-boxes' ).on( 'click', '#cancel-request', function () {
 		if ( jQuery( this ).val() ) {
 			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html();
-			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( '<div class="support_form_loader"></div>' );
+
+			// '<div class="support_form_loader"></div>'
+
+			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( support_form_loader_div );
 			var data = {
 				action: 'rtmedia_cancel_request'
 			};
@@ -136,7 +156,12 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( document ).on( 'click', "#bpm-services .encoding-try-now,#rtm-services .encoding-try-now", function ( e ) {
 		e.preventDefault();
 		if ( confirm( rtmedia_admin_strings.are_you_sure ) ) {
-			jQuery( this ).after( '<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />' )
+			var data = {
+				src   : rtmedia_admin_url + "images/wpspin_light.gif"
+			};
+
+			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
+
 			var data = {
 				action: 'rtmedia_free_encoding_subscribe'
 			};
@@ -151,7 +176,14 @@ jQuery( document ).ready( function ( $ ) {
 				} else {
 					jQuery( '.encoding-try-now' ).next().remove();
 					jQuery( '#settings-error-encoding-error' ).remove();
-					jQuery( '#bp-media-settings-boxes' ).before( '<div class="error" id="settings-error-encoding-error"><p>' + response.error + '</p></div>' );
+
+					var data = {
+						id : 'settings-error-encoding-error',
+						msg : response.error,
+						class : 'error'
+					};
+
+					jQuery( '#bp-media-settings-boxes' ).before( rtMediaAdmin.templates.rtm_msg_div( data ) );
 				}
 			} );
 		}
@@ -161,7 +193,11 @@ jQuery( document ).ready( function ( $ ) {
 		e.preventDefault();
 
 		if ( jQuery( this ).next( 'img' ).length == 0 ) {
-			jQuery( this ).after( '<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />' );
+			var data = {
+				src   : rtmedia_admin_url + "images/wpspin_light.gif"
+			};
+
+			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
 		}
 
 		var data = {
@@ -186,7 +222,14 @@ jQuery( document ).ready( function ( $ ) {
 				document.location.href = tempUrl + hash;
 			} else {
 				jQuery( '#settings-error-api-key-error' ).remove();
-				jQuery( 'h2:first' ).after( '<div class="error" id="settings-error-api-key-error"><p>' + response.error + '</p></div>' );
+
+				var data = {
+					id : 'settings-error-api-key-error',
+					msg : response.error,
+					class : 'error'
+				};
+
+				jQuery( 'h2:first' ).after( rtMediaAdmin.templates.rtm_msg_div( data ) );
 			}
 
 			jQuery( '#api-key-submit' ).next( 'img' ).remove();
@@ -196,7 +239,12 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( document ).on( 'click', '#disable-encoding', function ( e ) {
 		e.preventDefault();
 		if ( confirm( rtmedia_admin_strings.disable_encoding ) ) {
-			jQuery( this ).after( '<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />' )
+			var data = {
+				src   : rtmedia_admin_url + "images/wpspin_light.gif"
+			};
+
+			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
+
 			var data = {
 				action: 'rtmedia_disable_encoding'
 			};
@@ -209,7 +257,13 @@ jQuery( document ).ready( function ( $ ) {
 					if ( jQuery( '#settings-encoding-successfully-updated' ).length > 0 ) {
 						jQuery( '#settings-encoding-successfully-updated p' ).html( response );
 					} else {
-						jQuery( 'h2:first' ).after( '<div class="updated" id="settings-encoding-successfully-updated"><p>' + response + '</p></div>' );
+						var data = {
+							id : 'settings-encoding-successfully-updated',
+							msg : response,
+							class : 'updated'
+						};
+
+						jQuery( 'h2:first' ).after( rtMediaAdmin.templates.rtm_msg_div( data ) );
 					}
 
 					jQuery( '#rtmedia-encoding-usage' ).hide();
@@ -218,7 +272,14 @@ jQuery( document ).ready( function ( $ ) {
 					jQuery( '#enable-encoding' ).show();
 				} else {
 					jQuery( '#settings-error-encoding-disabled' ).remove();
-					jQuery( 'h2:first' ).after( '<div class="error" id="settings-error-encoding-disabled"><p>' + rtmedia_admin_strings.something_went_wrong + '</p></div>' );
+
+					var data = {
+						id : 'settings-error-encoding-disabled',
+						msg : rtmedia_admin_strings.something_went_wrong,
+						class : 'error'
+					};
+
+					jQuery( 'h2:first' ).after( rtMediaAdmin.templates.rtm_msg_div( data ) );
 				}
 			} );
 		}
@@ -227,10 +288,16 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( document ).on( 'click', '#enable-encoding', function ( e ) {
 		e.preventDefault();
 		if ( confirm( rtmedia_admin_strings.enable_encoding ) ) {
-			jQuery( this ).after( '<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />' )
+			var data = {
+				src   : rtmedia_admin_url + "images/wpspin_light.gif"
+			};
+
+			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
+
 			var data = {
 				action: 'rtmedia_enable_encoding'
 			};
+
 			jQuery.post( ajaxurl, data, function ( response ) {
 				if ( response ) {
 					jQuery( '.settings-error-encoding-enabled' ).remove();
@@ -238,7 +305,13 @@ jQuery( document ).ready( function ( $ ) {
 					if ( jQuery( '#settings-encoding-successfully-updated' ).length > 0 ) {
 						jQuery( '#settings-encoding-successfully-updated p' ).html( response );
 					} else {
-						jQuery( 'h2:first' ).after( '<div class="updated" id="settings-encoding-successfully-updated"><p>' + response + '</p></div>' );
+						var data = {
+							id : 'settings-encoding-successfully-updated',
+							msg : response,
+							class : 'updated'
+						};
+
+						jQuery( 'h2:first' ).after( rtMediaAdmin.templates.rtm_msg_div( data ) );
 					}
 
 					jQuery( '#enable-encoding' ).next( 'img' ).remove();
@@ -246,7 +319,14 @@ jQuery( document ).ready( function ( $ ) {
 					jQuery( '#disable-encoding' ).show();
 				} else {
 					jQuery( '#settings-error-encoding-disabled' ).remove();
-					jQuery( 'h2:first' ).after( '<div class="error" id="settings-error-encoding-enabled"><p>' + rtmedia_admin_strings.something_went_wrong + '</p></div>' );
+
+					var data = {
+						id : 'settings-error-encoding-enabled',
+						msg : rtmedia_admin_strings.something_went_wrong,
+						class : 'error'
+					};
+
+					jQuery( 'h2:first' ).after( rtMediaAdmin.templates.rtm_msg_div( data ) );
 				}
 			} );
 		}
@@ -254,14 +334,20 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '.bp-media-encoding-table' ).on( 'click', '.bpm-unsubscribe', function ( e ) {
 		e.preventDefault();
-		//        var note=prompt(bp_media_admin_strings.reason_for_unsubscribe);
+
 		jQuery( "#bpm-unsubscribe-dialog" ).dialog( {
 			dialogClass: "wp-dialog",
 			modal: true,
 			buttons: {
 				Unsubscribe: function () {
 					jQuery( this ).dialog( "close" );
-					jQuery( '.bpm-unsubscribe' ).after( '<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />' )
+
+					var data = {
+						src   : rtmedia_admin_url + "images/wpspin_light.gif"
+					};
+
+					jQuery( '.bpm-unsubscribe' ).after( rtMediaAdmin.templates.rtm_image( data ) );
+
 					var data = {
 						action: 'rtmedia_unsubscribe_encoding_service',
 						note: jQuery( '#bpm-unsubscribe-note' ).val(),
@@ -277,20 +363,33 @@ jQuery( document ).ready( function ( $ ) {
 							jQuery( '.bpm-unsubscribe' ).remove();
 							jQuery( '#settings-unsubscribed-successfully' ).remove();
 							jQuery( '#settings-unsubscribe-error' ).remove();
-							jQuery( 'h2:first' ).after( '<div class="updated" id="settings-unsubscribed-successfully"><p>' + response.updated + '</p></div>' );
+
+							var data = {
+								id : 'settings-unsubscribed-successfully',
+								msg : response.updated,
+								class : 'updated'
+							};
+
+							jQuery( 'h2:first' ).after( rtMediaAdmin.templates.rtm_msg_div( data ) );
 							window.location.hash = '#settings-unsubscribed-successfully';
 						} else {
 							jQuery( '.bpm-unsubscribe' ).next().remove();
 							jQuery( '#settings-unsubscribed-successfully' ).remove();
 							jQuery( '#settings-unsubscribe-error' ).remove();
-							jQuery( 'h2:first' ).after( '<div class="error" id="settings-unsubscribe-error"><p>' + response.error + '</p></div>' );
+
+							var data = {
+								id : 'settings-unsubscribe-error',
+								msg : response.error,
+								class : 'error'
+							};
+
+							jQuery( 'h2:first' ).after( rtMediaAdmin.templates.rtm_msg_div( data ) );
 							window.location.hash = '#settings-unsubscribe-error';
 						}
 					} );
 				}
 			}
 		} );
-
 	} );
 
 	function fireRequest( data ) {
@@ -302,7 +401,6 @@ jQuery( document ).ready( function ( $ ) {
 					progw = 100;
 					redirect = true
 				}
-				;
 				jQuery( '#rtprogressbar>div' ).css( 'width', progw + '%' );
 				finished = jQuery( '#rtprivacyinstaller span.finished' ).html();
 				jQuery( '#rtprivacyinstaller span.finished' ).html( parseInt( finished ) + data.count );
@@ -314,7 +412,11 @@ jQuery( document ).ready( function ( $ ) {
 					} );
 				}
 			} else {
-				jQuery( '#map_progress_msgs' ).html( '<div class="map_mapping_failure">Row ' + response + ' failed.</div>' );
+				var map_data = {
+					msg : "Row " + response + " failed."
+				};
+
+				jQuery( '#map_progress_msgs' ).html( rtMediaAdmin.templates.rtm_map_mapping_failure( map_data ) );
 			}
 		} );
 	}
@@ -361,8 +463,6 @@ jQuery( document ).ready( function ( $ ) {
 						return fireRequest( v );
 					} );
 				} );
-
-
 			}
 		} );
 	} );
@@ -400,8 +500,14 @@ jQuery( document ).ready( function ( $ ) {
 					}
 					jQuery.post( ajaxurl, favorite_data, function ( response ) {
 						if (response.hasOwnProperty(favorites) && (response.favorites !== 0 || response.favorites !== '0')) {
-							if ( !jQuery( '.bp-album-favorites' ).length )
-								jQuery( '.bp-album-comments' ).after( '<br /><div class="bp-album-favorites"><strong>User\'s Favorites: <span class="finished">0</span> / <span class="total">' + response.users + '</span></strong><div id="rtprogressbar"><div style="width:0%"></div></div></div>' );
+							if ( !jQuery( '.bp-album-favorites' ).length ) {
+								var data = {
+									users : response.users
+								}
+
+								jQuery( '.bp-album-comments' ).after( rtMediaAdmin.templates.rtm_album_favourites_importer( data ) );
+							}
+
 							$favorites = {};
 							if ( response.offset != 0 || response.offset != '0' )
 								start = response.offset * 1 + 1;
@@ -431,7 +537,6 @@ jQuery( document ).ready( function ( $ ) {
 									return fireimportfavoriteRequest( v );
 								} );
 							} );
-
 						} else {
 							window.setTimeout( reload_url, 2000 );
 						}
@@ -439,9 +544,17 @@ jQuery( document ).ready( function ( $ ) {
 				}
 			} else {
 				if (data.hasOwnProperty(page)) {
-					jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Row ' + response.page + ' failed.</div>');
+					var map_data = {
+						msg : "Row " + response.page + " failed."
+					};
+
+					jQuery('#map_progress_msgs').html( rtMediaAdmin.templates.rtm_map_mapping_failure( map_data ) );
 				} else {
-					jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Request failed.</div>');
+					var map_data = {
+						msg : "Request failed."
+					};
+
+					jQuery('#map_progress_msgs').html( rtMediaAdmin.templates.rtm_map_mapping_failure( map_data ) );
 				}
 			}
 		} );
@@ -504,9 +617,16 @@ jQuery( document ).ready( function ( $ ) {
 			jQuery( this ).prop( 'disabled', true );
 		}
 		wp_admin_url = ajaxurl.replace( 'admin-ajax.php', '' );
-		if ( !jQuery( '.bpm-ajax-loader' ).length )
-			jQuery( this ).after( ' <img class="bpm-ajax-loader" src="' + wp_admin_url + 'images/wpspin_light.gif" /> <strong>' + rtmedia_admin_strings.no_refresh + '</strong>' );
 
+		if ( !jQuery( '.bpm-ajax-loader' ).length ) {
+			var data = {
+				src   : rtmedia_admin_url + "images/wpspin_light.gif",
+				class : 'bpm-ajax-loader',
+				norefresh : rtmedia_admin_strings.no_refresh
+			};
+
+			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
+		}
 
 		$progress_parent = jQuery( '#bpmedia-bpalbumimport' );
 		$values = [];
@@ -526,7 +646,6 @@ jQuery( document ).ready( function ( $ ) {
 				if ( $count == 0 ) {
 					$count = 5
 				}
-				;
 			}
 			newvals = {
 				'page': i,
@@ -544,8 +663,6 @@ jQuery( document ).ready( function ( $ ) {
 				return fireimportRequest( v );
 			} );
 		} );
-
-
 	} );
 
 	jQuery( '#bp-media-settings-boxes' ).on( 'click', '.interested', function () {
@@ -567,7 +684,12 @@ jQuery( document ).ready( function ( $ ) {
 			interested: jQuery( 'input[name="interested"]:checked' ).val()
 		}
 		jQuery.post( ajaxurl, data, function ( response ) {
-			jQuery( '#video-transcoding-main-container' ).html( '<p><strong>' + response + '</strong></p>' );
+			var p_data = {
+				msg :response,
+				strong : 'yes'
+			};
+
+			jQuery( '#video-transcoding-main-container' ).html( rtMediaAdmin.templates.rtm_p_tag( p_data ) );
 		} );
 		return false;
 	} );
@@ -580,15 +702,25 @@ jQuery( document ).ready( function ( $ ) {
 			rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 		}
 		jQuery.get( ajaxurl, data, function ( response ) {
-			if ( response )
+			if ( response ) {
 				location.reload();
-			else
-				$bpalbum.parent().after( '<p>' + rtmedia_admin_strings.something_went_wrong + '</p>' );
+			} else {
+				var p_data = {
+					msg : rtmedia_admin_strings.something_went_wrong
+				};
+
+				$bpalbum.parent().after( rtMediaAdmin.templates.rtm_p_tag( p_data ) );
+			}
 		} );
 	} );
 
 	jQuery( '.updated' ).on( 'click', '.bpm-hide-encoding-notice', function () {
-		jQuery( this ).after( '<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />' );
+		var data = {
+			src   : rtmedia_admin_url + "images/wpspin_light.gif"
+		};
+
+		jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
+
 		var data = {
 			action: 'rtmedia_hide_encoding_notice'
 		}
@@ -598,36 +730,6 @@ jQuery( document ).ready( function ( $ ) {
 			}
 		} );
 	} );
-
-
-//	if ( jQuery( '#rtmedia-privacy-enable' ).is( ":checked" ) ) {
-//		jQuery( ".privacy-driven-disable label input" ).prop( "disabled", false );
-//		jQuery( ".privacy-driven-disable label .rt-switch" ).bootstrapSwitch( "setActive", true );
-//	} else {
-//		jQuery( ".privacy-driven-disable label input" ).prop( "disabled", true );
-//		jQuery( ".privacy-driven-disable label .rt-switch" ).bootstrapSwitch( "setActive", false );
-//		jQuery( ".privacy-driven-disable" ).parent().parent().css( "display", "none" );
-//	}
-//
-//	if ( jQuery( '#rtmedia-bp-enable-activity' ).is( ":checked" ) ) {
-//		jQuery( ".rtmedia-bp-activity-setting" ).prop( "disabled", false );
-//		jQuery( ".privacy-driven-disable label .rt-switch" ).bootstrapSwitch( "setActive", true );
-//	} else {
-//		jQuery( ".rtmedia-bp-activity-setting" ).prop( "disabled", true );
-//		jQuery( ".privacy-driven-disable label .rt-switch" ).bootstrapSwitch( "setActive", false );
-//	}
-//
-//	jQuery( '#rtmedia-privacy-enable' ).on( "click", function ( e ) {
-//		if ( jQuery( this ).is( ":checked" ) ) {
-//			jQuery( ".privacy-driven-disable label input" ).prop( "disabled", false );
-//			jQuery( ".privacy-driven-disable label .rt-switch" ).bootstrapSwitch( "setActive", true );
-//			jQuery( ".privacy-driven-disable" ).parent().parent().css( "display", "block" );
-//		} else {
-//			jQuery( ".privacy-driven-disable label input" ).prop( "disabled", true );
-//			jQuery( ".privacy-driven-disable label .rt-switch" ).bootstrapSwitch( "setActive", false );
-//			jQuery( ".privacy-driven-disable" ).parent().parent().css( "display", "none" );
-//		}
-//	} );
 
 	if ( jQuery( '#rtmedia-bp-enable-activity' ).is( ":checked" ) ) {
 		jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", false );
@@ -649,21 +751,6 @@ jQuery( document ).ready( function ( $ ) {
 		onData = 'data-on-label="' + rtmedia_on_label + '"';
 	if ( rtmedia_off_label !== undefined )
 		offData = 'data-off-label="' + rtmedia_off_label + '"';
-	//jQuery( "[data-toggle='switch']" ).wrap( '<div class="rt-switch" ' + onData + ' ' + offData + ' />' ).parent().bootstrapSwitch();
-
-//	$( ".rtmedia-tab-title" ).click( function () {
-//		hash = $( this ).attr( 'href' );
-//		window.location.hash = hash.substring( 1, hash.length );
-//	} );
-//
-//	function manageHash() {
-//
-//		hash = window.location.hash;
-//		$( '#tab-' + hash.substr( 1, hash.length ) ).click();
-//		if ( $( '#tab-' + hash.substr( 1, hash.length ) ).length < 1 )
-//			return 1;
-//		return $( '#tab-' + hash.substr( 1, hash.length ) ).parent().index() + 1;
-//	}
 
 	jQuery( '#rtmedia-submit-request' ).click( function () {
 		var flag = true;

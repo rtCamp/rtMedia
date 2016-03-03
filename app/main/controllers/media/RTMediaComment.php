@@ -27,7 +27,7 @@ class RTMediaComment {
 				'nonce' => wp_create_nonce( 'rtmedia_comment_nonce' ),
 			);
 
-			return json_encode( $token );
+			return wp_json_encode( $token );
 		}
 	}
 

@@ -584,6 +584,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 			return $this->generate_textbox( $attributes );
 		}
 
+		public function display_textbox( $args = '' ) {
+			echo $this->get_textbox( $args );
+		}
+
 		/**
 		 * Generate rtmedia html number field in admin options
 		 *
@@ -647,6 +651,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 		public function get_number( $attributes = '' ) {
 
 			return $this->generate_number( $attributes );
+		}
+
+		public function display_number( $args = '' ) {
+			echo $this->get_number( $args );
 		}
 
 		/**
@@ -811,6 +819,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 			return $this->generate_textarea( $attributes );
 		}
 
+		public function display_textarea( $args = '' ) {
+			echo $this->get_textarea( $args );
+		}
+
 		/* wysiwyg
 		 *
 		 * pending as of now.
@@ -895,6 +907,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 			return $this->generate_radio( $attributes );
 		}
 
+		public function display_radio( $args = '' ) {
+			echo $this->get_radio( $args );
+		}
+
 		/**
 		 * Generate rtmedia html input type checkbox in admin options.
 		 *
@@ -959,6 +975,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 			$attributes['switch'] = true;
 
 			return $this->generate_checkbox( $attributes );
+		}
+
+		public function display_switch( $args = '' ) {
+			echo $this->get_switch( $args );
 		}
 
 		/**
@@ -1050,6 +1070,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 		public function get_select( $attributes = '' ) {
 
 			return $this->generate_select( $attributes );
+		}
+
+		public function display_select( $args = '' ) {
+			echo $this->get_select( $args );
 		}
 	}
 

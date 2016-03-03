@@ -188,7 +188,7 @@ class RTMediaUploadEndpoint {
 				} else {
 					header( 'Content-type: application/json' );
 				}
-				echo json_encode( $rtupload->media_ids );
+				echo wp_json_encode( $rtupload->media_ids );
 			} else {
 				// Media Upload Case - on album/post/profile/group
 				if ( isset( $media[0] ) ) {
@@ -207,7 +207,7 @@ class RTMediaUploadEndpoint {
 				} else {
 					header( 'Content-type: application/json' );
 				}
-				echo json_encode( apply_filters( 'rtmedia_upload_endpoint_response', $data ) );
+				echo wp_json_encode( apply_filters( 'rtmedia_upload_endpoint_response', $data ) );
 			}
 
 			die();

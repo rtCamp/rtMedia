@@ -27,11 +27,11 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		}
 		global $wpdb;
 
-		return $wpdb->query( $wpdb->prepare( "ALTER TABLE {$wpdb->base_prefix}bp_album
+		return $wpdb->query( "ALTER TABLE {$wpdb->base_prefix}bp_album
                             ADD COLUMN import_status BIGINT (20) NOT NULL DEFAULT 0,
                             ADD COLUMN old_activity_id BIGINT (20) NOT NULL DEFAULT 0,
                             ADD COLUMN new_activity_id BIGINT (20) NOT NULL DEFAULT 0,
-                            ADD COLUMN favorites TINYINT (1) NOT NULL DEFAULT 0" ) );
+                            ADD COLUMN favorites TINYINT (1) NOT NULL DEFAULT 0" );
 	}
 
 	function column_exists( $column ) {
@@ -352,7 +352,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
 		$finished_users = BPMediaAlbumimporter::get_completed_users();
 
-		echo json_encode( array( 'page' => $page, 'users' => $finished_users[0]->users, 'comments' => $comments ) );
+		echo wp_json_encode( array( 'page' => $page, 'users' => $finished_users[0]->users, 'comments' => $comments ) );
 		die();
 	}
 
@@ -363,7 +363,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		$users = count_users();
-		echo json_encode( array(
+		echo wp_json_encode( array(
 			'favorites' => $wpdb->get_var( "SELECT COUNT(id) from $table WHERE favorites != 0" ), // @codingStandardsIgnoreLine
 			'users'     => $users['total_users'],
 			'offset'    => (int) get_site_option( 'bp_media_bp_album_favorite_import_status', 0 ),

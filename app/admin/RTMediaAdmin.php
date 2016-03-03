@@ -131,6 +131,18 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_action( 'admin_init', array( $this, 'rtmedia_migration' ) );
 
 			add_filter( 'removable_query_args', array( $this, 'removable_query_args' ), 10, 1 );
+
+			add_action( 'admin_footer', array( $this, 'rtm_admin_templates' ) );
+		}
+
+		function rtm_admin_templates() {
+			foreach ( glob( RTMEDIA_PATH . 'app/admin/templates/*.php' ) as $filename ) {
+				$slug = rtrim( basename( $filename ), '.php' );
+
+				echo '<script type="text/html" id="' . esc_attr( $slug ) . '">';
+				include $filename;
+				echo '</script>';
+			}
 		}
 
 		function modify_medialibrary_permalink( $action, $post ) {
@@ -876,9 +888,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( '' === $suffix ) {
 					wp_enqueue_script( 'rtmedia-admin-tabs', RTMEDIA_URL . 'app/assets/admin/js/vendors/tabs.js', array( 'backbone' ), RTMEDIA_VERSION );
 					wp_enqueue_script( 'rtmedia-admin-scripts', RTMEDIA_URL . 'app/assets/admin/js/scripts.js', array( 'backbone' ), RTMEDIA_VERSION );
-					wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/settings.js', array( 'backbone' ), RTMEDIA_VERSION );
+					wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/settings.js', array( 'backbone', 'wp-util' ), RTMEDIA_VERSION );
 				} else {
-					wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin.min.js', array( 'backbone' ), RTMEDIA_VERSION );
+					wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin.min.js', array( 'backbone', 'wp-util' ), RTMEDIA_VERSION );
 				}
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_on_label', esc_html__( 'ON', 'buddypress-media' ) );
@@ -889,7 +901,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 				$rtmedia_admin_strings = array(
 					'no_refresh'           => esc_html__( 'Please do not refresh this page.', 'buddypress-media' ),
-					'something_went_wrong' => esc_html__( 'Something went wrong. Please ' ) .  '<a href onclick="location.reload();">' . esc_html__( 'refresh', 'buddypress-media' ) . '</a>' . esc_html__( ' page.', 'buddypress-media' ),
+					'something_went_wrong' => esc_html__( 'Something went wrong. Please ', 'buddypress-media' ) .  '<a href onclick="location.reload();">' . esc_html__( 'refresh', 'buddypress-media' ) . '</a>' . esc_html__( ' page.', 'buddypress-media' ),
 					'are_you_sure'         => esc_html__( 'This will subscribe you to the free plan.', 'buddypress-media' ),
 					'disable_encoding'     => esc_html__( 'Are you sure you want to disable the encoding service?', 'buddypress-media' ),
 					'enable_encoding'      => esc_html__( 'Are you sure you want to enable the encoding service?', 'buddypress-media' ),
@@ -2089,7 +2101,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						}
 						$k ++;
 						if ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) {
-							$icon = '<i class="' . $tab['icon'] . '"></i>';
+							$icon = '<i class="' . esc_attr( $tab['icon'] ) . '"></i>';
 						}
 						$tab_without_hash = explode( '#', $tab['href'] );
 						$tab_without_hash = $tab_without_hash[1];

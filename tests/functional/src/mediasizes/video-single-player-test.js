@@ -38,8 +38,7 @@ module.exports = {
           .waitForElementVisible('body', 1500)
           .getElementSize("#rtm-mejs-video-container", function(result) {
                   this.assert.equal(result.value.width, _width);
-                  // Height calculated in %. Cannot be test
-                //  this.assert.equal(result.value.height, _height);
+                  this.assert.equal(result.value.height, _height);
                   console.log('set value for width are equal');
               })
           .wplogout()

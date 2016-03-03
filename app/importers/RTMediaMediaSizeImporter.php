@@ -87,7 +87,12 @@ class RTMediaMediaSizeImporter {
 	}
 
 	function create_notice( $message, $type = 'error' ) {
-		echo '<div class="' . esc_attr( $type ) . ' rtmedia-media-size-import-error">' . $message . '</div>'; // @codingStandardsIgnoreLine
+		echo '<div class="' . esc_attr( $type ) . ' rtmedia-media-size-import-error">'
+		     . wp_kses( $message, array(
+				'p' => array(),
+				'strong' => array()
+			   ) )
+		     . '</div>'; // @codingStandardsIgnoreLine
 	}
 
 	function init() {
@@ -174,10 +179,7 @@ class RTMediaMediaSizeImporter {
 					}
 				}
 				function rtm_show_file_error() {
-					jQuery('span.pending').html("Media with ID: " + fail_id.join(', ') + " can not be imported. Please check your server error log for more details. Don't worry, you can end importing media size now :)");
-					//			var data = {action: 'rtmedia_hide_media_size_import_notice'};
-					//			jQuery.post( ajaxurl, data, function ( response ) { } );
-					//			jQuery( "#rtMediaSyncing" ).hide();
+					jQuery('span.pending').text("Media with ID: " + fail_id.join(', ') + " can not be imported. Please check your server error log for more details. Don't worry, you can end importing media size now :)");
 				}
 				var db_done = <?php echo esc_js( $done ); ?>;
 				var db_total = <?php echo esc_js( $total ); ?>;
@@ -278,7 +280,7 @@ class RTMediaMediaSizeImporter {
 		}
 		rtmedia_update_site_option( 'rtmedia_media_size_import_pending_count', $pending );
 		$pending_time = rtmedia_migrate_formatseconds( $pending ) . ' (estimated)';
-		echo json_encode( array(
+		echo wp_json_encode( array(
 			'status'   => true,
 			'done'     => $done,
 			'total'    => $total,

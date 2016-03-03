@@ -542,7 +542,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			}
 			$message = '<html>
 				<head>
-					<title>' . $title . get_bloginfo( 'name' ) . '</title>
+					<title>' . strip_tags( $title . get_bloginfo( 'name' ) ) . '</title>
 				</head>
 				<body>
 					<table>

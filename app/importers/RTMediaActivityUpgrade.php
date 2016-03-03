@@ -98,7 +98,7 @@ class RTMediaActivityUpgrade {
 		}
 		rtmedia_update_site_option( 'rtmedia_media_activity_upgrade_pending', $pending );
 		$pending_time = rtmedia_migrate_formatseconds( $pending ) . ' (estimated)';
-		echo json_encode( array(
+		echo wp_json_encode( array(
 			'status'      => true,
 			'done'        => $done,
 			'total'       => $total,

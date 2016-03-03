@@ -25,9 +25,8 @@ module.exports = {
             .goToMedia()
             .pause(2000)
             .assert.elementPresent("#rtMedia-galary-next")
-
-      /*
-						//code for elements count using JQUERY
+		  /*
+						code for elements count using JQUERY */
             .url(function(result){
               var count,count2;
               var flag ;
@@ -50,7 +49,6 @@ module.exports = {
              browser.assert.equal(flag, true);
            });
       })
-      */
             .wplogout()
             .end();
         }

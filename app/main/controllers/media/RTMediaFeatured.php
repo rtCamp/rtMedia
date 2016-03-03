@@ -141,7 +141,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 				$this->generate_featured_size( $this->featured );
 				if ( $featured->media_id ) {
 					$image_array  = image_downsize( $featured->media_id, 'rt_media_thumbnail' );
-					$content_xtra = 'poster="' . esc_url( $image_array[0] ) . '" ';
+					$content_xtra = ' poster="' . esc_url( $image_array[0] ) . '" ';
 				}
 				$content = '<video class="bp-media-featured-media wp-video-shortcode"' . $content_xtra . 'src="' . esc_url( wp_get_attachment_url( $featured->media_id ) ) . '" width="' . esc_attr( $this->settings['width'] ) . '" height="' . esc_attr( $this->settings['height'] ) . '" type="video/mp4" id="bp_media_video_' . esc_attr( $this->featured ) . '" controls="controls" preload="true"></video>';
 				break;

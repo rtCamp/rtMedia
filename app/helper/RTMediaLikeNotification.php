@@ -90,27 +90,27 @@ class RTMediaLikeNotification extends RTMediaNotification {
 			if ( 0 === intval( $like_count ) ) {
 				$this->delete_notification_by_item_id( $initiator_id, $post_id );
 			} elseif ( 1 === intval( $like_count ) ) {
-				$text = $liked_by . ' ' . esc_html__( 'liked your', 'buddypress-media' ) . ' ' . $media_type;
+				$text = $liked_by . ' ' . __( 'liked your', 'buddypress-media' ) . ' ' . $media_type;
 			} elseif ( 2 === intval( $like_count ) ) {
-				$text = $liked_by . ' ' . esc_html__( 'and one more friend liked your', 'buddypress-media' ) . ' ' . $media_type;
+				$text = $liked_by . ' ' . __( 'and one more friend liked your', 'buddypress-media' ) . ' ' . $media_type;
 			} else {
 				$count = $like_count - 1;
-				$text  = $liked_by . ' ' . esc_html__( 'and', 'buddypress-media' ) . ' ' . $count . ' ' . esc_html__( 'other friends liked your', 'buddypress-media' ) . ' ' . $media_type;
+				$text  = $liked_by . ' ' . __( 'and', 'buddypress-media' ) . ' ' . $count . ' ' . __( 'other friends liked your', 'buddypress-media' ) . ' ' . $media_type;
 			}
+
+			$return = apply_filters( 'rtmedia_before_like_notification',
+				array(
+					'link' => $link,
+					'text' => $text,
+				),
+				(int) $total_items
+			);
 
 			if ( 'string' === $format ) {
-				$return = apply_filters( 'rtmedia_before_like_notification', '<a href="' . esc_url( $link ) . '">' . esc_html( $text ) . '</a>', (int) $total_items );
+				return '<a href="' . esc_url( $return['link'] ) . '">' . esc_html( $return['text'] ) . '</a>';
 			} else {
-				$return = apply_filters( 'rtmedia_before_like_notification',
-					array(
-						'link' => $link,
-						'text' => $text,
-					),
-					(int) $total_items
-				);
+				return $return;
 			}
-
-			return $return;
 		}
 	}
 

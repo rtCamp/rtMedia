@@ -171,4 +171,9 @@ class rtDimensions extends rtForm {
 	public function get_dimensions( $attributes = '' ) {
 		return $this->generate_dimensions( $attributes );
 	}
+
+	public function display_dimensions( $args = '' ) {
+		echo $this->get_dimensions( $args );
+	}
+
 }

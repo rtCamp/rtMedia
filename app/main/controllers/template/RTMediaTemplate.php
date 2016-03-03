@@ -222,7 +222,7 @@ class RTMediaTemplate {
 			$return_array ['pagination'] = rtmedia_get_pagination_values();
 		}
 
-		echo json_encode( $return_array );
+		echo wp_json_encode( $return_array );
 		die;
 	}
 

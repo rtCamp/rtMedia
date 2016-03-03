@@ -67,7 +67,7 @@ class RTMediaMedia {
 				'nonce'  => wp_create_nonce( 'rtmedia_' . $id ),
 			);
 
-			return json_encode( $token );
+			return wp_json_encode( $token );
 		}
 	}
 
