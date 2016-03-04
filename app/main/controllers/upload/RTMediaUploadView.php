@@ -78,7 +78,7 @@ class RTMediaUploadView {
 				'class' => array( 'rtm-upload-tab', 'active' ),
 				'content' => '<div class="rtm-upload-tab-content" data-id="rtm-upload-tab">'
 					. apply_filters( 'rtmedia_uploader_before_select_files', "" )
-					. '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . __( "Select your files", 'buddypress-media' ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
+					. '<div class="rtm-select-files"><input id="' . apply_filters( 'rtmedia_upload_button_id', 'rtMedia-upload-button' ) . '" value="' . __( "Select your files", 'buddypress-media' ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
 					. '<span class="rtm-seperator">' . __('or','buddypress-media') .'</span><span class="drag-drop-info">' . __('Drop your files here', 'buddypress-media') . '</span> <i class="rtm-file-size-limit rtmicon-info-circle rtmicon-fw"></i></div>'
 					. apply_filters( 'rtmedia_uploader_after_select_files', "" )
 					. '</div>',
@@ -106,7 +106,7 @@ class RTMediaUploadView {
 		}
 		global $rtmedia;
 		//Render UPLOAD button only if direct upload is disabled
-		$upload_button = ( ! ( isset( $rtmedia->options[ "general_direct_upload" ] )&& $rtmedia->options[ "general_direct_upload" ] == 1 ) ? '<input type="button" class="start-media-upload" value="' . __( 'Start upload', 'buddypress-media' ) . '"/>'  : '' );
+		$upload_button = ( ! ( isset( $rtmedia->options[ "general_direct_upload" ] ) && $rtmedia->options[ "general_direct_upload" ] == 1 ) ? '<input type="button" class="start-media-upload" value="' . __( 'Start upload', 'buddypress-media' ) . '"/>'  : '' );
         $tabs = array(
             'file_upload' => array(
                 'default' => array(
@@ -114,15 +114,16 @@ class RTMediaUploadView {
                     'content' =>
 	                    '<div id="rtmedia-upload-container" >'
 	                        . '<div id="drag-drop-area" class="drag-drop clearfix">'
-	                                . apply_filters( 'rtmedia_uploader_before_album_privacy', "" )
-	                                . "<div class='rtm-album-privacy'>" . $album . $privacy . "</div>"
-	                                . $upload_tab_html
-									. apply_filters( 'rtmedia_uploader_before_start_upload_button', "" )
-						. $upload_button
-									. apply_filters( 'rtmedia_uploader_after_start_upload_button', "" )
+                                . apply_filters( 'rtmedia_uploader_before_album_privacy', "" )
+                                . "<div class='rtm-album-privacy'>" . $album . $privacy . "</div>"
+                                . $upload_tab_html
+								. apply_filters( 'rtmedia_uploader_before_start_upload_button', "" )
+								. $upload_button
+								. apply_filters( 'rtmedia_uploader_after_start_upload_button', "" )
 	                        . '</div>'
-						. '<div class="clearfix">'
-						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul></div>'
+							. '<div class="clearfix">'
+							. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul>'
+							. '</div>'
 	                    . '</div>'
                 ),
 				'activity' => array(
@@ -131,9 +132,8 @@ class RTMediaUploadView {
 						'<div class="rtmedia-plupload-container rtmedia-container clearfix">'
 							.'<div id="rtmedia-action-update" class="clearfix">'
 								.'<div class="rtm-upload-button-wrapper">'
-									.'<div id="rtmedia-whts-new-upload-container">'
-									.'</div>'
-									.'<button type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update" title="' . apply_filters( 'rtmedia_attach_media_button_title', __( 'Attach Media', 'buddypress-media' ) ) . '">'
+									.'<div id="rtmedia-whts-new-upload-container"></div>'
+									.'<button type="button" class="rtmedia-add-media-button" id="' . apply_filters( 'rtmedia_upload_button_id', 'rtmedia-add-media-button-post-update' ) . '" title="' . apply_filters( 'rtmedia_attach_media_button_title', __( 'Attach Media', 'buddypress-media' ) ) . '">'
 										.'<span class="dashicons dashicons-admin-media"></span>'
 										. apply_filters( 'rtmedia_attach_file_message', '' )
 									. '</button>'
@@ -142,8 +142,7 @@ class RTMediaUploadView {
 							. '</div>'
 						.'</div>'
 						.'<div class="rtmedia-plupload-notice">'
-							.'<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist">'
-							.'</ul>'
+							.'<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul>'
 						.'</div>'
 				)
             ),

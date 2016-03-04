@@ -61,7 +61,7 @@ class RTMediaGalleryShortcode {
         $params = array(
             'url' => $url,
             'runtimes' => 'html5,flash,html4',
-            'browse_button' => 'rtMedia-upload-button',
+            'browse_button' => apply_filters( 'rtmedia_upload_button_id', 'rtMedia-upload-button' ),
             'container' => 'rtmedia-upload-container',
             'drop_element' => 'drag-drop-area',
             'filters' => apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => "Media Files", 'extensions' => get_rtmedia_allowed_upload_type () ) ) ),
@@ -73,7 +73,7 @@ class RTMediaGalleryShortcode {
             'file_data_name' => 'rtmedia_file', // key passed to $_FILE.
             'multi_selection' => true,
             'multipart_params' => apply_filters ( 'rtmedia-multi-params', array( 'redirect' => 'no', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER[ 'REQUEST_URI' ], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator ( false, true ) ) ),
-	    'max_file_size_msg' => apply_filters("rtmedia_plupload_file_size_msg",min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ))
+	        'max_file_size_msg' => apply_filters("rtmedia_plupload_file_size_msg",min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ))
         );
         if ( wp_is_mobile () )
             $params[ 'multi_selection' ] = false;

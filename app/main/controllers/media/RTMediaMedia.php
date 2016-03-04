@@ -478,9 +478,7 @@ class RTMediaMedia {
                  * FIX WORDPRESS 3.6 METADATA
                  */
                 require_once( ABSPATH . 'wp-admin/includes/media.php' );
-                /**
-                 *
-                 */
+
                 wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $file_object[ $key ][ 'file' ] ) );
             } else {
                 unlink( $file_object[ $key ][ 'file' ] );
@@ -569,23 +567,24 @@ class RTMediaMedia {
         return $media_id;
     }
 
-    function insert_activity( $id, $media ) {
+    function insert_activity( $id, $media, $activity_text = false ) {
         if( !$this->activity_enabled() ) {
             return false;
         }
-        $activity = new RTMediaActivity( $media->id, $media->privacy );
+
+        $activity = new RTMediaActivity( $media->id, $media->privacy, $activity_text );
         $activity_content = $activity->create_activity_html();
         $user = get_userdata( $media->media_author );
         $username = '<a href="' . get_rtmedia_user_link( $media->media_author ) . '">' . $user->user_nicename . '</a>';
         $count = count( $id );
         $media_const = 'RTMEDIA_' . strtoupper( $media->media_type );
+
         if( $count > 1 ) {
             $media_const .= '_PLURAL';
         }
+
         $media_const .= '_LABEL';
-
         $media_str = constant( $media_const );
-
         $action = sprintf( ( $count == 1 ) ? __( '%1$s added a %2$s', 'buddypress-media' ) : __( '%1$s added %4$d %3$s', 'buddypress-media' ), $username, $media->media_type, $media_str, $count );
         $action = apply_filters( 'rtmedia_buddypress_action_text_fitler', $action, $username, $count, $user->user_nicename, $media->media_type );
         $activity_args = array(
@@ -603,6 +602,7 @@ class RTMediaMedia {
 
         if( $media->context == 'group' || $media->context == 'profile' ) {
             $activity_args[ 'component' ] = $media->context;
+
             if( $media->context == 'group' ) {
                 $activity_args[ 'component' ] = "groups";
                 $activity_args[ 'item_id' ] = $media->context_id;
@@ -610,12 +610,13 @@ class RTMediaMedia {
         }
 
         $activity_id = bp_activity_add( $activity_args );
-        bp_activity_update_meta( $activity_id, 'rtmedia_privacy', ( $media->privacy == 0 ) ? - 1 : $media->privacy  );
 
+        bp_activity_update_meta( $activity_id, 'rtmedia_privacy', ( $media->privacy == 0 ) ? - 1 : $media->privacy  );
         $this->model->update( array( 'activity_id' => $activity_id ), array( 'id' => $media->id ) );
 
         // insert/update activity details in rtmedia activity table
         $rtmedia_activity_model = new RTMediaActivityModel();
+
         if( !$rtmedia_activity_model->check( $activity_id ) ) {
             $rtmedia_activity_model->insert( array( 'activity_id' => $activity_id, 'user_id' => $media->media_author, 'privacy' => $media->privacy ) );
         } else {

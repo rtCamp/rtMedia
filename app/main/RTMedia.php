@@ -249,6 +249,7 @@ class RTMedia {
 		.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail {
 		max-width: <?php echo $this->options[ "defaultSizes_photo_medium_width" ]; ?>px;
 		max-height: <?php echo $this->options[ "defaultSizes_photo_medium_height" ]; ?>px;
+		overflow: hidden;
 		}
 		.rtmedia-activity-container .mejs-container.mejs-video{
 		min-height: <?php echo $this->options[ "defaultSizes_video_activityPlayer_height" ]; ?>px;
