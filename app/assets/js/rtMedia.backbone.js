@@ -549,11 +549,18 @@ jQuery( function ( $ ) {
             
         jQuery( '.start-media-upload' ).on( 'click', function ( e ) {
             e.preventDefault();
-            var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
-            if ( allow_upload == false ) {
-                return false;
-            }
-            uploaderObj.uploadFiles();
+
+			/**
+			 * To check if any media file is selected or not for uploading
+			 */
+			if( jQuery( '#rtmedia_uploader_filelist').children( 'li').length > 0 ) {
+				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+
+				if ( allow_upload == false ) {
+					return false;
+				}
+				uploaderObj.uploadFiles();
+			}
         } );
 
 		uploaderObj.uploader.bind( 'UploadProgress', function ( up, file ) {
@@ -1013,6 +1020,18 @@ jQuery( document ).ready( function ( $ ) {
 
 				var orignalSuccess = originalOptions.success;
 				options.beforeSend = function () {
+					/**
+					 * This hook is added for rtMedia Upload Terms plugin to check if it is checked or not for activity
+					 */
+					var allowActivityPost = rtMediaHook.call( 'rtmedia_js_before_activity_added', true );
+
+					if( !allowActivityPost ) {
+						$( '#rtmedia_upload_terms_conditions').removeAttr( 'disabled' );
+						$( '#rtmedia-whts-new-upload-container').find('input').removeAttr( 'disabled' );
+
+						return false;
+					}
+
 					if ( originalOptions.data.action == 'post_update' ) {
 						if ( $.trim( $( "#whats-new" ).val() ) == "" && objUploadView.uploader.files.length > 0 ) {
 							/*
