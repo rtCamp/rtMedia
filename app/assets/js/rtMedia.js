@@ -137,7 +137,9 @@ function rtmedia_init_action_dropdown() {
 jQuery( 'document' ).ready( function ( $ ) {
 
 	// Tabs
-	$( '.rtm-tabs' ).rtTab();
+	if( typeof rtTab !== 'undefined' ) {
+		$( '.rtm-tabs' ).rtTab();
+	}
 
 	// open magnific popup as modal for create album/playlist
 	if ( jQuery( '.rtmedia-modal-link' ).length > 0 ) {
