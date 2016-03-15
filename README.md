@@ -140,10 +140,15 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
-#### 3.10.3 [Jan 28, 2015] ####
+#### 3.10.4 [Mar 15, 2016] ####
+* Fixed browser title if theme has title-tag support
+* Fixed the video & audio player issue for activity load more
+* Fixed minor bugs
+
+#### 3.10.3 [Jan 28, 2016] ####
 * Fix issues
 
-#### 3.10.2 [Jan 28, 2015] ####
+#### 3.10.2 [Jan 28, 2016] ####
 * Fix XSS vulnerability (thanks to [Brajesh](https://profiles.wordpress.org/sbrajesh/))
 * Updated Freemius SDK
 
@@ -1129,8 +1134,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.10.3 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix XSS vulnerability.
+#### 3.10.4 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed browser title if theme has title-tag support, Fixed the video & audio player issue for activity load more, Fixed minor bugs
 
 ## Sponsors ##
 
