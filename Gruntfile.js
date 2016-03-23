@@ -118,8 +118,7 @@ module.exports = function ( grunt ) {
                             '*.php',
                             '**/*.php',
                             '!node_modules/**',
-                            '!tests/**',
-                            '!lib/freemius/**'
+                            '!tests/**'
                         ], //all php
                         expand: true
                     } ]

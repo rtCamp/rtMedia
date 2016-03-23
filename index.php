@@ -117,40 +117,6 @@ spl_autoload_register( 'rtmedia_autoloader' );
 global $rtmedia;
 $rtmedia = new RTMedia();
 
-/**
- * Integrated Freemius into rtMedia.
- *
- * @return Freemius
- */
-function rtmedia_fs() {
-	global $bm_fs;
-
-	if ( ! isset( $bm_fs ) ) {
-		// Include Freemius SDK.
-		require_once RTMEDIA_PATH . 'lib/freemius/start.php';
-
-		$bm_fs = fs_dynamic_init( array(
-			'id'                => '122',
-			'slug'              => 'buddypress-media',
-			'public_key'        => 'pk_3b5465cdde21c8ba24cd731b149a8',
-			'is_premium'        => false,
-			'has_addons'        => false,
-			'has_paid_plans'    => false,
-			'menu'              => array(
-				'slug'       => 'rtmedia-settings',
-				'account'    => false,
-				'contact'    => false,
-				'support'    => false,
-			),
-		) );
-	}
-
-	return $bm_fs;
-}
-
-// Init Freemius.
-rtmedia_fs();
-
 /*
  * Look Ma! Very few includes! Next File: /app/main/RTMedia.php
  */
