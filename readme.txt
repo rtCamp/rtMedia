@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.4.2
-Stable tag: 3.10.4
+Stable tag: 3.10.5
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.10.5 [Mar 24, 2016] =
+* Code Cleanup
 
 = 3.10.4 [Mar 15, 2016] =
 * Fixed browser title if theme has title-tag support
@@ -1136,8 +1139,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.10.4 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed browser title if theme has title-tag support, Fixed the video & audio player issue for activity load more, Fixed minor bugs
+= 3.10.5 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Removed extra code
 
 == Sponsors ==
 
