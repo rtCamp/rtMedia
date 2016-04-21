@@ -1015,7 +1015,7 @@ jQuery( document ).ready( function ( $ ) {
 				while ( activity_attachemnt_ids.length > 0 ) {
 					options.data += "&rtMedia_attached_files[]=" + activity_attachemnt_ids.pop();
 				}
-				options.data += "&rtmedia-privacy=" + jQuery( "select.privacy" ).val();
+				options.data += "&rtmedia-privacy=" + jQuery( "select.privacy" ).not( '.rtm-activity-privacy-opt' ).val();
 				activity_attachemnt_ids = temp;
 
 				var orignalSuccess = originalOptions.success;
@@ -1109,7 +1109,7 @@ jQuery( document ).ready( function ( $ ) {
 			}
 
 			if ( originalOptions.data.action == 'post_update' || originalOptions.data.action == 'activity_widget_filter' ) {
-				options.data += "&rtmedia-privacy=" + jQuery( "select.privacy" ).val();
+				options.data += "&rtmedia-privacy=" + jQuery( "select.privacy" ).not( '.rtm-activity-privacy-opt' ).val();
 				var orignalSuccess = originalOptions.success;
 				options.success = function ( response ) {
 					orignalSuccess( response );
