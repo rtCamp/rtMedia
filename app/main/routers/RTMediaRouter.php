@@ -95,8 +95,7 @@ class RTMediaRouter {
         if ( $return ) {
             $wp_query->is_404 = false;
         }
-
-		if( isset( $rtmedia_query ) && isset( $rtmedia_query->query ) && ! isset($rtmedia_query->query['context']) ) {
+		if( !empty( $rtmedia_query ) && !empty( $rtmedia_query->query ) && empty($rtmedia_query->query['context']) ) {
 			$wp_query->is_404 = true;
 			$return = false;
 		}
