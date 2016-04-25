@@ -582,13 +582,11 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
 }
 
 .mfp-zoom-out-cur, .mfp-zoom-out-cur .mfp-image-holder .mfp-close {
-  cursor: -webkit-zoom-out;
   cursor: zoom-out;
 }
 
 .mfp-zoom {
   cursor: pointer;
-  cursor: -webkit-zoom-in;
   cursor: zoom-in;
 }
 
@@ -1120,9 +1118,9 @@ img.mfp-img {
   margin: 0;
   padding: 8px 10px;
   position: absolute;
-  left: 0;
+  right: 0;
   top: 38px;
-  width: 180px;
+  width: 190px;
   z-index: 10;
 }
 .rtm-options li {
