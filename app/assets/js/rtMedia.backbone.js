@@ -1015,7 +1015,16 @@ jQuery( document ).ready( function ( $ ) {
 				while ( activity_attachemnt_ids.length > 0 ) {
 					options.data += "&rtMedia_attached_files[]=" + activity_attachemnt_ids.pop();
 				}
-				options.data += "&rtmedia-privacy=" + jQuery( "select.privacy" ).not( '.rtm-activity-privacy-opt' ).val();
+                
+                var dynamic_privacy = '';
+                
+                if ( jQuery( 'select.privacy' ).not( '.rtm-activity-privacy-opt' ).length > 0 ) {
+                    dynamic_privacy = jQuery( 'select.privacy' ).not( '.rtm-activity-privacy-opt' ).val();
+                } else if ( jQuery( 'input[name="privacy"]' ).length > 0 ) {
+                    dynamic_privacy = jQuery( 'input[name="privacy"]' ).val();
+                }
+                
+				options.data += "&rtmedia-privacy=" + dynamic_privacy;
 				activity_attachemnt_ids = temp;
 
 				var orignalSuccess = originalOptions.success;
@@ -1109,7 +1118,15 @@ jQuery( document ).ready( function ( $ ) {
 			}
 
 			if ( originalOptions.data.action == 'post_update' || originalOptions.data.action == 'activity_widget_filter' ) {
-				options.data += "&rtmedia-privacy=" + jQuery( "select.privacy" ).not( '.rtm-activity-privacy-opt' ).val();
+                var dynamic_privacy = '';
+                
+                if ( jQuery( 'select.privacy' ).not( '.rtm-activity-privacy-opt' ).length > 0 ) {
+                    dynamic_privacy = jQuery( 'select.privacy' ).not( '.rtm-activity-privacy-opt' ).val();
+                } else if ( jQuery( 'input[name="privacy"]' ).length > 0 ) {
+                    dynamic_privacy = jQuery( 'input[name="privacy"]' ).val();
+                }
+                
+				options.data += "&rtmedia-privacy=" + dynamic_privacy;
 				var orignalSuccess = originalOptions.success;
 				options.success = function ( response ) {
 					orignalSuccess( response );
