@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.5.1
-Stable tag: 3.10.5
+Stable tag: 3.10.6
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -137,6 +137,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.10.6 [May 03, 2016] =
+* Fixed - BuddyPress group privacy now depends on group status (public, private, hidden)
+* Fixed - JS issue for WordPress 4.5
+* Fixed - 404 Error for titles on bbPress templates
+* Fixed - Required changes done for rtmedia.io
 
 = 3.10.5 [Mar 24, 2016] =
 * Code Cleanup
@@ -1137,8 +1143,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.10.5 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Removed extra code
+= 3.10.6 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed BuddyPress group privacy, JS issue with WordPress 4.5, 404 error on titles for bbPress templates
 
 == Sponsors ==
 
