@@ -400,7 +400,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			}
 
 			if ( 'premium_support' == $form ) {
-				if ( ! defined( 'RTMEDIA_PRO_VERSION' ) ) {
+				if ( ! has_filter( 'rtmedia_license_tabs' ) && ! has_action( 'rtmedia_addon_license_details' ) ) {
 					$content = '<h3 class="rtm-option-title">' . $meta_title . '</h3>';
 					$content .= '<p>' . __( 'If your site has some issues due to rtMedia and you want support, feel free to create a support topic on <a target="_blank" href="http://community.rtcamp.com/c/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">Community Forum</a>.', 'buddypress-media' ) . '</p>';
 					$content .= '<p>' . __( 'If you have any suggestions, enhancements or bug reports, you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/rtMedia/issues/new">GitHub</a>.', 'buddypress-media' ) . '</p>';
@@ -584,7 +584,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				echo '<div class="rtmedia-error">';
 				echo '<p>' . __( 'Your server failed to send an email.', 'buddypress-media' ) . '</p>';
 				echo '<p>' . __( 'Kindly contact your server support to fix this.', 'buddypress-media' ) . '</p>';
-				echo '<p>' . __( 'You can alternatively create a support request <a href="https://rtcamp.com/premium-support/" target="_blank">here</a>', 'buddypress-media' ) . '</p>';
+				echo '<p>' . __( 'You can alternatively create a support request <a href="https://rtmedia.io/premium-support/" target="_blank">here</a>', 'buddypress-media' ) . '</p>';
 				echo '</div>';
 			}
 			die();

@@ -25,7 +25,7 @@ class RTMediaFeed {
 	}
 
 	/**
-	 * Get BuddyPress Media Feed from rtCamp.com
+	 * Get BuddyPress Media Feed from rtmedia.io
 	 */
 
 	/**

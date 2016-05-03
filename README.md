@@ -97,7 +97,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 
 * [Project Homepage](http://rtcamp.com/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Project Homepage")
 * [Roadmap](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Roadmap page")
-* [Documentation](http://docs.rtcamp.com/rtmedia?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Documentation page")
+* [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Documentation page")
 * [FAQ](http://rtcamp.com/rtmedia/faq/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's FAQ page")
 * [Support](http://community.rtcamp.com/c/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's support page")
 * [GitHub](http://github.com/rtCamp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
@@ -113,7 +113,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 
 Please visit [rtMedia's FAQ page](http://rtcamp.com/rtmedia/faq/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's FAQ page").
 
-Read rtMedia [Documentation](http://docs.rtcamp.com/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)
+Read rtMedia [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)
 
 ## Screenshots ##
 

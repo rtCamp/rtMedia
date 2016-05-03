@@ -68,7 +68,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 			if ( ( $finished[ 0 ]->media != $total[ 0 ]->media ) || ( $users[ 'total_users' ] > $completed_users_favorites ) ) {
 				if ( 1 != $bp_album_active ) {
 					echo '<div id="setting-error-bp-album-importer" class="error settings-error below-h2">
-                        <p><strong>' . __( 'Warning!', 'buddypress-media' ) . '</strong> ' . sprintf( __( 'This import process is irreversible. Although everything is tested, please take a <a target="_blank" href="http://codex.wordpress.org/WordPress_Backups">backup of your database and files</a>, before proceeding. If you don\'t know your way around databases and files, consider <a target="_blank" href="%s">hiring us</a>, or another professional.', 'buddypress-media' ), 'http://rtcamp.com/contact/?purpose=buddypress&utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' ) . '</p>';
+                        <p><strong>' . __( 'Warning!', 'buddypress-media' ) . '</strong> ' . sprintf( __( 'This import process is irreversible. Although everything is tested, please take a <a target="_blank" href="http://codex.wordpress.org/WordPress_Backups">backup of your database and files</a>, before proceeding. If you don\'t know your way around databases and files, consider <a target="_blank" href="%s">hiring us</a>, or another professional.', 'buddypress-media' ), 'https://rtmedia.io/contact/?purpose=buddypress&utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' ) . '</p>';
 					echo '<p>' . __( 'If you have set "WP_DEBUG" in you wp-config.php file, please make sure it is set to "false", so that it doesn\'t conflict with the import process.', 'buddypress-media' ) . '</p></div>';
 					echo '<div class="bp-album-import-accept"><p><strong><label for="bp-album-import-accept"><input type="checkbox" value="accept" name="bp-album-import-accept" id="bp-album-import-accept" /> ' . __( 'I have taken a backup of the database and files of this site.', 'buddypress-media' ) . '</label></strong></p></div>';
 					echo '<button id="bpmedia-bpalbumimport" class="button button-primary">';
@@ -165,18 +165,18 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 				echo '<br />';
 				echo '<strong>' . __( 'Why don\'t you try adding some instagram like effects to your images?', 'buddypress-media' ) . '</strong>';
 				echo '<div class="bp-media-addon">
-                <a href="http://rtcamp.com/products/buddypress-media-instagram/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">
-                    <img width="240" height="184" title="BuddyPress-Media Instagram" alt="BuddyPress-Media Instagram" src="' . $img_src . 'BuddyPressMedia-Instagram.png?ref=bp-album-importer">
+                <a href="https://rtmedia.io/products/rtmedia-photo-filters/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="rtMedia Photo Filters" target="_blank">
+                    <img width="240" height="184" title="rtMedia Photo Filters" alt="rtMedia Photo Filters" src="' . $img_src . 'BuddyPressMedia-Instagram.png?ref=bp-album-importer">
                 </a>
-                <h4><a href="http://rtcamp.com/products/buddypress-media-instagram/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">BuddyPress-Media Instagram</a></h4>
+                <h4><a href="https://rtmedia.io/products/rtmedia-photo-filters/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="rtMedia Photo Filters" target="_blank">rtMedia Photo Filters</a></h4>
                 <div class="product_desc">
-                    <p>' . __( 'BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media.', 'buddypress-media' ) . '</p>
+                    <p>' . __( 'rtMedia Photo Filters adds Instagram like filters to images uploaded with BuddyPress Media.', 'buddypress-media' ) . '</p>
                     <p><strong>' . __( 'Important', 'buddypress-media' ) . ':</strong> ' . __( 'You need to have ImageMagick installed on your server for this addon to work.', 'buddypress-media' ) . '</p>
                 </div>
                 <div class="product_footer">
                     <span class="price alignleft"><span class="amount">$19</span></span>
-                    <a class="add_to_cart_button  alignright product_type_simple" href="http://rtcamp.com/products/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer&amp;add-to-cart=34379" target="_blank">' . __( 'Buy Now', 'buddypress-media' ) . '</a>
-                    <a class="alignleft product_demo_link" href="http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">' . __( 'Live Demo', 'buddypress-media' ) . '</a>
+                    <a class="add_to_cart_button  alignright product_type_simple" href="https://rtmedia.io/products/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer&amp;add-to-cart=34379" target="_blank">' . __( 'Buy Now', 'buddypress-media' ) . '</a>
+                    <a class="alignleft product_demo_link" href="http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="rtMedia Photo Filters" target="_blank">' . __( 'Live Demo', 'buddypress-media' ) . '</a>
                 </div></div>';
 			}
 			echo '</div>';

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.10.5\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-04-25 10:25:14+00:00\n"
+"POT-Creation-Date: 2016-05-03 14:07:43+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -49,7 +49,7 @@ msgid "rtMedia:"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:395
-msgid "Please update all premium add-ons that you have purchased from rtCamp from"
+msgid "Please update all premium add-ons that you have purchased from rtMedia from"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:395
@@ -218,8 +218,8 @@ msgstr ""
 msgid "not a video ..."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1259
-msgid "Empowering The Web With WordPress"
+#. Plugin Name of the plugin/theme
+msgid "rtMedia for WordPress, BuddyPress and bbPress"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1279
@@ -263,7 +263,7 @@ msgid "rtMedia Privacy"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1539
-#: app/main/controllers/privacy/RTMediaPrivacy.php:411
+#: app/main/controllers/privacy/RTMediaPrivacy.php:412
 msgid "Privacy"
 msgstr ""
 
@@ -1320,7 +1320,7 @@ msgid ""
 "If your site has some issues due to BuddyPress Media and you want one on "
 "one support then you can create a support topic on the <a target=\"_blank\" "
 "href=\"http://community.rtcamp.com/c/rtmedia?utm_source=dashboard&utm_"
-"medium=plugin&utm_campaign=rtmedia\">rtCamp Support Forum</a>."
+"medium=plugin&utm_campaign=rtmedia\">rtMedia Support Forum</a>."
 msgstr ""
 
 #: app/helper/RTMediaSettings.php:405
@@ -1476,7 +1476,7 @@ msgstr ""
 #: app/helper/RTMediaSupport.php:587
 msgid ""
 "You can alternatively create a support request <a "
-"href=\"https://rtcamp.com/premium-support/\" target=\"_blank\">here</a>"
+"href=\"https://rtmedia.io/premium-support/\" target=\"_blank\">here</a>"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:60 app/helper/RTMediaThemes.php:61
@@ -1645,7 +1645,7 @@ msgid ""
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:335
-msgid "product@rtcamp.com"
+msgid "rtmedia@rtcamp.com"
 msgstr ""
 
 #: app/helper/RTMediaUploadException.php:41
@@ -1780,8 +1780,8 @@ msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:173
 msgid ""
-"BuddyPress Media Instagram adds Instagram like filters to images uploaded "
-"with BuddyPress Media."
+"rtMedia Photo Filters adds Instagram like filters to images uploaded with "
+"BuddyPress Media."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:174
@@ -1916,8 +1916,8 @@ msgid "Albums"
 msgstr ""
 
 #: app/main/RTMedia.php:589 app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rt-template-functions.php:2160
-#: app/main/controllers/template/rt-template-functions.php:2164
+#: app/main/controllers/template/rt-template-functions.php:2166
+#: app/main/controllers/template/rt-template-functions.php:2170
 msgid "Upload"
 msgstr ""
 
@@ -2368,7 +2368,7 @@ msgid "Group Admin only"
 msgstr ""
 
 #: app/main/controllers/group/RTMediaGroupExtension.php:113
-#: app/main/controllers/privacy/RTMediaPrivacy.php:404
+#: app/main/controllers/privacy/RTMediaPrivacy.php:405
 #: templates/media/album-single-edit.php:47
 msgid "Save Changes"
 msgstr ""
@@ -2474,8 +2474,8 @@ msgid "Unlike"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rt-template-functions.php:2160
-#: app/main/controllers/template/rt-template-functions.php:2164
+#: app/main/controllers/template/rt-template-functions.php:2166
+#: app/main/controllers/template/rt-template-functions.php:2170
 msgid "Upload Media"
 msgstr ""
 
@@ -2511,15 +2511,15 @@ msgstr ""
 msgid "%1$s added %4$d %3$s"
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:369
+#: app/main/controllers/privacy/RTMediaPrivacy.php:370
 msgid "No changes were made to your account."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:372
+#: app/main/controllers/privacy/RTMediaPrivacy.php:373
 msgid "Your default privacy settings saved successfully."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:395
+#: app/main/controllers/privacy/RTMediaPrivacy.php:396
 msgid "Default Privacy"
 msgstr ""
 
@@ -2661,120 +2661,120 @@ msgstr ""
 msgid "Merge"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1957
+#: app/main/controllers/template/rt-template-functions.php:1963
 msgid "Privacy : "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2148
+#: app/main/controllers/template/rt-template-functions.php:2154
 msgid "people like this"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2247
+#: app/main/controllers/template/rt-template-functions.php:2253
 msgid "Empowering your community with "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2249
+#: app/main/controllers/template/rt-template-functions.php:2255
 msgid "The only complete media solution for WordPress, BuddyPress and bbPress"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2264
+#: app/main/controllers/template/rt-template-functions.php:2270
 msgid "Close (Esc)"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2278
+#: app/main/controllers/template/rt-template-functions.php:2284
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2282
+#: app/main/controllers/template/rt-template-functions.php:2288
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2286
+#: app/main/controllers/template/rt-template-functions.php:2292
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2290
+#: app/main/controllers/template/rt-template-functions.php:2296
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2294
+#: app/main/controllers/template/rt-template-functions.php:2300
 msgid "Blocked temporarily"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2331
+#: app/main/controllers/template/rt-template-functions.php:2337
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2344
+#: app/main/controllers/template/rt-template-functions.php:2350
 msgid "1 second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rt-template-functions.php:2347
+#: app/main/controllers/template/rt-template-functions.php:2353
 msgid "1 minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rt-template-functions.php:2350
+#: app/main/controllers/template/rt-template-functions.php:2356
 msgid "1 hour"
 msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rt-template-functions.php:2705
+#: app/main/controllers/template/rt-template-functions.php:2711
 #. translators: date format, see http:php.net/date
 msgid "You can consider rtMedia Team for following :"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2708
+#: app/main/controllers/template/rt-template-functions.php:2714
 msgid "rtMedia Customization ( in Upgrade Safe manner )"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2709
+#: app/main/controllers/template/rt-template-functions.php:2715
 msgid "WordPress/BuddyPress Theme Design and Development"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2710
+#: app/main/controllers/template/rt-template-functions.php:2716
 msgid "WordPress/BuddyPress Plugin Development"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2714
+#: app/main/controllers/template/rt-template-functions.php:2720
 msgid "Contact Us"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:70
+#: app/main/controllers/upload/RTMediaUploadView.php:78
 msgid "Privacy: "
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:77
-#: app/main/controllers/upload/RTMediaUploadView.php:113
-#: app/main/controllers/upload/RTMediaUploadView.php:130
+#: app/main/controllers/upload/RTMediaUploadView.php:85
+#: app/main/controllers/upload/RTMediaUploadView.php:121
+#: app/main/controllers/upload/RTMediaUploadView.php:138
 msgid "File Upload"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:81
+#: app/main/controllers/upload/RTMediaUploadView.php:89
 msgid "Select your files"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:82
+#: app/main/controllers/upload/RTMediaUploadView.php:90
 msgid "or"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:82
+#: app/main/controllers/upload/RTMediaUploadView.php:90
 msgid "Drop your files here"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:109
+#: app/main/controllers/upload/RTMediaUploadView.php:117
 msgid "Start upload"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:136
+#: app/main/controllers/upload/RTMediaUploadView.php:144
 msgid "Attach Media"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:151
+#: app/main/controllers/upload/RTMediaUploadView.php:159
 msgid "Insert from URL"
 msgstr ""
 
@@ -3116,14 +3116,10 @@ msgstr ""
 msgid "under"
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-msgid "rtMedia for WordPress, BuddyPress and bbPress"
-msgstr ""
-
 #. Plugin URI of the plugin/theme
 msgid ""
-"http://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_"
-"campaign=buddypress-media"
+"https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign="
+"buddypress-media"
 msgstr ""
 
 #. Description of the plugin/theme

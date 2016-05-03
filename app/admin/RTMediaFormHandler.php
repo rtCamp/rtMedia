@@ -440,7 +440,7 @@ class RTMediaFormHandler {
 				),
 				'group' => 100,
 				'depends' => 'rtmedia_add_linkback',
-				'after_content' => __( 'Signup for', 'buddypress-media' ) . ' rtMedia ' . __( 'affiliate program', 'buddypress-media' ) . ' <a href="https://rtcamp.com/affiliates">' . __( 'here', 'buddypress-media' ) . '</a>',
+				'after_content' => __( 'Signup for', 'buddypress-media' ) . ' rtMedia ' . __( 'affiliate program', 'buddypress-media' ) . ' <a href="https://rtmedia.io/affiliates/">' . __( 'here', 'buddypress-media' ) . '</a>',
 			), //
 			'rtmedia_enable_api' => array(
 				'title' => __( 'Enable JSON API', 'buddypress-media' ),
@@ -451,7 +451,7 @@ class RTMediaFormHandler {
 					'desc' => __( 'This will allow handling API requests for rtMedia sent through any mobile app.', 'buddypress-media' ),
 				),
 				'group' => 80,
-				'after_content' => __( 'You can refer to the API document from', 'buddypress-media' ) . ' <a href="http://docs.rtcamp.com/rtmedia/developers/json-api.html">' . __( 'here', 'buddypress-media' ) . '</a>',
+				'after_content' => __( 'You can refer to the API document from', 'buddypress-media' ) . ' <a href="https://rtmedia.io/json-api/ ">' . __( 'here', 'buddypress-media' ) . '</a>',
 			), //
 		);
 

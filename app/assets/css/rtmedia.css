@@ -1118,7 +1118,7 @@ img.mfp-img {
   margin: 0;
   padding: 8px 10px;
   position: absolute;
-  right: 0;
+  left: 0;
   top: 38px;
   width: 190px;
   z-index: 10;

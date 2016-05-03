@@ -89,14 +89,14 @@ class RTMediaThemes {
 		if ( $rtdating->exists() ) {
 			$rtdating_purchase = '';
 		} else {
-			$rtdating_purchase = '<a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy rtDating</a> | ';
+			$rtdating_purchase = '<a href="https://rtmedia.io/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy rtDating</a> | ';
 		}
 
 		$inspirebook = wp_get_theme( 'inspirebook' );
 		if ( $inspirebook->exists() ) {
 			$inspirebook_purchase = '';
 		} else {
-			$inspirebook_purchase = '<a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy InspireBook</a> | ';
+			$inspirebook_purchase = '<a href="https://rtmedia.io/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy InspireBook</a> | ';
 		}
 
 
@@ -106,8 +106,8 @@ class RTMediaThemes {
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtDating.png',
 				'demo_url' => 'http://demo.rtcamp.com/rtdating/',
 				'author' => __( 'rtCamp', 'buddypress-media' ),
-				'author_url' => 'https://rtcamp.com/',
-				'buy_url' => 'https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
+				'author_url' => 'https://rtmedia.io/',
+				'buy_url' => 'https://rtmedia.io/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
 				'description' => __( 'rtDating is a unique, clean and modern theme only for WordPress. This theme is mostly useful for dating sites and community websites. It can also be use for any other WordPress based website.', 'buddypress-media' ),
 				'tags' => 'black, green, white, light, dark, two-columns, three-columns, left-sidebar, right-sidebar, fixed-layout, responsive-layout, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready, accessibility-ready',
 			),
@@ -116,8 +116,8 @@ class RTMediaThemes {
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-InspireBook.png',
 				'demo_url' => 'http://demo.rtcamp.com/inspirebook/',
 				'author' => __( 'rtCamp', 'buddypress-media' ),
-				'author_url' => 'https://rtcamp.com/',
-				'buy_url' => 'https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
+				'author_url' => 'https://rtmedia.io/',
+				'buy_url' => 'https://rtmedia.io/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
 				'description' => __( 'InspireBook is a premium WordPress theme, designed especially for BuddyPress and rtMedia powered social-networks.', 'buddypress-media' ),
 				'tags' => 'black, blue, white, light, one-column, two-columns, right-sidebar, custom-header, custom-background, custom-menu, editor-style, theme-options, threaded-comments, sticky-post, translation-ready, responsive-layout, full-width-template, buddypress',
 			),
@@ -126,8 +126,8 @@ class RTMediaThemes {
 				'image' => 'https://rtcamp-481283.c.cdn77.org/wp-content/uploads/edd/2015/08/foodmania-img1.png',
 				'demo_url' => 'http://demo.rtcamp.com/foodmania/',
 				'author' => __( 'rtCamp', 'buddypress-media' ),
-				'author_url' => 'https://rtcamp.com/',
-				'buy_url' => 'https://rtcamp.com/products/foodmania/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
+				'author_url' => 'https://rtmedia.io/',
+				'buy_url' => 'https://rtmedia.io/products/foodmania/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
 				'description' => __( 'Its premium WordPress theme, designed especially for Food, recipe and photography community sites.', 'buddypress-media' ),
 				'tags' => 'black, yellow, white, dark, one-column, two-columns, right-sidebar, custom-header, custom-background, custom-menu, editor-style, theme-options, threaded-comments, sticky-post, translation-ready, responsive-layout, full-width-template, buddypress',
 			)
@@ -172,7 +172,7 @@ class RTMediaThemes {
 
 									<div class="theme-info">
 										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
-										<h4 class="theme-author">By <a href="https://rtcamp.com/"><?php echo $theme[ 'author' ]; ?></a></h4>
+										<h4 class="theme-author">By <a href="https://rtmedia.io/"><?php echo $theme[ 'author' ]; ?></a></h4>
 										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More', 'buddypress-media' ); ?></a></p>
 										<p class="theme-tags"><span><?php _e( 'Tags:', 'buddypress-media' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
 									</div>
@@ -332,7 +332,7 @@ class RTMediaThemes {
 
 			<p>
 				<?php _e( 'If you have developed a rtMedia compatible theme and would like it to list here, please email us at', 'buddypress-media' ) ?>
-				<a href="mailto:product@rtcamp.com"><?php _e( 'product@rtcamp.com', 'buddypress-media' ) ?></a>.
+				<a href="mailto:rtmedia@rtcamp.com"><?php _e( 'rtmedia@rtcamp.com', 'buddypress-media' ) ?></a>.
 			</p>
 		</div>
 		<?php

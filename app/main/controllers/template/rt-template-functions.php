@@ -1928,21 +1928,27 @@ function rtmedia_load_template() {
 }
 
 function is_rtmedia_privacy_enable() {
+    
 	global $rtmedia;
-	if ( isset( $rtmedia->options[ "privacy_enabled" ] ) && $rtmedia->options[ "privacy_enabled" ] != "0" ) {
+    
+	if ( isset( $rtmedia->options["privacy_enabled"] ) && $rtmedia->options["privacy_enabled"] != "0" ) {
 		return true;
 	}
 
 	return false;
+    
 }
 
 function is_rtmedia_privacy_user_overide() {
+    
 	global $rtmedia;
-	if ( isset( $rtmedia->options[ "privacy_userOverride" ] ) && $rtmedia->options[ "privacy_userOverride" ] != "0" ) {
+    
+	if ( isset( $rtmedia->options["privacy_userOverride"] ) && $rtmedia->options["privacy_userOverride"] != "0" ) {
 		return true;
 	}
 
 	return false;
+    
 }
 
 function rtmedia_edit_media_privacy_ui() {
@@ -2240,7 +2246,7 @@ function rtmedia_link_in_footer() {
 	$link = ( isset( $option[ 'rtmedia_add_linkback' ] ) ) ? $option[ 'rtmedia_add_linkback' ] : false;
 	if ( $link ) {
 		$aff_id = ( $option[ 'rtmedia_affiliate_id' ] != "" ) ? '&ref=' . $option[ 'rtmedia_affiliate_id' ] : "";
-		$href = 'https://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' . $aff_id;
+		$href = 'https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' . $aff_id;
 		?>
 
 		<div class='rtmedia-footer-link'>
@@ -2711,7 +2717,7 @@ function rtmedia_admin_pages_content( $page ){
 			</ol>
 
 			<div class="clearfix">
-				<a href="https://rtcamp.com/contact" class="rtm-button rtm-success" target="_blank"><?php _e( 'Contact Us', 'buddypress-media' ); ?></a>
+				<a href="https://rtmedia.io/contact/" class="rtm-button rtm-success" target="_blank"><?php _e( 'Contact Us', 'buddypress-media' ); ?></a>
 			</div>
 		</div>
 	<?php
