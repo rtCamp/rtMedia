@@ -35,7 +35,7 @@ function apply_rtMagnificPopup( selector ) {
 				},
 				callbacks: {
 					ajaxContentAdded: function () {
-                
+
                         mfp = jQuery.magnificPopup.instance;
                         if ( jQuery(mfp.items).size() === 1 ) {
                             jQuery(".mfp-arrow").remove();
@@ -73,7 +73,7 @@ function apply_rtMagnificPopup( selector ) {
 							//videoWidth: 1,
 							// if set, overrides <video height>
 							//videoHeight: 1
-                            success: function (mediaElement, domObject) { 
+                            success: function (mediaElement, domObject) {
                                 // call the play method
                                 mediaElement.play();
                             },
@@ -137,7 +137,7 @@ function rtmedia_init_action_dropdown() {
 jQuery( 'document' ).ready( function ( $ ) {
 
 	// Tabs
-	if( typeof rtTab !== 'undefined' ) {
+	if( typeof $.fn.rtTab !== 'undefined' ) {
 		$( '.rtm-tabs' ).rtTab();
 	}
 
@@ -422,7 +422,7 @@ jQuery( 'document' ).ready( function ( $ ) {
                 if ( jQuery(mfp.items).size() > 1 ) {
                     rtmedia_init_popup_navigation();
                 }
-				
+
 				rtmedia_disable_popup_navigation_comment_focus();
 				var height = $( window ).height();
 				jQuery( '.rtm-lightbox-container .mejs-video' ).css( { 'height': height * 0.8, 'max-height': height * 0.8, 'over-flow': 'hidden' } );
@@ -439,7 +439,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				jQuery( ".rtm-more" ).shorten( { // shorten the media description to 100 characters
 					"showChars": 130
 				} );
-                 
+
 				//show gallery title in lightbox at bottom
 				var gal_title = $( '.rtm-gallery-title' ), title = "";
 				if ( ! $.isEmptyObject( gal_title ) ) {
@@ -639,7 +639,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				type: 'post',
 				data: data,
 				success: function ( data ) {
-                                    
+
 					if ( data == '1' ) {
 						//media delete
 						rtmedia_gallery_action_alert_message( 'file deleted successfully.', 'success' );

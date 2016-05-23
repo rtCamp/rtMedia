@@ -10,3 +10,4 @@ npm-debug.log
 tests/functional/node_modules/
 /tests/functional/reports/
 selenium-*.jar
+sftp-config.json
