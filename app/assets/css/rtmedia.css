@@ -2233,6 +2233,11 @@ span.imgedit-scale-warn {
   padding: 2px;
 }
 
+body article.bp_members.bp_member .entry-content,
+body div.bp_members.bp_member .entry-content {
+  width: 100%;
+}
+
 .rtm-media-gallery-uploader {
   display: none;
 }
