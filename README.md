@@ -138,6 +138,12 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.10.7 [May 25, 2016] ####
+* Fixed JS issue for tabs in media edit
+* Fixed CSS for twentysixteen theme
+* Code cleanup
+* Updated german language file
+
 #### 3.10.6 [May 03, 2016] ####
 * Fixed - BuddyPress group privacy now depends on group status (public, private, hidden)
 * Fixed - JS issue for WordPress 4.5
@@ -1141,8 +1147,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.10.6 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed BuddyPress group privacy, JS issue with WordPress 4.5, 404 error on titles for bbPress templates
+#### 3.10.7 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed JS issue for tabs in media edit, Fixed CSS for twentysixteen theme, Updated german language file
 
 ## Sponsors ##
 
