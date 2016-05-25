@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.5.1
-Stable tag: 3.10.6
+Stable tag: 3.10.7
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -137,6 +137,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.10.7 [May 25, 2016] =
+* Fixed JS issue for tabs in media edit
+* Fixed CSS for twentysixteen theme
+* Code cleanup
+* Updated german language file
 
 = 3.10.6 [May 03, 2016] =
 * Fixed - BuddyPress group privacy now depends on group status (public, private, hidden)
@@ -1143,8 +1149,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.10.6 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed BuddyPress group privacy, JS issue with WordPress 4.5, 404 error on titles for bbPress templates
+= 3.10.7 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed JS issue for tabs in media edit, Fixed CSS for twentysixteen theme, Updated german language file
 
 == Sponsors ==
 
