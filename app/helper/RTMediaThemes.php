@@ -123,7 +123,7 @@ class RTMediaThemes {
 			),
 			'foodmania' => array(
 				'name' => __( 'Foodmania', 'buddypress-media' ),
-				'image' => 'https://rtcamp-481283.c.cdn77.org/wp-content/uploads/edd/2015/08/foodmania-img1.png',
+				'image' => 'https://cdn.rtmedia.io/wp-content/uploads/edd/2015/08/foodmania-img1.png',
 				'demo_url' => 'http://demo.rtcamp.com/foodmania/',
 				'author' => __( 'rtCamp', 'buddypress-media' ),
 				'author_url' => 'https://rtmedia.io/',
