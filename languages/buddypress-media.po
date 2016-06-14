@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.10.7\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-05-25 10:28:05+00:00\n"
+"POT-Creation-Date: 2016-06-14 07:27:19+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -785,407 +785,407 @@ msgstr ""
 msgid "Audio/Video  Encoding"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:111
+#: app/helper/RTMediaAddon.php:112
 msgid "SEO"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:114
+#: app/helper/RTMediaAddon.php:115
 msgid ""
 "Generate an XML sitemap for all the public media files uploaded via rtMedia "
 "plugin. These sitemaps can be useful to index search engine to improve "
 "website SEO."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:121
+#: app/helper/RTMediaAddon.php:122
 msgid "Moderation"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:124
+#: app/helper/RTMediaAddon.php:125
 msgid ""
 "Report media if they find offensive. Set number of reports to automatically "
 "take down media from site."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:132
+#: app/helper/RTMediaAddon.php:133
 msgid "Custom Attributes"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:135
+#: app/helper/RTMediaAddon.php:136
 msgid ""
 "Categories media based on attributes. Site owner need to create attributes. "
 "When user upload a media, can select in which attribute that media can add."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:143
+#: app/helper/RTMediaAddon.php:144
 msgid "Docs and Other files"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:146
+#: app/helper/RTMediaAddon.php:147
 msgid ""
 "Allow users to upload documents and other file type using rtMedia upload "
 "box. This addon support all the file extensions which WordPress allows."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:154
+#: app/helper/RTMediaAddon.php:155
 msgid "Default Albums"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:157
+#: app/helper/RTMediaAddon.php:158
 msgid ""
 "This plugin allows the creation of multiple default albums for rtMedia "
 "uploads. One of these albums can be set as the default global album."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:165
+#: app/helper/RTMediaAddon.php:166
 msgid "Podcast (RSS and Atom feeds)"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:168
+#: app/helper/RTMediaAddon.php:169
 msgid ""
 "Read rtMedia uploads from iTunes as well as any RSS feed-reader/podcasting "
 "software."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:176
+#: app/helper/RTMediaAddon.php:177
 msgid "Playlists"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:179
+#: app/helper/RTMediaAddon.php:180
 msgid ""
 "Audio can be grouped into playlists. Once the user upload any audio file, "
 "can create a playlist or use existing one to manage audio files."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:187
+#: app/helper/RTMediaAddon.php:188
 msgid "Favorites"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:190
+#: app/helper/RTMediaAddon.php:191
 msgid ""
 "Users can create their list of favorite media in which they can add media "
 "previously uploaded by any user."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:198
+#: app/helper/RTMediaAddon.php:199
 msgid "Restrictions"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:201
+#: app/helper/RTMediaAddon.php:202
 msgid ""
 "Site admin can set an upload limit on the basis of time span, file size "
 "(MB) and number of files user can upload."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:209
+#: app/helper/RTMediaAddon.php:210
 msgid "bbPress Attachments"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:212
+#: app/helper/RTMediaAddon.php:213
 msgid "Attach media files to bbPress forum topics and replies."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:220
+#: app/helper/RTMediaAddon.php:221
 msgid "WordPress Sitewide Gallery"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:223
+#: app/helper/RTMediaAddon.php:224
 msgid ""
 "Site admin can create and upload media into WordPress album. Create album "
 "without being dependent on BuddyPress."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:231
+#: app/helper/RTMediaAddon.php:232
 msgid "WordPress Comment Attachments"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:234
+#: app/helper/RTMediaAddon.php:235
 msgid ""
 "Allow users to upload a media file in WordPress comment attachment box. It "
 "will display a thumbnail of attached file."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:242
+#: app/helper/RTMediaAddon.php:243
 msgid "Social Sharing"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:245
+#: app/helper/RTMediaAddon.php:246
 msgid ""
 "Share uploaded media on social network sites like Facebook, twitter, "
 "linkedin, Google +. This addon integrate with rtSocial plugin."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:253
+#: app/helper/RTMediaAddon.php:254
 msgid "Sidebar Widgets"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:256
+#: app/helper/RTMediaAddon.php:257
 msgid ""
 "This addon provide widgets to upload media and display gallery for rtMedia "
 "plugin."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:264
+#: app/helper/RTMediaAddon.php:265
 msgid "5 Star Ratings"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:267
+#: app/helper/RTMediaAddon.php:268
 msgid ""
 "Display 5 star rating for all the uploaded media. User can rate the media "
 "files from 1 to 5 star."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:275
+#: app/helper/RTMediaAddon.php:276
 msgid "Edit Mp3 Info (ID3 Tags)"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:278
+#: app/helper/RTMediaAddon.php:279
 msgid "Allow user to edit MP3 FIle Audio tags (ID 3 tags)."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:286
+#: app/helper/RTMediaAddon.php:287
 msgid "Media Sorting"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:289
+#: app/helper/RTMediaAddon.php:290
 msgid ""
 "Sort uploaded media based on file size, ascending/descending title, upload "
 "date of media."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:297
+#: app/helper/RTMediaAddon.php:298
 msgid "Bulk Edit"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:300
+#: app/helper/RTMediaAddon.php:301
 msgid ""
 "Bulk edit option will allow user to quickly select media files and do "
 "required actions like move files from one album to another, change "
 "attributes, change privacy, delete files."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:308
+#: app/helper/RTMediaAddon.php:309
 msgid "BuddyPress Profile Picture"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:311
+#: app/helper/RTMediaAddon.php:312
 msgid "User can easily set his/her profile picture from media uploaded via rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:319
+#: app/helper/RTMediaAddon.php:320
 msgid "Album Cover Art"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:322
+#: app/helper/RTMediaAddon.php:323
 msgid "User can easily set any of the image of the album as album cover photo"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:330
+#: app/helper/RTMediaAddon.php:331
 msgid "Direct Download Link"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:333
+#: app/helper/RTMediaAddon.php:334
 msgid ""
 "User can download media from website. Site owner can restrict which media "
 "type can be allowed to download."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:341
+#: app/helper/RTMediaAddon.php:342
 msgid "Upload by URL"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:344
+#: app/helper/RTMediaAddon.php:345
 msgid ""
 "Users do not need to download media files from a URL and then upload it "
 "with rtMedia. Just provide the absolute URL for the media and it will "
 "upload on site."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:352
+#: app/helper/RTMediaAddon.php:353
 msgid "Media Likes"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:355
+#: app/helper/RTMediaAddon.php:356
 msgid ""
 "This add-on let you know who liked the media. User can also see which media "
 "they liked under their profile."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:363
+#: app/helper/RTMediaAddon.php:364
 msgid "Activity URL Preview"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:366
+#: app/helper/RTMediaAddon.php:367
 msgid ""
 "This addon provides a preview of the URL that is shared in BuddyPress "
 "activity. Just enter the URL you want to share on your site and see a "
 "preview of it before it is shared."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:374
+#: app/helper/RTMediaAddon.php:375
 msgid "View Counter"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:377
+#: app/helper/RTMediaAddon.php:378
 msgid ""
 "Enable view count for all the uploaded media. Whenever user open that media "
 "file in lightbox or in single media view, that view count will be "
 "calculated and display next to media file."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:385
+#: app/helper/RTMediaAddon.php:386
 msgid "Shortcode Generator"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:388
+#: app/helper/RTMediaAddon.php:389
 msgid ""
 "This add-on will add shortcode generator button in WordPress post and page "
 "editor for all the rtMedia shortcodes."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:396
+#: app/helper/RTMediaAddon.php:397
 msgid "Album Privacy"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:399
+#: app/helper/RTMediaAddon.php:400
 msgid ""
 "Set album privacy when user create an album or change album privacy when "
 "editing existing albums. The privacy levels are Public, Logged in user, "
 "Friends and Private."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:407
+#: app/helper/RTMediaAddon.php:408
 msgid "BuddyPress Group Media Control"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:410
+#: app/helper/RTMediaAddon.php:411
 msgid "This add-on allows group owner to manage media upload feature group wise."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:418
+#: app/helper/RTMediaAddon.php:419
 msgid "Set Custom Thumbnail for Audio/Video"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:421
+#: app/helper/RTMediaAddon.php:422
 msgid ""
 "Allow media owner to change the thumbnail of uploaded audio/video files. "
 "The File Upload box will be provided to change media thumbnail."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:429
+#: app/helper/RTMediaAddon.php:430
 msgid "myCRED"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:432
+#: app/helper/RTMediaAddon.php:433
 msgid ""
 "This plugin integrates rtMedia and myCRED plugin, users can be can award "
 "virtual points for various rtMedia activities, like media upload, likes, "
 "deleted etc."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:440
-msgid "Upload terms"
+#: app/helper/RTMediaAddon.php:441
+msgid "Upload Terms"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:443
+#: app/helper/RTMediaAddon.php:444
 msgid ""
 "User must have to check the terms and conditions checkbox before uploading "
 "the media."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:451
+#: app/helper/RTMediaAddon.php:452
 msgid "CubePoints"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:454
+#: app/helper/RTMediaAddon.php:455
 msgid ""
 "If you are using CubePoints plugin on your website than rtMedia CubePoint "
 "add-on can be integrate with that plugin to setup point management system "
 "for rtMedia related activities."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:462
+#: app/helper/RTMediaAddon.php:463
 msgid "Social Sync"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:465
+#: app/helper/RTMediaAddon.php:466
 msgid "rtMedia Social Sync allows you to import media from your Facebook account."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:473
+#: app/helper/RTMediaAddon.php:474
 msgid "Photo Watermark"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:476
+#: app/helper/RTMediaAddon.php:477
 msgid ""
 "rtMedia Photo Watermark let you add watermark on your images uploaded using "
 "rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:484
+#: app/helper/RTMediaAddon.php:485
 msgid "Photo Tagging"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:487
+#: app/helper/RTMediaAddon.php:488
 msgid ""
 "rtMedia Photo Tagging enable users to tag their friends on photos uploaded "
 "using rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:495
+#: app/helper/RTMediaAddon.php:496
 msgid "Photo Filters"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:498
+#: app/helper/RTMediaAddon.php:499
 msgid ""
 "rtMedia Photo Filters adds Instagram like filters to images uploaded with "
 "rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:506
+#: app/helper/RTMediaAddon.php:507
 msgid "Kaltura Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:509
+#: app/helper/RTMediaAddon.php:510
 msgid ""
 "Add support for more video formats using Kaltura video solution. It works "
 "with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:517
+#: app/helper/RTMediaAddon.php:518
 msgid "FFMPEG Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:520
+#: app/helper/RTMediaAddon.php:521
 msgid ""
 "Add supports for more audio & video formats using open-source media-node. "
 "Media node comes with automated setup script for Ubuntu/Debian."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:528
+#: app/helper/RTMediaAddon.php:529
 msgid "Membership Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:531
+#: app/helper/RTMediaAddon.php:532
 msgid ""
 "rtMedia Membership add-on provides membership functionality in your site in "
 "terms of media upload."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:571
+#: app/helper/RTMediaAddon.php:572
 msgid "Coming Soon !!"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:604
+#: app/helper/RTMediaAddon.php:605
 msgid "Purchased"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:606 app/helper/RTMediaThemes.php:155
+#: app/helper/RTMediaAddon.php:607 app/helper/RTMediaThemes.php:155
 #: app/helper/RTMediaThemes.php:183 app/helper/RTMediaThemes.php:290
 #: app/helper/RTMediaThemes.php:318 app/importers/BPMediaAlbumimporter.php:178
 msgid "Buy Now"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:635 app/helper/RTMediaThemes.php:154
+#: app/helper/RTMediaAddon.php:636 app/helper/RTMediaThemes.php:154
 #: app/helper/RTMediaThemes.php:182 app/helper/RTMediaThemes.php:289
 #: app/helper/RTMediaThemes.php:317 app/importers/BPMediaAlbumimporter.php:179
 msgid "Live Demo"
