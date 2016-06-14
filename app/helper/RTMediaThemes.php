@@ -99,12 +99,12 @@ class RTMediaThemes {
 			$inspirebook_purchase = '<a href="https://rtmedia.io/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy InspireBook</a> | ';
 		}
 
-
+        $rtmedia_demo_url = 'http://demo.rtmedia.io/';
 		$themes = array(
 			'rtdating' => array(
 				'name' => __( 'rtDating', 'buddypress-media' ),
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtDating.png',
-				'demo_url' => 'http://demo.rtcamp.com/rtdating/',
+				'demo_url' => $rtmedia_demo_url . 'rtdating/',
 				'author' => __( 'rtCamp', 'buddypress-media' ),
 				'author_url' => 'https://rtmedia.io/',
 				'buy_url' => 'https://rtmedia.io/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
@@ -114,7 +114,7 @@ class RTMediaThemes {
 			'inspirebook' => array(
 				'name' => __( 'InspireBook', 'buddypress-media' ),
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-InspireBook.png',
-				'demo_url' => 'http://demo.rtcamp.com/inspirebook/',
+				'demo_url' => $rtmedia_demo_url . 'inspirebook/',
 				'author' => __( 'rtCamp', 'buddypress-media' ),
 				'author_url' => 'https://rtmedia.io/',
 				'buy_url' => 'https://rtmedia.io/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
@@ -124,7 +124,7 @@ class RTMediaThemes {
 			'foodmania' => array(
 				'name' => __( 'Foodmania', 'buddypress-media' ),
 				'image' => 'https://cdn.rtmedia.io/wp-content/uploads/edd/2015/08/foodmania-img1.png',
-				'demo_url' => 'http://demo.rtcamp.com/foodmania/',
+				'demo_url' => $rtmedia_demo_url . 'foodmania/',
 				'author' => __( 'rtCamp', 'buddypress-media' ),
 				'author_url' => 'https://rtmedia.io/',
 				'buy_url' => 'https://rtmedia.io/products/foodmania/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',

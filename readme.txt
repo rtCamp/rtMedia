@@ -20,7 +20,7 @@ Built with a mobile-first approach, it works on mobile/tablet devices (like iPho
 
 If you're in a hurry, you can skip the long list of features in subsequent sections and just explore live demos!
 
-* [rtMedia Demo](http://demo.rtcamp.com/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
+* [rtMedia Demo](http://demo.rtmedia.io/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 
 = Video Tour =
 
@@ -31,7 +31,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 = rtMedia Features =
 
  1. **[Free Audio/Video conversion](https://rtmedia.io/audio-video-encoding-service/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Free Audio/Video Encoding Service")** - rtCamp (company behind rtMedia) has setup dedicated servers to provide free audio/video encoding services for all sites running rtMedia.
- 2. **WordPress Integration** - Display media on WordPress author pages ( eg: http://demo.rtcamp.com/rtmedia/author/admin/media/ )
+ 2. **WordPress Integration** - Display media on WordPress author pages ( eg: http://demo.rtmedia.io/author/admin/media/ )
  3. **BuddyPress Integration** - Find a new media tab under BuddyPress Profiles & Groups.
  4. **BuddyPress Activity Stream** - Attach media to activity status updates just like Facebook.
  5. **Albums** - Organise media into manageable collections. BuddyPress Group albums support collaboration.
@@ -115,7 +115,7 @@ Read rtMedia [Documentation](https://rtmedia.io/docs/?utm_source=readme&utm_medi
 
 == Screenshots ==
 
-You can also check [rtMedia's Live Demo](http://demo.rtcamp.com/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Live Demo") or video below:
+You can also check [rtMedia's Live Demo](http://demo.rtmedia.io/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Live Demo") or video below:
 
 http://www.youtube.com/watch?v=dJrykKQGDcs
 
