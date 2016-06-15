@@ -7,7 +7,7 @@
  * @author udit
  */
 
-if ( ! class_exists( 'RTDBModel' ) ){
+if ( ! class_exists( 'RTDBModel' ) ) {
 	class RTDBModel {
 
 		/**
@@ -24,10 +24,10 @@ if ( ! class_exists( 'RTDBModel' ) ){
 
 		/**
 		 *
-		 * @param string  $table_name Table name for model
+		 * @param string $table_name Table name for model
 		 * @param boolean $withprefix Set true if $tablename is with prefix otherwise it will prepend wordpress prefix with "rt_"
 		 */
-		function __construct( $table_name, $withprefix = false, $per_page = 10, $mu_single_table = false ){
+		function __construct( $table_name, $withprefix = false, $per_page = 10, $mu_single_table = false ) {
 			$this->mu_single_table = $mu_single_table;
 			$this->set_table_name( $table_name, $withprefix );
 			$this->set_per_page( $per_page );
@@ -37,12 +37,12 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param string  $table_name
-		 * @param mixed   $withprefix
+		 * @param string $table_name
+		 * @param mixed $withprefix
 		 */
-		public function set_table_name( $table_name, $withprefix = false ){
+		public function set_table_name( $table_name, $withprefix = false ) {
 			global $wpdb;
-			if ( ! $withprefix ){
+			if ( ! $withprefix ) {
 				$table_name = ( ( $this->mu_single_table ) ? $wpdb->base_prefix : $wpdb->prefix ) . 'rt_' . $table_name;
 			}
 			$this->table_name = $table_name;
@@ -53,7 +53,7 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 *
 		 * @param integer $per_page
 		 */
-		public function set_per_page( $per_page ){
+		public function set_per_page( $per_page ) {
 			$this->per_page = $per_page;
 		}
 
@@ -63,57 +63,57 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param string  $name - Added get_by_<coulmname>(value,pagging=true,page_no=1)
-		 * @param array   $arguments
+		 * @param string $name - Added get_by_<coulmname>(value,pagging=true,page_no=1)
+		 * @param array $arguments
 		 *
 		 * @return array  result array
 		 */
-		function __call( $name, $arguments ){
+		function __call( $name, $arguments ) {
 			$column_name = str_replace( 'get_by_', '', strtolower( $name ) );
 			$paging      = false;
 			$page        = 1;
-			if ( $arguments && ! empty( $arguments ) ){
-				if ( ! isset( $arguments[1] ) ){
+			if ( $arguments && ! empty( $arguments ) ) {
+				if ( ! isset( $arguments[1] ) ) {
 					$paging = true;
 				} else {
 					$paging = $arguments[1];
 				}
 
-				if ( ! isset( $arguments[2] ) ){
+				if ( ! isset( $arguments[2] ) ) {
 					$page = 1;
 				} else {
 					$page = $arguments[2];
 				}
 
-				$this->per_page           = apply_filters( 'rt_db_model_per_page', $this->per_page, $this->table_name );
-				$return_array             = array();
+				$this->per_page         = apply_filters( 'rt_db_model_per_page', $this->per_page, $this->table_name );
+				$return_array           = array();
 				$return_array['result'] = false;
 				global $wpdb;
-				$return_array['total'] = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM " . $this->table_name . " WHERE {$column_name} = %s", $arguments[0] ) ) );
-				if ( $return_array['total'] > 0 ){
+				$return_array[ 'total' ] = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM  {$this->table_name} WHERE {$column_name} = %s", $arguments[ 0 ] ) ) ); // @codingStandardsIgnoreLine
+				if ( $return_array['total'] > 0 ) {
 					$other = '';
-					if ( $paging ){
-						if ( intval( $this->per_page ) < 0 ){
+					if ( $paging ) {
+						if ( intval( $this->per_page ) < 0 ) {
 							$this->per_page = 1;
 						}
 
 						$offset = ( $page - 1 ) * $this->per_page;
 
-						if ( ! is_integer( $offset ) ){
+						if ( ! is_integer( $offset ) ) {
 							$offset = 0;
 						}
-						if ( intval( $offset ) < 0 ){
+						if ( intval( $offset ) < 0 ) {
 							$offset = 0;
 						}
 
-						if ( $offset <= $return_array['total'] ){
+						if ( $offset <= $return_array['total'] ) {
 							$other = ' LIMIT ' . $offset . ',' . $this->per_page;
 						} else {
 							return false;
 						}
 					}
 					//echo $wpdb->prepare("SELECT * FROM " . $this->table_name . " WHERE {$column_name} = %s {$other}", $arguments[0]);
-					$return_array['result'] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM " . $this->table_name . " WHERE {$column_name} = %s {$other}", $arguments[0] ), ARRAY_A );
+					$return_array[ 'result' ] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$this->table_name} WHERE {$column_name} = %s {$other}", $arguments[ 0 ] ), ARRAY_A ); // @codingStandardsIgnoreLine
 				}
 
 				return $return_array;
@@ -124,17 +124,17 @@ if ( ! class_exists( 'RTDBModel' ) ){
 
 		/**
 		 *
-		 * @global object  $wpdb
+		 * @global object $wpdb
 		 *
-		 * @param array    $row
+		 * @param array $row
 		 *
 		 * @return integer
 		 */
-		function insert( $row ){
+		function insert( $row ) {
 			global $wpdb;
 			$insertdata = array();
 			foreach ( $row as $key => $val ) {
-				if ( $val != null ){
+				if ( null !== $val ) {
 					$insertdata[ $key ] = $val;
 				}
 			}
@@ -148,10 +148,10 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param array   $data
-		 * @param array   $where
+		 * @param array $data
+		 * @param array $where
 		 */
-		function update( $data, $where ){
+		function update( $data, $where ) {
 			global $wpdb;
 
 			return $wpdb->update( $this->table_name, $data, $where );
@@ -163,68 +163,67 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param array   $columns
+		 * @param array $columns
 		 *
 		 * @return array
 		 */
-		function get( $columns, $offset = false, $per_page = false, $order_by = 'id desc' ){
+		function get( $columns, $offset = false, $per_page = false, $order_by = 'id desc' ) {
+			global $wpdb;
+
 			$select = "SELECT * FROM {$this->table_name}";
 			$where  = ' where 2=2 ';
 			foreach ( $columns as $colname => $colvalue ) {
-				if ( is_array( $colvalue ) ){
-					if ( ! isset( $colvalue['compare'] ) ){
+				if ( is_array( $colvalue ) ) {
+					if ( ! isset( $colvalue['compare'] ) ) {
 						$compare = 'IN';
 					} else {
 						$compare = $colvalue['compare'];
 					}
-					if ( ! isset( $colvalue['value'] ) ){
-						$colvalue['value'] = $colvalue;
+					if ( ! isset( $colvalue['value'] ) ) {
+						$colvalue['value'] = esc_sql( $colvalue );
 					}
 					$col_val_comapare = ( is_array( $colvalue['value'] ) ) ? '(\'' . implode( "','", $colvalue['value'] ) . '\')' : '(\'' . $colvalue['value'] . '\')';
 					$where .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
 				} else {
-					$where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // @codingStandardsIgnoreLine
 				}
 			}
 			$sql = $select . $where;
 
 			$sql .= " ORDER BY {$this->table_name}.$order_by";
-			if ( false !== $offset ){
-				if ( ! is_integer( $offset ) ){
+			if ( false !== $offset ) {
+				if ( ! is_integer( $offset ) ) {
 					$offset = 0;
 				}
-				if ( intval( $offset ) < 0 ){
+				if ( intval( $offset ) < 0 ) {
 					$offset = 0;
 				}
 
-				if ( ! is_integer( $per_page ) ){
+				if ( ! is_integer( $per_page ) ) {
 					$per_page = 0;
 				}
-				if ( intval( $per_page ) < 0 ){
+				if ( intval( $per_page ) < 0 ) {
 					$per_page = 1;
 				}
-				$sql .= ' LIMIT ' . $offset . ',' . $per_page;
+				$sql .= $wpdb->prepare( ' LIMIT %d, %d', $offset, $per_page );
 
 			}
-			global $wpdb;
 
-			return $wpdb->get_results( $sql );
+			return $wpdb->get_results( $sql ); // @codingStandardsIgnoreLine
 		}
 
 		/**
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param array   $where
+		 * @param array $where
 		 *
 		 * @return array
 		 */
-		function delete( $where ){
+		function delete( $where ) {
 			global $wpdb;
 
 			return $wpdb->delete( $this->table_name, $where );
 		}
-
-
 	}
 }

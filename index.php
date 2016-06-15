@@ -55,13 +55,6 @@ if ( ! defined( 'RTMEDIA_BASE_NAME' ) ) {
 }
 
 /**
- * Start session here to avoid header notice
- */
-if ( ! session_id() ) {
-	session_start();
-}
-
-/**
  * Auto Loader Function
  *
  * Autoloads classes on instantiation. Used by spl_autoload_register.
@@ -117,6 +110,9 @@ spl_autoload_register( 'rtmedia_autoloader' );
 global $rtmedia;
 $rtmedia = new RTMedia();
 
+function is_rtmedia_vip_plugin() {
+	return ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV );
+}
 /*
  * Look Ma! Very few includes! Next File: /app/main/RTMedia.php
  */

@@ -18,12 +18,12 @@ class RTMediaDeprecated {
 	static function uploadshortcode() {
 		//
 		//add_shortcode('rtmedia_uploader', array($this, 'pre_render'));
-		$deprecated = false;
+		$deprecated       = false;
 		$deprecate_notice = '';
-//		echo self::generate_notice(__METHOD__, $deprecated, $deprecate_notice);
+		//      echo self::generate_notice(__METHOD__, $deprecated, $deprecate_notice);
 	}
 
-	static function generate_notice($method, $deprecated=false, $notice='') {
-		return sprintf(__("Deprecated %s. Please use %s.",'buddypress-media' ), $deprecated, $method);
+	static function generate_notice( $method, $deprecated = false, $notice = '' ) {
+		return sprintf( esc_html__( 'Deprecated %s. Please use %s.', 'buddypress-media' ), $deprecated, $method );
 	}
 }

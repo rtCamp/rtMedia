@@ -296,7 +296,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 			$( "#rtmedia_create_new_album" ).prepend( "<img src='" + rMedia_loading_file + "' />" );
 
 			jQuery.post( rtmedia_ajax_url, data, function ( response ) {
-				response = jQuery.parseJSON(response);
 				if ( typeof response.album != 'undefined' ) {
 					response =  jQuery.trim( response.album );
 					var flag = true;

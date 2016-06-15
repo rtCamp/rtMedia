@@ -29,17 +29,17 @@ class RTMediaContext {
 	 *
 	 * @return \RTMediaContext
 	 */
-	function __construct(){
+	function __construct() {
 		$this->set_context();
 
 		return $this;
 	}
 
 	/**
-	 *
+	 * Set current request context
 	 */
-	function set_context(){
-		if ( class_exists( 'BuddyPress' ) ){
+	function set_context() {
+		if ( class_exists( 'BuddyPress' ) ) {
 			$this->set_bp_context();
 		} else {
 			$this->set_wp_context();
@@ -47,13 +47,13 @@ class RTMediaContext {
 	}
 
 	/**
-	 *
+	 * Set WordPress context
 	 * @global type $post
 	 */
-	function set_wp_context(){
+	function set_wp_context() {
 		global $post;
 		global $bp;
-		if ( is_author() ){
+		if ( is_author() ) {
 			$this->type = 'profile';
 			$this->id   = get_query_var( 'author' );
 		} elseif ( isset( $post->post_type ) ) {
@@ -68,10 +68,10 @@ class RTMediaContext {
 	}
 
 	/**
-	 *
+	 * Set BuddyPress context
 	 */
-	function set_bp_context(){
-		if ( bp_is_blog_page() && ! is_home() ){
+	function set_bp_context() {
+		if ( bp_is_blog_page() && ! is_home() ) {
 			$this->set_wp_context();
 		} else {
 			$this->set_bp_component_context();
@@ -79,33 +79,33 @@ class RTMediaContext {
 	}
 
 	/**
-	 *
+	 * Set BuddyPress component context
 	 */
-	function set_bp_component_context(){
-		if ( bp_displayed_user_id() && ! bp_is_group() ){
+	function set_bp_component_context() {
+		if ( bp_displayed_user_id() && ! bp_is_group() ) {
 			$this->type = 'profile';
 		} else {
-			if ( ! bp_displayed_user_id() && bp_is_group() ){
+			if ( ! bp_displayed_user_id() && bp_is_group() ) {
 				$this->type = 'group';
 			} else {
 				$this->type = 'profile';
 			}
 		}
 		$this->id = $this->get_current_bp_component_id();
-		if ( $this->id == null ){
+		if ( null === $this->id ) {
 			global $bp;
 			$this->id = $bp->loggedin_user->id;
 		}
 	}
 
 	/**
-	 *
-	 * @return type
+	 * Get current bp component id
+	 * @return int/null
 	 */
-	function get_current_bp_component_id(){
+	function get_current_bp_component_id() {
 		switch ( bp_current_component() ) {
 			case 'groups':
-				if ( function_exists( 'bp_get_current_group_id' ) ){
+				if ( function_exists( 'bp_get_current_group_id' ) ) {
 					return bp_get_current_group_id();
 				}
 
@@ -116,5 +116,4 @@ class RTMediaContext {
 				break;
 		}
 	}
-
 }

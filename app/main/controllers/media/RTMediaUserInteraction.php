@@ -50,12 +50,14 @@ class RTMediaUserInteraction {
 	/**
 	 * Initialise the user interaction
 	 *
+	 * @param array $args
+	 *
 	 * @global object $rtmedia_query Default query
 	 *
-	 * @param string $action The user action
-	 * @param boolean $private Whether other users are allowed the action
-	 * @param string $label The label for the button
-	 * @param boolean $increase Increase or decrease the action count
+	 * @internal param string $action The user action
+	 * @internal param bool $private Whether other users are allowed the action
+	 * @internal param string $label The label for the button
+	 * @internal param bool $increase Increase or decrease the action count
 	 */
 	function __construct( $args = array() ) {
 		$defaults = array(
@@ -68,7 +70,7 @@ class RTMediaUserInteraction {
 			'single'     => false,
 			'repeatable' => false,
 			'undoable'   => false,
-			'icon_class' => ''
+			'icon_class' => '',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -76,9 +78,7 @@ class RTMediaUserInteraction {
 			$this->{$key} = $val;
 		}
 
-
 		$this->init();
-
 
 		// filter the default actions with this new one
 		add_filter( 'rtmedia_query_actions', array( $this, 'register' ) );
@@ -137,7 +137,6 @@ class RTMediaUserInteraction {
 			}
 		}
 
-
 	}
 
 	function set_interactor() {
@@ -153,17 +152,17 @@ class RTMediaUserInteraction {
 		if ( ! isset( $this->interactor ) ) {
 			return 0;
 		}
-		if ( $this->interactor === false ) {
+		if ( false === $this->interactor ) {
 			return 0;
 		}
-		if ( $this->interactor == $this->owner ) {
+		if ( $this->interactor === $this->owner ) {
 			return 60;
 		}
 
 		$friends = new RTMediaFriends();
 		$friends = $friends->get_friends_cache( $this->interactor );
 
-		if ( $friends && in_array( $this->owner, $friends ) ) {
+		if ( $friends && in_array( intval( $this->owner ), array_map( 'intval', $friends ), true ) ) {
 			return 40;
 		}
 
@@ -200,7 +199,7 @@ class RTMediaUserInteraction {
 
 	function render() {
 		$before_render = $this->before_render();
-		if ( $before_render === false ) {
+		if ( false === $before_render ) {
 			return false;
 		}
 		$button = $button_start = $button_end = '';
@@ -212,12 +211,12 @@ class RTMediaUserInteraction {
 				$disabled = ' disabled';
 			}
 
-			if ( isset( $this->icon_class ) && $this->icon_class != "" ) {
-				$icon = "<i class='" . $this->icon_class . "'></i>";
+			if ( isset( $this->icon_class ) && '' !== $this->icon_class ) {
+				$icon = "<i class='" . esc_attr( $this->icon_class ) . "'></i>";
 			}
-			$button_start = '<form action="' . $link . '">';
-			$button       = '<button type="submit" id="rtmedia-' . $this->action . '-button-' . $this->media->id . '" class="rtmedia-' . $this->action
-			                . ' rtmedia-action-buttons button' . $disabled . '">' . $icon . '<span>' . apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label ) . '</span></button>';
+			$button_start = '<form action="' . esc_url( $link ) . '">';
+			$button       = '<button type="submit" id="rtmedia-' . esc_attr( $this->action ) . '-button-' . esc_attr( $this->media->id ) . '" class="rtmedia-' . esc_attr( $this->action )
+			                . ' rtmedia-action-buttons button' . esc_attr( $disabled ) . '">' . $icon . '<span>' . esc_html( apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label ) ) . '</span></button>';
 
 			//filter the button as required
 			$button = apply_filters( 'rtmedia_' . $this->action . '_button_filter', $button );
@@ -266,7 +265,7 @@ class RTMediaUserInteraction {
 		global $rtmedia_query;
 		$this->action_query = $rtmedia_query->action_query;
 
-		if ( $this->action_query->action != $this->action ) {
+		if ( $this->action_query->action !== $this->action ) {
 			return false;
 		}
 
@@ -297,7 +296,6 @@ class RTMediaUserInteraction {
 	 * @return integer New count
 	 */
 	function process() {
-		return $false;
+		return false;
 	}
-
 }

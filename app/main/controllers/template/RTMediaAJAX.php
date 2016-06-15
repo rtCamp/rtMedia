@@ -18,76 +18,83 @@ class RTMediaAJAX {
 	}
 
 	function backbone_template() {
-		include RTMEDIA_PATH.'templates/media/media-gallery-item.php';
+		include RTMEDIA_PATH . 'templates/media/media-gallery-item.php';
 	}
 
 	function create_album() {
-		$nonce = $_POST[ 'create_album_nonce' ];
+		$nonce = filter_input( INPUT_POST, 'create_album_nonce', FILTER_SANITIZE_STRING );
+		$_name = filter_input( INPUT_POST, 'name', FILTER_SANITIZE_STRING );
 
 		$return['error'] = false;
-		if( wp_verify_nonce( $nonce, 'rtmedia_create_album_nonce' ) && isset( $_POST[ 'name' ] ) && $_POST[ 'name' ] && is_rtmedia_album_enable() ) {
-			if( isset( $_POST[ 'context' ] ) && $_POST[ 'context' ] == "group" ) {
-				$group_id = !empty( $_POST[ 'context_id' ] ) ? $_POST[ 'context_id' ] : '';
-
-				if( can_user_create_album_in_group( $group_id ) == false ) {
-					$return['error'] = __( 'You can not create album in this group.', 'buddypress-media' );
+		if ( wp_verify_nonce( $nonce, 'rtmedia_create_album_nonce' ) && isset( $_name ) && $_name && is_rtmedia_album_enable() ) {
+			$_context    = filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING );
+			$_context_id = filter_input( INPUT_POST, 'context_id', FILTER_SANITIZE_NUMBER_INT );
+			if ( ! empty( $_context ) && 'group' === $_context ) {
+				$group_id = ! empty( $_context_id ) ? $_context_id : '';
+				if ( false === can_user_create_album_in_group( $group_id ) ) {
+					$return['error'] = esc_html__( 'You can not create album in this group.', 'buddypress-media' );
 				}
 			}
 
-			$create_album = apply_filters( "rtm_is_album_create_enable", true );
-			if( !$create_album ) {
-				$return['error'] = __( 'You can not create album.', 'buddypress-media' );
+			$create_album = apply_filters( 'rtm_is_album_create_enable', true );
+			if ( ! $create_album ) {
+				$return['error'] = esc_html__( 'You can not create album.', 'buddypress-media' );
 			}
 
-			$create_album = apply_filters( "rtm_display_create_album_button", true, $_POST[ 'context_id' ] );
-			if( !$create_album ) {
-				$return['error'] = __( 'You can not create more albums, you exceed your album limit.', 'buddypress-media' );
+			$create_album = apply_filters( 'rtm_display_create_album_button', true, $_context_id );
+			if ( ! $create_album ) {
+				$return['error'] = esc_html__( 'You can not create more albums, you exceed your album limit.', 'buddypress-media' );
 			}
 
-			if( $return['error'] !== false ){
-				echo json_encode( $return );
-				wp_die();
+			if ( false !== $return['error'] ) {
+				wp_send_json( $return );
 			}
 
 			$album = new RTMediaAlbum();
 
 			// setup context values
-			$context = $_POST['context'];
-			if( $context == 'profile' ){
+			$context = $_context;
+			if ( 'profile' === $context ) {
 				$context_id = get_current_user_id();
 			} else {
-				$context_id = ( isset( $_POST['context_id'] ) ? $_POST['context_id'] : 0 );
+				$context_id = ( ! empty( $_context_id ) ? $_context_id : 0 );
 			}
 
 			// setup new album data
 			$album_data = apply_filters( 'rtmedia_create_album_data', array(
-				'title' => $_POST['name'],
-				'author' => get_current_user_id(),
-				'new' => true,
-				'post_id'=> false,
-				'context' => $context,
+				'title'      => $_name,
+				'author'     => get_current_user_id(),
+				'new'        => true,
+				'post_id'    => false,
+				'context'    => $context,
 				'context_id' => $context_id,
 			) );
 
 			$rtmedia_id = $album->add( $album_data['title'], $album_data['author'], $album_data['new'], $album_data['post_id'], $album_data['context'], $album_data['context_id'] );
 
-			$rtMediaNav = new RTMediaNav();
+			$rtmedia_nav = new RTMediaNav();
 
-			if( $_POST[ 'context' ] == "group" ) {
-				$rtMediaNav->refresh_counts( $_POST[ 'context_id' ], array( "context" => $_POST[ 'context' ], 'context_id' => $_POST[ 'context_id' ] ) );
+			if ( 'group' === $_context ) {
+				$rtmedia_nav->refresh_counts( $_context_id, array(
+					'context'    => $_context,
+					'context_id' => $_context_id,
+				) );
 			} else {
-				$rtMediaNav->refresh_counts( get_current_user_id(), array( "context" => "profile", 'media_author' => get_current_user_id() ) );
+				$rtmedia_nav->refresh_counts( get_current_user_id(), array(
+					'context'      => 'profile',
+					'media_author' => get_current_user_id(),
+				) );
 			}
 
-			if( $rtmedia_id ){
+			if ( $rtmedia_id ) {
 				$return['album'] = apply_filters( 'rtmedia_create_album_response', $rtmedia_id );
-				echo json_encode( $return );
+				wp_send_json( $return );
 			} else {
 				echo false;
 			}
 		} else {
-			$return['error'] = __( 'Data mismatch, Please insert data properly.', 'buddypress-media' );
-			echo json_encode( $return );
+			$return['error'] = esc_html__( 'Data mismatch, Please insert data properly.', 'buddypress-media' );
+			wp_send_json( $return );
 		}
 
 		wp_die();

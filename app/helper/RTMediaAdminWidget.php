@@ -5,34 +5,33 @@
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-if ( ! class_exists( 'RTMediaAdminWidget' ) ){
+if ( ! class_exists( 'RTMediaAdminWidget' ) ) {
 
 	class RTMediaAdminWidget {
 
 		/**
 		 * Constructs the RTMediaAdminWidget.
 		 *
-		 * @global type  $rtmedia
-		 * @param  type  $id
-		 * @param  type  $title
-		 * @param  type  $content
+		 * @global type $rtmedia
+		 *
+		 * @param  type $id
+		 * @param  type $title
+		 * @param  type $content
 		 */
 		public function __construct( $id = null, $title = null, $content = null ) {
-			global $rtmedia;
-			if ( $id ){
+			if ( $id ) {
 				?>
-				<div class="postbox" id="<?php echo $id; ?>">
-				<?php if ( $title ){ ?>
-						<h3 class="hndle"><span><?php echo $title; ?></span></h3>
+			<div class="postbox" id="<?php echo esc_attr( $id ); ?>">
+				<?php if ( $title ) { ?>
+					<h3 class="hndle"><span><?php esc_html_e( $title, 'buddypress-media' ); ?></span></h3>
 				<?php }
 				?>
-				    <div class="inside"><?php echo $content; ?></div>
+				<div class="inside"><?php echo $content; // @codingStandardsIgnoreLine ?></div>
 				</div><?php
 			} else {
-				trigger_error( __( 'Argument missing. id is required.', 'buddypress-media' ) );
+				trigger_error( esc_html__( 'Argument missing. id is required.', 'buddypress-media' ) );
 			}
 		}
-
 	}
 
 }

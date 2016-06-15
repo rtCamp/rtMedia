@@ -3,6 +3,9 @@
  */
 jQuery( document ).ready( function ( $ ) {
 
+	var rtm_warning = document.createElement('div');
+	rtm_warning.setAttribute( 'class', 'rtm-warning rtm-fly-warning hide' );
+
 	// Tabs
 	$( '.rtm-tabs' ).rtTab();
 
@@ -11,7 +14,9 @@ jQuery( document ).ready( function ( $ ) {
 		$( '.rtm-save-settings-msg' ).remove();
 
 		if ( $( '.rtm-fly-warning' ).length === 0 ) {
-			$( '.rtm-button-container.top' ).prepend( '<div class="rtm-warning rtm-fly-warning hide">Settings have changed, you should save them!</div>' );
+			rtm_warning.innerText = "Settings have changed, you should save them!";
+
+			$( '.rtm-button-container.top' ).prepend( rtm_warning );
 			$( '.rtm-fly-warning' ).slideDown();
 		}
 	} );
@@ -97,7 +102,11 @@ jQuery( document ).ready( function ( $ ) {
 				$( '.rtm-theme-overlay' ).show();
 				$( this.el ).find( '.rtm-theme-content-wrap' ).empty().append( themeContent );
 			} else {
-				$( this.el ).append( '<div class="theme-overlay rtm-theme-overlay"><div class="theme-backdrop rtm-close"></div><div class="rtm-theme-content-wrap">' + themeContent + '</div></div>' );
+				var data = {
+					themeContent : themeContent
+				};
+
+				$( this.el ).append( rtMediaAdmin.templates.rtm_theme_overlay( data ) );
 			}
 
 			if ( $( event.currentTarget ).is( ':first-child' ) ) {

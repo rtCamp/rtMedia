@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of rtfDimension
+ * Description of rtDimension
  *
  * @author udit
  */
@@ -55,18 +55,20 @@ class rtDimensions extends rtForm {
 		return self::$default_class;
 	}
 
+
 	/**
 	 * Embedd html class to html output.
 	 *
 	 * @access private
 	 *
-	 * @param  string $element
-	 * @param  array  $class
+	 * @param string $element
+	 * @param null $class
 	 *
-	 * @return string $html
+	 * @return string
+	 * @throws rtFormsInvalidArgumentsException
 	 */
 	private function embedd_class( $element, $class = null ) {
-		$html = 'class = "' . $this->get_default_class();
+		$html = 'class= "' . $this->get_default_class();
 
 		if ( isset( $class ) ) {
 
@@ -93,9 +95,10 @@ class rtDimensions extends rtForm {
 	protected function generate_dimensions( $attributes ) {
 		$element = 'rtDimension';
 		global $rtmedia;
-		$options = $rtmedia->options;
+		$options  = $rtmedia->options;
 		$defaults = array(
-			'desc' => '', 'show_desc' => false,
+			'desc'      => '',
+			'show_desc' => false,
 		);
 
 		$attributes = wp_parse_args( $attributes, $defaults );
@@ -103,39 +106,54 @@ class rtDimensions extends rtForm {
 
 		$html = '';
 
-		$html .= '<td>' . parent::get_number( array(
-					'name' => "rtmedia-options[{$key}_width]", 'value' => $width, 'class' => array( 'small-text large-offset-1' ), 'show_desc' => $show_desc,
-				) ) . '</td>';
+		$html .= '<td>' .
+		         parent::get_number(
+			         array(
+				         'name'      => "rtmedia-options[{$key}_width]",
+				         'value'     => $width,
+				         'class'     => array( 'small-text large-offset-1' ),
+				         'show_desc' => $show_desc,
+			         )
+		         ) .
+		         '</td>';
 
 		if ( isset( $height ) ) {
-			$html .= '<td>' . parent::get_number( array(
-						'name' => "rtmedia-options[{$key}_height]", 'value' => $height, 'class' => array( 'small-text large-offset-1' ), 'show_desc' => $show_desc,
-					) ) . '</td>';
+			$html .= '<td>' .
+			         parent::get_number(
+				         array(
+					         'name'      => "rtmedia-options[{$key}_height]",
+					         'value'     => $height,
+					         'class'     => array( 'small-text large-offset-1' ),
+					         'show_desc' => $show_desc,
+				         )
+			         ) .
+			         '</td>';
 		}
 
 		if ( isset( $crop ) ) {
-			$html .= '<td>' . parent::get_switch(
-							array(
-								'name' => "rtmedia-options[{$key}_crop]",
-								'rtForm_options' => array(
-									array(
-										'' => 1, //label would be blank
-										'checked' => $crop,
-									),
-								),
-								'value' => ( isset( $options[ "rtmedia-options[{$key}_crop]" ] ) ) ? $options[ "rtmedia-options[{$key}_crop]" ] : '0',
-								'show_desc' => $show_desc,
-					) ) . '</td>';
+			$html .= '<td>' .
+			         parent::get_switch(
+				         array(
+					         'name'           => "rtmedia-options[{$key}_crop]",
+					         'rtForm_options' => array(
+						         array(
+							         ''        => 1, //label would be blank
+							         'checked' => $crop,
+						         ),
+					         ),
+					         'value'          => ( isset( $options[ "rtmedia-options[{$key}_crop]" ] ) ) ? $options[ "rtmedia-options[{$key}_crop]" ] : '0',
+					         'show_desc'      => $show_desc,
+				         )
+			         ) .
+			         '</td>';
 		}
 
 		if ( $desc && $show_desc ) {
-			$html .= '<span class="clearfix large-offset-3 description">' . $desc . '</span>';
+			$html .= '<span class="clearfix large-offset-3 description">' . esc_html( $desc ) . '</span>';
 		}
 
-//		$html .= '</div>';
-
-		if ( isset( $attributes[ 'label' ] ) ) {
-			$html = parent::enclose_label( 'container', $html, $attributes[ 'label' ] );
+		if ( isset( $attributes['label'] ) ) {
+			$html = parent::enclose_label( 'container', $html, $attributes['label'] );
 		}
 
 		return $html;
@@ -152,6 +170,10 @@ class rtDimensions extends rtForm {
 	 */
 	public function get_dimensions( $attributes = '' ) {
 		return $this->generate_dimensions( $attributes );
+	}
+
+	public function display_dimensions( $args = '' ) {
+		echo $this->get_dimensions( $args );
 	}
 
 }
