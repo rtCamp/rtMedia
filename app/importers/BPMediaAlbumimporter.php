@@ -164,18 +164,18 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 				echo '<br />';
 				echo '<strong>' . esc_html__( 'Why don\'t you try adding some instagram like effects to your images?', 'buddypress-media' ) . '</strong>';
 				echo '<div class="bp-media-addon">
-					<a href="https://rtmedia.io/products/buddypress-media-instagram/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">
-						<img width="240" height="184" title="BuddyPress-Media Instagram" alt="BuddyPress-Media Instagram" src="' . esc_url( $img_src ) . 'BuddyPressMedia-Instagram.png?ref=bp-album-importer">
+					<a href="https://rtmedia.io/products/rtmedia-photo-filters/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="rtMedia Photo Filters" target="_blank">
+						<img width="240" height="184" title="rtMedia Photo Filters" alt="rtMedia Photo Filters" src="' . esc_url( $img_src ) . 'BuddyPressMedia-Instagram.png?ref=bp-album-importer">
 					</a>
-	                <h4><a href="https://rtmedia.io/products/buddypress-media-instagram/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">BuddyPress-Media Instagram</a></h4>
+	                <h4><a href="https://rtmedia.io/products/rtmedia-photo-filters/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="rtMedia Photo Filters" target="_blank">rtMedia Photo Filters</a></h4>
 	                <div class="product_desc">
-	                    <p>' . esc_html__( 'BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media.', 'buddypress-media' ) . '</p>
+	                    <p>' . esc_html__( 'rtMedia Photo Filters adds Instagram like filters to images uploaded with BuddyPress Media.', 'buddypress-media' ) . '</p>
 	                    <p><strong>' . esc_html__( 'Important', 'buddypress-media' ) . ':</strong> ' . esc_html__( 'You need to have ImageMagick installed on your server for this addon to work.', 'buddypress-media' ) . '</p>
 	                </div>
 	                <div class="product_footer">
 	                    <span class="price alignleft"><span class="amount">$19</span></span>
 	                    <a class="add_to_cart_button  alignright product_type_simple" href="https://rtmedia.io/products/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer&amp;add-to-cart=34379" target="_blank">' . esc_html__( 'Buy Now', 'buddypress-media' ) . '</a>
-	                    <a class="alignleft product_demo_link" href="http://demo.rtmedia.io/rtmedia/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">' . esc_html__( 'Live Demo', 'buddypress-media' ) . '</a>
+	                    <a class="alignleft product_demo_link" href="http://demo.rtmedia.io/rtmedia/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="rtMedia Photo Filters" target="_blank">' . esc_html__( 'Live Demo', 'buddypress-media' ) . '</a>
 	                </div></div>';
 			}
 			echo '</div>';

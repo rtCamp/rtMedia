@@ -70,18 +70,8 @@ class RTMediaRouter {
 	 * @return boolean
 	 */
 	function is_template() {
-		global $wp_query;
-		global $rtmedia, $rtmedia_query;
-		//		if( isset( $rtmedia_query ) && isset( $rtmedia_query->query ) && isset($rtmedia_query->query['context']) ) {
-		//	    	if( ( ! isset( $rtmedia->options['buddypress_enableOnGroup'] ) ) || ( $rtmedia_query->query['context'] == "group" && isset( $rtmedia->options['buddypress_enableOnGroup'] ) && $rtmedia->options['buddypress_enableOnGroup'] == '0' ) ) {
-		//				$wp_query->is_404 = true;
-		//				return false;
-		//	    	}
-		//	    	if( ( ! isset( $rtmedia->options['buddypress_enableOnProfile'] ) ) || ( $rtmedia_query->query['context'] == "profile" && isset( $rtmedia->options['buddypress_enableOnProfile'] ) && $rtmedia->options['buddypress_enableOnProfile'] == '0' ) ) {
-		//				$wp_query->is_404 = true;
-		//				return false;
-		//	    	}
-		//		}
+		global $wp_query, $rtmedia_query;
+
 		$return = isset( $wp_query->query_vars[ $this->slug ] );
 		$return = apply_filters( 'rtmedia_return_is_template', $return, $this->slug );
 		if ( $return ) {
@@ -97,7 +87,7 @@ class RTMediaRouter {
 		if ( $return ) {
 			$wp_query->is_404 = false;
 		}
-		if( ! empty( $rtmedia_query ) && ! empty( $rtmedia_query->query ) && empty( $rtmedia_query->query['context'] ) ) {
+		if ( ! empty( $rtmedia_query ) && ! empty( $rtmedia_query->query ) && empty( $rtmedia_query->query['context'] ) ) {
 			$wp_query->is_404 = true;
 			$return           = false;
 		}
@@ -243,7 +233,7 @@ class RTMediaRouter {
 				'post_status'           => $wp_query->post->post_status,
 				'post_author'           => $wp_query->post->post_author,
 				'post_parent'           => $wp_query->post->post_parent,
-				'post_type'             => 'rtmedia', //$wp_query->post->post_type,
+				'post_type'             => 'rtmedia',
 				'post_date'             => $wp_query->post->post_date,
 				'post_date_gmt'         => $wp_query->post->post_date_gmt,
 				'post_modified'         => $wp_query->post->post_modified,

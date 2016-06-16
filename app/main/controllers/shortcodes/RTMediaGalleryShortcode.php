@@ -73,7 +73,7 @@ class RTMediaGalleryShortcode {
 		$params = array(
 			'url'                 => $url,
 			'runtimes'            => 'html5,flash,html4',
-			'browse_button'       => 'rtMedia-upload-button',
+			'browse_button'       => apply_filters( 'rtmedia_upload_button_id', 'rtMedia-upload-button' ),
 			'container'           => 'rtmedia-upload-container',
 			'drop_element'        => 'drag-drop-area',
 			'filters'             => apply_filters( 'rtmedia_plupload_files_filter', array(

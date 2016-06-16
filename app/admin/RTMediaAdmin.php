@@ -219,7 +219,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				<div class="updated rtmedia-pro-split-notice">
 					<p>
 						<span>
-                            <b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
+							<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
 							<?php esc_html_e( 'We have released 30+ premium add-ons for rtMedia plugin. Read more about it ', 'buddypress-media' ); ?>
 							<a href="https://rtmedia.io/blog/rtmedia-pro-splitting-major-change/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media"
 							   target="_blank"><?php esc_html_e( 'here', 'buddypress-media' ) ?></a>.
@@ -561,7 +561,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			?>
 			<div class='rtmedia-admin-ad'>
 				<a href='https://rtmedia.io/products/rtmedia-pro/' target='_blank' title='rtMedia Pro'>
-					<img src='<?php echo $src; ?>' alt="<?php _e( 'rtMedia Pro is released', 'buddypress-media' ); ?>"/>
+					<img src='<?php echo esc_url( $src ); ?>' alt="<?php esc_attr_e( 'rtMedia Pro is released', 'buddypress-media' ); ?>"/>
 				</a>
 			</div>
 			<?php
@@ -1241,9 +1241,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$media_type = $media[0]->media_type;
 				$response   = array();
 				if ( 'video' === $media_type ) {
-					$objRTMediaEncoding = new RTMediaEncoding( true );
+					$obj_rtmedia_encoding = new RTMediaEncoding( true );
 					$autoformat         = 'thumbnails';
-					$objRTMediaEncoding->reencoding( $media_id, $autoformat );
+					$obj_rtmedia_encoding->reencoding( $media_id, $autoformat );
 					$response['status'] = true;
 				} else {
 					$response['status']  = false;

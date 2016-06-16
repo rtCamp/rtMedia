@@ -274,6 +274,7 @@ class RTMedia {
 		.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail {
 		max-width: <?php echo esc_attr( $this->options['defaultSizes_photo_medium_width'] ); ?>px;
 		max-height: <?php echo esc_attr( $this->options['defaultSizes_photo_medium_height'] ); ?>px;
+		overflow: hidden;
 		}
 		.rtmedia-activity-container .mejs-container.mejs-video{
 		min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
@@ -524,9 +525,9 @@ class RTMedia {
 		}
 
 		/* Previous Sizes values from buddypress is migrated */
-		foreach ( $this->default_sizes as $type => $typeValue ) {
-			foreach ( $typeValue as $size => $sizeValue ) {
-				foreach ( $sizeValue as $dimension => $value ) {
+		foreach ( $this->default_sizes as $type => $type_value ) {
+			foreach ( $type_value as $size => $size_value ) {
+				foreach ( $size_value as $dimension => $value ) {
 					switch ( $type ) {
 						case 'photo':
 							if ( isset( $bp_media_options['sizes']['image'][ $size ][ $dimension ] ) && ! empty( $bp_media_options['sizes']['image'][ $size ][ $dimension ] ) ) {
@@ -722,18 +723,13 @@ class RTMedia {
 		$this->set_site_options();
 
 		/**
-		 * Add a settings link to the Plugin list screen
-		 */
-		//            add_filter('plugin_action_links', array($this, 'settings_link'), 10, 2);
-
-		/**
 		 * BuddyPress - Media Navigation Tab Inject
 		 *
 		 */
 		/**
 		 * Load accessory functions
 		 */
-		//          new BPMediaActivity();
+
 		$class_construct = array(
 			'deprecated'          => true,
 			'interaction'         => true,
@@ -1214,8 +1210,8 @@ function parentlink_global_album( $id ) {
 }
 
 function get_rtmedia_permalink( $id ) {
-	$mediaModel = new RTMediaModel();
-	$media      = $mediaModel->get( array( 'id' => intval( $id ) ) );
+	$media_model = new RTMediaModel();
+	$media      = $media_model->get( array( 'id' => intval( $id ) ) );
 	global $rtmedia_query;
 
 	// Adding filter to get permalink for current blog

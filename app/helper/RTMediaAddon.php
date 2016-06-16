@@ -441,7 +441,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					'purchased'    => ( defined( 'RTMEDIA_MYCRED_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-mycred/index.php' ) ) ? true : false,
 				),
 				array(
-					'title'        => esc_html__( 'Upload terms', 'buddypress-media' ),
+					'title'        => esc_html__( 'Upload Terms', 'buddypress-media' ),
 					'img_src'      => $rtcamp_upload_url . 'edd/2015/06/rtmedia-upload-terms.jpg',
 					'product_link' => 'https://rtmedia.io/products/rtmedia-upload-terms/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'desc'         => '<p>' . esc_html__( 'User must have to check the terms and conditions checkbox before uploading the media.', 'buddypress-media' ) . '</p>',

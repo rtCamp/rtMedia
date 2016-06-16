@@ -12,7 +12,7 @@ For support-request/feature-request, please use - http://community.rtcamp.com/c/
 
 Please do NOT send pull-request for translations.
 
-You can contribute translations using web-interface here - http://rtcamp.com/translate/projects/rtmedia
+You can contribute translations using web-interface here - https://rtmedia.io/translate/projects/rtmedia
 
 ## Pull Requests
 

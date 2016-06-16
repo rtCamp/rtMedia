@@ -58,7 +58,7 @@ class RTMediaNav {
 			$tab_position = apply_filters( 'rtmedia_media_tab_position', 99 );
 			if ( 0 !== intval( $rtmedia->options['buddypress_enableOnProfile'] ) ) {
 				bp_core_new_nav_item( array(
-					'name'                => RTMEDIA_MEDIA_LABEL . '<span>' . $profile_counts['total']['all'] . '</span>',
+					'name'                => RTMEDIA_MEDIA_LABEL . ' <span>' . $profile_counts['total']['all'] . '</span>',
 					'slug'                => apply_filters( 'rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG ),
 					'screen_function'     => array( $this, 'media_screen' ),
 					'default_subnav_slug' => 'all',
@@ -80,7 +80,7 @@ class RTMediaNav {
 				$group_counts                                               = $this->actual_counts( $bp->groups->current_group->id, 'group' );
 				$slug                                                       = apply_filters( 'rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG );
 				$bp->bp_options_nav[ bp_get_current_group_slug() ]['media'] = array(
-					'name'                => RTMEDIA_MEDIA_LABEL . '<span>' . $group_counts['total']['all'] . '</span>',
+					'name'                => RTMEDIA_MEDIA_LABEL . ' <span>' . $group_counts['total']['all'] . '</span>',
 					'link'                => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ) . $slug,
 					'slug'                => $slug,
 					'user_has_access'     => true,
@@ -246,7 +246,7 @@ class RTMediaNav {
 				. '-' . esc_attr( $context ) . '-' . esc_attr( $context_id ) . '-li" ' . $selected
 				. '><a id="rtmedia-nav-item-' . esc_attr( $type['name'] ) . '" href="' . esc_url(
 					$profile_link . RTMEDIA_MEDIA_SLUG . '/'
-					. constant( 'RTMEDIA_' . $name . '_SLUG' ) . '/' ) . '">'
+				. constant( 'RTMEDIA_' . $name . '_SLUG' ) . '/' ) . '">'
 				. $type_label . '<span>' . esc_html( ( isset( $counts['total'][ $type['name'] ] ) ) ? $counts['total'][ $type['name'] ] : 0 ) . '</span>' . '</a></li>', $type['name']
 			);
 		}

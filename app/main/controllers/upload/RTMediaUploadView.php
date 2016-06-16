@@ -61,12 +61,12 @@ class RTMediaUploadView {
 			&& ( ( ! isset( $rtmedia_query->is_upload_shortcode ) || false === $rtmedia_query->is_upload_shortcode ) )
 			|| ( isset( $rtmedia_query->is_upload_shortcode ) && ! isset( $this->attributes['privacy'] ) )
 		) {
-			if ( ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) || ( function_exists( 'bp_is_groups_component' ) && bp_is_groups_component() ) ) {
+			if ( ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) || ( function_exists( 'bp_is_groups_component' ) && bp_is_groups_component() ) ) {
 				$group_status         = bp_get_group_status();
 				$privacy_levels_array = array(
 					'public'  => 0,
 					'private' => 20,
-					'hidden'  => 20
+					'hidden'  => 20,
 				);
 				$privacy_levels_array = apply_filters( 'rtmedia_group_privacy_levels', $privacy_levels_array );
 				$privacy_val          = $privacy_levels_array[ $group_status ];
@@ -87,7 +87,7 @@ class RTMediaUploadView {
 				'class'   => array( 'rtm-upload-tab', 'active' ),
 				'content' => '<div class="rtm-upload-tab-content" data-id="rtm-upload-tab">'
 					. apply_filters( 'rtmedia_uploader_before_select_files', '' )
-					. '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . esc_attr__( 'Select your files', 'buddypress-media' ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
+					. '<div class="rtm-select-files"><input id="' . apply_filters( 'rtmedia_upload_button_id', 'rtMedia-upload-button' ) . '" value="' . esc_attr__( 'Select your files', 'buddypress-media' ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
 					. '<span class="rtm-seperator">' . esc_html__( 'or', 'buddypress-media' ) . '</span><span class="drag-drop-info">' . esc_html__( 'Drop your files here', 'buddypress-media' ) . '</span> <i class="rtm-file-size-limit rtmicon-info-circle rtmicon-fw"></i></div>'
 					. apply_filters( 'rtmedia_uploader_after_select_files', '' )
 					. '</div>',
@@ -131,7 +131,8 @@ class RTMediaUploadView {
 						. apply_filters( 'rtmedia_uploader_after_start_upload_button', '' )
 						. '</div>'
 						. '<div class="clearfix">'
-						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul></div>'
+						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul>'
+						. '</div>'
 						. '</div>',
 				),
 				'activity' => array(
@@ -142,7 +143,7 @@ class RTMediaUploadView {
 						. '<div class="rtm-upload-button-wrapper">'
 						. '<div id="rtmedia-whts-new-upload-container">'
 						. '</div>'
-						. '<button type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update" title="' . apply_filters( 'rtmedia_attach_media_button_title', esc_attr__( 'Attach Media', 'buddypress-media' ) ) . '">'
+						. '<button type="button" class="rtmedia-add-media-button" id="' . apply_filters( 'rtmedia_upload_button_id', 'rtmedia-add-media-button-post-update' ) . '" title="' . apply_filters( 'rtmedia_attach_media_button_title', esc_attr__( 'Attach Media', 'buddypress-media' ) ) . '">'
 						. '<span class="dashicons dashicons-admin-media"></span>'
 						. apply_filters( 'rtmedia_attach_file_message', '' )
 						. '</button>'
@@ -150,14 +151,12 @@ class RTMediaUploadView {
 						. $up_privacy
 						. '</div>'
 						. '</div>'
-						. apply_filters( 'rtmedia_uploader_after_activity_upload_button', "" )
+						. apply_filters( 'rtmedia_uploader_after_activity_upload_button', '' )
 						. '<div class="rtmedia-plupload-notice">'
-						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist">'
-						. '</ul>'
+						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul>'
 						. '</div>',
 				),
 			),
-			//          'file_upload' => array( 'title' => esc_html__('File Upload','buddypress-media'), 'content' => '<div id="rtmedia-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
 			'link_input'  => array(
 				'title'   => esc_html__( 'Insert from URL', 'buddypress-media' ),
 				'content' => '<input type="url" name="bp-media-url" class="rtmedia-upload-input rtmedia-url" />',
@@ -184,7 +183,7 @@ class RTMediaUploadView {
 			$upload_type = 'activity';
 		}
 
-		$uploadHelper = new RTMediaUploadHelper();
+		$upload_helper = new RTMediaUploadHelper();
 		include $this->locate_template( $template_name );
 	}
 

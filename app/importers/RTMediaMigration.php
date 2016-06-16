@@ -108,7 +108,6 @@ class RTMediaMigration {
 			$count += intval( $_SESSION['migration_group_album'] );
 		}
 		if ( $this->table_exists( $bp_prefix . 'bp_activity' ) ) {
-			//$sql_bpm_comment_count = "select count(*) from {$bp_prefix}bp_activity where component='activity' and type='activity_comment' and is_spam <> 1 and ;";
 			$sql_bpm_comment_count = "SELECT
                                                     count(id)
                                                 FROM
@@ -126,8 +125,6 @@ class RTMediaMigration {
                                                     type = 'activity_comment'
                                                     and is_spam <>1 and
                                                         not p.meta_value is NULL";
-
-			//echo  $sql_bpm_comment_count;
 
 			$_SESSION['migration_activity'] = $wpdb->get_var( $sql_bpm_comment_count ); // @codingStandardsIgnoreLine
 			$count += intval( $_SESSION['migration_activity'] );
@@ -151,7 +148,6 @@ class RTMediaMigration {
 		$_SESSION['migration_media'] = $wpdb->get_var( $sql ); // @codingStandardsIgnoreLine
 		$count += intval( $_SESSION['migration_media'] );
 
-		// var_dump($_SESSION);
 		return $count;
 	}
 
@@ -254,7 +250,7 @@ class RTMediaMigration {
 			$wp_rewrite->flush_rules( true );
 		}
 		rtmedia_update_site_option( 'rtMigration-pending-count', $pending );
-		$pending_time = $this->formatSeconds( $pending );
+		$pending_time = $this->format_seconds( $pending );
 
 		echo wp_json_encode( array( 'status' => true, 'done' => $done, 'total' => $total, 'pending' => $pending_time ) );
 		die();
@@ -414,7 +410,7 @@ class RTMediaMigration {
 			<hr/>
 
 			<?php
-			echo '<span class="pending">' . esc_html( $this->formatSeconds( $total - $done ) ) . '</span><br />';
+			echo '<span class="pending">' . esc_html( $this->format_seconds( $total - $done ) ) . '</span><br />';
 			echo '<span class="finished">' . esc_html( $done ) . '</span>/<span class="total">' . esc_html( $total ) . '</span>';
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
 
@@ -563,8 +559,6 @@ class RTMediaMigration {
 			global $wp_rewrite;
 			//Call flush_rules() as a method of the $wp_rewrite object
 			$wp_rewrite->flush_rules( true );
-			//            echo wp_json_encode(array("status" => false, "done" => $done, "total" => $this->get_total_count()));
-			//            die();
 		}
 		$this->return_migration();
 	}
@@ -726,15 +720,6 @@ class RTMediaMigration {
 		), array( '%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d', '%d' ) );
 		$last_id = $wpdb->insert_id;
 
-		// Photo tag meta migration
-		//$photo_tag_meta = get_post_meta($media_id, "bp-media-user-tags", true);
-		//        if($photo_tag_meta && !empty($photo_tag_meta)){
-		//            $wpdb->insert(
-		//                $wpdb->prefix . "rt_rtm_media_meta", array(
-		//                    'media_id' => $media_id,
-		//                    'meta_key' => "user-tags",
-		//                    "meta_value" =>  maybe_serialize($photo_tag_meta)), array('%d', '%s', '%s'));
-		//        }
 		if ( 'album' != $media_type && function_exists( 'bp_core_get_user_domain' ) && $activity_data ) {
 			if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 				$bp_prefix = bp_core_get_table_prefix();
@@ -750,7 +735,7 @@ class RTMediaMigration {
 			$activity_data->content = str_replace( $activity_data->old_primary_link, $activity_data->primary_link, $activity_data->content );
 			global $last_baseurl, $last_newurl;
 
-			$replace_img = $last_newurl; //$last_baseurl . "rtMedia/$prefix/";
+			$replace_img = $last_newurl;
 			if ( false === strpos( $activity_data->content, $replace_img ) ) {
 				$activity_data->content = str_replace( $last_baseurl, $replace_img, $activity_data->content );
 			}
@@ -1035,47 +1020,47 @@ class RTMediaMigration {
 		$wpdb->get_row( $sql );// @codingStandardsIgnoreLine
 	}
 
-	function formatSeconds( $secondsLeft ) {
+	function format_seconds( $seconds_left ) {
 
-		$minuteInSeconds = 60;
-		$hourInSeconds   = $minuteInSeconds * 60;
-		$dayInSeconds    = $hourInSeconds * 24;
+		$minute_in_seconds = 60;
+		$hour_in_seconds   = $minute_in_seconds * 60;
+		$day_in_seconds    = $hour_in_seconds * 24;
 
-		$days        = floor( $secondsLeft / $dayInSeconds );
-		$secondsLeft = $secondsLeft % $dayInSeconds;
+		$days         = floor( $seconds_left / $day_in_seconds );
+		$seconds_left = $seconds_left % $day_in_seconds;
 
-		$hours       = floor( $secondsLeft / $hourInSeconds );
-		$secondsLeft = $secondsLeft % $hourInSeconds;
+		$hours        = floor( $seconds_left / $hour_in_seconds );
+		$seconds_left = $seconds_left % $hour_in_seconds;
 
-		$minutes = floor( $secondsLeft / $minuteInSeconds );
+		$minutes = floor( $seconds_left / $minute_in_seconds );
 
-		$seconds = $secondsLeft % $minuteInSeconds;
+		$seconds = $seconds_left % $minute_in_seconds;
 
-		$timeComponents = array();
+		$time_components = array();
 
 		if ( $days > 0 ) {
-			$timeComponents[] = $days .esc_html__( ' day', 'buddypress-media' ) . ( $days > 1 ? 's' : '' );
+			$time_components[] = $days .esc_html__( ' day', 'buddypress-media' ) . ( $days > 1 ? 's' : '' );
 		}
 
 		if ( $hours > 0 ) {
-			$timeComponents[] = $hours . esc_html__( ' hour', 'buddypress-media' ) . ( $hours > 1 ? 's' : '' );
+			$time_components[] = $hours . esc_html__( ' hour', 'buddypress-media' ) . ( $hours > 1 ? 's' : '' );
 		}
 
 		if ( $minutes > 0 ) {
-			$timeComponents[] = $minutes . esc_html__( ' minute', 'buddypress-media' ) . ( $minutes > 1 ? 's' : '' );
+			$time_components[] = $minutes . esc_html__( ' minute', 'buddypress-media' ) . ( $minutes > 1 ? 's' : '' );
 		}
 
 		if ( $seconds > 0 ) {
-			$timeComponents[] = $seconds . esc_html__( ' second', 'buddypress-media' ) . ( $seconds > 1 ? 's' : '' );
+			$time_components[] = $seconds . esc_html__( ' second', 'buddypress-media' ) . ( $seconds > 1 ? 's' : '' );
 		}
-		if ( count( $timeComponents ) > 0 ) {
-			$formattedTimeRemaining = implode( ', ', $timeComponents );
-			$formattedTimeRemaining = trim( $formattedTimeRemaining );
+		if ( count( $time_components ) > 0 ) {
+			$formatted_time_remaining = implode( ', ', $time_components );
+			$formatted_time_remaining = trim( $formatted_time_remaining );
 		} else {
-			$formattedTimeRemaining = esc_html__( 'No time remaining.', 'buddypress-media' );
+			$formatted_time_remaining = esc_html__( 'No time remaining.', 'buddypress-media' );
 		}
 
-		return $formattedTimeRemaining;
+		return $formatted_time_remaining;
 	}
 
 	function insert_comment( $media_id, $data, $exclude, $parent_commnet_id = 0 ) {

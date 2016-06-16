@@ -70,9 +70,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			}
 
 			/* Previous Sizes values from buddypress is migrated */
-			foreach ( $rtmedia->default_sizes as $type => $typeValue ) {
-				foreach ( $typeValue as $size => $sizeValue ) {
-					foreach ( $sizeValue as $dimension => $value ) {
+			foreach ( $rtmedia->default_sizes as $type => $type_value ) {
+				foreach ( $type_value as $size => $size_value ) {
+					foreach ( $size_value as $dimension => $value ) {
 						$defaults[ 'defaultSizes_' . $type . '_' . $size . '_' . $dimension ] = 0;
 					}
 				}
@@ -396,7 +396,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 */
 		public function rtmedia_support_intro() {
 			echo '<p>' . esc_html__( 'If your site has some issues due to rtMedia and you want one on one support then you can create a support topic on the ', 'buddypress-media' ) .
-				'<a target="_blank" href="http://community.rtcamp.com/c/rtmedia?utm_source=dashboard&utm_medium=plugin&utm_campaign=rtmedia">' . esc_html__( 'rtCamp Support Forum', 'buddypress-media' ) . '</a>.' .
+				'<a target="_blank" href="http://community.rtcamp.com/c/rtmedia?utm_source=dashboard&utm_medium=plugin&utm_campaign=rtmedia">' . esc_html__( 'rtMedia Support Forum', 'buddypress-media' ) . '</a>.' .
 				'</p>';
 			echo '<p>' . esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on ', 'buddypress-media' ) .
 				'<a target="_blank" href="https://github.com/rtCamp/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.' .

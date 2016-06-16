@@ -623,11 +623,12 @@ class RTMediaMedia {
 		return $media_id;
 	}
 
-	function insert_activity( $id, $media ) {
+	function insert_activity( $id, $media, $activity_text = false ) {
 		if ( ! $this->activity_enabled() ) {
 			return false;
 		}
-		$activity         = new RTMediaActivity( $media->id, $media->privacy );
+
+		$activity         = new RTMediaActivity( $media->id, $media->privacy, $activity_text );
 		$activity_content = $activity->create_activity_html();
 		$user             = get_userdata( $media->media_author );
 		$username         = '<a href="' . esc_url( get_rtmedia_user_link( $media->media_author ) ) . '">' . esc_html( $user->user_nicename ) . '</a>';
@@ -636,6 +637,7 @@ class RTMediaMedia {
 		if ( $count > 1 ) {
 			$media_const .= '_PLURAL';
 		}
+
 		$media_const .= '_LABEL';
 
 		$media_str = constant( $media_const );
@@ -657,6 +659,7 @@ class RTMediaMedia {
 
 		if ( 'group' === $media->context || 'profile' === $media->context ) {
 			$activity_args['component'] = $media->context;
+
 			if ( 'group' === $media->context ) {
 				$activity_args['component'] = 'groups';
 				$activity_args['item_id']   = $media->context_id;
@@ -664,12 +667,14 @@ class RTMediaMedia {
 		}
 
 		$activity_id = bp_activity_add( $activity_args );
+
 		bp_activity_update_meta( $activity_id, 'rtmedia_privacy', ( 0 === $media->privacy ) ? - 1 : $media->privacy );
 
 		$this->model->update( array( 'activity_id' => $activity_id ), array( 'id' => $media->id ) );
 
 		// insert/update activity details in rtmedia activity table
 		$rtmedia_activity_model = new RTMediaActivityModel();
+
 		if ( ! $rtmedia_activity_model->check( $activity_id ) ) {
 			$rtmedia_activity_model->insert( array(
 				'activity_id' => $activity_id,
