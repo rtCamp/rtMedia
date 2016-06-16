@@ -360,7 +360,8 @@ class RTMediaPrivacy {
 
 		$default_privacy = filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING );
 		$nonce           = filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING );
-		if ( ! empty( $default_privacy ) ) {
+
+		if ( NULL !== $default_privacy ) {
 			$status = false;
 			if ( wp_verify_nonce( $nonce, 'rtmedia_member_settings_privacy' ) ) {
 				//todo user attribute
