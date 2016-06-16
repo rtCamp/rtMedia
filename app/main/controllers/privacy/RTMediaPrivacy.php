@@ -447,7 +447,7 @@ class RTMediaPrivacy {
 						if ( isset( $friends ) && ! empty( $friends ) ) {
 							$in_str_arr = array_fill( 0, count( $friends ), '%d' );
 							$in_str     = join( ',', $in_str_arr );
-							$where .= $wpdb->prepare( " OR ({$this->rtm_activity_table_alias}.privacy=40 AND a.user_id IN ({$in_str})", $friends ); // @codingStandardsIgnoreLine
+							$where .= $wpdb->prepare( " OR ({$this->rtm_activity_table_alias}.privacy=40 AND a.user_id IN ({$in_str}) )", $friends ); // @codingStandardsIgnoreLine
 						}
 					}
 				}
