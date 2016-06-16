@@ -359,7 +359,8 @@ jQuery( function ( $ ) {
 			},
 			uploadFiles: function ( e ) {
 				if ( e != undefined ) {
-					e.preventDefault(); }
+					e.preventDefault();
+				}
 				this.uploader.start();
 				return false;
 			}
@@ -508,7 +509,8 @@ jQuery( function ( $ ) {
 
 				$.each( upload_remove_array, function ( i, rfile ) {
 					if ( up.getFile( rfile ) ) {
-						up.removeFile( up.getFile( rfile ) ); }
+						up.removeFile( up.getFile( rfile ) );
+					}
 				} );
 
 				rtMediaHook.call( 'rtmedia_js_after_files_added', [ up, files ] );
@@ -597,14 +599,17 @@ jQuery( function ( $ ) {
 					up.settings.multipart_params.privacy = $( "#rtm-file_upload-ui select.privacy" ).val();
 				}
 				if ( jQuery( "#rt_upload_hf_redirect" ).length > 0 ) {
-					up.settings.multipart_params.redirect = up.files.length; }
+					up.settings.multipart_params.redirect = up.files.length;
+				}
 				jQuery( "#rtmedia-uploader-form input[type=hidden]" ).each( function () {
 					up.settings.multipart_params[$( this ).attr( "name" )] = $( this ).val();
 				} );
 				up.settings.multipart_params.activity_id = activity_id;
 				if ( $( '#rtmedia-uploader-form .rtmedia-user-album-list' ).length > 0 ) {
-					up.settings.multipart_params.album_id = $( '#rtmedia-uploader-form .rtmedia-user-album-list' ).find( ":selected" ).val(); } else if ( $( '#rtmedia-uploader-form .rtmedia-current-album' ).length > 0 ) {
-					up.settings.multipart_params.album_id = $( '#rtmedia-uploader-form .rtmedia-current-album' ).val(); }
+					up.settings.multipart_params.album_id = $( '#rtmedia-uploader-form .rtmedia-user-album-list' ).find( ":selected" ).val();
+				} else if ( $( '#rtmedia-uploader-form .rtmedia-current-album' ).length > 0 ) {
+					up.settings.multipart_params.album_id = $( '#rtmedia-uploader-form .rtmedia-current-album' ).val();
+				}
 
 					rtMediaHook.call( 'rtmedia_js_before_file_upload', [up, file] );
 			} );
@@ -635,7 +640,10 @@ jQuery( function ( $ ) {
 				}
 				if ( res.status == 200 || res.status == 302 ) {
 					if ( uploaderObj.upload_count == undefined ) {
-						uploaderObj.upload_count = 1; } else { 					uploaderObj.upload_count ++; }
+						uploaderObj.upload_count = 1;
+					} else {
+						uploaderObj.upload_count ++;
+					}
 
 					if ( uploaderObj.upload_count == up.files.length && jQuery( "#rt_upload_hf_redirect" ).length > 0 && jQuery.trim( rtnObj.redirect_url.indexOf( "http" ) == 0 ) ) {
 						window.location = rtnObj.redirect_url;
@@ -863,7 +871,8 @@ jQuery( document ).ready( function ( $ ) {
 
 			$.each( objUploadView.upload_remove_array, function ( i, rfile ) {
 				if ( upl.getFile( rfile ) ) {
-					upl.removeFile( upl.getFile( rfile ) ); }
+					upl.removeFile( upl.getFile( rfile ) );
+				}
 			} );
 
 			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' && jQuery.trim( jQuery( "#whats-new" ).val() ) != "" ) {
@@ -885,7 +894,8 @@ jQuery( document ).ready( function ( $ ) {
 				if ( ieversion < 10 ) {
 					try {
 						if ( typeof JSON.parse( res.response ) !== "undefined" ) {
-							res.status = 200; }
+							res.status = 200;
+						}
 					} catch ( e ) {
 					}
 				}
@@ -1186,7 +1196,8 @@ jQuery( document ).ready( function ( $ ) {
 		var ask_confirmation = true
 		ask_confirmation = rtMediaHook.call( 'rtmedia_js_delete_comment_confirmation', [ ask_confirmation ] );
 		if ( ask_confirmation && ! confirm( rtmedia_media_comment_delete_confirmation ) ) {
-			return false; }
+			return false;
+		}
 		var current_comment = jQuery( this );
 		var current_comment_parent = current_comment.parent();
 		var comment_id = current_comment.data( 'id' );

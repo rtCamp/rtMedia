@@ -63,7 +63,8 @@ function apply_rtMagnificPopup( selector ) {
 						var settings = { };
 
 						if ( typeof _wpmejsSettings !== 'undefined' ) {
-							settings.pluginPath = _wpmejsSettings.pluginPath; }
+							settings.pluginPath = _wpmejsSettings.pluginPath;
+						}
 						$( '.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video' ).mediaelementplayer( {
 							// if the <video width> is not specified, this is the default
 							defaultVideoWidth: 480,
@@ -95,9 +96,10 @@ var rtMediaHook = {
 	is_break: false,
 	register: function ( name, callback ) {
 		if ( 'undefined' == typeof ( rtMediaHook.hooks[name] ) ) {
-			rtMediaHook.hooks[name] = [ ]
-			rtMediaHook.hooks[name].push( callback )
-		} },
+			rtMediaHook.hooks[name] = [ ];
+		}
+		rtMediaHook.hooks[name].push( callback );
+	},
 	call: function ( name, arguments ) {
 		if ( 'undefined' != typeof ( rtMediaHook.hooks[name] ) ) {
 			for ( i = 0; i < rtMediaHook.hooks[name].length; ++ i ) {
@@ -109,7 +111,7 @@ var rtMediaHook = {
 			} }
 		return true;
 	}
-}
+};
 
 //drop-down js
 function rtmedia_init_action_dropdown() {
@@ -203,10 +205,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 					    defaultVideoWidth: 480,
 					    // if the <video height> is not specified, this is the default
 					    defaultVideoHeight: 270
-					    // if set, overrides <video width>
-					    //videoWidth: 1,
-					    // if set, overrides <video height>
-					    //videoHeight: 1
 				    } );
 			    }, 900 );
 		    }
