@@ -97,7 +97,7 @@ class RTMediaUploadShortcode {
 				return ob_get_clean();
 			}
 		} else {
-			echo "<div class='rtmedia-upload-not-allowed'>" . esc_html( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.','buddypress-media' ), 'uploader_shortcode' ) ) . '</div>';
+			echo "<div class='rtmedia-upload-not-allowed'>" . wp_kses( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.','buddypress-media' ), 'uploader_shortcode' ), RTMediaUpload::$wp_kses_allowed_tags ) . '</div>';
 		}
 	}
 }

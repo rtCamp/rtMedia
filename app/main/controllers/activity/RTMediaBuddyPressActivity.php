@@ -316,7 +316,7 @@ class RTMediaBuddyPressActivity {
 			$upload_view = new RTMediaUploadView( array( 'activity' => true ) );
 			$upload_view->render( 'uploader' );
 		} else {
-			echo "<div class='rtmedia-upload-not-allowed'>" . esc_html( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ), 'activity' ) ) . '</div>';
+			echo "<div class='rtmedia-upload-not-allowed'>" . wp_kses( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ), 'activity' ), RTMediaUpload::$wp_kses_allowed_tags ) . '</div>';
 		}
 	}
 
