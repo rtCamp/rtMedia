@@ -15,6 +15,20 @@ class RTMediaUpload {
 	var $media_ids = null;
 
 	/**
+	 * Static array to hold the allowed tags to be use in wp_kses
+	 *
+	 * @var array
+	 */
+	public static $wp_kses_allowed_tags = array(
+		'a' => array(
+			'id' => array(),
+			'href' => array(),
+			'target' => array(),
+		),
+		'p' => array(),
+	);
+
+	/**
 	 *
 	 * @param array $uploaded
 	 *
