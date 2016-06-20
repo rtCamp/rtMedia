@@ -380,7 +380,13 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 	$thumbnail_id = 0;
 	if ( isset( $media_object->media_type ) ) {
 		if ( 'album' === $media_object->media_type || 'photo' !== $media_object->media_type || 'video' === $media_object->media_type ) {
-			$thumbnail_id = ( isset( $media_object->cover_art ) && ( 0 !== intval( $media_object->cover_art ) ) ) ? $media_object->cover_art : false;
+			$thumbnail_id = ( isset( $media_object->cover_art )
+								&& (
+									( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) )   // Cover art might be an absolute URL
+									||
+									( 0 !== intval( $media_object->cover_art ) )    // Cover art might be a media ID
+								)
+							) ? $media_object->cover_art : false;
 			$thumbnail_id = apply_filters( 'show_custom_album_cover', $thumbnail_id, $media_object->media_type, $media_object->id ); // for rtMedia pro users
 		} elseif ( 'photo' === $media_object->media_type ) {
 			$thumbnail_id = $media_object->media_id;
