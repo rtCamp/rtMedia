@@ -155,7 +155,7 @@ class RTMediaUserInteraction {
 		if ( false === $this->interactor ) {
 			return 0;
 		}
-		if ( $this->interactor === $this->owner ) {
+		if ( intval( $this->interactor ) === intval( $this->owner ) ) {
 			return 60;
 		}
 
