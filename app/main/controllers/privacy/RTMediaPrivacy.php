@@ -360,7 +360,8 @@ class RTMediaPrivacy {
 
 		$default_privacy = filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING );
 		$nonce           = filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING );
-		if ( ! empty( $default_privacy ) ) {
+
+		if ( NULL !== $default_privacy ) {
 			$status = false;
 			if ( wp_verify_nonce( $nonce, 'rtmedia_member_settings_privacy' ) ) {
 				//todo user attribute
@@ -446,7 +447,7 @@ class RTMediaPrivacy {
 						if ( isset( $friends ) && ! empty( $friends ) ) {
 							$in_str_arr = array_fill( 0, count( $friends ), '%d' );
 							$in_str     = join( ',', $in_str_arr );
-							$where .= $wpdb->prepare( " OR ({$this->rtm_activity_table_alias}.privacy=40 AND a.user_id IN ({$in_str})", $friends ); // @codingStandardsIgnoreLine
+							$where .= $wpdb->prepare( " OR ({$this->rtm_activity_table_alias}.privacy=40 AND a.user_id IN ({$in_str}) )", $friends ); // @codingStandardsIgnoreLine
 						}
 					}
 				}

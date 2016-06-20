@@ -2329,7 +2329,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 	$mediamodel = new RTMediaModel();
 	$actions    = $mediamodel->get( array( 'id' => rtmedia_id( $rtmedia_id ) ) );
 	$privacy    = '';
-	if ( ! empty( $actions[0]->privacy ) ) {
+	if ( intval( $actions[0]->privacy ) >= 0 ) {
 		$title = $icon = '';
 
 		switch ( $actions[0]->privacy ) {
