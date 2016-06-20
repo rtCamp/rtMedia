@@ -71,7 +71,7 @@ class RTMediaUploadView {
 				$privacy_levels_array = apply_filters( 'rtmedia_group_privacy_levels', $privacy_levels_array );
 				$privacy_val          = $privacy_levels_array[ $group_status ];
 
-				$up_privacy = $privacy = "<input type='hidden' name='privacy' value='" . $privacy_val . "' />";
+				$up_privacy = $privacy = "<input type='hidden' name='privacy' value='" . esc_attr( $privacy_val ) . "' />";
 			} else {
 				$up_privacy = new RTMediaPrivacy( false );
 				$up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy' );

@@ -81,7 +81,7 @@ class RTMediaUploadModel {
 		if ( is_rtmedia_privacy_enable() ) {
 			if ( is_rtmedia_privacy_user_overide() ) {
 				$privacy = filter_input( INPUT_POST, 'privacy', FILTER_SANITIZE_NUMBER_INT );
-				if ( ! is_null( $privacy ) ) {
+				if ( is_null( $privacy ) ) {
 					$this->upload['privacy'] = get_rtmedia_default_privacy();
 				} else {
 					$this->upload['privacy'] = $privacy;
