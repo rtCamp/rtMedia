@@ -35,15 +35,19 @@ class RTMediaTemplate {
 	}
 
 	function enqueue_image_editor_scripts() {
-		$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
+		global $rtmedia_query;
 
 		wp_enqueue_script( 'wp-ajax-response' );
-		wp_enqueue_script( 'rtmedia-image-edit', admin_url( "js/image-edit$suffix.js" ), array(
-			'jquery',
-			'json2',
-			'imgareaselect',
-		), false, 1 );
-		wp_enqueue_style( 'rtmedia-image-area-select', includes_url( '/js/imgareaselect/imgareaselect.css' ) );
+
+		if ( $rtmedia_query->is_single_edit() ) {
+			wp_enqueue_script( 'rtmedia-image-edit', admin_url( 'js/image-edit.js' ), array(
+				'jquery',
+				'json2',
+				'imgareaselect',
+			), false, 1 );
+			wp_enqueue_style( 'rtmedia-image-area-select', includes_url( '/js/imgareaselect/imgareaselect.css' ) );
+			wp_enqueue_style( 'rtmedia-image-edit', admin_url( 'css/media.css' ) );
+		}
 	}
 
 	/**

@@ -171,7 +171,7 @@ class RTMediaBuddyPressActivity {
 		if ( null !== $rtmedia_privacy ) {
 			$privacy = - 1;
 			if ( is_rtmedia_privacy_enable() ) {
-				if ( ! is_rtmedia_privacy_user_overide() ) {
+				if ( is_rtmedia_privacy_user_overide() ) {
 					$privacy = $rtmedia_privacy;
 				} else {
 					$privacy = get_rtmedia_default_privacy();

@@ -185,6 +185,14 @@ class RTMediaQuery {
 		return false;
 	}
 
+	function is_single_edit() {
+		if ( $this->is_single() && ( isset( $this->action_query->action ) && 'edit' === $this->action_query->action ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * json request
 	 */
