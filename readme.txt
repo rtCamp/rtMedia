@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.5.2
-Stable tag: 3.10.9
+Stable tag: 4.0
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -137,6 +137,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.0 [Jun 21, 2016] =
+* Removed esc_html causing stripping of html tags in rtMedia featured for WordPress VIP compatibility
+* Fixed BuddyPress nav items in group issue for BuddyPress 2.6 with backward compatibility
+* Fixed check of class_exist for group extension for BuddyPress 2.6 compatibility
 
 = 3.10.9 [Jun 20, 2016] =
 * WordPress VIP compatibility added
@@ -1156,8 +1161,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.10.9 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. WordPress VIP compatibility added
+= 4.0 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. WordPress VIP compatibility and fixes for BuddyPress 2.6
 
 == Sponsors ==
 
