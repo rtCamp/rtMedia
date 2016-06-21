@@ -172,9 +172,9 @@ class RTMedia {
 		if ( class_exists( 'BuddyPress' ) && $table_exist ) {
 			$model     = new RTMediaModel();
 			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' and m.privacy <> 80 ";
-			$wpdb->query( $wpdb->prepare( $sql_group ) ); // @codingStandardsIgnoreLine
+			$wpdb->query( $sql_group ); // @codingStandardsIgnoreLine
 			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 20 where m.context = 'group' and ( bp.status = 'private' OR bp.status = 'hidden' ) and m.privacy <> 80 ";
-			$wpdb->query( $wpdb->prepare( $sql_group ) ); // @codingStandardsIgnoreLine
+			$wpdb->query( $sql_group ); // @codingStandardsIgnoreLine
 		}
 	}
 
