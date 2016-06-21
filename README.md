@@ -12,7 +12,7 @@ Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & m
 
 ## Description ##
 
-rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress.
+rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress, and is **WordPress VIP** compatible.
 
 Built with a mobile-first approach, it works on mobile/tablet devices (like iPhone/iPad, Android).
 
@@ -137,6 +137,11 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 
 ## Changelog ##
+
+#### 4.0 [Jun 21, 2016] ####
+* Removed esc_html causing stripping of html tags in rtMedia featured for WordPress VIP compatibility
+* Fixed BuddyPress nav items in group issue for BuddyPress 2.6 with backward compatibility
+* Fixed check of class_exist for group extension for BuddyPress 2.6 compatibility
 
 #### 3.10.9 [Jun 20, 2016] ####
 * WordPress VIP compatibility added
@@ -1154,8 +1159,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.10.9 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. WordPress VIP compatibility added
+#### 4.0 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. WordPress VIP compatibility and fixes for BuddyPress 2.6
 
 ## Sponsors ##
 
