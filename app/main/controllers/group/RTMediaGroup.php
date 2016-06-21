@@ -26,7 +26,7 @@ class RTMediaGroup {
 			return;
 		}
 
-		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'groups' ) ) {
+		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'groups' ) && class_exists( 'BP_Group_Extension' ) ) {
 			bp_register_group_extension( 'RTMediaGroupExtension' );
 		}
 

@@ -210,7 +210,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 }
 
 function rtmedia_featured( $user_id = false ) {
-	echo esc_html( rtmedia_get_featured( $user_id ) );
+	echo rtmedia_get_featured( $user_id );
 }
 
 function rtmedia_get_featured( $user_id = false ) {
