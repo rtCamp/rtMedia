@@ -43,7 +43,7 @@ class RTMediaNav {
 	 * @global object $bp global BuddyPress object
 	 */
 	function custom_media_nav_tab() {
-		global $bp;
+		$bp = buddypress();
 		if ( ! function_exists( 'bp_core_new_nav_item' ) ) {
 			return;
 		}
@@ -67,7 +67,6 @@ class RTMediaNav {
 			}
 		}
 		if ( bp_is_group() && 0 !== intval( $rtmedia->options['buddypress_enableOnGroup'] ) ) {
-			global $bp;
 			$media_enabled = true;
 			//filter for rtMedia PRO for PER GROUP MEDIA enable/disable functionality
 			$media_enabled = apply_filters( 'rtmedia_media_enabled_for_current_group', $media_enabled );
@@ -79,16 +78,41 @@ class RTMediaNav {
 			if ( $media_enabled && $is_visible_to_current_user ) {
 				$group_counts                                               = $this->actual_counts( $bp->groups->current_group->id, 'group' );
 				$slug                                                       = apply_filters( 'rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG );
-				$bp->bp_options_nav[ bp_get_current_group_slug() ]['media'] = array(
-					'name'                => RTMEDIA_MEDIA_LABEL . ' <span>' . $group_counts['total']['all'] . '</span>',
-					'link'                => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ) . $slug,
-					'slug'                => $slug,
-					'user_has_access'     => true,
-					'css_id'              => 'rtmedia-media-nav',
-					'position'            => 99,
-					'screen_function'     => array( $this, 'media_screen' ),
-					'default_subnav_slug' => 'all',
-				);
+
+				if( isset( $bp->version ) && $bp->version > '2.5.3' ){
+
+					/*
+					 * As from BuddyPress 2.6, you can't access $bp->bp_options_nav directly.
+					 * Use `bp_core_new_subnav_item` to add subnav item.
+					 *
+					 * Check https://buddypress.trac.wordpress.org/ticket/6534 and https://buddypress.trac.wordpress.org/changeset/10745
+					 * for more details
+					 */
+					bp_core_new_subnav_item( array(
+						'name'                => RTMEDIA_MEDIA_LABEL . ' <span>' . $group_counts['total']['all'] . '</span>',
+						'link'                => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ) . $slug,
+						'slug'                => $slug,
+						'parent_slug'         => bp_get_current_group_slug(),
+						'parent_url'          => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ),
+						'user_has_access'     => true,
+						'css_id'              => 'rtmedia-media-nav',
+						'position'            => 99,
+						'screen_function'     => array( $this, 'media_screen' ),
+						'default_subnav_slug' => 'all',
+					) );
+
+				} else {
+					$bp->bp_options_nav[ bp_get_current_group_slug() ]['media'] = array(
+						'name'                => RTMEDIA_MEDIA_LABEL . ' <span>' . $group_counts['total']['all'] . '</span>',
+						'link'                => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ) . $slug,
+						'slug'                => $slug,
+						'user_has_access'     => true,
+						'css_id'              => 'rtmedia-media-nav',
+						'position'            => 99,
+						'screen_function'     => array( $this, 'media_screen' ),
+						'default_subnav_slug' => 'all',
+					);
+				}
 			}
 		}
 	}
