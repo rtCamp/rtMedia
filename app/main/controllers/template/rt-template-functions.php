@@ -664,7 +664,7 @@ function rtmedia_description_input( $editor = true, $echo = false ) {
 function rtmedia_description( $echo = true ) {
 	if ( $echo ) {
 		// escape description for any html tags and reformat using `wpautop`
-		echo strip_tags( str_replace( '</p>', '</p><br>', rtmedia_description( $echo = false ) ), '<br>' ); // @codingStandardsIgnoreLine
+		echo rtmedia_get_media_description();
 	} else {
 		return rtmedia_get_media_description();
 	}
@@ -681,7 +681,13 @@ function rtmedia_get_media_description( $id = false ) {
 		$media_post_id = $rtmedia_media->media_id;
 	}
 
-	return apply_filters( 'the_content', get_post_field( 'post_content', $media_post_id ) );
+	/**
+	 * This function will mostly be used in single media page.
+	 * We are showing single media page using `the_content` filter and uses dummy post.
+	 * If we use `the_content` filter again than media description won't work as this is already singe media request
+	 * and hence using `wpautop` instead.
+	 */
+	return wpautop( get_post_field( 'post_content', $media_post_id ) );
 }
 
 /**

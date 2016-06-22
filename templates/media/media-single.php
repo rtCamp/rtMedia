@@ -86,7 +86,7 @@
 						</div>
 
 						<div class="rtmedia-media-description rtm-more">
-							<?php echo strip_tags( str_replace( '</p>', '</p><br>', rtmedia_description( $echo = false ) ), '<br>' ); // @codingStandardsIgnoreLine ?>
+							<?php echo rtmedia_description( $echo = false ); ?>
 						</div>
 
 						<?php if ( rtmedia_comments_enabled() ) { ?>
