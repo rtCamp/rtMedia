@@ -138,6 +138,14 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 4.0.1 [Jun 23, 2016] ####
+* Fixed issue of wpdb prepare statement missing argument
+* Fixed time conversion issue in lightbox
+* Fixed context & context_id for profile media upload
+* Fixed lightbox loading whole site
+* Fixed Keep current tab active when traversing different media type tabs
+* Removed the_content filter and used wpautop function for media description
+
 #### 4.0 [Jun 21, 2016] ####
 * Removed esc_html causing stripping of html tags in rtMedia featured for WordPress VIP compatibility
 * Fixed BuddyPress nav items in group issue for BuddyPress 2.6 with backward compatibility
@@ -1159,8 +1167,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.0 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. WordPress VIP compatibility and fixes for BuddyPress 2.6
+#### 4.0.1 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed lightbox issue and other bug fixes.
 
 ## Sponsors ##
 
