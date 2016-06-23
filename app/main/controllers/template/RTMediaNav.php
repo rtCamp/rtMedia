@@ -201,21 +201,19 @@ class RTMediaNav {
 		}
 		$all = '';
 		if ( ! isset( $rtmedia_query->action_query->media_type ) && ! isset( $rtmedia_query->query['media_type'] ) ) {
-			$all = 'class="current selected"';
+			$all = 'current selected';
 		}
-		echo apply_filters( 'rtmedia_sub_nav_all', '<li id="rtmedia-nav-item-all-li" ' . esc_attr( $all ) . '><a id="rtmedia-nav-item-all" href="' . esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/">' . esc_html__( 'All', 'buddypress-media' ) . '<span>' . esc_html( ( isset( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0 ) . '</span>' . '</a></li>' );// @codingStandardsIgnoreLine
-
+		echo apply_filters( 'rtmedia_sub_nav_all', '<li id="rtmedia-nav-item-all-li" class="' . esc_attr( $all ) . '"><a id="rtmedia-nav-item-all" href="' . esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/">' . esc_html__( 'All', 'buddypress-media' ) . '<span>' . esc_html( ( isset( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0 ) . '</span>' . '</a></li>' );// @codingStandardsIgnoreLine
 		if ( ! isset( $rtmedia_query->action_query->action ) || empty( $rtmedia_query->action_query->action ) ) {
 			$default = true;
 		}
 
 		$albums = '';
 		//condition to keep "Album" tab active
-		if ( array_key_exists('media_type', $rtmedia_query->query) && isset ( $rtmedia_query->query['media_type']) && ($rtmedia_query->query['media_type'] == 'album') ) {
-             $albums = 'class="current selected"';
-        }
-         elseif ( array_key_exists('media_type', $rtmedia_query->action_query)  && isset ($rtmedia_query->action_query->media_type)  && ($rtmedia_query->action_query->media_type == 'album') ) {
-             $albums = 'class="current selected"';
+		if ( array_key_exists( 'media_type', $rtmedia_query->query ) && isset( $rtmedia_query->query['media_type'] ) && ( 'album' === $rtmedia_query->query['media_type'] ) ) {
+             $albums = 'current selected';
+        } elseif ( array_key_exists( 'media_type', $rtmedia_query->action_query )  && isset( $rtmedia_query->action_query->media_type ) && ( 'album' === $rtmedia_query->action_query->media_type ) ) {
+             $albums = 'current selected';
 	
         }
 
@@ -227,7 +225,7 @@ class RTMediaNav {
 
 			$counts['total']['album'] = $counts['total']['album'] + $other_count;
 			$album_label              = esc_html__( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'buddypress-media' );
-			echo apply_filters( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" ' . esc_attr( $albums ) . '><a id="rtmedia-nav-item-albums" href="' . esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/album/">' . esc_html( $album_label ) . '<span>' . esc_html( ( isset( $counts['total']['album'] ) ) ? $counts['total']['album'] : 0 ) . '</span>' . '</a></li>' );// @codingStandardsIgnoreLine
+			echo apply_filters( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" class="' . esc_attr( $albums ) . '"><a id="rtmedia-nav-item-albums" href="' . esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/album/">' . esc_html( $album_label ) . '<span>' . esc_html( ( isset( $counts['total']['album'] ) ) ? $counts['total']['album'] : 0 ) . '</span>' . '</a></li>' );// @codingStandardsIgnoreLine
 		}
 
 		foreach ( $rtmedia->allowed_types as $type ) {
