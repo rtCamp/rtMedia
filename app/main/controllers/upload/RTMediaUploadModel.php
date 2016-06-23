@@ -53,7 +53,8 @@ class RTMediaUploadModel {
 
 		if ( ! $this->has_context() ) {
 			// Set context_id to Logged in user id if context is profile and context_id is not provided
-			if ( 'profile' === $this->upload['context'] ) {
+			if ( 'profile' === $this->upload['context'] || 'bp_member' === $this->upload['context'] ) {
+				$this->upload['context'] 	= 'profile';
 				$this->upload['context_id'] = get_current_user_id();
 			} else {
 				global $rtmedia_interaction;
