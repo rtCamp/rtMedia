@@ -200,7 +200,7 @@ class RTMediaNav {
 			$other_count = $model->get_other_album_count( bp_displayed_user_id(), 'profile' );
 		}
 		$all = '';
-		if ( ! isset( $rtmedia_query->action_query->media_type ) ) {
+		if ( ! isset( $rtmedia_query->action_query->media_type ) && ! isset( $rtmedia_query->query['media_type'] ) ) {
 			$all = 'class="current selected"';
 		}
 		echo apply_filters( 'rtmedia_sub_nav_all', '<li id="rtmedia-nav-item-all-li" ' . esc_attr( $all ) . '><a id="rtmedia-nav-item-all" href="' . esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/">' . esc_html__( 'All', 'buddypress-media' ) . '<span>' . esc_html( ( isset( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0 ) . '</span>' . '</a></li>' );// @codingStandardsIgnoreLine
@@ -210,9 +210,14 @@ class RTMediaNav {
 		}
 
 		$albums = '';
-		if ( isset( $rtmedia_query->action_query->media_type ) && 'album' === $rtmedia_query->action_query->media_type ) {
-			$albums = 'class="current selected"';
-		}
+		//condition to keep "Album" tab active
+		if ( array_key_exists('media_type', $rtmedia_query->query) && isset ( $rtmedia_query->query['media_type']) && ($rtmedia_query->query['media_type'] == 'album') ) {
+             $albums = 'class="current selected"';
+        }
+         elseif ( array_key_exists('media_type', $rtmedia_query->action_query)  && isset ($rtmedia_query->action_query->media_type)  && ($rtmedia_query->action_query->media_type == 'album') ) {
+             $albums = 'class="current selected"';
+	
+        }
 
 		if ( is_rtmedia_album_enable() ) {
 
