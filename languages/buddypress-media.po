@@ -1,28 +1,16 @@
-# Copyright (C) 2016 rtCamp
-# This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
+# <!=Copyright (C) 2016 rtCamp
+# This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.10.8\n"
-"Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-06-16 10:32:57+00:00\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/index\n"
+"POT-Creation-Date: 2016-06-23 09:00:56+00:00\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
-"Last-Translator: rtMedia <rtmedia@rtcamp.com>\n"
-"Language-Team: rtMedia <rtmedia@rtcamp.com>\n"
-"X-Generator: grunt-wp-i18n 0.5.4\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
-"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Country: United States\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-Bookmarks: \n"
-"X-Textdomain-Support: yes\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 
 #: app/admin/RTMediaAdmin.php:154
 msgid "View &#8220;%s&#8221;"
@@ -43,7 +31,7 @@ msgstr ""
 #: app/admin/RTMediaAdmin.php:225 app/admin/RTMediaAdmin.php:1166
 #: app/admin/RTMediaAdmin.php:1837 app/admin/RTMediaAdmin.php:1855
 #: app/admin/RTMediaAdmin.php:1873 app/admin/RTMediaFormHandler.php:435
-#: app/admin/RTMediaFormHandler.php:446 app/helper/RTMediaSettings.php:296
+#: app/admin/RTMediaFormHandler.php:446 app/helper/RTMediaSettings.php:297
 #: app/helper/RTMediaSupport.php:368 app/helper/RTMediaSupport.php:636
 msgid "here"
 msgstr ""
@@ -152,7 +140,7 @@ msgstr ""
 
 #: app/admin/RTMediaAdmin.php:730 app/admin/RTMediaAdmin.php:824
 #: app/admin/RTMediaAdmin.php:827 app/admin/RTMediaAdmin.php:968
-#: app/admin/RTMediaAdmin.php:1573 app/helper/RTMediaSettings.php:220
+#: app/admin/RTMediaAdmin.php:1573 app/helper/RTMediaSettings.php:221
 #: app/helper/RTMediaSupport.php:52 app/helper/RTMediaSupport.php:53
 msgid "Support"
 msgstr ""
@@ -349,7 +337,7 @@ msgid "rtMedia Privacy"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1689
-#: app/main/controllers/privacy/RTMediaPrivacy.php:416
+#: app/main/controllers/privacy/RTMediaPrivacy.php:417
 msgid "Privacy"
 msgstr ""
 
@@ -414,9 +402,7 @@ msgid "Premium Add-ons"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1836
-msgid ""
-"You have images enabled on rtMedia but your network allowed filetypes do "
-"not permit uploading of %s. Click "
+msgid "You have images enabled on rtMedia but your network allowed filetypes do not permit uploading of %s. Click "
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1838 app/admin/RTMediaAdmin.php:1856
@@ -435,15 +421,11 @@ msgid "Update Network Settings Automatically"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1854
-msgid ""
-"You have video enabled on BuddyPress Media but your network allowed "
-"filetypes do not permit uploading of mp4. Click "
+msgid "You have video enabled on BuddyPress Media but your network allowed filetypes do not permit uploading of mp4. Click "
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1872
-msgid ""
-"You have audio enabled on BuddyPress Media but your network allowed "
-"filetypes do not permit uploading of mp3. Click "
+msgid "You have audio enabled on BuddyPress Media but your network allowed filetypes do not permit uploading of mp3. Click "
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1893
@@ -463,10 +445,7 @@ msgid "Regenerate Video Thumbnails"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:2033
-msgid ""
-"Please update rtMedia template files if you have overridden the default "
-"rtMedia templates in your theme. If not, you can ignore and hide this "
-"notice."
+msgid "Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice."
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:2033
@@ -498,9 +477,7 @@ msgid "Allow user to comment on uploaded media"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:296
-msgid ""
-"This will display the comment form and comment listing on single media "
-"pages as well as inside lightbox (if lightbox is enabled)."
+msgid "This will display the comment form and comment listing on single media pages as well as inside lightbox (if lightbox is enabled)."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:301
@@ -556,9 +533,7 @@ msgid "and uncheck the crop box for thumbnails."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:344
-msgid ""
-"To set gallery for fixed width, set image height to 0 and width as per your "
-"requirement and vice-versa."
+msgid "To set gallery for fixed width, set image height to 0 and width as per your requirement and vice-versa."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:347
@@ -590,10 +565,7 @@ msgid "Allow usage data tracking"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:402
-msgid ""
-"To make rtMedia better compatible with your sites, you can help the rtMedia "
-"team learn what themes and plugins you are using. No private information "
-"about your setup will be sent during tracking."
+msgid "To make rtMedia better compatible with your sites, you can help the rtMedia team learn what themes and plugins you are using. No private information about your setup will be sent during tracking."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:406
@@ -601,9 +573,7 @@ msgid "Admin bar menu integration"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:411
-msgid ""
-"Add rtMedia menu to WordPress admin bar for easy access to settings and "
-"moderation page (if enabled)."
+msgid "Add rtMedia menu to WordPress admin bar for easy access to settings and moderation page (if enabled)."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:416
@@ -619,9 +589,7 @@ msgid "Also add my affiliate-id to rtMedia footer link"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:431
-msgid ""
-"Add your affiliate-id along with footer link and get rewarded by our "
-"affiliation program."
+msgid "Add your affiliate-id along with footer link and get rewarded by our affiliation program."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:435
@@ -637,9 +605,7 @@ msgid "Enable JSON API"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:443
-msgid ""
-"This will allow handling API requests for rtMedia sent through any mobile "
-"app."
+msgid "This will allow handling API requests for rtMedia sent through any mobile app."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:446
@@ -666,7 +632,7 @@ msgstr ""
 msgid "Media Types Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:557 app/helper/RTMediaSettings.php:318
+#: app/admin/RTMediaFormHandler.php:557 app/helper/RTMediaSettings.php:319
 msgid "Media Type"
 msgstr ""
 
@@ -719,9 +685,7 @@ msgid "Number of thumbnails to generate on video upload"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:821
-msgid ""
-" If you choose more than 1 thumbnail, your users will be able to change the "
-"thumbnail by going to video 'edit' section. Maximum value is 10."
+msgid " If you choose more than 1 thumbnail, your users will be able to change the thumbnail by going to video 'edit' section. Maximum value is 10."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:829
@@ -749,9 +713,7 @@ msgid "rtMedia default styles"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:895
-msgid ""
-"Load default rtMedia styles. You need to write your own style for rtMedia "
-"if you disable it."
+msgid "Load default rtMedia styles. You need to write your own style for rtMedia if you disable it."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:900
@@ -783,9 +745,7 @@ msgid "Allow users to set privacy for their content"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:957
-msgid ""
-"If you choose this, users will be able to change privacy of their own "
-"uploads."
+msgid "If you choose this, users will be able to change privacy of their own uploads."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:961
@@ -821,11 +781,7 @@ msgid "Number of media items to show in activity stream"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1039
-msgid ""
-"With bulk uploads activity, the stream may get flooded. You can control the "
-"maximum number of media items or files per activity. This limit will not "
-"affect the actual number of uploads. This is only for display. \"0\" means "
-"unlimited."
+msgid "With bulk uploads activity, the stream may get flooded. You can control the maximum number of media items or files per activity. This limit will not affect the actual number of uploads. This is only for display. \"0\" means unlimited."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1046
@@ -833,9 +789,7 @@ msgid "Enable media notification"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1051
-msgid ""
-"This will enable notifications to media authors for media likes and "
-"comments."
+msgid "This will enable notifications to media authors for media likes and comments."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1057
@@ -859,9 +813,7 @@ msgid "Organize media into albums"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1085
-msgid ""
-"This will add 'album' tab to BuddyPress profile and group depending on the "
-"^above^ settings."
+msgid "This will add 'album' tab to BuddyPress profile and group depending on the ^above^ settings."
 msgstr ""
 
 #: app/admin/templates/tmpl-rtm-album-favourites-importer.php:4
@@ -881,10 +833,7 @@ msgid "SEO"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:117
-msgid ""
-"Generate an XML sitemap for all the public media files uploaded via rtMedia "
-"plugin. These sitemaps can be useful to index search engine to improve "
-"website SEO."
+msgid "Generate an XML sitemap for all the public media files uploaded via rtMedia plugin. These sitemaps can be useful to index search engine to improve website SEO."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:125
@@ -892,9 +841,7 @@ msgid "Moderation"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:128
-msgid ""
-"Report media if they find offensive. Set number of reports to automatically "
-"take down media from site."
+msgid "Report media if they find offensive. Set number of reports to automatically take down media from site."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:136
@@ -902,9 +849,7 @@ msgid "Custom Attributes"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:139
-msgid ""
-"Categories media based on attributes. Site owner need to create attributes. "
-"When user upload a media, can select in which attribute that media can add."
+msgid "Categories media based on attributes. Site owner need to create attributes. When user upload a media, can select in which attribute that media can add."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:147
@@ -912,9 +857,7 @@ msgid "Docs and Other files"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:150
-msgid ""
-"Allow users to upload documents and other file type using rtMedia upload "
-"box. This addon support all the file extensions which WordPress allows."
+msgid "Allow users to upload documents and other file type using rtMedia upload box. This addon support all the file extensions which WordPress allows."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:158
@@ -922,9 +865,7 @@ msgid "Default Albums"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:161
-msgid ""
-"This plugin allows the creation of multiple default albums for rtMedia "
-"uploads. One of these albums can be set as the default global album."
+msgid "This plugin allows the creation of multiple default albums for rtMedia uploads. One of these albums can be set as the default global album."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:169
@@ -932,9 +873,7 @@ msgid "Podcast (RSS and Atom feeds)"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:172
-msgid ""
-"Read rtMedia uploads from iTunes as well as any RSS feed-reader/podcasting "
-"software."
+msgid "Read rtMedia uploads from iTunes as well as any RSS feed-reader/podcasting software."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:180
@@ -942,9 +881,7 @@ msgid "Playlists"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:183
-msgid ""
-"Audio can be grouped into playlists. Once the user upload any audio file, "
-"can create a playlist or use existing one to manage audio files."
+msgid "Audio can be grouped into playlists. Once the user upload any audio file, can create a playlist or use existing one to manage audio files."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:191
@@ -952,9 +889,7 @@ msgid "Favorites"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:194
-msgid ""
-"Users can create their list of favorite media in which they can add media "
-"previously uploaded by any user."
+msgid "Users can create their list of favorite media in which they can add media previously uploaded by any user."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:202
@@ -962,9 +897,7 @@ msgid "Restrictions"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:205
-msgid ""
-"Site admin can set an upload limit on the basis of time span, file size "
-"(MB) and number of files user can upload."
+msgid "Site admin can set an upload limit on the basis of time span, file size (MB) and number of files user can upload."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:213
@@ -980,9 +913,7 @@ msgid "WordPress Sitewide Gallery"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:227
-msgid ""
-"Site admin can create and upload media into WordPress album. Create album "
-"without being dependent on BuddyPress."
+msgid "Site admin can create and upload media into WordPress album. Create album without being dependent on BuddyPress."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:235
@@ -990,9 +921,7 @@ msgid "WordPress Comment Attachments"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:238
-msgid ""
-"Allow users to upload a media file in WordPress comment attachment box. It "
-"will display a thumbnail of attached file."
+msgid "Allow users to upload a media file in WordPress comment attachment box. It will display a thumbnail of attached file."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:246
@@ -1000,9 +929,7 @@ msgid "Social Sharing"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:249
-msgid ""
-"Share uploaded media on social network sites like Facebook, twitter, "
-"linkedin, Google +. This addon integrate with rtSocial plugin."
+msgid "Share uploaded media on social network sites like Facebook, twitter, linkedin, Google +. This addon integrate with rtSocial plugin."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:257
@@ -1010,9 +937,7 @@ msgid "Sidebar Widgets"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:260
-msgid ""
-"This addon provide widgets to upload media and display gallery for rtMedia "
-"plugin."
+msgid "This addon provide widgets to upload media and display gallery for rtMedia plugin."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:268
@@ -1020,9 +945,7 @@ msgid "5 Star Ratings"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:271
-msgid ""
-"Display 5 star rating for all the uploaded media. User can rate the media "
-"files from 1 to 5 star."
+msgid "Display 5 star rating for all the uploaded media. User can rate the media files from 1 to 5 star."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:279
@@ -1038,9 +961,7 @@ msgid "Media Sorting"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:293
-msgid ""
-"Sort uploaded media based on file size, ascending/descending title, upload "
-"date of media."
+msgid "Sort uploaded media based on file size, ascending/descending title, upload date of media."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:301
@@ -1048,10 +969,7 @@ msgid "Bulk Edit"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:304
-msgid ""
-"Bulk edit option will allow user to quickly select media files and do "
-"required actions like move files from one album to another, change "
-"attributes, change privacy, delete files."
+msgid "Bulk edit option will allow user to quickly select media files and do required actions like move files from one album to another, change attributes, change privacy, delete files."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:312
@@ -1075,9 +993,7 @@ msgid "Direct Download Link"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:337
-msgid ""
-"User can download media from website. Site owner can restrict which media "
-"type can be allowed to download."
+msgid "User can download media from website. Site owner can restrict which media type can be allowed to download."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:345
@@ -1085,10 +1001,7 @@ msgid "Upload by URL"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:348
-msgid ""
-"Users do not need to download media files from a URL and then upload it "
-"with rtMedia. Just provide the absolute URL for the media and it will "
-"upload on site."
+msgid "Users do not need to download media files from a URL and then upload it with rtMedia. Just provide the absolute URL for the media and it will upload on site."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:356
@@ -1096,9 +1009,7 @@ msgid "Media Likes"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:359
-msgid ""
-"This add-on let you know who liked the media. User can also see which media "
-"they liked under their profile."
+msgid "This add-on let you know who liked the media. User can also see which media they liked under their profile."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:367
@@ -1106,10 +1017,7 @@ msgid "Activity URL Preview"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:370
-msgid ""
-"This addon provides a preview of the URL that is shared in BuddyPress "
-"activity. Just enter the URL you want to share on your site and see a "
-"preview of it before it is shared."
+msgid "This addon provides a preview of the URL that is shared in BuddyPress activity. Just enter the URL you want to share on your site and see a preview of it before it is shared."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:378
@@ -1117,10 +1025,7 @@ msgid "View Counter"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:381
-msgid ""
-"Enable view count for all the uploaded media. Whenever user open that media "
-"file in lightbox or in single media view, that view count will be "
-"calculated and display next to media file."
+msgid "Enable view count for all the uploaded media. Whenever user open that media file in lightbox or in single media view, that view count will be calculated and display next to media file."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:389
@@ -1128,9 +1033,7 @@ msgid "Shortcode Generator"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:392
-msgid ""
-"This add-on will add shortcode generator button in WordPress post and page "
-"editor for all the rtMedia shortcodes."
+msgid "This add-on will add shortcode generator button in WordPress post and page editor for all the rtMedia shortcodes."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:400
@@ -1138,10 +1041,7 @@ msgid "Album Privacy"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:403
-msgid ""
-"Set album privacy when user create an album or change album privacy when "
-"editing existing albums. The privacy levels are Public, Logged in user, "
-"Friends and Private."
+msgid "Set album privacy when user create an album or change album privacy when editing existing albums. The privacy levels are Public, Logged in user, Friends and Private."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:411
@@ -1157,9 +1057,7 @@ msgid "Set Custom Thumbnail for Audio/Video"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:425
-msgid ""
-"Allow media owner to change the thumbnail of uploaded audio/video files. "
-"The File Upload box will be provided to change media thumbnail."
+msgid "Allow media owner to change the thumbnail of uploaded audio/video files. The File Upload box will be provided to change media thumbnail."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:433
@@ -1167,10 +1065,7 @@ msgid "myCRED"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:436
-msgid ""
-"This plugin integrates rtMedia and myCRED plugin, users can be can award "
-"virtual points for various rtMedia activities, like media upload, likes, "
-"deleted etc."
+msgid "This plugin integrates rtMedia and myCRED plugin, users can be can award virtual points for various rtMedia activities, like media upload, likes, deleted etc."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:444
@@ -1178,9 +1073,7 @@ msgid "Upload Terms"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:447
-msgid ""
-"User must have to check the terms and conditions checkbox before uploading "
-"the media."
+msgid "User must have to check the terms and conditions checkbox before uploading the media."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:455
@@ -1188,10 +1081,7 @@ msgid "CubePoints"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:458
-msgid ""
-"If you are using CubePoints plugin on your website than rtMedia CubePoint "
-"add-on can be integrate with that plugin to setup point management system "
-"for rtMedia related activities."
+msgid "If you are using CubePoints plugin on your website than rtMedia CubePoint add-on can be integrate with that plugin to setup point management system for rtMedia related activities."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:466
@@ -1207,9 +1097,7 @@ msgid "Photo Watermark"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:480
-msgid ""
-"rtMedia Photo Watermark let you add watermark on your images uploaded using "
-"rtMedia."
+msgid "rtMedia Photo Watermark let you add watermark on your images uploaded using rtMedia."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:488
@@ -1217,9 +1105,7 @@ msgid "Photo Tagging"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:491
-msgid ""
-"rtMedia Photo Tagging enable users to tag their friends on photos uploaded "
-"using rtMedia."
+msgid "rtMedia Photo Tagging enable users to tag their friends on photos uploaded using rtMedia."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:499
@@ -1227,9 +1113,7 @@ msgid "Photo Filters"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:502
-msgid ""
-"rtMedia Photo Filters adds Instagram like filters to images uploaded with "
-"rtMedia."
+msgid "rtMedia Photo Filters adds Instagram like filters to images uploaded with rtMedia."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:510
@@ -1237,9 +1121,7 @@ msgid "Kaltura Add-on"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:513
-msgid ""
-"Add support for more video formats using Kaltura video solution. It works "
-"with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
+msgid "Add support for more video formats using Kaltura video solution. It works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:521
@@ -1247,9 +1129,7 @@ msgid "FFMPEG Add-on"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:524
-msgid ""
-"Add supports for more audio & video formats using open-source media-node. "
-"Media node comes with automated setup script for Ubuntu/Debian."
+msgid "Add supports for more audio & video formats using open-source media-node. Media node comes with automated setup script for Ubuntu/Debian."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:532
@@ -1257,9 +1137,7 @@ msgid "Membership Add-on"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:535
-msgid ""
-"rtMedia Membership add-on provides membership functionality in your site in "
-"terms of media upload."
+msgid "rtMedia Membership add-on provides membership functionality in your site in terms of media upload."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:575
@@ -1346,73 +1224,67 @@ msgstr ""
 msgid "other friends liked your"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:215
+#: app/helper/RTMediaSettings.php:216
 msgid "BuddyPress Media Addons for Photos"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:225
+#: app/helper/RTMediaSettings.php:226
 msgid "rtMedia Themes"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:295
-msgid ""
-"Currently your network allows uploading of the following file types. You "
-"can change the settings %s"
+#: app/helper/RTMediaSettings.php:296
+msgid "Currently your network allows uploading of the following file types. You can change the settings %s"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:316 app/helper/RTMediaSettings.php:318
+#: app/helper/RTMediaSettings.php:317 app/helper/RTMediaSettings.php:319
 msgid "Atleast one Media Type Must be selected"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:327 app/helper/RTMediaSettings.php:329
+#: app/helper/RTMediaSettings.php:328 app/helper/RTMediaSettings.php:330
 msgid "\"Number of media\" count value should be numeric and greater than 0."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:329
+#: app/helper/RTMediaSettings.php:330
 msgid "Default Count"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:334
+#: app/helper/RTMediaSettings.php:335
 msgid "Settings saved."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:358
+#: app/helper/RTMediaSettings.php:359
 msgid "If you make changes to width, height or crop settings, you must use "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:359
+#: app/helper/RTMediaSettings.php:360
 msgid "Regenerate Thumbnail Plugin"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:360
+#: app/helper/RTMediaSettings.php:361
 msgid " to regenerate old images."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:383
+#: app/helper/RTMediaSettings.php:384
 msgid "BuddyPress Media 2.6 requires a database upgrade. "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:384
+#: app/helper/RTMediaSettings.php:385
 msgid "Update Database"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:398
-msgid ""
-"If your site has some issues due to rtMedia and you want one on one support "
-"then you can create a support topic on the "
+#: app/helper/RTMediaSettings.php:399
+msgid "If your site has some issues due to rtMedia and you want one on one support then you can create a support topic on the "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:399
+#: app/helper/RTMediaSettings.php:400
 msgid "rtMedia Support Forum"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:401
-msgid ""
-"If you have any suggestions, enhancements or bug reports, then you can open "
-"a new issue on "
+#: app/helper/RTMediaSettings.php:402
+msgid "If you have any suggestions, enhancements or bug reports, then you can open a new issue on "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:402 app/helper/RTMediaSupport.php:419
+#: app/helper/RTMediaSettings.php:403 app/helper/RTMediaSupport.php:419
 msgid "GitHub"
 msgstr ""
 
@@ -1480,9 +1352,7 @@ msgid "Submit Support Request"
 msgstr ""
 
 #: app/helper/RTMediaSupport.php:411
-msgid ""
-"If your site has some issues due to rtMedia and you want support, feel free "
-"to create a support topic on %s"
+msgid "If your site has some issues due to rtMedia and you want support, feel free to create a support topic on %s"
 msgstr ""
 
 #: app/helper/RTMediaSupport.php:412
@@ -1490,9 +1360,7 @@ msgid "Community Forum"
 msgstr ""
 
 #: app/helper/RTMediaSupport.php:418
-msgid ""
-"If you have any suggestions, enhancements or bug reports, then you can open "
-"a new issue on %s"
+msgid "If you have any suggestions, enhancements or bug reports, then you can open a new issue on %s"
 msgstr ""
 
 #: app/helper/RTMediaSupport.php:438
@@ -1584,15 +1452,13 @@ msgstr ""
 msgid "rtDating"
 msgstr ""
 
-#. Author of the plugin/theme
+#: app/helper/RTMediaThemes.php:108 app/helper/RTMediaThemes.php:118
+#: app/helper/RTMediaThemes.php:128
 msgid "rtCamp"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:111
-msgid ""
-"rtDating is a unique, clean and modern theme only for WordPress. This theme "
-"is mostly useful for dating sites and community websites. It can also be "
-"use for any other WordPress based website."
+msgid "rtDating is a unique, clean and modern theme only for WordPress. This theme is mostly useful for dating sites and community websites. It can also be use for any other WordPress based website."
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:115
@@ -1600,9 +1466,7 @@ msgid "InspireBook"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:121
-msgid ""
-"InspireBook is a premium WordPress theme, designed especially for "
-"BuddyPress and rtMedia powered social-networks."
+msgid "InspireBook is a premium WordPress theme, designed especially for BuddyPress and rtMedia powered social-networks."
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:125
@@ -1610,9 +1474,7 @@ msgid "Foodmania"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:131
-msgid ""
-"Its premium WordPress theme, designed especially for Food, recipe and "
-"photography community sites."
+msgid "Its premium WordPress theme, designed especially for Food, recipe and photography community sites."
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:149 app/helper/RTMediaThemes.php:302
@@ -1648,9 +1510,7 @@ msgid "Alkaweb"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:233
-msgid ""
-"Woffice is a feature rich, powerful Multipurpose Intranet/Extranet "
-"Wordpress theme."
+msgid "Woffice is a feature rich, powerful Multipurpose Intranet/Extranet Wordpress theme."
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:237
@@ -1662,9 +1522,7 @@ msgid "dunhakdis"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:243
-msgid ""
-"Thrive is an innovative WordPress Theme designed to cater company portals, "
-"organisational websites, company intranet and extranets."
+msgid "Thrive is an innovative WordPress Theme designed to cater company portals, organisational websites, company intranet and extranets."
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:247
@@ -1676,11 +1534,7 @@ msgid "gavick"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:253
-msgid ""
-"(M)Social is a sophisticated, vibrant community theme that offers "
-"incredible grid layouts, with full BuddyPress support so your users can "
-"interact with each other, create their own pages, and share their thoughts "
-"and images with the community."
+msgid "(M)Social is a sophisticated, vibrant community theme that offers incredible grid layouts, with full BuddyPress support so your users can interact with each other, create their own pages, and share their thoughts and images with the community."
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:257
@@ -1688,10 +1542,7 @@ msgid "Klein"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:263
-msgid ""
-"Klein is an innovative WordPress theme built to support BuddyPress, "
-"bbPress, and WooCommerce out of the box. Perfect for websites that "
-"interacts with many users."
+msgid "Klein is an innovative WordPress theme built to support BuddyPress, bbPress, and WooCommerce out of the box. Perfect for websites that interacts with many users."
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:267
@@ -1703,11 +1554,7 @@ msgid "SeventhQueen"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:273
-msgid ""
-"SweetDate is a unique, clean and modern Premium Wordpress theme. It is "
-"perfect for a dating or community website but can be used as well for any "
-"other domain. They added all the things you need to create a perfect "
-"community system."
+msgid "SweetDate is a unique, clean and modern Premium Wordpress theme. It is perfect for a dating or community website but can be used as well for any other domain. They added all the things you need to create a perfect community system."
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:277
@@ -1715,16 +1562,11 @@ msgid "KLEO"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:283
-msgid ""
-"You no longer need to be a professional developer or designer to create an "
-"awesome website. Let your imagination run wild and create the site of your "
-"dreams. KLEO has all the tools to get you started."
+msgid "You no longer need to be a professional developer or designer to create an awesome website. Let your imagination run wild and create the site of your dreams. KLEO has all the tools to get you started."
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:365
-msgid ""
-"These are the third party themes. For any issues or queries regarding these "
-"themes please contact theme developers."
+msgid "These are the third party themes. For any issues or queries regarding these themes please contact theme developers."
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:368
@@ -1732,9 +1574,7 @@ msgid "Are you a developer?"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:371
-msgid ""
-"If you have developed a rtMedia compatible theme and would like it to list "
-"here, please email us at"
+msgid "If you have developed a rtMedia compatible theme and would like it to list here, please email us at"
 msgstr ""
 
 #: app/helper/RTMediaThemes.php:372
@@ -1742,9 +1582,7 @@ msgid "rtmedia@rtcamp.com"
 msgstr ""
 
 #: app/helper/RTMediaUploadException.php:41
-msgid ""
-"The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
-"the HTML form"
+msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
 
 #: app/helper/RTMediaUploadException.php:44
@@ -1780,9 +1618,7 @@ msgid "Warning!"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:65
-msgid ""
-"This import process is irreversible. Although everything is tested, please "
-"take a "
+msgid "This import process is irreversible. Although everything is tested, please take a "
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:66
@@ -1790,9 +1626,7 @@ msgid "backup of your database and files"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:67
-msgid ""
-", before proceeding. If you don't know your way around databases and files, "
-"consider "
+msgid ", before proceeding. If you don't know your way around databases and files, consider "
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:68
@@ -1804,9 +1638,7 @@ msgid ", or another professional."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:71
-msgid ""
-"If you have set \"WP_DEBUG\" in you wp-config.php file, please make sure it "
-"is set to \"false\", so that it doesn't conflict with the import process."
+msgid "If you have set \"WP_DEBUG\" in you wp-config.php file, please make sure it is set to \"false\", so that it doesn't conflict with the import process."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:72
@@ -1871,9 +1703,7 @@ msgid "Tweet this"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:154
-msgid ""
-"However, a lot of unnecessary files and a database table are still eating "
-"up your resources. If everything seems fine, you can clean this data up."
+msgid "However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:157
@@ -1889,9 +1719,7 @@ msgid "Why don't you try adding some instagram like effects to your images?"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:172
-msgid ""
-"rtMedia Photo Filters adds Instagram like filters to images uploaded with "
-"BuddyPress Media."
+msgid "rtMedia Photo Filters adds Instagram like filters to images uploaded with BuddyPress Media."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:173
@@ -1899,15 +1727,11 @@ msgid "Important"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:173
-msgid ""
-"You need to have ImageMagick installed on your server for this addon to "
-"work."
+msgid "You need to have ImageMagick installed on your server for this addon to work."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:183
-msgid ""
-"Looks like you don't use BP Album. Is there any other BuddyPress Plugin you "
-"want an importer for?"
+msgid "Looks like you don't use BP Album. Is there any other BuddyPress Plugin you want an importer for?"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:184
@@ -2070,13 +1894,13 @@ msgstr ""
 msgid "Public - Visible to the world"
 msgstr ""
 
-#: app/main/RTMedia.php:605 app/main/controllers/template/RTMediaNav.php:182
+#: app/main/RTMedia.php:605 app/main/controllers/template/RTMediaNav.php:206
 #: app/main/controllers/template/rt-template-functions.php:86
 msgid "All"
 msgstr ""
 
 #: app/main/RTMedia.php:617 app/main/controllers/media/RTMediaAlbum.php:54
-#: app/main/controllers/template/rt-template-functions.php:1454
+#: app/main/controllers/template/rt-template-functions.php:1466
 #: app/main/controllers/upload/RTMediaUploadView.php:52
 #: app/main/controllers/upload/RTMediaUploadView.php:55
 msgid "Album"
@@ -2088,8 +1912,8 @@ msgid "Albums"
 msgstr ""
 
 #: app/main/RTMedia.php:631 app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rt-template-functions.php:2216
-#: app/main/controllers/template/rt-template-functions.php:2220
+#: app/main/controllers/template/rt-template-functions.php:2228
+#: app/main/controllers/template/rt-template-functions.php:2232
 msgid "Upload"
 msgstr ""
 
@@ -2196,16 +2020,16 @@ msgstr ""
 #: app/main/RTMedia.php:985
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:63
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
-#: app/main/controllers/template/rt-template-functions.php:778
-#: app/main/controllers/template/rt-template-functions.php:799
+#: app/main/controllers/template/rt-template-functions.php:790
+#: app/main/controllers/template/rt-template-functions.php:811
 msgid "Edit"
 msgstr ""
 
 #: app/main/RTMedia.php:986
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:67
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
-#: app/main/controllers/template/rt-template-functions.php:1535
-#: app/main/controllers/template/rt-template-functions.php:1542
+#: app/main/controllers/template/rt-template-functions.php:1547
+#: app/main/controllers/template/rt-template-functions.php:1554
 #: templates/media/album-single-edit.php:78
 msgid "Delete"
 msgstr ""
@@ -2264,7 +2088,7 @@ msgstr ""
 
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:319
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:100
-#: app/main/controllers/template/rt-template-functions.php:1569
+#: app/main/controllers/template/rt-template-functions.php:1581
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
@@ -2363,9 +2187,7 @@ msgid "Username: %s"
 msgstr ""
 
 #: app/main/controllers/api/RTMediaJsonApi.php:341
-msgid ""
-"To reset your password visit the following address, otherwise just ignore "
-"this email and nothing will happen."
+msgid "To reset your password visit the following address, otherwise just ignore this email and nothing will happen."
 msgstr ""
 
 #: app/main/controllers/api/RTMediaJsonApi.php:344
@@ -2544,7 +2366,7 @@ msgid "Group Admin only"
 msgstr ""
 
 #: app/main/controllers/group/RTMediaGroupExtension.php:116
-#: app/main/controllers/privacy/RTMediaPrivacy.php:408
+#: app/main/controllers/privacy/RTMediaPrivacy.php:409
 #: templates/media/album-single-edit.php:55
 msgid "Save Changes"
 msgstr ""
@@ -2559,9 +2381,13 @@ msgstr ""
 
 #: app/main/controllers/group/RTMediaGroupExtension.php:170
 msgid ""
-"You could display a small snippet of information from your group extension "
-"here. It will show on the group\n"
+"You could display a small snippet of information from your group extension here. It will show on the group\n"
 "\t                home screen."
+msgstr ""
+
+#: app/main/controllers/media/RTMediaAlbum.php:35
+msgctxt "Status General Name"
+msgid "hidden"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaAlbum.php:36
@@ -2575,12 +2401,12 @@ msgid "Create"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaAlbum.php:56
-#: app/main/controllers/template/rt-template-functions.php:1847
+#: app/main/controllers/template/rt-template-functions.php:1859
 msgid "Create Album"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaAlbum.php:57
-#: app/main/controllers/template/rt-template-functions.php:1927
+#: app/main/controllers/template/rt-template-functions.php:1939
 msgid "Edit Album"
 msgstr ""
 
@@ -2650,8 +2476,8 @@ msgid "Unlike"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rt-template-functions.php:2216
-#: app/main/controllers/template/rt-template-functions.php:2220
+#: app/main/controllers/template/rt-template-functions.php:2228
+#: app/main/controllers/template/rt-template-functions.php:2232
 msgid "Upload Media"
 msgstr ""
 
@@ -2687,15 +2513,15 @@ msgstr ""
 msgid "%1$s added %4$d %3$s"
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:370
+#: app/main/controllers/privacy/RTMediaPrivacy.php:371
 msgid "No changes were made to your account."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:373
+#: app/main/controllers/privacy/RTMediaPrivacy.php:374
 msgid "Your default privacy settings saved successfully."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:397
+#: app/main/controllers/privacy/RTMediaPrivacy.php:398
 msgid "Default Privacy"
 msgstr ""
 
@@ -2723,200 +2549,206 @@ msgstr ""
 msgid "Data mismatch, Please insert data properly."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:105
-#: app/main/controllers/template/RTMediaTemplate.php:156
+#: app/main/controllers/template/RTMediaNav.php:32
+msgctxt "My Account Privacy sub nav"
+msgid "Privacy"
+msgstr ""
+
+#: app/main/controllers/template/RTMediaTemplate.php:109
+#: app/main/controllers/template/RTMediaTemplate.php:160
 msgid "Invalid attribute passed for rtmedia_gallery shortcode."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:344
-#: app/main/controllers/template/RTMediaTemplate.php:428
-#: app/main/controllers/template/RTMediaTemplate.php:516
-#: app/main/controllers/template/RTMediaTemplate.php:652
+#: app/main/controllers/template/RTMediaTemplate.php:348
+#: app/main/controllers/template/RTMediaTemplate.php:432
+#: app/main/controllers/template/RTMediaTemplate.php:520
+#: app/main/controllers/template/RTMediaTemplate.php:656
 msgid "Ooops !!! Invalid access. No nonce was found !!"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:351
+#: app/main/controllers/template/RTMediaTemplate.php:355
 msgid "Media updated Sucessfully"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:357
+#: app/main/controllers/template/RTMediaTemplate.php:361
 msgid "Error in updating Media"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:754
-#: app/main/controllers/template/rt-template-functions.php:1752
+#: app/main/controllers/template/rt-template-functions.php:766
+#: app/main/controllers/template/rt-template-functions.php:1764
 msgid "Options"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:842
+#: app/main/controllers/template/rt-template-functions.php:854
 msgid "There are no comments on this media yet."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:878
+#: app/main/controllers/template/rt-template-functions.php:890
 msgid "Delete Comment"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1092
+#: app/main/controllers/template/rt-template-functions.php:1104
 msgid "Go to page no : "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1097
+#: app/main/controllers/template/rt-template-functions.php:1109
 msgid "Go"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1268
+#: app/main/controllers/template/rt-template-functions.php:1280
 msgid "Video Thumbnail"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1318
+#: app/main/controllers/template/rt-template-functions.php:1330
 msgid "Video Thumbnail:"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1405
+#: app/main/controllers/template/rt-template-functions.php:1417
 msgid "Image"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1422
+#: app/main/controllers/template/rt-template-functions.php:1434
 msgid "Modify Image"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1496
+#: app/main/controllers/template/rt-template-functions.php:1508
 msgid "Type Comment..."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1499
+#: app/main/controllers/template/rt-template-functions.php:1511
 #: templates/media/media-single.php:98 templates/media/media-single.php:141
 msgid "Comment"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1535
-#: app/main/controllers/template/rt-template-functions.php:1542
+#: app/main/controllers/template/rt-template-functions.php:1547
+#: app/main/controllers/template/rt-template-functions.php:1554
 msgid "Delete Media"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1696
+#: app/main/controllers/template/rt-template-functions.php:1708
 msgid "Profile Albums"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1699
-#: app/main/controllers/template/rt-template-functions.php:1731
+#: app/main/controllers/template/rt-template-functions.php:1711
+#: app/main/controllers/template/rt-template-functions.php:1743
 msgid "Group Albums"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1817
+#: app/main/controllers/template/rt-template-functions.php:1829
 msgid "Create New Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1817
+#: app/main/controllers/template/rt-template-functions.php:1829
 msgid "Add Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1833
+#: app/main/controllers/template/rt-template-functions.php:1845
 msgid "Create an Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1836
+#: app/main/controllers/template/rt-template-functions.php:1848
 msgid "Album Title : "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1878
-#: app/main/controllers/template/rt-template-functions.php:1886
-#: app/main/controllers/template/rt-template-functions.php:1937
+#: app/main/controllers/template/rt-template-functions.php:1890
+#: app/main/controllers/template/rt-template-functions.php:1898
+#: app/main/controllers/template/rt-template-functions.php:1949
 msgid "Merge Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1881
+#: app/main/controllers/template/rt-template-functions.php:1893
 msgid "Select Album to merge with : "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1928
+#: app/main/controllers/template/rt-template-functions.php:1940
 msgid "Delete Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1965
+#: app/main/controllers/template/rt-template-functions.php:1977
 msgid "Merge"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2024
+#: app/main/controllers/template/rt-template-functions.php:2036
 msgid "Privacy : "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2204
+#: app/main/controllers/template/rt-template-functions.php:2216
 msgid "people like this"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2299
+#: app/main/controllers/template/rt-template-functions.php:2311
 msgid "Empowering your community with "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2301
+#: app/main/controllers/template/rt-template-functions.php:2313
 msgid "The only complete media solution for WordPress, BuddyPress and bbPress"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2317
+#: app/main/controllers/template/rt-template-functions.php:2329
 msgid "Close (Esc)"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2331
+#: app/main/controllers/template/rt-template-functions.php:2343
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2335
+#: app/main/controllers/template/rt-template-functions.php:2347
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2339
+#: app/main/controllers/template/rt-template-functions.php:2351
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2343
+#: app/main/controllers/template/rt-template-functions.php:2355
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2347
+#: app/main/controllers/template/rt-template-functions.php:2359
 msgid "Blocked temporarily"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2383
+#: app/main/controllers/template/rt-template-functions.php:2395
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2399
+#: app/main/controllers/template/rt-template-functions.php:2408
 msgid "1 second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rt-template-functions.php:2402
+#: app/main/controllers/template/rt-template-functions.php:2411
 msgid "1 minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rt-template-functions.php:2405
+#: app/main/controllers/template/rt-template-functions.php:2414
 msgid "1 hour"
 msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rt-template-functions.php:2790
 #. translators: date format, see http:php.net/date
+
+#: app/main/controllers/template/rt-template-functions.php:2799
 msgid "You can consider rtMedia Team for following :"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2793
+#: app/main/controllers/template/rt-template-functions.php:2802
 msgid "rtMedia Customization ( in Upgrade Safe manner )"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2794
+#: app/main/controllers/template/rt-template-functions.php:2803
 msgid "WordPress/BuddyPress Theme Design and Development"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2795
+#: app/main/controllers/template/rt-template-functions.php:2804
 msgid "WordPress/BuddyPress Plugin Development"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2800
+#: app/main/controllers/template/rt-template-functions.php:2809
 msgid "Contact Us"
 msgstr ""
 
@@ -2964,9 +2796,7 @@ msgstr ""
 
 #: app/main/controllers/upload/processors/RTMediaUploadFile.php:240
 #: app/main/controllers/upload/processors/RTMediaUploadFile.php:245
-msgid ""
-"The MP4 file you have uploaded is using an unsupported video codec. "
-"Supported video codec is H.264."
+msgid "The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264."
 msgstr ""
 
 #: app/main/controllers/upload/processors/RTMediaUploadFile.php:250
@@ -2979,9 +2809,7 @@ msgstr ""
 
 #: app/main/controllers/upload/processors/RTMediaUploadFile.php:270
 #: app/main/controllers/upload/processors/RTMediaUploadFile.php:275
-msgid ""
-"The MP3 file you have uploaded is using an unsupported audio format. "
-"Supported audio format is MP3."
+msgid "The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3."
 msgstr ""
 
 #: app/main/controllers/upload/processors/RTMediaUploadFile.php:280
@@ -2989,9 +2817,7 @@ msgid "The MP3 file you have uploaded is not an audio file."
 msgstr ""
 
 #: app/main/controllers/upload/processors/RTMediaUploadFile.php:288
-msgid ""
-"Media File you have tried to upload is not supported. Supported media files "
-"are .jpg, .png, .gif, .mp3, .mov and .mp4."
+msgid "Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4."
 msgstr ""
 
 #: app/main/deprecated/RTMediaDeprecated.php:27
@@ -3044,9 +2870,7 @@ msgid "Unsubscribe"
 msgstr ""
 
 #: app/services/RTMediaEncoding.php:278
-msgid ""
-"Just to improve our service we would like to know the reason for you to "
-"leave us."
+msgid "Just to improve our service we would like to know the reason for you to leave us."
 msgstr ""
 
 #: app/services/RTMediaEncoding.php:328 app/services/RTMediaEncoding.php:448
@@ -3172,9 +2996,7 @@ msgid "Could not read file."
 msgstr ""
 
 #: app/services/RTMediaEncoding.php:583
-msgid ""
-"Something went wrong. The required attachment id does not exists. It must "
-"have been deleted."
+msgid "Something went wrong. The required attachment id does not exists. It must have been deleted."
 msgstr ""
 
 #: app/services/RTMediaEncoding.php:600
@@ -3295,36 +3117,22 @@ msgstr ""
 #: templates/media/media-single.php:41
 msgid "under"
 msgstr ""
-
 #. Plugin Name of the plugin/theme
 msgid "rtMedia for WordPress, BuddyPress and bbPress"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid ""
-"https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign="
-"buddypress-media"
+msgid "https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid ""
-"This plugin adds missing media rich features like photos, videos and audio "
-"uploading to BuddyPress which are essential if you are building social "
-"network, seriously!"
+msgid "This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "rtCamp"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid ""
-"http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign="
-"buddypress-media"
-msgstr ""
-
-#: app/main/controllers/media/RTMediaAlbum.php:35
-msgctxt "Status General Name"
-msgid "hidden"
-msgstr ""
-
-#: app/main/controllers/template/RTMediaNav.php:32
-msgctxt "My Account Privacy sub nav"
-msgid "Privacy"
+msgid "http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media"
 msgstr ""

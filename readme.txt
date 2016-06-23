@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: 4.5.2
-Stable tag: 4.0
+Tested up to: 4.5.3
+Stable tag: 4.0.1
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -137,6 +137,14 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.0.1 [Jun 23, 2016] =
+* Fixed issue of wpdb prepare statement missing argument
+* Fixed time conversion issue in lightbox
+* Fixed context & context_id for profile media upload
+* Fixed lightbox loading whole site
+* Fixed Keep current tab active when traversing different media type tabs
+* Removed the_content filter and used wpautop function for media description
 
 = 4.0 [Jun 21, 2016] =
 * Removed esc_html causing stripping of html tags in rtMedia featured for WordPress VIP compatibility
@@ -1161,8 +1169,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.0 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. WordPress VIP compatibility and fixes for BuddyPress 2.6
+= 4.0.1 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed lightbox issue and other bug fixes.
 
 == Sponsors ==
 
