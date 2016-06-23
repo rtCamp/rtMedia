@@ -122,7 +122,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		if ( ! empty( $is_json ) && 'true' === $is_json ) {
 			wp_send_json( $return );
 		} else {
-			$url = filter_input( INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_URL );
+			$url = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
 			wp_safe_redirect( esc_url_raw( $url ) );
 			die();
 		}

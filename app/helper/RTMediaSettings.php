@@ -202,7 +202,8 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				if ( ! isset( $setting_save ) ) {
 					$settings_saved = '&settings-saved=true';
 				}
-				$http_referer = filter_input( INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_URL );
+
+				$http_referer = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
 				if ( isset( $http_referer ) ) {
 					wp_redirect( $http_referer . $settings_saved );
 				}

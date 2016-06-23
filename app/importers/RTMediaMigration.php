@@ -20,7 +20,7 @@ class RTMediaMigration {
 		$hide = filter_input( INPUT_GET, 'hide', FILTER_SANITIZE_STRING );
 		if ( isset( $page ) && 'rtmedia-migration' === $page && isset( $hide ) && 'true' === $hide ) {
 			$this->hide_migration_notice();
-			$http_referer = filter_input( INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_URL );
+			$http_referer = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
 			wp_safe_redirect( esc_url_raw( $http_referer ) );
 		}
 		if ( false !== rtmedia_get_site_option( 'rt_migration_hide_notice' ) ) {

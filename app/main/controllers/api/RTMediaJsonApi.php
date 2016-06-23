@@ -200,7 +200,7 @@ class RTMediaJsonApi {
 
 				//update all tokens for user to exired on each login
 				$rtmapilogin->update( array( 'status' => 'FALSE' ), array( 'user_id' => $user_login->ID ) );
-				$remote_addr   = filter_input( INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP );
+				$remote_addr   = rtm_get_server_var( 'REMOTE_ADDR', 'FILTER_VALIDATE_IP' );
 				$login_details = array(
 					'user_id'    => intval( $user_login->ID ),
 					'ip'         => $remote_addr,

@@ -58,7 +58,7 @@ class RTMediaGalleryShortcode {
 			), admin_url( 'admin-ajax.php' ) ), null, '' );
 		}
 		wp_localize_script( 'rtmedia-backbone', 'template_url', $template_url );
-		$request_uri = filter_input( INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL );
+		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url          = trailingslashit( $request_uri );
 		$rtmedia_slug = '/' . RTMEDIA_MEDIA_SLUG;
 		// check position of media slug from end of the URL

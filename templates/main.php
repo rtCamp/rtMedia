@@ -12,7 +12,7 @@ $rt_ajax_request = false;
 //todo sanitize and fix $_SERVER variable usage
 // check if it is an ajax request
 
-$_rt_ajax_request = filter_input( INPUT_SERVER, 'HTTP_X_REQUESTED_WITH', FILTER_SANITIZE_STRING );
+$_rt_ajax_request = rtm_get_server_var( 'HTTP_X_REQUESTED_WITH', 'FILTER_SANITIZE_STRING' );
 if ( 'xmlhttprequest' === strtolower( $_rt_ajax_request ) ) {
 	$rt_ajax_request = true;
 }

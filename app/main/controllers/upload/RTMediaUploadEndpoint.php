@@ -177,7 +177,7 @@ class RTMediaUploadEndpoint {
 			ob_end_clean();
 			//check for simpe
 			$rtmedia_update = filter_input( INPUT_POST, 'rtmedia_update', FILTER_SANITIZE_STRING );
-			$_user_agent    = filter_input( INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING );
+			$_user_agent    = rtm_get_server_var( 'HTTP_USER_AGENT', 'FILTER_SANITIZE_STRING' );
 			/**
 			 * if(redirect)
 			 *

@@ -146,7 +146,7 @@ class RTMediaRouter {
 		global $rt_ajax_request;
 		$rt_ajax_request = false;
 
-		$req_with = filter_input( INPUT_SERVER, 'HTTP_X_REQUESTED_WITH', FILTER_SANITIZE_STRING );
+		$req_with = rtm_get_server_var( 'HTTP_X_REQUESTED_WITH', 'FILTER_SANITIZE_STRING' );
 		// check if it is an ajax request
 		if (
 			! empty( $req_with ) &&

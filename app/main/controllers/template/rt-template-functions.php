@@ -2996,3 +2996,25 @@ function rtm_modify_document_title_parts( $title = array() ) {
 }
 
 add_filter( 'document_title_parts', 'rtm_modify_document_title_parts', 30, 1 );
+
+/**
+ * To get server variable
+ *
+ * @param $server_key	string
+ * @param $filter_type	string
+ *
+ * @return mixed
+ */
+function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_STRING' ) {
+
+	$server_val = '';
+
+	if ( function_exists( 'filter_input' ) && filter_has_var( INPUT_SERVER, $server_key ) ) {
+		$server_val = filter_input( INPUT_SERVER, $server_key, constant( $filter_type ) );
+	} elseif( isset( $_SERVER[ $server_key ] ) ) {
+		$server_val = $_SERVER[ $server_key ];
+	}
+
+	return $server_val;
+
+}

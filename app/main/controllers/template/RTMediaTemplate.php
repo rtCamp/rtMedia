@@ -502,7 +502,7 @@ class RTMediaTemplate {
 				$parent_link = get_author_posts_url( $post->media_author );
 			}
 
-			$redirect_url = filter_input( INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_URL );
+			$redirect_url = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
 
 			if ( strpos( $redirect_url, '/' . $rtmedia_query->media[0]->id ) > 0 ) {
 				if ( 'profile' === $context && isset( $rtmedia_query->media[0]->album_id ) && intval( $rtmedia_query->media[0]->album_id ) > 0 ) {

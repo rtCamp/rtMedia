@@ -425,10 +425,10 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					$website = filter_input( INPUT_POST, 'website', FILTER_SANITIZE_URL );
 					$subject = filter_input( INPUT_POST, 'subject', FILTER_SANITIZE_STRING );
 					$details = filter_input( INPUT_POST, 'details', FILTER_SANITIZE_STRING );
-					$server_addr = filter_input( INPUT_SERVER, 'SERVER_ADDR', FILTER_VALIDATE_IP );
-					$remote_addr = filter_input( INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP );
-					$server_software = filter_input( INPUT_SERVER, 'SERVER_SOFTWARE', FILTER_SANITIZE_STRING );
-					$http_user_agent = filter_input( INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING );
+					$server_addr = rtm_get_server_var( 'SERVER_ADDR', 'FILTER_VALIDATE_IP' );
+					$remote_addr = rtm_get_server_var( 'REMOTE_ADDR', 'FILTER_VALIDATE_IP' );
+					$server_software = rtm_get_server_var( 'SERVER_SOFTWARE', 'FILTER_SANITIZE_STRING' );
+					$http_user_agent = rtm_get_server_var( 'HTTP_USER_AGENT', 'FILTER_SANITIZE_STRING' );
 					?>
 					<h3 class="rtm-option-title"><?php echo esc_html( $meta_title ); ?></h3>
 					<div id="support-form" class="bp-media-form rtm-support-form rtm-option-wrapper">
