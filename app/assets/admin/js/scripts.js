@@ -14,7 +14,7 @@ jQuery( document ).ready( function ( $ ) {
 		$( '.rtm-save-settings-msg' ).remove();
 
 		if ( $( '.rtm-fly-warning' ).length === 0 ) {
-			rtm_warning.innerText = "Settings have changed, you should save them!";
+			rtm_warning.innerText = rtmedia_admin_strings.settings_changed;
 
 			$( '.rtm-button-container.top' ).prepend( rtm_warning );
 			$( '.rtm-fly-warning' ).slideDown();

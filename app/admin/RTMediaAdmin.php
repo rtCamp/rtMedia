@@ -925,6 +925,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'are_you_sure'         => esc_html__( 'This will subscribe you to the free plan.', 'buddypress-media' ),
 					'disable_encoding'     => esc_html__( 'Are you sure you want to disable the encoding service?', 'buddypress-media' ),
 					'enable_encoding'      => esc_html__( 'Are you sure you want to enable the encoding service?', 'buddypress-media' ),
+					'settings_changed'	   => esc_html__( 'Settings have changed, you should save them!', 'buddypress-media' ),
 				);
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
