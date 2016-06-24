@@ -42,6 +42,8 @@ class RTMediaBuddyPressActivity {
 			add_action( 'rtmedia_after_add_comment', array( $this, 'activity_after_media_comment' ) );
 			add_action( 'rtmedia_before_remove_comment', array( $this, 'remove_activity_after_media_comment_delete' ) );
 		}
+
+		add_filter( 'bp_activity_user_can_delete', array( $this, 'rtm_bp_activity_user_can_delete' ), 10, 2 );
 	}
 
 	function bp_activity_deleted_activities( $activity_ids_deleted ) {
@@ -678,4 +680,27 @@ class RTMediaBuddyPressActivity {
 			}
 		}
 	}
+
+	/**
+	 * To check whether user can delete the activity or not
+	 *
+	 * @access	public
+	 *
+	 * @since	4.0.2
+	 *
+	 * @param	bool	$can_delete	Whether the user can delete the item.
+	 * @param	object	$activity	Current activity item object.
+	 *
+	 * @return	bool	$can_delete
+	 */
+	public function rtm_bp_activity_user_can_delete( $can_delete, $activity ) {
+
+		if ( isset( $activity->user_id ) && ( intval( $activity->user_id ) === intval( bp_loggedin_user_id() ) ) ) {
+			$can_delete = true;
+		}
+
+		return $can_delete;
+
+	}
+
 }

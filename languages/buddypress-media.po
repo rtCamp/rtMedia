@@ -2779,7 +2779,6 @@ msgstr ""
 #: app/main/controllers/template/rt-template-functions.php:1417
 msgid "Image"
 msgstr ""
-msgstr ""
 
 #: app/main/controllers/template/rt-template-functions.php:1434
 msgid "Modify Image"
