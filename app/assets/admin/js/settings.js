@@ -93,10 +93,10 @@ jQuery( document ).ready( function ( $ ) {
 			var error_msg = "";
 			var general_videothumb_val = 0;
 			if ( general_videothumb.val() <= 0 ) {
-				error_msg += "Number of video thumbnails to be generated should be greater than 0 in media sizes settings. Setting it to default value 2.";
+				error_msg += rtmedia_admin_strings.video_thumbnail_error;
 				general_videothumb_val = 2;
 			} else if ( !reg.test( general_videothumb.val() ) ) {
-				error_msg += 'Invalid value for Number of video thumbnails in media sizes settings. Setting it to round value ' + Math.round( general_videothumb.val() ) + ".";
+				error_msg += rtmedia_admin_strings.video_thumbnail_invalid_value + ' ' + Math.round( general_videothumb.val() ) + ".";
 				general_videothumb_val = Math.round( general_videothumb.val() );
 			}
 			if ( error_msg != "" ) {
@@ -112,13 +112,13 @@ jQuery( document ).ready( function ( $ ) {
 			var error_msg = "";
 			var general_jpeg_image_quality_val = 0;
 			if ( general_jpeg_image_quality.val() <= 0 ) {
-				error_msg += "Number of percentage in JPEG image quality should be greater than 0 in media sizes settings. Setting it to default value 90.";
+				error_msg += rtmedia_admin_strings.jpeg_quality_negative_error;
 				general_jpeg_image_quality_val = 90;
 			} else if ( general_jpeg_image_quality.val() > 100 ) {
-				error_msg += "Number of percentage in JPEG image quality should be less than 100 in media sizes settings. Setting it to 100.";
+				error_msg += rtmedia_admin_strings.jpeg_quality_percentage_error;
 				general_jpeg_image_quality_val = 100;
 			} else if ( !reg.test( general_jpeg_image_quality.val() ) ) {
-				error_msg += 'Invalid value for percentage in JPEG image quality in media sizes settings. Setting it to round value ' + Math.round( general_jpeg_image_quality.val() ) + ".";
+				error_msg += rtmedia_admin_strings.jpeg_quality_invalid_value + ' ' + Math.round( general_jpeg_image_quality.val() ) + ".";
 				general_jpeg_image_quality_val = Math.round( general_jpeg_image_quality.val() );
 			}
 			if ( error_msg != "" ) {
@@ -134,10 +134,10 @@ jQuery( document ).ready( function ( $ ) {
 			var error_msg = "";
 			var general_perPageMedia_val = 0;
 			if ( general_perPageMedia.val() < 1 ) {
-				error_msg += "Please enter positive integer value only. Setting number of media per page value to default value 10.";
+				error_msg += rtmedia_admin_strings.per_page_media_negative_value;
 				general_perPageMedia_val = 10;
 			} else if ( jQuery.isNumeric( general_perPageMedia.val() ) && ( Math.floor( general_perPageMedia.val() ) != general_perPageMedia.val() ) ) {
-				error_msg += "Please enter positive integer value only. Setting number of media per page value to round value " + Math.round( general_perPageMedia.val() ) + ".";
+				error_msg += rtmedia_admin_strings.per_page_media_positive_error + " " + Math.round( general_perPageMedia.val() ) + ".";
 				general_perPageMedia_val = Math.round( general_perPageMedia.val() );
 			}
 			if ( error_msg != "" ) {
@@ -551,7 +551,7 @@ jQuery( document ).ready( function ( $ ) {
 					jQuery('#map_progress_msgs').html( rtMediaAdmin.templates.rtm_map_mapping_failure( map_data ) );
 				} else {
 					var map_data = {
-						msg : "Request failed."
+						msg : rtmedia_admin_strings.request_failed
 					};
 
 					jQuery('#map_progress_msgs').html( rtMediaAdmin.templates.rtm_map_mapping_failure( map_data ) );
@@ -783,27 +783,27 @@ jQuery( document ).ready( function ( $ ) {
 		if ( request_type == "bug_report" ) {
 			var wp_admin_username = jQuery( '#wp_admin_username' ).val();
 			if ( wp_admin_username == "" ) {
-				alert( "Please enter WP Admin Login." );
+				alert( rtmedia_admin_support_strings.wp_admin_username_error );
 				return false;
 			}
 			var wp_admin_pwd = jQuery( '#wp_admin_pwd' ).val();
 			if ( wp_admin_pwd == "" ) {
-				alert( "Please enter WP Admin password." );
+				alert( rtmedia_admin_support_strings.wp_admin_pwd_error );
 				return false;
 			}
 			var ssh_ftp_host = jQuery( '#ssh_ftp_host' ).val();
 			if ( ssh_ftp_host == "" ) {
-				alert( "Please enter SSH / FTP host." );
+				alert( rtmedia_admin_support_strings.ssh_ftp_host_error );
 				return false;
 			}
 			var ssh_ftp_username = jQuery( '#ssh_ftp_username' ).val();
 			if ( ssh_ftp_username == "" ) {
-				alert( "Please enter SSH / FTP login." );
+				alert( rtmedia_admin_support_strings.ssh_ftp_username_error );
 				return false;
 			}
 			var ssh_ftp_pwd = jQuery( '#ssh_ftp_pwd' ).val();
 			if ( ssh_ftp_pwd == "" ) {
-				alert( "Please enter SSH / FTP password." );
+				alert( rtmedia_admin_support_strings.ssh_ftp_pwd_error );
 				return false;
 			}
 			form_data = {
@@ -840,7 +840,7 @@ jQuery( document ).ready( function ( $ ) {
 		jQuery.post( ajaxurl, data, function ( data ) {
 			data = data.trim();
 			if ( data == "false" ) {
-				alert( "Please fill all the fields." );
+				alert( rtmedia_admin_support_strings.all_fields_error );
 				return false;
 			}
 			$( '#rtmedia_service_contact_container' ).empty();

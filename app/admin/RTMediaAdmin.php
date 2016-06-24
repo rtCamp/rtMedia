@@ -920,17 +920,36 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_url', admin_url() );
 
 				$rtmedia_admin_strings = array(
-					'no_refresh'           => esc_html__( 'Please do not refresh this page.', 'buddypress-media' ),
-					'something_went_wrong' => esc_html__( 'Something went wrong. Please ', 'buddypress-media' ) .  '<a href onclick="location.reload();">' . esc_html__( 'refresh', 'buddypress-media' ) . '</a>' . esc_html__( ' page.', 'buddypress-media' ),
-					'are_you_sure'         => esc_html__( 'This will subscribe you to the free plan.', 'buddypress-media' ),
-					'disable_encoding'     => esc_html__( 'Are you sure you want to disable the encoding service?', 'buddypress-media' ),
-					'enable_encoding'      => esc_html__( 'Are you sure you want to enable the encoding service?', 'buddypress-media' ),
-					'settings_changed'	   => esc_html__( 'Settings have changed, you should save them!', 'buddypress-media' ),
+					'no_refresh'           	  		=> esc_html__( 'Please do not refresh this page.', 'buddypress-media' ),
+					'something_went_wrong' 	  		=> esc_html__( 'Something went wrong. Please ', 'buddypress-media' ) .  '<a href onclick="location.reload();">' . esc_html__( 'refresh', 'buddypress-media' ) . '</a>' . esc_html__( ' page.', 'buddypress-media' ),
+					'are_you_sure'         	  		=> esc_html__( 'This will subscribe you to the free plan.', 'buddypress-media' ),
+					'disable_encoding'     	  		=> esc_html__( 'Are you sure you want to disable the encoding service?', 'buddypress-media' ),
+					'enable_encoding'      	  		=> esc_html__( 'Are you sure you want to enable the encoding service?', 'buddypress-media' ),
+					'settings_changed'	   	  		=> esc_html__( 'Settings have changed, you should save them!', 'buddypress-media' ),
+					'video_thumbnail_error' 		=> esc_html__( 'Number of video thumbnails to be generated should be greater than 0 in media sizes settings. Setting it to default value 2.', 'buddypress-media' ),
+					'video_thumbnail_invalid_value' => esc_html__( 'Invalid value for number of video thumbnails in media sizes settings. Setting it to round value', 'buddypress-media' ),
+					'jpeg_quality_negative_error'	=> esc_html__( 'Number of percentage in JPEG image quality should be greater than 0 in media sizes settings. Setting it to default value 90.', 'buddypress-media' ),
+					'jpeg_quality_percentage_error'	=> esc_html__( 'Number of percentage in JPEG image quality should be less than 100 in media sizes settings. Setting it to 100.', 'buddypress-media' ),
+					'jpeg_quality_invalid_value'	=> esc_html__( 'Invalid value for percentage in JPEG image quality in media sizes settings. Setting it to round value', 'buddypress-media' ),
+					'per_page_media_negative_value'	=> esc_html__( 'Please enter positive integer value only. Setting number of media per page value to default value 10.', 'buddypress-media' ),
+					'per_page_media_positive_error'	=> esc_html__( 'Please enter positive integer value only. Setting number of media per page value to round value', 'buddypress-media' ),
+					'request_failed'				=> esc_html__( 'Request failed.', 'buddypress-media' ),
 				);
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
 				wp_localize_script( 'rtmedia-admin', 'settings_url', esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) . '#privacy_enabled' );
 				wp_localize_script( 'rtmedia-admin', 'settings_rt_album_import_url', esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) );
+
+				$rtmedia_admin_support_strings = array(
+					'wp_admin_username_error' => esc_html__( 'Please enter WP Admin Login.', 'buddypress-media' ),
+					'wp_admin_pwd_error' 	  => esc_html__( 'Please enter WP Admin password.', 'buddypress-media' ),
+					'ssh_ftp_host_error' 	  => esc_html__( 'Please enter SSH / FTP host.', 'buddypress-media' ),
+					'ssh_ftp_username_error'  => esc_html__( 'Please enter SSH / FTP login.', 'buddypress-media' ),
+					'ssh_ftp_pwd_error'  	  => esc_html__( 'Please enter SSH / FTP password.', 'buddypress-media' ),
+					'all_fields_error'  	  => esc_html__( 'Please fill all the fields.', 'buddypress-media' ),
+				);
+
+				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_support_strings', $rtmedia_admin_support_strings );
 
 				/* Only one CSS file should enqueue */
 				wp_enqueue_style( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/css/admin' . $suffix . '.css', '', RTMEDIA_VERSION );
