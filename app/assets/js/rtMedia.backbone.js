@@ -1309,7 +1309,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error ) {
 	if ( error == '' ) {
 		upload_progress = '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
 		upload_progress += '</div>';
-		icon = '<span id="label_' + file.id + '" class="dashicons dashicons-edit rtmicon" title="Edit File Name"></span>';
+		icon = '<span id="label_' + file.id + '" class="dashicons dashicons-edit rtmicon" title="' + rtmedia_backbone_strings.rtm_edit_file_name + '"></span>';
 	} else if ( error.code == - 600 ) {
 		err_msg = ( uploader != '' ) ? rtmedia_max_file_msg + uploader.settings.max_file_size :  window.file_size_info;
 		title = "title='" + err_msg + "'";

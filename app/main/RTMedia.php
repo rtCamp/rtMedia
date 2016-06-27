@@ -1005,6 +1005,13 @@ class RTMedia {
 			'description' => esc_html__( 'Description:', 'buddypress-media' ),
 		) );
 
+		// Localizing strings for rtMedia.backbone.js
+		$rtmedia_backbone_strings = array(
+			'rtm_edit_file_name' => esc_html__( 'Edit File Name', 'buddypress-media' ),
+		);
+
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_strings', $rtmedia_backbone_strings );
+
 		// Enqueue touchswipe
 		wp_enqueue_script( 'rtmedia-touchswipe', RTMEDIA_URL . 'lib/touchswipe/jquery.touchSwipe.min.js', array( 'jquery' ), RTMEDIA_VERSION, true );
 
