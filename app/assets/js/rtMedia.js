@@ -302,8 +302,9 @@ jQuery( 'document' ).ready( function ( $ ) {
 						} );
 
 						if ( flag ) {
-							var label = $context.charAt( 0 ).toUpperCase() + $context.slice( 1 );
-							var opt_html = '<optgroup value="' + $context + '" label="' + label + ' Albums"><option value="' + response + '">' + $albumname + '</option></optgroup>';
+							var label = $context.charAt( 0 ).toUpperCase() + $context.slice( 1 ) + " " + rtmedia_main_js_strings.rtmedia_albums;
+
+							var opt_html = '<optgroup value="' + $context + '" label="' + label + '"><option value="' + response + '">' + $albumname + '</option></optgroup>';
 
 							jQuery( this ).append( opt_html );
 						}
@@ -376,10 +377,10 @@ jQuery( 'document' ).ready( function ( $ ) {
 			var message = '';
 			var css_class = '';
 			if ( res == "true" ) {
-				message = "Privacy updated successfully.";
+				message = rtmedia_main_js_strings.privacy_update_success;
 				css_class = 'success';
 			} else {
-				message = "Couldn't change privacy, please try again.";
+				message = rtmedia_main_js_strings.privacy_update_error;
 				css_class = 'fail';
 			}
 
@@ -628,7 +629,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 
 					if ( data == '1' ) {
 						//media delete
-						rtmedia_gallery_action_alert_message( 'file deleted successfully.', 'success' );
+						rtmedia_gallery_action_alert_message( rtmedia_main_js_strings.file_delete_success, 'success' );
 						curr_li.remove();
 						if ( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 							rtm_masonry_reload( rtm_masonry_container );

@@ -1012,6 +1012,16 @@ class RTMedia {
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_strings', $rtmedia_backbone_strings );
 
+		// Localizing strings for rtMedia.js
+		$rtmedia_main_js_strings = array(
+			'rtmedia_albums' => esc_html__( 'Albums', 'buddypress-media' ),
+			'privacy_update_success' => esc_html__( 'Privacy updated successfully.', 'buddypress-media' ),
+			'privacy_update_error' => esc_html__( 'Couldn\'t change privacy, please try again.', 'buddypress-media' ),
+			'file_delete_success' => esc_html__( 'file deleted successfully.', 'buddypress-media' ),
+		);
+
+		wp_localize_script( 'rtmedia-main', 'rtmedia_main_js_strings', $rtmedia_main_js_strings );
+
 		// Enqueue touchswipe
 		wp_enqueue_script( 'rtmedia-touchswipe', RTMEDIA_URL . 'lib/touchswipe/jquery.touchSwipe.min.js', array( 'jquery' ), RTMEDIA_VERSION, true );
 
