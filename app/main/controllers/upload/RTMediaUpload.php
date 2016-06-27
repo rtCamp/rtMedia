@@ -56,7 +56,7 @@ class RTMediaUpload {
 		/**
 		 * if upload successful then populate the rtMedia database and insert the media into album
 		 */
-		if ( $file_object && $uploaded ) {
+		if ( ! is_wp_error( $file_object ) && $file_object && $uploaded ) {
 			$this->media_ids = $this->media->add( $uploaded, $file_object );
 			do_action( 'rtemdia_after_file_upload_before_activity', $file_object, $this );
 			if ( $this->media_ids ) {
