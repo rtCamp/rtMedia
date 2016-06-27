@@ -44,6 +44,8 @@ class RTMediaBuddyPressActivity {
 		}
 
 		add_filter( 'bp_activity_user_can_delete', array( $this, 'rtm_bp_activity_user_can_delete' ), 10, 2 );
+
+		add_filter( 'bp_activity_permalink_access', array( $this, 'rtm_bp_activity_permalink_access' ) );
 	}
 
 	function bp_activity_deleted_activities( $activity_ids_deleted ) {
@@ -700,6 +702,67 @@ class RTMediaBuddyPressActivity {
 		}
 
 		return $can_delete;
+
+	}
+
+	/**
+	 * To check user has access to view single activity
+	 *
+	 * @access	public
+	 *
+	 * @since	4.0.2
+	 *
+	 * @param	bool 	$args
+	 *
+	 * @return 	bool	$has_access
+	 */
+	public function rtm_bp_activity_permalink_access( $args ) {
+
+		$bp = buddypress();
+
+		// Get the activity details.
+		$activity = bp_activity_get_specific( array( 'activity_ids' => bp_current_action(), 'show_hidden' => true, 'spam' => 'ham_only', ) );
+
+		// 404 if activity does not exist
+		if ( empty( $activity['activities'][0] ) || bp_action_variables() ) {
+			bp_do_404();
+
+			return;
+		} else {
+			$activity = $activity['activities'][0];
+		}
+
+		// Default access is true.
+		$has_access = true;
+
+		// If activity is from a group, do an extra cap check.
+		if ( isset( $bp->groups->id ) && $activity->component == $bp->groups->id ) {
+			// Activity is from a group, but groups is currently disabled.
+			if ( ! bp_is_active( 'groups' ) ) {
+				bp_do_404();
+
+				return;
+			}
+
+			// Check to see if the group is not public, if so, check the
+			// user has access to see this activity.
+			if ( $group = groups_get_group( array( 'group_id' => $activity->item_id ) ) ) {
+				// Group is not public.
+				if ( 'public' != $group->status ) {
+					// User is not a member of group.
+					if ( ! groups_is_user_member( bp_loggedin_user_id(), $group->id ) ) {
+						$has_access = false;
+					}
+				}
+			}
+		}
+
+		// If activity author does not match displayed user, block access.
+		if ( true === $has_access && intval( bp_displayed_user_id() ) !== intval( $activity->user_id ) ) {
+			$has_access = false;
+		}
+
+		return $has_access;
 
 	}
 
