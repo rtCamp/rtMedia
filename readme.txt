@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.5.3
-Stable tag: 4.0.1
+Stable tag: 4.0.2
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -137,6 +137,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.0.2 [Jun 27, 2016] =
+* Fixed privacy issue in activity for BuddyPress 2.6.0
+* Fixed single activity permalink issue
 
 = 4.0.1 [Jun 23, 2016] =
 * Fixed issue of wpdb prepare statement missing argument
@@ -1169,8 +1173,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.0.1 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed lightbox issue and other bug fixes.
+= 4.0.2 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed privacy and permalink issues for BuddyPress activity.
 
 == Sponsors ==
 
