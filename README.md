@@ -138,6 +138,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 4.0.2 [Jun 27, 2016] ####
+* Fixed privacy issue in activity for BuddyPress 2.6.0
+* Fixed single activity permalink issue
+
 #### 4.0.1 [Jun 23, 2016] ####
 * Fixed issue of wpdb prepare statement missing argument
 * Fixed time conversion issue in lightbox
@@ -1167,8 +1171,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.0.1 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed lightbox issue and other bug fixes.
+#### 4.0.2 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed privacy and permalink issues for BuddyPress activity.
 
 ## Sponsors ##
 
