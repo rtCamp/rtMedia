@@ -61,7 +61,7 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 
 			check_admin_referer( 'groups_create_save_' . $this->slug );
 
-			$rt_album_creation_control = filter_input( 'INPUT_POST', 'rt_album_creation_control', FILTER_SANITIZE_STRING );
+			$rt_album_creation_control = filter_input( INPUT_POST, 'rt_album_creation_control', FILTER_SANITIZE_STRING );
 
 			/* Save any details submitted here */
 			if ( ! empty( $rt_album_creation_control ) ) {
