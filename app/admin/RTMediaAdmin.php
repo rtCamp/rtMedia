@@ -764,9 +764,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function bulk_action_handler() {
 			$action = filter_input( INPUT_GET, 'action', FILTER_SANITIZE_STRING );
-			$request_media = filter_input( INPUT_GET, 'media', FILTER_DEFAULT, FILTER_SANITIZE_NUMBER_INT );
+			$request_media = filter_input( INPUT_GET, 'media', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
 			if ( 'bulk_video_regenerate_thumbnails' === $action && '' !== $request_media ) {
-				wp_safe_redirect( esc_url_raw( add_query_arg( array( 'media_ids' => urlencode( implode( ',', $request_media ) ) ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) ) );
+				wp_safe_redirect( esc_url_raw( add_query_arg( array( 'media_ids' => urlencode( implode( ',', array_map( 'intval', $request_media ) ) ) ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) ) );
 				exit;
 			}
 		}
