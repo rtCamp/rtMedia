@@ -258,7 +258,7 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function bp_after_activity_post_form() {
-		$url_raw    = rtm_get_server_var( 'REQUEST_URI', 'FILTER_VALIDATE_URL' );
+		$url_raw    = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url        = trailingslashit( $url_raw );
 		$slug_split = explode( '/', $url );
 		// check position of media slug for end of the URL
