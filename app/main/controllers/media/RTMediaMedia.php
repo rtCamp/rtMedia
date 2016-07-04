@@ -357,6 +357,11 @@ class RTMediaMedia {
 							bp_activity_delete_by_activity_id( $media[0]->activity_id );
 						}
 					}
+
+					// Deleting like and comment activity for media
+					if ( function_exists( 'bp_activity_delete' ) ) {
+						bp_activity_delete( array( 'item_id' => $media[0]->id ) );
+					}
 				}
 			}
 			if ( ! $core ) {
