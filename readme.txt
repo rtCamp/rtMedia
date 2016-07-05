@@ -1,5 +1,5 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, rittesh.patel, sanket.parmar, pranalipatel, jignesh.nakrani, mangeshp, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores
+Contributors: rtcamp, rittesh.patel, sanket.parmar, pranalipatel, jignesh.nakrani, mangeshp, kiranpotphode, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
@@ -139,10 +139,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 = 4.0.3 [Jul 05, 2016] =
-* Fixed filter_input warning for media in group creation
-* Fixed warning for video encoding
-* Fixed delete activity for like and comment after media delete
-* Fixed media uploading issue from activity for multisite
+* Fix filter_input warning for media in group creation
+* Fix warning for video encoding
+* Fix delete activity for like and comment after media delete
+* Fix media uploading issue from activity for multisite
 
 = 4.0.2 [Jun 27, 2016] =
 * Fixed privacy issue in activity for BuddyPress 2.6.0
