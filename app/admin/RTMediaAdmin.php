@@ -34,10 +34,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			$this->rtmedia_support = new RTMediaSupport();
 			add_action( 'wp_ajax_rtmedia_select_request', array( $this->rtmedia_support, 'get_form' ), 1 );
-			add_action( 'wp_ajax_rtmedia_cancel_request', function () {
-				do_settings_sections( 'rtmedia-support' );
-				die();
-			}, 1 );
+
+			add_action( 'wp_ajax_rtmedia_cancel_request', array( $this->rtmedia_support, 'rtmedia_cancel_request' ), 1 );
+
 			add_action( 'wp_ajax_rtmedia_submit_request', array( $this->rtmedia_support, 'submit_request' ), 1 );
 
 			add_action( 'wp_ajax_rtmedia_linkback', array( $this, 'linkback' ), 1 ); //fixme : is it being used ?

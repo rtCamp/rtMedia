@@ -170,8 +170,8 @@ class RTMediaEncoding {
 			foreach ( $users as $user ) {
 				$admin_email_ids[] = $user->user_email;
 			}
-			add_filter( 'wp_mail_content_type', function(){ return 'text/html';
-			} );
+
+			add_filter( 'wp_mail_content_type', array($this,'rtmedia_mail_content_type'));
 			wp_mail( $admin_email_ids, $subject, sprintf( $message, size_format( $usage_details[ $this->api_key ]->used, 2 ), size_format( $usage_details[ $this->api_key ]->remaining, 2 ), size_format( $usage_details[ $this->api_key ]->total, 2 ) ) );
 		}
 		update_site_option( 'rtmedia-encoding-usage-limit-mail', 1 );
@@ -189,12 +189,16 @@ class RTMediaEncoding {
 				foreach ( $users as $user ) {
 					$admin_email_ids[] = $user->user_email;
 				}
-				add_filter( 'wp_mail_content_type', function(){ return 'text/html';
-				} );
+				
+				add_filter( 'wp_mail_content_type', array($this,'rtmedia_mail_content_type'));
 				wp_mail( $admin_email_ids, $subject, sprintf( $message, size_format( $usage_details[ $this->api_key ]->used, 2 ), 0, size_format( $usage_details[ $this->api_key ]->total, 2 ) ) );
 			}
 			update_site_option( 'rtmedia-encoding-usage-limit-mail', 1 );
 		}
+	}
+
+	public function rtmedia_mail_content_type() {
+	    return 'text/html';
 	}
 
 	public function save_api_key() {
@@ -607,8 +611,8 @@ class RTMediaEncoding {
 					foreach ( $users as $user ) {
 						$admin_email_ids[] = $user->user_email;
 					}
-					add_filter( 'wp_mail_content_type', function(){ return 'text/html';
-					} );
+
+					add_filter( 'wp_mail_content_type', array($this,'rtmedia_mail_content_type'));
 					wp_mail( $admin_email_ids, $subject, $message );
 				}
 				echo esc_html( $flag );
