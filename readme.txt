@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.5.3
-Stable tag: 4.0.3
+Stable tag: 4.0.4
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -137,6 +137,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.0.4 [Jul 08, 2016] =
+* Backward compability for PHP 5.2
 
 = 4.0.3 [Jul 05, 2016] =
 * Fixed filter_input warning for media in group creation
@@ -1179,8 +1182,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.0.3 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
+= 4.0.4 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes for backward compatibility.
 
 == Sponsors ==
 
