@@ -138,6 +138,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 4.0.4 [Jul 08, 2016] ####
+* Backward compability for PHP 5.2
+
 #### 4.0.3 [Jul 05, 2016] ####
 * Fix filter_input warning for media in group creation
 * Fix warning for video encoding
@@ -1177,8 +1180,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.0.3 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
+#### 4.0.4 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes for backward compatibility.
 
 ## Sponsors ##
 
