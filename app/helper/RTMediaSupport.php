@@ -325,7 +325,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						?>
 						<tr>
 						<th scope="row"><?php echo esc_html( $configuration ); ?></th>
-						<td><?php echo esc_html( $value ); ?></td>
+						<td><?php echo wp_kses( $value ); ?></td>
 						</tr><?php
 					}
 				}
