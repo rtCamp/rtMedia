@@ -376,8 +376,16 @@ class RTMediaTemplate {
 			$submit         = filter_input( INPUT_POST, 'submit', FILTER_SANITIZE_STRING );
 			$_move_selected = filter_input( INPUT_POST, 'move-selected', FILTER_SANITIZE_STRING );
 			$_album         = filter_input( INPUT_POST, 'album', FILTER_SANITIZE_STRING );
-//			$_selected      = filter_input( INPUT_POST, 'selected', FILTER_SANITIZE_STRING );
-			$_selected = $_POST[ 'selected' ];
+
+			$filters = array(
+				'selected' => array(
+					'filter' => FILTER_VALIDATE_INT,
+					'flags'  => FILTER_REQUIRE_ARRAY,
+				),
+			);
+
+			$_selected_arr = filter_input_array( INPUT_POST, $filters );
+			$_selected     = $_selected_arr['selected'];
 			if ( isset( $submit ) ) {
 				$data_array = array( 'media_title', 'description', 'privacy' );
 				$data       = rtmedia_sanitize_object( $_POST, $data_array );
@@ -461,7 +469,15 @@ class RTMediaTemplate {
 		$_wp_http_referer = filter_input( INPUT_POST, '_wp_http_referer', FILTER_SANITIZE_URL );
 		$media            = new RTMediaMedia();
 
-		$_selected = $_POST[ 'selected' ];
+		$filters = array(
+				'selected' => array(
+					'filter' => FILTER_VALIDATE_INT,
+					'flags'  => FILTER_REQUIRE_ARRAY,
+				),
+			);
+
+		$_selected_arr = filter_input_array( INPUT_POST, $filters );
+		$_selected     = $_selected_arr['selected'];
 		if ( wp_verify_nonce( $nonce, 'rtmedia_bulk_delete_nonce' ) && ! empty( $_selected ) ) {
 
 			$ids = $_selected;
