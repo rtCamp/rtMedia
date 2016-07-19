@@ -547,13 +547,14 @@ class RTMediaBuddyPressActivity {
 						$activity_args['item_id']   = $media_obj->context_id;
 					}
 				}
+                                if ( class_exists( 'BuddyPress' ) && bp_is_active( 'activity' ) ) {
+                                        // add BP activity
+                                        $activity_id = bp_activity_add( $activity_args );
 
-				// add BP activity
-				$activity_id = bp_activity_add( $activity_args );
-
-				// Store activity id into user meta for reference
-				//todo user_attribute
-				update_user_meta( $user_id, 'rtm-bp-media-like-activity-' . $media_id, $activity_id );
+                                        // Store activity id into user meta for reference
+                                        //todo user_attribute
+                                        update_user_meta( $user_id, 'rtm-bp-media-like-activity-' . $media_id, $activity_id );
+                                }
 			} else {
 
 				$meta_key = 'rtm-bp-media-like-activity-' . $media_id;
