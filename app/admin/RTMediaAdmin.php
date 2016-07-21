@@ -2050,11 +2050,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ! $site_option || 'hide' !== $site_option ) {
 				rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_9_4', 'show' );
 				if ( is_dir( get_template_directory() . '/rtmedia' ) ) {
-					echo '<div class="error rtmedia-update-template-notice"><p>' . esc_html__( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.', 'buddypress-media' ) . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' . esc_html__( 'Hide', 'buddypress-media' ) . '</a></p></div>';
+					echo '<div class="error rtmedia-update-template-notice"><p>' . esc_html__( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.', 'buddypress-media' ) . '<a href="#" onclick="rtmedia_hide_template_override_notice(\''.esc_js( wp_create_nonce( 'rtmedia_template_notice' ) ).'\')" style="float:right">' . esc_html__( 'Hide', 'buddypress-media' ) . '</a></p></div>';
 					?>
 					<script type="text/javascript">
-						function rtmedia_hide_template_override_notice() {
-							var data = {action: 'rtmedia_hide_template_override_notice', _rtm_nonce: jQuery('#rtmedia-update-template-notice-nonce').val()};
+						function rtmedia_hide_template_override_notice( rtmedia_template_notice_nonce ) {
+							var data = {action: 'rtmedia_hide_template_override_notice', _rtm_nonce: rtmedia_template_notice_nonce };
 							jQuery.post(ajaxurl, data, function (response) {
 								response = response.trim();
 								if ('1' === response)
@@ -2069,7 +2069,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 		function rtmedia_hide_template_override_notice() {
 
-			if ( check_ajax_referer( '_rtmedia-update-template-notice_', '_rtm_nonce' ) && rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_9_4', 'hide' ) ) {
+			if ( check_ajax_referer( 'rtmedia_template_notice', '_rtm_nonce' ) && rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_9_4', 'hide' ) ) {
 				echo '1';
 			} else {
 				echo '0';
