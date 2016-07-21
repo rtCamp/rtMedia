@@ -314,6 +314,12 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 */
 		public function debug_info_html( $page = '' ) {
 			$this->debug_info();
+			$allowed_html = array(
+				'a' => array(
+					'href' => array(),
+					),
+				'br' => array(),
+				);
 			?>
 			<div id="debug-info" class="rtm-option-wrapper">
 			<h3 class="rtm-option-title"><?php esc_html_e( 'Debug Info', 'buddypress-media' ); ?></h3>
@@ -325,7 +331,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						?>
 						<tr>
 						<th scope="row"><?php echo esc_html( $configuration ); ?></th>
-						<td><?php echo esc_html( $value ); ?></td>
+						<td><?php echo wp_kses( $value, $allowed_html ); ?></td>
 						</tr><?php
 					}
 				}
