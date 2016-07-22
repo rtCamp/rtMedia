@@ -134,8 +134,7 @@ class RTMediaUploadEndpoint {
 						}
 					}
 				}
-
-				if ( isset( $this->upload['rtmedia_simple_file_upload'] ) && true === $this->upload['rtmedia_simple_file_upload'] ) {
+				if ( isset( $this->upload['rtmedia_simple_file_upload'] ) && true == $this->upload['rtmedia_simple_file_upload'] ) {
 					if ( isset( $media ) && count( $media ) > 0 ) {
 						if ( isset( $_redirect_url ) ) {
 							if ( intval( $_redirect_url ) > 1 ) {
