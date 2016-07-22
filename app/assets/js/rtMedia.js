@@ -695,8 +695,8 @@ function rtm_masonry_reload( el ) {
 		var config = {
 			showChars: 100,
 			ellipsesText: "...",
-			moreText: "more",
-			lessText: "less"
+			moreText: "Read more",
+			lessText: "Show less"
 		};
 
 		if ( settings ) {
