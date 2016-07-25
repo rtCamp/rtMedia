@@ -138,6 +138,14 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 4.0.5 [Jul 25, 2016] ####
+* Fix bulk edit not working on delete and move
+* Fix issue more and less click on media description
+* Fix html markup in support tab
+* Make pagination work on opening page-link in new tab
+* Fix hide rtMedia template files notice after click on dismiss
+* Fix for profile pic not changing on uploading photo
+
 #### 4.0.4 [Jul 08, 2016] ####
 * Backward compability for PHP 5.2
 
@@ -1180,8 +1188,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.0.4 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes for backward compatibility.
+#### 4.0.5 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
 
 ## Sponsors ##
 
