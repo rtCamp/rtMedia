@@ -138,7 +138,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.0.5 [Jul 28, 2016] =
+= 4.0.5 [Jul 25, 2016] =
 * Fix bulk edit not working on delete and move
 * Fix issue more and less click on media description
 * Fix html markup in support tab
