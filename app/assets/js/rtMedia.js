@@ -695,8 +695,8 @@ function rtm_masonry_reload( el ) {
 		var config = {
 			showChars: 100,
 			ellipsesText: "...",
-			moreText: "more",
-			lessText: "less"
+			moreText: "Read more",
+			lessText: "Show less"
 		};
 
 		if ( settings ) {
@@ -715,7 +715,7 @@ function rtm_masonry_reload( el ) {
 				$this.addClass( 'less' );
 				$this.html( config.lessText );
 				}
-				$this.parent().prev().toggle();
+
 				$this.prev().children( '.morecontent' ).toggle();
 				$this.prev().children( '.moreellipses' ).toggle();
 				return false;
