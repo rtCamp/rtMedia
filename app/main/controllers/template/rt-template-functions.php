@@ -1009,7 +1009,7 @@ function rtmedia_pagination_next_link() {
 	return apply_filters( 'rtmedia_pagination_next_link', $link . $page_url, $link, $page_url );
 }
 
-function rtmedia_pagination_page_link( $page_no ) {
+function rtmedia_pagination_page_link( $page_no = '' ) {
 
 	global $rtmedia_media, $rtmedia_interaction, $rtmedia_query;
 
