@@ -4,7 +4,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.0.4\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
+<<<<<<< Updated upstream
 "POT-Creation-Date: 2016-07-22 06:56:14+00:00\n"
+=======
+"POT-Creation-Date: 2016-07-28 10:40:28+00:00\n"
+>>>>>>> Stashed changes
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
