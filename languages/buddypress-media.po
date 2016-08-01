@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.0.5\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.0.6\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-08-01 05:18:08+00:00\n"
+"POT-Creation-Date: 2016-08-01 13:08:48+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1376,31 +1376,23 @@ msgstr ""
 msgid "Posted "
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:56
+#: app/helper/RTMediaLicense.php:64
 msgid "Activated"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:59
+#: app/helper/RTMediaLicense.php:68
 msgid "Deactivated"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:69
+#: app/helper/RTMediaLicense.php:106
 msgid "Status: "
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:78
-msgid "License Key"
-msgstr ""
-
-#: app/helper/RTMediaLicense.php:90
-msgid "Activate / Deactivate License"
-msgstr ""
-
-#: app/helper/RTMediaLicense.php:98
+#: app/helper/RTMediaLicense.php:135
 msgid "Deactivate License"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:101
+#: app/helper/RTMediaLicense.php:138
 msgid "Activate License"
 msgstr ""
 

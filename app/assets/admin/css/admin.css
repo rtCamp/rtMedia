@@ -394,6 +394,33 @@
   font-size: 13px;
 }
 
+.rtm-addon-license {
+  border: 1px solid #ddd;
+  margin: 1%;
+  display: inline-block;
+  background-color: #fff;
+  width: 100%;
+  vertical-align: top;
+}
+@media (min-width: 768px) {
+  .rtm-addon-license {
+    width: 30%;
+  }
+}
+.rtm-addon-license .title {
+  background-color: #fafafa;
+  border-bottom: 1px solid #ddd;
+  margin: 0;
+  /* min-height: 40px;*/
+  padding: 10px;
+}
+.rtm-addon-license form {
+  padding: 10px;
+}
+.rtm-addon-license form input[type="submit"] {
+  margin: 10px 0;
+}
+
 #rtmedia-encoding-usage strong {
   display: inline-block;
   min-width: 120px;
