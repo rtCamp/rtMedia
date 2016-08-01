@@ -913,6 +913,7 @@ class RTMediaJsonApi {
 
 		$rtmedia_file = filter_input( INPUT_POST, 'rtmedia_file', FILTER_SANITIZE_STRING );
 		$image_type   = filter_input( INPUT_POST, 'image_type', FILTER_SANITIZE_STRING );
+		$title   = filter_input( INPUT_POST, 'title', FILTER_SANITIZE_STRING );
 
 		$updated       = false;
 		$uploaded_look = false;
