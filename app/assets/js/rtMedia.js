@@ -716,27 +716,28 @@ function rtm_masonry_reload( el ) {
 
      $(document).off("click", '.morelink');
 
-     $(document).on({
-         click: function() {
+	 $(document).on({
+		 click: function() {
 
-             var $this = $(this);
-             if ($this.hasClass('less')) {
-                 $this.removeClass('less');
-                 $this.html(config.moreText);
-                 $this.parent().prev().animate({'height':'0'+'%'}, function () { $this.parent().prev().prev().show(); }).hide('fast', function() {
-                     config.onLess();
-                   });
-
-             } else {
-                 $this.addClass('less');
-                 $this.html(config.lessText);
-                 $this.parent().prev().animate({'height':'100'+'%'}, function () { $this.parent().prev().prev().hide(); }).show('fast', function() {
-                     config.onMore();
-                   });
-             }
-             return false;
-         }
-     }, '.morelink');
+			 var $this = $(this);
+			 if ($this.hasClass('less')) {
+				 $this.removeClass('less');
+				 $this.html(config.moreText);
+				 $this.parent().prev().hide( 0 , function () { $this.parent().prev().prev().show(); })
+				 .hide( 0, function() {
+					 config.onLess();
+				 });
+			 } else {
+				 $this.addClass('less');
+				 $this.html(config.lessText);
+				 $this.parent().prev().show( 0 , function () { $this.parent().prev().prev().hide(); })
+				 .show( 0 , function() {
+					 config.onMore();
+				 });
+			 }
+			 return false;
+		 }
+		}, '.morelink');
 
      return this.each(function() {
          var $this = $(this);
