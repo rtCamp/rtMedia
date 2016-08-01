@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.5.3
-Stable tag: 4.0.5
+Stable tag: 4.0.6
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -137,6 +137,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.0.6 [Aug 01, 2016] =
+* Fix read more media description in media popup
+* Fix warning for pagination links
+* Update products page link on Admin Dashboard widget
 
 = 4.0.5 [Jul 25, 2016] =
 * Fix bulk edit not working on delete and move
@@ -1190,7 +1195,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.0.5 =
+= 4.0.6 =
 Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
 
 == Sponsors ==
