@@ -811,7 +811,7 @@ function rtm_masonry_reload( el ) {
              }
 
              var html = '<div class="shortcontent">' + c +
-                 '</div><div class="allcontent" style="max-height: 200px; overflow-y: auto;">' + content +
+                 '</div><div class="allcontent">' + content +
                  '</div><span><a href="javascript://nop/" class="morelink">' + config.moreText + '</a></span>';
 
              $this.html(html);
