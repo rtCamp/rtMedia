@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: 4.5.3
-Stable tag: 4.0.6
+Tested up to: 4.6
+Stable tag: 4.0.7
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -137,6 +137,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.0.7 [Aug 17, 2016] =
+* Fix Media upload using json api
+* Fix media upload not working on Windows Servers
+* Fix view counter not working
+* Update read more media description with scroll
 
 = 4.0.6 [Aug 01, 2016] =
 * Fix read more media description in media popup
@@ -1195,7 +1201,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.0.6 =
+= 4.0.7 =
 Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
 
 == Sponsors ==
