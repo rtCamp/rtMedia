@@ -130,7 +130,7 @@ class RTMediaUploadFile {
 			 * otherwise check for $_FILES global object from the form submitted
 			 */
 		} elseif ( isset( $_FILES['rtmedia_file'] ) ) {
-			$this->populate_file_array( wp_unslash( $_FILES['rtmedia_file'] ) );
+			$this->populate_file_array( $_FILES['rtmedia_file'] );
 		} else {
 			/**
 			 * No files could be found to upload
