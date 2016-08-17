@@ -65,7 +65,7 @@ class RTMediaInteractionModel extends RTDBModel {
 	 * @return type $results
 	 */
 	function get_row( $user_id = '', $media_id = '', $action = '' ) {
-		if ( '' === $user_id || '' === $media_id || '' === $action ) {
+		if ( '' === $user_id && '' === $media_id && '' === $action ) {
 			return false;
 		}
 
