@@ -326,27 +326,30 @@ class RTMediaBuddyPressActivity {
 
 	function override_allowed_tags( $activity_allowedtags ) {
 
-		$activity_allowedtags['video']             = array();
-		$activity_allowedtags['video']['id']       = array();
-		$activity_allowedtags['video']['class']    = array();
-		$activity_allowedtags['video']['src']      = array();
-		$activity_allowedtags['video']['controls'] = array();
-		$activity_allowedtags['video']['preload']  = array();
-		$activity_allowedtags['video']['alt']      = array();
-		$activity_allowedtags['video']['title']    = array();
-		$activity_allowedtags['video']['width']    = array();
-		$activity_allowedtags['video']['height']   = array();
-		$activity_allowedtags['video']['poster']   = array();
-		$activity_allowedtags['audio']             = array();
-		$activity_allowedtags['audio']['id']       = array();
-		$activity_allowedtags['audio']['class']    = array();
-		$activity_allowedtags['audio']['src']      = array();
-		$activity_allowedtags['audio']['controls'] = array();
-		$activity_allowedtags['audio']['preload']  = array();
-		$activity_allowedtags['audio']['alt']      = array();
-		$activity_allowedtags['audio']['title']    = array();
-		$activity_allowedtags['audio']['width']    = array();
-		$activity_allowedtags['audio']['poster']   = array();
+		$activity_allowedtags['video']             	= array();
+		$activity_allowedtags['video']['id']       	= array();
+		$activity_allowedtags['video']['class']    	= array();
+		$activity_allowedtags['video']['src']      	= array();
+		$activity_allowedtags['video']['controls'] 	= array();
+		$activity_allowedtags['video']['preload']  	= array();
+		$activity_allowedtags['video']['alt']      	= array();
+		$activity_allowedtags['video']['title']    	= array();
+		$activity_allowedtags['video']['width']    	= array();
+		$activity_allowedtags['video']['height']   	= array();
+		$activity_allowedtags['video']['poster']   	= array();
+		$activity_allowedtags['source'] 		   	= array();
+		$activity_allowedtags['source']['type']	   	= array();
+		$activity_allowedtags['source']['src'] 	   	= array();
+		$activity_allowedtags['audio']             	= array();
+		$activity_allowedtags['audio']['id']       	= array();
+		$activity_allowedtags['audio']['class']    	= array();
+		$activity_allowedtags['audio']['src']      	= array();
+		$activity_allowedtags['audio']['controls'] 	= array();
+		$activity_allowedtags['audio']['preload']  	= array();
+		$activity_allowedtags['audio']['alt']      	= array();
+		$activity_allowedtags['audio']['title']    	= array();
+		$activity_allowedtags['audio']['width']    	= array();
+		$activity_allowedtags['audio']['poster']   	= array();
 
 		if ( ! isset( $activity_allowedtags['div'] ) ) {
 			$activity_allowedtags['div'] = array();
