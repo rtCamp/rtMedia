@@ -26,6 +26,7 @@ class RTMediaCommentModel {
 	 * Insert attr
 	 *
 	 * @access public
+	 *
 	 * @param  array $attr
 	 */
 	public function insert( $attr ) {
@@ -37,6 +38,7 @@ class RTMediaCommentModel {
 	 * Update comment.
 	 *
 	 * @access public
+	 *
 	 * @param  array $attr
 	 */
 	public function update( $attr ) {
@@ -48,6 +50,7 @@ class RTMediaCommentModel {
 	 * Get comments.
 	 *
 	 * @access public
+	 *
 	 * @param  string $where
 	 */
 	public function get( $where ) {
@@ -59,7 +62,8 @@ class RTMediaCommentModel {
 	 * Get comments by id.
 	 *
 	 * @access public
-	 * @param  int    $id
+	 *
+	 * @param  int $id
 	 */
 	public function get_by_id( $id ) {
 
@@ -70,7 +74,8 @@ class RTMediaCommentModel {
 	 * Delete comments by id.
 	 *
 	 * @access public
-	 * @param  int    $id
+	 *
+	 * @param  int $id
 	 */
 	public function delete( $id ) {
 

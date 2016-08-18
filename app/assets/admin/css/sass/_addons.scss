@@ -11,7 +11,7 @@
 
 		img {
 			height: auto;
-			margin: -10px 0 0 -10px;
+			/*margin: -10px 0 0 -10px;*/
 			max-width: 120px;
 		}
 	}
@@ -24,6 +24,7 @@
 
 	h4 {
 		margin-bottom: 0;
+		margin-top: 0;
 	}
 
 	a {
@@ -48,6 +49,9 @@
 
 	.rtm-setting-title + .rtm-option-title {
 		margin-top: 0;
+	}
+	.plugin-card-top {
+		padding: 10px;
 	}
 }
 

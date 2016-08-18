@@ -15,10 +15,23 @@ class RTMediaUpload {
 	var $media_ids = null;
 
 	/**
+	 * Static array to hold the allowed tags to be use in wp_kses
+	 *
+	 * @var array
+	 */
+	public static $wp_kses_allowed_tags = array(
+		'a' => array(
+			'id' => array(),
+			'href' => array(),
+			'target' => array(),
+		),
+		'p' => array(),
+	);
+
+	/**
 	 *
 	 * @param array $uploaded
 	 *
-	 * @return boolean
 	 */
 	public function __construct( $uploaded ) {
 		/**
@@ -43,10 +56,10 @@ class RTMediaUpload {
 		/**
 		 * if upload successful then populate the rtMedia database and insert the media into album
 		 */
-		if ( $file_object && $uploaded ){
+		if ( ! is_wp_error( $file_object ) && $file_object && $uploaded ) {
 			$this->media_ids = $this->media->add( $uploaded, $file_object );
-			do_action( "rtemdia_after_file_upload_before_activity", $file_object, $this );
-			if ( $this->media_ids ){
+			do_action( 'rtemdia_after_file_upload_before_activity', $file_object, $this );
+			if ( $this->media_ids ) {
 				return true;
 			} else {
 				return false;
@@ -64,18 +77,17 @@ class RTMediaUpload {
 	 * @return type
 	 */
 	function upload( $uploaded ) {
-		switch ( $uploaded[ 'mode' ] ) {
+		switch ( $uploaded['mode'] ) {
 			case 'file_upload':
-				if( isset( $uploaded[ 'files' ] ) ) {
-					return $this->file->init( $uploaded[ 'files' ] );
+				if ( isset( $uploaded['files'] ) ) {
+					return $this->file->init( $uploaded['files'] );
 				}
 				break;
 			case 'link_input':
 				return $this->url->init( $uploaded );
 				break;
 			default:
-				do_action( 'rtmedia_upload_' . $uploaded[ 'mode' ], $uploaded );
+				do_action( 'rtmedia_upload_' . $uploaded['mode'], $uploaded );
 		}
 	}
-
 }

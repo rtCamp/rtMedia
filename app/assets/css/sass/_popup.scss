@@ -4,6 +4,14 @@
 		background: $black;
 		margin: 0 auto;
 		position: relative;
+
+		.rtmedia-media-description {
+			.allcontent {
+				max-height: 200px;
+    			overflow-y: auto;
+				margin: 5px 0;
+			}
+		}
 	}
 
 	.rtm-single-meta {
@@ -65,7 +73,7 @@
         	opacity: 1;
         }
     }
-    
+
 }
 
 #buddypress #rtmedia-single-media-container.rtmedia-single-media {

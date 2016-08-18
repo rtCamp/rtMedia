@@ -18,7 +18,7 @@ class RTMediaInteractionModel extends RTDBModel {
 	 * @access public
 	 * @return void
 	 */
-	public function __construct(){
+	public function __construct() {
 		parent::__construct( 'rtm_media_interaction', false, 10, true );
 	}
 
@@ -27,26 +27,26 @@ class RTMediaInteractionModel extends RTDBModel {
 	 *
 	 * @access public
 	 *
-	 * @param  int  $user_id
-	 * @param  int  $media_id
+	 * @param  int $user_id
+	 * @param  int $media_id
 	 * @param  type $action
 	 *
 	 * @return bool
 	 */
-	public function check( $user_id = '', $media_id = '', $action = '' ){
-		if ( $user_id == '' || $media_id == '' || $action == '' ){
+	public function check( $user_id = '', $media_id = '', $action = '' ) {
+		if ( '' === $user_id || '' === $media_id || '' === $action ) {
 			return false;
 		}
 
 		$columns = array(
-			'user_id' => $user_id,
+			'user_id'  => $user_id,
 			'media_id' => $media_id,
-			'action' => $action,
+			'action'   => $action,
 		);
 
 		$results = $this->get( $columns );
 
-		if ( $results ){
+		if ( $results ) {
 			return true;
 		} else {
 			return false;
@@ -58,28 +58,28 @@ class RTMediaInteractionModel extends RTDBModel {
 	 *
 	 * @access public
 	 *
-	 * @param  int  $user_id
-	 * @param  int  $media_id
+	 * @param  int $user_id
+	 * @param  int $media_id
 	 * @param  type $action
 	 *
 	 * @return type $results
 	 */
-	function get_row( $user_id = '', $media_id = '', $action = '' ){
-		if ( $user_id == '' && $media_id == '' && $action == '' ){
+	function get_row( $user_id = '', $media_id = '', $action = '' ) {
+		if ( '' === $user_id && '' === $media_id && '' === $action ) {
 			return false;
 		}
 
 		$columns = array();
-		if ( '' != $user_id ) {
+		if ( '' !== $user_id ) {
 			$columns['user_id'] = $user_id;
 		}
-		if ( '' != $media_id ) {
+		if ( '' !== $media_id ) {
 			$columns['media_id'] = $media_id;
 		}
-		if ( '' != $action ) {
+		if ( '' !== $action ) {
 			$columns['action'] = $action;
 		}
-		
+
 		$results = $this->get( $columns );
 
 		return $results;

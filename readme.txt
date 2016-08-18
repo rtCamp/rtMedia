@@ -1,18 +1,18 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, rittesh.patel, sanket.parmar, pranalipatel, jignesh.nakrani, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores
+Contributors: rtcamp, rittesh.patel, sanket.parmar, pranalipatel, jignesh.nakrani, mangeshp, kiranpotphode, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: 4.5.1
-Stable tag: 3.10.6
+Tested up to: 4.6
+Stable tag: 4.0.7
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
 == Description ==
 
-rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress.
+rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress, and is **WordPress VIP** compatible.
 
 Built with a mobile-first approach, it works on mobile/tablet devices (like iPhone/iPad, Android).
 
@@ -20,7 +20,7 @@ Built with a mobile-first approach, it works on mobile/tablet devices (like iPho
 
 If you're in a hurry, you can skip the long list of features in subsequent sections and just explore live demos!
 
-* [rtMedia Demo](http://demo.rtcamp.com/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
+* [rtMedia Demo](http://demo.rtmedia.io/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 
 = Video Tour =
 
@@ -31,16 +31,16 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 = rtMedia Features =
 
  1. **[Free Audio/Video conversion](https://rtmedia.io/audio-video-encoding-service/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Free Audio/Video Encoding Service")** - rtCamp (company behind rtMedia) has setup dedicated servers to provide free audio/video encoding services for all sites running rtMedia.
- 2. **WordPress Integration** - Display media on WordPress author pages ( eg: http://demo.rtcamp.com/rtmedia/author/admin/media/ )
+ 2. **WordPress Integration** - Display media on WordPress author pages ( eg: http://demo.rtmedia.io/author/admin/media/ )
  3. **BuddyPress Integration** - Find a new media tab under BuddyPress Profiles & Groups.
  4. **BuddyPress Activity Stream** - Attach media to activity status updates just like Facebook.
  5. **Albums** - Organise media into manageable collections. BuddyPress Group albums support collaboration.
  6. **Responsive** - Album Slideshow (Lightbox), video player, uploads work on mobiles & tablets. Support for swipe guestures.
  7. **Privacy** - Control who can see media files, albums and BuddyPress activities.
  8. **Templating system** - Completely customise rtMedia by modifying the template files. Just copy over the template folder to your theme.
- 9. **[Featured Media](https://rtmedia.io/featured-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
- 10. **[rtMedia Uploader](https://rtmedia.io/upload/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Uploader")** - Use `[rtmedia_uploader]` shortcode or `<?php rtmedia_uploader() ?>` template tag, to show drag-n-drop uploader in any WordPress area (post, page, custom-post, etc).
- 11. **[rtMedia Gallery](https://rtmedia.io/gallery/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Gallery")** - Display media gallery anywhere on your site using `[rtmedia_gallery]` shortcode or `<?php rtmedia_gallery ?>` template tag.
+ 9. **[Featured Media](https://rtmedia.io/docs/developers/featured-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
+ 10. **[rtMedia Uploader](https://rtmedia.io/docs/features/upload/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Uploader")** - Use `[rtmedia_uploader]` shortcode or `<?php rtmedia_uploader() ?>` template tag, to show drag-n-drop uploader in any WordPress area (post, page, custom-post, etc).
+ 11. **[rtMedia Gallery](https://rtmedia.io/docs/features/gallery/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Gallery")** - Display media gallery anywhere on your site using `[rtmedia_gallery]` shortcode or `<?php rtmedia_gallery ?>` template tag.
 
 = Audio/Video Conversion =
 
@@ -99,7 +99,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 * [FAQ](https://rtmedia.io/faq/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's FAQ page")
 * [Support](http://community.rtcamp.com/c/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's support page")
 * [GitHub](http://github.com/rtCamp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
-* [Translations](http://rtcamp.com/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) - Please do NOT use Github for translations. Instead Use [this GlotPress project](http://rtcamp.com/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
+* [Translations](https://rtmedia.io/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) - Please do NOT use Github for translations. Instead Use [this GlotPress project](https://rtmedia.io/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 
 == Installation ==
 
@@ -115,7 +115,7 @@ Read rtMedia [Documentation](https://rtmedia.io/docs/?utm_source=readme&utm_medi
 
 == Screenshots ==
 
-You can also check [rtMedia's Live Demo](http://demo.rtcamp.com/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Live Demo") or video below:
+You can also check [rtMedia's Live Demo](http://demo.rtmedia.io/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Live Demo") or video below:
 
 http://www.youtube.com/watch?v=dJrykKQGDcs
 
@@ -137,6 +137,64 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.0.7 [Aug 17, 2016] =
+* Fix Media upload using json api
+* Fix media upload not working on Windows Servers
+* Fix view counter not working
+* Update read more media description with scroll
+
+= 4.0.6 [Aug 01, 2016] =
+* Fix read more media description in media popup
+* Fix warning for pagination links
+* Update products page link on Admin Dashboard widget
+
+= 4.0.5 [Jul 25, 2016] =
+* Fix bulk edit not working on delete and move
+* Fix issue more and less click on media description
+* Fix html markup in support tab
+* Make pagination work on opening page-link in new tab
+* Fix hide rtMedia template files notice after click on dismiss
+* Fix for profile pic not changing on uploading photo
+
+= 4.0.4 [Jul 08, 2016] =
+* Backward compability for PHP 5.2
+
+= 4.0.3 [Jul 05, 2016] =
+* Fix filter_input warning for media in group creation
+* Fix warning for video encoding
+* Fix delete activity for like and comment after media delete
+* Fix media uploading issue from activity for multisite
+
+= 4.0.2 [Jun 27, 2016] =
+* Fixed privacy issue in activity for BuddyPress 2.6.0
+* Fixed single activity permalink issue
+
+= 4.0.1 [Jun 23, 2016] =
+* Fixed issue of wpdb prepare statement missing argument
+* Fixed time conversion issue in lightbox
+* Fixed context & context_id for profile media upload
+* Fixed lightbox loading whole site
+* Fixed Keep current tab active when traversing different media type tabs
+* Removed the_content filter and used wpautop function for media description
+
+= 4.0 [Jun 21, 2016] =
+* Removed esc_html causing stripping of html tags in rtMedia featured for WordPress VIP compatibility
+* Fixed BuddyPress nav items in group issue for BuddyPress 2.6 with backward compatibility
+* Fixed check of class_exist for group extension for BuddyPress 2.6 compatibility
+
+= 3.10.9 [Jun 20, 2016] =
+* WordPress VIP compatibility added
+
+= 3.10.8 [Jun 14, 2016] =
+* Fixed database error when deleting comment
+* Changed price for add-ons
+
+= 3.10.7 [May 25, 2016] =
+* Fixed JS issue for tabs in media edit
+* Fixed CSS for twentysixteen theme
+* Code cleanup
+* Updated german language file
 
 = 3.10.6 [May 03, 2016] =
 * Fixed - BuddyPress group privacy now depends on group status (public, private, hidden)
@@ -1143,8 +1201,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.10.6 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed BuddyPress group privacy, JS issue with WordPress 4.5, 404 error on titles for bbPress templates
+= 4.0.7 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
 
 == Sponsors ==
 
@@ -1155,17 +1213,17 @@ Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed BuddyPress group p
 
 == Translation ==
 
-rtMedia includes [full translation support](https://rtcamp.com/tutorials/rtmedia-translation/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). Head over to the [translation project](http://rtcamp.com/translate/projects/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
+rtMedia includes [full translation support](https://rtmedia.io/docs/translations/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). Head over to the [translation project](https://rtmedia.io/translate/projects/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
 
-* [Dutch](https://rtcamp.com/translate/projects/rtmedia/nl/default) translation by [carry2web] (http://profiles.wordpress.org/carry2web)
-* [Italian](https://rtcamp.com/translate/projects/rtmedia/it/default) translation by [Paolo]
-* [Dutch](https://rtcamp.com/translate/projects/rtmedia/nl/default) translation by [rjpj](http://profiles.wordpress.org/rjpj)
-* [Polish](https://rtcamp.com/translate/projects/rtmedia/pl/default) translation by [Polski_Ziom](http://profiles.wordpress.org/polski_ziom)
-* [Spanish](https://rtcamp.com/translate/projects/rtmedia/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/) and [d3ne]
-* [Solvak](https://rtcamp.com/translate/projects/rtmedia/sk/default) translation by [igid26](http://profiles.wordpress.org/igid26)
-* [Italian](https://rtcamp.com/translate/projects/rtmedia/it/default) translation by [Yukiko.Kawa]
-* [Persian](https://rtcamp.com/translate/projects/rtmedia/fa/default) translation by [mahdiar](http://profiles.wordpress.org/mahdiar/)
-* [German](https://rtcamp.com/translate/projects/rtmedia/de/default) translation by [hannes.muc]
+* [Dutch](https://rtmedia.io/translate/projects/rtmedia/nl/default) translation by [carry2web] (http://profiles.wordpress.org/carry2web)
+* [Italian](https://rtmedia.io/translate/projects/rtmedia/it/default) translation by [Paolo]
+* [Dutch](https://rtmedia.io/translate/projects/rtmedia/nl/default) translation by [rjpj](http://profiles.wordpress.org/rjpj)
+* [Polish](https://rtmedia.io/translate/projects/rtmedia/pl/default) translation by [Polski_Ziom](http://profiles.wordpress.org/polski_ziom)
+* [Spanish](https://rtmedia.io/translate/projects/rtmedia/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/) and [d3ne]
+* [Solvak](https://rtmedia.io/translate/projects/rtmedia/sk/default) translation by [igid26](http://profiles.wordpress.org/igid26)
+* [Italian](https://rtmedia.io/translate/projects/rtmedia/it/default) translation by [Yukiko.Kawa]
+* [Persian](https://rtmedia.io/translate/projects/rtmedia/fa/default) translation by [mahdiar](http://profiles.wordpress.org/mahdiar/)
+* [German](https://rtmedia.io/translate/projects/rtmedia/de/default) translation by [hannes.muc]
 
 (**Note**: Credits are given for translations that are at least 50% complete.)
 

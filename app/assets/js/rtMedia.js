@@ -35,11 +35,11 @@ function apply_rtMagnificPopup( selector ) {
 				},
 				callbacks: {
 					ajaxContentAdded: function () {
-                
-                        mfp = jQuery.magnificPopup.instance;
-                        if ( jQuery(mfp.items).size() === 1 ) {
-                            jQuery(".mfp-arrow").remove();
-                        }
+
+						mfp = jQuery.magnificPopup.instance;
+						if ( jQuery( mfp.items ).size() === 1 ) {
+							jQuery( ".mfp-arrow" ).remove();
+						}
 						// When last second media is encountered in lightbox, load more medias if available
 						var mfp = jQuery.magnificPopup.instance;
 						var current_media = mfp.currItem.el;
@@ -62,21 +62,18 @@ function apply_rtMagnificPopup( selector ) {
 
 						var settings = { };
 
-						if ( typeof _wpmejsSettings !== 'undefined' )
+						if ( typeof _wpmejsSettings !== 'undefined' ) {
 							settings.pluginPath = _wpmejsSettings.pluginPath;
+						}
 						$( '.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video' ).mediaelementplayer( {
 							// if the <video width> is not specified, this is the default
 							defaultVideoWidth: 480,
 							// if the <video height> is not specified, this is the default
 							defaultVideoHeight: 270,
-							// if set, overrides <video width>
-							//videoWidth: 1,
-							// if set, overrides <video height>
-							//videoHeight: 1
-                            success: function (mediaElement, domObject) { 
-                                // call the play method
-                                mediaElement.play();
-                            },
+							success: function (mediaElement, domObject) {
+								// call the play method
+								mediaElement.play();
+							},
 						} );
 						$( '.mfp-content .mejs-audio .mejs-controls' ).css( 'position', 'relative' );
 						rtMediaHook.call( 'rtmedia_js_popup_after_content_added', [ ] );
@@ -98,22 +95,23 @@ var rtMediaHook = {
 	hooks: [ ],
 	is_break: false,
 	register: function ( name, callback ) {
-		if ( 'undefined' == typeof ( rtMediaHook.hooks[name] ) )
-			rtMediaHook.hooks[name] = [ ]
-		rtMediaHook.hooks[name].push( callback )
+		if ( 'undefined' == typeof ( rtMediaHook.hooks[name] ) ) {
+			rtMediaHook.hooks[name] = [ ];
+		}
+		rtMediaHook.hooks[name].push( callback );
 	},
 	call: function ( name, arguments ) {
-		if ( 'undefined' != typeof ( rtMediaHook.hooks[name] ) )
+		if ( 'undefined' != typeof ( rtMediaHook.hooks[name] ) ) {
 			for ( i = 0; i < rtMediaHook.hooks[name].length; ++ i ) {
 				if ( true != rtMediaHook.hooks[name][i]( arguments ) ) {
 					rtMediaHook.is_break = true;
 					return false;
 					break;
 				}
-			}
+			} }
 		return true;
 	}
-}
+};
 
 //drop-down js
 function rtmedia_init_action_dropdown() {
@@ -137,7 +135,7 @@ function rtmedia_init_action_dropdown() {
 jQuery( 'document' ).ready( function ( $ ) {
 
 	// Tabs
-	if( typeof rtTab !== 'undefined' ) {
+	if ( typeof $.fn.rtTab !== 'undefined' ) {
 		$( '.rtm-tabs' ).rtTab();
 	}
 
@@ -152,10 +150,10 @@ jQuery( 'document' ).ready( function ( $ ) {
 
 	$( "#rt_media_comment_form" ).submit( function ( e ) {
 		if ( $.trim( $( "#comment_content" ).val() ) == "" ) {
-			if ( jQuery('#rtmedia-single-media-container').length == 0 ) {
-				rtmedia_gallery_action_alert_message(rtmedia_empty_comment_msg, 'warning');
+			if ( jQuery( '#rtmedia-single-media-container' ).length == 0 ) {
+				rtmedia_gallery_action_alert_message( rtmedia_empty_comment_msg, 'warning' );
 			} else {
-				rtmedia_single_media_alert_message(rtmedia_empty_comment_msg, 'warning');
+				rtmedia_single_media_alert_message( rtmedia_empty_comment_msg, 'warning' );
 			}
 			return false;
 		} else {
@@ -169,21 +167,21 @@ jQuery( 'document' ).ready( function ( $ ) {
 		$( this ).addClass( "no-popup" );
 	} );
 
-    //Remove title from popup duplication
-    $("li.rtmedia-list-item p a").each(function(e) {
-        $(this).addClass("no-popup");
-    })
-    //rtmedia_lightbox_enabled from setting
-    if (typeof(rtmedia_lightbox_enabled) != 'undefined' && rtmedia_lightbox_enabled == "1") {
-        apply_rtMagnificPopup('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container');
-    }
+	//Remove title from popup duplication
+	$( "li.rtmedia-list-item p a" ).each(function(e) {
+		$( this ).addClass( "no-popup" );
+	})
+	//rtmedia_lightbox_enabled from setting
+	if (typeof(rtmedia_lightbox_enabled) != 'undefined' && rtmedia_lightbox_enabled == "1") {
+		apply_rtMagnificPopup( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
+	}
 
-    jQuery.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-		try{
+	jQuery.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+		try {
 	        if (originalOptions.data == null || typeof(originalOptions.data) == "undefined" || typeof(originalOptions.data.action) == "undefined" ) {
 	            return true;
 	        }
-	    }catch(e){
+	    } catch (e) {
 	        return true;
 	    }
 
@@ -191,9 +189,9 @@ jQuery( 'document' ).ready( function ( $ ) {
 	    if (originalOptions.data.action == 'activity_get_older_updates') {
 		    var orignalSuccess = originalOptions.success;
 		    options.success = function(response) {
-				orignalSuccess(response);
-				apply_rtMagnificPopup('.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
-				rtMediaHook.call('rtmedia_js_after_activity_added', []);
+				orignalSuccess( response );
+				apply_rtMagnificPopup( '.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' );
+				rtMediaHook.call( 'rtmedia_js_after_activity_added', [] );
 		    }
 		} else if ( originalOptions.data.action == 'get_single_activity_content' ) {
 		    // Handle lightbox in BuddyPress single activity loadmore
@@ -201,21 +199,17 @@ jQuery( 'document' ).ready( function ( $ ) {
 		    options.success = function ( response ) {
 			    orignalSuccess( response );
 			    setTimeout( function(){
-				    apply_rtMagnificPopup('.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
+				    apply_rtMagnificPopup( '.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' );
 				    jQuery( 'ul.activity-list li.rtmedia_update:first-child .wp-audio-shortcode, ul.activity-list li.rtmedia_update:first-child .wp-video-shortcode' ).mediaelementplayer( {
 					    // if the <video width> is not specified, this is the default
 					    defaultVideoWidth: 480,
 					    // if the <video height> is not specified, this is the default
 					    defaultVideoHeight: 270
-					    // if set, overrides <video width>
-					    //videoWidth: 1,
-					    // if set, overrides <video height>
-					    //videoHeight: 1
 				    } );
 			    }, 900 );
 		    }
 	    }
-    });
+	});
 
 	jQuery.ajaxPrefilter( function ( options, originalOptions, jqXHR ) {
 		try {
@@ -236,10 +230,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 					defaultVideoWidth: 480,
 					// if the <video height> is not specified, this is the default
 					defaultVideoHeight: 270
-					// if set, overrides <video width>
-					//videoWidth: 1,
-					// if set, overrides <video height>
-					//videoHeight: 1
 				} );
 
 				rtMediaHook.call( 'rtmedia_js_after_activity_added', [ ] );
@@ -271,7 +261,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 	} );
 
 	jQuery( '#rtmedia-create-album-modal' ).on( 'click', '#rtmedia_create_new_album', function ( e ) {
-		$albumname = jQuery( '<span/>' ).text( jQuery.trim( jQuery( '#rtmedia_album_name' ).val()  ) ).html();
+		$albumname = jQuery( '<span/>' ).text( jQuery.trim( jQuery( '#rtmedia_album_name' ).val() ) ).html();
 		$context = jQuery.trim( jQuery( '#rtmedia_album_context' ).val() );
 		$context_id = jQuery.trim( jQuery( '#rtmedia_album_context_id' ).val() );
 		$privacy = jQuery.trim( jQuery( '#rtmedia_select_album_privacy' ).val() );
@@ -296,9 +286,8 @@ jQuery( 'document' ).ready( function ( $ ) {
 			$( "#rtmedia_create_new_album" ).prepend( "<img src='" + rMedia_loading_file + "' />" );
 
 			jQuery.post( rtmedia_ajax_url, data, function ( response ) {
-				response = jQuery.parseJSON(response);
 				if ( typeof response.album != 'undefined' ) {
-					response =  jQuery.trim( response.album );
+					response = jQuery.trim( response.album );
 					var flag = true;
 
 					jQuery( '.rtmedia-user-album-list' ).each( function () {
@@ -313,8 +302,9 @@ jQuery( 'document' ).ready( function ( $ ) {
 						} );
 
 						if ( flag ) {
-							var label = $context.charAt( 0 ).toUpperCase() + $context.slice( 1 );
-							var opt_html = '<optgroup value="' + $context + '" label="' + label + ' Albums"><option value="' + response + '">' + $albumname + '</option></optgroup>';
+							var label = $context.charAt( 0 ).toUpperCase() + $context.slice( 1 ) + " " + rtmedia_main_js_strings.rtmedia_albums;
+
+							var opt_html = '<optgroup value="' + $context + '" label="' + label + '"><option value="' + response + '">' + $albumname + '</option></optgroup>';
 
 							jQuery( this ).append( opt_html );
 						}
@@ -335,14 +325,14 @@ jQuery( 'document' ).ready( function ( $ ) {
 					}, 2000 );
 				} else if ( typeof response.error != 'undefined' ) {
 					rtmedia_gallery_action_alert_message( response.error, 'warning' );
-                } else {
+				} else {
 					rtmedia_gallery_action_alert_message( rtmedia_something_wrong_msg, 'warning' );
 				}
 
 				$( "#rtmedia_create_new_album" ).removeAttr( 'disabled' );
 				$( "#rtmedia_create_new_album" ).html( old_val );
 			} );
-        } else {
+		} else {
 			rtmedia_gallery_action_alert_message( rtmedia_empty_album_name_msg, 'warning' );
 		}
 	} );
@@ -350,7 +340,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 	jQuery( '.rtmedia-container' ).on( 'click', '.rtmedia-delete-selected', function ( e ) {
 		if ( jQuery( '.rtmedia-list :checkbox:checked' ).length > 0 ) {
 			if ( confirm( rtmedia_selected_media_delete_confirmation ) ) {
-                jQuery( this ).closest( 'form' ).attr( 'action', '../../../' + rtmedia_media_slug + '/delete' ).submit();
+				jQuery( this ).closest( 'form' ).attr( 'action', '../../../' + rtmedia_media_slug + '/delete' ).submit();
 			}
 		} else {
 			rtmedia_gallery_action_alert_message( rtmedia_no_media_selected, 'warning' );
@@ -368,46 +358,44 @@ jQuery( 'document' ).ready( function ( $ ) {
 
 	} );
 
-    jQuery( '#buddypress' ).on( 'change', '.rtm-activity-privacy-opt', function(){
+	jQuery( '#buddypress' ).on( 'change', '.rtm-activity-privacy-opt', function(){
 
-        var activity_id = jQuery( this ).attr( 'id');
-        activity_id = activity_id.split( '-' );
-        activity_id = activity_id[ activity_id.length - 1 ];
+		var activity_id = jQuery( this ).attr( 'id' );
+		activity_id = activity_id.split( '-' );
+		activity_id = activity_id[ activity_id.length - 1 ];
 
-        var that = this;
+		var that = this;
 
-        data = {
-            activity_id : activity_id,
-            privacy : jQuery( this ).val(),
-            nonce : jQuery( '#rtmedia_activity_privacy_nonce' ).val(),
-            action : 'rtm_change_activity_privacy'
-        };
+		data = {
+			activity_id : activity_id,
+			privacy : jQuery( this ).val(),
+			nonce : jQuery( '#rtmedia_activity_privacy_nonce' ).val(),
+			action : 'rtm_change_activity_privacy'
+		};
 
-        jQuery.post( ajaxurl, data, function( res ){
-            var message = '';
-            var css_class = '';
-            if( res == "true" ){
-                message = "Privacy updated successfully.";
-                css_class = 'success';
-            } else {
-                message = "Couldn't change privacy, please try again.";
-                css_class = 'fail';
-            }
+		jQuery.post( ajaxurl, data, function( res ){
+			var message = '';
+			var css_class = '';
+			if ( res == "true" ) {
+				message = rtmedia_main_js_strings.privacy_update_success;
+				css_class = 'success';
+			} else {
+				message = rtmedia_main_js_strings.privacy_update_error;
+				css_class = 'fail';
+			}
 
-            jQuery( that ).after( '<p class="rtm-ac-privacy-updated '+ css_class +'">'+ message +'</p>' );
-            setTimeout( function(){
-                jQuery( that ).siblings( '.rtm-ac-privacy-updated').remove();
-            }, 2000 );
-        } );
-    } );
+			jQuery( that ).after( '<p class="rtm-ac-privacy-updated ' + css_class + '">' + message + '</p>' );
+			setTimeout( function(){
+				jQuery( that ).siblings( '.rtm-ac-privacy-updated' ).remove();
+			}, 2000 );
+		} );
+	} );
 
 	function rtmedia_media_view_counts() {
 		//var view_count_action = jQuery('#rtmedia-media-view-form').attr("action");
 		if ( jQuery( '#rtmedia-media-view-form' ).length > 0 ) {
 			var url = jQuery( '#rtmedia-media-view-form' ).attr( "action" );
-			jQuery.post( url,
-					{
-					}, function ( data ) {
+			jQuery.post( url, { }, function ( data ) {
 
 			} );
 		}
@@ -415,14 +403,14 @@ jQuery( 'document' ).ready( function ( $ ) {
 
 	rtmedia_media_view_counts();
 	rtMediaHook.register( 'rtmedia_js_popup_after_content_added',
-			function () {
+		function () {
 				rtmedia_media_view_counts();
 				rtmedia_init_media_deleting();
-                mfp = jQuery.magnificPopup.instance;
-                if ( jQuery(mfp.items).size() > 1 ) {
-                    rtmedia_init_popup_navigation();
-                }
-				
+				mfp = jQuery.magnificPopup.instance;
+			if ( jQuery( mfp.items ).size() > 1 ) {
+				rtmedia_init_popup_navigation();
+			}
+
 				rtmedia_disable_popup_navigation_comment_focus();
 				var height = $( window ).height();
 				jQuery( '.rtm-lightbox-container .mejs-video' ).css( { 'height': height * 0.8, 'max-height': height * 0.8, 'over-flow': 'hidden' } );
@@ -439,7 +427,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				jQuery( ".rtm-more" ).shorten( { // shorten the media description to 100 characters
 					"showChars": 130
 				} );
-                 
+
 				//show gallery title in lightbox at bottom
 				var gal_title = $( '.rtm-gallery-title' ), title = "";
 				if ( ! $.isEmptyObject( gal_title ) ) {
@@ -456,7 +444,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				$( 'li.total' ).html( counts );
 
 				return true;
-			}
+		}
 	);
 
 	function rtmedia_init_popup_navigation() {
@@ -483,36 +471,36 @@ jQuery( 'document' ).ready( function ( $ ) {
 	}
 
 	function rtmedia_disable_popup_navigation_comment_focus() {
-        jQuery( document ).on( 'focusin', '#comment_content', function() {
-            jQuery( document ).unbind( 'keydown' );
-        } );
-        jQuery( document ).on( 'focusout', '#comment_content', function() {
-            var rtm_mfp = jQuery.magnificPopup.instance;
-            jQuery( document ).on( 'keydown', function( e ) {
-                if ( e.keyCode === 37 ) {
-                    rtm_mfp.prev();
-                } else if ( e.keyCode === 39 ) {
-                    rtm_mfp.next();
-                }
-            } );
-        } );
-    }
+		jQuery( document ).on( 'focusin', '#comment_content', function() {
+			jQuery( document ).unbind( 'keydown' );
+		} );
+		jQuery( document ).on( 'focusout', '#comment_content', function() {
+			var rtm_mfp = jQuery.magnificPopup.instance;
+			jQuery( document ).on( 'keydown', function( e ) {
+				if ( e.keyCode === 37 ) {
+					rtm_mfp.prev();
+				} else if ( e.keyCode === 39 ) {
+					rtm_mfp.next();
+				}
+			} );
+		} );
+	}
 
-    var dragArea = jQuery( "#drag-drop-area" );
-    var activityArea = jQuery( '#whats-new' );
-    var content = dragArea.html();
-    jQuery( '#rtmedia-upload-container' ).after( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
-    if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
-        jQuery( '#whats-new-textarea' ).append( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
-    }
-    jQuery( document )
-            .on( 'dragover', function( e ) {
-                jQuery( '#rtm-media-gallery-uploader' ).show();
-                if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
-                    activityArea.addClass( 'rtm-drag-drop-active' );
-                }
+	var dragArea = jQuery( "#drag-drop-area" );
+	var activityArea = jQuery( '#whats-new' );
+	var content = dragArea.html();
+	jQuery( '#rtmedia-upload-container' ).after( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
+	if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
+		jQuery( '#whats-new-textarea' ).append( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
+	}
+	jQuery( document )
+			.on( 'dragover', function( e ) {
+				jQuery( '#rtm-media-gallery-uploader' ).show();
+				if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
+					activityArea.addClass( 'rtm-drag-drop-active' );
+				}
 
-//            activityArea.css('height','150px');
+				//            activityArea.css('height','150px');
 				dragArea.addClass( 'rtm-drag-drop-active' );
 				jQuery( '#rtm-drop-files-title' ).show();
 			} )
@@ -535,7 +523,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 				dragArea.removeClass( 'rtm-drag-drop-active' );
 				jQuery( '#rtm-drop-files-title' ).hide();
 			} );
-
 
 	function rtmedia_init_media_deleting() {
 		jQuery( '.rtmedia-container' ).on( 'click', '.rtmedia-delete-media', function ( e ) {
@@ -580,7 +567,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 		} );
 	}
 
-//    masonry code
+	//    masonry code
 	if ( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_container = jQuery( '.rtmedia-container .rtmedia-list' )
 		rtm_masonry_container.masonry( {
@@ -597,30 +584,30 @@ jQuery( 'document' ).ready( function ( $ ) {
 		} );
 	}
 
-    if( jQuery( '.rtm-uploader-tabs' ).length > 0 ){
-        jQuery( '.rtm-uploader-tabs li' ).click( function( e ){
-            if( ! jQuery( this ).hasClass( 'active' ) ){
-                jQuery( this ).siblings().removeClass( 'active' );
-                jQuery( this ).parents( '.rtm-uploader-tabs' ).siblings().hide();
-                class_name = jQuery( this ).attr( 'class' );
-	            jQuery( this ).parents( '.rtm-uploader-tabs' ).siblings('[data-id="' + class_name + '"]').show();
-                jQuery( this ).addClass( 'active' );
+	if ( jQuery( '.rtm-uploader-tabs' ).length > 0 ) {
+		jQuery( '.rtm-uploader-tabs li' ).click( function( e ){
+			if ( ! jQuery( this ).hasClass( 'active' ) ) {
+				jQuery( this ).siblings().removeClass( 'active' );
+				jQuery( this ).parents( '.rtm-uploader-tabs' ).siblings().hide();
+				class_name = jQuery( this ).attr( 'class' );
+	            jQuery( this ).parents( '.rtm-uploader-tabs' ).siblings( '[data-id="' + class_name + '"]' ).show();
+				jQuery( this ).addClass( 'active' );
 
-                if ( class_name != 'rtm-upload-tab' ) {
-                    jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).hide();
-                } else {
-                    jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).show();
-                }
-            }
-        });
-    }
+				if ( class_name != 'rtm-upload-tab' ) {
+					jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).hide();
+				} else {
+					jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).show();
+				}
+			}
+		});
+	}
 
 	// delete media from gallery page under the user's profile when user clicks the delete button on the gallery item.
 	jQuery( '.rtmedia-container' ).on( 'click', '.rtm-delete-media', function ( e ) {
 		e.preventDefault();
 		var confirmation = 'Are you sure you want to delete this media?';
 
-		if( typeof rtmedia_media_delete_confirmation != 'undefined' ){
+		if ( typeof rtmedia_media_delete_confirmation != 'undefined' ) {
 			confirmation = rtmedia_media_delete_confirmation;
 		}
 
@@ -639,10 +626,10 @@ jQuery( 'document' ).ready( function ( $ ) {
 				type: 'post',
 				data: data,
 				success: function ( data ) {
-                                    
+
 					if ( data == '1' ) {
 						//media delete
-						rtmedia_gallery_action_alert_message( 'file deleted successfully.', 'success' );
+						rtmedia_gallery_action_alert_message( rtmedia_main_js_strings.file_delete_success, 'success' );
 						curr_li.remove();
 						if ( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 							rtm_masonry_reload( rtm_masonry_container );
@@ -654,78 +641,23 @@ jQuery( 'document' ).ready( function ( $ ) {
 			} );
 		}
 	} );
-}	);
-
-
+} );
 
 //Legacy media element for old activities
 function bp_media_create_element( id ) {
 	return false;
 }
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-( function ( $ ) {
-	$.fn.shorten = function ( settings ) {
-
-		var config = {
-			showChars: 100,
-			ellipsesText: "...",
-			moreText: "more",
-			lessText: "less"
-		};
-
-		if ( settings ) {
-			$.extend( config, settings );
-		}
-
-		$( document ).off( "click", '.morelink' );
-
-		$( document ).on( { click: function () {
-
-				var $this = $( this );
-				if ( $this.hasClass( 'less' ) ) {
-					$this.removeClass( 'less' );
-					$this.html( config.moreText );
-				} else {
-					$this.addClass( 'less' );
-					$this.html( config.lessText );
-				}
-				$this.parent().prev().toggle();
-				$this.prev().toggle();
-				return false;
-			}
-		}, '.morelink' );
-
-		return this.each( function () {
-			var $this = $( this );
-			if ( $this.hasClass( "shortened" ) )
-				return;
-
-			$this.addClass( "shortened" );
-			var content = $this.html();
-			if ( content.length > config.showChars ) {
-				var c = content.substr( 0, config.showChars );
-				var h = content.substr( config.showChars, content.length - config.showChars );
-				var html = c + '<span class="moreellipses">' + config.ellipsesText + ' </span><span class="morecontent"><span>' + h + '</span> <a href="#" class="morelink">' + config.moreText + '</a></span>';
-				$this.html( html );
-				$( ".morecontent span" ).hide();
-			}
-		} );
-
-	};
-
-} )( jQuery );
-
 function rtmedia_version_compare( left, right ) {
-	if ( typeof left + typeof right != 'stringstring' )
+	if ( typeof left + typeof right != 'stringstring' ) {
 		return false;
-	var a = left.split( '.' )
-			, b = right.split( '.' )
-			, i = 0, len = Math.max( a.length, b.length );
+	}
+
+	var a = left.split( '.' ),
+		b = right.split( '.' ),
+		i = 0,
+		len = Math.max( a.length, b.length );
+
 	for ( ; i < len; i ++ ) {
 		if ( ( a[i] && ! b[i] && parseInt( a[i] ) > 0 ) || ( parseInt( a[i] ) > parseInt( b[i] ) ) ) {
 			return true;
@@ -733,6 +665,7 @@ function rtmedia_version_compare( left, right ) {
 			return false;
 		}
 	}
+
 	return true;
 }
 
@@ -751,6 +684,146 @@ function rtm_masonry_reload( el ) {
 	}, 250 );
 }
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+(function($) {
+ $.fn.shorten = function(settings) {
+     "use strict";
+
+     var config = {
+         showChars: 100,
+         minHideChars: 10,
+         ellipsesText: "...",
+         moreText: "Read more",
+         lessText: "Show less",
+         onLess: function() {},
+         onMore: function() {},
+         errMsg: null,
+         force: false
+     };
+
+     if (settings) {
+         $.extend(config, settings);
+     }
+
+     if ($(this).data('jquery.shorten') && !config.force) {
+         return false;
+     }
+     $(this).data('jquery.shorten', true);
+
+     $(document).off("click", '.morelink');
+
+	 $(document).on({
+		 click: function() {
+
+			 var $this = $(this);
+			 if ($this.hasClass('less')) {
+				 $this.removeClass('less');
+				 $this.html(config.moreText);
+				 $this.parent().prev().hide( 0 , function () { $this.parent().prev().prev().show(); })
+				 .hide( 0, function() {
+					 config.onLess();
+				 });
+			 } else {
+				 $this.addClass('less');
+				 $this.html(config.lessText);
+				 $this.parent().prev().show( 0 , function () { $this.parent().prev().prev().hide(); })
+				 .show( 0 , function() {
+					 config.onMore();
+				 });
+			 }
+			 return false;
+		 }
+		}, '.morelink');
+
+     return this.each(function() {
+         var $this = $(this);
+
+         var content = $this.html();
+         var contentlen = $this.text().length;
+         if (contentlen > config.showChars + config.minHideChars) {
+             var c = content.substr(0, config.showChars);
+             if (c.indexOf('<') >= 0) // If there's HTML don't want to cut it
+             {
+                 var inTag = false; // I'm in a tag?
+                 var bag = ''; // Put the characters to be shown here
+                 var countChars = 0; // Current bag size
+                 var openTags = []; // Stack for opened tags, so I can close them later
+                 var tagName = null;
+
+                 for (var i = 0, r = 0; r <= config.showChars; i++) {
+                     if (content[i] == '<' && !inTag) {
+                         inTag = true;
+
+                         // This could be "tag" or "/tag"
+                         tagName = content.substring(i + 1, content.indexOf('>', i));
+
+                         // If its a closing tag
+                         if (tagName[0] == '/') {
+
+
+                             if (tagName != '/' + openTags[0]) {
+                                 config.errMsg = 'ERROR en HTML: the top of the stack should be the tag that closes';
+                             } else {
+                                 openTags.shift(); // Pops the last tag from the open tag stack (the tag is closed in the retult HTML!)
+                             }
+
+                         } else {
+                             // There are some nasty tags that don't have a close tag like <br/>
+                             if (tagName.toLowerCase() != 'br') {
+                                 openTags.unshift(tagName); // Add to start the name of the tag that opens
+                             }
+                         }
+                     }
+                     if (inTag && content[i] == '>') {
+                         inTag = false;
+                     }
+
+                     if (inTag) { bag += content.charAt(i); } // Add tag name chars to the result
+                     else {
+                         r++;
+                         if (countChars <= config.showChars) {
+                             bag += content.charAt(i); // Fix to ie 7 not allowing you to reference string characters using the []
+                             countChars++;
+                         } else // Now I have the characters needed
+                         {
+                             if (openTags.length > 0) // I have unclosed tags
+                             {
+                                 //console.log('They were open tags');
+                                 //console.log(openTags);
+                                 for (j = 0; j < openTags.length; j++) {
+                                     //console.log('Cierro tag ' + openTags[j]);
+                                     bag += '</' + openTags[j] + '>'; // Close all tags that were opened
+
+                                     // You could shift the tag from the stack to check if you end with an empty stack, that means you have closed all open tags
+                                 }
+                                 break;
+                             }
+                         }
+                     }
+                 }
+                 c = $('<div/>').html(bag + '<span class="ellip">' + config.ellipsesText + '</span>').html();
+             }else{
+                 c+=config.ellipsesText;
+             }
+
+             var html = '<div class="shortcontent">' + c +
+                 '</div><div class="allcontent">' + content +
+                 '</div><span><a href="javascript://nop/" class="morelink">' + config.moreText + '</a></span>';
+
+             $this.html(html);
+             $this.find(".allcontent").hide(); // Hide all text
+             $('.shortcontent p:last', $this).css('margin-bottom', 0); //Remove bottom margin on last paragraph as it's likely shortened
+         }
+     });
+
+ };
+
+})(jQuery);
+
 window.onload = function () {
 	if ( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_reload( rtm_masonry_container );
@@ -766,24 +839,24 @@ function rtmediaGetParameterByName( name ) {
 }
 
 function rtmedia_single_media_alert_message( msg, action ) {
-    var action_class = 'rtmedia-success';
+	var action_class = 'rtmedia-success';
 
-    if ( 'warning' == action ) {
-        action_class = 'rtmedia-warning';
-    }
+	if ( 'warning' == action ) {
+		action_class = 'rtmedia-warning';
+	}
 
-    jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '0.2' );
-    jQuery( '.rtmedia-single-media .rtmedia-media' ).after( "<div class='rtmedia-message-container'><span class='"+ action_class +"'>" + msg + " </span></div>" );
+	jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '0.2' );
+	jQuery( '.rtmedia-single-media .rtmedia-media' ).after( "<div class='rtmedia-message-container'><span class='" + action_class + "'>" + msg + " </span></div>" );
 
-    setTimeout( function() {
-        jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
-        jQuery( ".rtmedia-message-container" ).remove();
-    }, 3000 );
+	setTimeout( function() {
+		jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
+		jQuery( ".rtmedia-message-container" ).remove();
+	}, 3000 );
 
-    jQuery('.rtmedia-message-container').click( function() {
-        jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
-        jQuery( ".rtmedia-message-container" ).remove();
-    } );
+	jQuery( '.rtmedia-message-container' ).click( function() {
+		jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
+		jQuery( ".rtmedia-message-container" ).remove();
+	} );
 }
 
 function rtmedia_gallery_action_alert_message( msg, action ) {
@@ -794,12 +867,12 @@ function rtmedia_gallery_action_alert_message( msg, action ) {
 	}
 	var container = '<div class="rtmedia-gallery-alert-container"> </div>';
 	jQuery( 'body' ).append( container );
-	jQuery( '.rtmedia-gallery-alert-container' ).append( "<div class='rtmedia-gallery-message-box'><span class='"+ action_class +"'>" + msg + " </span></div>" );
+	jQuery( '.rtmedia-gallery-alert-container' ).append( "<div class='rtmedia-gallery-message-box'><span class='" + action_class + "'>" + msg + " </span></div>" );
 
 	setTimeout( function() {		jQuery( ".rtmedia-gallery-alert-container" ).remove();
 	}, 3000 );
 
-	jQuery('.rtmedia-gallery-message-box').click( function() {
+	jQuery( '.rtmedia-gallery-message-box' ).click( function() {
 		jQuery( ".rtmedia-gallery-alert-container" ).remove();
 	} );
 }

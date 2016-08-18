@@ -1,5 +1,5 @@
 <div class="rtmedia-container rtmedia-single-container">
-    <div class="rtm-lightbox-container clearfix">
+	<div class="rtm-lightbox-container clearfix">
 		<?php
 		global $rt_ajax_request;
 		do_action( 'rtmedia_before_media' );
@@ -9,31 +9,38 @@
 			global $rtmedia_media;
 			$type = ! empty( $rtmedia_media->media_type ) ? $rtmedia_media->media_type : 'none';
 			?>
-			<div id="rtmedia-single-media-container" class="rtmedia-single-media rtm-single-media rtm-media-type-<?php echo $type; ?>">
+			<div id="rtmedia-single-media-container"
+			     class="rtmedia-single-media rtm-single-media rtm-media-type-<?php echo esc_attr( $type ); ?>">
 				<?php if ( ! $rt_ajax_request ) { ?>
 
 					<span class="rtmedia-media-title">
-						<?php echo rtmedia_title(); ?>
+						<?php echo esc_html( rtmedia_title() ); ?>
 					</span>
-					<div class="rtmedia-media" id ="rtmedia-media-<?php echo rtmedia_id(); ?>"><?php rtmedia_media( true ); ?></div>
+					<div class="rtmedia-media"
+					     id="rtmedia-media-<?php echo esc_attr( rtmedia_id() ); ?>"><?php rtmedia_media( true ); ?></div>
 
 				<?php } else { ?>
 
-					<span class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button" title="Previous Media"></span>
+					<span class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button"
+					      title="Previous Media"></span>
 					<span class="mfp-arrow mfp-arrow-right mfp-prevent-close" type="button" title="Next Media"></span>
 
-					<div class="rtmedia-media" id ="rtmedia-media-<?php echo rtmedia_id(); ?>"><?php rtmedia_media( true ); ?></div>
+					<div class="rtmedia-media"
+					     id="rtmedia-media-<?php echo esc_attr( rtmedia_id() ); ?>"><?php rtmedia_media( true ); ?></div>
 
 					<div class='rtm-ltb-action-container clearfix'>
 						<div class='rtm-ltb-title'>
-							<span class="rtmedia-media-name <?php if ( rtmedia_album_name() ) { ?>rtmedia-media-name-width-50<?php } else { ?>rtmedia-media-name-width-100<?php } ?>">
-								&nbsp;<a href="<?php echo rtmedia_permalink(); ?>" title="<?php echo rtmedia_title(); ?>"><?php echo rtmedia_title(); ?></a>
+							<span
+								class="rtmedia-media-name <?php if ( rtmedia_album_name() ) { ?>rtmedia-media-name-width-50<?php } else { ?>rtmedia-media-name-width-100<?php } ?>">
+								&nbsp;<a href="<?php rtmedia_permalink(); ?>"
+								         title="<?php echo esc_attr( rtmedia_title() ); ?>"><?php echo esc_html( rtmedia_title() ); ?></a>
 							</span>
 
 							<?php if ( rtmedia_album_name() ) { ?>
 								<span class="rtmedia-album-name">
-									<span>&nbsp;<?php echo __( 'under', 'buddypress-media' ); ?></span>
-									<a href="<?php echo rtmedia_album_permalink(); ?>" title="<?php echo rtmedia_album_name(); ?>"><?php echo rtmedia_album_name(); ?></a>
+									<span>&nbsp;<?php esc_html_e( 'under', 'buddypress-media' ); ?></span>
+									<a href="<?php rtmedia_album_permalink(); ?>"
+									   title="<?php echo esc_attr( rtmedia_album_name() ); ?>"><?php echo esc_html( rtmedia_album_name() ); ?></a>
 								</span>
 							<?php } ?>
 						</div>
@@ -50,7 +57,9 @@
 
 				<?php if ( $rt_ajax_request ) { ?>
 
-					<div class="rtm-single-meta-contents<?php if ( is_user_logged_in() ) echo " logged-in"; ?>">
+					<div class="rtm-single-meta-contents<?php if ( is_user_logged_in() ) {
+						echo esc_attr( ' logged-in' );
+} ?>">
 
 						<div class="rtm-user-meta-details">
 							<div class="userprofile rtm-user-avatar">
@@ -62,7 +71,13 @@
 							</div>
 
 							<div class="rtm-time-privacy clearfix">
-								<?php echo get_rtmedia_date_gmt(); ?> <?php echo get_rtmedia_privacy_symbol(); ?>
+								<?php echo wp_kses( get_rtmedia_date_gmt(), array( 'span' => array() ) );
+								echo wp_kses( get_rtmedia_privacy_symbol(), array(
+									'i' => array(
+										'class' => array(),
+										'title' => array(),
+									),
+								) ); ?>
 							</div>
 						</div>
 
@@ -71,7 +86,7 @@
 						</div>
 
 						<div class="rtmedia-media-description rtm-more">
-							<?php echo strip_tags( rtmedia_description( $echo = false ) ); ?>
+							<?php echo rtmedia_description( $echo = false ); ?>
 						</div>
 
 						<?php if ( rtmedia_comments_enabled() ) { ?>
@@ -79,7 +94,8 @@
 								<div class="rtmedia-actions-before-comments clearfix">
 									<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 									<?php if ( is_user_logged_in() ) { ?>
-										<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'buddypress-media' ); ?></a></span>
+										<span><a href='#'
+										         class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a></span>
 									<?php } ?>
 								</div>
 								<div class="rtm-like-comments-info">
@@ -99,7 +115,9 @@
 						</div>
 					<?php } ?>
 
-				<?php } else { // else for if ( $rt_ajax_request ) ?>
+				<?php } else {
+					// else for if ( $rt_ajax_request )
+					?>
 
 					<div class="rtmedia-item-actions rtm-single-actions rtm-item-actions clearfix">
 						<?php do_action( 'rtmedia_actions_without_lightbox' ); ?>
@@ -119,7 +137,8 @@
 							<div class="rtmedia-actions-before-comments clearfix">
 								<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 								<?php if ( is_user_logged_in() ) { ?>
-									<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'buddypress-media' ); ?></a></span>
+									<span><a href='#'
+									         class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a></span>
 								<?php } ?>
 							</div>
 
@@ -141,10 +160,9 @@
 				<?php } ?>
 			</div>
 
-		<?php else: ?>
+		<?php else : ?>
 			<p class="rtmedia-no-media-found"><?php
-				$message = __( "Sorry !! There's no media found for the request !!", 'buddypress-media' );
-				echo apply_filters( 'rtmedia_no_media_found_message_filter', $message );
+				esc_html_e( apply_filters( 'rtmedia_no_media_found_message_filter', 'Sorry !! There\'s no media found for the request !!' ), 'buddypress-media' );
 				?>
 			</p>
 		<?php endif; ?>

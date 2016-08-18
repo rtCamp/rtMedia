@@ -1,3 +1,12 @@
+body {
+    article.bp_members.bp_member,
+    div.bp_members.bp_member {
+        .entry-content {
+            width: 100%;
+        }
+    }
+}
+
 .rtm-media-gallery-uploader {
 	display: none;
 }
