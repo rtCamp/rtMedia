@@ -2833,3 +2833,195 @@ function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_STRING
 	return $server_val;
 
 }
+
+if ( ! function_exists( 'rt_media_shortcode' ) ) {
+	/**
+	 * Builds the [rt_media] shortcode output.
+	 *
+	 * If media type is video then display transcoded video (mp4 format) if any else original video.
+	 *
+	 * If media type is audio then display transcoded audio (mp3 format) if any else original audio.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array  $attrs {
+	 *     Attributes of the shortcode.
+	 *
+	 *     @type int $attachment_id     ID of attachment.
+	 * }
+	 * @param  string $content	Shortcode content.
+	 * @return string|void		HTML content to display video.
+	 */
+	function rt_media_shortcode( $attrs, $content = '' ) {
+		if ( empty( $attrs['attachment_id'] ) ) {
+		    return false;
+		}
+
+		$attachment_id = $attrs['attachment_id'];
+
+		$type = get_post_mime_type( $attachment_id );
+
+		if ( empty( $type ) ) {
+			return false;
+		}
+
+		$mime_type = explode( '/', $type );
+
+		if ( 'video' === $mime_type[0] ) {
+
+			$video_shortcode_attributes = '';
+			$media_url 	= rtt_get_media_url( $attachment_id );
+
+			$poster 	= rt_media_get_video_thumbnail( $attachment_id );
+
+			$attrs['src'] 		= $media_url;
+			$attrs['poster'] 	= $poster;
+
+			foreach ( $attrs as $key => $value ) {
+			    $video_shortcode_attributes .= ' ' . $key . '="' . $value . '"';
+			}
+
+			$content = do_shortcode( "[video {$video_shortcode_attributes}]" );
+
+		} elseif ( 'audio' === $mime_type[0] ) {
+
+			$media_url 	= rtt_get_media_url( $attachment_id, 'mp3' );
+
+			$audio_shortcode_attributes = 'src="' . $media_url . '"';
+
+			foreach ( $attrs as $key => $value ) {
+			    $audio_shortcode_attributes .= ' ' . $key . '="' . $value . '"';
+			}
+
+			$content = do_shortcode( "[audio {$audio_shortcode_attributes}]" );
+
+		}
+
+		if ( is_file_being_transcoded( $attachment_id ) ) {
+			$content .= '<p class="transcoding-in-progress"> ' . esc_html__( 'The file has been sent to transcoder', 'transcoder' ) . '</p>';
+		}
+
+		/**
+		 * Allow user to filter [rt_media] short code content.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $content    	Activity content.
+		 * @param int $attachment_id  	ID of attachment.
+		 * @param string $media_url  	URL of the media.
+		 * @param string $media_type  	Mime type of the media.
+		 */
+		return apply_filters( 'rt_media_shortcode', $content, $attachment_id, $media_url, $mime_type[0] );
+	}
+	add_shortcode( 'rt_media', 'rt_media_shortcode' );
+}
+
+
+if ( ! function_exists( 'is_file_being_transcoded' ) ) {
+	/**
+	 * Check whether the file is sent to the transcoder or not.
+	 *
+	 * @since	1.0.0
+	 *
+	 * @param  number $attachment_id	ID of attachment.
+	 * @return boolean
+	 */
+	function is_file_being_transcoded( $attachment_id ) {
+		$job_id = get_post_meta( $attachment_id, '_rt_transcoding_job_id', true );
+		if ( ! empty( $job_id ) ) {
+			$transcoded_files = get_post_meta( $attachment_id, '_rt_media_transcoded_files', true );
+			if ( empty( $transcoded_files ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
+
+if ( ! function_exists( 'rt_media_get_video_thumbnail' ) ) {
+	/**
+	 * Give the transcoded video's thumbnail stored in videos meta.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param  int $attachment_id   ID of attachment.
+	 * @return string 				returns image file url on success.
+	 */
+	function rt_media_get_video_thumbnail( $attachment_id ) {
+
+		if ( empty( $attachment_id ) ) {
+		    return;
+		}
+
+		$thumbnails = get_post_meta( $attachment_id, '_rt_media_video_thumbnail', true );
+
+		if ( ! empty( $thumbnails ) ) {
+
+			$file_url = $thumbnails;
+			$uploads = wp_get_upload_dir();
+			if ( 0 === strpos( $file_url, $uploads['baseurl'] ) ) {
+				$final_file_url = $file_url;
+		    } else {
+		    	$final_file_url = $uploads['baseurl'] . '/' . $file_url;
+		    }
+
+			return $final_file_url;
+		}
+
+		return false;
+
+	}
+}
+
+if ( ! function_exists( 'rtt_get_media_url' ) ) {
+	/**
+	 * Give the transcoded media URL of attachment.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param  int    $attachment_id	 ID of attachment.
+	 * @param  string $media_type        Type of media i.e mp4, mp3. By default it mp4 is passed.
+	 * @return string					 Returns audio file url on success.
+	 */
+	function rtt_get_media_url( $attachment_id, $media_type = 'mp4' ) {
+
+		if ( empty( $attachment_id ) ) {
+		    return;
+		}
+
+		$medias = get_post_meta( $attachment_id, '_rt_media_transcoded_files', true );
+
+		if ( isset( $medias[ $media_type ] ) && is_array( $medias[ $media_type ] ) && ! empty( $medias[ $media_type ][0] ) ) {
+			$file_url = $medias[ $media_type ][0];
+			$uploads = wp_get_upload_dir();
+			if ( 0 === strpos( $file_url, $uploads['baseurl'] ) ) {
+				$final_file_url = $file_url;
+		    } else {
+		    	$final_file_url = $uploads['baseurl'] . '/' . $file_url;
+		    }
+		} else {
+			$final_file_url = wp_get_attachment_url( $attachment_id );
+		}
+
+		return $final_file_url;
+
+	}
+}
+
+if ( ! function_exists( 'rtt_transcoder_parse_shortcode' ) ) {
+	/**
+	 * Parse the short codes in the activity content.
+	 *
+	 * @since	1.0.0
+	 *
+	 * @param  text   $content   activity body content.
+	 * @param  object $activity  activity object.
+	 *
+	 * @return text
+	 */
+	function rtt_transcoder_parse_shortcode( $content, $activity ) {
+		return do_shortcode( $content );
+	}
+
+	add_filter( 'bp_get_activity_content_body', 'rtt_transcoder_parse_shortcode', 1, 2 );
+}
