@@ -477,7 +477,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				<div class="error rtmedia-addon-upate-notice">
 					<p>
 						<strong><?php esc_html_e( 'rtMedia:', 'buddypress-media' ) ?></strong>
-						<?php esc_html_e( 'Please update all premium add-ons that you have purchased from rtCamp from', 'buddypress-media' ) ?>
+						<?php esc_html_e( 'Please update all premium add-ons that you have purchased from', 'buddypress-media' ) ?>
 						<a href="https://rtmedia.io/my-account/"
 						   target="_blank"><?php esc_html_e( 'your account', 'buddypress-media' ) ?></a>.
 						<a href="#" onclick="rtmedia_hide_addon_update_notice()"
