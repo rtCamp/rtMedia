@@ -127,7 +127,13 @@ class RTMediaActivity {
 				$size = '" width="' . esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_width'] ) . '" height="' . esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_height'] ) . '"';
 				$html = '[rt_media attachment_id="' . $media->media_id . '" id="rt_media_video_' . esc_attr( $media->id ) . '"' . $size . ']';
 			} elseif ( 'music' === $media->media_type ) {
-				$html = '[rt_media attachment_id="' . $media->media_id . '"]';
+				$width = $rtmedia->options['defaultSizes_music_singlePlayer_width'];
+				$width = ( $width * 75 ) / 640;
+				$size  = ' style="width:' . esc_attr( $width ) . '%; height:30px;" ';
+				if ( ! $size_flag ) {
+					$size = '';
+				}
+				$html = '[rt_media attachment_id="' . $media->media_id . '" ' . $size . ']';
 			}
 		}
 

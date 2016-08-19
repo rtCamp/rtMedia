@@ -328,11 +328,11 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 		} elseif ( 'music' === $rtmedia_media->media_type ) {
 			$width = $rtmedia->options['defaultSizes_music_singlePlayer_width'];
 			$width = ( $width * 75 ) / 640;
-			$size  = ' width= ' . esc_attr( $width ) . '% height="30" ';
+			$size  = 'style="width:' . esc_attr( $width ) . '%; height:30px;" ';
 			if ( ! $size_flag ) {
 				$size = '';
 			}
-			$html = do_shortcode( '[rt_media attachment_id="' . $rtmedia_media->media_id . '"' . $size . ']' );
+			$html = do_shortcode( '[rt_media attachment_id="' . $rtmedia_media->media_id . '" ' . $size . ']' );
 		} else {
 			$html = false;
 		}
@@ -1234,8 +1234,6 @@ function is_rtmedia_edit_allowed() {
 		return false;
 	}
 }
-
-add_action( 'rtmedia_after_update_media', 'set_video_thumbnail', 12 );
 
 add_action( 'rtmedia_add_edit_tab_title', 'rtmedia_image_editor_title', 12, 1 );
 
