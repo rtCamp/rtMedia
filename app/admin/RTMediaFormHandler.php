@@ -807,31 +807,6 @@ class RTMediaFormHandler {
 		<?php
 		$options = $rtmedia->options;
 
-		// Checking if user has subscribed any plan for encoding
-		$rtmedia_encoding_api_key = get_rtmedia_encoding_api_key();
-
-		if ( isset( $rtmedia_encoding_api_key ) && '' !== $rtmedia_encoding_api_key && $rtmedia_encoding_api_key ) {
-			$render_video_thumb = array(
-				'title'    => esc_html__( 'Number of thumbnails to generate on video upload', 'buddypress-media' ),
-				'callback' => array( 'RTMediaFormHandler', 'number' ),
-				'args'     => array(
-					'key'   => 'general_videothumbs',
-					'value' => $options['general_videothumbs'],
-					'class' => array( 'rtmedia-setting-text-box' ),
-					'desc'  => esc_html__( ' If you choose more than 1 thumbnail, your users will be able to change the thumbnail by going to video \'edit\' section. Maximum value is 10.', 'buddypress-media' ),
-					'min'   => 1,
-					'max'   => 10,
-				),
-			);
-			?>
-
-			<div class="rtm-option-wrapper">
-				<?php self::render_option_group( esc_html__( 'Encoding Settings', 'buddypress-media' ) ); ?>
-				<?php self::render_option_content( $render_video_thumb ); ?>
-			</div>
-			<?php
-		}
-
 		$render_jpeg_image_quality = array(
 			'title'    => esc_html__( 'JPEG/JPG image quality (1-100)', 'buddypress-media' ),
 			'callback' => array( 'RTMediaFormHandler', 'number' ),

@@ -64,7 +64,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		}
 
 		/**
-		 * Get addons for Audio/Video  Encoding and Plugins.
+		 * Get addons for Plugins.
 		 *
 		 * @access public
 		 *
@@ -85,14 +85,6 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					'callback' => array( $this, 'plugins_content' ),
 				);
 			}
-
-			$tabs[] = array(
-				'title'    => esc_html__( 'Audio/Video  Encoding', 'buddypress-media' ),
-				'name'     => esc_html__( 'Audio/Video  Encoding', 'buddypress-media' ),
-				'href'     => '#rtm-services',
-				'icon'     => 'dashicons-playlist-video',
-				'callback' => array( $rtmedia_admin->rtmedia_encoding, 'encoding_service_intro' ),
-			);
 
 			RTMediaAdmin::render_admin_ui( self::$page, $tabs );
 		}
@@ -547,19 +539,6 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			?>
 			<div class="clear"></div>
 			<?php
-		}
-
-		/**
-		 * services_content.
-		 *
-		 * @access public
-		 *
-		 * @param  array $args
-		 *
-		 * @return void
-		 */
-		public function services_content( $args = '' ) {
-			$objEncoding->encoding_service_intro();
 		}
 
 		/**
