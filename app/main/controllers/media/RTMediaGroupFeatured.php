@@ -157,7 +157,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 				$content = '[rt_media attachment_id="' . $featured->media_id . '"' . $size . ']';
 				break;
 			case 'music' :
-				$size = '" width="' . esc_attr( $this->settings['width'] ) . '"';
+				$size  = ' style="width:' . esc_attr( $this->settings['width'] ) . '%; height:30px;" ';
 				$content = '[rt_media attachment_id="' . $featured->media_id . '"' . $size . ']';
 				break;
 			case 'photo' :
