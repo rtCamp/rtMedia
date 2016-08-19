@@ -60,7 +60,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			// Show admin notice to install transcoder plugin.
-			if ( ! class_exists( 'RT_Transcoder_Handler' ) ) {
+			if ( ! class_exists( 'RT_Transcoder_Admin' ) ) {
 				if ( is_multisite() ) {
 					add_action( 'network_admin_notices', array( $this, 'install_transcoder_admin_notice' ) );
 				}
