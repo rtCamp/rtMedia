@@ -134,7 +134,15 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			<div class="notice notice-info install-transcoder-notice is-dismissible">
 				<?php wp_nonce_field( '_install_transcoder_hide_notice_', 'install_transcoder_hide_notice_nonce' ); ?>
 				<p>
-					<?php esc_html_e( 'Install <a href="https://wordpress.org/plugins/transcoder/" target="_blank">Transcoder plugin</a> to convert audio/video files and thumbnail generation.', 'transcoder' ); ?>
+					<?php
+					$allowed_tags = array(
+					    'a' => array(
+					        'href' => array(),
+					        'target' => array(),
+					    ),
+					);
+					echo wp_kses( __( 'Install <a href="https://wordpress.org/plugins/transcoder/" target="_blank">Transcoder plugin</a> to convert audio/video files and thumbnails generation.', 'buddypress-media' ), $allowed_tags );
+					?>
 				</p>
 			</div>
 			<script type="text/javascript">
