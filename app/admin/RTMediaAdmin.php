@@ -49,32 +49,23 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_action( 'wp_ajax_rtmedia_correct_upload_filetypes', array( $this, 'correct_upload_filetypes' ), 1 );
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_meta_premium_addon_link' ), 1, 2 );
 			add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widgets' ), 0 );
-			add_filter( 'attachment_fields_to_edit', array( $this, 'edit_video_thumbnail' ), null, 2 );
-			add_filter( 'attachment_fields_to_save', array( $this, 'save_video_thumbnail' ), null, 1 );
-			add_action( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array(
-				$this,
-				'rtmedia_hide_video_thumb_admin_notice',
-			), 1 );
 			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array(
 				$this,
 				'rtmedia_hide_addon_update_notice',
 			), 1 );
 			add_filter( 'media_row_actions', array( $this, 'modify_medialibrary_permalink' ), 10, 2 );
 
-			$obj_encoding = new RTMediaEncoding( true );
-
-			if ( $obj_encoding->api_key ) {
-				add_filter( 'media_row_actions', array( $this, 'add_reencode_link' ), null, 2 );
-				add_action( 'admin_head-upload.php', array( $this, 'add_bulk_actions_regenerate' ) );
-				add_action( 'admin_footer', array( $this, 'rtmedia_regenerate_thumb_js' ) );
-				add_action( 'admin_action_bulk_video_regenerate_thumbnails', array( $this, 'bulk_action_handler' ) );
-				add_action( 'admin_action_-1', array( $this, 'bulk_action_handler' ) );
-			}
-
-			add_action( 'wp_ajax_rt_media_regeneration', array( $this, 'rt_media_regeneration' ), 1 );
-
 			if ( ! isset( $rtmedia->options ) ) {
 				$rtmedia->options = rtmedia_get_site_option( 'rtmedia-options' );
+			}
+
+			// Show admin notice to install transcoder plugin.
+			if ( ! class_exists( 'RT_Transcoder_Admin' ) ) {
+				if ( is_multisite() ) {
+					add_action( 'network_admin_notices', array( $this, 'install_transcoder_admin_notice' ) );
+				}
+				add_action( 'admin_notices', array( $this, 'install_transcoder_admin_notice' ) );
+				add_action( 'wp_ajax_install_transcoder_hide_admin_notice', array( $this, 'install_transcoder_hide_admin_notice' ) );
 			}
 
 			$rtmedia_option = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_SANITIZE_NUMBER_INT );
@@ -99,7 +90,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			$this->rtmedia_settings = new RTMediaSettings();
-			$this->rtmedia_encoding = new RTMediaEncoding();
 
 			if ( ! class_exists( 'BuddyPress' ) ) {
 				add_action( 'admin_init', array( $this, 'check_permalink_admin_notice' ) );
@@ -132,6 +122,53 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_filter( 'removable_query_args', array( $this, 'removable_query_args' ), 10, 1 );
 
 			add_action( 'admin_footer', array( $this, 'rtm_admin_templates' ) );
+		}
+
+		/**
+		 * Display admin notice.
+		 */
+		function install_transcoder_admin_notice() {
+			$show_notice = get_site_option( 'install_transcoder_admin_notice', 1 );
+			if ( '1' === $show_notice || 1 === $show_notice ) :
+		?>
+			<div class="notice notice-info install-transcoder-notice is-dismissible">
+				<?php wp_nonce_field( '_install_transcoder_hide_notice_', 'install_transcoder_hide_notice_nonce' ); ?>
+				<p>
+					<?php
+					$allowed_tags = array(
+					    'a' => array(
+					        'href' => array(),
+					        'target' => array(),
+					    ),
+					);
+					echo wp_kses( __( 'Install <a href="https://wordpress.org/plugins/transcoder/" target="_blank">Transcoder plugin</a> to convert audio/video files and thumbnails generation.', 'buddypress-media' ), $allowed_tags );
+					?>
+				</p>
+			</div>
+			<script type="text/javascript">
+				jQuery( document ).ready( function() {
+					jQuery( '.install-transcoder-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
+						var data = {
+							action: 'install_transcoder_hide_admin_notice',
+							install_transcoder_notice_nonce: jQuery('#install_transcoder_hide_notice_nonce').val()
+						};
+						jQuery.post( ajaxurl, data, function ( response ) {
+							jQuery('.install-transcoder-notice').remove();
+						});
+					});
+				});
+			</script>
+		<?php
+			endif;
+		}
+		/**
+		 * Set option to hide admin notice when user click on dismiss button.
+		 */
+		function install_transcoder_hide_admin_notice() {
+			if ( check_ajax_referer( '_install_transcoder_hide_notice_', 'install_transcoder_notice_nonce' ) ) {
+				update_site_option( 'install_transcoder_admin_notice', '0' );
+			}
+			die();
 		}
 
 		function rtm_admin_templates() {
@@ -191,7 +228,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function rtmedia_admin_notices() {
 			if ( current_user_can( 'list_users' ) ) {
 				$this->upload_filetypes_error();
-				$this->rtmedia_regenerate_thumbnail_notice();
 				$this->rtmedia_addon_update_notice();
 				$this->rtmedia_update_template_notice();
 
@@ -733,45 +769,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Add the reencode link
-		 *
-		 * @access public
-		 *
-		 * @param  array $actions
-		 * @param  object $post
-		 *
-		 * @return array $actions
-		 */
-		public function add_reencode_link( $actions, $post ) {
-
-			$mime_type_array = explode( '/', $post->post_mime_type );
-			if ( is_array( $mime_type_array ) && '' !== $mime_type_array && 'video' === $mime_type_array[0] ) {
-				$actions['reencode'] = '<a class="submitdelete" onclick="return rtmedia_regenerate_thumbs(' . esc_attr( $post->ID ) . ')" href="#">' . esc_html_e( 'Regenerate Thumbnail', 'buddypress-media' ) . '</a>';
-			}
-
-			return $actions;
-		}
-
-		/**
-		 * Do the bulk video/media handler.
-		 *
-		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public function bulk_action_handler() {
-			$action = filter_input( INPUT_GET, 'action', FILTER_SANITIZE_STRING );
-			$request_media = filter_input( INPUT_GET, 'media', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-
-			if ( 'bulk_video_regenerate_thumbnails' === $action && '' !== $request_media ) {
-				wp_safe_redirect( esc_url_raw( add_query_arg( array( 'media_ids' => urlencode( implode( ',', array_map( 'intval', $request_media ) ) ) ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) ) );
-				exit;
-			}
-		}
-
-		/**
 		 * Add admin bar menu
 		 *
 		 * @access public
@@ -1011,216 +1008,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				) );
 			}
 
-			$obj_encoding = new RTMediaEncoding( true );
-
-			if ( $obj_encoding->api_key ) {
-				add_submenu_page( 'rtmedia-settings', esc_html__( 'Regenerate Thumbnail', 'buddypress-media' ), esc_html__( 'Regen. Thumbnail ', 'buddypress-media' ), 'manage_options', 'rtmedia-regenerate', array(
-					$this,
-					'rt_regenerate_thumbnail',
-				) );
-			}
-		}
-
-		/**
-		 * Define regenerate thumbnail functionality.
-		 *
-		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public function rt_regenerate_thumbnail() {
-			$prog = new rtProgress();
-			$done = $total = 0;
-			?>
-			<div class="wrap">
-				<h2> <?php esc_html_e( 'rtMedia: Regenerate Video Thumbnails', 'buddypress-media' ); ?> </h2>
-				<?php
-				$request_mediaids = filter_input( INPUT_GET, 'media', FILTER_DEFAULT, FILTER_SANITIZE_STRING );
-				if ( isset( $request_mediaids ) && trim( $request_mediaids ) !== '' ) {
-					$requested = false;
-					$media_ids = explode( ',', $request_mediaids );
-					$total     = count( $media_ids );
-				} else {
-					$media_ids = get_video_without_thumbs();
-					if ( is_array( $media_ids ) ) {
-						$total     = count( $media_ids );
-					}
-				}
-				?>
-				<script>
-					var rt_thumb_all_media = <?php echo wp_json_encode( $media_ids ); ?>;
-				</script>
-				<?php
-				if ( ! isset( $requested ) ) {
-					?>
-					<br/>
-					<p>
-						<?php esc_html_e( 'You can see this page because you have ', 'buddypress-media' ) ?>
-						<a href='<?php echo esc_url( admin_url( 'admin.php?page=rtmedia-addons' ) ); ?>'><?php esc_html_e( 'subscribed', 'buddypress-media' ) ?></a>
-						<?php esc_html_e( ' for ', 'buddypress-media' ) ?>
-						<a href='<?php echo esc_url( 'https://rtmedia.io/audio-video-encoding-service/' ); ?>' target='_blank'><?php esc_html_e( 'rtMedia audio/video encoding service', 'buddypress-media' ) ?></a>.
-					</p>
-					<p>
-						<?php esc_html_e( 'You can regenerate thumbnails of a specific video by visiting ', 'buddypress-media' ) ?>
-						<a href='<?php echo esc_url( admin_url( 'upload.php?post_mime_type=video' ) ); ?>'><?php esc_html_e( 'media page', 'buddypress-media' ); ?></a>
-						<?php esc_html_e( ' and clicking the ', 'buddypress-media' ) ?>
-						<b><?php esc_html_e( 'Regenerate Thumbnail', 'buddypress-media' ) ?></b>
-						<?php esc_html_e( ' option for that particular video.', 'buddypress-media' ) ?>
-					</p>
-					<p>
-						<?php esc_html_e( 'Click ', 'buddypress-media' ) ?>
-						<b><?php esc_html_e( 'Regenerate Pending Thumbnails', 'buddypress-media' ) ?></b>
-						<?php esc_html_e( ' to regenerate thumbnails of pending videos.', 'buddypress-media' ) ?>
-					</p>
-					<p>
-						<input type="button" class="button button-primary" id="rt-start-media-regenerate"
-						       value="<?php echo esc_attr__( 'Regenerate Pending Thumbnails', 'buddypress-media' ) . ' (' . esc_attr( $total ) . ')'; ?>"/>
-						<?php wp_nonce_field( '_rt-start-media-regenerate_', 'rt-regenerate-nonce' ); ?>
-					</p>
-					<?php
-				}
-				?>
-				<div id="rt-migration-progress">
-					<br/> <br/>
-					<?php
-					$temp = $prog->progress( $done, $total );
-					$prog->progress_ui( $temp, true );
-					?>
-					<p> <?php esc_html_e( 'Total Videos', 'buddypress-media' ) ?> : <span
-							class='rt-total'><?php echo esc_html( $total ); ?></span>
-					</p>
-
-					<p> <?php esc_html_e( 'Sent of regenerate thumbails', 'buddypress-media' ) ?> : <span
-							class='rt-done'>0</span></p>
-
-					<p> <?php esc_html_e( 'Fail to regenerate thumbails', 'buddypress-media' ) ?> : <span
-							class='rt-fail'>0</span></p>
-
-				</div>
-				<script>
-
-					var db_done = 0;
-					var db_fail = 0;
-					var db_total = <?php echo esc_js( $total ); ?>;
-					var indx = 0;
-					function db_start_regenrate() {
-						if (indx < db_total) {
-							jQuery.ajax({
-								url: rtmedia_admin_ajax,
-								type: 'post',
-								data: {
-									"action": "rt_media_regeneration",
-									"media_id": rt_thumb_all_media[indx++],
-									"_rtm_nonce": jQuery('#rt-regenerate-nonce').val()
-								},
-								success: function (data) {
-									data = JSON.parse(data);
-
-									if (data.status == false) {
-										handle_regenrate_fail();
-									} else {
-										db_done++;
-										var progw = Math.ceil(( db_done / db_total ) * 100);
-										if (progw > 100) {
-											progw = 100;
-										}
-										jQuery('#rtprogressbar>div').css('width', progw + '%');
-										jQuery('span.rt-done').html(db_done);
-										db_start_regenrate();
-									}
-								},
-								error: function () {
-									handle_regenrate_fail();
-								}
-							});
-						} else {
-							alert("<?php esc_html_e( 'Regenerate Video Thumbnails Done', 'buddypress-media' ); ?>");
-						}
-					}
-					function handle_regenrate_fail() {
-						db_fail++;
-						jQuery('span.rt-fail').html(db_fail);
-						db_start_regenrate();
-					}
-					$media_regenerate = jQuery("#rt-start-media-regenerate");
-					if ($media_regenerate.length > 0) {
-						jQuery("#rt-migration-progress").hide();
-						$media_regenerate.click(function () {
-							jQuery(this).hide();
-							jQuery("#rt-migration-progress").show();
-							db_start_regenrate();
-						})
-					} else {
-						db_start_regenrate();
-					}
-
-				</script>
-
-
-			</div> <?php
-		}
-
-		/**
-		 * Generate rtmedia thumbnail notice.
-		 *
-		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public function rtmedia_regenerate_thumbnail_notice() {
-			$obj_encoding = new RTMediaEncoding( true );
-			if ( $obj_encoding->api_key ) {
-				$site_option = rtmedia_get_site_option( 'rtmedia-video-thumb-notice' );
-				if ( ! $site_option || 'hide' !== $site_option ) {
-					rtmedia_update_site_option( 'rtmedia-video-thumb-notice', 'show' );
-					$videos_without_thumbs = get_video_without_thumbs();
-					if ( isset( $videos_without_thumbs ) && is_array( $videos_without_thumbs ) && count( $videos_without_thumbs ) > 0 ) {
-						?>
-						<div class="error rtmedia-regenerate-video-thumb-error">
-							<p>
-								<?php printf( esc_html__( 'You have %s videos without thumbnails. Click ', 'buddypress-media' ), esc_html( count( $videos_without_thumbs ) ) );?>
-								<a href='<?php echo esc_url( admin_url( 'admin.php?page=rtmedia-regenerate' ) ); ?>'><?php esc_html_e( 'here', 'buddypress-media' ); ?></a>
-								<?php esc_html_e( ' to generate thumbnails.', 'buddypress-media' ) ?>
-								<a href='#' onclick='rtmedia_hide_video_thumb_notice()' style='float:right'>Hide</a>.
-								<?php wp_nonce_field( '_rtmedia_hide_video_thumb_notice_', 'rtm_hide_video_thumb_notice' ); ?>
-							</p>
-						</div>
-						<script type="text/javascript">
-							function rtmedia_hide_video_thumb_notice() {
-								var data = {action: 'rtmedia_hide_video_thumb_admin_notice', _rtm_nonce:jQuery('#rtm_hide_video_thumb_notice').val()};
-								jQuery.post(ajaxurl, data, function (response) {
-									response = response.trim();
-									if (response === "1")
-										jQuery('.rtmedia-regenerate-video-thumb-error').remove();
-								});
-							}
-						</script>
-						<?php
-					}
-				}
-			}
-		}
-
-		/**
-		 * Hide rtmedia video thumb admin notice.
-		 *
-		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public function rtmedia_hide_video_thumb_admin_notice() {
-			if ( check_ajax_referer( '_rtmedia_hide_video_thumb_notice_', '_rtm_nonce' ) && rtmedia_update_site_option( 'rtmedia-video-thumb-notice', 'hide' ) ) {
-				echo '1';
-			} else {
-				echo '0';
-			}
-			die();
 		}
 
 		/**
@@ -1241,38 +1028,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			die();
 		}
 
-		/**
-		 * Define rt_media_regeneration.
-		 *
-		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public function rt_media_regeneration() {
-			if ( ! check_ajax_referer( '_rt-start-media-regenerate_', '_rtm_nonce' ) ) {
-				wp_send_json( false );
-			}
-			$media_id = sanitize_text_field( intval( $_POST['media_id'] ) );
-			if ( isset( $media_id ) ) {
-				$model      = new RTMediaModel();
-				$media      = $model->get_media( array( 'media_id' => $media_id ), 0, 1 );
-				$media_type = $media[0]->media_type;
-				$response   = array();
-				if ( 'video' === $media_type ) {
-					$obj_rtmedia_encoding = new RTMediaEncoding( true );
-					$autoformat         = 'thumbnails';
-					$obj_rtmedia_encoding->reencoding( $media_id, $autoformat );
-					$response['status'] = true;
-				} else {
-					$response['status']  = false;
-					$response['message'] = esc_html__( 'not a video ...', 'buddypress-media' );
-				}
-				echo wp_json_encode( $response );
-				die();
-			}
-		}
 
 		/**
 		 * Render the BuddyPress Media Settings page.
@@ -1955,93 +1710,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 			echo true;
 			wp_die();
-		}
-
-		function edit_video_thumbnail( $form_fields, $post ) {
-			if ( isset( $post->post_mime_type ) ) {
-				$media_type = explode( '/', $post->post_mime_type );
-				if ( is_array( $media_type ) && 'video' === $media_type[0] ) {
-					$media_id         = $post->ID;
-					$thumbnail_array  = get_post_meta( $media_id, 'rtmedia_media_thumbnails', true );
-					$rtmedia_model    = new RTMediaModel();
-					$rtmedia_media    = $rtmedia_model->get( array( 'media_id' => $media_id ) );
-					$video_thumb_html = '';
-					if ( is_array( $thumbnail_array ) ) {
-						$video_thumb_html .= '<ul> ';
-
-						foreach ( $thumbnail_array as $key => $thumbnail_src ) {
-							$checked = checked( $thumbnail_src, $rtmedia_media[0]->cover_art, false );
-							$count   = $key + 1;
-							$video_thumb_html .= '<li style="width: 150px;display: inline-block;">
-									<label for="rtmedia-upload-select-thumbnail-' . esc_attr( $count ) . '">
-									<input type="radio" ' . esc_attr( $checked ) . ' id="rtmedia-upload-select-thumbnail-' . esc_attr( $count ) . '" value="' . esc_url( $thumbnail_src ) . '" name="rtmedia-thumbnail" />
-									<img src=" ' . esc_url( $thumbnail_src ) . '" style="max-height: 120px;max-width: 120px; vertical-align: middle;" />
-									</label></li> ';
-						}
-
-						$video_thumb_html .= '  </ul>';
-						$form_fields['rtmedia_video_thumbnail'] = array(
-							'label' => 'Video Thumbnails',
-							'input' => 'html',
-							'html'  => $video_thumb_html,
-						);
-					}
-				}
-			}
-
-			return $form_fields;
-		}
-
-		function save_video_thumbnail( $post ) {
-			$rtmedia_thumbnail = filter_input( INPUT_POST, 'rtmedia-thumbnail', FILTER_SANITIZE_STRING );
-			$id = filter_input( INPUT_POST, 'ID', FILTER_SANITIZE_NUMBER_INT );
-			if ( isset( $rtmedia_thumbnail ) ) {
-				$rtmedia_model = new RTMediaModel();
-				$model         = new RTMediaModel();
-				$media         = $model->get( array( 'media_id' => $id ) );
-				$media_id      = $media[0]->id;
-				$rtmedia_model->update( array( 'cover_art' => $rtmedia_thumbnail ), array( 'media_id' => $id ) );
-				update_activity_after_thumb_set( $media_id );
-			}
-
-			return $post;
-		}
-
-		function rtmedia_regenerate_thumb_js() {
-			global $pagenow;
-
-			if ( 'upload.php' === $pagenow ) {
-				?>
-				<script type="text/javascript">
-					function rtmedia_regenerate_thumbs(post_id) {
-						if (post_id != "") {
-							var data = {
-								action: 'rt_media_regeneration',
-								media_id: post_id
-							};
-							jQuery.post(ajaxurl, data, function (data) {
-								data = JSON.parse(data);
-								if (data.status === true) {
-									alert("<?php esc_html_e( 'Video is sent to generate thumbnails.', 'buddypress-media' ) ?>");
-								} else {
-									alert("<?php esc_html_e( 'Video cannot be sent to generate thumbnails.', 'buddypress-media' ) ?>");
-								}
-							});
-						}
-					}
-				</script>
-				<?php
-			}
-		}
-
-		function add_bulk_actions_regenerate() {
-			?>
-			<script type="text/javascript">
-				jQuery(document).ready(function ($) {
-					$('select[name^="action"] option:last-child').before('<option value="bulk_video_regenerate_thumbnails"><?php esc_html_e( 'Regenerate Video Thumbnails', 'buddypress-media' ); ?></option>');
-				});
-			</script>
-			<?php
 		}
 
 		function rtmedia_update_template_notice() {
