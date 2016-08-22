@@ -323,16 +323,16 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			$height = ( $height * 75 ) / 640;
 			$size   = ' width="' . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . '" height="' . esc_attr( $height ) . '%" ';
 			$html   = "<div id='rtm-mejs-video-container' style='width:" . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . 'px;height:' . esc_attr( $height ) . "%;  max-width:96%;max-height:80%;'>";
-			$html .= do_shortcode( '[rt_media attachment_id="' . $rtmedia_media->media_id . '"' . $size . ']' );
+			$html .= '<video src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" ' . esc_attr( $size ) . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . esc_attr( $rtmedia_media->id ) . '" controls="controls" preload="true"></video>';
 			$html .= '</div>';
 		} elseif ( 'music' === $rtmedia_media->media_type ) {
 			$width = $rtmedia->options['defaultSizes_music_singlePlayer_width'];
 			$width = ( $width * 75 ) / 640;
-			$size  = 'style="width:' . esc_attr( $width ) . '%; height:30px;" ';
+			$size  = ' width= ' . esc_attr( $width ) . '% height="30" ';
 			if ( ! $size_flag ) {
 				$size = '';
 			}
-			$html = do_shortcode( '[rt_media attachment_id="' . $rtmedia_media->media_id . '" ' . $size . ']' );
+			$html = '<audio src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" ' . esc_attr( $size ) . ' type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . esc_attr( $rtmedia_media->id ) . '" controls="controls" preload="none"></audio>';
 		} else {
 			$html = false;
 		}
@@ -1235,6 +1235,179 @@ function is_rtmedia_edit_allowed() {
 	}
 }
 
+add_action( 'rtmedia_after_update_media', 'set_video_thumbnail', 12 );
+add_filter( 'rtmedia_single_content_filter', 'change_poster', 99, 2 );
+
+function change_poster( $html, $media ) {
+	global $rtmedia_media;
+	if ( 'video' === $rtmedia_media->media_type ) {
+		$thumbnail_id = $rtmedia_media->cover_art;
+		if ( $thumbnail_id ) {
+			if ( is_numeric( $thumbnail_id ) ) {
+				$thumbnail_info = wp_get_attachment_image_src( $thumbnail_id, 'full' );
+				$html           = str_replace( '<video ', '<video poster="' . esc_url( $thumbnail_info[0] ) . '" ', $html );
+			} else {
+				$html = str_replace( '<video ', '<video poster="' . esc_attr( $thumbnail_id ) . '" ', $html );
+			}
+		}
+	}
+
+	return $html;
+}
+
+// add title for video editor in tabs
+add_action( 'rtmedia_add_edit_tab_title', 'rtmedia_vedio_editor_title', 1000 );
+
+function rtmedia_vedio_editor_title() {
+	global $rtmedia_query;
+	if ( isset( $rtmedia_query->media[0]->media_type ) && 'video' === $rtmedia_query->media[0]->media_type ) {
+		$flag            = false;
+		$media_id        = $rtmedia_query->media[0]->media_id;
+		$thumbnail_array = get_post_meta( $media_id, 'rtmedia_media_thumbnails', true );
+		if ( is_array( $thumbnail_array ) ) {
+			$flag = true;
+		} else {
+			global $rtmedia_media;
+			$curr_cover_art = $rtmedia_media->cover_art;
+			if ( ! empty( $curr_cover_art ) ) {
+				$rtmedia_video_thumbs = get_rtmedia_meta( $rtmedia_query->media[0]->media_id, 'rtmedia-thumbnail-ids' );
+				if ( is_array( $rtmedia_video_thumbs ) ) {
+					$flag = true;
+				}
+			}
+		}
+		if ( $flag ) {
+			echo '<li><a href="#panel2"><i class="dashicons dashicons-format-image rtmicon"></i>' . esc_html__( 'Video Thumbnail', 'buddypress-media' ) . '</a></li>';
+		}
+	}
+}
+
+add_action( 'rtmedia_add_edit_tab_content', 'rtmedia_vedio_editor_content', 1000 );
+
+function rtmedia_vedio_editor_content() {
+	global $rtmedia_query;
+	if ( isset( $rtmedia_query->media ) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media[0]->media_type ) && 'video' === $rtmedia_query->media[0]->media_type ) {
+		$media_id        = $rtmedia_query->media[0]->media_id;
+		$thumbnail_array = get_post_meta( $media_id, 'rtmedia_media_thumbnails', true );
+		echo '<div class="content" id="panel2">';
+		if ( is_array( $thumbnail_array ) ) {
+			?>
+
+			<div class="rtmedia-change-cover-arts">
+				<ul>
+					<?php
+					foreach ( $thumbnail_array as $key => $thumbnail_src ) {
+						?>
+						<li<?php echo checked( $thumbnail_src, $rtmedia_query->media[0]->cover_art, false ) ? ' class="selected"' : ''; ?>
+							style="width: 150px;display: inline-block;">
+							<label
+								for="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
+								class="alignleft">
+								<input
+									type="radio"<?php checked( $thumbnail_src, $rtmedia_query->media[0]->cover_art ); ?>
+									id="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
+									value="<?php echo esc_url( $thumbnail_src ); ?>" name="rtmedia-thumbnail"/>
+								<img src="<?php echo esc_url( $thumbnail_src ); ?>"
+								     style="max-height: 120px;max-width: 120px"/>
+							</label>
+						</li>
+						<?php
+					}
+					?>
+				</ul>
+			</div>
+
+
+			<?php
+		} else { // check for array of thumbs stored as attachement ids
+			global $rtmedia_media;
+			$curr_cover_art = $rtmedia_media->cover_art;
+			if ( ! empty( $curr_cover_art ) ) {
+				$rtmedia_video_thumbs = get_rtmedia_meta( $rtmedia_query->media[0]->media_id, 'rtmedia-thumbnail-ids' );
+				if ( is_array( $rtmedia_video_thumbs ) ) {
+					?>
+					<div class="rtmedia-change-cover-arts">
+						<p><?php esc_html_e( 'Video Thumbnail:', 'buddypress-media' ); ?></p>
+						<ul>
+							<?php
+							foreach ( $rtmedia_video_thumbs as $key => $attachment_id ) {
+								$thumbnail_src = wp_get_attachment_url( $attachment_id );
+								?>
+								<li<?php echo checked( $attachment_id, $curr_cover_art, false ) ? ' class="selected"' : ''; ?>
+									style="width: 150px;display: inline-block;">
+									<label
+										for="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
+										class="alignleft">
+										<input type="radio"<?php checked( $attachment_id, $curr_cover_art ); ?>
+										       id="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
+										       value="<?php echo esc_attr( $attachment_id ); ?>"
+										       name="rtmedia-thumbnail"/>
+										<img src="<?php echo esc_attr( $thumbnail_src ); ?>"
+										     style="max-height: 120px;max-width: 120px"/>
+									</label>
+								</li>
+								<?php
+							}
+							?>
+						</ul>
+					</div>
+
+					<?php
+				}
+			}
+		}
+		echo '</div>';
+	}
+}
+
+function update_activity_after_thumb_set( $id ) {
+	$model       = new RTMediaModel();
+	$media_obj   = new RTMediaMedia();
+	$media       = $model->get( array( 'id' => $id ) );
+	$privacy     = $media[0]->privacy;
+	$activity_id = rtmedia_activity_id( $id );
+	if ( ! empty( $activity_id ) ) {
+		$same_medias           = $media_obj->model->get( array( 'activity_id' => $activity_id ) );
+		$update_activity_media = array();
+		foreach ( $same_medias as $a_media ) {
+			$update_activity_media[] = $a_media->id;
+		}
+		$obj_activity = new RTMediaActivity( $update_activity_media, $privacy, false );
+		global $wpdb, $bp;
+		$activity_old_content = bp_activity_get_meta( $activity_id, 'bp_old_activity_content' );
+		$activity_text        = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
+		if ( ! empty( $activity_old_content ) ) {
+			// get old activity content and save in activity meta
+			$activity_get  = bp_activity_get_specific( array( 'activity_ids' => $activity_id ) );
+			$activity      = $activity_get['activities'][0];
+			$activity_body = $activity->content;
+			bp_activity_update_meta( $activity_id, 'bp_old_activity_content', $activity_body );
+			//extract activity text from old content
+			$activity_text = strip_tags( $activity_body, '<span>' );
+			$activity_text = explode( '</span>', $activity_text );
+			$activity_text = strip_tags( $activity_text[0] );
+			bp_activity_update_meta( $activity_id, 'bp_activity_text', $activity_text );
+		}
+		$activity_text               = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
+		$obj_activity->activity_text = $activity_text;
+		$wpdb->update( $bp->activity->table_name, array(
+			'type'    => 'rtmedia_update',
+			'content' => $obj_activity->create_activity_html(),
+		), array( 'id' => $activity_id ) );
+	}
+}
+
+function set_video_thumbnail( $id ) {
+	$media_type = rtmedia_type( $id );
+	$thumbnail  = filter_input( INPUT_POST, 'rtmedia-thumbnail', FILTER_SANITIZE_URL );
+	if ( 'video' === $media_type && ! empty( $thumbnail ) ) {
+		$model = new RTMediaModel();
+		$model->update( array( 'cover_art' => $thumbnail ), array( 'id' => intval( $id ) ) );
+		update_activity_after_thumb_set( $id );
+		// code to update activity
+	}
+}
+
 add_action( 'rtmedia_add_edit_tab_title', 'rtmedia_image_editor_title', 12, 1 );
 
 //add the tab title media on media edit screen
@@ -1303,6 +1476,18 @@ function rtmedia_add_album_selection_field( $media_type ) {
 		</div>
 		<?php
 	}
+}
+
+function update_video_poster( $html, $media, $activity = false ) {
+	if ( 'video' === $media->media_type ) {
+		$thumbnail_id = $media->cover_art;
+		if ( $thumbnail_id ) {
+			$thumbnail_info = wp_get_attachment_image_src( $thumbnail_id, 'full' );
+			$html           = str_replace( '<video ', '<video poster="' . esc_url( $thumbnail_info[0] ) . '" ', $html );
+		}
+	}
+
+	return $html;
 }
 
 function get_video_without_thumbs() {
@@ -2832,196 +3017,4 @@ function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_STRING
 
 	return $server_val;
 
-}
-
-if ( ! function_exists( 'rt_media_shortcode' ) ) {
-	/**
-	 * Builds the [rt_media] shortcode output.
-	 *
-	 * If media type is video then display transcoded video (mp4 format) if any else original video.
-	 *
-	 * If media type is audio then display transcoded audio (mp3 format) if any else original audio.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array  $attrs {
-	 *     Attributes of the shortcode.
-	 *
-	 *     @type int $attachment_id     ID of attachment.
-	 * }
-	 * @param  string $content	Shortcode content.
-	 * @return string|void		HTML content to display video.
-	 */
-	function rt_media_shortcode( $attrs, $content = '' ) {
-		if ( empty( $attrs['attachment_id'] ) ) {
-		    return false;
-		}
-
-		$attachment_id = $attrs['attachment_id'];
-
-		$type = get_post_mime_type( $attachment_id );
-
-		if ( empty( $type ) ) {
-			return false;
-		}
-
-		$mime_type = explode( '/', $type );
-
-		if ( 'video' === $mime_type[0] ) {
-
-			$video_shortcode_attributes = '';
-			$media_url 	= rtt_get_media_url( $attachment_id );
-
-			$poster 	= rt_media_get_video_thumbnail( $attachment_id );
-
-			$attrs['src'] 		= $media_url;
-			$attrs['poster'] 	= $poster;
-
-			foreach ( $attrs as $key => $value ) {
-			    $video_shortcode_attributes .= ' ' . $key . '="' . $value . '"';
-			}
-
-			$content = do_shortcode( "[video {$video_shortcode_attributes}]" );
-
-		} elseif ( 'audio' === $mime_type[0] ) {
-
-			$media_url 	= rtt_get_media_url( $attachment_id, 'mp3' );
-
-			$audio_shortcode_attributes = 'src="' . $media_url . '"';
-
-			foreach ( $attrs as $key => $value ) {
-			    $audio_shortcode_attributes .= ' ' . $key . '="' . $value . '"';
-			}
-
-			$content = do_shortcode( "[audio {$audio_shortcode_attributes}]" );
-
-		}
-
-		if ( is_file_being_transcoded( $attachment_id ) ) {
-			$content .= '<p class="transcoding-in-progress"> ' . esc_html__( 'The file has been sent to transcoder', 'transcoder' ) . '</p>';
-		}
-
-		/**
-		 * Allow user to filter [rt_media] short code content.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $content    	Activity content.
-		 * @param int $attachment_id  	ID of attachment.
-		 * @param string $media_url  	URL of the media.
-		 * @param string $media_type  	Mime type of the media.
-		 */
-		return apply_filters( 'rt_media_shortcode', $content, $attachment_id, $media_url, $mime_type[0] );
-	}
-	add_shortcode( 'rt_media', 'rt_media_shortcode' );
-}
-
-
-if ( ! function_exists( 'is_file_being_transcoded' ) ) {
-	/**
-	 * Check whether the file is sent to the transcoder or not.
-	 *
-	 * @since	1.0.0
-	 *
-	 * @param  number $attachment_id	ID of attachment.
-	 * @return boolean
-	 */
-	function is_file_being_transcoded( $attachment_id ) {
-		$job_id = get_post_meta( $attachment_id, '_rt_transcoding_job_id', true );
-		if ( ! empty( $job_id ) ) {
-			$transcoded_files = get_post_meta( $attachment_id, '_rt_media_transcoded_files', true );
-			if ( empty( $transcoded_files ) ) {
-				return true;
-			}
-		}
-		return false;
-	}
-}
-
-if ( ! function_exists( 'rt_media_get_video_thumbnail' ) ) {
-	/**
-	 * Give the transcoded video's thumbnail stored in videos meta.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param  int $attachment_id   ID of attachment.
-	 * @return string 				returns image file url on success.
-	 */
-	function rt_media_get_video_thumbnail( $attachment_id ) {
-
-		if ( empty( $attachment_id ) ) {
-		    return;
-		}
-
-		$thumbnails = get_post_meta( $attachment_id, '_rt_media_video_thumbnail', true );
-
-		if ( ! empty( $thumbnails ) ) {
-
-			$file_url = $thumbnails;
-			$uploads = wp_get_upload_dir();
-			if ( 0 === strpos( $file_url, $uploads['baseurl'] ) ) {
-				$final_file_url = $file_url;
-		    } else {
-		    	$final_file_url = $uploads['baseurl'] . '/' . $file_url;
-		    }
-
-			return $final_file_url;
-		}
-
-		return false;
-
-	}
-}
-
-if ( ! function_exists( 'rtt_get_media_url' ) ) {
-	/**
-	 * Give the transcoded media URL of attachment.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param  int    $attachment_id	 ID of attachment.
-	 * @param  string $media_type        Type of media i.e mp4, mp3. By default it mp4 is passed.
-	 * @return string					 Returns audio file url on success.
-	 */
-	function rtt_get_media_url( $attachment_id, $media_type = 'mp4' ) {
-
-		if ( empty( $attachment_id ) ) {
-		    return;
-		}
-
-		$medias = get_post_meta( $attachment_id, '_rt_media_transcoded_files', true );
-
-		if ( isset( $medias[ $media_type ] ) && is_array( $medias[ $media_type ] ) && ! empty( $medias[ $media_type ][0] ) ) {
-			$file_url = $medias[ $media_type ][0];
-			$uploads = wp_get_upload_dir();
-			if ( 0 === strpos( $file_url, $uploads['baseurl'] ) ) {
-				$final_file_url = $file_url;
-		    } else {
-		    	$final_file_url = $uploads['baseurl'] . '/' . $file_url;
-		    }
-		} else {
-			$final_file_url = wp_get_attachment_url( $attachment_id );
-		}
-
-		return $final_file_url;
-
-	}
-}
-
-if ( ! function_exists( 'rtt_transcoder_parse_shortcode' ) ) {
-	/**
-	 * Parse the short codes in the activity content.
-	 *
-	 * @since	1.0.0
-	 *
-	 * @param  text   $content   activity body content.
-	 * @param  object $activity  activity object.
-	 *
-	 * @return text
-	 */
-	function rtt_transcoder_parse_shortcode( $content, $activity ) {
-		return do_shortcode( $content );
-	}
-
-	add_filter( 'bp_get_activity_content_body', 'rtt_transcoder_parse_shortcode', 1, 2 );
 }
