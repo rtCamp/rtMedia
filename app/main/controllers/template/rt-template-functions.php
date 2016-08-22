@@ -1235,131 +1235,6 @@ function is_rtmedia_edit_allowed() {
 	}
 }
 
-add_action( 'rtmedia_after_update_media', 'set_video_thumbnail', 12 );
-add_filter( 'rtmedia_single_content_filter', 'change_poster', 99, 2 );
-
-function change_poster( $html, $media ) {
-	global $rtmedia_media;
-	if ( 'video' === $rtmedia_media->media_type ) {
-		$thumbnail_id = $rtmedia_media->cover_art;
-		if ( $thumbnail_id ) {
-			if ( is_numeric( $thumbnail_id ) ) {
-				$thumbnail_info = wp_get_attachment_image_src( $thumbnail_id, 'full' );
-				$html           = str_replace( '<video ', '<video poster="' . esc_url( $thumbnail_info[0] ) . '" ', $html );
-			} else {
-				$html = str_replace( '<video ', '<video poster="' . esc_attr( $thumbnail_id ) . '" ', $html );
-			}
-		}
-	}
-
-	return $html;
-}
-
-// add title for video editor in tabs
-add_action( 'rtmedia_add_edit_tab_title', 'rtmedia_vedio_editor_title', 1000 );
-
-function rtmedia_vedio_editor_title() {
-	global $rtmedia_query;
-	if ( isset( $rtmedia_query->media[0]->media_type ) && 'video' === $rtmedia_query->media[0]->media_type ) {
-		$flag            = false;
-		$media_id        = $rtmedia_query->media[0]->media_id;
-		$thumbnail_array = get_post_meta( $media_id, 'rtmedia_media_thumbnails', true );
-		if ( is_array( $thumbnail_array ) ) {
-			$flag = true;
-		} else {
-			global $rtmedia_media;
-			$curr_cover_art = $rtmedia_media->cover_art;
-			if ( ! empty( $curr_cover_art ) ) {
-				$rtmedia_video_thumbs = get_rtmedia_meta( $rtmedia_query->media[0]->media_id, 'rtmedia-thumbnail-ids' );
-				if ( is_array( $rtmedia_video_thumbs ) ) {
-					$flag = true;
-				}
-			}
-		}
-		if ( $flag ) {
-			echo '<li><a href="#panel2"><i class="dashicons dashicons-format-image rtmicon"></i>' . esc_html__( 'Video Thumbnail', 'buddypress-media' ) . '</a></li>';
-		}
-	}
-}
-
-add_action( 'rtmedia_add_edit_tab_content', 'rtmedia_vedio_editor_content', 1000 );
-
-function rtmedia_vedio_editor_content() {
-	global $rtmedia_query;
-	if ( isset( $rtmedia_query->media ) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media[0]->media_type ) && 'video' === $rtmedia_query->media[0]->media_type ) {
-		$media_id        = $rtmedia_query->media[0]->media_id;
-		$thumbnail_array = get_post_meta( $media_id, 'rtmedia_media_thumbnails', true );
-		echo '<div class="content" id="panel2">';
-		if ( is_array( $thumbnail_array ) ) {
-			?>
-
-			<div class="rtmedia-change-cover-arts">
-				<ul>
-					<?php
-					foreach ( $thumbnail_array as $key => $thumbnail_src ) {
-						?>
-						<li<?php echo checked( $thumbnail_src, $rtmedia_query->media[0]->cover_art, false ) ? ' class="selected"' : ''; ?>
-							style="width: 150px;display: inline-block;">
-							<label
-								for="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
-								class="alignleft">
-								<input
-									type="radio"<?php checked( $thumbnail_src, $rtmedia_query->media[0]->cover_art ); ?>
-									id="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
-									value="<?php echo esc_url( $thumbnail_src ); ?>" name="rtmedia-thumbnail"/>
-								<img src="<?php echo esc_url( $thumbnail_src ); ?>"
-								     style="max-height: 120px;max-width: 120px"/>
-							</label>
-						</li>
-						<?php
-					}
-					?>
-				</ul>
-			</div>
-
-
-			<?php
-		} else { // check for array of thumbs stored as attachement ids
-			global $rtmedia_media;
-			$curr_cover_art = $rtmedia_media->cover_art;
-			if ( ! empty( $curr_cover_art ) ) {
-				$rtmedia_video_thumbs = get_rtmedia_meta( $rtmedia_query->media[0]->media_id, 'rtmedia-thumbnail-ids' );
-				if ( is_array( $rtmedia_video_thumbs ) ) {
-					?>
-					<div class="rtmedia-change-cover-arts">
-						<p><?php esc_html_e( 'Video Thumbnail:', 'buddypress-media' ); ?></p>
-						<ul>
-							<?php
-							foreach ( $rtmedia_video_thumbs as $key => $attachment_id ) {
-								$thumbnail_src = wp_get_attachment_url( $attachment_id );
-								?>
-								<li<?php echo checked( $attachment_id, $curr_cover_art, false ) ? ' class="selected"' : ''; ?>
-									style="width: 150px;display: inline-block;">
-									<label
-										for="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
-										class="alignleft">
-										<input type="radio"<?php checked( $attachment_id, $curr_cover_art ); ?>
-										       id="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
-										       value="<?php echo esc_attr( $attachment_id ); ?>"
-										       name="rtmedia-thumbnail"/>
-										<img src="<?php echo esc_attr( $thumbnail_src ); ?>"
-										     style="max-height: 120px;max-width: 120px"/>
-									</label>
-								</li>
-								<?php
-							}
-							?>
-						</ul>
-					</div>
-
-					<?php
-				}
-			}
-		}
-		echo '</div>';
-	}
-}
-
 function update_activity_after_thumb_set( $id ) {
 	$model       = new RTMediaModel();
 	$media_obj   = new RTMediaMedia();
@@ -1397,16 +1272,6 @@ function update_activity_after_thumb_set( $id ) {
 	}
 }
 
-function set_video_thumbnail( $id ) {
-	$media_type = rtmedia_type( $id );
-	$thumbnail  = filter_input( INPUT_POST, 'rtmedia-thumbnail', FILTER_SANITIZE_URL );
-	if ( 'video' === $media_type && ! empty( $thumbnail ) ) {
-		$model = new RTMediaModel();
-		$model->update( array( 'cover_art' => $thumbnail ), array( 'id' => intval( $id ) ) );
-		update_activity_after_thumb_set( $id );
-		// code to update activity
-	}
-}
 
 add_action( 'rtmedia_add_edit_tab_title', 'rtmedia_image_editor_title', 12, 1 );
 
@@ -3018,3 +2883,30 @@ function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_STRING
 	return $server_val;
 
 }
+
+function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
+
+	if ( empty( $rtmedia_media->media_id ) ) {
+		return $html;
+	}
+
+	$media_type 	= 'mp4';
+	$attachment_id 	= $rtmedia_media->media_id;
+
+	$medias = get_post_meta( $attachment_id, '_rt_media_transcoded_files', true );
+	if ( isset( $medias[ $media_type ] ) && is_array( $medias[ $media_type ] ) && ! empty( $medias[ $media_type ][0] ) ) {
+		$file_url = $medias[ $media_type ][0];
+		$uploads = wp_get_upload_dir();
+		if ( 0 === strpos( $file_url, $uploads['baseurl'] ) ) {
+			$final_file_url = $file_url;
+	    } else {
+	    	$final_file_url = $uploads['baseurl'] . '/' . $file_url;
+	    }
+	} else {
+		$final_file_url = wp_get_attachment_url( $attachment_id );
+	}
+	return preg_replace( "/src=[\"]([^\"]+)[\"]/", "src=\"$final_file_url\"", $html );
+
+}
+
+add_filter( 'rtmedia_single_content_filter', 'replace_src_with_transcoded_file_url', 100, 2 );
