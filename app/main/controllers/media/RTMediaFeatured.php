@@ -143,12 +143,10 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 					$image_array  = image_downsize( $featured->media_id, 'rt_media_thumbnail' );
 					$content_xtra = ' poster="' . esc_url( $image_array[0] ) . '" ';
 				}
-				$size = '" width="' . esc_attr( $this->settings['width'] ) . '" height="' . esc_attr( $this->settings['height'] ) . '"';
-				$content = '[rt_media attachment_id="' . $featured->media_id . '"' . $size . ']';
+				$content = '<video class="bp-media-featured-media wp-video-shortcode"' . $content_xtra . 'src="' . esc_url( wp_get_attachment_url( $featured->media_id ) ) . '" width="' . esc_attr( $this->settings['width'] ) . '" height="' . esc_attr( $this->settings['height'] ) . '" type="video/mp4" id="bp_media_video_' . esc_attr( $this->featured ) . '" controls="controls" preload="true"></video>';
 				break;
 			case 'music' :
-				$size  = ' style="width:' . esc_attr( $this->settings['width'] ) . '%; height:30px;" ';
-				$content = '[rt_media attachment_id="' . $featured->media_id . '"' . $size . ']';
+				$content = '<audio class="bp-media-featured-media wp-audio-shortcode"' . $content_xtra . 'src="' . esc_url( wp_get_attachment_url( $featured->media_id ) ) . '" width="' . esc_attr( $this->settings['width'] ) . '" type="audio/mp3" id="bp_media_audio_' . esc_attr( $this->featured ) . '" controls="controls" preload="none"></audio>';
 				break;
 			case 'photo' :
 				$this->generate_featured_size( $featured->media_id );

@@ -323,16 +323,16 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			$height = ( $height * 75 ) / 640;
 			$size   = ' width="' . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . '" height="' . esc_attr( $height ) . '%" ';
 			$html   = "<div id='rtm-mejs-video-container' style='width:" . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . 'px;height:' . esc_attr( $height ) . "%;  max-width:96%;max-height:80%;'>";
-			$html .= do_shortcode( '[rt_media attachment_id="' . $rtmedia_media->media_id . '"' . $size . ']' );
+			$html .= '<video src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" ' . esc_attr( $size ) . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . esc_attr( $rtmedia_media->id ) . '" controls="controls" preload="true"></video>';
 			$html .= '</div>';
 		} elseif ( 'music' === $rtmedia_media->media_type ) {
 			$width = $rtmedia->options['defaultSizes_music_singlePlayer_width'];
 			$width = ( $width * 75 ) / 640;
-			$size  = 'style="width:' . esc_attr( $width ) . '%; height:30px;" ';
+			$size  = ' width= ' . esc_attr( $width ) . '% height="30" ';
 			if ( ! $size_flag ) {
 				$size = '';
 			}
-			$html = do_shortcode( '[rt_media attachment_id="' . $rtmedia_media->media_id . '" ' . $size . ']' );
+			$html = '<audio src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" ' . esc_attr( $size ) . ' type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . esc_attr( $rtmedia_media->id ) . '" controls="controls" preload="none"></audio>';
 		} else {
 			$html = false;
 		}
@@ -1235,6 +1235,44 @@ function is_rtmedia_edit_allowed() {
 	}
 }
 
+function update_activity_after_thumb_set( $id ) {
+	$model       = new RTMediaModel();
+	$media_obj   = new RTMediaMedia();
+	$media       = $model->get( array( 'id' => $id ) );
+	$privacy     = $media[0]->privacy;
+	$activity_id = rtmedia_activity_id( $id );
+	if ( ! empty( $activity_id ) ) {
+		$same_medias           = $media_obj->model->get( array( 'activity_id' => $activity_id ) );
+		$update_activity_media = array();
+		foreach ( $same_medias as $a_media ) {
+			$update_activity_media[] = $a_media->id;
+		}
+		$obj_activity = new RTMediaActivity( $update_activity_media, $privacy, false );
+		global $wpdb, $bp;
+		$activity_old_content = bp_activity_get_meta( $activity_id, 'bp_old_activity_content' );
+		$activity_text        = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
+		if ( ! empty( $activity_old_content ) ) {
+			// get old activity content and save in activity meta
+			$activity_get  = bp_activity_get_specific( array( 'activity_ids' => $activity_id ) );
+			$activity      = $activity_get['activities'][0];
+			$activity_body = $activity->content;
+			bp_activity_update_meta( $activity_id, 'bp_old_activity_content', $activity_body );
+			//extract activity text from old content
+			$activity_text = strip_tags( $activity_body, '<span>' );
+			$activity_text = explode( '</span>', $activity_text );
+			$activity_text = strip_tags( $activity_text[0] );
+			bp_activity_update_meta( $activity_id, 'bp_activity_text', $activity_text );
+		}
+		$activity_text               = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
+		$obj_activity->activity_text = $activity_text;
+		$wpdb->update( $bp->activity->table_name, array(
+			'type'    => 'rtmedia_update',
+			'content' => $obj_activity->create_activity_html(),
+		), array( 'id' => $activity_id ) );
+	}
+}
+
+
 add_action( 'rtmedia_add_edit_tab_title', 'rtmedia_image_editor_title', 12, 1 );
 
 //add the tab title media on media edit screen
@@ -1303,6 +1341,18 @@ function rtmedia_add_album_selection_field( $media_type ) {
 		</div>
 		<?php
 	}
+}
+
+function update_video_poster( $html, $media, $activity = false ) {
+	if ( 'video' === $media->media_type ) {
+		$thumbnail_id = $media->cover_art;
+		if ( $thumbnail_id ) {
+			$thumbnail_info = wp_get_attachment_image_src( $thumbnail_id, 'full' );
+			$html           = str_replace( '<video ', '<video poster="' . esc_url( $thumbnail_info[0] ) . '" ', $html );
+		}
+	}
+
+	return $html;
 }
 
 function get_video_without_thumbs() {
@@ -2833,3 +2883,30 @@ function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_STRING
 	return $server_val;
 
 }
+
+function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
+
+	if ( empty( $rtmedia_media->media_id ) ) {
+		return $html;
+	}
+
+	$media_type 	= 'mp4';
+	$attachment_id 	= $rtmedia_media->media_id;
+
+	$medias = get_post_meta( $attachment_id, '_rt_media_transcoded_files', true );
+	if ( isset( $medias[ $media_type ] ) && is_array( $medias[ $media_type ] ) && ! empty( $medias[ $media_type ][0] ) ) {
+		$file_url = $medias[ $media_type ][0];
+		$uploads = wp_get_upload_dir();
+		if ( 0 === strpos( $file_url, $uploads['baseurl'] ) ) {
+			$final_file_url = $file_url;
+	    } else {
+	    	$final_file_url = $uploads['baseurl'] . '/' . $file_url;
+	    }
+	} else {
+		$final_file_url = wp_get_attachment_url( $attachment_id );
+	}
+	return preg_replace( "/src=[\"]([^\"]+)[\"]/", "src=\"$final_file_url\"", $html );
+
+}
+
+add_filter( 'rtmedia_single_content_filter', 'replace_src_with_transcoded_file_url', 100, 2 );
