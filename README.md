@@ -135,6 +135,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 4.1.1 [Aug 24, 2016] ####
+* Add backward compatibility
+
 #### 4.1 [Aug 24, 2016] ####
 * Remove encoding service
 * Introduced new [Transcoder](https://wordpress.org/plugins/transcoder/) plugin
@@ -1202,8 +1205,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.1 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Removed encoding service and bug fixes.
+#### 4.1.1 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Add backward compatibility.
 
 ## Sponsors ##
 
