@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.6
-Stable tag: 4.0.7
+Stable tag: 4.1
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -134,6 +134,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.1 [Aug 24, 2016] =
+* Remove encoding service
+* Introduced new [Transcoder](https://wordpress.org/plugins/transcoder/) plugin
+* Add span tag to remove duplicity of activity content on thumbnail update
+* Fix notice undefined index
 
 = 4.0.7 [Aug 17, 2016] =
 * Fix Media upload using json api
@@ -1198,8 +1204,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.0.7 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
+= 4.1 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Removed encoding service and bug fixes.
 
 == Sponsors ==
 
