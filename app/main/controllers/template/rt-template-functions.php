@@ -2896,7 +2896,12 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 	$medias = get_post_meta( $attachment_id, '_rt_media_transcoded_files', true );
 	if ( isset( $medias[ $media_type ] ) && is_array( $medias[ $media_type ] ) && ! empty( $medias[ $media_type ][0] ) ) {
 		$file_url = $medias[ $media_type ][0];
-		$uploads = wp_get_upload_dir();
+		/* for WordPress backward compatibility */
+		if ( function_exists( 'wp_get_upload_dir' ) ) {
+			$uploads = wp_get_upload_dir();
+		} else {
+			$uploads = wp_upload_dir();
+		}
 		if ( 0 === strpos( $file_url, $uploads['baseurl'] ) ) {
 			$final_file_url = $file_url;
 	    } else {
