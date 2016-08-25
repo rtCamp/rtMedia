@@ -2884,6 +2884,13 @@ function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_STRING
 
 }
 
+/**
+ * Replace original src with the transcoded media src
+ * @param  string $html
+ * @param  object $rtmedia_media
+ * 
+ * @return string
+ */
 function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 
 	if ( empty( $rtmedia_media->media_id ) ) {
@@ -2923,6 +2930,14 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 
 add_filter( 'rtmedia_single_content_filter', 'replace_src_with_transcoded_file_url', 100, 2 );
 
+/**
+ * Check if URL exists of a given media type
+ * 
+ * @param  array $medias
+ * @param  string $media_type
+ * 
+ * @return boolen|string
+ */
 function rtt_is_video_exists( $medias, $media_type = 'mp4' ) {
 	if ( empty( $medias ) || empty( $media_type ) ) {
 		return false;
