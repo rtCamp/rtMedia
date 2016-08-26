@@ -536,7 +536,7 @@ function rtmedia_duration( $id = false ) {
 	$duration = '';
 	if ( ( 'video' === $media_object->media_type ) || ( 'music' === $media_object->media_type ) ) {
 		$media_time = get_rtmedia_meta( $media_object->id, 'duration_time' );
-		if ( false === $media_time ) {
+		if ( false === $media_time || empty( $media_time ) ) {
 			$filepath   = get_attached_file( $media_object->media_id );
 			$media_tags = new RTMediaTags( $filepath );
 			$duration   = $media_tags->duration;
@@ -544,6 +544,7 @@ function rtmedia_duration( $id = false ) {
 		} else {
 			$duration = $media_time;
 		}
+		$duration = str_replace( '-:--', '', $duration );
 		$duration = '<span class="rtmedia_time" >' . esc_attr( $duration ) . '</span>';
 	}
 
