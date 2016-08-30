@@ -12,7 +12,7 @@ Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & mor
 
 == Description ==
 
-rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress, and is **WordPress VIP** compatible.
+rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress, and is **WordPress.com VIP** compatible.
 
 Built with a mobile-first approach, it works on mobile/tablet devices (like iPhone/iPad, Android).
 
