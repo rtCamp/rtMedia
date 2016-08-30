@@ -135,6 +135,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 4.1.2 [Aug 25, 2016] ####
+* Update the original audio URL with transcoded audio URL in activity
+
 #### 4.1.1 [Aug 24, 2016] ####
 * Add backward compatibility
 
@@ -1205,8 +1208,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.1.1 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Add backward compatibility.
+#### 4.1.2 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update the original audio URL with transcoded audio URL in activity.
 
 ## Sponsors ##
 
