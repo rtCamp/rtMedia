@@ -328,7 +328,7 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 		} elseif ( 'music' === $rtmedia_media->media_type ) {
 			$width = $rtmedia->options['defaultSizes_music_singlePlayer_width'];
 			$width = ( $width * 75 ) / 640;
-			$size  = ' width= ' . esc_attr( $width ) . '% height="30" ';
+			$size  = ' width= ' . esc_attr( $width ) . '% height=30 ';
 			if ( ! $size_flag ) {
 				$size = '';
 			}
