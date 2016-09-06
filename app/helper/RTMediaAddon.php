@@ -199,7 +199,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					'demo_link'    => $rtmedia_demo_url . '?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'buy_now'      => 'https://rtmedia.io/products/rtmedia-restrictions/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'category'     => 'general',
-					'purchased'    => ( defined( 'RTMEDIA_RSS_ATOM_FEED_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-podcast-feed/index.php' ) ) ? true : false,
+					'purchased'    => ( defined( 'RTMEDIA_RESTRICTIONS_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-restrictions/index.php' ) ) ? true : false,
 				),
 				array(
 					'title'        => esc_html__( 'bbPress Attachments', 'buddypress-media' ),
@@ -342,7 +342,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					'demo_link'    => $rtmedia_demo_url . '?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'buy_now'      => 'https://rtmedia.io/products/rtmedia-upload-by-url/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'category'     => 'general',
-					'purchased'    => ( defined( 'RTMEDIA_DOWNLOADS_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-upload-by-url/index.php' ) ) ? true : false,
+					'purchased'    => ( defined( 'RTMEDIA_URL_UPLOAD_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-upload-by-url/index.php' ) ) ? true : false,
 				),
 				array(
 					'title'        => esc_html__( 'Media Likes', 'buddypress-media' ),
