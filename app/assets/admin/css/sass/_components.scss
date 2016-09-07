@@ -353,3 +353,32 @@
 		}
 	}
 }
+
+.rtm-addon-license {
+	border: 1px solid #ddd;
+	margin: 1%;
+	display: inline-block;
+	background-color: #fff;
+	width: 100%;
+	vertical-align: top;
+
+	@media( min-width: 768px ){
+		width: 30%;
+	}
+
+	.title {
+		background-color: #fafafa;
+		border-bottom: 1px solid #ddd;
+	    margin: 0;
+		/* min-height: 40px;*/
+	    padding: 10px;
+	}
+
+	form {
+		padding: 10px;
+
+		input[type="submit"] {
+			margin: 10px 0;
+		}
+	}
+}
