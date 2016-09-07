@@ -1268,31 +1268,23 @@ msgstr ""
 msgid "Posted "
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:56
+#: app/helper/RTMediaLicense.php:64
 msgid "Activated"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:59
+#: app/helper/RTMediaLicense.php:68
 msgid "Deactivated"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:69
+#: app/helper/RTMediaLicense.php:106
 msgid "Status: "
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:78
-msgid "License Key"
-msgstr ""
-
-#: app/helper/RTMediaLicense.php:90
-msgid "Activate / Deactivate License"
-msgstr ""
-
-#: app/helper/RTMediaLicense.php:98
+#: app/helper/RTMediaLicense.php:135
 msgid "Deactivate License"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:101
+#: app/helper/RTMediaLicense.php:138
 msgid "Activate License"
 msgstr ""
 
