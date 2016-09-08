@@ -63,6 +63,7 @@ class RTMediaLicense {
 		$el_id			   = $args['addon_id'];
 		$license_key_id	   = $args['key_id'];
 		$license_status_id = $args['status_id'];
+		$license_data 	   = get_option( 'edd_' . $el_id . '_active', '' );
 		?>
 		<div class="large-4 medium-6 small-12 license-column">
 
