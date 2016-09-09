@@ -14,6 +14,7 @@ scss/.sass-cache/
 .bower-registry
 .bower-tmp
 .idea
+.idea/*
 _book
 nbproject
 nbproject/private/
