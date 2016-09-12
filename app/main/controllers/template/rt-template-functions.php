@@ -2966,29 +2966,35 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 	if ( is_numeric( $thumbnail_id ) ) {
 		return $thumbnail_id;
 	}
-	/* for WordPress backward compatibility */
-	if ( function_exists( 'wp_get_upload_dir' ) ) {
-		$uploads = wp_get_upload_dir();
-	} else {
-		$uploads = wp_upload_dir();
-	}
-
-	$baseurl = $uploads['baseurl'];
-
-	$search 	= '/^(http|https)(.*)([wp\-content])(\/)/i';
-	$replace 	= $baseurl . '/';
-
-	$thumbnail_url = preg_replace( $search, $replace, $thumbnail_id );
-	if ( ! empty( $thumbnail_url ) ) {
-		$thumbnail_id = $thumbnail_url;
-	}
-	return $thumbnail_id;
-}
-if ( ! class_exists( 'RTAWSS3_Class' ) ) {
 	/**
 	 * Fix for rtAmazon S3 addon
 	 * When rtAmazon S3 is disabled we need to restore/replace the attachment URLS with the
 	 * original WordPress URL structure
 	 */
-	add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
+	if ( ! class_exists( 'RTAWSS3_Class' ) ) {
+		/* for WordPress backward compatibility */
+		if ( function_exists( 'wp_get_upload_dir' ) ) {
+			$uploads = wp_get_upload_dir();
+		} else {
+			$uploads = wp_upload_dir();
+		}
+
+		$baseurl = $uploads['baseurl'];
+
+		$search 	= '/^(http|https)(.*)([wp\-content])(\/)/i';
+		$replace 	= $baseurl . '/';
+
+		$thumbnail_url = preg_replace( $search, $replace, $thumbnail_id );
+		if ( ! empty( $thumbnail_url ) ) {
+			$thumbnail_id = $thumbnail_url;
+		}
+	}
+	/**
+	 * Apply filter to get amazon s3 URL
+	 *
+	 */
+	$final_file_url = apply_filters( 'transcoded_file_url', $thumbnail_id, $media_id );
+
+	return $final_file_url;
 }
+add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
