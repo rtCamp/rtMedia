@@ -175,6 +175,7 @@ class RTMediaTags {
 
 		$array_ext  = array( 'ogg', 'm4a', 'mp4', 'webm' );
 		$path_parts = pathinfo( $this->file );
+		$path_parts['extension'] = $path_parts['extension'] ? $path_parts['extension'] : false;
 
 		$data = $this->id3->analyze( $this->file );
 

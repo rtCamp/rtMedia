@@ -323,12 +323,12 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			$height = ( $height * 75 ) / 640;
 			$size   = ' width="' . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . '" height="' . esc_attr( $height ) . '%" ';
 			$html   = "<div id='rtm-mejs-video-container' style='width:" . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . 'px;height:' . esc_attr( $height ) . "%;  max-width:96%;max-height:80%;'>";
-			$html .= '<video src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" ' . esc_attr( $size ) . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . esc_attr( $rtmedia_media->id ) . '" controls="controls" preload="true"></video>';
+			$html .= '<video poster="" src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" ' . esc_attr( $size ) . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . esc_attr( $rtmedia_media->id ) . '" controls="controls" preload="true"></video>';
 			$html .= '</div>';
 		} elseif ( 'music' === $rtmedia_media->media_type ) {
 			$width = $rtmedia->options['defaultSizes_music_singlePlayer_width'];
 			$width = ( $width * 75 ) / 640;
-			$size  = ' width= ' . esc_attr( $width ) . '% height="30" ';
+			$size  = ' width= ' . esc_attr( $width ) . '% height=30 ';
 			if ( ! $size_flag ) {
 				$size = '';
 			}
@@ -2922,6 +2922,7 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 	    } else {
 	    	$final_file_url = $uploads['baseurl'] . '/' . $file_url;
 	    }
+	    $final_file_url = apply_filters( 'transcoded_file_url', $final_file_url, $attachment_id );
 	} else {
 		$final_file_url = wp_get_attachment_url( $attachment_id );
 	}
@@ -2932,11 +2933,11 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 add_filter( 'rtmedia_single_content_filter', 'replace_src_with_transcoded_file_url', 100, 2 );
 
 /**
- * Check if URL exists of a given media type
- * 
+ * Check if URL exists of a given media type (i.e mp4, ogg, wmv)
+ *
  * @param  array $medias
  * @param  string $media_type
- * 
+ *
  * @return boolen|string
  */
 function rtt_is_video_exists( $medias, $media_type = 'mp4' ) {
@@ -2947,3 +2948,53 @@ function rtt_is_video_exists( $medias, $media_type = 'mp4' ) {
 		return $medias[ $media_type ][0];
 	}
 }
+
+/**
+ * Gives the WordPress's default attachment URL if the base URL of the attachment is
+ * different than the WordPress's default base URL. e.g following URL
+ * https://s3.amazonaws.com/bucket-name/wp-content/uploads/2016/09/attachment.jpg
+ * will get replaced with
+ * http://www.wordpress-base.url/wp-content/uploads/2016/09/1473432502-small-10-1-16_1.jpg
+ *
+ * @param  mixed 	$thumbnail_id 	It can be attachment URL or attachment ID
+ * @param  string 	$media_type   	Media type
+ * @param  int 		$media_id     	Attachment ID
+ *
+ * @return string 					Attachment URL if attachment URL is provided in the argument
+ */
+function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
+	if ( is_numeric( $thumbnail_id ) ) {
+		return $thumbnail_id;
+	}
+	/**
+	 * Fix for rtAmazon S3 addon
+	 * When rtAmazon S3 is disabled we need to restore/replace the attachment URLS with the
+	 * original WordPress URL structure
+	 */
+	if ( ! class_exists( 'RTAWSS3_Class' ) ) {
+		/* for WordPress backward compatibility */
+		if ( function_exists( 'wp_get_upload_dir' ) ) {
+			$uploads = wp_get_upload_dir();
+		} else {
+			$uploads = wp_upload_dir();
+		}
+
+		$baseurl = $uploads['baseurl'];
+
+		$search 	= '/^(http|https)(.*)([wp\-content])(\/)/i';
+		$replace 	= $baseurl . '/';
+
+		$thumbnail_url = preg_replace( $search, $replace, $thumbnail_id );
+		if ( ! empty( $thumbnail_url ) ) {
+			$thumbnail_id = $thumbnail_url;
+		}
+	}
+	/**
+	 * Apply filter to get amazon s3 URL
+	 *
+	 */
+	$final_file_url = apply_filters( 'transcoded_file_url', $thumbnail_id, $media_id );
+
+	return $final_file_url;
+}
+add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
