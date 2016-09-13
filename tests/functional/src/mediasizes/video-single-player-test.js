@@ -35,11 +35,9 @@ module.exports = {
           .pause(8000)
           .refresh()
           .click('.rtmedia-item-thumbnail img')
-          .waitForElementVisible('body', 1500)
+          .waitForElementVisible('#rtm-mejs-video-container',1500)
           .getElementSize("#rtm-mejs-video-container", function(result) {
-                  this.assert.equal(result.value.width, _width);
-                  this.assert.equal(result.value.height, _height);
-                  console.log('set value for width are equal');
+              this.assert.equal(result.value.width, _width,'Set value for width are equal');
               })
           .wplogout()
           .end();
