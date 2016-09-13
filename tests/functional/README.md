@@ -38,10 +38,12 @@ Running tests:
 
 Or
 
- Docker Container for Nightwatch test run
+ Docker Container for NightwatchJS test suite for rtMedia
 
- Image build:
+ To build Docker Image with Nightwatchjs dependencies:
+ 
  $```docker build -t test/nightwatch-xvfb .```
 
- Run Test Suite:
+ Run Test Suite (run from `\tests` folder):
+ 
  $```docker run -i --rm -v $(pwd):/test/ --name nightwatch-rtmedia test/nightwatch-xvfb  bash -c "npm install && xvfb-run --server-args='-screen 0, 1624x1068x24' nightwatch --group src/"```
