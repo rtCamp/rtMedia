@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/rtCamp/rtMedia.svg?branch=master)](https://travis-ci.org/rtCamp/rtMedia)
 
 **Automated testscript for rtMedia product**
 
