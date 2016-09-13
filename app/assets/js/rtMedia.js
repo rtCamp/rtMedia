@@ -413,7 +413,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 
 				rtmedia_disable_popup_navigation_comment_focus();
 				var height = $( window ).height();
-				jQuery( '.rtm-lightbox-container .mejs-video' ).css( { 'height': height * 0.8, 'max-height': height * 0.8, 'over-flow': 'hidden' } );
+				jQuery( '.rtm-lightbox-container .mejs-video' ).css( { 'height': height * 0.8, 'over-flow': 'hidden' } );
 				jQuery( '.mfp-content .rtmedia-media' ).css( { 'max-height': height * 0.87, 'over-flow': 'hidden' } );
 				//mejs-video
 				//init the options dropdown menu
