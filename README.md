@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/rtCamp/rtMedia.svg?branch=master)](https://travis-ci.org/rtCamp/rtMedia)
-
-![alt text](https://plugins.svn.wordpress.org/buddypress-media/assets/banner-772x250.jpg)
+![alt text](https://plugins.svn.wordpress.org/buddypress-media//assets/banner-772x250.jpg)
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
@@ -136,6 +134,11 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 
 ## Changelog ##
+
+#### 4.1.4 [Sep 13, 2016] ####
+* Fix audio player height issue
+* Fix video player fullscreen issue
+* Fix the attachment URL when rtAmazon S3 is disabled
 
 #### 4.1.3 [Aug 30, 2016] ####
 * Fix audio/video time duration on media thumbnail
@@ -1213,8 +1216,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.1.3 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix audio/video time duration on media thumbnail.
+#### 4.1.4 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix audio/video height and fullscreen issue.
 
 ## Sponsors ##
 
