@@ -100,13 +100,158 @@ class RTMediaLicense {
 					* alert
 
 					<?php */ ?>
-					<div class="license-message info">
-						<?php esc_html_e( 'Your license key expires on October 8, 2017.', 'buddypress-media' ); ?>
-					</div>
-
+					<?php self::render_license_message( $license_data, $tab['title'] ); ?>
 				</div><!-- End of .license-inner -->
 			</div><!-- End of .rtm-addon-license -->
 		</div><!-- End of .license-column -->
 		<?php
+	}
+
+	static function render_license_message( $license = '', $addon_name = '' ) {
+
+		$addon_name = isset( $license->item_name ) ? esc_html( $license->item_name ) : esc_html( $addon_name );
+		$messages = array();
+
+		if ( ! empty( $license ) && is_object( $license ) ) {
+
+			// activate_license 'invalid' on anything other than valid, so if there was an error capture it
+			if ( false === $license->success ) {
+
+				switch ( $license->error ) {
+
+					case 'expired' :
+
+						$class = 'alert';
+						$messages[] = sprintf(
+							__( 'Your license key expired on %1$s. Please renew your license key.', 'buddypress-media' ),
+							date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
+						);
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'revoked' :
+
+						$class = 'alert';
+						$messages[] = __( 'Your license key has been disabled. Please contact support for more information.', 'buddypress-media' );
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'missing' :
+
+						$class = 'alert';
+						$messages[] = sprintf(
+							__( 'Invalid license. Please <a href="%s" target="_blank">visit your account page</a> and verify it.', 'buddypress-media' ), 'https://rtmedia.io/my-account/'
+						);
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'invalid' :
+					case 'site_inactive' :
+
+						$class = 'alert';
+						$messages[] = sprintf(
+							__( 'Your %1$s is not active for this URL. Please <a href="%2$s" target="_blank">visit your account page</a> to manage your license key URLs.', 'buddypress-media' ),
+							$addon_name,
+							'https://rtmedia.io/my-account/'
+						);
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'item_name_mismatch' :
+
+						$class = 'alert';
+						$messages[] = sprintf( __( 'This appears to be an invalid license key for %s.', 'buddypress-media' ), $addon_name );
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'no_activations_left':
+
+						$class = 'alert';
+						$messages[] = sprintf( __( 'Your license key has reached its activation limit. <a href="%s">View possible upgrades</a> now.', 'buddypress-media' ), 'https://rtmedia.io/my-account/' );
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					default :
+
+						$messages[] = print_r( $license, true );
+						break;
+				}
+			} else {
+
+				switch ( $license->license ) {
+
+					case 'valid' :
+					default:
+
+						$class = 'success';
+
+						$now        = current_time( 'timestamp' );
+						$expiration = strtotime( $license->expires, current_time( 'timestamp' ) );
+
+						if ( 'lifetime' === $license->expires ) {
+
+							$messages[] = __( 'License key never expires.', 'buddypress-media' );
+
+							$license_status = 'license-lifetime-notice';
+
+						} elseif ( $expiration > $now && $expiration - $now < ( DAY_IN_SECONDS * 30 ) ) {
+
+							$class = 'warning';
+
+							$messages[] = sprintf(
+								__( 'Your license key expires soon! It expires on %1$s. Renew your license key.', 'buddypress-media' ),
+								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
+							);
+
+							$license_status = 'license-expires-soon-notice';
+
+						} else {
+
+							$class = 'info';
+
+							$messages[] = sprintf(
+								__( 'Your license key expires on %s.', 'buddypress-media' ),
+								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
+							);
+
+							$license_status = 'license-expiration-date-notice';
+
+						}
+
+						break;
+
+				}
+			}
+		} else {
+			$class = 'alert';
+
+			$messages[] = __( 'To receive updates, please enter your valid license key.', 'buddypress-media' );
+
+			$license_status = null;
+		}
+
+		$html = '';
+
+		if ( ! empty( $messages ) ) {
+			foreach ( $messages as $message ) {
+
+				$html .= '<div class="license-message ' . esc_attr( $class ) . ' ' . esc_attr( $license_status ) . '">' . $message . '</div>';
+
+			}
+		}
+
+		echo $html; // Please ignore PHPCS warning for $html
 	}
 }
