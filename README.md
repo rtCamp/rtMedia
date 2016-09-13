@@ -1,4 +1,6 @@
-![alt text](https://plugins.svn.wordpress.org/buddypress-media//assets/banner-772x250.jpg)
+[![Build Status](https://travis-ci.org/rtCamp/rtMedia.svg?branch=master)](https://travis-ci.org/rtCamp/rtMedia)
+
+![alt text](https://plugins.svn.wordpress.org/buddypress-media/assets/banner-772x250.jpg)
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 

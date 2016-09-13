@@ -2971,7 +2971,7 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 	 * When rtAmazon S3 is disabled we need to restore/replace the attachment URLS with the
 	 * original WordPress URL structure
 	 */
-	if ( ! class_exists( 'RTAWSS3_Class' ) ) {
+	if ( ! class_exists( 'RTAWSS3_Class' ) && ! class_exists( 'AS3CF_Utils' ) ) {
 		/* for WordPress backward compatibility */
 		if ( function_exists( 'wp_get_upload_dir' ) ) {
 			$uploads = wp_get_upload_dir();
