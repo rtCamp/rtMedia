@@ -12,3 +12,4 @@ tests/functional/node_modules/
 selenium-*.jar
 sftp-config.json
 .phpintel
+selenium-debug.log
