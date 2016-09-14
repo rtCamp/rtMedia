@@ -142,7 +142,11 @@ jQuery( function ( $ ) {
 						var list_el = "";
 
 						if ( typeof ( element ) === "undefined" ) {
-							list_el = $( ".rtmedia-list" )[0];
+							if( jQuery( el ).find( '.rtmedia-list' ).lenght > 0 ) {
+								list_el = jQuery( el ).find( '.rtmedia-list' );
+							} else {
+								list_el = $( ".rtmedia-list" )[0];
+							}
 						} else {
 							list_el = element.parent().siblings( '.rtmedia-list' );
 						}
@@ -173,11 +177,11 @@ jQuery( function ( $ ) {
 				} );
 			}
 		},
-		reloadView: function () {
+		reloadView: function ( parent_el ) {
 			upload_sync = true;
 			nextpage = 1;
 			jQuery( '.rtmedia-container .rtmedia-list' ).css( 'opacity', '0.5' );
-			this.getNext();
+			this.getNext( undefined, parent_el, undefined );
 		}
 	} );
 
