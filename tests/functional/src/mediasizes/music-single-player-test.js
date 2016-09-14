@@ -43,7 +43,7 @@ module.exports = {
             .refresh()
             .click('.rtmedia-item-thumbnail')
             .getElementSize(".mejs-container", function(result) {  //#mep_0
-                  this.assert.equal(result.value.width, 200);
+                  this.assert.equal(result.value.width, 200*0.865);
                   console.log('set value for width are equal');
             })
             .wplogout()

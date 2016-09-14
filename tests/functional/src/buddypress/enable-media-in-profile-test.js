@@ -37,7 +37,7 @@ module.exports = {
             .pause(6000)
             .refresh()
             .getText('.rtmedia-list-item a.rtmedia-list-item-a .rtmedia-item-title h4',function(result){
-                browser.assert.equal(result.value, 'test', 'image uploaded successfully');
+                browser.assert.equal(result.value, 'TEST', 'image uploaded successfully');
                })
             .wplogout()
             .end();
