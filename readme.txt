@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 4.6.1
-Stable tag: 4.1.4
+Stable tag: 4.1.5
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -134,6 +134,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.1.5 [Sep 14, 2016] =
+* Fix issue where multiple gallery shortcode not working together
 
 = 4.1.4 [Sep 13, 2016] =
 * Fix audio player height issue
@@ -1218,8 +1221,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.1.4 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix audio/video height and fullscreen issue.
+= 4.1.5 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix issue where multiple gallery shortcode not working together.
 
 == Sponsors ==
 
