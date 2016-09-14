@@ -142,7 +142,7 @@ jQuery( function ( $ ) {
 						var list_el = "";
 
 						if ( typeof ( element ) === "undefined" ) {
-							if( jQuery( el ).find( '.rtmedia-list' ).lenght > 0 ) {
+							if( jQuery( el ).find( '.rtmedia-list' ).length > 0 ) {
 								list_el = jQuery( el ).find( '.rtmedia-list' );
 							} else {
 								list_el = $( ".rtmedia-list" )[0];
