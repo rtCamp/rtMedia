@@ -572,8 +572,8 @@ class RTMediaBuddyPressActivity {
                                                 }
                                         }
                                 }
-                        }
-                }
+                        }	
+                }             
         }
 
 	/**
