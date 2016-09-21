@@ -1,6 +1,5 @@
 <div class="rtmedia-container">
 	<?php
-	global $rtmedia_query;
 	do_action( 'rtmedia_before_album_gallery' );
 
 	$title = get_rtmedia_gallery_title();
@@ -34,15 +33,9 @@
 
 		<!-- addClass 'rtmedia-list-media' for work properly selectbox -->
 		<ul class="rtmedia-list-media rtmedia-list rtmedia-album-list clearfix">
-
-			<?php
-			$count = 0;
-			while ( have_rtmedia() ) : rtmedia();
-
-				include( 'album-gallery-item.php' );
-				$count ++;
-			endwhile;
-			?>
+			<?php while ( have_rtmedia() ) : rtmedia(); ?>
+					<?php include( 'album-gallery-item.php' ); ?>
+				<?php endwhile; ?>
 		</ul>
 
 		<div class="rtmedia_next_prev rtm-load-more clearfix">

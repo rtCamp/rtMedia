@@ -22,7 +22,7 @@ if ( isset( $is_edit_allowed[0] ) ) {
 }
 ?>
 <!-- addClass if not default album -->
-<li <?php if ( null !== $rtmedia_query->media[ $count ]->context_id ) { echo 'class="rtmedia-list-item"'; } ?> >
+<li class="rtmedia-list-item">
 
 	<a href="<?php rtmedia_permalink(); ?>" title="<?php echo esc_attr( rtmedia_title() ); ?>">
 
