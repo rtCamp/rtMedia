@@ -458,7 +458,7 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 		}
 
 		$baseurl       = $uploads['baseurl'];
-		$search        = '/^(http|https)(.*)([wp\-content])(\/)/i';
+		$search        = '/^(http|https)(.*)([wp\-content])(\/)(uploads\/)/i';
 		$replace       = $baseurl . '/';
 		$thumbnail_url = preg_replace( $search, $replace, $thumbnail_id );
 
