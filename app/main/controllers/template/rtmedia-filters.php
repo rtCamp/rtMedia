@@ -406,6 +406,13 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 					$content = str_replace( $url, $thumbnail_url, $content );
 				}
 			} else {
+				/**
+				 * Sometimes there's no attachment ID for the URL assigned, so we pass MD5 hash of the URL as a attachment ID
+				 */
+				$attachment_id = md5( $url );
+				if ( ! empty( $all_media ) && ! empty( $all_media[0]->media_id ) ) {
+					$attachment_id 	= $all_media[0]->media_id;
+				}
 				$image_url = apply_filters( 'rtmedia_filtered_photo_url', $url, $attachment_id );
 				$content = str_replace( $url, $image_url, $content );
 			}
