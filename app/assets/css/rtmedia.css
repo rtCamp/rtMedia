@@ -195,6 +195,10 @@ body.media.buddypress {
 #rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-title-wrapper label, #rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-desc-wrapper label, #rtmedia_uploader_filelist .rtm-upload-edit-title-wrapper label, #rtmedia_uploader_filelist .rtm-upload-edit-desc-wrapper label {
   display: block;
 }
+#rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-title-wrapper input.rtm-upload-edit-title, #rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-desc-wrapper input.rtm-upload-edit-title, #rtmedia_uploader_filelist .rtm-upload-edit-title-wrapper input.rtm-upload-edit-title, #rtmedia_uploader_filelist .rtm-upload-edit-desc-wrapper input.rtm-upload-edit-title {
+  min-width: 100%;
+  margin-top: 1px;
+}
 
 .rtm-plupload-list:empty {
   display: none;
@@ -231,7 +235,7 @@ button#rtmedia-add-media-button-post-update .dashicons {
   background: #EEEEEE;
   position: absolute;
   height: 18px;
-  right: 0;
+  right: 4px;
   top: 0;
   width: 18px;
   z-index: 10;
@@ -246,7 +250,7 @@ button#rtmedia-add-media-button-post-update .dashicons {
 }
 
 .plupload_file_status {
-  height: 8px;
+  height: 18px;
   overflow: hidden;
   position: relative;
 }
