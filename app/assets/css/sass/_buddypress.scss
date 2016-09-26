@@ -1,19 +1,17 @@
 // BuddyPress Overwites
 
 #buddypress form#whats-new-form textarea {
-
 	// Fixed for 2012
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-
 	min-height: 70px;
 	width: 100%;
 }
 
 #buddypress #whats-new-options {
-    height: auto !important;
-    overflow: hidden;
+	height: auto !important;
+	overflow: hidden;
 }
 
 #buddypress form#whats-new-form p.activity-greeting {
@@ -21,9 +19,9 @@
 }
 
 #buddypress form#whats-new-form #whats-new-options select {
-    border: 1px solid #ccc;
-    font-size: 13px;
-    margin-top: 0;
+	border: 1px solid #ccc;
+	font-size: 13px;
+	margin-top: 0;
 	padding: 3px 2px;
 }
 
@@ -44,4 +42,9 @@
 
 #whats-new-textarea {
 	margin-bottom: 10px;
+}
+
+// Fix for bootstrap selector conflicts
+body.media.buddypress {
+	overflow-y: auto;
 }

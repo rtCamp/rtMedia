@@ -918,7 +918,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 				$rtmedia_admin_strings = array(
 					'no_refresh'           	  		=> esc_html__( 'Please do not refresh this page.', 'buddypress-media' ),
-					'something_went_wrong' 	  		=> esc_html__( 'Something went wrong. Please ', 'buddypress-media' ) .  '<a href onclick="location.reload();">' . esc_html__( 'refresh', 'buddypress-media' ) . '</a>' . esc_html__( ' page.', 'buddypress-media' ),
+					'something_went_wrong' 	  		=> esc_html__( 'Something went wrong. Please ', 'buddypress-media' ) . '<a href onclick="location.reload();">' . esc_html__( 'refresh', 'buddypress-media' ) . '</a>' . esc_html__( ' page.', 'buddypress-media' ),
 					'are_you_sure'         	  		=> esc_html__( 'This will subscribe you to the free plan.', 'buddypress-media' ),
 					'disable_encoding'     	  		=> esc_html__( 'Are you sure you want to disable the encoding service?', 'buddypress-media' ),
 					'enable_encoding'      	  		=> esc_html__( 'Are you sure you want to enable the encoding service?', 'buddypress-media' ),
@@ -1216,9 +1216,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 								<div class="rtm-button-container bottom">
 									<div class="rtm-social-links alignleft">
-										<a href="http://twitter.com/rtcamp" class="twitter" target="_blank"><span
+										<a href="http://twitter.com/rtMediaWP" class="twitter" target="_blank"><span
 												class="dashicons dashicons-twitter"></span></a>
-										<a href="https://www.facebook.com/rtCamp.solutions" class="facebook"
+										<a href="https://www.facebook.com/rtmediawp" class="facebook"
 										   target="_blank"><span class="dashicons dashicons-facebook"></span></a>
 										<a href="http://profiles.wordpress.org/rtcamp" class="wordpress"
 										   target="_blank"><span class="dashicons dashicons-wordpress"></span></a>
@@ -1718,7 +1718,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ! $site_option || 'hide' !== $site_option ) {
 				rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_9_4', 'show' );
 				if ( is_dir( get_template_directory() . '/rtmedia' ) ) {
-					echo '<div class="error rtmedia-update-template-notice"><p>' . esc_html__( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.', 'buddypress-media' ) . '<a href="#" onclick="rtmedia_hide_template_override_notice(\''.esc_js( wp_create_nonce( 'rtmedia_template_notice' ) ).'\')" style="float:right">' . esc_html__( 'Hide', 'buddypress-media' ) . '</a></p></div>';
+					echo '<div class="error rtmedia-update-template-notice"><p>' . esc_html__( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.', 'buddypress-media' ) . '<a href="#" onclick="rtmedia_hide_template_override_notice(\'' . esc_js( wp_create_nonce( 'rtmedia_template_notice' ) ) . '\')" style="float:right">' . esc_html__( 'Hide', 'buddypress-media' ) . '</a></p></div>';
 					?>
 					<script type="text/javascript">
 						function rtmedia_hide_template_override_notice( rtmedia_template_notice_nonce ) {

@@ -8,33 +8,40 @@
 	* {
 		&,
 		&:before,
-			&:after {
+		&:after {
 			-webkit-box-sizing: inherit;
 			-moz-box-sizing: inherit;
 			box-sizing: inherit;
 		}
-
 	}
 }
 
-
 .rtmedia-list {
-
 	// Increased specificity with double class to overwrite defualt styles. 2012
 	&.rtmedia-list {
 		list-style: none;
-		margin: 0; // theme 2015/2014
-		padding: 0; // theme 2013
+		margin: 0;
+
+		// theme 2015/2014
+		padding: 0;
+
+		// theme 2013
+
 	}
 }
 
 .rtmedia-list-item > a {
-    border: 0;
-    display: inline-block;
-	text-decoration: none; // 2012
+	border: 0;
+	display: inline-block;
+	text-decoration: none;
+
+	// 2012
 
 	&:focus {
-		outline: 0; // theme 2015
+		outline: 0;
+
+		// theme 2015
+
 	}
 
 	& + p {
@@ -43,7 +50,10 @@
 
 	.rtmedia-item-thumbnail {
 		img {
-			display: inline-block; // Remove extra white space below image.
+			display: inline-block;
+
+			// Remove extra white space below image.
+
 		}
 	}
 }
@@ -64,14 +74,14 @@
 		padding: 5px;
 		position: relative;
 
-        &.upload-error {
-            border: 1px solid red;
-        }
+		&.upload-error {
+			border: 1px solid red;
+		}
 	}
-    
-    img {
-        max-width: 100%;
-    }
+
+	img {
+		max-width: 100%;
+	}
 
 	canvas {
 		display: block;
@@ -81,15 +91,22 @@
 	.rtm-upload-edit-title {
 		font-size: 12px;
 	}
+
 	.rtm-upload-edit-desc {
 		font-size: 12px;
 		display: block;
 	}
+
 	.rtm-upload-edit-title-wrapper, .rtm-upload-edit-desc-wrapper {
 		label {
 			display: block;
 		}
-	}	
+
+		input.rtm-upload-edit-title {
+			min-width: 100%;
+			margin-top: 1px;
+		}
+	}
 }
 
 .rtm-plupload-list {
@@ -128,12 +145,12 @@ button#rtmedia-add-media-button-post-update {
 
 .plupload_file_action {
 	background: $light;
-    position: absolute;
+	position: absolute;
 	height: 18px;
-    right: 0;
-    top: 0;
+	right: 4px;
+	top: 0;
 	width: 18px;
-    z-index: 10;
+	z-index: 10;
 
 	.dashicons {
 		color: $error;
@@ -146,16 +163,16 @@ button#rtmedia-add-media-button-post-update {
 }
 
 .plupload_file_status {
-    height: 8px;
-    overflow: hidden;
-    position: relative;
+	height: 18px;
+	overflow: hidden;
+	position: relative;
 }
 
 .plupload_file_progress {
 	background: $success;
 	height: 4px;
-    position: absolute;
-    top: 0;
+	position: absolute;
+	top: 0;
 }
 
 .rtm-form {
@@ -184,20 +201,18 @@ button#rtmedia-add-media-button-post-update {
 }
 
 .rtm-pagination {
-
-    background: transparent;
-    border: none;
-    color: #888;
-    font-size: small;
-    margin: 0;
-    position: relative;
-    display: block;
-    float: left;
-    width: 100%;
-    padding: 10px 0;
+	background: transparent;
+	border: none;
+	color: #888;
+	font-size: small;
+	margin: 0;
+	position: relative;
+	display: block;
+	float: left;
+	width: 100%;
+	padding: 10px 0;
 
 	.rtm-paginate {
-
 		float: right;
 		font-size: 15px;
 
@@ -206,7 +221,10 @@ button#rtmedia-add-media-button-post-update {
 			line-height: 1;
 			margin: 0 2px;
 			padding: 8px;
-			text-decoration: none; //2012
+			text-decoration: none;
+
+			//2012
+
 		}
 
 		a.rtmedia-page-link {
@@ -233,10 +251,10 @@ button#rtmedia-add-media-button-post-update {
 
 .rtmedia-upload-not-allowed {
 	background-color: #fcf8e3;
-    border-bottom: 1px solid #EEE;
-    color: #c09853;
+	border-bottom: 1px solid #EEE;
+	color: #c09853;
 	margin-bottom: 20px;
-    padding: 10px 15px;
+	padding: 10px 15px;
 }
 
 .plupload_file_name {
@@ -295,12 +313,11 @@ button#rtmedia-add-media-button-post-update {
 	.dashicons-trash {
 		font-size: 15px;
 	}
-
 }
 
 // Hover actions
 .rtm-pro-allow-action {
-    .rtmedia-list-item:hover {
+	.rtmedia-list-item:hover {
 		.rtmedia-gallery-item-actions {
 			opacity: 1;
 		}
@@ -323,98 +340,101 @@ button#rtmedia-add-media-button-post-update {
 //table form Media list edit tab
 
 .rtmedia-text-link-decoration {
-    text-decoration: none;
-    &:hover { 
-        text-decoration: underline;
-    }
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 .rtmedia-container .rtmedia-edit-list-media-table {
-    max-height: 300px;
-    overflow-y: auto;
-    
-    thead {
-        tr {
-            background-color: #50A1D7;
-        }
-        
-        th {
-            text-align: center; 
-            color: #FFF; 
-        }
-    }
-    
-    tbody {
-        tr {
-            &:nth-child(odd) { 
-                background: #FFF; 
-            }
-        }
-        
-        tr {
-            &:nth-child(even) { 
-                background: #DCDCDC; 
-            }
-        }
-    }
+	max-height: 300px;
+	overflow-y: auto;
+
+	thead {
+		tr {
+			background-color: #50A1D7;
+		}
+
+		th {
+			text-align: center;
+			color: #FFF;
+		}
+	}
+
+	tbody {
+		tr {
+			&:nth-child(odd) {
+				background: #FFF;
+			}
+		}
+
+		tr {
+			&:nth-child(even) {
+				background: #DCDCDC;
+			}
+		}
+	}
 }
 
 table.rtmedia-edit-media-list {
-    tr {
-        line-height: 30px;
-        th { 
-            color: #333; 
-            padding: 4px 10px; 
-            line-height: 20px; 
-        }
-        .rtm-edit-media-list-heading {
-            width: 44%;
-        }
-        .rtm-edit-media-list-title-heading {
-            width: 56%;
-        }
-        
-        td.rtm-edit-media-list-edit, 
-        td.rtm-edit-media-list-delete, 
-        td.rtm-edit-media-list-title {
-            padding: 4px; 
-            font-size: 14px;
-            line-height: 24px;
-            
-            a,span { 
-                @extend .rtmedia-text-link-decoration; 
-            }
-        }
-        
-        td.rtm-edit-media-list-title {
-           
-            a { 
-                text-decoration: none; 
-                color: #333; 
-            }
-        }
-        
-        td.rtm-edit-media-list-edit {
-            text-align: center;
-            
-            a { 
-                color: #333; 
-                font-size: 13px; 
-            }
-        }
-        
-        td.rtm-edit-media-list-delete {
-            text-align: center;
-            
-            span { 
-                color: #FF0000; 
-                cursor: pointer; 
-                font-size: 13px;
-            }
-        }
-    }
+	tr {
+		line-height: 30px;
+
+		th {
+			color: #333;
+			padding: 4px 10px;
+			line-height: 20px;
+		}
+
+		.rtm-edit-media-list-heading {
+			width: 44%;
+		}
+
+		.rtm-edit-media-list-title-heading {
+			width: 56%;
+		}
+
+		td.rtm-edit-media-list-edit,
+		td.rtm-edit-media-list-delete,
+		td.rtm-edit-media-list-title {
+			padding: 4px;
+			font-size: 14px;
+			line-height: 24px;
+
+			a, span {
+				@extend .rtmedia-text-link-decoration;
+			}
+		}
+
+		td.rtm-edit-media-list-title {
+			a {
+				text-decoration: none;
+				color: #333;
+			}
+		}
+
+		td.rtm-edit-media-list-edit {
+			text-align: center;
+
+			a {
+				color: #333;
+				font-size: 13px;
+			}
+		}
+
+		td.rtm-edit-media-list-delete {
+			text-align: center;
+
+			span {
+				color: #FF0000;
+				cursor: pointer;
+				font-size: 13px;
+			}
+		}
+	}
 }
 
-.rtm-hide{
+.rtm-hide {
 	display: none;
 }

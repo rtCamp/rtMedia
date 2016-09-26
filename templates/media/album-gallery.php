@@ -27,12 +27,15 @@
 		<?php rtmedia_uploader( array( 'is_up_shortcode' => false ) ); ?>
 	</div>
 
-	<?php if ( have_rtmedia() ) { ?>
+	<?php
+	do_action( 'rtmedia_after_media_gallery_title' );
+	if ( have_rtmedia() ) { ?>
 
-		<ul class="rtmedia-list rtmedia-album-list clearfix">
+		<!-- addClass 'rtmedia-list-media' for work properly selectbox -->
+		<ul class="rtmedia-list-media rtmedia-list rtmedia-album-list clearfix">
 			<?php while ( have_rtmedia() ) : rtmedia(); ?>
-				<?php include( 'album-gallery-item.php' ); ?>
-			<?php endwhile; ?>
+					<?php include( 'album-gallery-item.php' ); ?>
+				<?php endwhile; ?>
 		</ul>
 
 		<div class="rtmedia_next_prev rtm-load-more clearfix">
@@ -68,6 +71,7 @@
 	<?php } ?>
 
 	<?php do_action( 'rtmedia_after_album_gallery' ); ?>
+	<?php do_action( 'rtmedia_after_media_gallery' ); ?>
 </div>
 
 <!-- template for single media in gallery -->
