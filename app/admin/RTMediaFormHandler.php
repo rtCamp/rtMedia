@@ -637,11 +637,11 @@ class RTMediaFormHandler {
 										'span' => array(
 											'class' => array(),
 											'data-on' => array(),
-											'data-off' => array()
+											'data-off' => array(),
 										),
 										'label' => array(
 											'for' => array(),
-											'class' => array()
+											'class' => array(),
 										),
 										'input' => array(
 											'type' => array(),
@@ -649,8 +649,8 @@ class RTMediaFormHandler {
 											'data-toggle' => array(),
 											'id' => array(),
 											'name' => array(),
-											'value' => array()
-										)
+											'value' => array(),
+										),
 									) );
 									?>
 								</span>
@@ -663,11 +663,11 @@ class RTMediaFormHandler {
 									'span' => array(
 										'class' => array(),
 										'data-on' => array(),
-										'data-off' => array()
+										'data-off' => array(),
 									),
 									'label' => array(
 										'for' => array(),
-										'class' => array()
+										'class' => array(),
 									),
 									'input' => array(
 										'type' => array(),
@@ -675,8 +675,8 @@ class RTMediaFormHandler {
 										'data-toggle' => array(),
 										'id' => array(),
 										'name' => array(),
-										'value' => array()
-									)
+										'value' => array(),
+									),
 								) );
 								?>
 							</td>
@@ -787,11 +787,11 @@ class RTMediaFormHandler {
 							$args = array(
 								'key' => 'defaultSizes_' . $parent_key . '_' . $entity['title'],
 							);
-							foreach ( $entity as $child_key => $value ) {
-								if ( 'title' !== $child_key ) {
-									$args[ $child_key ] = $value;
-								}
+						foreach ( $entity as $child_key => $value ) {
+							if ( 'title' !== $child_key ) {
+								$args[ $child_key ] = $value;
 							}
+						}
 							self::dimensions( $args );
 							?>
 						</tr>
