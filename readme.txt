@@ -1,12 +1,12 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, sanket.parmar, pranalipatel, jignesh.nakrani, mangeshp, manishsongirkar36, kiranpotphode, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel
+Contributors: rtcamp, sanket.parmar, pranalipatel, jignesh.nakrani, mangeshp, manishsongirkar36, kiranpotphode, yahil, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 4.6.1
-Stable tag: 4.1.5
+Stable tag: 4.1.6
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -95,7 +95,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 * [Documentation](https://rtmedia.io/docs/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Documentation page")
 * [FAQ](https://rtmedia.io/faq/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's FAQ page")
 * [Support](http://community.rtcamp.com/c/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's support page")
-* [GitHub](http://github.com/rtCamp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
+* [GitHub](https://github.com/rtmediawp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
 * [Translations](https://rtmedia.io/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) - Please do NOT use Github for translations. Instead Use [this GlotPress project](https://rtmedia.io/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 
 == Installation ==
@@ -134,6 +134,14 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.1.6 [Sep 26, 2016] =
+* Fix broken UI when image information is edited/updated
+* Fix issue related to media sorting
+* Divide rt-template-functions.php into four files (core functions, actions & filters)
+* Fix playlist settings not getting saved in groups
+* Add filters to alter the image/video URLS in activity
+* Fix bootstrap css selector conflict
 
 = 4.1.5 [Sep 15, 2016] =
 * Fix issue where multiple gallery shortcode not working together
@@ -1223,8 +1231,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.1.5 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix issue where multiple gallery shortcode not working together and added filter to change 'under' album text.
+= 4.1.6 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fixed broken UI when image information is edited/updated also fixed issue related to media sorting
+and playlist settings not getting saved in groups.
 
 == Sponsors ==
 

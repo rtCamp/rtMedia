@@ -3344,5 +3344,4 @@ function rtt_is_video_exists( $medias, $media_type = 'mp4' ) {
 	if ( isset( $medias[ $media_type ] ) && is_array( $medias[ $media_type ] ) && ! empty( $medias[ $media_type ][0] ) ) {
 		return $medias[ $media_type ][0];
 	}
-
 }

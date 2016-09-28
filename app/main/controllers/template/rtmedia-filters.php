@@ -289,6 +289,143 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 add_filter( 'rtmedia_single_content_filter', 'replace_src_with_transcoded_file_url', 100, 2 );
 
 /**
+ * Replace aws url of image with the wordpress attachment url in buddypress activity
+ * @param  string $html
+ * @param  object $rtmedia_media
+ *
+ * @return string
+ */
+function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
+	if ( empty( $rtmedia_media ) ) {
+		return $html;
+	}
+	/**
+	 * Allow users/plugins to prevent replacing of URL from activty
+	 *
+	 * @var boolean					Boolean false is passed as a parameter.
+	 * @var object $rtmedia_media	Object of rtmedia containing media_id, media_type etc.
+	 */
+	if ( apply_filters( 'replace_aws_img_urls_from_activity', false, $rtmedia_media ) ) {
+		return $html;
+	}
+
+	if ( empty( $rtmedia_media->media_id ) || empty( $rtmedia_media->media_type ) ) {
+		return $html;
+	}
+
+	$media_type 	= $rtmedia_media->media_type;
+
+	if ( 'imgae' === $media_type ) {
+		/**
+		 * Fix for rtAmazon S3 addon
+		 * When rtAmazon S3 is disabled we need to restore/replace the attachment URLS with the
+		 * original WordPress URL structure
+		 */
+		if ( ! class_exists( 'RTAWSS3_Class' ) && ! class_exists( 'AS3CF_Utils' ) ) {
+			/* for WordPress backward compatibility */
+			if ( function_exists( 'wp_get_upload_dir' ) ) {
+				$uploads = wp_get_upload_dir();
+			} else {
+				$uploads = wp_upload_dir();
+			}
+
+			$baseurl = $uploads['baseurl'];
+
+			$search 	= '/^(http|https)(.*)([wp\-content])(\/uploads\/)/i';
+			$replace 	= $baseurl . '/';
+
+			$thumbnail_url = preg_replace( $search, $replace, $thumbnail_id );
+			if ( ! empty( $thumbnail_url ) ) {
+				$html = preg_replace( "/src=[\"]([^\"]+)[\"]/", "src=\"$thumbnail_url\"", $html );
+			}
+		}
+	}
+	return $html;
+}
+
+add_filter( 'rtmedia_single_content_filter', 'replace_aws_img_urls_from_activity', 100, 2 );
+
+/**
+ * Add the notice when file is sent for the transcoding and adds the poster thumbnail if poster tag is empty
+ *
+ * @since 1.0.1
+ *
+ * @param  string $content  HTML contents of the activity
+ * @param  object $activity Activity object
+ *
+ * @return string
+ */
+function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
+
+	if ( empty( $content ) || empty( $activity ) ) {
+		return $content;
+	}
+
+	/**
+	 * Allow users/plugins to prevent replacing of URL from activty
+	 *
+	 * @var boolean					Boolean false is passed as a parameter.
+	 * @var object $activity		Object of activity.
+	 */
+	if ( apply_filters( 'replace_aws_img_urls_from_activity', false, $activity ) ) {
+		return $content;
+	}
+
+	$rt_model  = new RTMediaModel();
+	$all_media = $rt_model->get( array( 'activity_id' => $activity->id ) );
+
+	$is_img 	= false;
+	$url 		= '';
+	$is_img 	= strpos( $content , '<img ' );
+
+	$search 	= "/<img.+src=[\"]([^\"]+)[\"]/";
+	preg_match_all( $search , $content, $url );
+
+	if ( ! empty( $is_img ) && ! empty( $url ) && ! empty( $url[1] ) ) {
+		/**
+		 * Fix for rtAmazon S3 addon
+		 * When rtAmazon S3 is disabled we need to restore/replace the attachment URLS with the
+		 * original WordPress URL structure
+		 */
+		foreach ( $url[1] as $key => $url ) {
+			if ( ! class_exists( 'RTAWSS3_Class' ) && ! class_exists( 'AS3CF_Utils' ) ) {
+				/* for WordPress backward compatibility */
+				if ( function_exists( 'wp_get_upload_dir' ) ) {
+					$uploads = wp_get_upload_dir();
+				} else {
+					$uploads = wp_upload_dir();
+				}
+
+				$baseurl = $uploads['baseurl'];
+
+				$search 	= "/^(http|https)(.*)([wp\-content])(\/uploads\/)/i";
+				$replace 	= $baseurl . '/';
+
+				$thumbnail_url = preg_replace( $search, $replace, $url );
+				if ( ! empty( $thumbnail_url ) ) {
+					$content = str_replace( $url, $thumbnail_url, $content );
+				}
+			} else {
+				/**
+				 * Sometimes there's no attachment ID for the URL assigned, so we pass MD5 hash of the URL as a attachment ID
+				 */
+				$attachment_id = md5( $url );
+				if ( ! empty( $all_media ) && ! empty( $all_media[0]->media_id ) ) {
+					$attachment_id 	= $all_media[0]->media_id;
+				}
+				$image_url = apply_filters( 'rtmedia_filtered_photo_url', $url, $attachment_id );
+				$content = str_replace( $url, $image_url, $content );
+			}
+		}
+
+	}
+	return $content;
+}
+
+add_filter( 'bp_get_activity_content_body', 'replace_aws_img_urls_from_activities', 99, 2 );
+
+
+/**
  * Gives the WordPress's default attachment URL if the base URL of the attachment is
  * different than the WordPress's default base URL. e.g following URL
  * https://s3.amazonaws.com/bucket-name/wp-content/uploads/2016/09/attachment.jpg
@@ -321,7 +458,7 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 		}
 
 		$baseurl       = $uploads['baseurl'];
-		$search        = '/^(http|https)(.*)([wp\-content])(\/)/i';
+		$search        = '/^(http|https)(.*)([wp\-content])(\/)(uploads\/)/i';
 		$replace       = $baseurl . '/';
 		$thumbnail_url = preg_replace( $search, $replace, $thumbnail_id );
 

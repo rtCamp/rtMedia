@@ -1,10 +1,8 @@
-[![Build Status](https://travis-ci.org/rtCamp/rtMedia.svg?branch=master)](https://travis-ci.org/rtCamp/rtMedia)
-
-![alt text](https://plugins.svn.wordpress.org/buddypress-media/assets/banner-772x250.jpg)
+![alt text](https://plugins.svn.wordpress.org/buddypress-media//assets/banner-772x250.jpg)
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
-* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [sanket.parmar] (http://profiles.wordpress.org/sanket.parmar), [pranalipatel] (http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani] (http://profiles.wordpress.org/jignesh.nakrani), [mangeshp] (http://profiles.wordpress.org/mangeshp), [manishsongirkar36] (http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode] (http://profiles.wordpress.org/kiranpotphode), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [sagarjadhav] (http://profiles.wordpress.org/sagarjadhav), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [faishal] (http://profiles.wordpress.org/faishal), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [rahul286] (http://profiles.wordpress.org/rahul286), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay), [jarretc] (http://profiles.wordpress.org/jarretc), [tobiaskluge] (http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal] (http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla] (http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar] (http://profiles.wordpress.org/mehulkaklotar), [tannermirabel] (http://profiles.wordpress.org/tannermirabel), [kishores] (http://profiles.wordpress.org/kishores),
+* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [sanket.parmar] (http://profiles.wordpress.org/sanket.parmar), [pranalipatel] (http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani] (http://profiles.wordpress.org/jignesh.nakrani), [mangeshp] (http://profiles.wordpress.org/mangeshp), [manishsongirkar36] (http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode] (http://profiles.wordpress.org/kiranpotphode), [yahil] (http://profiles.wordpress.org/yahil), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [sagarjadhav] (http://profiles.wordpress.org/sagarjadhav), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [faishal] (http://profiles.wordpress.org/faishal), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [rahul286] (http://profiles.wordpress.org/rahul286), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay), [jarretc] (http://profiles.wordpress.org/jarretc), [tobiaskluge] (http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal] (http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla] (http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar] (http://profiles.wordpress.org/mehulkaklotar), [tannermirabel] (http://profiles.wordpress.org/tannermirabel), [kishores] (http://profiles.wordpress.org/kishores), [chandrapatel] (http://profiles.wordpress.org/chandrapatel),
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -14,7 +12,7 @@ Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & mor
 
 ## Description ##
 
-rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress, and is **WordPress VIP** compatible.
+rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress, and is **WordPress.com VIP** compatible.
 
 Built with a mobile-first approach, it works on mobile/tablet devices (like iPhone/iPad, Android).
 
@@ -97,7 +95,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 * [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Documentation page")
 * [FAQ](https://rtmedia.io/faq/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's FAQ page")
 * [Support](http://community.rtcamp.com/c/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's support page")
-* [GitHub](http://github.com/rtCamp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
+* [GitHub](https://github.com/rtmediawp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
 * [Translations](https://rtmedia.io/translate/projects/rtmedia?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media) - Please do NOT use Github for translations. Instead Use [this GlotPress project](https://rtmedia.io/translate/projects/rtmedia?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)
 
 ## Installation ##
@@ -136,6 +134,30 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 
 ## Changelog ##
+
+#### 4.1.6 [Sep 26, 2016] ####
+* Fix broken UI when image information is edited/updated
+* Fix issue related to media sorting
+* Divide rt-template-functions.php into four files (core functions, actions & filters)
+* Fix playlist settings not getting saved in groups
+* Add filters to alter the image/video URLS in activity
+* Fix bootstrap css selector conflict
+
+#### 4.1.5 [Sep 15, 2016] ####
+* Fix issue where multiple gallery shortcode not working together
+* Add filter to change 'under' album text
+* Fix issue where media query not reset properly
+
+#### 4.1.4 [Sep 13, 2016] ####
+* Fix audio player height issue
+* Fix video player fullscreen issue
+* Fix the attachment URL when rtAmazon S3 is disabled
+
+#### 4.1.3 [Aug 30, 2016] ####
+* Fix audio/video time duration on media thumbnail
+
+#### 4.1.2 [Aug 25, 2016] ####
+* Update the original audio URL with transcoded audio URL in activity
 
 #### 4.1.1 [Aug 24, 2016] ####
 * Add backward compatibility
@@ -1207,8 +1229,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.1.1 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Add backward compatibility.
+#### 4.1.6 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fixed broken UI when image information is edited/updated also fixed issue related to media sorting
+and playlist settings not getting saved in groups.
 
 ## Sponsors ##
 
