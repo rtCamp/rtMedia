@@ -38,4 +38,4 @@ if ( isset( $is_edit_allowed[0] ) ) {
 
 	</a>
 	<?php do_action( 'rtmedia_after_album_gallery_item' ) ?>
-</li>
+</li> <!-- End of .rtmedia-list-item -->
