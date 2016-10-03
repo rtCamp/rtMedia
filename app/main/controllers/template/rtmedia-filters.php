@@ -315,7 +315,7 @@ function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
 
 	$media_type 	= $rtmedia_media->media_type;
 
-	if ( 'imgae' === $media_type ) {
+	if ( 'image' === $media_type && ! empty( $rtmedia_media->guid ) ) {
 		/**
 		 * Fix for rtAmazon S3 addon
 		 * When rtAmazon S3 is disabled we need to restore/replace the attachment URLS with the
@@ -331,10 +331,17 @@ function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
 
 			$baseurl = $uploads['baseurl'];
 
-			$search 	= '/^(http|https)(.*)([wp\-content])(\/uploads\/)/i';
-			$replace 	= $baseurl . '/';
+			if ( 0 === strpos( $rtmedia_media->guid, $uploads['baseurl'] ) ) {
+				$thumbnail_url = $rtmedia_media->guid;
+			} else {
 
-			$thumbnail_url = preg_replace( $search, $replace, $thumbnail_id );
+				$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
+
+				$thumbnail_url = explode( $rtmedia_folder_name , $rtmedia_media->guid );
+
+				$thumbnail_url = $baseurl . '/' . $rtmedia_folder_name . '/' . ltrim( $thumbnail_url[1], '/' );
+			}
+
 			if ( ! empty( $thumbnail_url ) ) {
 				$html = preg_replace( "/src=[\"]([^\"]+)[\"]/", "src=\"$thumbnail_url\"", $html );
 			}
@@ -346,7 +353,9 @@ function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
 add_filter( 'rtmedia_single_content_filter', 'replace_aws_img_urls_from_activity', 100, 2 );
 
 /**
- * Add the notice when file is sent for the transcoding and adds the poster thumbnail if poster tag is empty
+ * Fix for rtAmazon S3 addon
+ * When rtAmazon S3 is disabled we need to restore/replace the attachment URLS with the
+ * original WordPress URL structure
  *
  * @since 1.0.1
  *
@@ -367,7 +376,7 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 	 * @var boolean					Boolean false is passed as a parameter.
 	 * @var object $activity		Object of activity.
 	 */
-	if ( apply_filters( 'replace_aws_img_urls_from_activity', false, $activity ) ) {
+	if ( apply_filters( 'replace_aws_img_urls_from_activities', false, $activity ) ) {
 		return $content;
 	}
 
@@ -383,9 +392,7 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 
 	if ( ! empty( $is_img ) && ! empty( $url ) && ! empty( $url[1] ) ) {
 		/**
-		 * Fix for rtAmazon S3 addon
-		 * When rtAmazon S3 is disabled we need to restore/replace the attachment URLS with the
-		 * original WordPress URL structure
+		 * Iterate through each image URL found in regex
 		 */
 		foreach ( $url[1] as $key => $url ) {
 			if ( ! class_exists( 'RTAWSS3_Class' ) && ! class_exists( 'AS3CF_Utils' ) ) {
@@ -398,10 +405,16 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 
 				$baseurl = $uploads['baseurl'];
 
-				$search 	= "/^(http|https)(.*)([wp\-content])(\/uploads\/)/i";
-				$replace 	= $baseurl . '/';
+				if ( 0 === strpos( $url, $uploads['baseurl'] ) ) {
+					$thumbnail_url = $url;
+				} else {
+					$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
 
-				$thumbnail_url = preg_replace( $search, $replace, $url );
+					$thumbnail_url = explode( $rtmedia_folder_name , $url );
+
+					$thumbnail_url = $baseurl . '/' . $rtmedia_folder_name . '/' . ltrim( $thumbnail_url[1], '/' );
+				}
+
 				if ( ! empty( $thumbnail_url ) ) {
 					$content = str_replace( $url, $thumbnail_url, $content );
 				}
@@ -445,6 +458,16 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 	}
 
 	/**
+	 * Allow users/plugins to prevent replacing of URL of album cover
+	 *
+	 * @var boolean					Boolean false is passed as a parameter.
+	 * @var string $media_type		Type of the media.
+	 */
+	if ( apply_filters( 'rtt_restore_og_wp_image_url', false, $media_type ) ) {
+		return $thumbnail_id;
+	}
+
+	/**
 	 * Fix for rtAmazon S3 addon
 	 * When rtAmazon S3 is disabled we need to restore/replace the attachment URLS with the
 	 * original WordPress URL structure
@@ -457,10 +480,18 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 			$uploads = wp_upload_dir();
 		}
 
-		$baseurl       = $uploads['baseurl'];
-		$search        = '/^(http|https)(.*)([wp\-content])(\/)(uploads\/)/i';
-		$replace       = $baseurl . '/';
-		$thumbnail_url = preg_replace( $search, $replace, $thumbnail_id );
+		if ( 0 === strpos( $thumbnail_id, $uploads['baseurl'] ) ) {
+			/* URL is clean here */
+			/* Apply any filter here if its required */
+		} else {
+			$baseurl       = $uploads['baseurl'];
+
+			$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
+
+			$thumbnail_url = explode( $rtmedia_folder_name , $thumbnail_id );
+
+			$thumbnail_url = $baseurl . '/' . $rtmedia_folder_name . '/' . ltrim( $thumbnail_url[1], '/' );
+		}
 
 		if ( ! empty( $thumbnail_url ) ) {
 			$thumbnail_id = $thumbnail_url;
