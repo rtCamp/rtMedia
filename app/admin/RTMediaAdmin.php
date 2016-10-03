@@ -122,7 +122,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_filter( 'removable_query_args', array( $this, 'removable_query_args' ), 10, 1 );
 
 			add_action( 'admin_footer', array( $this, 'rtm_admin_templates' ) );
-			
+
 			// Display invalid add-on license notices to admins.
 			add_action( 'admin_notices', array( $this, 'rtm_addon_license_notice' ) );
 		}
@@ -1775,7 +1775,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					foreach ( $sub_tabs as $tab ) {
 
 						// tab status
-						$active_class = '';
+						$active_class = $error_class = '';
+						if ( ! empty( $tab['args'] ) && ( empty( $tab['args']['status'] ) || 'valid' !== $tab['args']['status'] ) ) {
+							$error_class = 'error';
+						}
 						if ( 1 === $i ) {
 							$active_class = 'active';
 						}
@@ -1786,7 +1789,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							$icon = '<i class="' . esc_attr( $tab['icon'] ) . ' dashicons rtmicon"></i>';
 						}
 						?>
-						<li class="<?php echo esc_attr( $active_class ) ?>">
+						<li class="<?php echo esc_attr( $active_class ) ?> <?php echo esc_attr( $error_class ) ?>">
 							<a id="tab-<?php echo esc_attr( substr( $tab['href'], 1 ) ) ?>" title="<?php echo esc_attr( $tab['title'] ); ?>"
 							   href="<?php echo esc_url( $tab['href'] ); ?>"
 							   class="rtmedia-tab-title <?php echo esc_attr( sanitize_title( $tab['name'] ) ); ?>">
@@ -1844,12 +1847,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			return $removable_query_args;
 		}
-		
+
 		/**
 		 * Display invlaid license notice to admins.
-		 * 
+		 *
 		 * @since 4.1.7
-		 * 
+		 *
 		 * @return  void
 		 */
 		function rtm_addon_license_notice() {
@@ -1859,14 +1862,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			$addons = apply_filters( 'rtmedia_license_tabs', array() );
-			
+
 			if ( empty( $addons ) ) {
 				return;
 			}
 
 			$message = '';
 			foreach ( $addons as $addon ) {
-				if ( ! empty( $addon['args']['status'] ) && 'valid' !== $addon['args']['status'] ) {
+				if ( empty( $addon['args']['status'] ) || 'valid' !== $addon['args']['status'] ) {
 					$message = sprintf(
 						__( 'You have invalid or expired license key for rtMedia add-on. Please go to the <a href="%s">Licenses page</a> to correct this issue.', 'buddypress-media' ),
 						admin_url( 'admin.php?page=rtmedia-license' )
