@@ -122,6 +122,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_filter( 'removable_query_args', array( $this, 'removable_query_args' ), 10, 1 );
 
 			add_action( 'admin_footer', array( $this, 'rtm_admin_templates' ) );
+			
+			// Display invalid add-on license notices to admins.
+			add_action( 'admin_notices', array( $this, 'rtm_addon_license_notice' ) );
 		}
 
 		/**
@@ -1840,6 +1843,38 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			return $removable_query_args;
+		}
+		
+		/**
+		 * Display invlaid license notice to admins.
+		 * 
+		 * @since 4.1.7
+		 * 
+		 * @return  void
+		 */
+		function rtm_addon_license_notice() {
+
+			if ( ! empty( $_GET['page'] ) && 'rtmedia-license' === $_GET['page'] ) {
+				return;
+			}
+
+			$addons = apply_filters( 'rtmedia_license_tabs', array() );
+			
+			if ( empty( $addons ) ) {
+				return;
+			}
+
+			$message = '';
+			foreach ( $addons as $addon ) {
+				if ( ! empty( $addon['args']['status'] ) && 'valid' !== $addon['args']['status'] ) {
+					$message = sprintf(
+						__( 'You have invalid or expired license key for rtMedia add-on. Please go to the <a href="%s">Licenses page</a> to correct this issue.', 'buddypress-media' ),
+						admin_url( 'admin.php?page=rtmedia-license' )
+					);
+					echo '<div class="error"><p>' . $message . '</p></div>';
+					break;
+				}
+			}
 		}
 	}
 
