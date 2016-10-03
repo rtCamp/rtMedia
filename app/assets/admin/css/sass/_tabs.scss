@@ -2,6 +2,10 @@
 
 	li {
 		margin: 0;
+
+		&.error {
+		 	border-left: 4px solid #dc3232;
+		}
 	}
 
 	a {
