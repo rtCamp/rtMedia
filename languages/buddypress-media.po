@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.1.5\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.1.6\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-09-26 08:36:32+00:00\n"
+"POT-Creation-Date: 2016-09-29 11:41:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2710,18 +2710,18 @@ msgstr ""
 msgid "Invalid attribute passed for rtmedia_gallery shortcode."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:348
-#: app/main/controllers/template/RTMediaTemplate.php:441
-#: app/main/controllers/template/RTMediaTemplate.php:539
-#: app/main/controllers/template/RTMediaTemplate.php:675
+#: app/main/controllers/template/RTMediaTemplate.php:352
+#: app/main/controllers/template/RTMediaTemplate.php:445
+#: app/main/controllers/template/RTMediaTemplate.php:543
+#: app/main/controllers/template/RTMediaTemplate.php:679
 msgid "Ooops !!! Invalid access. No nonce was found !!"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:355
+#: app/main/controllers/template/RTMediaTemplate.php:359
 msgid "Media updated Sucessfully"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:361
+#: app/main/controllers/template/RTMediaTemplate.php:365
 msgid "Error in updating Media"
 msgstr ""
 
