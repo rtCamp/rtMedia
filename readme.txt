@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 4.6.1
-Stable tag: 4.1.6
+Stable tag: 4.1.7
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -134,6 +134,13 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.1.7 [Oct 04, 2016] =
+* Update the notice messages
+* Check for the valid URL structure for compatibility with multisite
+* Fix UI/media broken on activity page
+* Change string UNSET to REMOVE to improve the translation
+* Fix save settings button of manage media in group
 
 = 4.1.6 [Sep 26, 2016] =
 * Fix broken UI when image information is edited/updated
@@ -1231,9 +1238,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.1.6 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fixed broken UI when image information is edited/updated also fixed issue related to media sorting
-and playlist settings not getting saved in groups.
+= 4.1.7 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fix UI/media broken on activity page also fixed the save settings button of manage media in groups and updated the notices.
 
 == Sponsors ==
 
