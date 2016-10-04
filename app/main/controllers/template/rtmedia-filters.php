@@ -339,7 +339,11 @@ function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
 
 				$thumbnail_url = explode( $rtmedia_folder_name , $rtmedia_media->guid );
 
-				$thumbnail_url = $baseurl . '/' . $rtmedia_folder_name . '/' . ltrim( $thumbnail_url[1], '/' );
+				if ( is_array( $thumbnail_url ) && ! empty( $thumbnail_url[1] ) ) {
+					$thumbnail_url = $baseurl . '/' . $rtmedia_folder_name . '/' . ltrim( $thumbnail_url[1], '/' );
+				} else {
+					$thumbnail_url = $rtmedia_media->guid;
+				}
 			}
 
 			if ( ! empty( $thumbnail_url ) ) {
@@ -412,7 +416,11 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 
 					$thumbnail_url = explode( $rtmedia_folder_name , $url );
 
-					$thumbnail_url = $baseurl . '/' . $rtmedia_folder_name . '/' . ltrim( $thumbnail_url[1], '/' );
+					if ( is_array( $thumbnail_url ) && ! empty( $thumbnail_url[1] ) ) {
+						$thumbnail_url = $baseurl . '/' . $rtmedia_folder_name . '/' . ltrim( $thumbnail_url[1], '/' );
+					} else {
+						$thumbnail_url = $url;
+					}
 				}
 
 				if ( ! empty( $thumbnail_url ) ) {
@@ -484,13 +492,16 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 			/* URL is clean here */
 			/* Apply any filter here if its required */
 		} else {
-			$baseurl       = $uploads['baseurl'];
+			$baseurl = $uploads['baseurl'];
 
 			$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
 
 			$thumbnail_url = explode( $rtmedia_folder_name , $thumbnail_id );
-
-			$thumbnail_url = $baseurl . '/' . $rtmedia_folder_name . '/' . ltrim( $thumbnail_url[1], '/' );
+			if ( is_array( $thumbnail_url ) && ! empty( $thumbnail_url[1] ) ) {
+				$thumbnail_url = $baseurl . '/' . $rtmedia_folder_name . '/' . ltrim( $thumbnail_url[1], '/' );
+			} else {
+				$thumbnail_url = $thumbnail_id;
+			}
 		}
 
 		if ( ! empty( $thumbnail_url ) ) {
