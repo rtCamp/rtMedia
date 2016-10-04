@@ -35,3 +35,4 @@ sftp-config.json
 *.sublime-project
 *.sublime-workspace
 .phpintel
+selenium-debug.log

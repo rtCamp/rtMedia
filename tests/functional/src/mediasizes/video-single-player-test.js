@@ -29,15 +29,19 @@ module.exports = {
           .waitForElementVisible('body', 1500)
           .pause(1000)
           .click('#rtm_show_upload_ui')
+          .waitForElementVisible('.rtm-select-files',1500)
           .click('.rtm-select-files')
           .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_VIDEO))
           .click('.start-media-upload')
           .pause(8000)
           .refresh()
           .click('.rtmedia-item-thumbnail img')
+          .waitForElementVisible('body', 1500)
           .waitForElementVisible('#rtm-mejs-video-container',1500)
           .getElementSize("#rtm-mejs-video-container", function(result) {
-              this.assert.equal(result.value.width, _width,'Set value for width are equal');
+                  this.assert.equal(result.value.width, _width,'Entered value for width is equal');
+                  this.assert.equal(result.value.height, _height,'Entered value for height is equal');
+                  // console.log('set value for width are equal');
               })
           .wplogout()
           .end();

@@ -532,6 +532,9 @@ form.license-form input[type="submit"] {
 .rtm-tabs li {
   margin: 0;
 }
+.rtm-tabs li.error {
+  border-left: 4px solid #dc3232;
+}
 .rtm-tabs a {
   border-bottom: 1px solid #e7e7e7;
   border-top: 1px solid #f2f2f2;

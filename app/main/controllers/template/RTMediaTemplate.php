@@ -314,7 +314,11 @@ class RTMediaTemplate {
 				}
 			}
 
-			$rtmedia_query->query( false );
+			if ( isset( $rtmedia_query->query ) ) {
+				$rtmedia_query->query( $rtmedia_query->query );
+			} else {
+				$rtmedia_query->query( false );
+			}
 
 			global $rtmedia_points_media_id;
 

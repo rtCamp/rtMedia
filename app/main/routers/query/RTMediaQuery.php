@@ -438,7 +438,7 @@ class RTMediaQuery {
 		 * 
 		 * Later on, renmove this comment and below commented code.
 		 */
-		// $this->query          = wp_parse_args( $query, $this->query );
+		 // $this->query          = wp_parse_args( $query, $this->query );
 		
 		$this->query = $query;
 		
@@ -467,16 +467,8 @@ class RTMediaQuery {
 					unset( $query_data[ $key ] );
 				}
 			}
-			/*
-			 * @chandra commented this code. here we are merging new query vars and previous query vars
-			 * which is cause an issue. For example, First time query vars contain media_type and second time query vars not contain media_type
-			 * then media not listed properly.
-			 * 
-			 * Later on, renmove this comment and below commented code.
-			 */
-			// $this->query          = wp_parse_args( $query, $this->query );
 			
-			$this->query = $query_data;
+			$this->query = wp_parse_args( $query_data, $this->query );
 			
 		} else {
 			if ( isset( $this->is_gallery_shortcode ) && true === $this->is_gallery_shortcode ) {
