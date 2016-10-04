@@ -21,7 +21,7 @@ if ( isset( $is_edit_allowed[0] ) ) {
 	$rtmedia_backbone['is_edit_allowed'] = $is_edit_allowed[0];
 }
 ?>
-
+<!-- addClass if not default album -->
 <li class="rtmedia-list-item">
 
 	<a href="<?php rtmedia_permalink(); ?>" title="<?php echo esc_attr( rtmedia_title() ); ?>">
@@ -38,4 +38,4 @@ if ( isset( $is_edit_allowed[0] ) ) {
 
 	</a>
 	<?php do_action( 'rtmedia_after_album_gallery_item' ) ?>
-</li>
+</li> <!-- End of .rtmedia-list-item -->

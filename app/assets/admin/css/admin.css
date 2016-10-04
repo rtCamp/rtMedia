@@ -129,6 +129,51 @@
   width: 100%;
 }
 
+.license-row {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.license-column, .license-column {
+  box-sizing: border-box;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  padding-right: .5rem;
+  padding-left: .5rem;
+}
+
+.large-4 {
+  -ms-flex-preferred-size: 33.33333333%;
+  flex-basis: 33.33333333%;
+  max-width: 33.33333333%;
+}
+
+@media screen and (max-width: 768px) {
+  .medium-6 {
+    -ms-flex-preferred-size: 50%;
+        flex-basis: 50%;
+    max-width: 50%;
+  }
+}
+@media screen and (max-width: 667px) {
+  .small-12 {
+    -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+    max-width: 100%;
+  }
+}
 .rtm-social-links a {
   display: inline-block;
   margin: 4px 0 4px 4px;
@@ -396,29 +441,60 @@
 
 .rtm-addon-license {
   border: 1px solid #ddd;
-  margin: 1%;
-  display: inline-block;
+  margin: .5rem 0;
   background-color: #fff;
-  width: 100%;
-  vertical-align: top;
-}
-@media (min-width: 768px) {
-  .rtm-addon-license {
-    width: 30%;
-  }
 }
 .rtm-addon-license .title {
   background-color: #fafafa;
   border-bottom: 1px solid #ddd;
   margin: 0;
-  /* min-height: 40px;*/
+  padding: 15px 10px;
+}
+.rtm-addon-license .license-inner {
   padding: 10px;
 }
-.rtm-addon-license form {
-  padding: 10px;
+
+form.license-form {
+  padding: 0;
+  margin: 0;
 }
-.rtm-addon-license form input[type="submit"] {
-  margin: 10px 0;
+form.license-form input[type="text"] {
+  width: 100%;
+  max-width: 100%;
+  height: 35px;
+  line-height: 35px;
+}
+form.license-form input[type="submit"] {
+  margin: 10px 0 0;
+}
+
+.license-message {
+  margin: 15px 0 0 0;
+  padding: 8px;
+}
+.license-message.warning {
+  background: rgba(255, 185, 0, 0.1);
+  border: 1px solid #ffb900;
+}
+.license-message.success {
+  background: rgba(70, 180, 80, 0.1);
+  border: 1px solid #46b450;
+}
+.license-message.info {
+  background: rgba(0, 160, 210, 0.1);
+  border: 1px solid #00a0d2;
+}
+.license-message.alert {
+  background: rgba(220, 50, 50, 0.1);
+  border: 1px solid #dc3232;
+}
+
+.rtml-submit-wrapper .submit {
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 10px;
 }
 
 #rtmedia-encoding-usage strong {
@@ -455,6 +531,9 @@
 
 .rtm-tabs li {
   margin: 0;
+}
+.rtm-tabs li.error {
+  border-left: 4px solid #dc3232;
 }
 .rtm-tabs a {
   border-bottom: 1px solid #e7e7e7;

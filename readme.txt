@@ -1,18 +1,18 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, rittesh.patel, sanket.parmar, pranalipatel, jignesh.nakrani, mangeshp, kiranpotphode, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores
+Contributors: rtcamp, sanket.parmar, pranalipatel, jignesh.nakrani, mangeshp, manishsongirkar36, kiranpotphode, yahil, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Requires at least: WordPress 3.6
-Tested up to: 4.6
-Stable tag: 4.0.7
+Requires at least: WordPress 4.1
+Tested up to: 4.6.1
+Stable tag: 4.1.6
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
 == Description ==
 
-rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress, and is **WordPress VIP** compatible.
+rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress, and is **WordPress.com VIP** compatible.
 
 Built with a mobile-first approach, it works on mobile/tablet devices (like iPhone/iPad, Android).
 
@@ -95,7 +95,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 * [Documentation](https://rtmedia.io/docs/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Documentation page")
 * [FAQ](https://rtmedia.io/faq/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's FAQ page")
 * [Support](http://community.rtcamp.com/c/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's support page")
-* [GitHub](http://github.com/rtCamp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
+* [GitHub](https://github.com/rtmediawp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
 * [Translations](https://rtmedia.io/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) - Please do NOT use Github for translations. Instead Use [this GlotPress project](https://rtmedia.io/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 
 == Installation ==
@@ -134,6 +134,39 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.1.6 [Sep 26, 2016] =
+* Fix broken UI when image information is edited/updated
+* Fix issue related to media sorting
+* Divide rt-template-functions.php into four files (core functions, actions & filters)
+* Fix playlist settings not getting saved in groups
+* Add filters to alter the image/video URLS in activity
+* Fix bootstrap css selector conflict
+
+= 4.1.5 [Sep 15, 2016] =
+* Fix issue where multiple gallery shortcode not working together
+* Add filter to change 'under' album text
+* Fix issue where media query not reset properly
+
+= 4.1.4 [Sep 13, 2016] =
+* Fix audio player height issue
+* Fix video player fullscreen issue
+* Fix the attachment URL when rtAmazon S3 is disabled
+
+= 4.1.3 [Aug 30, 2016] =
+* Fix audio/video time duration on media thumbnail
+
+= 4.1.2 [Aug 25, 2016] =
+* Update the original audio URL with transcoded audio URL in activity
+
+= 4.1.1 [Aug 24, 2016] =
+* Add backward compatibility
+
+= 4.1 [Aug 24, 2016] =
+* Remove encoding service
+* Introduced new [Transcoder](https://wordpress.org/plugins/transcoder/) plugin
+* Add span tag to remove duplicity of activity content on thumbnail update
+* Fix notice undefined index
 
 = 4.0.7 [Aug 17, 2016] =
 * Fix Media upload using json api
@@ -1198,8 +1231,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.0.7 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
+= 4.1.6 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fixed broken UI when image information is edited/updated also fixed issue related to media sorting
+and playlist settings not getting saved in groups.
 
 == Sponsors ==
 

@@ -52,7 +52,7 @@ class RTMediaUploadEndpoint {
 
 				}
 
-				//                ////if media upload is being made for a group, identify the group privacy and set media privacy accordingly
+				//if media upload is being made for a group, identify the group privacy and set media privacy accordingly
 				if ( isset( $this->upload['context'] ) && isset( $this->upload['context_id'] ) && 'group' === $this->upload['context'] && function_exists( 'groups_get_group' ) ) {
 
 					$group = groups_get_group( array( 'group_id' => $this->upload['context_id'] ) );
