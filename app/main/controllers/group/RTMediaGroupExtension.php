@@ -63,15 +63,20 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 
 			/**
 			 * add playlist Save functionality
+			 * By: Yahil
 			 */
 			$rt_album_creation_control = filter_input( INPUT_POST, 'rt_album_creation_control', FILTER_SANITIZE_STRING );
 			$rtmp_playlist_creation_control = filter_input( INPUT_POST, 'rtmp_playlist_creation_control', FILTER_SANITIZE_STRING );
 
 			/**
-			 * Save any details submitted here
+			 * save details 'ALBUM CREATION CONTROL' and 'PLAYLIST CREATION CONTROL'
+			 * By: Yahil
 			 */
-			if ( ! empty( $rt_album_creation_control ) && ! empty( $rtmp_playlist_creation_control ) ) {
+			if ( isset( $rt_album_creation_control ) && ! empty( $rt_album_creation_control ) ) {
 				groups_update_groupmeta( $bp->groups->new_group_id, 'rt_media_group_control_level', $rt_album_creation_control );
+			}
+
+			if ( isset( $rtmp_playlist_creation_control ) && ! empty( $rtmp_playlist_creation_control ) ) {
 				groups_update_groupmeta( $bp->groups->new_group_id, 'rtmp_create_playlist_control_level', $rtmp_playlist_creation_control );
 			}
 
@@ -149,24 +154,30 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 			}
 
 			/**
-			 * remove the ' ' [ syntax mistake ]
-			 * add PLAYLIST CREATION CONTROL save functionality
+			 * Remove The ' ' [ syntax mistake ]
+			 * Add PLAYLIST CREATION CONTROL save functionality
+			 * By: Yahil
 			 */
-			$rt_album_creation_control = filter_input( INPUT_POST, 'rt_album_creation_control', FILTER_SANITIZE_STRING );
-			$rtmp_playlist_creation_control = filter_input( INPUT_POST, 'rtmp_playlist_creation_control', FILTER_SANITIZE_STRING );
+			$rt_album_creation_control		= filter_input( INPUT_POST, 'rt_album_creation_control', FILTER_SANITIZE_STRING );
+			$rtmp_playlist_creation_control	= filter_input( INPUT_POST, 'rtmp_playlist_creation_control', FILTER_SANITIZE_STRING );
 
 			check_admin_referer( 'groups_edit_save_' . $this->slug );
 
-			if ( ! empty( $rt_album_creation_control ) && ! empty( $rtmp_playlist_creation_control ) ) {
+			if ( isset( $rt_album_creation_control ) && ! empty( $rt_album_creation_control )  ) {
 				$success = groups_update_groupmeta( bp_get_current_group_id(), 'rt_media_group_control_level', $rt_album_creation_control );
-				$success = groups_update_groupmeta( bp_get_current_group_id(), 'rtmp_create_playlist_control_level', $rtmp_playlist_creation_control );
 				do_action( 'rtmedia_edit_save_group_media_settings' , $_POST );
 				$success = true;
 			} else {
 				$success = false;
 			}
 
-				/* To post an error/success message to the screen, use the following */
+			if ( isset( $rtmp_playlist_creation_control ) && ! empty( $rtmp_playlist_creation_control ) ) {
+				$success = groups_update_groupmeta( bp_get_current_group_id(), 'rtmp_create_playlist_control_level', $rtmp_playlist_creation_control );
+				do_action( 'rtmedia_edit_save_group_media_settings' , $_POST );
+				$success = true;
+			}
+
+			/* To post an error/success message to the screen, use the following */
 			if ( ! $success ) {
 				bp_core_add_message( esc_html__( 'There was an error saving, please try again', 'buddypress-media' ), 'error' );
 			} else {
@@ -188,14 +199,13 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 		 */
 		function widget_display() {
 			?>
-			<div class="info-group" >
-			<h4><?php echo esc_html( $this->name ) ?></h4>
-			<p>
-			<?php esc_html_e( 'You could display a small snippet of information from your group extension here. It will show on the group
-	                home screen.', 'buddypress-media' ); ?>
-								</p>
-							</div>
-							<?php
+				<div class="info-group" >
+					<h4><?php echo esc_html( $this->name ) ?></h4>
+					<p>
+					<?php esc_html_e( 'You could display a small snippet of information from your group extension here. It will show on the group home screen.', 'buddypress-media' ); ?>
+					</p>
+				</div>
+			<?php
 		}
 	}
 

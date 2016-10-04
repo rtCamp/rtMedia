@@ -24,7 +24,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 			'action'     => 'featured',
 			'label'      => esc_html__( 'Set as Featured', 'buddypress-media' ),
 			'plural'     => '',
-			'undo_label' => esc_html__( 'Unset Featured', 'buddypress-media' ),
+			'undo_label' => esc_html__( 'Remove Featured', 'buddypress-media' ),
 			'privacy'    => 60,
 			'countable'  => false,
 			'single'     => true,

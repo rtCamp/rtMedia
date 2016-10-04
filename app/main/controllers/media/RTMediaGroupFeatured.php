@@ -16,7 +16,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 			'action'     => 'group-featured',
 			'label'      => esc_html__( 'Set as Featured', 'buddypress-media' ),
 			'plural'     => '',
-			'undo_label' => esc_html__( 'Unset Featured', 'buddypress-media' ),
+			'undo_label' => esc_html__( 'Remove Featured', 'buddypress-media' ),
 			'privacy'    => 20,
 			'countable'  => false,
 			'single'     => true,
