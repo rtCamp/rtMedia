@@ -135,6 +135,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 4.1.8 [Oct 05, 2016] ####
+* Fix fatal error for older PHP version
+
 #### 4.1.7 [Oct 05, 2016] ####
 * Change the UI of addons license tab
 * Update the notice messages
@@ -1238,8 +1241,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.1.7 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fix UI/media broken on activity page also fixed the save settings button of manage media in groups and updated the notices.
+#### 4.1.8 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fix UI/media broken on activity page also fixed the fixed fatal error for older PHP version.
 
 ## Sponsors ##
 
