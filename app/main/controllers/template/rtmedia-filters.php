@@ -520,6 +520,11 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 
 add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
 
+/**
+ * Get the information ( status, expiry date ) of all the installed addons and store in site option
+ *
+ * @since 4.1.7
+ */
 function rt_check_addon_status(){
 	$addons = apply_filters( 'rtmedia_license_tabs', array() );
 
@@ -536,12 +541,18 @@ function rt_check_addon_status(){
 
 			$addon_id = $addon['args']['addon_id'];
 
+			/**
+			 * Check if information about the addon in already fetched from the store
+			 * If it's already fetched, then don't send the request again for the information
+			 */
 			if ( ! empty( get_option( 'edd_' . $addon_id . '_active' ) ) ) {
 				continue;
 			}
 
+			/* Get the store URL from the constant defined in the addon */
 			$store_url = constant( 'EDD_' . strtoupper( $addon_id ) . '_STORE_URL' );
 
+			/* If store URL not found in the addon, use the default store URL */
 			if ( empty( $store_url ) ) {
 				$store_url = "https://rtmedia.io/";
 			}
