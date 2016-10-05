@@ -1,13 +1,16 @@
 @media #{$large-up} {
 
 	.mfp-content {
-
 		.rtm-lightbox-container {
 			display: table;
 
 			// Fixed issue in Firefox and Opera
 			table-layout: fixed;
 			width: 100%;
+		}
+
+		.rtm-mfp-close {
+			background: transparent;
 		}
 
 		.rtm-single-media {
@@ -18,13 +21,19 @@
 		.rtm-single-meta {
 			display: table-cell;
 			width: 33.3333%;
+			padding: 20px;
+			height: 473px;
+
+			.rtmedia-scroll {
+				height: 100%;
+				overflow-X: hidden;
+			}
 		}
 
 		.rtmedia-item-comments {
-			max-height: 330px;
+			/* max-height: 330px;
 			overflow-x: hidden;
-			overflow-y: auto;
+			overflow-y: auto; */
 		}
-
 	}
 }
