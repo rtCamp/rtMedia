@@ -519,3 +519,56 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 }
 
 add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
+
+function rt_check_addon_status(){
+	$addons = apply_filters( 'rtmedia_license_tabs', array() );
+
+	if ( empty( $addons ) ) {
+		return;
+	}
+
+	foreach ( $addons as $addon ) {
+		if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
+
+			$license = $addon['args']['license_key'];
+
+			$addon_name = $addon['name'];
+
+			$addon_id = $addon['args']['addon_id'];
+
+			if ( ! empty( get_option( 'edd_' . $addon_id . '_active' ) ) ) {
+				continue;
+			}
+
+			$store_url = constant( 'EDD_' . strtoupper( $addon_id ) . '_STORE_URL' );
+
+			if ( empty( $store_url ) ) {
+				$store_url = "https://rtmedia.io/";
+			}
+
+			// data to send in our API request
+			$api_params = array(
+				'edd_action' => 'activate_license',
+				'license'    => $license,
+				'item_name'  => urlencode( $addon_name ), // the name of our product in EDD
+				'url'        => home_url(),
+			);
+
+	        // Call the custom API.
+			$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $store_url ) ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+			// make sure the response came back okay
+			if ( is_wp_error( $response ) ) {
+				return false;
+			}
+
+			// decode the license data
+			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+			// Store the data in database
+			update_option( 'edd_' . $addon_id . '_active', $license_data );
+		}
+	}
+}
+
+add_action( 'admin_init', 'rt_check_addon_status' );
