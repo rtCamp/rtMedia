@@ -1018,9 +1018,9 @@ img.mfp-img {
   position: relative;
 }
 .mfp-content .rtm-lightbox-container .rtmedia-media-description .allcontent {
-  max-height: 200px;
+  /* max-height: 200px;
   overflow-y: auto;
-  margin: 5px 0;
+  margin: 5px 0; */
 }
 .mfp-content .rtm-single-meta {
   background: #FFFFFF;
@@ -1368,9 +1368,7 @@ img.mfp-img {
   background-color: #edeff4;
   bottom: 20px;
   padding: 10px;
-  position: absolute;
-  width: -webkit-calc(100% - 40px);
-  width: calc(100% - 40px);
+  width: 100%;
 }
 .rtm-media-single-comments textarea {
   font-size: 12px;
@@ -2470,6 +2468,9 @@ a.rtmedia-upload-media-link {
     table-layout: fixed;
     width: 100%;
   }
+  .mfp-content .rtm-mfp-close {
+    background: transparent;
+  }
   .mfp-content .rtm-single-media {
     display: table-cell;
     width: 66.6667%;
@@ -2477,11 +2478,17 @@ a.rtmedia-upload-media-link {
   .mfp-content .rtm-single-meta {
     display: table-cell;
     width: 33.3333%;
+    padding: 20px;
+    height: 473px;
+  }
+  .mfp-content .rtm-single-meta .rtmedia-scroll {
+    height: 100%;
+    overflow-X: hidden;
   }
   .mfp-content .rtmedia-item-comments {
-    max-height: 330px;
+    /* max-height: 330px;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: auto; */
   }
 }
 .rtl #rtSelectPrivacy {
