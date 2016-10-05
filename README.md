@@ -135,6 +135,15 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 4.1.7 [Oct 05, 2016] ####
+* Change the UI of addons license tab
+* Update the notice messages
+* Check for the valid URL structure for compatibility with multisite
+* Change string UNSET to REMOVE to improve the translation
+* Fix UI/media broken on activity page
+* Fix the scroll bar on the media pop screen
+* Fix save settings button of manage media in group
+
 #### 4.1.6 [Sep 26, 2016] ####
 * Fix broken UI when image information is edited/updated
 * Fix issue related to media sorting
@@ -1229,9 +1238,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.1.6 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fixed broken UI when image information is edited/updated also fixed issue related to media sorting
-and playlist settings not getting saved in groups.
+#### 4.1.7 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fix UI/media broken on activity page also fixed the save settings button of manage media in groups and updated the notices.
 
 ## Sponsors ##
 
