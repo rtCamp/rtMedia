@@ -38,7 +38,7 @@
 
 							<?php if ( rtmedia_album_name() ) { ?>
 								<span class="rtmedia-album-name">
-									<span>&nbsp;<?php echo $media_under = apply_filters( 'rtmedia_update_under_album_text', esc_html__( 'under', 'buddypress-media' )); ?></span>
+									<span>&nbsp;<?php echo $media_under = apply_filters( 'rtmedia_update_under_album_text', esc_html__( 'under', 'buddypress-media' ) ); ?></span>
 									<a href="<?php rtmedia_album_permalink(); ?>"
 									   title="<?php echo esc_attr( rtmedia_album_name() ); ?>"><?php echo esc_html( rtmedia_album_name() ); ?></a>
 								</span>
@@ -54,7 +54,7 @@
 			</div>
 
 			<div class="rtmedia-single-meta rtm-single-meta">
-
+			<div class="rtmedia-scroll">
 				<?php if ( $rt_ajax_request ) { ?>
 
 					<div class="rtm-single-meta-contents<?php if ( is_user_logged_in() ) {
@@ -158,6 +158,7 @@
 
 					<?php } ?>
 				<?php } ?>
+			</div>
 			</div>
 
 		<?php else : ?>
