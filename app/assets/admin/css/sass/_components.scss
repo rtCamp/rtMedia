@@ -1,29 +1,27 @@
 // Social Links
 .rtm-social-links {
-
 	a {
 		display: inline-block;
 		margin: 4px 0 4px 4px;
 		text-decoration: none;
 	}
-
 }
 
 // Go Pro button
 .nav-tab.rtm-premium {
-    background: #e74c3c;
-    color: white;
-    letter-spacing: 0.5px;
+	background: #e74c3c;
+	color: white;
+	letter-spacing: 0.5px;
 }
 
 .rtm-setting-title {
 	border-bottom: 1px solid $light;
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 1;
-    margin-bottom: 20px;
-    margin-top: 0;
-    padding-bottom: 14px;
+	font-size: 22px;
+	font-weight: 400;
+	line-height: 1;
+	margin-bottom: 20px;
+	margin-top: 0;
+	padding-bottom: 14px;
 	display: none;
 
 	&.rtm-show {
@@ -146,12 +144,12 @@
 
 .rtm-option-title {
 	border-bottom: 1px solid $light;
-    font-size: 14px;
-    letter-spacing: 0.02rem;
-    margin-bottom: 12px;
-    margin-top: 0;
-    padding: 0 0 6px;
-    text-transform: uppercase;
+	font-size: 14px;
+	letter-spacing: 0.02rem;
+	margin-bottom: 12px;
+	margin-top: 0;
+	padding: 0 0 6px;
+	text-transform: uppercase;
 }
 
 .rtm-sidebar {
@@ -164,7 +162,6 @@
 }
 
 .rtm-social-share {
-
 	.dashicons {
 		font-size: 18px;
 		position: absolute;
@@ -183,7 +180,6 @@
 			color: #3b5998;
 		}
 	}
-
 
 	.wordpress {
 		.dashicons {
@@ -205,11 +201,11 @@
 .rtm-notice {
 	background: rgba($light, 0.8);
 	color: #777;
-    font-size: 12px;
-    line-height: 1.6;
-    margin-top: 10px;
+	font-size: 12px;
+	line-height: 1.6;
+	margin-top: 10px;
 	overflow: hidden;
-    padding: 0 10px;
+	padding: 0 10px;
 
 	p {
 		font-size: inherit;
@@ -220,9 +216,9 @@
 
 .rtm-warning {
 	background-color: #fcf8e3;
-    border-bottom: 1px solid #EEE;
-    color: #c09853;
-    padding: 10px 15px;
+	border-bottom: 1px solid #EEE;
+	color: #c09853;
+	padding: 10px 15px;
 }
 
 .rtmedia-theme-warning {
@@ -231,22 +227,22 @@
 
 .rtm-success {
 	background-color: #dff0d8;
-    border-bottom: 1px solid #e7e7e7;
-    color: #468847;
-    margin: 0;
-    padding: 8px 35px 8px 14px;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	border-bottom: 1px solid #e7e7e7;
+	color: #468847;
+	margin: 0;
+	padding: 8px 35px 8px 14px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .rtm-fly-warning {
 	border-bottom: 0;
-    left: -10px;
-    letter-spacing: 1px;
-    line-height: 22px;
-    margin-bottom: 0;
-    padding: 14px 25px;
-    position: absolute;
-    top: -5px;
+	left: -10px;
+	letter-spacing: 1px;
+	line-height: 22px;
+	margin-bottom: 0;
+	padding: 14px 25px;
+	position: absolute;
+	top: -5px;
 }
 
 // Types table needs different styles
@@ -328,7 +324,6 @@
 			}
 		}
 
-
 		tr:last-child {
 			border-top: 1px solid $light;
 
@@ -351,5 +346,73 @@
 		strong {
 			font-size: 13px;
 		}
+	}
+}
+
+.rtm-addon-license {
+	border: 1px solid #ddd;
+	margin: .5rem 0;
+	background-color: #fff;
+
+	.title {
+		background-color: #fafafa;
+		border-bottom: 1px solid #ddd;
+		margin: 0;
+		padding: 15px 10px;
+	}
+
+	.license-inner {
+		padding: 10px;
+	}
+}
+
+form.license-form {
+	padding: 0;
+	margin: 0;
+
+	input[type="text"] {
+		width: 100%;
+		max-width: 100%;
+		height: 35px;
+		line-height: 35px;
+	}
+
+	input[type="submit"] {
+		margin: 10px 0 0;
+	}
+}
+
+.license-message {
+	margin: 15px 0 0 0;
+	padding: 8px;
+
+	&.warning {
+		background: rgba(#ffb900, 0.1);
+		border: 1px solid #ffb900;
+	}
+
+	&.success {
+		background: rgba(#46b450, 0.1);
+		border: 1px solid #46b450;
+	}
+
+	&.info {
+		background: rgba(#00a0d2, 0.1);
+		border: 1px solid #00a0d2;
+	}
+
+	&.alert {
+		background: rgba(#dc3232, 0.1);
+		border: 1px solid #dc3232;
+	}
+}
+
+.rtml-submit-wrapper {
+	.submit {
+		margin-left: 8px;
+		margin-right: 8px;
+		margin-top: 0;
+		padding-top: 0;
+		padding-bottom: 10px;
 	}
 }
