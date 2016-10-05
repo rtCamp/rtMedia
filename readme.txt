@@ -136,6 +136,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 = 4.1.7 [Oct 04, 2016] =
+* Change the UI of addons license tab
 * Update the notice messages
 * Check for the valid URL structure for compatibility with multisite
 * Fix UI/media broken on activity page
