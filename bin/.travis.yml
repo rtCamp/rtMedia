@@ -13,6 +13,7 @@ php:
 - 5.2
 
 before_install:
+- rbenv install -l
 - rm -rf ~/.gnupg
 - sudo apt-get install xvfb
 
