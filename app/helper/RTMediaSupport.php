@@ -78,7 +78,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			</div>
 			<?php
 		}
-		
+
 		public function rtmedia_cancel_request() {
 		    do_settings_sections( 'rtmedia-support' );
 		    die();
@@ -143,21 +143,21 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						<select name="rtmedia_service_select">
 							<option
 								value="premium_support" <?php
-							if ( 'premium_support' === $form ) {
-								echo 'selected';
-							}
+								if ( 'premium_support' === $form ) {
+									echo 'selected';
+								}
 							?>><?php esc_html_e( 'Premium Support', 'buddypress-media' ); ?></option>
 							<option
 								value="bug_report" <?php
-							if ( 'bug_report' === $form ) {
-								echo 'selected';
-							}
+								if ( 'bug_report' === $form ) {
+									echo 'selected';
+								}
 							?>><?php esc_html_e( 'Bug Report', 'buddypress-media' ); ?></option>
 							<option
 								value="new_feature" <?php
-							if ( 'new_feature' === $form ) {
-								echo 'selected';
-							}
+								if ( 'new_feature' === $form ) {
+									echo 'selected';
+								}
 							?>><?php esc_html_e( 'New Feature', 'buddypress-media' ); ?></option>
 						</select>
 						<input name="support_submit" value="<?php esc_attr_e( 'Submit', 'buddypress-media' ); ?>"
@@ -235,7 +235,9 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						if ( is_dir( $template_path . DIRECTORY_SEPARATOR . $value ) ) {
 							$sub_files = $this->rtmedia_scan_template_files( $template_path . DIRECTORY_SEPARATOR . $value );
 							foreach ( $sub_files as $sub_file ) {
-								$result[] = str_replace( ABSPATH . 'wp-content/', '', RTMediaTemplate::locate_template( substr( $sub_file, 0, ( count( $sub_file ) - 5 ) ) ) );
+								$rt_to_dir_paths	= RTMediaTemplate::locate_template( substr( $sub_file, 0, ( count( $sub_file ) - 5 ) ) );
+								$rt_to_dir_path		= str_replace( '//', '/', $rt_to_dir_paths );
+								$result[]			= str_replace( ABSPATH . 'wp-content/', '', $rt_to_dir_path );
 							}
 						} else {
 							if ( 'main.php' !== $value ) {
@@ -402,7 +404,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		public function get_form( $form = '' ) {
 			//todo: nonce required
 			if ( empty( $form ) ) {
-				$form = filter_input( INPUT_POST, 'form'. FILTER_SANITIZE_STRING );
+				$form = filter_input( INPUT_POST, 'form' . FILTER_SANITIZE_STRING );
 				$form = isset( $form ) ? $form : 'premium_support';
 			}
 			$meta_title = '';
@@ -626,14 +628,14 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$message .= '</body>
 				</html>';
 
-			add_filter( 'wp_mail_content_type', array($this,'rtmedia_mail_content_type'));
+			add_filter( 'wp_mail_content_type', array( $this, 'rtmedia_mail_content_type' ) );
 
 			$headers       = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
 			$support_email = 'support@rtcamp.com';
 			if ( wp_mail( $support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace( array(
 					'http://',
 					'https://',
-				), '', $form_data['website'] ), stripslashes( $message ), $headers ) ) {
+			), '', $form_data['website'] ), stripslashes( $message ), $headers ) ) {
 				echo '<div class="rtmedia-success" style="margin:10px 0;">';
 				if ( 'new_feature' === sanitize_text_field( $form_data['request_type'] ) ) {
 					echo '<p>' . esc_html__( 'Thank you for your Feedback/Suggestion.', 'buddypress-media' ) . '</p>';
