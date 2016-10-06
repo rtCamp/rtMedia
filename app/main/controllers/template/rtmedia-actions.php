@@ -329,7 +329,7 @@ function add_music_cover_art( $file_object, $upload_obj ) {
 
 	$media_obj = new RTMediaMedia();
 	$media     = $media_obj->model->get( array(
-		'id' => $upload_obj->media_ids[0]
+		'id' => $upload_obj->media_ids[0],
 	) );
 
 }
@@ -413,7 +413,7 @@ function update_group_media_privacy( $group_id ) {
 	if ( ! empty( $group_id ) && function_exists( 'groups_get_group' ) ) {
 		//get the buddybress group
 		$group = groups_get_group( array(
-			'group_id' => $group_id
+			'group_id' => $group_id,
 		) );
 
 		if ( isset( $group->status ) ) {
@@ -566,3 +566,57 @@ function rtmedia_add_media_delete_nonce_shortcode() {
 }
 
 add_action( 'rtmedia_pre_template', 'rtmedia_add_media_delete_nonce_shortcode' );
+
+if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
+	function rtmedia_single_media_pagination() {
+		$disable = apply_filters( 'rtmedia_single_media_pagination', false );
+		if ( true === $disable ) {
+			return;
+		}
+		if ( rtmedia_id() ) {
+			$model = new RTMediaModel();
+
+			$media = $model->get_media( array(
+				'id' => rtmedia_id(),
+			), 0, 1 );
+			echo $media[0]->context;
+			echo $media[0]->context_id;
+
+			if ( 'profile' == $media[0]->context ) {
+				$media = $model->get_media( array(
+					'media_author' => $media[0]->media_author,
+					'context' => $media[0]->context,
+				) );
+			} else if ( 'group' == $media[0]->context ) {
+				$media = $model->get_media( array(
+					'media_author' => $media[0]->media_author,
+					'context' => $media[0]->context,
+					'context_id' => $media[0]->context_id,
+				) );
+			}
+
+			for ( $i = 0; $i < count( $media ); $i++ ) {
+				if ( rtmedia_id() == $media[ $i ]->id ) {
+					if ( 0 != $i ) {
+						$previous = $media[ $i - 1 ]->id;
+					}
+					if ( count( $media ) != $i + 1 ) {
+						$next = $media[ $i + 1 ]->id;
+					}
+					break;
+				}
+			}
+		}
+
+		$html = '';
+		if ( isset( $previous ) && $previous ) {
+			$html .= '<div class="previous-pagination"><a href="' . esc_url( get_rtmedia_permalink( $previous ) ) . '" title="' . esc_html__( 'previous', 'buddypress-media' ) . '">' . esc_html__( 'previous', 'buddypress-media' ) . '</a></div>';
+		}
+		if ( isset( $next ) && $next ) {
+			$html .= '<div class="next-pagination"><a href="' . esc_url( get_rtmedia_permalink( $next ) ) . '" title="' . esc_html__( 'next media', 'buddypress-media' ) . '">' . esc_html__( 'next', 'buddypress-media' ) . '</a></div>';
+		}
+		echo $html; // @codingStandardsIgnoreLine
+	}
+}
+
+
