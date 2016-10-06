@@ -19,6 +19,13 @@
 					<div class="rtmedia-media"
 					     id="rtmedia-media-<?php echo esc_attr( rtmedia_id() ); ?>"><?php rtmedia_media( true ); ?></div>
 
+						<?php
+							/**
+							 * call function to display single media pagination
+							 * By: Yahil
+							 */
+						  	rtmedia_single_media_pagination();
+						?>
 				<?php } else { ?>
 
 					<span class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button"
@@ -57,9 +64,7 @@
 			<div class="rtmedia-scroll">
 				<?php if ( $rt_ajax_request ) { ?>
 
-					<div class="rtm-single-meta-contents<?php if ( is_user_logged_in() ) {
-						echo esc_attr( ' logged-in' );
-} ?>">
+					<div class="rtm-single-meta-contents<?php if ( is_user_logged_in() ) { echo esc_attr( ' logged-in' ); } ?>">
 
 						<div class="rtm-user-meta-details">
 							<div class="userprofile rtm-user-avatar">
