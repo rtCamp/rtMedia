@@ -31,7 +31,6 @@ function rtmedia_author_actions() {
 			echo $output; // @codingStandardsIgnoreLine
 		}
 	}
-
 }
 
 add_action( 'after_rtmedia_action_buttons', 'rtmedia_author_actions' );
@@ -73,7 +72,6 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 
 		if ( current_user_can( 'edit_posts' ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/image-edit.php' );
-
 			$nonce         = wp_create_nonce( "image_editor-$media_id" );
 			$modify_button = '<p><input type="button" class="button rtmedia-image-edit" id="imgedit-open-btn-' . esc_attr( $media_id ) . '" onclick="imageEdit.open( \'' . esc_attr( $media_id ) . '\', \'' . esc_attr( $nonce ) . '\' )" value="' . esc_attr__( 'Modify Image', 'buddypress-media' ) . '"> <span class="spinner"></span></p>';
 		}
@@ -275,7 +273,6 @@ function rtmedia_item_select() {
 			}
 		}
 	}
-
 }
 
 add_action( 'rtmedia_before_item', 'rtmedia_item_select' );
@@ -301,7 +298,6 @@ add_action( 'rtmedia_query_actions', 'rtmedia_album_merge_action' );
  * Add upload button
  */
 function add_upload_button() {
-
 	if ( function_exists( 'bp_is_blog_page' ) && ! bp_is_blog_page() ) {
 		if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() === get_current_user_id() ) {
 			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</span>';
@@ -313,7 +309,6 @@ function add_upload_button() {
 			}
 		}
 	}
-
 }
 
 add_action( 'rtmedia_media_gallery_actions', 'add_upload_button', 99 );
@@ -358,7 +353,6 @@ function rtmedia_link_in_footer() {
 		</div>
 		<?php
 	}
-
 }
 
 add_action( 'wp_footer', 'rtmedia_link_in_footer' );
@@ -583,8 +577,6 @@ if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
 			$media = $model->get_media( array(
 				'id' => rtmedia_id(),
 			), 0, 1 );
-			echo $media[0]->context;
-			echo $media[0]->context_id;
 
 			if ( 'profile' == $media[0]->context ) {
 				$media = $model->get_media( array(
@@ -622,5 +614,3 @@ if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
 		echo $html; // @codingStandardsIgnoreLine
 	}
 }
-
-
