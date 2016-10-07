@@ -1,0 +1,25 @@
+# Codeception Test Suite Configuration
+
+# Suite for WordPress acceptance tests.
+# Perform tests using or simulating a browser.
+
+
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - \Helper\Acceptance
+        - WPWebDriver
+    config:   
+          WPWebDriver:
+            host: 'hub-cloud.browserstack.com'
+            port: 80
+            browser: 'chrome'
+            url: 'http://demo.rtmedia.io/'
+            adminUsername: ''
+            adminPassword: ''
+            adminPath: '/wp-admin'
+            capabilities:
+              'browserstack.user': ''
+              'browserstack.key': ''
+              'os': 'OS X'
+              'os_version' : 'El Capitan'    

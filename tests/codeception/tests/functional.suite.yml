@@ -1,0 +1,25 @@
+# Codeception Test Suite Configuration
+
+# Suite for WordPress functional tests.
+# Emulate web requests and make the WordPress application process them.
+
+
+class_name: FunctionalTester
+modules:
+    enabled:
+        - \Helper\Functional
+        - Filesystem
+        - WPDb:
+            dsn: 'mysql:host=localhost;dbname=wordpress-tests'
+            user: root
+            password: root
+            dump: tests/_data/dump.sql
+            populate: true
+            cleanup: true
+            url: 'http://wp.local'
+            tablePrefix: wp_
+        - WordPress:
+            depends: WPDb
+            wpRootFolder: /var/www/wordpress
+            adminUsername: admin
+            adminPassword: password
