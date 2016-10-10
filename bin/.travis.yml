@@ -1,19 +1,13 @@
 sudo: required
 
-language: php
+language: node_js
 node_js:
 - "0.10"
-
 
 env:
 - WP_VERSION=4.0 WP_MULTISITE=0
 
-# Versions of PHP to test against
-php:
-- 5.2
-
 before_install:
-- rbenv install -l
 - rm -rf ~/.gnupg
 - sudo apt-get install xvfb
 
