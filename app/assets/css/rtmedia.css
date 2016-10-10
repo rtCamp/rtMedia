@@ -1533,6 +1533,15 @@ img.mfp-img {
   margin-top: 10px;
 }
 
+@media screen and (max-width: 500px) {
+  #activity-stream li .media-type-video {
+    width: 100%;
+  }
+  #activity-stream li .media-type-video .mejs-video {
+    max-width: 100%;
+    min-width: 100%;
+  }
+}
 .rtmedia-album-edit .rtm-checkbox-wrap {
   background: rgba(255, 255, 255, 0.9);
   height: 30px;

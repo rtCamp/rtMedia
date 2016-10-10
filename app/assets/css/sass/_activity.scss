@@ -115,3 +115,14 @@
 	float: right;
 	margin-top: 10px;
 }
+
+@media screen and (max-width: 500px) {
+	#activity-stream li .media-type-video {
+		width: 100%;
+
+		.mejs-video {
+			max-width: 100%;
+			min-width: 100%;
+		}
+	}
+}
