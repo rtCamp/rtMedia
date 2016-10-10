@@ -541,11 +541,13 @@ function rt_check_addon_status(){
 
 			$addon_id = $addon['args']['addon_id'];
 
+			$addon_active = get_option( 'edd_' . $addon_id . '_active' );
+
 			/**
 			 * Check if information about the addon in already fetched from the store
 			 * If it's already fetched, then don't send the request again for the information
 			 */
-			if ( ! empty( get_option( 'edd_' . $addon_id . '_active' ) ) ) {
+			if ( ! empty( $addon_active ) ) {
 				continue;
 			}
 
