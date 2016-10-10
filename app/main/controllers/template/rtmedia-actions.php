@@ -558,12 +558,12 @@ function rtmedia_add_media_delete_nonce_shortcode() {
 	}
 
 }
+add_action( 'rtmedia_pre_template', 'rtmedia_add_media_delete_nonce_shortcode' );
 
 /**
  * add function to display pagination on single media page with add_filter
  * By: Yahil
  */
-add_action( 'rtmedia_pre_template', 'rtmedia_add_media_delete_nonce_shortcode' );
 
 if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
 	function rtmedia_single_media_pagination() {
