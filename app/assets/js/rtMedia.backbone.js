@@ -323,7 +323,7 @@ jQuery( function ( $ ) {
 				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
 		}
 		change_rtBrowserAddressUrl( href, '' );
-		
+
 		} );
 
 		if ( window.location.pathname.indexOf( rtmedia_media_slug ) != - 1 ) {
@@ -1065,11 +1065,19 @@ jQuery( document ).ready( function ( $ ) {
 					if ( originalOptions.data.action == 'post_update' ) {
 						if ( $.trim( $( "#whats-new" ).val() ) == "" && objUploadView.uploader.files.length > 0 ) {
 							/*
-							 *Added $nbsp; as activity text to post activity without TEXT
+							 * Added $nbsp; as activity text to post activity without TEXT
 							 * Disabled TextBox color(transparent)
+							 * ELSE
+							 * Required Activity text with media
 							 */
-							$( "#whats-new" ).css( 'color', 'transparent' );
-							$( "#whats-new" ).val( '&nbsp;' );
+							if ( activity_text_with_attechment == 'disable') {
+								$( "#whats-new" ).css( 'color', 'transparent' );
+								$( "#whats-new" ).val( '&nbsp;' );
+							} else {
+								jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p>Please enter some content to post.</p></div>')
+								jQuery( '#whats-new' ).removeAttr( 'disabled' );
+								return false;
+							}
 						}
 					}
 					if ( ! media_uploading && objUploadView.uploader.files.length > 0 ) {
