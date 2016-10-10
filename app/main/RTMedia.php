@@ -998,6 +998,7 @@ class RTMedia {
 		wp_localize_script( 'rtmedia-main', 'rtmedia_less', esc_html__( 'less', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_read_more', esc_html__( 'Read more', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia__show_less', esc_html__( 'Show less', 'buddypress-media' ) );
+		wp_localize_script( 'rtmedia-main', 'activity_text_with_attechment', apply_filters( 'required_activity_text_with_attechment', 'disable' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_delete_uploaded_media', esc_html__( 'This media is uploaded. Are you sure you want to delete this media?', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtm_wp_version', get_bloginfo( 'version' ) );
 		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_media', RTMEDIA_URL . 'app/assets/admin/img/boxspinner.gif' );
