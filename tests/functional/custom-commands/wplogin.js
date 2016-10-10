@@ -4,14 +4,15 @@
 exports.command = function(url,username,password) {
 var client = this;
 var loginurl = url + "/wp-admin" ;
-
+console.log(username);
+console.log(password);
 client
    .url(loginurl)
    .pause(500)
    .waitForElementVisible('body', 2000)
-   .setValue('#user_login', username)
-   .setValue('#user_pass', password)
-   .click('#wp-submit')
+   .setValue('input[id="user_login"]', username)
+   .setValue('input[id="user_pass"]', password)
+   .click('input[type=submit]')
 
 return this;
 };
