@@ -614,3 +614,38 @@ if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
 		echo $html; // @codingStandardsIgnoreLine
 	}
 }
+
+/**
+ * Display album Count
+ * @param  [type] $rtmedia_id [Album Id]
+ * @param  [type] $context    [Album Context profile/group]
+ * @param  [type] $user       [Displayed user id]
+ * @return [type]             [return album media count in number]
+ * By: Yahil
+ */
+function rtmedia_album_count( $rtmedia_id, $context, $user ) {
+	if ( $rtmedia_id ) {
+		$model = new RTMediaModel();
+		$media = $model->get_media( array(
+				'id' => rtmedia_id(),
+		), 0, 1 );
+
+		if ( 'profile' == $context ) {
+			$media = $model->get_media( array(
+				'album_id'		=> $rtmedia_id,
+				'context_id'	=> $user,
+				'context'		=> $context,
+			) );
+		}
+
+		if ( 'group' == $context ) {
+
+			$media = $model->get_media( array(
+				'album_id'		=> $rtmedia_id,
+				'context_id'	=> bp_get_group_id(),
+				'context'		=> $context,
+			) );
+		}
+		 return count( $media );
+	}
+}
