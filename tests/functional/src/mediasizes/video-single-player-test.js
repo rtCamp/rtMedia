@@ -35,6 +35,7 @@ module.exports = {
           .click('.start-media-upload')
           .pause(8000)
           .refresh()
+          .waitForElementVisible('.rtmedia-item-title', 10000)
           .click('.rtmedia-item-title a')
           .waitForElementVisible('body', 1500)
           .waitForElementVisible('#rtm-mejs-video-container',1500)
