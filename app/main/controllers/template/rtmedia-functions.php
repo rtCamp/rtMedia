@@ -1523,7 +1523,10 @@ function rtmedia_get_pagination_values() {
 		if ( $paged > 2 && $paged > $range + 1 && $showitems < $pages ) {
 			$page_url = $page_base_url . '1';
 
-			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='1' href='" . esc_url( $page_url ) . "'>1</a><span>...</span>";
+			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='1' href='" . esc_url( $page_url ) . "'>1</a>";
+			if ( $paged != 3 ) {
+				$rtmedia_media_pages .= '<span>...</span>';
+			}
 		}
 
 		for ( $i = 1; $i <= $pages; $i ++ ) {
