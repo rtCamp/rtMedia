@@ -33,11 +33,12 @@ module.exports = {
           .click('.rtm-select-files')
           .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_VIDEO))
           .click('.start-media-upload')
-          .pause(7000)
+          .pause(10000)
           .refresh()
           .waitForElementVisible('.rtmedia-item-title', 8000)
           .click('.rtmedia-item-title a')
-          .waitForElementVisible('#rtm-mejs-video-container',3000)
+          .pause(7000)
+          .waitForElementVisible('#rtm-mejs-video-container',10000)
           .pause(10000)
           .getElementSize("#rtm-mejs-video-container", function(result) {
             this.assert.equal(result.value.width, _width,'Entered value for width is equal');
