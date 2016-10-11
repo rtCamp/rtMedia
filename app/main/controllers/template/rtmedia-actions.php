@@ -575,19 +575,19 @@ if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
 			$model = new RTMediaModel();
 
 			$media = $model->get_media( array(
-				'id' => rtmedia_id(),
+				'id'	=> rtmedia_id(),
 			), 0, 1 );
 
 			if ( 'profile' == $media[0]->context ) {
 				$media = $model->get_media( array(
-					'media_author' => $media[0]->media_author,
-					'context' => $media[0]->context,
+					'media_author'	=> $media[0]->media_author,
+					'context'		=> $media[0]->context,
 				) );
 			} else if ( 'group' == $media[0]->context ) {
 				$media = $model->get_media( array(
-					'media_author' => $media[0]->media_author,
-					'context' => $media[0]->context,
-					'context_id' => $media[0]->context_id,
+					'media_author'	=> $media[0]->media_author,
+					'context'		=> $media[0]->context,
+					'context_id'	=> $media[0]->context_id,
 				) );
 			}
 
