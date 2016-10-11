@@ -1,4 +1,11 @@
 <?php
+/*  
+Prerequisites:
+
+For this test to pass. Buddypress and rtMedia should be installed and activated. BuddyPress activity page needs to be at yoursite.com/activity. rtMedia Settings > Display > Allow users to comment on uploaded media should be ON. rtMedia Settings > BuddyPress > Allow upload from activity stream should be ON.
+
+*/
+
 $I = new AcceptanceTester($scenario);
 $I->wantTo('upload an image and comment on it');
 
