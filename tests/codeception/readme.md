@@ -8,7 +8,7 @@ This repository will contain automated test cases for rtmedia using codeception.
 
 ## Current Set up
 
-Tests are in codeception branch.  rtMedia > tests > codeception
+Tests are in codeception branch under codeception directory. rtMedia > tests > codeception
 
 Under codeception directory there's the composer.json file.
 
@@ -18,9 +18,9 @@ Under codeception directory there's the composer.json file.
 ### Install composer globally
 
 
-### Composer update
+### Run composer update
 
-Pull this repo 
+Clone this repo 
 
 Change branch to codeception
 
@@ -29,23 +29,16 @@ Navigate to codeception directory and do `composer update`
 This will install all dependencies in your local setup.
 
 
-#### Clone this repo
-
-`git clone git@git.rtcamp.com:jondo/snapbox-automated-testing.git`
+### Update .yml files as per requirements
 
 
 ## How to run tests
 
+Navigate to codeception directory and run
 
+`wpcept run acceptance {file-nameCept.php}`
 
-### Run the tests on separate tab
-Navigate to the cloned directory snapbox-automated-testing:
+**Note:** If vendor/bin is not added to path, then you need to run
 
-`cd snapbox-automated-testing`
+`vendor/bin/wpcept run acceptance exampleCept.php`
 
-
-**To run test suite :** `nightwatch`
-
-**To run individual cases :** `nightwatch --test tests/testOrderPunchBySelectingProductFromMyComputer.js --env chrome`
-
-*Note: You may refer http://nightwatchjs.org/guide#running-tests in case of issues.*
