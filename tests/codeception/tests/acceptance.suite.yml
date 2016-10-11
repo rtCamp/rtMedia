@@ -14,12 +14,13 @@ modules:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'chrome'
-            url: 'http://demo.rtmedia.io/'
-            adminUsername: ''
-            adminPassword: ''
+            url: 'http://demo.rtmedia.io/'  recgecj  rec;oiasjdas blajajaj 
+            adminUsername: 'sumeet'
+            adminPassword: 'sumeet'
             adminPath: '/wp-admin'
             capabilities:
-              'browserstack.user': ''
-              'browserstack.key': ''
+              'browserstack.user': 'billy186'
+              'browserstack.key': 'RDMsBsFsxyCq3jKexkJC'
               'os': 'OS X'
               'os_version' : 'El Capitan'    
+
