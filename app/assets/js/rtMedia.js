@@ -88,9 +88,29 @@ function apply_rtMagnificPopup( selector ) {
 				}
 			} );
 		}
+		/**
+		 * after Complete Ajex process add 'title' Attribute,
+		 * we can not add title attribute from html section, code coming from WordPress codePointAt,
+		 * By: Yahil
+		 */
+		jQuery( document ).ajaxComplete(function(){
+			jQuery('.imgedit-crop').attr('title', 'Crop');
+			jQuery('.imgedit-rleft').attr('title', 'Left rotation');
+			jQuery('.imgedit-rright').attr('title', 'Right rotation');
+			jQuery('.imgedit-flipv').attr('title', 'Flip vertical');
+			jQuery('.imgedit-fliph').attr('title', 'Flip horizontal');
+			jQuery('.imgedit-undo').attr('title', 'Undo');
+			jQuery('.imgedit-redo').attr('title', 'Reundo');
+			jQuery('.dashicons-editor-help').attr('title', 'Help');
+			jQuery('#imgedit-scale-button').attr('title', 'Scale');
+
+			jQuery('[id^=imgedit-leaving]').filter(function(){
+				var text = jQuery(this).text();
+				jQuery(this).text(text.replace('OK', 'Save'));
+			});
+		});
 	} );
 }
-
 var rtMediaHook = {
 	hooks: [ ],
 	is_break: false,
