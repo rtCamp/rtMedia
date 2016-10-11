@@ -12,7 +12,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.MEDIASIZES.MEDIASIZES)
-          .pause(2000)
+          .pause(800)
           .clearValue(data.SELECTORS.MEDIASIZES.PHOTO_THUMBNAIL_WIDTH)
           .setValue(data.SELECTORS.MEDIASIZES.PHOTO_THUMBNAIL_WIDTH,'150') //set width size:150
           .clearValue(data.SELECTORS.MEDIASIZES.PHOTO_THUMBNAIL_HEIGHT)
@@ -31,7 +31,7 @@ module.exports = {
             .click('.rtm-select-files')
             .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_IMAGE))
             .click('.start-media-upload')
-            .pause(7000)
+            .pause(1007)
             .refresh()
     //get the height of uploaded photo thumbnail.
             .getElementSize(".rtmedia-item-thumbnail img", function(result) {

@@ -23,7 +23,7 @@ module.exports = {
 'step two: Check on Frontend ' : function (browser) {
         browser
             .goToMedia()
-            .pause(2000)
+            .pause(800)
             .assert.elementPresent("#rtMedia-galary-next")
 		  /*
 						code for elements count using JQUERY */

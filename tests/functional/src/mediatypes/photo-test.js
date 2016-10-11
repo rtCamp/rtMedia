@@ -11,7 +11,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click('#tab-rtmedia-bp')
-          .pause(2000)
+          .pause(800)
           //select checkbox switch
           .getAttribute("#rtmedia-bp-enable-activity", "checked", function(result) {
             //  console.log(result); //used for debug

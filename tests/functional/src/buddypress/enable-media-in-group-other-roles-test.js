@@ -31,12 +31,12 @@ module.exports = {
           .click('#groups-list .is-member .item .item-title a')
           .assert.elementPresent('#rtmedia-media-nav')
           .click('#rtmedia-media-nav')
-          .pause(2000)
+          .pause(800)
           .click('#rtm_show_upload_ui')
           .click('.rtm-select-files')
           .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_IMAGE))
           .click('.start-media-upload')
-          .pause(6000)
+          .pause(1006)
           .refresh()
           .getText('.rtmedia-list-item a.rtmedia-list-item-a .rtmedia-item-title h4',function(result){
               browser.assert.equal(result.value, 'TEST', 'image uploaded successfully');
@@ -52,12 +52,12 @@ module.exports = {
         .click('#groups-list .is-member .item .item-title a')
         .assert.elementPresent('#rtmedia-media-nav')
         .click('#rtmedia-media-nav')
-        .pause(2000)
+        .pause(800)
         .click('#rtm_show_upload_ui')
         .click('.rtm-select-files')
         .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_IMAGE))
         .click('.start-media-upload')
-        .pause(6000)
+        .pause(1006)
         .refresh()
         .getText('.rtmedia-list-item a.rtmedia-list-item-a .rtmedia-item-title h4',function(result){
             browser.assert.equal(result.value, 'TEST', 'image uploaded successfully');
@@ -72,12 +72,12 @@ module.exports = {
       .click('#groups-list .is-member .item .item-title a')
       .assert.elementPresent('#rtmedia-media-nav')
       .click('#rtmedia-media-nav')
-      .pause(2000)
+      .pause(800)
       .click('#rtm_show_upload_ui')
       .click('.rtm-select-files')
       .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_IMAGE))
       .click('.start-media-upload')
-      .pause(5000)
+      .pause(1005)
       .refresh()
       .getText('.rtmedia-list-item a.rtmedia-list-item-a .rtmedia-item-title h4',function(result){
           browser.assert.equal(result.value, 'TEST', 'image uploaded successfully');
@@ -92,12 +92,12 @@ module.exports = {
       .click('#groups-list .is-member .item .item-title a')
       .assert.elementPresent('#rtmedia-media-nav')
       .click('#rtmedia-media-nav')
-      .pause(2000)
+      .pause(800)
       .click('#rtm_show_upload_ui')
       .click('.rtm-select-files')
       .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_IMAGE))
       .click('.start-media-upload')
-      .pause(5000)
+      .pause(1005)
       .refresh()
       .getText('.rtmedia-list-item a.rtmedia-list-item-a .rtmedia-item-title h4',function(result){
           browser.assert.equal(result.value, 'TEST', 'image uploaded successfully');

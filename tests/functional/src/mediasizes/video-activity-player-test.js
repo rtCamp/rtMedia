@@ -11,7 +11,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.MEDIASIZES.MEDIASIZES)
-          .pause(2000)
+          .pause(800)
           .clearValue(data.SELECTORS.MEDIASIZES.VIDEO_ACTIVITY_PLAYER_WIDTH)
           .setValue(data.SELECTORS.MEDIASIZES.VIDEO_ACTIVITY_PLAYER_WIDTH,'300') //set width size:300
           .clearValue(data.SELECTORS.MEDIASIZES.VIDEO_ACTIVITY_PLAYER_HEIGHT)

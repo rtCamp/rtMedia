@@ -8,7 +8,7 @@ client
     .pause(500)
     .click('#wp-admin-bar-my-account-xprofile.menupop a.ab-item')
     .waitForElementVisible('body', 2500)
-    .pause(2000)
+    .pause(800)
     .getTitle(function(title) {
         console.log("We are in Profile Page :"+title);
       })

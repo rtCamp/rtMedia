@@ -12,7 +12,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.PRIVACY.PRIVACY)                                                 //open privacy tab from rtmedia
-          .pause(2000)
+          .pause(800)
           .getAttribute(data.SELECTORS.PRIVACY.ENABLE_PRIVACY, "checked", function(result) {         //select Enable privacy feature
 
                   if(result.value)
@@ -58,7 +58,7 @@ module.exports = {
             .setValue('#whats-new','test privacy for public')
             .click("#rtSelectPrivacy option[value='0']")
             .click('#aw-whats-new-submit')
-            .pause(2000)
+            .pause(800)
 
       /* assert for if post submited in both logged-in & logged-out mode */
 

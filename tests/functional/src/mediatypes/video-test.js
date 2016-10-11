@@ -12,7 +12,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click('#tab-rtmedia-bp')
-          .pause(2000)
+          .pause(800)
           /*
           'Allow Upload From Activity Stream' is switched  on
           code here ..
