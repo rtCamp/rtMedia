@@ -36,7 +36,7 @@ module.exports = {
           .pause(7000)
           .refresh()
           .waitForElementVisible('.rtmedia-item-title', 8000)
-          .click('.rtmedia-item-title:nth-child(0) a')
+          .click('.rtmedia-item-title a')
           .waitForElementVisible('#rtm-mejs-video-container',3000)
           .pause(10000)
           .getElementSize("#rtm-mejs-video-container", function(result) {
