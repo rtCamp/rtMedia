@@ -14,7 +14,7 @@ modules:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'chrome'
-            url: 'http://demo.rtmedia.io/'
+            url: 'http://demo.rtmedia.io/'  recgecj  rec;oiasjdas blajajaj 
             adminUsername: 'sumeet'
             adminPassword: 'sumeet'
             adminPath: '/wp-admin'
