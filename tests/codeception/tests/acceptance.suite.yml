@@ -14,7 +14,7 @@ modules:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'chrome'
-            url: 'http://demo.rtmedia.io/'
+            url: ''  # Your url
             adminUsername: ''
             adminPassword: ''
             adminPath: '/wp-admin'
@@ -23,3 +23,4 @@ modules:
               'browserstack.key': ''
               'os': 'OS X'
               'os_version' : 'El Capitan'    
+              'browserstack.local': true # use only for testing on localhost
