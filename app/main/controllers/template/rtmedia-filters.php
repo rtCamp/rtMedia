@@ -282,7 +282,7 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 		$final_file_url = wp_get_attachment_url( $attachment_id );
 	}
 
-	return preg_replace( "/src=[\"]([^\"]+)[\"]/", "src=\"$final_file_url\"", $html );
+	return preg_replace( '/src=["]([^"]+)["]/', "src=\"$final_file_url\"", $html );
 
 }
 
@@ -347,10 +347,10 @@ function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
 			}
 
 			if ( ! empty( $thumbnail_url ) ) {
-				$html = preg_replace( "/src=[\"]([^\"]+)[\"]/", "src=\"$thumbnail_url\"", $html );
+				$html = preg_replace( '/src=["]([^"]+)["]/', "src=\"$thumbnail_url\"", $html );
 			}
 		}
-	}
+	}// End if().
 	return $html;
 }
 
@@ -391,7 +391,7 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 	$url 		= '';
 	$is_img 	= strpos( $content , '<img ' );
 
-	$search 	= "/<img.+src=[\"]([^\"]+)[\"]/";
+	$search 	= '/<img.+src=["]([^"]+)["]/';
 	preg_match_all( $search , $content, $url );
 
 	if ( ! empty( $is_img ) && ! empty( $url ) && ! empty( $url[1] ) ) {
@@ -436,10 +436,9 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 				}
 				$image_url = apply_filters( 'rtmedia_filtered_photo_url', $url, $attachment_id );
 				$content = str_replace( $url, $image_url, $content );
-			}
-		}
-
-	}
+			}// End if().
+		}// End foreach().
+	}// End if().
 	return $content;
 }
 
@@ -525,7 +524,7 @@ add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
  *
  * @since 4.1.7
  */
-function rt_check_addon_status(){
+function rt_check_addon_status() {
 	$addons = apply_filters( 'rtmedia_license_tabs', array() );
 
 	if ( empty( $addons ) ) {
@@ -556,7 +555,7 @@ function rt_check_addon_status(){
 
 			/* If store URL not found in the addon, use the default store URL */
 			if ( empty( $store_url ) ) {
-				$store_url = "https://rtmedia.io/";
+				$store_url = 'https://rtmedia.io/';
 			}
 
 			// data to send in our API request
@@ -580,8 +579,42 @@ function rt_check_addon_status(){
 
 			// Store the data in database
 			update_option( 'edd_' . $addon_id . '_active', $license_data );
-		}
-	}
+		}// End if().
+	}// End foreach().
 }
 
 add_action( 'admin_init', 'rt_check_addon_status' );
+
+/**
+ * Function to edit attachment link on comment section for rtMedia Media
+ * @param  string $link    Media comment link
+ * @param  array $comment  return comment data array
+ * @param  array $args
+ * @param  array $cpage
+ * @return string  $link  media comment link
+ */
+function rt_get_comment_link_callback( $link, $comment, $args, $cpage ) {
+	$rtmedia_media_id = rtmedia_id( $comment->comment_post_ID );
+	if ( get_post_type( $comment->comment_post_ID ) == 'attachment' && is_admin() && ! empty( $rtmedia_media_id ) ) {
+		$link = esc_url( get_rtmedia_permalink( $rtmedia_media_id ) ) . '#rtmedia_comment_ul';
+	}
+	return $link;
+}
+add_filter( 'get_comment_link', 'rt_get_comment_link_callback', 99,4 );
+
+/**
+ * Function to edit attachment in response link on comment section for rtMedia Media
+ * @param  string $link    Media comment link
+ * @param  array $comment  return comment data array
+ * @param  array $args
+ * @param  array $cpage
+ * @return string  $link  media comment link
+ */
+function rtmedia_attachment_link_callback( $permalink, $post_id ) {
+	$rtmedia_media_id = rtmedia_id( $post_id );
+	if ( is_admin() && ! empty( $rtmedia_media_id ) ) {
+		$permalink = esc_url( get_rtmedia_permalink( rtmedia_id( $post_id ) ) ) . '#rtmedia_comment_ul';
+	}
+	return $permalink;
+}
+add_filter( 'attachment_link', 'rtmedia_attachment_link_callback', 99,2 );
