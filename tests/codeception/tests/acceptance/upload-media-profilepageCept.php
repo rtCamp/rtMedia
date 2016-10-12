@@ -15,7 +15,7 @@ $I->amGoingTo('Upload a png image');
 $I->click('#rtm_show_upload_ui');
 // Check Agree to terms
 $I->click('#rtmedia_upload_terms_conditions');
-$I->attachFile('input[type="file"]','1.png');
+$I->attachFile('input[type="file"]','hello.png');
 $I->wait(5);
 $I->click('.start-media-upload');
 $I->wait(10);
