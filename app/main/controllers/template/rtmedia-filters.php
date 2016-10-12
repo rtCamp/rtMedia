@@ -594,8 +594,9 @@ add_action( 'admin_init', 'rt_check_addon_status' );
  * @return string  $link  media comment link
  */
 function rt_get_comment_link_callback( $link, $comment, $args, $cpage ) {
-	if ( get_post_type( $comment->comment_post_ID ) == 'attachment' ) {
-		$link = esc_url( get_rtmedia_permalink( rtmedia_id( $comment->comment_post_ID ) ) ) . '#rtmedia_comment_ul';
+	$rtmedia_media_id = rtmedia_id( $comment->comment_post_ID );
+	if ( get_post_type( $comment->comment_post_ID ) == 'attachment' && is_admin() && ! empty( $rtmedia_media_id ) ) {
+		$link = esc_url( get_rtmedia_permalink( $rtmedia_media_id ) ) . '#rtmedia_comment_ul';
 	}
 	return $link;
 }
@@ -610,7 +611,10 @@ add_filter( 'get_comment_link', 'rt_get_comment_link_callback', 99,4 );
  * @return string  $link  media comment link
  */
 function rtmedia_attachment_link_callback( $permalink, $post_id ) {
-	$link = esc_url( get_rtmedia_permalink( rtmedia_id( $post_id ) ) ) . '#rtmedia_comment_ul';
-	return $link;
+	$rtmedia_media_id = rtmedia_id( $post_id );
+	if ( is_admin() && ! empty( $rtmedia_media_id ) ) {
+		$permalink = esc_url( get_rtmedia_permalink( rtmedia_id( $post_id ) ) ) . '#rtmedia_comment_ul';
+	}
+	return $permalink;
 }
 add_filter( 'attachment_link', 'rtmedia_attachment_link_callback', 99,2 );
