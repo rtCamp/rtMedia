@@ -3,6 +3,8 @@
 tests/functional/node_modules/
 /tests/functional/reports/
 /tests/codeception/vendor
+/tests/codeception/tests/_output
+/tests/codeception/tests/_data
 selenium-*.jar
 .sass-cache
 *.sass-cache
