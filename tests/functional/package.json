@@ -12,15 +12,13 @@
   "description": "",
   "contributors": [],
   "dependencies": {
-    "nightwatch": "~0.4.17"
+    "nightwatch": "*"
   },
 
   "devDependencies": {
-    "selenium-server": "2.45.0",
+    "selenium-server": "*",
     "jquery": "^2.1.1",
     "jsdom": "^1.0.0-pre.3",
-    "nightwatch": "0.4.17"
-
-
+    "nightwatch": "*"
   }
 }
