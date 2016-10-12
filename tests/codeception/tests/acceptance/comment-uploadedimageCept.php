@@ -13,10 +13,7 @@ $I->fillfield('#whats-new','Upload test');
 $I->attachFile('input[type="file"]','hello.png');
 $I->wait(5);
 $I->click('Post Update');
-$I->wait(10);
-//$I->click('Post Update');
-$I->wait(2);
-
+$I->wait(12);
 // Add a comment
 $I->click('.rtmedia-item-thumbnail');
 $I->wait(15);
@@ -24,6 +21,6 @@ $I->click('textarea#comment_content');
 $I->fillField( 'textarea#comment_content', 'This is a test comment' );
 $I->click('input#rt_media_comment_submit');
 $I->wait(4);
-
+$I->see('This is a test comment');
 ?>
 
