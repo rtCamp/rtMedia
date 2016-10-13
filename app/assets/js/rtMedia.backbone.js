@@ -719,8 +719,13 @@ jQuery( function( $ ) {
 
 jQuery( document ).ready( function( $ ) {
 
-	//Handling the "post update: button on activity page
-	jQuery( '#aw-whats-new-submit' ).removeAttr( 'disabled' );
+	// Handling the "post update: button on activity page
+	/**
+	 * Commented by : Naveen giri
+	 * Reason : Commenting this code because its overriding buddypress functionality
+	 * 			and introducing issue Duplicate activity generation  Issue #108.
+	 */
+	/*JQuery( '#aw-whats-new-submit' ).removeAttr( 'disabled' );
 	jQuery( document ).on( 'blur', '#whats-new', function() {
 		setTimeout( function() {
 			jQuery( '#aw-whats-new-submit' ).removeAttr( 'disabled' );
@@ -730,7 +735,7 @@ jQuery( document ).ready( function( $ ) {
 		setTimeout( function() {
 			jQuery( '#aw-whats-new-submit' ).removeAttr( 'disabled' );
 		}, 100 );
-	} );
+	} );*/
 
 	// When user changes the value in activity "post in" dropdown, hide the privacy dropdown and show when posting in profile.
 	jQuery( '#whats-new-post-in' ).on( 'change', function( e ) {
