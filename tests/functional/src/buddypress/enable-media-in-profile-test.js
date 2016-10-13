@@ -12,7 +12,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.BUDDYPRESS.BUDDYPRESS)
-          .pause(2000)
+          .pause(800)
           //select checkbox switch
           .getAttribute(data.SELECTORS.BUDDYPRESS.ENABLE_MEDIA_PROFILE, "checked", function(result) {
             //  console.log(result); //used for debug
@@ -34,7 +34,7 @@ module.exports = {
             .click('.rtm-select-files')
             .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_IMAGE))
             .click('.start-media-upload')
-            .pause(6000)
+            .pause(1006)
             .refresh()
             .getText('.rtmedia-list-item a.rtmedia-list-item-a .rtmedia-item-title h4',function(result){
                 browser.assert.equal(result.value, 'TEST', 'image uploaded successfully');

@@ -10,7 +10,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.PRIVACY.PRIVACY)                                                 //open privacy tab from rtmedia
-          .pause(2000)
+          .pause(800)
           .getAttribute(data.SELECTORS.PRIVACY.ENABLE_PRIVACY, "checked", function(result) {        //select Enable privacy feature
                   if(result.value)
                   {

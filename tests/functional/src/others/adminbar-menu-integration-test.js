@@ -9,7 +9,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.OTHERSETTINGS.OTHERSETTINGS)
-          .pause(2000)
+          .pause(800)
           //select checkbox switch
           .getAttribute(data.SELECTORS.OTHERSETTINGS.SHOW_ADMIN_MENU, "checked", function(result) {
               if(result.value)
