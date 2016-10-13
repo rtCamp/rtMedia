@@ -146,7 +146,7 @@ function rtmedia_gallery_options() {
 	if ( ! empty( $options ) ) {
 		$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
                 <div class="no-js">
-                <div class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . esc_html__( 'Options', 'buddypress-media' ) . '</div>
+                <div class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . apply_filters( 'rtm_gallary_option_label', __( 'Options', 'buddypress-media' ) ) . '</div>
                 <ul class="rtm-options">';
 
 		foreach ( $options as $action ) {
@@ -304,11 +304,11 @@ function add_upload_button() {
 
 	if ( function_exists( 'bp_is_blog_page' ) && ! bp_is_blog_page() ) {
 		if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() === get_current_user_id() ) {
-			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</span>';
+			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . apply_filters( 'rtm_gallary_upload_label', __( 'Upload', 'buddypress-media' ) ) . '</span>';
 		} else {
 			if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 				if ( can_user_upload_in_group() ) {
-					echo '<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</span>';
+					echo '<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . apply_filters( 'rtm_gallary_upload_label', __( 'Upload', 'buddypress-media' ) ) . '</span>';
 				}
 			}
 		}
@@ -329,7 +329,7 @@ function add_music_cover_art( $file_object, $upload_obj ) {
 
 	$media_obj = new RTMediaMedia();
 	$media     = $media_obj->model->get( array(
-		'id' => $upload_obj->media_ids[0]
+		'id' => $upload_obj->media_ids[0],
 	) );
 
 }
@@ -413,7 +413,7 @@ function update_group_media_privacy( $group_id ) {
 	if ( ! empty( $group_id ) && function_exists( 'groups_get_group' ) ) {
 		//get the buddybress group
 		$group = groups_get_group( array(
-			'group_id' => $group_id
+			'group_id' => $group_id,
 		) );
 
 		if ( isset( $group->status ) ) {

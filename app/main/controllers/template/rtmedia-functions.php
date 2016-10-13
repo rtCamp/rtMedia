@@ -132,7 +132,7 @@ function get_rtmedia_title( $id ) {
 
 	$rtmedia_model = new RTMediaModel();
 	$title         = $rtmedia_model->get( array(
-		'id' => $id
+		'id' => $id,
 	) );
 
 	return $title[0]->media_title;
@@ -179,7 +179,7 @@ function rtmedia_author_profile_pic( $show_link = true, $echo = true, $author_id
 					'object'  => 'user',
 					'no_grav' => false,
 					'html'    => false,
-				) ) !== bp_core_avatar_default()
+			) ) !== bp_core_avatar_default()
 			) {
 				$profile_pic .= bp_core_fetch_avatar( array(
 					'item_id' => $author_id,
@@ -205,7 +205,7 @@ function rtmedia_author_profile_pic( $show_link = true, $echo = true, $author_id
 		} else {
 			return $profile_pic;
 		}
-	}
+	}// End if().
 
 }
 
@@ -300,7 +300,7 @@ function rtmedia_id( $media_id = false ) {
 	if ( $media_id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array(
-			'media_id' => $media_id
+			'media_id' => $media_id,
 		), 0, 1 );
 
 		if ( isset( $media ) && count( $media ) > 0 ) {
@@ -330,7 +330,7 @@ function rtmedia_media_id( $id = false ) {
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array(
-			'id' => $id
+			'id' => $id,
 		), 0, 1 );
 
 		return $media[0]->media_id;
@@ -356,7 +356,7 @@ function rtmedia_media_ext( $id = false ) {
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array(
-			'id' => $id
+			'id' => $id,
 		), 0, 1 );
 
 		if ( isset( $media[0] ) ) {
@@ -390,7 +390,7 @@ function rtmedia_activity_id( $id = false ) {
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array(
-			'id' => $id
+			'id' => $id,
 		), 0, 1 );
 
 		return $media[0]->activity_id;
@@ -416,7 +416,7 @@ function rtmedia_type( $id = false ) {
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array(
-			'id' => $id
+			'id' => $id,
 		), 0, 1 );
 
 		if ( isset( $media[0] ) && isset( $media[0]->media_type ) ) {
@@ -446,7 +446,7 @@ function rtmedia_cover_art( $id = false ) {
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array(
-			'id' => $id
+			'id' => $id,
 		), 0, 1 );
 
 		return $media[0]->cover_art;
@@ -574,7 +574,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array(
-			'id' => $id
+			'id' => $id,
 		), false, false );
 
 		if ( isset( $media[0] ) ) {
@@ -661,7 +661,7 @@ function rtmedia_image_alt( $id = false, $echo = true ) {
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array(
-			'id' => $id
+			'id' => $id,
 		), false, false );
 
 		if ( isset( $media[0] ) ) {
@@ -743,7 +743,7 @@ function rtmedia_album_image( $size = 'thumbnail', $id = false ) {
 		} else {
 			$media = $model->get_media( array(
 				'album_id'   => $id,
-				'media_type' => 'photo'
+				'media_type' => 'photo',
 			), 0, 1 );
 		}
 	}
@@ -783,7 +783,7 @@ function rtmedia_duration( $id = false ) {
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array(
-			'id' => $id
+			'id' => $id,
 		), false, false );
 
 		if ( isset( $media[0] ) ) {
@@ -1174,7 +1174,7 @@ function rtmedia_comments( $echo = true ) {
 	$html         = '<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="' . esc_url( get_rtmedia_permalink( rtmedia_id() ) ) . 'delete-comment/">';
 	$comments     = get_comments( array(
 		'post_id' => $rtmedia_media->media_id,
-		'order'   => 'ASC'
+		'order'   => 'ASC',
 	) );
 	$comment_list = '';
 
@@ -1547,7 +1547,7 @@ function rtmedia_get_pagination_values() {
 		}
 
 		$rtmedia_media_pages .= "</div></div>\n";
-	}
+	}// End if().
 
 	return $rtmedia_media_pages;
 
@@ -1639,7 +1639,7 @@ function is_rtmedia_album( $album_id = false ) {
 	if ( $album_id ) {
 		$rtmedia_model = new RTMediaModel();
 		$media         = $rtmedia_model->get( array(
-			'id' => $album_id
+			'id' => $album_id,
 		) );
 
 		if ( is_array( $media ) && isset( $media[0] ) && isset( $media[0]->media_type ) && 'album' === $media[0]->media_type ) {
@@ -1713,14 +1713,14 @@ function update_activity_after_thumb_set( $id ) {
 	$model       = new RTMediaModel();
 	$media_obj   = new RTMediaMedia();
 	$media       = $model->get( array(
-		'id' => $id
+		'id' => $id,
 	) );
 	$privacy     = $media[0]->privacy;
 	$activity_id = rtmedia_activity_id( $id );
 
 	if ( ! empty( $activity_id ) ) {
 		$same_medias           = $media_obj->model->get( array(
-			'activity_id' => $activity_id
+			'activity_id' => $activity_id,
 		) );
 		$update_activity_media = array();
 
@@ -1737,7 +1737,7 @@ function update_activity_after_thumb_set( $id ) {
 		if ( ! empty( $activity_old_content ) ) {
 			// get old activity content and save in activity meta
 			$activity_get  = bp_activity_get_specific( array(
-				'activity_ids' => $activity_id
+				'activity_ids' => $activity_id,
 			) );
 			$activity      = $activity_get['activities'][0];
 			$activity_body = $activity->content;
@@ -1758,10 +1758,10 @@ function update_activity_after_thumb_set( $id ) {
 		$wpdb->update( $bp->activity->table_name, array(
 			'type'    => 'rtmedia_update',
 			'content' => $obj_activity->create_activity_html(),
-		), array(
-			'id' => $activity_id
+			), array(
+			'id' => $activity_id,
 		) );
-	}
+	}// End if().
 
 }
 
@@ -1837,7 +1837,7 @@ function rtmedia_get_cover_art_src( $id ) {
 
 	$model     = new RTMediaModel();
 	$media     = $model->get( array(
-		'id' => $id
+		'id' => $id,
 	) );
 	$cover_art = $media[0]->cover_art;
 
@@ -2074,7 +2074,7 @@ function rtmedia_global_album_list( $selected_album_id = false ) {
 
 	$option        = null;
 	$album_objects = $model->get_media( array(
-		'id' => $global_albums
+		'id' => $global_albums,
 	), false, false );
 
 	if ( $album_objects ) {
@@ -2627,7 +2627,7 @@ function get_rtmedia_like( $media_id = false ) {
 
 	$mediamodel = new RTMediaModel();
 	$actions    = $mediamodel->get( array(
-		'id' => rtmedia_id( $media_id )
+		'id' => rtmedia_id( $media_id ),
 	) );
 
 	if ( isset( $actions[0]->likes ) ) {
@@ -2703,9 +2703,9 @@ function rtm_get_music_cover_art( $media_object ) {
 
 		if ( is_array( $thumb_upload_info ) && ! empty( $thumb_upload_info['url'] ) ) {
 			$media_obj->model->update( array(
-				'cover_art' => $thumb_upload_info['url']
-			), array(
-				'id' => $id
+				'cover_art' => $thumb_upload_info['url'],
+				), array(
+				'id' => $id,
 			) );
 
 			return $thumb_upload_info['url'];
@@ -2713,9 +2713,9 @@ function rtm_get_music_cover_art( $media_object ) {
 	}
 
 	$media_obj->model->update( array(
-		'cover_art' => '-1'
-	), array(
-		'id' => $id
+		'cover_art' => '-1',
+		), array(
+		'id' => $id,
 	) );
 
 	return false;
@@ -2735,7 +2735,6 @@ if ( ! function_exists( 'get_music_cover_art' ) ) {
 		return false;
 
 	}
-
 }
 
 /**
@@ -2749,7 +2748,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 
 	$mediamodel = new RTMediaModel();
 	$actions    = $mediamodel->get( array(
-		'id' => rtmedia_id( $rtmedia_id )
+		'id' => rtmedia_id( $rtmedia_id ),
 	) );
 	$privacy    = '';
 
@@ -2833,7 +2832,7 @@ function rtmedia_convert_date( $_date ) {
 	$length    = array( 1, 60, 3600, 86400 );
 	$ago_text  = esc_html__( '%s ago ', 'buddypress-media' );
 
-	for ( $i = sizeof( $length ) - 1; ( $i >= 0 ) && ( ( $no = $diff / $length[ $i ] ) <= 1 ); $i -- );
+	for ( $i = sizeof( $length ) - 1; ( $i >= 0 ) && ( ( $no = $diff / $length[ $i ] ) <= 1 ); $i -- ) {}
 
 	if ( $i < 0 ) {
 		$i = 0;
@@ -3319,7 +3318,7 @@ function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_STRING
 
 	if ( function_exists( 'filter_input' ) && filter_has_var( INPUT_SERVER, $server_key ) ) {
 		$server_val = filter_input( INPUT_SERVER, $server_key, constant( $filter_type ) );
-	} elseif( isset( $_SERVER[ $server_key ] ) ) {
+	} elseif ( isset( $_SERVER[ $server_key ] ) ) {
 		$server_val = $_SERVER[ $server_key ];
 	}
 
@@ -3345,3 +3344,22 @@ function rtt_is_video_exists( $medias, $media_type = 'mp4' ) {
 		return $medias[ $media_type ][0];
 	}
 }
+
+
+add_filter( 'rtm_gallary_option_label','rtmedia_option_text_callback',10 ,1 );
+function rtmedia_option_text_callback( $option_txt ) {
+	$option_txt = 'New Option';
+	return $option_txt;
+}
+
+
+add_filter( 'rtm_gallary_upload_label','rtmedia_upload_album_text_callback',10,1 );
+function rtmedia_upload_album_text_callback( $album ) {
+	return 'New Album';
+}
+
+add_filter( 'rtm_sort_label','rtmedia_gallary_upload_text_callback',10,1 );
+function rtmedia_gallary_upload_text_callback( $album ) {
+	return 'New Sort';
+}
+
