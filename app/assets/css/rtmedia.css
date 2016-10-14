@@ -1251,6 +1251,7 @@ img.mfp-img {
 .rtm-time-privacy .dashicons {
   font-size: 14px;
   line-height: 1.5;
+  margin-top: -2px;
 }
 
 .rtmedia-actions-before-comments > span {
