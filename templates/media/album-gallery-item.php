@@ -29,24 +29,18 @@ if ( isset( $is_edit_allowed[0] ) ) {
 
 		<?php
 		if ( apply_filters( 'rtmedia_media_gallery_show_media_title', true ) ) {
-
-			/**
-			 * Add Album Count On Album Thumbnail
-			 * By: Yahil
-			 */
-			if ( bp_is_group() ) {
-				$context = 'group';
-			} else {
-				$context = 'profile';
-			}
 			?>
 			<div class="rtmedia-item-title">
-			  <h4><?php echo esc_html( rtmedia_title() ); ?><span>(<?php echo esc_html( rtmedia_album_count( rtmedia_id(), $context  ,bp_displayed_user_id() ) ); ?></span>)</h4>
+				<h4><?php echo esc_html( rtmedia_title() ); ?><span></h4>
 			</div>
 			<?php
 		}
 	 	?>
-
 	</a>
-	<?php do_action( 'rtmedia_after_album_gallery_item' ) ?>
+	<?php
+	/**
+	 * Fires after album gallery item.
+	 */
+	do_action( 'rtmedia_after_album_gallery_item' );
+	?>
 </li> <!-- End of .rtmedia-list-item -->

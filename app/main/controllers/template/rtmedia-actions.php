@@ -616,44 +616,35 @@ if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
 }
 
 /**
- * Display album Count
- * @param  [type] $rtmedia_id [Album Id]
- * @param  [type] $context    [Album Context profile/group]
- * @param  [type] $user       [Displayed user id]
- * @return [type]             [return album media count in number]
- * By: Yahil
+ * @param $album_id
+ *
+ * @return array
  */
-function rtmedia_album_count( $rtmedia_id, $context, $user ) {
-	if ( $rtmedia_id ) {
-		$model = new RTMediaModel();
-		$media = $model->get_media( array(
-				'id' => rtmedia_id(),
-		), 0, 1 );
-
-		if ( 'profile' == $context ) {
-			$media = $model->get_media( array(
-				'album_id'		=> $rtmedia_id,
-				'context_id'	=> $user,
-				'context'		=> $context,
-			) );
-		}
-
-		if ( 'group' == $context ) {
-
-			$media = $model->get_media( array(
-				'album_id'		=> $rtmedia_id,
-				'context_id'	=> bp_get_group_id(),
-				'context'		=> $context,
-			) );
-		}
-		 return count( $media );
-	}
+function rtm_get_album_media_count( $album_id ) {
+	global $rtmedia_query;
+	$args = array(
+		'album_id'		=> $album_id,
+		'context'		=> $rtmedia_query->query['context'],
+		'context_id'	=> $rtmedia_query->query['context_id'],
+	);
+	$rtmedia_model = new RTMediaModel();
+	$count = $rtmedia_model->get( $args, false, false, 'media_id desc', true );
+	return $count;
 }
 
 /**
+ * HTML markup for displaying Media Count of album in album list gallery
+ */
+function rtm_album_media_count() {
+	?>
+	<div class="rtmedia-album-media-count" title="<?php echo rtm_get_album_media_count( rtmedia_id() ) . ' ' . RTMEDIA_MEDIA_LABEL; ?>"><?php echo rtm_get_album_media_count( rtmedia_id() ); ?></div>
+	<?php
+}
+
+add_action( 'rtmedia_after_album_gallery_item', 'rtm_album_media_count' );
+
+/**
  * Get the information ( status, expiry date ) of all the installed addons and store in site option
- *
- * @since 4.1.7
  */
 function rt_check_addon_status() {
 	$addons = apply_filters( 'rtmedia_license_tabs', array() );
