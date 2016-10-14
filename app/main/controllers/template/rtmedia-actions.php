@@ -596,7 +596,7 @@ function rt_check_addon_status() {
 			 * Check if information about the addon in already fetched from the store
 			 * If it's already fetched, then don't send the request again for the information
 			 */
-			if ( ! empty( $addon_active ) && ! isset( $_POST[ 'edd_' . $addon_active . '_license_activate' ] ) ) {
+			if ( ! empty( $addon_active ) && ! isset( $_POST[ 'edd_' . $addon_id . '_license_activate' ] ) ) {
 				continue;
 			}
 
