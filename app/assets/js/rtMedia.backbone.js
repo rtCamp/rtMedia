@@ -888,14 +888,27 @@ jQuery( document ).ready( function ( $ ) {
 				}
 			} );
 
-			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' && jQuery.trim( jQuery( "#whats-new" ).val() ) != "" ) {
+			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
+
+				/*
+				 * add activity_text_with_attechment condition to filter
+				 * if user want media and activity_text both require
+				 * By: Yahil
+				 */
+				if ( jQuery.trim( jQuery( "#whats-new" ).val() ) == "" ) {
+					if ( activity_text_with_attechment != 'disable') {
+						jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
+						jQuery( '#whats-new' ).removeAttr( 'disabled' );
+						return false;
+					}
+				}
+
 				//Call upload event direct when direct upload is enabled (removed UPLOAD button and its triggered event)
 				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
 
 				if ( allow_upload == false ) {
 					return false;
 				}
-
 				objUploadView.uploadFiles();
 			}
 		} );
@@ -1069,12 +1082,15 @@ jQuery( document ).ready( function ( $ ) {
 							 * Disabled TextBox color(transparent)
 							 * ELSE
 							 * Required Activity text with media
+							 * add activity_text_with_attechment condition to filter
+		 					 * if user want media and activity_text both require
+		 					 * By: Yahil
 							 */
 							if ( activity_text_with_attechment == 'disable') {
 								$( "#whats-new" ).css( 'color', 'transparent' );
 								$( "#whats-new" ).val( '&nbsp;' );
 							} else {
-								jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p>Please enter some content to post.</p></div>')
+								jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
 								jQuery( '#whats-new' ).removeAttr( 'disabled' );
 								return false;
 							}
