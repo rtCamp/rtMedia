@@ -2,16 +2,16 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.1.7\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.1.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-10-05 06:12:22+00:00\n"
+"POT-Creation-Date: 2016-10-13 20:04:24+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
 "Last-Translator: rtMedia <rtmedia@rtcamp.com>\n"
 "Language-Team: rtMedia <rtmedia@rtcamp.com>\n"
-"X-Generator: grunt-wp-i18n 0.5.4\n"
+"X-Generator: grunt-wp-i18n 0.5.3\n"
 "X-Poedit-KeywordsList: "
 "__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
 "attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
@@ -398,7 +398,7 @@ msgstr ""
 #: app/admin/RTMediaAdmin.php:1561 app/admin/RTMediaAdmin.php:1579
 #: app/admin/RTMediaAdmin.php:1597 app/admin/RTMediaFormHandler.php:435
 #: app/admin/RTMediaFormHandler.php:446 app/helper/RTMediaSettings.php:297
-#: app/helper/RTMediaSupport.php:383 app/helper/RTMediaSupport.php:652
+#: app/helper/RTMediaSupport.php:385 app/helper/RTMediaSupport.php:654
 msgid "here"
 msgstr ""
 
@@ -1316,20 +1316,26 @@ msgid ""
 "possible upgrades</a> now."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:205
+#: app/helper/RTMediaLicense.php:189
+msgid ""
+"Your license is not activable, please visit <a href=\"%s\">your account "
+"page</a>."
+msgstr ""
+
+#: app/helper/RTMediaLicense.php:198 app/helper/RTMediaLicense.php:252
+msgid "To receive updates, please enter your valid license key."
+msgstr ""
+
+#: app/helper/RTMediaLicense.php:217
 msgid "License key never expires."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:214
+#: app/helper/RTMediaLicense.php:226
 msgid "Your license key expires soon! It expires on %1$s. Renew your license key."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:225
+#: app/helper/RTMediaLicense.php:237
 msgid "Your license key expires on %s."
-msgstr ""
-
-#: app/helper/RTMediaLicense.php:240
-msgid "To receive updates, please enter your valid license key."
 msgstr ""
 
 #: app/helper/RTMediaLikeNotification.php:93
@@ -1414,12 +1420,12 @@ msgid ""
 "a new issue on "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:403 app/helper/RTMediaSupport.php:434
+#: app/helper/RTMediaSettings.php:403 app/helper/RTMediaSupport.php:436
 msgid "GitHub"
 msgstr ""
 
 #: app/helper/RTMediaSupport.php:59 app/helper/RTMediaSupport.php:60
-#: app/helper/RTMediaSupport.php:325 app/helper/RTMediaSupport.php:617
+#: app/helper/RTMediaSupport.php:327 app/helper/RTMediaSupport.php:619
 msgid "Debug Info"
 msgstr ""
 
@@ -1456,121 +1462,121 @@ msgstr ""
 msgid "version"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:377
+#: app/helper/RTMediaSupport.php:379
 msgid "There is no media found to migrate."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:383
+#: app/helper/RTMediaSupport.php:385
 #: app/main/controllers/media/RTMediaLoginPopup.php:56
 msgid "Click"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:383
+#: app/helper/RTMediaSupport.php:385
 msgid "here to migrate media from rtMedia 2.x to rtMedia 3.0+."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:411
+#: app/helper/RTMediaSupport.php:413
 msgid "Submit a Bug Report"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:414
+#: app/helper/RTMediaSupport.php:416
 msgid "Submit a New Feature Request"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:417
+#: app/helper/RTMediaSupport.php:419
 msgid "Submit Support Request"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:426
+#: app/helper/RTMediaSupport.php:428
 msgid ""
 "If your site has some issues due to rtMedia and you want support, feel free "
 "to create a support topic on %s"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:427
+#: app/helper/RTMediaSupport.php:429
 msgid "Community Forum"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:433
+#: app/helper/RTMediaSupport.php:435
 msgid ""
 "If you have any suggestions, enhancements or bug reports, then you can open "
 "a new issue on %s"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:453
+#: app/helper/RTMediaSupport.php:455
 msgid "Name"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:458
+#: app/helper/RTMediaSupport.php:460
 msgid "Use actual user name which used during purchased."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:465
+#: app/helper/RTMediaSupport.php:467
 msgid "Email"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:470
+#: app/helper/RTMediaSupport.php:472
 msgid "Use email id which used during purchased"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:477
+#: app/helper/RTMediaSupport.php:479
 msgid "Website"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:485
+#: app/helper/RTMediaSupport.php:487
 msgid "Subject"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:493 templates/media/album-single-edit.php:20
+#: app/helper/RTMediaSupport.php:495 templates/media/album-single-edit.php:20
 #: templates/media/media-single-edit.php:17
 msgid "Details"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:531
+#: app/helper/RTMediaSupport.php:533
 msgid "Cheatin' uh?"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:532
+#: app/helper/RTMediaSupport.php:534
 msgid "Can not verify request source."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:547
+#: app/helper/RTMediaSupport.php:549
 msgid "rtMedia Premium Support Request from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:550
+#: app/helper/RTMediaSupport.php:552
 msgid "rtMedia New Feature Request from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:553
+#: app/helper/RTMediaSupport.php:555
 msgid "rtMedia Bug Report from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:556
+#: app/helper/RTMediaSupport.php:558
 msgid "rtMedia Contact from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:639
+#: app/helper/RTMediaSupport.php:641
 msgid "Thank you for your Feedback/Suggestion."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:641
+#: app/helper/RTMediaSupport.php:643
 msgid "Thank you for posting your support request."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:642
+#: app/helper/RTMediaSupport.php:644
 msgid "We will get back to you shortly."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:647
+#: app/helper/RTMediaSupport.php:649
 msgid "Your server failed to send an email."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:648
+#: app/helper/RTMediaSupport.php:650
 msgid "Kindly contact your server support to fix this."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:651
+#: app/helper/RTMediaSupport.php:653
 msgid "You can alternatively create a support request %s"
 msgstr ""
 
