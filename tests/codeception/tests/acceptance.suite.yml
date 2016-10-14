@@ -9,7 +9,7 @@ modules:
     enabled:
         - \Helper\Acceptance
         - WPWebDriver
-    config:   
+    config:
           WPWebDriver:
             host: 'hub-cloud.browserstack.com'
             port: 80
@@ -22,4 +22,4 @@ modules:
               'browserstack.user': ''
               'browserstack.key': ''
               'os': 'OS X'
-              'os_version' : 'El Capitan'    
+              'os_version' : 'El Capitan'
