@@ -31,14 +31,15 @@ class AcceptanceTester extends \Codeception\Actor
             $I->fillfield( 'input#bp-login-widget-user-login', $userName );
             $I->fillfield( 'input#bp-login-widget-user-pass', $password );
             $I->click('Log In');
-            $I->see('Demo');
+            $I->seeElement('.logout');
 
     }
 
-    public function uploadPhoto(){
+    public function uploadPhoto($userName){
 
+            $url = 'members/'.$userName.'/media/photo/';
             $I = $this;
-            $I->amonPage('members/demo/media/photo/');
+            $I->amonPage($url);
             $I->seeElement('.rtm-gallery-title');
             $I->seeElement('.rtm-media-options .rtmedia-upload-media-link');
             $I->click('.rtm-media-options .rtmedia-upload-media-link');
