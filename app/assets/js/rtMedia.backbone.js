@@ -645,7 +645,7 @@ jQuery( function ( $ ) {
 					if ( rtnObj.permalink != '' ) {
 						$( "#" + file.id + " .plupload_file_name" ).html( "<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.title.substring( 0, 40 ).replace( /(<([^>]+)>)/ig, "" ) + "</a>" );
 						$( "#" + file.id + " .plupload_media_edit" ).html( "<a href='" + rtnObj.permalink + "edit' target='_blank'><span title='" + rtmedia_edit_media + "'><i class='dashicons dashicons-edit rtmicon'></i> " + rtmedia_edit + "</span></a>" );
-						$( "#" + file.id + " .plupload_delete" ).html( "<span id='" + rtnObj.media_id + "' class='rtmedia-delete-uploaded-media' title='" + rtmedia_delete + "'>&times;</span>" );
+						$( "#" + file.id + " .plupload_delete" ).html( "<span id='" + rtnObj.media_id + "' class='rtmedia-delete-uploaded-media dashicons dashicons-dismiss' title='" + rtmedia_delete + "'></span>" );
 					}
 
 				} catch ( e ) {
@@ -896,7 +896,10 @@ jQuery( document ).ready( function ( $ ) {
 				 * By: Yahil
 				 */
 				if ( jQuery.trim( jQuery( "#whats-new" ).val() ) == "" ) {
-					if ( activity_text_with_attechment != 'disable') {
+					if ( activity_text_with_attechment == 'disable') {
+						$( "#whats-new" ).css( 'color', 'transparent' );
+						$( "#whats-new" ).val( '&nbsp;' );
+					} else {
 						jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
 						jQuery( '#whats-new' ).removeAttr( 'disabled' );
 						return false;
