@@ -622,13 +622,22 @@ if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
  */
 function rtm_get_album_media_count( $album_id ) {
 	global $rtmedia_query;
-	$args = array(
-		'album_id'		=> $album_id,
-		'context'		=> $rtmedia_query->query['context'],
-		'context_id'	=> $rtmedia_query->query['context_id'],
-	);
+
+	$args = array();
+	if ( isset( $album_id ) && $album_id ) {
+		$args['album_id'] = $album_id;
+	}
+	if ( isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] ) {
+		$args['context'] = $rtmedia_query->query['context'];
+	}
+	if ( isset( $rtmedia_query->query['context_id'] ) && $rtmedia_query->query['context_id'] ) {
+		$args['context_id'] = $rtmedia_query->query['context_id'];
+	}
+
 	$rtmedia_model = new RTMediaModel();
-	$count = $rtmedia_model->get( $args, false, false, 'media_id desc', true );
+	if ( $args ) {
+		$count = $rtmedia_model->get( $args, false, false, 'media_id desc', true );
+	}
 	return $count;
 }
 
