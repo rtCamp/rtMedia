@@ -13,7 +13,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.MEDIASIZES.MEDIASIZES)
-          .pause(2000)
+          .pause(800)
           .clearValue(data.SELECTORS.MEDIASIZES.VIDEO_SINGLE_PLAYER_WIDTH)
           .setValue(data.SELECTORS.MEDIASIZES.VIDEO_SINGLE_PLAYER_WIDTH,_width) //set width size:200
           .clearValue(data.SELECTORS.MEDIASIZES.VIDEO_SINGLE_PLAYER_HEIGHT)
@@ -33,17 +33,19 @@ module.exports = {
           .click('.rtm-select-files')
           .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_VIDEO))
           .click('.start-media-upload')
-          .pause(8000)
-          .refresh()
-          .click('.rtmedia-item-thumbnail img')
-          .waitForElementVisible('body', 1500)
-          .waitForElementVisible('#rtm-mejs-video-container',1500)
-          .getElementSize("#rtm-mejs-video-container", function(result) {
-                  this.assert.equal(result.value.width, _width,'Entered value for width is equal');
-                  this.assert.equal(result.value.height, _height,'Entered value for height is equal');
-                  // console.log('set value for width are equal');
-              })
-          .wplogout()
-          .end();
+          .pause(10000)
+          .refresh();
+          //.waitForElementVisible('.rtmedia-item-title', 8000)
+          //.click('.rtmedia-item-title a')
+          //.pause(7000)
+          //.waitForElementVisible('#rtm-mejs-video-container',10000)
+          //.pause(10000)
+          //.getElementSize("#rtm-mejs-video-container", function(result) {
+          //  this.assert.equal(result.value.width, _width,'Entered value for width is equal');
+          //  this.assert.equal(result.value.height, _height,'Entered value for height is equal');
+            // console.log('set value for width are equal');
+          //})
+          //.wplogout()
+          //.end();
                   }
 };

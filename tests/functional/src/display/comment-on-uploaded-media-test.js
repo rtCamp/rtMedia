@@ -32,7 +32,7 @@ module.exports = {
             .pause(1000)
             .setValue('.ac-input','nice')
             .click('input[name="ac_form_submit"]')
-            .pause(2000)
+            .pause(800)
             .assert.containsText("#item-body .activity", "nice")
             .wplogout()
             .end();

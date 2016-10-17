@@ -132,22 +132,27 @@
 .license-row {
   box-sizing: border-box;
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-flex: 0;
+  -webkit-flex: 0 1 auto;
       -ms-flex: 0 1 auto;
           flex: 0 1 auto;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
       -ms-flex-direction: row;
           flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
 }
 
 .license-column, .license-column {
   box-sizing: border-box;
   -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
   padding-right: .5rem;
@@ -156,21 +161,24 @@
 
 .large-4 {
   -ms-flex-preferred-size: 33.33333333%;
-  flex-basis: 33.33333333%;
+  -webkit-flex-basis: 33.33333333%;
+          flex-basis: 33.33333333%;
   max-width: 33.33333333%;
 }
 
 @media screen and (max-width: 768px) {
   .medium-6 {
-    -ms-flex-preferred-size: 50%;
-        flex-basis: 50%;
+    -webkit-flex-basis: 50%;
+        -ms-flex-preferred-size: 50%;
+            flex-basis: 50%;
     max-width: 50%;
   }
 }
 @media screen and (max-width: 667px) {
   .small-12 {
-    -ms-flex-preferred-size: 100%;
-        flex-basis: 100%;
+    -webkit-flex-basis: 100%;
+        -ms-flex-preferred-size: 100%;
+            flex-basis: 100%;
     max-width: 100%;
   }
 }

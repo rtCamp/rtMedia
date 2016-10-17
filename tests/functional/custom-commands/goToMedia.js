@@ -9,7 +9,7 @@ client
     .assert.elementPresent('#wp-admin-bar-my-account-media.menupop a.ab-item')
     .click('#wp-admin-bar-my-account-media.menupop a.ab-item')
     .waitForElementVisible('body', 2500)
-    .pause(2000)
+    .pause(800)
     .getTitle(function(title) {
         console.log("We are in Media Page :"+title);
       })

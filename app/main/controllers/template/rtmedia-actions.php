@@ -566,3 +566,71 @@ function rtmedia_add_media_delete_nonce_shortcode() {
 }
 
 add_action( 'rtmedia_pre_template', 'rtmedia_add_media_delete_nonce_shortcode' );
+
+/**
+ * Get the information ( status, expiry date ) of all the installed addons and store in site option
+ *
+ * @since 4.1.7
+ */
+function rt_check_addon_status() {
+	$addons = apply_filters( 'rtmedia_license_tabs', array() );
+
+	if ( empty( $addons ) ) {
+		return;
+	}
+
+	foreach ( $addons as $addon ) {
+		if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
+
+			$license = $addon['args']['license_key'];
+
+			$addon_name = $addon['name'];
+
+			$addon_id = $addon['args']['addon_id'];
+
+			$addon_active = get_option( 'edd_' . $addon_id . '_active' );
+
+			// listen for activate button to be clicked
+
+			/**
+			 * Check if information about the addon in already fetched from the store
+			 * If it's already fetched, then don't send the request again for the information
+			 */
+			if ( ! empty( $addon_active ) && ! isset( $_POST[ 'edd_' . $addon_id . '_license_activate' ] ) ) {
+				continue;
+			}
+
+			// Get the store URL from the constant defined in the addon
+			$store_url = constant( 'EDD_' . strtoupper( $addon_id ) . '_STORE_URL' );
+
+			// If store URL not found in the addon, use the default store URL
+			if ( empty( $store_url ) ) {
+				$store_url = 'https://rtmedia.io/';
+			}
+
+			// data to send in our API request
+			$api_params = array(
+				'edd_action' => 'activate_license',
+				'license'    => $license,
+				'item_name'  => urlencode( $addon_name ), // the name of our product in EDD
+				'url'        => home_url(),
+			);
+
+	        // Call the custom API.
+			$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $store_url ) ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+			// make sure the response came back okay
+			if ( is_wp_error( $response ) ) {
+				return false;
+			}
+
+			// decode the license data
+			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+			// Store the data in database
+			update_option( 'edd_' . $addon_id . '_active', $license_data );
+		}// End if().
+	}// End foreach().
+}
+
+add_action( 'admin_init', 'rt_check_addon_status' );
