@@ -299,12 +299,19 @@ add_action( 'rtmedia_query_actions', 'rtmedia_album_merge_action' );
  */
 function add_upload_button() {
 	if ( function_exists( 'bp_is_blog_page' ) && ! bp_is_blog_page() ) {
+		/**
+		 * Add filter to transfer "Upload" string,
+		 * issue: http://git.rtcamp.com/rtmedia/rtMedia/issues/133
+		 * By: Yahil
+		 */
+		$upload_string = apply_filters( 'rtmedia_upload_button_string', __( 'Upload', 'buddypress-media' ) );
+
 		if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() === get_current_user_id() ) {
-			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</span>';
+			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' . esc_html( $upload_string ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html( $upload_string ) . '</span>';
 		} else {
 			if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 				if ( can_user_upload_in_group() ) {
-					echo '<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</span>';
+					echo '<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="' . esc_html( $upload_string ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html( $upload_string ) . '</span>';
 				}
 			}
 		}
