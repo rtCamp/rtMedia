@@ -88,9 +88,18 @@ function apply_rtMagnificPopup( selector ) {
 				}
 			} );
 		}
+		/**
+		 * string replace Save From ok
+		 * By: Yahil
+		 */
+		jQuery( document ).ajaxComplete(function(){
+			jQuery('[id^=imgedit-leaving]').filter(function(){
+				var text = jQuery(this).text();
+				jQuery(this).text(text.replace('OK', 'Save'));
+			});
+		});
 	} );
 }
-
 var rtMediaHook = {
 	hooks: [ ],
 	is_break: false,
@@ -698,8 +707,8 @@ function rtm_masonry_reload( el ) {
          showChars: 100,
          minHideChars: 10,
          ellipsesText: '...',
-         moreText: 'Read more',
-         lessText: 'Show less',
+         moreText: rtmedia_read_more,
+         lessText: rtmedia__show_less,
          onLess: function() {},
          onMore: function() {},
          errMsg: null,
@@ -725,8 +734,8 @@ function rtm_masonry_reload( el ) {
 				 $this.removeClass( 'less' );
 				 $this.html( config.moreText );
 				 $this.parent().prev().hide( 0, function() {
- $this.parent().prev().prev().show();
- })
+					 $this.parent().prev().prev().show();
+				 })
 				 .hide( 0, function() {
 					 config.onLess();
 				 });
@@ -734,8 +743,8 @@ function rtm_masonry_reload( el ) {
 				 $this.addClass( 'less' );
 				 $this.html( config.lessText );
 				 $this.parent().prev().show( 0, function() {
- $this.parent().prev().prev().hide();
- })
+					 $this.parent().prev().prev().hide();
+				 })
 				 .show( 0, function() {
 					 config.onMore();
 				 });
