@@ -476,6 +476,15 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
   display: none;
 }
 
+.rtmedia-list-item .rtmedia-album-media-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: black;
+  color: white;
+  padding: 0 5px;
+}
+
 .rtm-tabs.rtm-tabs {
   border-bottom: 1px solid #EEEEEE;
   list-style: none;
@@ -590,13 +599,11 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
 }
 
 .mfp-zoom-out-cur, .mfp-zoom-out-cur .mfp-image-holder .mfp-close {
-  cursor: -webkit-zoom-out;
   cursor: zoom-out;
 }
 
 .mfp-zoom {
   cursor: pointer;
-  cursor: -webkit-zoom-in;
   cursor: zoom-in;
 }
 
@@ -1526,6 +1533,25 @@ img.mfp-img {
   margin-bottom: 10px;
 }
 
+.previous-pagination {
+  float: left;
+  margin-top: 10px;
+}
+
+.next-pagination {
+  float: right;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 500px) {
+  #activity-stream li .media-type-video {
+    width: 100%;
+  }
+  #activity-stream li .media-type-video .mejs-video {
+    max-width: 100%;
+    min-width: 100%;
+  }
+}
 .rtmedia-album-edit .rtm-checkbox-wrap {
   background: rgba(255, 255, 255, 0.9);
   height: 30px;

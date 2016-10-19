@@ -6,12 +6,11 @@
 	* {
 		&,
 		&:before,
-			&:after {
+		&:after {
 			-webkit-box-sizing: inherit;
 			-moz-box-sizing: inherit;
 			box-sizing: inherit;
 		}
-
 	}
 }
 
@@ -23,13 +22,11 @@
 
 // hide unnecessory div
 .rtmedia-activity-container {
-
 	.rtmedia-item-actions {
 		display: none;
 	}
 
 	.rtmedia-item-title {
-
 		&, a {
 			border: 0;
 			color: $gray;
@@ -41,38 +38,39 @@
 			white-space: nowrap;
 		}
 	}
-
 }
 
 // Uploader Button
 #rtmedia-whts-new-upload-container div {
-    left: 0 !important;
-    position: absolute;
-    top: 0 !important;
+	left: 0 !important;
+	position: absolute;
+	top: 0 !important;
 }
 
 #aw-whats-new-submit,
 .rtmedia-add-media-button {
-	display: block; // Remove extra space
+	display: block;
+
+	// Remove extra space
 }
 
 .rtm-drag-drop-active {
-    border: 4px dashed green !important;
-    display: block;
-    height: 100%;
-    opacity: 0.5;
-    z-index: 9999;
+	border: 4px dashed green !important;
+	display: block;
+	height: 100%;
+	opacity: 0.5;
+	z-index: 9999;
 }
 
 #rtm-drop-files-title {
 	background: rgba(0, 0, 0, 0.2);
-    display: none;
-    font-size: 14px;
-    height: 100%;
-    padding: 20px;
-    position: absolute;
-    top: 0;
-    width: 100%;
+	display: none;
+	font-size: 14px;
+	height: 100%;
+	padding: 20px;
+	position: absolute;
+	top: 0;
+	width: 100%;
 }
 
 #rtSelectPrivacy {
@@ -80,7 +78,7 @@
 }
 
 .rtmedia-plupload-container {
-    position: relative;
+	position: relative;
 	float: left;
 }
 
@@ -105,5 +103,26 @@
 .media-type-music {
 	.mejs-container {
 		margin-bottom: 10px;
+	}
+}
+
+.previous-pagination {
+	float: left;
+	margin-top: 10px;
+}
+
+.next-pagination {
+	float: right;
+	margin-top: 10px;
+}
+
+@media screen and (max-width: 500px) {
+	#activity-stream li .media-type-video {
+		width: 100%;
+
+		.mejs-video {
+			max-width: 100%;
+			min-width: 100%;
+		}
 	}
 }

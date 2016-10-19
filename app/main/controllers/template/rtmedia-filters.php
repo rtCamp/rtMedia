@@ -551,4 +551,5 @@ function rtmedia_attachment_link_callback( $permalink, $post_id ) {
 	}
 	return $permalink;
 }
+
 add_filter( 'attachment_link', 'rtmedia_attachment_link_callback', 99,2 );
