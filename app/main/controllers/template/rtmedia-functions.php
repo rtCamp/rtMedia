@@ -3344,22 +3344,3 @@ function rtt_is_video_exists( $medias, $media_type = 'mp4' ) {
 		return $medias[ $media_type ][0];
 	}
 }
-
-
-add_filter( 'rtm_gallary_option_label','rtmedia_option_text_callback',10 ,1 );
-function rtmedia_option_text_callback( $option_txt ) {
-	$option_txt = 'New Option';
-	return $option_txt;
-}
-
-
-add_filter( 'rtm_gallary_upload_label','rtmedia_upload_album_text_callback',10,1 );
-function rtmedia_upload_album_text_callback( $album ) {
-	return 'New Album';
-}
-
-add_filter( 'rtm_sort_label','rtmedia_gallary_upload_text_callback',10,1 );
-function rtmedia_gallary_upload_text_callback( $album ) {
-	return 'New Sort';
-}
-
