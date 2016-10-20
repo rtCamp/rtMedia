@@ -1419,7 +1419,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			if ( function_exists( 'bp_get_current_group_slug' ) ) {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
-		} else {
+		} elseif( isset( $rtmedia_query->media->media_id ) ) {
 			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
 
 			$link .= $site_url . $post->post_name . '/';
@@ -1523,7 +1523,10 @@ function rtmedia_get_pagination_values() {
 		if ( $paged > 2 && $paged > $range + 1 && $showitems < $pages ) {
 			$page_url = $page_base_url . '1';
 
-			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='1' href='" . esc_url( $page_url ) . "'>1</a><span>...</span>";
+			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='1' href='" . esc_url( $page_url ) . "'>1</a>";
+			if ( $paged != 3 ) {
+				$rtmedia_media_pages .= '<span>...</span>';
+			}
 		}
 
 		for ( $i = 1; $i <= $pages; $i ++ ) {

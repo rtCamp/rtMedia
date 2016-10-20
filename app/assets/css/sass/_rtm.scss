@@ -438,3 +438,14 @@ table.rtmedia-edit-media-list {
 .rtm-hide {
 	display: none;
 }
+
+.rtmedia-list-item {
+	.rtmedia-album-media-count {
+		position: absolute;
+		top: 0;
+		right: 0;
+		background-color: black;
+		color: white;
+		padding: 0 5px;
+	}
+}

@@ -165,7 +165,7 @@ jQuery( function( $ ) {
 							el: list_el
 						} );
 						//Element.show();
-						jQuery( '.rtmedia-container .rtmedia-list' ).css( 'opacity', '1' );
+
 						rtMediaHook.call( 'rtmedia_after_gallery_load' );
 
 						jQuery( '.rtmedia-container .rtmedia_next_prev .rtm-pagination' ).remove();
@@ -173,6 +173,11 @@ jQuery( function( $ ) {
 						jQuery( '.rtmedia-container .rtmedia_next_prev .rtm-media-loading' ).remove();
 						jQuery( '.rtmedia-container .rtmedia_next_prev br' ).remove();
 						jQuery( '.rtmedia-container .rtmedia_next_prev' ).append( response.pagination );
+
+						if ( jQuery( '.rtm-uploader-main-wrapper div.rtm-upload-url' ).is( ':visible' ) == false ) {
+							jQuery( '.rtmedia-container .rtmedia-list' ).css( 'opacity', '1' );
+							jQuery( '#rtm-media-gallery-uploader' ).slideUp();
+						}
 					}
 				} );
 			}
@@ -634,7 +639,7 @@ jQuery( function( $ ) {
 					if ( ieversion < 10 ) {
 						if ( typeof res.response !== 'undefined' ) {
 							res.status = 200;
- }
+ 						}
 					}
 				}
 				var rtnObj;
@@ -644,9 +649,9 @@ jQuery( function( $ ) {
 					uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
 					activity_id = rtnObj.activity_id;
 					if ( rtnObj.permalink != '' ) {
-						$( '#' + file.id + ' .plupload_file_name' ).html( '<a href=\'' + rtnObj.permalink + '\' target=\'_blank\' title=\'' + rtnObj.permalink + '\'>' + file.title.substring( 0, 40 ).replace( /(<([^>]+)>)/ig, '' ) + '</a>' );
-						$( '#' + file.id + ' .plupload_media_edit' ).html( '<a href=\'' + rtnObj.permalink + 'edit\' target=\'_blank\'><span title=\'' + rtmedia_edit_media + '\'><i class=\'dashicons dashicons-edit rtmicon\'></i> ' + rtmedia_edit + '</span></a>' );
-						$( '#' + file.id + ' .plupload_delete' ).html( '<span id=\'' + rtnObj.media_id + '\' class=\'rtmedia-delete-uploaded-media\' title=\'' + rtmedia_delete + '\'>&times;</span>' );
+						$( "#" + file.id + " .plupload_file_name" ).html( "<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.title.substring( 0, 40 ).replace( /(<([^>]+)>)/ig, "" ) + "</a>" );
+						$( "#" + file.id + " .plupload_media_edit" ).html( "<a href='" + rtnObj.permalink + "edit' target='_blank'><span title='" + rtmedia_edit_media + "'><i class='dashicons dashicons-edit rtmicon'></i> " + rtmedia_edit + "</span></a>" );
+						$( "#" + file.id + " .plupload_delete" ).html( "<span id='" + rtnObj.media_id + "' class='rtmedia-delete-uploaded-media dashicons dashicons-dismiss' title='" + rtmedia_delete + "'></span>" );
 					}
 
 				} catch ( e ) {
@@ -894,14 +899,29 @@ jQuery( document ).ready( function( $ ) {
 				}
 			} );
 
-			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' && jQuery.trim( jQuery( '#whats-new' ).val() ) != '' ) {
+			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
+
+				/*
+				 * add activity_text_with_attechment condition to filter
+				 * if user want media and activity_text both require
+				 * By: Yahil
+				 */
+				if ( jQuery.trim( jQuery( "#whats-new" ).val() ) == "" ) {
+					if ( activity_text_with_attechment == 'disable') {
+						$( "#whats-new" ).css( 'color', 'transparent' );
+						$( "#whats-new" ).val( '&nbsp;' );
+					} else {
+						jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
+						jQuery( '#whats-new' ).removeAttr( 'disabled' );
+						return false;
+					}
+				}
 				//Call upload event direct when direct upload is enabled (removed UPLOAD button and its triggered event)
 				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
 
 				if ( allow_upload == false ) {
 					return false;
 				}
-
 				objUploadView.uploadFiles();
 			}
 		} );
@@ -1073,11 +1093,23 @@ jQuery( document ).ready( function( $ ) {
 					if ( originalOptions.data.action == 'post_update' ) {
 						if ( $.trim( $( '#whats-new' ).val() ) == '' && objUploadView.uploader.files.length > 0 ) {
 							/*
-							 *Added $nbsp; as activity text to post activity without TEXT
+							 * Added $nbsp; as activity text to post activity without TEXT
 							 * Disabled TextBox color(transparent)
+							 * ELSE
+							 * Required Activity text with media
+							 * add activity_text_with_attechment condition to filter
+		 					 * if user want media and activity_text both require
+		 					 * By: Yahil
 							 */
-							$( '#whats-new' ).css( 'color', 'transparent' );
-							$( '#whats-new' ).val( '&nbsp;' );
+
+							if ( activity_text_with_attechment == 'disable') {
+								$( "#whats-new" ).css( 'color', 'transparent' );
+								$( "#whats-new" ).val( '&nbsp;' );
+							} else {
+								jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
+								jQuery( '#whats-new' ).removeAttr( 'disabled' );
+								return false;
+							}
 						}
 					}
 					if ( ! media_uploading && objUploadView.uploader.files.length > 0 ) {
