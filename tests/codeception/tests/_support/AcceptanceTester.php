@@ -44,9 +44,10 @@ class AcceptanceTester extends \Codeception\Actor
         $I->attachFile('input[type="file"]','test.jpg');
         $I->wait(5);
         $I->seeElement('#rtmedia_uploader_filelist');
-        $I->click('#rtmedia_upload_terms_conditions');
+        $I->click('#rtmedia_upload_terms_conditions'); //Assuming that "rtMedia Uplaod terms" plugin is enabled
         $I->click('.start-media-upload');
         $I->wait(3);
     }
+
 
 }
