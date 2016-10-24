@@ -11,7 +11,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.MEDIASIZES.MEDIASIZES)
-          .pause(2000)
+          .pause(800)
           .clearValue(data.SELECTORS.MEDIASIZES.MUSIC_SINGLEPLAYER_WIDTH)
           .setValue(data.SELECTORS.MEDIASIZES.MUSIC_SINGLEPLAYER_WIDTH,'200') //set size:200
           .click(data.SELECTORS.SUBMIT)
@@ -39,7 +39,7 @@ module.exports = {
             .click('.rtm-select-files')
             .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_MUSIC))
             .click('.start-media-upload')
-            .pause(8000)
+            .pause(1008)
             .refresh()
             .click('.rtmedia-item-thumbnail')
             .getElementSize(".mejs-container", function(result) {  //#mep_0

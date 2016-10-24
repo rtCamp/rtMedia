@@ -183,9 +183,21 @@ class RTMediaLicense {
 
 						break;
 
+					case 'license_not_activable':
+
+						$class = 'alert';
+						$messages[] = sprintf( __( 'Your license is not activable, please visit <a href="%s">your account page</a>.', 'buddypress-media' ), 'https://rtmedia.io/my-account/' );
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
 					default :
 
-						$messages[] = print_r( $license, true );
+						$class = 'alert';
+						$messages[] = __( 'To receive updates, please enter your valid license key.', 'buddypress-media' );
+
+						$license_status = 'license-' . $class . '-notice';
 						break;
 				}
 			} else {

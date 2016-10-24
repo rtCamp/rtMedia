@@ -4,7 +4,8 @@
 exports.command = function(url,username,password) {
 var client = this;
 var loginurl = url + "/wp-admin" ;
-
+console.log(username);
+console.log(password);
 client
    .url(loginurl)
    .pause(500)

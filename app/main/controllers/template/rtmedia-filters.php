@@ -282,7 +282,7 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 		$final_file_url = wp_get_attachment_url( $attachment_id );
 	}
 
-	return preg_replace( "/src=[\"]([^\"]+)[\"]/", "src=\"$final_file_url\"", $html );
+	return preg_replace( '/src=["]([^"]+)["]/', "src=\"$final_file_url\"", $html );
 
 }
 
@@ -347,10 +347,10 @@ function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
 			}
 
 			if ( ! empty( $thumbnail_url ) ) {
-				$html = preg_replace( "/src=[\"]([^\"]+)[\"]/", "src=\"$thumbnail_url\"", $html );
+				$html = preg_replace( '/src=["]([^"]+)["]/', "src=\"$thumbnail_url\"", $html );
 			}
 		}
-	}
+	}// End if().
 	return $html;
 }
 
@@ -391,7 +391,7 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 	$url 		= '';
 	$is_img 	= strpos( $content , '<img ' );
 
-	$search 	= "/<img.+src=[\"]([^\"]+)[\"]/";
+	$search 	= '/<img.+src=["]([^"]+)["]/';
 	preg_match_all( $search , $content, $url );
 
 	if ( ! empty( $is_img ) && ! empty( $url ) && ! empty( $url[1] ) ) {
@@ -436,10 +436,9 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 				}
 				$image_url = apply_filters( 'rtmedia_filtered_photo_url', $url, $attachment_id );
 				$content = str_replace( $url, $image_url, $content );
-			}
-		}
-
-	}
+			}// End if().
+		}// End foreach().
+	}// End if().
 	return $content;
 }
 
@@ -521,67 +520,36 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
 
 /**
- * Get the information ( status, expiry date ) of all the installed addons and store in site option
- *
- * @since 4.1.7
+ * Function to edit attachment link on comment section for rtMedia Media
+ * @param  string $link    Media comment link
+ * @param  array $comment  return comment data array
+ * @param  array $args
+ * @param  array $cpage
+ * @return string  $link  media comment link
  */
-function rt_check_addon_status(){
-	$addons = apply_filters( 'rtmedia_license_tabs', array() );
-
-	if ( empty( $addons ) ) {
-		return;
+function rt_get_comment_link_callback( $link, $comment, $args, $cpage ) {
+	$rtmedia_media_id = rtmedia_id( $comment->comment_post_ID );
+	if ( get_post_type( $comment->comment_post_ID ) == 'attachment' && is_admin() && ! empty( $rtmedia_media_id ) ) {
+		$link = esc_url( get_rtmedia_permalink( $rtmedia_media_id ) ) . '#rtmedia_comment_ul';
 	}
+	return $link;
+}
+add_filter( 'get_comment_link', 'rt_get_comment_link_callback', 99,4 );
 
-	foreach ( $addons as $addon ) {
-		if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
-
-			$license = $addon['args']['license_key'];
-
-			$addon_name = $addon['name'];
-
-			$addon_id = $addon['args']['addon_id'];
-
-			$addon_active = get_option( 'edd_' . $addon_id . '_active' );
-
-			/**
-			 * Check if information about the addon in already fetched from the store
-			 * If it's already fetched, then don't send the request again for the information
-			 */
-			if ( ! empty( $addon_active ) ) {
-				continue;
-			}
-
-			/* Get the store URL from the constant defined in the addon */
-			$store_url = constant( 'EDD_' . strtoupper( $addon_id ) . '_STORE_URL' );
-
-			/* If store URL not found in the addon, use the default store URL */
-			if ( empty( $store_url ) ) {
-				$store_url = "https://rtmedia.io/";
-			}
-
-			// data to send in our API request
-			$api_params = array(
-				'edd_action' => 'activate_license',
-				'license'    => $license,
-				'item_name'  => urlencode( $addon_name ), // the name of our product in EDD
-				'url'        => home_url(),
-			);
-
-	        // Call the custom API.
-			$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $store_url ) ), array( 'timeout' => 15, 'sslverify' => false ) );
-
-			// make sure the response came back okay
-			if ( is_wp_error( $response ) ) {
-				return false;
-			}
-
-			// decode the license data
-			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-			// Store the data in database
-			update_option( 'edd_' . $addon_id . '_active', $license_data );
-		}
+/**
+ * Function to edit attachment in response link on comment section for rtMedia Media
+ * @param  string $link    Media comment link
+ * @param  array $comment  return comment data array
+ * @param  array $args
+ * @param  array $cpage
+ * @return string  $link  media comment link
+ */
+function rtmedia_attachment_link_callback( $permalink, $post_id ) {
+	$rtmedia_media_id = rtmedia_id( $post_id );
+	if ( is_admin() && ! empty( $rtmedia_media_id ) ) {
+		$permalink = esc_url( get_rtmedia_permalink( rtmedia_id( $post_id ) ) ) . '#rtmedia_comment_ul';
 	}
+	return $permalink;
 }
 
-add_action( 'admin_init', 'rt_check_addon_status' );
+add_filter( 'attachment_link', 'rtmedia_attachment_link_callback', 99,2 );

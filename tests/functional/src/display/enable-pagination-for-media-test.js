@@ -23,7 +23,7 @@ module.exports = {
   'step two: Check on Frontend ' : function (browser) {
             browser
             .goToMedia()
-            .pause(2000)
+            .pause(800)
             .assert.elementPresent(".rtm-pagination")
             /*
 						need code for elements count */
