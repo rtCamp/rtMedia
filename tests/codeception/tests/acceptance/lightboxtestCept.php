@@ -16,13 +16,12 @@
     $I->wantTo('To check if the lightbox is enabled');
 
     $loginPage = new LoginPage($I);
-    $loginPage->login($userName,$password); //It will call login function using Page object
+    $loginPage->login($userName,$password);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMedia($userName); //It will upload media function using Page object
+    $uploadmedia->uploadMediaUsingStartUploadButton($userName);
+    $uploadmedia->fisrtThumbnailMedia($I);
 
-    $I->click(LightboxPage::$firstChild);    //This will click on the fisrt child element
-    $I->wait(5);
     $I->seeElement(LightboxPage::$closeButton);   //The close button will only be visible if the media is opened in Lightbox
     $I->click(LightboxPage::$closeButton);
 

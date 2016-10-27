@@ -6,20 +6,22 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\UploadMedia as UploadMediaPage;
 
     $userName = 'demo';
     $password = 'demo';
-    $url = 'members/'.$userName.'/media'; //This wil take the user to media page
-
 
     $I = new AcceptanceTester($scenario);
     $I->wantTo('To check if Load More - Media display pagination option is enabled');
 
     $loginPage = new LoginPage($I);
-    $loginPage->login($userName,$password); //It will call login function using Page object
+    $loginPage->login($userName,$password);
 
-    $I->amonPage($url);
-    $I->wait(5);
-    $I->see('Load More');
+    $loadMore = new UploadMediaPage($I);
+    $loadMore->gotoMediaPage($userName,$I);
+
+    $I->wait(3);
+
+    $I->seeElement(UploadMediaPage::$loadMore);
 
 ?>

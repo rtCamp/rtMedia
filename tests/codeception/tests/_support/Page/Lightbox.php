@@ -5,7 +5,6 @@ class Lightbox
 {
     // include url of current page
     public static $URL = '';
-    public static $firstChild = 'ul.rtm-gallery-list li:first-child'; //Id of first media from the list
     public static $closeButton = '.rtm-mfp-close';
 
     /**
