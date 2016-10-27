@@ -1235,6 +1235,7 @@ function rmedia_single_comment( $comment ) {
 	$comment_string = wp_kses( $comment['comment_content'], $allowedtags );
 
 	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( apply_filters( 'bp_get_activity_content', $comment_string ) ) ) . '</div>';
+	$html .= '<div class="rtmedia-comment-extra">' . apply_filters( 'rtmedia_comment_extra', '', $comment ) . '</div>';
 
 	if ( is_rt_admin() || ( isset( $comment['user_id'] ) && ( get_current_user_id() === intval( $comment['user_id'] ) || intval( $rtmedia_media->media_author ) === get_current_user_id() ) ) || apply_filters( 'rtmedia_allow_comment_delete', false ) ) { // show delete button for comment author and admins
 		$html .= '<i data-id="' . esc_attr( $comment['comment_ID'] ) . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt rtmicon" title="' . esc_attr__( 'Delete Comment', 'buddypress-media' ) . '"></i>';
@@ -1245,6 +1246,8 @@ function rmedia_single_comment( $comment ) {
 	return apply_filters( 'rtmedia_single_comment', $html, $comment );
 
 }
+
+
 
 /**
  * Get media comment count using media ID
@@ -1419,7 +1422,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			if ( function_exists( 'bp_get_current_group_slug' ) ) {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
-		} elseif( isset( $rtmedia_query->media->media_id ) ) {
+		} elseif ( isset( $rtmedia_query->media->media_id ) ) {
 			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
 
 			$link .= $site_url . $post->post_name . '/';
