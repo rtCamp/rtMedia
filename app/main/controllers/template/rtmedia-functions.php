@@ -205,7 +205,7 @@ function rtmedia_author_profile_pic( $show_link = true, $echo = true, $author_id
 		} else {
 			return $profile_pic;
 		}
-	}
+	}// End if().
 
 }
 
@@ -1550,7 +1550,7 @@ function rtmedia_get_pagination_values() {
 		}
 
 		$rtmedia_media_pages .= "</div></div>\n";
-	}
+	}// End if().
 
 	return $rtmedia_media_pages;
 
@@ -1764,7 +1764,7 @@ function update_activity_after_thumb_set( $id ) {
 			), array(
 			'id' => $activity_id,
 		) );
-	}
+	}// End if().
 
 }
 

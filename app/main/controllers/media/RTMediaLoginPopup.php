@@ -35,7 +35,7 @@ class RTMediaLoginPopup {
 
 	function rtmedia_add_upload_album_button_popup() {
 		if ( ! is_user_logged_in() ) {
-			echo '<span><a href="#rtmedia-login-register-modal" class="primary rtmedia-upload-media-link rtmedia-modal-link" id="rtmedia-login-register-modal" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</a></span>';
+			echo '<span><a href="#rtmedia-login-register-modal" class="primary rtmedia-upload-media-link rtmedia-modal-link" id="rtmedia-login-register-modal" title="' . apply_filters( 'rtm_album_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . apply_filters( 'rtm_album_upload_label', __( 'Upload', 'buddypress-media' ) ) . '</a></span>';
 		}
 	}
 
