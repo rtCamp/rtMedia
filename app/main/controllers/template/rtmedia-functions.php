@@ -1524,7 +1524,7 @@ function rtmedia_get_pagination_values() {
 			$page_url = $page_base_url . '1';
 
 			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='1' href='" . esc_url( $page_url ) . "'>1</a>";
-			if ( $paged != 3 ) {
+			if ( $paged > 3 ) {
 				$rtmedia_media_pages .= '<span>...</span>';
 			}
 		}
@@ -1540,7 +1540,11 @@ function rtmedia_get_pagination_values() {
 		if ( $paged < $pages - 1 && $paged + $range - 1 < $pages && $showitems < $pages ) {
 			$page_url = $page_base_url . $pages;
 
-			$rtmedia_media_pages .= "<span>...</span><a class='rtmedia-page-link' data-page-type='page' data-page='" . esc_attr( $pages ) . "' href='" . esc_url( $page_url ) . "'>" . esc_html( $pages ) . '</a>';
+			if ( $paged + 2 < $pages  ) {
+				$rtmedia_media_pages .= '<span>...</span>';
+			}
+
+			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='" . esc_attr( $pages ) . "' href='" . esc_url( $page_url ) . "'>" . esc_html( $pages ) . '</a>';
 		}
 
 		if ( $paged < $pages && $showitems < $pages ) {
