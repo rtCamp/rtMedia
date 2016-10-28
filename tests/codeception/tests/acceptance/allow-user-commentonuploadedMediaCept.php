@@ -9,6 +9,7 @@
 
     $userName = 'demo';
     $password = 'demo';
+    $commentStr = 'test comment';
 
     $I = new AcceptanceTester($scenario);
     $I->wantTo('To check if the user is allowed to comment on uploaded media');
@@ -21,10 +22,10 @@
     $uploadmedia->fisrtThumbnailMedia($I);
 
     $I->seeElement(UploadMediaPage::$commentTextArea);
-    $I->fillfield(UploadMediaPage::$commentTextArea,"test");    //Add you comment here
+    $I->fillfield(UploadMediaPage::$commentTextArea,$commentStr);
     $I->click(UploadMediaPage::$commentSubmitButton);
     $I->wait(5);
-    $I->see('test');
+    $I->see($commentStr);
 
     $I->reloadPage();
     $I->wait(5);
