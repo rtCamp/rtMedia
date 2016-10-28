@@ -1419,7 +1419,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			if ( function_exists( 'bp_get_current_group_slug' ) ) {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
-		} elseif( isset( $rtmedia_query->media->media_id ) ) {
+		} elseif ( isset( $rtmedia_query->media->media_id ) ) {
 			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
 
 			$link .= $site_url . $post->post_name . '/';

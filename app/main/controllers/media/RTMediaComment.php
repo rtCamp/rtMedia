@@ -42,7 +42,7 @@ class RTMediaComment {
 		global $current_user;
 
 		return $current_user->ID;
-        
+
 	}
 
 	/**
@@ -57,7 +57,7 @@ class RTMediaComment {
 
 		return $current_user->user_login;
 
-    }
+	}
 
 	function add( $attr ) {
 				global $allowedtags;
