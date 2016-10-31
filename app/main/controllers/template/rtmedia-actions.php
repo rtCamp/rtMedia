@@ -681,12 +681,11 @@ function rt_check_addon_status() {
 
 			$addon_active = get_option( 'edd_' . $addon_id . '_active' );
 
-			// listen for activate button to be clicked
+			// Listen for activate button to be clicked
 
-			/**
-			 * Check if information about the addon in already fetched from the store
-			 * If it's already fetched, then don't send the request again for the information
-			 */
+			// Also check if information about the addon in already fetched from the store
+			// If it's already fetched, then don't send the request again for the information
+
 			if ( ! empty( $addon_active ) && ! isset( $_POST[ 'edd_' . $addon_id . '_license_activate' ] ) ) {
 				continue;
 			}
