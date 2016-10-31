@@ -126,3 +126,12 @@
 		}
 	}
 }
+
+//
+#rtmedia_show_all_comment {
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
