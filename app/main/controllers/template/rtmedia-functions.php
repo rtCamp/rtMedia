@@ -1202,20 +1202,18 @@ function rtmedia_comments( $echo = true ) {
 }
 
 /**
- * Render single comment
- *
- * @global      array       $allowedtags
- * @global      object      $rtmedia_media
- *
- * @param       array       $comment
- *
- * @return      string
+ * Render single comment,
+ * And display show all comment link to display all comment
+ * @param  [array] $comment [comment]
+ * @param  [int] $count   [comment count]
+ * @param  [int] $i       [increment with loop]
+ * By: Yahil
  */
 function rmedia_single_comment( $comment, $count, $i ) {
 
 	$html = '';
 	$class = '';
-	if ( $count ) {
+	if ( isset( $count ) && $count ) {
 		$hide = $count - 5;
 		if ( $i < $hide ) {
 			$class = 'hide';
