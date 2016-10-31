@@ -208,7 +208,6 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 				$sql .= $wpdb->prepare( ' LIMIT %d, %d', $offset, $per_page );
 
 			}
-
 			return $wpdb->get_results( $sql ); // @codingStandardsIgnoreLine
 		}
 

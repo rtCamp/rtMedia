@@ -1419,7 +1419,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			if ( function_exists( 'bp_get_current_group_slug' ) ) {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
-		} elseif( isset( $rtmedia_query->media->media_id ) ) {
+		} elseif ( isset( $rtmedia_query->media->media_id ) ) {
 			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
 
 			$link .= $site_url . $post->post_name . '/';
@@ -1524,7 +1524,7 @@ function rtmedia_get_pagination_values() {
 			$page_url = $page_base_url . '1';
 
 			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='1' href='" . esc_url( $page_url ) . "'>1</a>";
-			if ( $paged != 3 ) {
+			if ( $paged > 3 ) {
 				$rtmedia_media_pages .= '<span>...</span>';
 			}
 		}
@@ -1540,7 +1540,11 @@ function rtmedia_get_pagination_values() {
 		if ( $paged < $pages - 1 && $paged + $range - 1 < $pages && $showitems < $pages ) {
 			$page_url = $page_base_url . $pages;
 
-			$rtmedia_media_pages .= "<span>...</span><a class='rtmedia-page-link' data-page-type='page' data-page='" . esc_attr( $pages ) . "' href='" . esc_url( $page_url ) . "'>" . esc_html( $pages ) . '</a>';
+			if ( $paged + 2 < $pages  ) {
+				$rtmedia_media_pages .= '<span>...</span>';
+			}
+
+			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='" . esc_attr( $pages ) . "' href='" . esc_url( $page_url ) . "'>" . esc_html( $pages ) . '</a>';
 		}
 
 		if ( $paged < $pages && $showitems < $pages ) {

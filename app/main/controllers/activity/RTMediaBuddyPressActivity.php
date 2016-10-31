@@ -486,95 +486,95 @@ class RTMediaBuddyPressActivity {
 	 * @param $obj RTMediaLike
 	 */
 	function activity_after_media_like( $obj ) {
-                if ( class_exists( 'BuddyPress' ) ){
-                        global $rtmedia_points_media_id;
-                        if ( is_a( $obj, 'RTMediaLike' ) && isset( $obj->action_query->id ) ) {
-                                $media_id = $obj->action_query->id;
-                        } elseif ( ! empty( $rtmedia_points_media_id ) ) {
-                                $media_id = $rtmedia_points_media_id;
-                        } else {
-                                $media_id = false;
-                        }
+		if ( class_exists( 'BuddyPress' ) ) {
+			global $rtmedia_points_media_id;
+			if ( is_a( $obj, 'RTMediaLike' ) && isset( $obj->action_query->id ) ) {
+				$media_id = $obj->action_query->id;
+			} elseif ( ! empty( $rtmedia_points_media_id ) ) {
+				$media_id = $rtmedia_points_media_id;
+			} else {
+				$media_id = false;
+			}
 
-                        $media_obj = $obj->media;
+			$media_obj = $obj->media;
 
-                        // Proceed only if we have media to process.
-                        if ( false !== $media_id && ( 'profile' === $media_obj->context || 'group' === $media_obj->context ) ) {
+			// Proceed only if we have media to process.
+			if ( false !== $media_id && ( 'profile' === $media_obj->context || 'group' === $media_obj->context ) ) {
 
-                                $user_id = $obj->interactor;
+				$user_id = $obj->interactor;
 
-                                // If $obj->increase is true than request is to like the media.
-                                if ( $obj->increase ) {
+				// If $obj->increase is true than request is to like the media.
+				if ( $obj->increase ) {
 
-                                        // Create activity on media like
-                                        $user     = get_userdata( $user_id );
-                                        $username = '<a href="' . esc_url( get_rtmedia_user_link( $user_id ) ) . '">' . esc_html( $user->display_name ) . '</a>';
+					// Create activity on media like
+					$user     = get_userdata( $user_id );
+					$username = '<a href="' . esc_url( get_rtmedia_user_link( $user_id ) ) . '">' . esc_html( $user->display_name ) . '</a>';
 
-                                        $media_author = $obj->owner;
+					$media_author = $obj->owner;
 
-                                        $primary_link = get_rtmedia_permalink( $media_id );
+					$primary_link = get_rtmedia_permalink( $media_id );
 
-                                        $media_const = 'RTMEDIA_' . strtoupper( $obj->media->media_type ) . '_LABEL';
-                                        $media_str   = '<a href="' . esc_url( $primary_link ) . '">' . esc_html( constant( $media_const ) ) . '</a>';
+					$media_const = 'RTMEDIA_' . strtoupper( $obj->media->media_type ) . '_LABEL';
+					$media_str   = '<a href="' . esc_url( $primary_link ) . '">' . esc_html( constant( $media_const ) ) . '</a>';
 
-                                        if ( 'group' === $media_obj->context ) {
-                                                $group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
-                                                $group_name = '<a href="' . esc_url( bp_get_group_permalink( $group_data ) ) . '">' . esc_html( $group_data->name ) . '</a>';
-                                                $action     = sprintf( esc_html__( '%1$s liked a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
-                                        } else {
-                                                if ( $user_id === $media_author ) {
-                                                        $action = sprintf( esc_html__( '%1$s liked their %2$s', 'buddypress-media' ), $username, $media_str );
-                                                } else {
-                                                        $media_author_data = get_userdata( $media_author );
-                                                        $media_author_name = '<a href="' . esc_url( get_rtmedia_user_link( $media_author ) ) . '">' . esc_html( $media_author_data->display_name ) . '</a>';
-                                                        $action            = sprintf( esc_html__( '%1$s liked %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
-                                                }
-                                        }
+					if ( 'group' === $media_obj->context ) {
+						$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
+						$group_name = '<a href="' . esc_url( bp_get_group_permalink( $group_data ) ) . '">' . esc_html( $group_data->name ) . '</a>';
+						$action     = sprintf( esc_html__( '%1$s liked a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
+					} else {
+						if ( $user_id === $media_author ) {
+							$action = sprintf( esc_html__( '%1$s liked their %2$s', 'buddypress-media' ), $username, $media_str );
+						} else {
+							$media_author_data = get_userdata( $media_author );
+							$media_author_name = '<a href="' . esc_url( get_rtmedia_user_link( $media_author ) ) . '">' . esc_html( $media_author_data->display_name ) . '</a>';
+							$action            = sprintf( esc_html__( '%1$s liked %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
+						}
+					}
 
-                                        $action       = apply_filters( 'rtm_bp_like_activity_action', $action, $media_id, $user_id );
-                                        $primary_link = get_rtmedia_permalink( $media_id );
+					$action       = apply_filters( 'rtm_bp_like_activity_action', $action, $media_id, $user_id );
+					$primary_link = get_rtmedia_permalink( $media_id );
 
-                                        // generate activity arguments.
-                                        $activity_args = array(
-                                                'user_id'      => $user_id,
-                                                'action'       => $action,
-                                                'type'         => 'rtmedia_like_activity',
-                                                'primary_link' => $primary_link,
-                                                'item_id'      => $media_id,
-                                        );
+					// generate activity arguments.
+					$activity_args = array(
+							'user_id'      => $user_id,
+							'action'       => $action,
+							'type'         => 'rtmedia_like_activity',
+							'primary_link' => $primary_link,
+							'item_id'      => $media_id,
+					);
 
-                                        // set activity component
-                                        if ( 'group' === $media_obj->context || 'profile' === $media_obj->context ) {
-                                                $activity_args['component'] = $media_obj->context;
-                                                if ( 'group' === $media_obj->context ) {
-                                                        $activity_args['component'] = 'groups';
-                                                        $activity_args['item_id']   = $media_obj->context_id;
-                                                }
-                                        }
+					// set activity component
+					if ( 'group' === $media_obj->context || 'profile' === $media_obj->context ) {
+						$activity_args['component'] = $media_obj->context;
+						if ( 'group' === $media_obj->context ) {
+							$activity_args['component'] = 'groups';
+							$activity_args['item_id']   = $media_obj->context_id;
+						}
+					}
 
-                                        // add BP activity
-                                        $activity_id = bp_activity_add( $activity_args );
+					// add BP activity
+					$activity_id = bp_activity_add( $activity_args );
 
-                                        // Store activity id into user meta for reference
-                                        //todo user_attribute
-                                        update_user_meta( $user_id, 'rtm-bp-media-like-activity-' . $media_id, $activity_id );
-                                } else {
+					// Store activity id into user meta for reference
+					//todo user_attribute
+					update_user_meta( $user_id, 'rtm-bp-media-like-activity-' . $media_id, $activity_id );
+				} else {
 
-                                        $meta_key = 'rtm-bp-media-like-activity-' . $media_id;
-                                        // Delete activity when user remove his like.
-                                        //todo user_attribute
-                                        $activity_id = get_user_meta( $user_id, $meta_key, true );
+					$meta_key = 'rtm-bp-media-like-activity-' . $media_id;
+					// Delete activity when user remove his like.
+					//todo user_attribute
+					$activity_id = get_user_meta( $user_id, $meta_key, true );
 
-                                        if ( ! empty( $activity_id ) ) {
-                                                if ( bp_activity_delete( array( 'id' => $activity_id ) ) ) {
-                                                        //todo user_attribute
-                                                        delete_user_meta( $user_id, $meta_key );
-                                                }
-                                        }
-                                }
-                        }
-                }
-        }
+					if ( ! empty( $activity_id ) ) {
+						if ( bp_activity_delete( array( 'id' => $activity_id ) ) ) {
+							//todo user_attribute
+							delete_user_meta( $user_id, $meta_key );
+						}
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * Create BuddyPress activity when user comment on media
@@ -582,76 +582,76 @@ class RTMediaBuddyPressActivity {
 	 * @param $params array
 	 */
 	function activity_after_media_comment( $params ) {
-                if ( class_exists( 'BuddyPress' ) ) {
-                        if ( isset( $params['comment_post_ID'] ) ) {
+		if ( class_exists( 'BuddyPress' ) ) {
+			if ( isset( $params['comment_post_ID'] ) ) {
 
-                                // get media details
-                                $media_model = new RTMediaModel();
-                                $media_obj   = $media_model->get( array( 'media_id' => $params['comment_post_ID'] ) );
-                                $media_obj   = $media_obj[0];
+				// get media details
+				$media_model = new RTMediaModel();
+				$media_obj   = $media_model->get( array( 'media_id' => $params['comment_post_ID'] ) );
+				$media_obj   = $media_obj[0];
 
-                                // only proceed if corresponding media is exist.
-                                if ( ! empty( $media_obj ) && ( 'profile' === $media_obj->context || 'group' === $media_obj->context ) ) {
+				// only proceed if corresponding media is exist.
+				if ( ! empty( $media_obj ) && ( 'profile' === $media_obj->context || 'group' === $media_obj->context ) ) {
 
-                                        $media_id = $media_obj->id;
+					$media_id = $media_obj->id;
 
-                                        $user_id  = $params['user_id'];
-                                        $user     = get_userdata( $user_id );
-                                        $username = '<a href="' . esc_url( get_rtmedia_user_link( $user_id ) ) . '">' . esc_html( $user->display_name ) . '</a>';
+					$user_id  = $params['user_id'];
+					$user     = get_userdata( $user_id );
+					$username = '<a href="' . esc_url( get_rtmedia_user_link( $user_id ) ) . '">' . esc_html( $user->display_name ) . '</a>';
 
-                                        $primary_link = get_rtmedia_permalink( $media_id );
+					$primary_link = get_rtmedia_permalink( $media_id );
 
-                                        $media_const = 'RTMEDIA_' . strtoupper( $media_obj->media_type ) . '_LABEL';
-                                        $media_str   = '<a href="' . esc_url( $primary_link ) . '">' . constant( $media_const ) . '</a>';
+					$media_const = 'RTMEDIA_' . strtoupper( $media_obj->media_type ) . '_LABEL';
+					$media_str   = '<a href="' . esc_url( $primary_link ) . '">' . constant( $media_const ) . '</a>';
 
-                                        $media_author = $media_obj->media_author;
+					$media_author = $media_obj->media_author;
 
-                                        if ( 'group' === $media_obj->context ) {
-                                                $group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
-                                                $group_name = '<a href="' . esc_url( bp_get_group_permalink( $group_data ) ) . '">' . esc_html( $group_data->name ) . '</a>';
-                                                $action     = sprintf( esc_html__( '%1$s commented on a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
-                                        } else {
-                                                if ( $user_id === $media_author ) {
-                                                        $action = sprintf( esc_html__( '%1$s commented on their %2$s', 'buddypress-media' ), $username, $media_str );
-                                                } else {
-                                                        $media_author_data = get_userdata( $media_author );
-                                                        $media_author_name = '<a href="' . esc_url( get_rtmedia_user_link( $media_author ) ) . '">' . esc_html( $media_author_data->display_name ) . '</a>';
-                                                        $action            = sprintf( esc_html__( '%1$s commented on %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
-                                                }
-                                        }
+					if ( 'group' === $media_obj->context ) {
+						$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
+						$group_name = '<a href="' . esc_url( bp_get_group_permalink( $group_data ) ) . '">' . esc_html( $group_data->name ) . '</a>';
+						$action     = sprintf( esc_html__( '%1$s commented on a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
+					} else {
+						if ( $user_id === $media_author ) {
+							$action = sprintf( esc_html__( '%1$s commented on their %2$s', 'buddypress-media' ), $username, $media_str );
+						} else {
+							$media_author_data = get_userdata( $media_author );
+							$media_author_name = '<a href="' . esc_url( get_rtmedia_user_link( $media_author ) ) . '">' . esc_html( $media_author_data->display_name ) . '</a>';
+							$action            = sprintf( esc_html__( '%1$s commented on %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
+						}
+					}
 
-                                        $comment_content = $params['comment_content'];
-                                        $wp_comment_id   = $params['comment_id'];
+					$comment_content = $params['comment_content'];
+					$wp_comment_id   = $params['comment_id'];
 
-                                        // prepare activity arguments
-                                        $activity_args = array(
-                                                'user_id'           => $user_id,
-                                                'action'            => $action,
-                                                'content'           => $comment_content,
-                                                'type'              => 'rtmedia_comment_activity',
-                                                'primary_link'      => $primary_link,
-                                                'item_id'           => $media_id,
-                                                'secondary_item_id' => $wp_comment_id,
-                                        );
+					// prepare activity arguments
+					$activity_args = array(
+							'user_id'           => $user_id,
+							'action'            => $action,
+							'content'           => $comment_content,
+							'type'              => 'rtmedia_comment_activity',
+							'primary_link'      => $primary_link,
+							'item_id'           => $media_id,
+							'secondary_item_id' => $wp_comment_id,
+					);
 
-                                        // set activity component
-                                        if ( 'group' === $media_obj->context || 'profile' === $media_obj->context ) {
-                                                $activity_args['component'] = $media_obj->context;
-                                                if ( 'group' === $media_obj->context ) {
-                                                        $activity_args['component'] = 'groups';
-                                                        $activity_args['item_id']   = $media_obj->context_id;
-                                                }
-                                        }
+					// set activity component
+					if ( 'group' === $media_obj->context || 'profile' === $media_obj->context ) {
+						$activity_args['component'] = $media_obj->context;
+						if ( 'group' === $media_obj->context ) {
+							$activity_args['component'] = 'groups';
+							$activity_args['item_id']   = $media_obj->context_id;
+						}
+					}
 
-                                        // create BuddyPress activity
-                                        $activity_id = bp_activity_add( $activity_args );
+					// create BuddyPress activity
+					$activity_id = bp_activity_add( $activity_args );
 
-                                        // Store activity id into user meta for reference
-                                        //todo user_attribute
-                                        update_user_meta( $user_id, 'rtm-bp-media-comment-activity-' . $media_id . '-' . $wp_comment_id, $activity_id );
-                                }
-                        }
-                }
+					// Store activity id into user meta for reference
+					//todo user_attribute
+					update_user_meta( $user_id, 'rtm-bp-media-comment-activity-' . $media_id . '-' . $wp_comment_id, $activity_id );
+				}
+			}
+		}
 	}
 
 	/**
@@ -727,7 +727,7 @@ class RTMediaBuddyPressActivity {
 		$bp = buddypress();
 
 		// Get the activity details.
-		$activity = bp_activity_get_specific( array( 'activity_ids' => bp_current_action(), 'show_hidden' => true, 'spam' => 'ham_only', ) );
+		$activity = bp_activity_get_specific( array( 'activity_ids' => bp_current_action(), 'show_hidden' => true, 'spam' => 'ham_only' ) );
 
 		// 404 if activity does not exist
 		if ( empty( $activity['activities'][0] ) || bp_action_variables() ) {
@@ -771,5 +771,4 @@ class RTMediaBuddyPressActivity {
 		return $has_access;
 
 	}
-
 }
