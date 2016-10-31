@@ -269,6 +269,16 @@ jQuery( function( $ ) {
 		galleryObj.getNext( nextpage, $( this ).parent().parent().parent(), $( this ) );
 	} );
 
+	$( document ).on( 'click', '#rtmedia_show_all_comment', function() {
+		var show_comment = $( '#rtmedia_show_all_comment' ).parent().next();
+		$( show_comment ).each(function() {
+			$( this ).find('li').each(function() {
+				$(this).removeClass('hide');
+			} );
+		} );
+		$( this ).parent().remove();
+	} );
+
 		$( document ).on( 'keypress', '#rtmedia_go_to_num', function( e ) {
 			if ( e.keyCode == 13 ) {
 				e.preventDefault();
