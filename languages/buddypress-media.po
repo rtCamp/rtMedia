@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.1.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-10-14 12:39:35+00:00\n"
+"POT-Creation-Date: 2016-10-31 09:58:54+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2096,8 +2096,9 @@ msgid "Albums"
 msgstr ""
 
 #: app/main/RTMedia.php:637 app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rtmedia-actions.php:303
 #: app/main/controllers/template/rtmedia-actions.php:307
+#: app/main/controllers/template/rtmedia-actions.php:311
+#: app/main/controllers/template/rtmedia-actions.php:315
 msgid "Upload"
 msgstr ""
 
@@ -2212,8 +2213,8 @@ msgstr ""
 #: app/main/RTMedia.php:992
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:67
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
-#: app/main/controllers/template/rtmedia-functions.php:1882
-#: app/main/controllers/template/rtmedia-functions.php:1891
+#: app/main/controllers/template/rtmedia-functions.php:1899
+#: app/main/controllers/template/rtmedia-functions.php:1908
 #: templates/media/album-single-edit.php:78
 msgid "Delete"
 msgstr ""
@@ -2296,7 +2297,7 @@ msgstr ""
 
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:323
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:100
-#: app/main/controllers/template/rtmedia-functions.php:1921
+#: app/main/controllers/template/rtmedia-functions.php:1938
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
@@ -2681,8 +2682,8 @@ msgid "Unlike"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rtmedia-actions.php:303
-#: app/main/controllers/template/rtmedia-actions.php:307
+#: app/main/controllers/template/rtmedia-actions.php:311
+#: app/main/controllers/template/rtmedia-actions.php:315
 msgid "Upload Media"
 msgstr ""
 
@@ -2809,47 +2810,47 @@ msgstr ""
 msgid "Merge"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:351
+#: app/main/controllers/template/rtmedia-actions.php:359
 msgid "Empowering your community with "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:352
+#: app/main/controllers/template/rtmedia-actions.php:360
 msgid "The only complete media solution for WordPress, BuddyPress and bbPress"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:371
+#: app/main/controllers/template/rtmedia-actions.php:379
 msgid "Close (Esc)"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:516
+#: app/main/controllers/template/rtmedia-actions.php:524
 msgid "You can consider rtMedia Team for following :"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:518
+#: app/main/controllers/template/rtmedia-actions.php:526
 msgid "rtMedia Customization ( in Upgrade Safe manner )"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:519
+#: app/main/controllers/template/rtmedia-actions.php:527
 msgid "WordPress/BuddyPress Theme Design and Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:520
+#: app/main/controllers/template/rtmedia-actions.php:528
 msgid "WordPress/BuddyPress Plugin Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:523
+#: app/main/controllers/template/rtmedia-actions.php:531
 msgid "Contact Us"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:609
+#: app/main/controllers/template/rtmedia-actions.php:617
 msgid "previous"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:612
+#: app/main/controllers/template/rtmedia-actions.php:620
 msgid "next media"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:612
+#: app/main/controllers/template/rtmedia-actions.php:620
 msgid "next"
 msgstr ""
 
@@ -2865,90 +2866,90 @@ msgstr ""
 msgid "Delete Album"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1188
+#: app/main/controllers/template/rtmedia-functions.php:1191
 msgid "There are no comments on this media yet."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1240
+#: app/main/controllers/template/rtmedia-functions.php:1253
 msgid "Delete Comment"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1509
+#: app/main/controllers/template/rtmedia-functions.php:1522
 msgid "Go to page no : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1514
+#: app/main/controllers/template/rtmedia-functions.php:1527
 msgid "Go"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1823
+#: app/main/controllers/template/rtmedia-functions.php:1840
 msgid "Type Comment..."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1824
+#: app/main/controllers/template/rtmedia-functions.php:1841
 #: templates/media/media-single.php:103 templates/media/media-single.php:146
 msgid "Comment"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1882
-#: app/main/controllers/template/rtmedia-functions.php:1891
+#: app/main/controllers/template/rtmedia-functions.php:1899
+#: app/main/controllers/template/rtmedia-functions.php:1908
 msgid "Delete Media"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2137
+#: app/main/controllers/template/rtmedia-functions.php:2154
 msgid "Profile Albums"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2141
-#: app/main/controllers/template/rtmedia-functions.php:2186
+#: app/main/controllers/template/rtmedia-functions.php:2158
+#: app/main/controllers/template/rtmedia-functions.php:2203
 msgid "Group Albums"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2357
+#: app/main/controllers/template/rtmedia-functions.php:2374
 msgid "Privacy : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2666
+#: app/main/controllers/template/rtmedia-functions.php:2683
 msgid "people like this"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2763
+#: app/main/controllers/template/rtmedia-functions.php:2780
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2768
+#: app/main/controllers/template/rtmedia-functions.php:2785
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2773
+#: app/main/controllers/template/rtmedia-functions.php:2790
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2778
+#: app/main/controllers/template/rtmedia-functions.php:2795
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2783
+#: app/main/controllers/template/rtmedia-functions.php:2800
 msgid "Blocked temporarily"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2836
+#: app/main/controllers/template/rtmedia-functions.php:2853
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2850
+#: app/main/controllers/template/rtmedia-functions.php:2867
 msgid "1 second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2854
+#: app/main/controllers/template/rtmedia-functions.php:2871
 msgid "1 minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2858
+#: app/main/controllers/template/rtmedia-functions.php:2875
 msgid "1 hour"
 msgid_plural "%s hours"
 msgstr[0] ""

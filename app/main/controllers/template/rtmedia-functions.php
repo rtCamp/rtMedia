@@ -1177,9 +1177,12 @@ function rtmedia_comments( $echo = true ) {
 		'order'   => 'ASC',
 	) );
 	$comment_list = '';
+	$count = count( $comments );
+	$i = 0;
 
 	foreach ( $comments as $comment ) {
-		$comment_list .= rmedia_single_comment( (array) $comment );
+		$comment_list .= rmedia_single_comment( (array) $comment, $count, $i );
+		$i++;
 	}
 
 	if ( ! empty( $comment_list ) ) {
@@ -1199,21 +1202,29 @@ function rtmedia_comments( $echo = true ) {
 }
 
 /**
- * Render single comment
- *
- * @global      array       $allowedtags
- * @global      object      $rtmedia_media
- *
- * @param       array       $comment
- *
- * @return      string
+ * Render single comment,
+ * And display show all comment link to display all comment
+ * @param  [array] $comment [comment]
+ * @param  [int] $count   [comment count]
+ * @param  [int] $i       [increment with loop]
+ * By: Yahil
  */
-function rmedia_single_comment( $comment ) {
-
-	global $allowedtags, $rtmedia_media;
+function rmedia_single_comment( $comment, $count, $i ) {
 
 	$html = '';
-	$html .= '<li class="rtmedia-comment">';
+	$class = '';
+	if ( isset( $count ) && $count ) {
+		$hide = $count - 5;
+		if ( $i < $hide ) {
+			$class = 'hide';
+			if ( 0 == $i ) {
+				echo '<div class="rtmedia-like-info"><span id="rtmedia_show_all_comment"> ' . esc_html( 'Show all ' . $count . ' comments', 'rtmedia' ) . ' </span></div>';
+			}
+		}
+	}
+	global $allowedtags, $rtmedia_media;
+
+	$html .= '<li class="rtmedia-comment ' . $class . ' ">';
 
 	if ( $comment['user_id'] ) {
 		$user_link   = "<a href='" . esc_url( get_rtmedia_user_link( $comment['user_id'] ) ) . "' title='" . esc_attr( rtmedia_get_author_name( $comment['user_id'] ) ) . "'>" . esc_html( rtmedia_get_author_name( $comment['user_id'] ) ) . '</a>';
