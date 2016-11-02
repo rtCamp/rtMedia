@@ -2,6 +2,7 @@ var rtMagnificPopup;
 var rtm_masonry_container;
 function apply_rtMagnificPopup( selector ) {
 	jQuery( 'document' ).ready( function( $ ) {
+
 		var rt_load_more = '';
 		if ( typeof ( rtmedia_load_more ) === 'undefined' ) {
 			rt_load_more = 'Loading media';
@@ -77,6 +78,10 @@ function apply_rtMagnificPopup( selector ) {
 						} );
 						$( '.mfp-content .mejs-audio .mejs-controls' ).css( 'position', 'relative' );
 						rtMediaHook.call( 'rtmedia_js_popup_after_content_added', [ ] );
+
+						$( '#atwho-container #atwho-ground-comment_content' ).remove();
+						$( '#comment_content' ).bp_mentions( bp.mentions.users );
+
 					},
 					close: function( e ) {
 						//Console.log(e);
@@ -89,13 +94,13 @@ function apply_rtMagnificPopup( selector ) {
 			} );
 		}
 		/**
-		 * string replace Save From ok
+		 * String replace Save From ok
 		 * By: Yahil
 		 */
-		jQuery( document ).ajaxComplete(function(){
-			jQuery('[id^=imgedit-leaving]').filter(function(){
-				var text = jQuery(this).text();
-				jQuery(this).text(text.replace('OK', 'Save'));
+		jQuery( document ).ajaxComplete(function() {
+			jQuery( '[id^=imgedit-leaving]' ).filter(function() {
+				var text = jQuery( this ).text();
+				jQuery( this ).text( text.replace( 'OK', 'Save' ) );
 			});
 		});
 	} );
@@ -651,6 +656,7 @@ jQuery( 'document' ).ready( function( $ ) {
 			} );
 		}
 	} );
+
 } );
 
 //Legacy media element for old activities

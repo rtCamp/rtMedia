@@ -209,6 +209,17 @@ class RTMedia {
 		}
 		$this->add_image_sizes();
 		$this->set_image_quality();
+		$this->commentautocomplete( $rtmedia_options, $bp_media_options );
+	}
+
+	public function commentautocomplete( $rtmedia_options = false, $bp_media_options = false ) {
+		$lightbox_enable = ( $rtmedia_options['general_enableLightbox'] ) ? true : false;
+		add_filter( 'bp_activity_maybe_load_mentions_scripts', array( $this, 'bp_activity_maybe_load_mentions_scripts_callback' ), 10001, 2 );
+	}
+
+	public function bp_activity_maybe_load_mentions_scripts_callback( $load_mentions, $mentions_enabled ) {
+		$load_mentions = true;
+		return $load_mentions;
 	}
 
 	public function set_image_quality() {
@@ -690,7 +701,7 @@ class RTMedia {
 			if ( ! defined( 'RTMEDIA_' . $slug . '_PLURAL_LABEL' ) ) {
 				define( 'RTMEDIA_' . $slug . '_PLURAL_LABEL', $label_plural );
 			}
-		}
+		}// End foreach().
 	}
 
 	/**

@@ -81,7 +81,7 @@ class RTMediaTemplate {
 		if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, array(
 				'profile',
 				'group',
-			), true )
+		), true )
 		) {
 			$this->check_return_edit();
 			$this->check_return_delete();
@@ -160,10 +160,10 @@ class RTMediaTemplate {
 						echo esc_html__( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
 
 						return false;
-					}
-				}
-			}
-		}
+					}// End if().
+				}// End if().
+			}// End if().
+		}// End if().
 	}
 
 	function add_hidden_fields_in_gallery() {
@@ -350,7 +350,7 @@ class RTMediaTemplate {
 			}
 		} else {
 			esc_html_e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
-		}
+		}// End if().
 
 		remove_filter( 'intermediate_image_sizes_advanced', array( $this, 'filter_image_sizes_details' ) );
 	}
@@ -443,7 +443,7 @@ class RTMediaTemplate {
 			die();
 		} else {
 			esc_html_e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
-		}
+		}// End if().
 	}
 
 	function check_return_delete() {
@@ -541,7 +541,7 @@ class RTMediaTemplate {
 			die();
 		} else {
 			esc_html_e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
-		}
+		}// End if().
 	}
 
 	function album_delete() {
@@ -664,6 +664,11 @@ class RTMediaTemplate {
 				}
 
 				if ( ! empty( $comment_activity_id ) ) {
+					$rtmedia_activity_comment = rtmedia_activity_comment( $comment_activity_id );
+					if ( $rtmedia_activity_comment['content'] ) {
+						update_comment_meta( $id, 'activity_comment_content', $rtmedia_activity_comment['content'] );
+					}
+
 					update_comment_meta( $id, 'activity_id', $comment_activity_id );
 				}
 				$_rt_ajax = filter_input( INPUT_POST, 'rtajax', FILTER_SANITIZE_STRING );
@@ -677,8 +682,8 @@ class RTMediaTemplate {
 				}
 			} else {
 				esc_html_e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
-			}
-		}
+			}// End if().
+		}// End if().
 	}
 
 	function check_delete_comments() {

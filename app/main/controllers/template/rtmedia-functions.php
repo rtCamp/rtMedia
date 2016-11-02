@@ -1232,7 +1232,22 @@ function rmedia_single_comment( $comment ) {
 	$html .= '<span class ="rtmedia-comment-author">' . $user_name . '</span>';
 	$html .= '<span class ="rtmedia-comment-date"> ' . apply_filters( 'rtmedia_comment_date_format', rtmedia_convert_date( $comment['comment_date_gmt'] ), $comment ) . '</span>';
 
-	$comment_string = wp_kses( $comment['comment_content'], $allowedtags );
+	$comment_content = $comment['comment_content'];
+	$activity_comment_content = (int) get_comment_meta( $comment['comment_ID'], 'activity_comment_content', true );
+	if ( empty( $activity_comment_content ) ) {
+		$activity_id = (int) get_comment_meta( $comment['comment_ID'], 'activity_id', true );
+		if ( $activity_id ) {
+			$rtmedia_activity_comment = rtmedia_activity_comment( $activity_id );
+			if ( $rtmedia_activity_comment['content'] ) {
+				$comment_content = $rtmedia_activity_comment['content'];
+				update_comment_meta( $comment['comment_ID'], 'activity_comment_content', $rtmedia_activity_comment['content'] );
+			}
+		}
+	} else {
+		$comment_content = $activity_comment_content;
+	}
+
+	$comment_string = wp_kses( $comment_content, $allowedtags );
 
 	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( apply_filters( 'bp_get_activity_content', $comment_string ) ) ) . '</div>';
 	$html .= apply_filters( 'rtmedia_comment_extra', '', $comment );
@@ -1245,6 +1260,19 @@ function rmedia_single_comment( $comment ) {
 
 	return apply_filters( 'rtmedia_single_comment', $html, $comment );
 
+}
+
+
+function rtmedia_activity_comment( $activity_id ) {
+	$activity_id = ( $activity_id ) ? (int) $activity_id : false;
+	$activity_comment_content = false;
+	if ( $activity_id ) {
+		global $wpdb;
+		global $bp;
+		$table_name = $bp->activity->table_name;
+		$activity_comment_content = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $activity_id ), ARRAY_A );
+	}
+	return $activity_comment_content;
 }
 
 
@@ -1823,7 +1851,7 @@ function rtmedia_comment_form() {
 	if ( is_user_logged_in() ) {
 		?>
 		<form method="post" id="rt_media_comment_form" class="rt_media_comment_form" action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
-			<textarea style="width:100%" placeholder="<?php esc_attr_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"></textarea>
+			<textarea style="width:100%" placeholder="<?php esc_attr_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content" class="bp-suggestions ac-input"></textarea>
 			<input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit" value="<?php esc_attr_e( 'Comment', 'buddypress-media' ); ?>">
 			<?php RTMediaComment::comment_nonce_generator(); ?>
 		</form>
