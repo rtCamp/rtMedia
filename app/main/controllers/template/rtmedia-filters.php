@@ -553,3 +553,16 @@ function rtmedia_attachment_link_callback( $permalink, $post_id ) {
 }
 
 add_filter( 'attachment_link', 'rtmedia_attachment_link_callback', 99,2 );
+
+add_action("bp_activity_register_activity_actions","rtmedia_activity_register_activity_actions_callback");
+function rtmedia_activity_register_activity_actions_callback(){
+		$bp = buddypress();
+		bp_activity_set_action(
+			$bp->activity->id,
+			'rtmedia_update',
+			__( 'Posted a status update', 'buddypress' ),
+			'bp_activity_format_activity_action_activity_update',
+			__( 'Updates', 'buddypress' ),
+			array( 'activity', 'group', 'member', 'member_groups' )
+		);
+}
