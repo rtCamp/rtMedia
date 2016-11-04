@@ -664,6 +664,10 @@ class RTMediaTemplate {
 				}
 
 				if ( ! empty( $comment_activity_id ) ) {
+					$rtmedia_activity_comment = rtmedia_activity_comment( $comment_activity_id );
+					if ( $rtmedia_activity_comment['content'] ) {
+						update_comment_meta( $id, 'activity_comment_content', $rtmedia_activity_comment['content'] );
+					}
 					update_comment_meta( $id, 'activity_id', $comment_activity_id );
 				}
 				$_rt_ajax = filter_input( INPUT_POST, 'rtajax', FILTER_SANITIZE_STRING );
