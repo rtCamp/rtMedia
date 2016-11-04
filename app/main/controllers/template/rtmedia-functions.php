@@ -1244,7 +1244,7 @@ function rmedia_single_comment( $comment, $count, $i ) {
 	$html .= '<span class ="rtmedia-comment-date"> ' . apply_filters( 'rtmedia_comment_date_format', rtmedia_convert_date( $comment['comment_date_gmt'] ), $comment ) . '</span>';
 
 	$comment_content = $comment['comment_content'];
-	$activity_comment_content = (int) get_comment_meta( $comment['comment_ID'], 'activity_comment_content', true );
+	$activity_comment_content = get_comment_meta( $comment['comment_ID'], 'activity_comment_content', true );
 	if ( empty( $activity_comment_content ) ) {
 		$activity_id = (int) get_comment_meta( $comment['comment_ID'], 'activity_id', true );
 		if ( $activity_id ) {
