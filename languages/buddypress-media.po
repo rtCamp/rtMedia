@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.1.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-11-04 06:22:47+00:00\n"
+"POT-Creation-Date: 2016-11-04 08:45:50+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -146,7 +146,7 @@ msgstr ""
 
 #: app/admin/RTMediaAdmin.php:739 app/admin/RTMediaAdmin.php:1243
 #: app/admin/RTMediaAdmin.php:1244 app/importers/RTMediaActivityUpgrade.php:116
-#: app/importers/RTMediaMigration.php:68 app/main/RTMedia.php:914
+#: app/importers/RTMediaMigration.php:68 app/main/RTMedia.php:926
 msgid "rtMedia"
 msgstr ""
 
@@ -1829,7 +1829,7 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: app/importers/BPMediaAlbumimporter.php:89 app/main/RTMedia.php:603
+#: app/importers/BPMediaAlbumimporter.php:89 app/main/RTMedia.php:615
 msgid "Media"
 msgstr ""
 
@@ -2041,168 +2041,168 @@ msgstr ""
 msgid "No time remaining."
 msgstr ""
 
-#: app/main/RTMedia.php:334
+#: app/main/RTMedia.php:346
 msgid "Photo"
 msgstr ""
 
-#: app/main/RTMedia.php:335
+#: app/main/RTMedia.php:347
 msgid "Photos"
 msgstr ""
 
-#: app/main/RTMedia.php:343
+#: app/main/RTMedia.php:355
 msgid "Video"
 msgstr ""
 
-#: app/main/RTMedia.php:344
+#: app/main/RTMedia.php:356
 msgid "Videos"
 msgstr ""
 
-#: app/main/RTMedia.php:352 app/main/RTMedia.php:353
+#: app/main/RTMedia.php:364 app/main/RTMedia.php:365
 msgid "Music"
 msgstr ""
 
-#: app/main/RTMedia.php:444
+#: app/main/RTMedia.php:456
 msgid "Private - Visible only to the user"
 msgstr ""
 
-#: app/main/RTMedia.php:445
+#: app/main/RTMedia.php:457
 msgid "Friends - Visible to user's friends"
 msgstr ""
 
-#: app/main/RTMedia.php:446
+#: app/main/RTMedia.php:458
 msgid "Logged in Users - Visible to registered users"
 msgstr ""
 
-#: app/main/RTMedia.php:447
+#: app/main/RTMedia.php:459
 msgid "Public - Visible to the world"
 msgstr ""
 
-#: app/main/RTMedia.php:611 app/main/controllers/template/RTMediaNav.php:213
+#: app/main/RTMedia.php:623 app/main/controllers/template/RTMediaNav.php:213
 #: app/main/controllers/template/rtmedia-functions.php:114
 msgid "All"
 msgstr ""
 
-#: app/main/RTMedia.php:623 app/main/controllers/media/RTMediaAlbum.php:54
+#: app/main/RTMedia.php:635 app/main/controllers/media/RTMediaAlbum.php:54
 #: app/main/controllers/template/rtmedia-actions.php:117
 #: app/main/controllers/upload/RTMediaUploadView.php:52
 #: app/main/controllers/upload/RTMediaUploadView.php:55
 msgid "Album"
 msgstr ""
 
-#: app/main/RTMedia.php:627 app/main/RTMedia.php:1026
+#: app/main/RTMedia.php:639 app/main/RTMedia.php:1038
 #: app/main/controllers/media/RTMediaAlbum.php:53
 #: app/main/controllers/media/RTMediaAlbum.php:65
 msgid "Albums"
 msgstr ""
 
-#: app/main/RTMedia.php:637 app/main/controllers/media/RTMediaLoginPopup.php:38
+#: app/main/RTMedia.php:649 app/main/controllers/media/RTMediaLoginPopup.php:38
 #: app/main/controllers/template/rtmedia-actions.php:307
 #: app/main/controllers/template/rtmedia-actions.php:311
 #: app/main/controllers/template/rtmedia-actions.php:315
 msgid "Upload"
 msgstr ""
 
-#: app/main/RTMedia.php:642
+#: app/main/RTMedia.php:654
 msgid "Wall Post"
 msgstr ""
 
-#: app/main/RTMedia.php:861 app/main/RTMedia.php:870
+#: app/main/RTMedia.php:873 app/main/RTMedia.php:882
 msgid "Wall Posts"
 msgstr ""
 
-#: app/main/RTMedia.php:914
+#: app/main/RTMedia.php:926
 msgid ": Can't Create Database table. Please check create table permission."
 msgstr ""
 
-#: app/main/RTMedia.php:969
+#: app/main/RTMedia.php:981
 msgid "Loading media"
 msgstr ""
 
-#: app/main/RTMedia.php:970
+#: app/main/RTMedia.php:982
 msgid "Please enter some content to post."
 msgstr ""
 
-#: app/main/RTMedia.php:971
+#: app/main/RTMedia.php:983
 msgid "Empty Comment is not allowed."
 msgstr ""
 
-#: app/main/RTMedia.php:972
+#: app/main/RTMedia.php:984
 msgid "Are you sure you want to delete this media?"
 msgstr ""
 
-#: app/main/RTMedia.php:973
+#: app/main/RTMedia.php:985
 msgid "Are you sure you want to delete this comment?"
 msgstr ""
 
-#: app/main/RTMedia.php:974
+#: app/main/RTMedia.php:986
 msgid "Are you sure you want to delete this Album?"
 msgstr ""
 
-#: app/main/RTMedia.php:975
+#: app/main/RTMedia.php:987
 msgid "Drop files here"
 msgstr ""
 
-#: app/main/RTMedia.php:976
+#: app/main/RTMedia.php:988
 msgid "album created successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:977
+#: app/main/RTMedia.php:989
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: app/main/RTMedia.php:978
+#: app/main/RTMedia.php:990
 msgid "Enter an album name."
 msgstr ""
 
-#: app/main/RTMedia.php:979
+#: app/main/RTMedia.php:991
 msgid "Max file Size Limit : "
 msgstr ""
 
-#: app/main/RTMedia.php:980
+#: app/main/RTMedia.php:992
 msgid "Allowed File Formats"
 msgstr ""
 
-#: app/main/RTMedia.php:981 templates/media/album-single-edit.php:73
+#: app/main/RTMedia.php:993 templates/media/album-single-edit.php:73
 msgid "Select All Visible"
 msgstr ""
 
-#: app/main/RTMedia.php:982
+#: app/main/RTMedia.php:994
 msgid "Unselect All Visible"
 msgstr ""
 
-#: app/main/RTMedia.php:983
+#: app/main/RTMedia.php:995
 msgid "Please select some media."
 msgstr ""
 
-#: app/main/RTMedia.php:984
+#: app/main/RTMedia.php:996
 msgid "Are you sure you want to delete the selected media?"
 msgstr ""
 
-#: app/main/RTMedia.php:985
+#: app/main/RTMedia.php:997
 msgid "Are you sure you want to move the selected media?"
 msgstr ""
 
-#: app/main/RTMedia.php:986
+#: app/main/RTMedia.php:998
 msgid "Waiting"
 msgstr ""
 
-#: app/main/RTMedia.php:987
+#: app/main/RTMedia.php:999
 msgid "Uploaded"
 msgstr ""
 
-#: app/main/RTMedia.php:988
+#: app/main/RTMedia.php:1000
 msgid "Uploading"
 msgstr ""
 
-#: app/main/RTMedia.php:989
+#: app/main/RTMedia.php:1001
 msgid "Failed"
 msgstr ""
 
-#: app/main/RTMedia.php:990
+#: app/main/RTMedia.php:1002
 msgid "Close"
 msgstr ""
 
-#: app/main/RTMedia.php:991
+#: app/main/RTMedia.php:1003
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:63
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
 #: app/main/controllers/template/rtmedia-functions.php:1115
@@ -2210,7 +2210,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: app/main/RTMedia.php:992
+#: app/main/RTMedia.php:1004
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:67
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
 #: app/main/controllers/template/rtmedia-functions.php:1900
@@ -2219,75 +2219,75 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: app/main/RTMedia.php:993 templates/media/media-single-edit.php:8
+#: app/main/RTMedia.php:1005 templates/media/media-single-edit.php:8
 msgid "Edit Media"
 msgstr ""
 
-#: app/main/RTMedia.php:994
+#: app/main/RTMedia.php:1006
 msgid "Remove from queue"
 msgstr ""
 
-#: app/main/RTMedia.php:995
+#: app/main/RTMedia.php:1007
 msgid "Add more files"
 msgstr ""
 
-#: app/main/RTMedia.php:996
+#: app/main/RTMedia.php:1008
 msgid "File not supported"
 msgstr ""
 
-#: app/main/RTMedia.php:997
+#: app/main/RTMedia.php:1009
 msgid "more"
 msgstr ""
 
-#: app/main/RTMedia.php:998
+#: app/main/RTMedia.php:1010
 msgid "less"
 msgstr ""
 
-#: app/main/RTMedia.php:999
+#: app/main/RTMedia.php:1011
 msgid "Read more"
 msgstr ""
 
-#: app/main/RTMedia.php:1000
+#: app/main/RTMedia.php:1012
 msgid "Show less"
 msgstr ""
 
-#: app/main/RTMedia.php:1002
+#: app/main/RTMedia.php:1014
 msgid "This media is uploaded. Are you sure you want to delete this media?"
 msgstr ""
 
-#: app/main/RTMedia.php:1010
+#: app/main/RTMedia.php:1022
 msgid "Featured media set successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1011
+#: app/main/RTMedia.php:1023
 msgid "Featured media removed successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1013
+#: app/main/RTMedia.php:1025
 msgid "Title:"
 msgstr ""
 
-#: app/main/RTMedia.php:1014
+#: app/main/RTMedia.php:1026
 msgid "Description:"
 msgstr ""
 
-#: app/main/RTMedia.php:1019
+#: app/main/RTMedia.php:1031
 msgid "Edit File Name"
 msgstr ""
 
-#: app/main/RTMedia.php:1027
+#: app/main/RTMedia.php:1039
 msgid "Privacy updated successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1028
+#: app/main/RTMedia.php:1040
 msgid "Couldn't change privacy, please try again."
 msgstr ""
 
-#: app/main/RTMedia.php:1029
+#: app/main/RTMedia.php:1041
 msgid "file deleted successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1061
+#: app/main/RTMedia.php:1073
 msgid "There are some uploads in progress. Do you want to cancel them?"
 msgstr ""
 
@@ -2763,7 +2763,7 @@ msgstr ""
 #: app/main/controllers/template/RTMediaTemplate.php:352
 #: app/main/controllers/template/RTMediaTemplate.php:445
 #: app/main/controllers/template/RTMediaTemplate.php:543
-#: app/main/controllers/template/RTMediaTemplate.php:679
+#: app/main/controllers/template/RTMediaTemplate.php:683
 msgid "Ooops !!! Invalid access. No nonce was found !!"
 msgstr ""
 

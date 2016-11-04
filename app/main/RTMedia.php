@@ -209,7 +209,32 @@ class RTMedia {
 		}
 		$this->add_image_sizes();
 		$this->set_image_quality();
+		$this->comment_auto_complete();
 	}
+
+	/**
+	 * add filter that is being given in the buddypress plugin which add the JS and CSS for autocomplete
+	 *
+	 * More deatils on: http://hookr.io/functions/bp_activity_maybe_load_mentions_scripts/
+	 */
+	public function comment_auto_complete( $rtmedia_options = false, $bp_media_options = false ) {
+		add_filter( 'bp_activity_maybe_load_mentions_scripts', array( $this, 'rtmedia_bp_activity_maybe_load_mentions_scripts_callback' ), 10001, 2 );
+	}
+
+
+	/**
+	 * Always set to true when call on any of the Buddypress Pages
+	 *
+	 * @param       bool       $load_mentions
+	 * @param       bool       $$mentions_enabled
+	 *
+	 * @return      bool     true
+	 */
+	public function rtmedia_bp_activity_maybe_load_mentions_scripts_callback( $load_mentions, $mentions_enabled ) {
+		$load_mentions = true;
+		return $load_mentions;
+ 	}
+
 
 	public function set_image_quality() {
 		add_filter( 'jpeg_quality', array( $this, 'rtmedia_jpeg_quality' ) );
