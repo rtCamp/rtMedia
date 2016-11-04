@@ -515,26 +515,43 @@ jQuery( function( $ ) {
 						jQuery( rtm_file_title_input ).focus();
 
 						// Set media title and description in file object
-						jQuery( rtm_file_save_el ).click( function() {
-							var file_title_val = jQuery( rtm_file_title_input ).val();
-							var file_desc_val = jQuery( rtm_file_desc_input ).val();
-							var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
+						$( '#save_' + file.id ).click( function( e ) {
+						    e.preventDefault();
 
-							if ( file_title_val != '' ) {
-								file_name_wrapper_el.text( file_title_val + '.' + rtm_file_name_array[ 1 ] );
-								file.title = file_title_val;
-							}
+						    rtm_file_label = this;
 
-							if ( file_desc_val != '' ) {
-								file.description = file_desc_val;
-							}
+						    rtm_file_title_id = 'text_' + file.id;
+						    rtm_file_title_input = '#' + rtm_file_title_id;
+						    rtm_file_title_wrapper_id = 'rtm_title_wp_' + file.id;
+						    rtm_file_title_wrapper = '#' + rtm_file_title_wrapper_id;
 
-							jQuery( rtm_file_title_wrapper ).hide();
-							jQuery( rtm_file_desc_wrapper ).hide();
-							file_name_wrapper_el.show();
-							jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
-							jQuery( rtm_file_label ).show();
-							jQuery( this ).hide();
+						    rtm_file_desc_id = 'rtm_desc_' + file.id;
+						    rtm_file_desc_input = '#' + rtm_file_desc_id;
+						    rtm_file_desc_wrapper_id = 'rtm_desc_wp_' + file.id;
+						    rtm_file_desc_wrapper = '#' + rtm_file_desc_wrapper_id;
+
+						    rtm_file_save_id = 'save_' + file.id;
+						    rtm_file_save_el = '#' + rtm_file_save_id;
+
+						    var file_title_val = jQuery( rtm_file_title_input ).val();
+						    var file_desc_val = jQuery( rtm_file_desc_input ).val();
+						    var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
+
+						    if ( file_title_val != '' ) {
+						        file_name_wrapper_el.text( file_title_val + '.' + rtm_file_name_array[ 1 ] );
+						        file.title = file_title_val;
+						    }
+
+						    if ( file_desc_val != '' ) {
+						        file.description = file_desc_val;
+						    }
+
+						    jQuery( rtm_file_title_wrapper ).hide();
+						    jQuery( rtm_file_desc_wrapper ).hide();
+
+						    file_name_wrapper_el.show();
+						    jQuery( rtm_file_label ).siblings( '#label_' + file.id ).show();
+						    jQuery( this ).hide();
 						} );
 					} );
 				} );
