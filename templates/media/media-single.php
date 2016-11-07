@@ -121,8 +121,6 @@
 						</div>
 					<?php } ?>
 
-					<?php do_action( 'rtmedia_actions_after_comments_form' ); ?>
-
 				<?php } else {
 					// else for if ( $rt_ajax_request )
 					?>
@@ -166,6 +164,8 @@
 
 					<?php } ?>
 				<?php } ?>
+				
+				<?php do_action( 'rtmedia_actions_after_comments_form' ); ?>
 			</div>
 			</div>
 
