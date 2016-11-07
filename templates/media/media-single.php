@@ -114,11 +114,14 @@
 
 
 					</div>
+
 					<?php if ( rtmedia_comments_enabled() && is_user_logged_in() ) { ?>
 						<div class='rtm-media-single-comments'>
 							<?php rtmedia_comment_form(); ?>
 						</div>
 					<?php } ?>
+
+					<?php do_action( 'rtmedia_actions_after_comments_form' ); ?>
 
 				<?php } else {
 					// else for if ( $rt_ajax_request )
