@@ -117,7 +117,7 @@ function is_rtmedia_vip_plugin() {
  * Look Ma! Very few includes! Next File: /app/main/RTMedia.php
  */
 
-function my_function( $data, $post_ID ) {
+function rtmedia_edit_media_on_database( $data, $post_ID ) {
 
 	$post = get_post( $post_ID );
 
@@ -168,4 +168,4 @@ function my_function( $data, $post_ID ) {
 
 	return $data;
 }
-add_filter( 'wp_update_attachment_metadata', 'my_function', 10, 2 );
+add_filter( 'wp_update_attachment_metadata', 'rtmedia_edit_media_on_database', 10, 2 );
