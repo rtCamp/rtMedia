@@ -726,11 +726,11 @@ add_action( 'admin_init', 'rt_check_addon_status' );
 
 
 /**
- * Function to add buddypress language conversion to Media activities. 
- * It allow language conversion for all activity 
+ * Function to add buddypress language conversion to Media activities.
+ * It allow language conversion for all activity
  * type rtmedia_update".
  */
-function rtmedia_activity_register_activity_actions_callback(){
+function rtmedia_activity_register_activity_actions_callback() {
 	$bp = buddypress();
 	bp_activity_set_action(
 		$bp->activity->id,
