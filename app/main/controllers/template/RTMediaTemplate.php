@@ -81,7 +81,7 @@ class RTMediaTemplate {
 		if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, array(
 				'profile',
 				'group',
-			), true )
+		), true )
 		) {
 			$this->check_return_edit();
 			$this->check_return_delete();
