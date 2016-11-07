@@ -554,7 +554,13 @@ function rtmedia_attachment_link_callback( $permalink, $post_id ) {
 
 add_filter( 'attachment_link', 'rtmedia_attachment_link_callback', 99,2 );
 
-
+/**
+ * [rtmedia_edit_media_on_database]
+ * Update Media details on database while admin edit reporter media
+ * @param  [Array]  $data	     Image Details
+ * @param  [Number] $post_ID     Media ID
+ * @return [array]  $data
+ */
 function rtmedia_edit_media_on_database( $data, $post_ID ) {
 
 	$post = get_post( $post_ID );
@@ -567,9 +573,12 @@ function rtmedia_edit_media_on_database( $data, $post_ID ) {
 			$media_available = $media->get_media( array(
 				'media_id'	=> $_REQUEST['postid'],
 			), 0, 1 );
+
 			$media_id = $media_available[0]->id;
+
 			if ( ! empty( $media_available ) ) {
 				$rtmedia_filepath_old = rtmedia_image( 'rt_media_activity_image', $media_id, false );
+
 				if ( isset( $rtmedia_filepath_old ) ) {
 					$is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $rtmedia_filepath_old );
 
