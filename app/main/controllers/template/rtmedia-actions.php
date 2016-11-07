@@ -723,3 +723,22 @@ function rt_check_addon_status() {
 }
 
 add_action( 'admin_init', 'rt_check_addon_status' );
+
+
+/**
+ * Function to add buddypress language conversion to Media activities. 
+ * It allow language conversion for all activity 
+ * type rtmedia_update".
+ */
+function rtmedia_activity_register_activity_actions_callback(){
+	$bp = buddypress();
+	bp_activity_set_action(
+		$bp->activity->id,
+		'rtmedia_update',
+		__( 'Posted a status update', 'buddypress-media' ),
+		'bp_activity_format_activity_action_activity_update',
+		__( 'Updates', 'buddypress-media' ),
+		array( 'activity', 'group', 'member', 'member_groups' )
+	);
+}
+add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );

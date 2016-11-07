@@ -1021,6 +1021,13 @@ img.mfp-img {
     padding-right: 6px;
   }
 }
+/*
+* popup autocomplete
+ */
+#atwho-container #atwho-ground-comment_content .atwho-view {
+  z-index: 2147483647;
+}
+
 .mfp-content .rtm-lightbox-container {
   background: #000000;
   margin: 0 auto;
