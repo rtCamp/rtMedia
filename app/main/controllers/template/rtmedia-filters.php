@@ -553,3 +553,66 @@ function rtmedia_attachment_link_callback( $permalink, $post_id ) {
 }
 
 add_filter( 'attachment_link', 'rtmedia_attachment_link_callback', 99,2 );
+
+/**
+ * [rtmedia_edit_media_on_database]
+ * Update Media details on database while admin edit reporter media
+ * @param  [Array]  $data	     Image Details
+ * @param  [Number] $post_ID     Media ID
+ * @return [array]  $data
+ */
+function rtmedia_edit_media_on_database( $data, $post_ID ) {
+
+	$post = get_post( $post_ID );
+
+	if ( $_REQUEST ) {
+
+		if ( isset( $_REQUEST['postid'] ) && 'image-editor' == $_REQUEST['action'] && 'edit-attachment' == $_REQUEST['context'] ) {
+
+			$media = new RTMediaModel();
+			$media_available = $media->get_media( array(
+				'media_id'	=> $_REQUEST['postid'],
+			), 0, 1 );
+
+			$media_id = $media_available[0]->id;
+
+			if ( ! empty( $media_available ) ) {
+				$rtmedia_filepath_old = rtmedia_image( 'rt_media_activity_image', $media_id, false );
+
+				if ( isset( $rtmedia_filepath_old ) ) {
+					$is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $rtmedia_filepath_old );
+
+					if ( $is_valid_url && function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
+						$thumbnailinfo = wp_get_attachment_image_src( $post_ID, 'rt_media_activity_image' );
+						$activity_id   = rtmedia_activity_id( $media_id );
+
+						if ( $post_ID && ! empty( $activity_id ) ) {
+							global $wpdb, $bp;
+
+							if ( ! empty( $bp->activity ) ) {
+								$media->model = new RTMediaModel();
+								$related_media_data = $media->model->get( array( 'activity_id' => $activity_id ) );
+								$related_media      = array();
+								foreach ( $related_media_data as $activity_media ) {
+									$related_media[] = $activity_media->id;
+								}
+								$activity_text = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
+
+								$activity = new RTMediaActivity( $related_media, 0, $activity_text );
+
+								$activity_content_new = $activity->create_activity_html();
+
+								$activity_content = str_replace( $rtmedia_filepath_old, wp_get_attachment_url( $post_ID ), $activity_content_new );
+
+								$wpdb->update( $bp->activity->table_name, array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return $data;
+}
+add_filter( 'wp_update_attachment_metadata', 'rtmedia_edit_media_on_database', 10, 2 );

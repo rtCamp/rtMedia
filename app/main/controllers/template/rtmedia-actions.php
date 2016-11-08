@@ -307,12 +307,11 @@ function add_upload_button() {
 		$upload_string = apply_filters( 'rtmedia_upload_button_string', __( 'Upload', 'buddypress-media' ) );
 
 		if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() === get_current_user_id() ) {
-
-			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' .apply_filters( 'rtm_gallary_upload_title_label', __( 'Upload Media', 'buddypress-media' ) )  . '"><i class="dashicons dashicons-upload rtmicon"></i>' . apply_filters( 'rtm_gallary_upload_label', __( 'Upload', 'buddypress-media' ) ) . '</span>';
+			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' . apply_filters( 'rtm_gallary_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . apply_filters( 'rtm_gallary_upload_label', __( 'Upload', 'buddypress-media' ) ) . '</span>';
 		} else {
 			if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 				if ( can_user_upload_in_group() ) {
-					echo '<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="' . apply_filters( 'rtm_gallary_upload_title_label', __( 'Upload Media', 'buddypress-media' ) )  . '"><i class="dashicons dashicons-upload rtmicon"></i>' . apply_filters( 'rtm_gallary_upload_label', __( 'Upload', 'buddypress-media' ) ) . '</span>';
+					echo '<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="' . apply_filters( 'rtm_gallary_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . apply_filters( 'rtm_gallary_upload_label', __( 'Upload', 'buddypress-media' ) ) . '</span>';
 				}
 			}
 		}
@@ -727,11 +726,11 @@ add_action( 'admin_init', 'rt_check_addon_status' );
 
 
 /**
- * Function to add buddypress language conversion to Media activities. 
- * It allow language conversion for all activity 
+ * Function to add buddypress language conversion to Media activities.
+ * It allow language conversion for all activity
  * type rtmedia_update".
  */
-function rtmedia_activity_register_activity_actions_callback(){
+function rtmedia_activity_register_activity_actions_callback() {
 	$bp = buddypress();
 	bp_activity_set_action(
 		$bp->activity->id,

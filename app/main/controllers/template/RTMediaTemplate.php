@@ -81,7 +81,7 @@ class RTMediaTemplate {
 		if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, array(
 				'profile',
 				'group',
-			), true )
+		), true )
 		) {
 			$this->check_return_edit();
 			$this->check_return_delete();
@@ -664,6 +664,10 @@ class RTMediaTemplate {
 				}
 
 				if ( ! empty( $comment_activity_id ) ) {
+					$rtmedia_activity_comment = rtmedia_activity_comment( $comment_activity_id );
+					if ( $rtmedia_activity_comment['content'] ) {
+						update_comment_meta( $id, 'activity_comment_content', $rtmedia_activity_comment['content'] );
+					}
 					update_comment_meta( $id, 'activity_id', $comment_activity_id );
 				}
 				$_rt_ajax = filter_input( INPUT_POST, 'rtajax', FILTER_SANITIZE_STRING );
