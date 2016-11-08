@@ -9,23 +9,23 @@
 
     $userName = 'demo';
     $password = 'demo';
+    $commentStr = 'test comment';
 
     $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if the user is allwed to comment on uploaded media');
+    $I->wantTo('To check if the user is allowed to comment on uploaded media');
 
     $loginPage = new LoginPage($I);
-    $loginPage->login($userName,$password); //It will call login function using Page object
+    $loginPage->login($userName,$password);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMedia($userName); //It will upload media function using Page object
+    $uploadmedia->uploadMediaUsingStartUploadButton($userName);
+    $uploadmedia->fisrtThumbnailMedia($I);
 
-    $I->click(UploadMediaPage::$firstChild); //This will click on the fisrt child element
-    $I->wait(5);
     $I->seeElement(UploadMediaPage::$commentTextArea);
-    $I->fillfield(UploadMediaPage::$commentTextArea,"test"); //Add you comment here
+    $I->fillfield(UploadMediaPage::$commentTextArea,$commentStr);
     $I->click(UploadMediaPage::$commentSubmitButton);
     $I->wait(5);
-    $I->see('test');
+    $I->see($commentStr);
 
     $I->reloadPage();
     $I->wait(5);
