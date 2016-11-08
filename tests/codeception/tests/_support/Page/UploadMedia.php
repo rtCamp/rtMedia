@@ -60,6 +60,7 @@ class UploadMedia
         $I->wait(5);
         $I->seeElement(self::$fileList);
         $I->click(self::$uploadTermsCheckbox); //Assuming that "rtMedia Uplaod terms" plugin is enabled
+        $I->seeCheckboxIsChecked(self::$uploadTermsCheckbox);
 
     }
 
@@ -105,7 +106,7 @@ class UploadMedia
 
         $I->click(self::$firstChild);
         $I->wait(5);
-    
+
         return $this;
 
     }

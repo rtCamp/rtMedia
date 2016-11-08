@@ -12,7 +12,7 @@
     $password = 'demo';
 
     $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if Admin bar menu integration is enabled.');
+    $I->wantTo('To check Add a link to rtMedia in footer is enabled.');
 
     $loginPage = new LoginPage($I);
     $loginPage->login($userName,$password);

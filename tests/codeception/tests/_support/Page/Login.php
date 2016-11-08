@@ -13,6 +13,7 @@ class Login
      public static $userNameField = 'input#bp-login-widget-user-login';
      public static $passwordField = 'input#bp-login-widget-user-pass';
      public static $loginButton = 'input#bp-login-widget-submit';
+     public static $titleTag = 'rtMedia Demo Site';
 
     /**
      * Basic route example for your current URL
@@ -39,6 +40,7 @@ class Login
         $I->fillField(self::$userNameField, $name);
         $I->fillField(self::$passwordField, $password);
         $I->click(self::$loginButton);
+        $I->seeInTitle(self::$titleTag);
 
         return $this;
 
