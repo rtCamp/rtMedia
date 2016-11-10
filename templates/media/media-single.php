@@ -114,6 +114,7 @@
 
 
 					</div>
+
 					<?php if ( rtmedia_comments_enabled() && is_user_logged_in() ) { ?>
 						<div class='rtm-media-single-comments'>
 							<?php rtmedia_comment_form(); ?>
@@ -163,6 +164,8 @@
 
 					<?php } ?>
 				<?php } ?>
+				
+				<?php do_action( 'rtmedia_actions_after_comments_form' ); ?>
 			</div>
 			</div>
 

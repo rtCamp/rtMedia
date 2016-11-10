@@ -35,7 +35,6 @@ function apply_rtMagnificPopup( selector ) {
 				},
 				callbacks: {
 					ajaxContentAdded: function() {
-
 						mfp = jQuery.magnificPopup.instance;
 						if ( jQuery( mfp.items ).size() === 1 ) {
 							jQuery( '.mfp-arrow' ).remove();
@@ -65,12 +64,27 @@ function apply_rtMagnificPopup( selector ) {
 						if ( typeof _wpmejsSettings !== 'undefined' ) {
 							settings.pluginPath = _wpmejsSettings.pluginPath;
 						}
+						var $single_meta_h = jQuery( ".rtmedia-container .rtmedia-single-meta" ).height();
 						$( '.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video' ).mediaelementplayer( {
 							// If the <video width> is not specified, this is the default
 							defaultVideoWidth: 480,
 							// If the <video height> is not specified, this is the default
 							defaultVideoHeight: 270,
+							enableAutosize: true,
+							 // if set, overrides <video height>
+    						videoHeight: -1,
 							success: function( mediaElement, domObject ) {
+								mediaElement.addEventListener('loadeddata', function (e) {
+									var $video_h = $( mediaElement ).height();
+									var $window_h = $( window ).height();
+									var $rtm_ltb = jQuery( "div.rtm-ltb-action-container" ).height();
+									var $rtm_ltb = $rtm_ltb + 50;
+									var $new_video_h =  $single_meta_h - $rtm_ltb;
+									if( $video_h > $window_h ){
+										jQuery( ".rtmedia-container #rtmedia-single-media-container .mejs-container" ).attr( "style", 'height:'+$new_video_h+'px !important' );
+									}
+			                    }, false);
+			                    
 								// Call the play method
 								mediaElement.play();
 							}
