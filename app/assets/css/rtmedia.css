@@ -132,6 +132,10 @@ body.media.buddypress {
   overflow-y: auto;
 }
 
+body #buddypress #rtmedia-single-media-container.rtmedia-single-media .button {
+  font-size: 13px;
+}
+
 .rtmedia-container {
   box-sizing: border-box;
 }
