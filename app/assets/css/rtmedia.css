@@ -2354,6 +2354,9 @@ body div.bp_members.bp_member .entry-content {
 }
 .rtmedia-container .rtmedia-list .rtmedia-list-item > a {
   display: block;
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 5px;
 }
 .rtmedia-container .rtmedia-list .rtmedia_time {
   background-color: #000;
@@ -2375,7 +2378,7 @@ body div.bp_members.bp_member .entry-content {
   color: #666666;
   font-size: 12px;
   font-weight: normal;
-  margin: 5px 0 0;
+  margin: 10px 0 5px;
   overflow: hidden;
   text-align: center;
   text-overflow: ellipsis;
