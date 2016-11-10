@@ -45,6 +45,13 @@ before_script:
 - npm install -g nightwatch
 - npm install
 - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
+
+after_script:
+- tail /var/log/ee/ee.log
+
+after_success:
+- tail /var/log/ee/ee.log
+
 script:
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --test res/setup.js
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --group src/
