@@ -22,7 +22,7 @@ before_script:
 - source /etc/bash_completion.d/ee_auto.rc
 - sudo ee -v
 - sudo lsb_release  -a
-- sudo ee site create wp.localtest.me --wp --user=ADMINUSER --email=mangesh.parte@rtcamp.com --pass=ADMINPASS
+- sudo ee site create wp.localtest.me --wp --user=ADMINUSER --email=mangesh.parte@rtcamp.com --pass=ADMINPASS || sudo tail -n200 /var/log/ee/ee.log
 - sudo chmod 777 -R /var/www
 - sudo cat /etc/mysql/conf.d/my.cnf
 - sudo nginx -t
@@ -45,9 +45,6 @@ before_script:
 - npm install -g nightwatch
 - npm install
 - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
-
-after_failure:
-- tail /var/log/ee/ee.log
 
 script:
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --test res/setup.js
