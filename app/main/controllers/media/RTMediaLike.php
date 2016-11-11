@@ -14,7 +14,9 @@ class RTMediaLike extends RTMediaUserInteraction {
 
 	function __construct() {
 		$args = array(
-			'action'     => 'like',
+			'action'                => 'like',
+			'person_label'          => esc_html__( 'person likes this', 'buddypress-media' ),
+			'person_plural_label'   => esc_html__( 'people like this', 'buddypress-media' ),
 			'label'      => esc_html__( 'Like', 'buddypress-media' ),
 			'plural'     => esc_html__( 'Likes', 'buddypress-media' ),
 			'undo_label' => esc_html__( 'Unlike', 'buddypress-media' ),
@@ -108,9 +110,19 @@ class RTMediaLike extends RTMediaUserInteraction {
 			$actions --;
 			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 		}
+
+		/* label for "person/people like this" in media popup" */
+		if( 1 === $actions ){
+			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $this->person_label );
+		} else {
+			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $this->person_plural_label );
+		}
+
 		if ( $actions < 0 ) {
 			$actions = 0;
 		}
+
+
 
 		$return['count'] = $actions;
 		$this->model->update( array( 'likes' => $actions ), array( 'id' => $this->action_query->id ) );
