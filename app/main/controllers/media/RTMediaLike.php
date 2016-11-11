@@ -113,10 +113,10 @@ class RTMediaLike extends RTMediaUserInteraction {
 
 		/* label for "person/people like this" in media popup" */
 		if( 1 === $actions ){
-            $return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $this->person_label );
-        } else {
-            $return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $this->person_plural_label );
-        }
+			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $this->person_label );
+		} else {
+			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $this->person_plural_label );
+		}
 
 		if ( $actions < 0 ) {
 			$actions = 0;
