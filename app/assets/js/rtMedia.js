@@ -81,10 +81,9 @@ function apply_rtMagnificPopup( selector ) {
 									var $rtm_ltb = $rtm_ltb + 50;
 									var $new_video_h =  $single_meta_h - $rtm_ltb;
 									if( $video_h > $window_h ){
-										jQuery( ".rtmedia-container #rtmedia-single-media-container .mejs-container" ).attr( "style", 'height:'+$new_video_h+'px !important; transition:0.5s' );
+										jQuery( ".rtmedia-container #rtmedia-single-media-container .mejs-container" ).attr( "style", 'height:'+$new_video_h+'px !important; transition:0.2s' );
 									}
 			                    }, false);
-			                    
 								// Call the play method
 								mediaElement.play();
 							}
