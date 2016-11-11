@@ -2696,7 +2696,14 @@ function show_rtmedia_like_counts() {
 		}
 		?>
 		<div class='rtmedia-like-info <?php echo $class; ?>'>
-			<i class="rtmicon-thumbs-up rtmicon-fw"></i> <span class="rtmedia-like-counter-wrap"><span class="rtmedia-like-counter"><?php echo esc_html( $count ); ?></span> <?php esc_html_e( 'people like this', 'buddypress-media' ); ?></span>
+			<i class="rtmicon-thumbs-up rtmicon-fw"></i>
+			<span class="rtmedia-like-counter-wrap">
+				<span class="rtmedia-like-counter"><?php echo esc_html( $count ); ?></span>
+				<?php 
+					$people_label = _n( 'person likes this', 'people like this', $count, 'buddypress-media' );
+					echo $people_label;
+				?>
+			</span>
 		</div>
 		<?php
 	}

@@ -933,12 +933,12 @@ jQuery( document ).ready( function( $ ) {
 			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
 
 				/*
-				 * add activity_text_with_attechment condition to filter
+				 * add rtmedia_activity_text_with_attachment condition to filter
 				 * if user want media and activity_text both require
 				 * By: Yahil
 				 */
 				if ( jQuery.trim( jQuery( "#whats-new" ).val() ) == "" ) {
-					if ( activity_text_with_attechment == 'disable') {
+					if ( rtmedia_activity_text_with_attachment == 'disable') {
 						$( "#whats-new" ).css( 'color', 'transparent' );
 						$( "#whats-new" ).val( '&nbsp;' );
 					} else {
@@ -1128,12 +1128,12 @@ jQuery( document ).ready( function( $ ) {
 							 * Disabled TextBox color(transparent)
 							 * ELSE
 							 * Required Activity text with media
-							 * add activity_text_with_attechment condition to filter
+							 * add rtmedia_activity_text_with_attachment condition to filter
 		 					 * if user want media and activity_text both require
 		 					 * By: Yahil
 							 */
 
-							if ( activity_text_with_attechment == 'disable') {
+							if ( rtmedia_activity_text_with_attachment == 'disable') {
 								$( "#whats-new" ).css( 'color', 'transparent' );
 								$( "#whats-new" ).val( '&nbsp;' );
 							} else {
@@ -1327,6 +1327,7 @@ jQuery( document ).ready( function( $ ) {
 
 				}
 				$( '.rtmedia-like span' ).html( data.next );
+				$( '.rtmedia-like-counter-wrap' ).html( '<span class="rtmedia-like-counter">' + data.count + '</span> ' + data.person_text );
 				$( '.rtm-like-loading' ).remove();
 				$( that ).removeAttr( 'disabled' );
 				//Update the like counter
