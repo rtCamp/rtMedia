@@ -1327,6 +1327,7 @@ jQuery( document ).ready( function( $ ) {
 
 				}
 				$( '.rtmedia-like span' ).html( data.next );
+				$( '.rtmedia-like-counter-wrap' ).html( '<span class="rtmedia-like-counter">' + data.count + '</span> ' + data.person_text );
 				$( '.rtm-like-loading' ).remove();
 				$( that ).removeAttr( 'disabled' );
 				//Update the like counter
