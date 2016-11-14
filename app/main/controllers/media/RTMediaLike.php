@@ -113,10 +113,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 
 		$like_html = '<span class="rtmedia-like-counter"></span>';
 		if( $actions > 0  && function_exists( 'rtmedia_who_like_html' ) ) {
-			ob_start();
-				rtmedia_who_like_html( $actions, $this->increase );
-				$like_html = ob_get_contents();
-			ob_end_clean();
+			$like_html = rtmedia_who_like_html( $actions, $this->increase );
 		}
 
 		/* label for "person/people like this" in media popup" */
