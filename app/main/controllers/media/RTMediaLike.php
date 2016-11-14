@@ -111,11 +111,19 @@ class RTMediaLike extends RTMediaUserInteraction {
 			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 		}
 
+		$like_html = '<span class="rtmedia-like-counter"></span>';
+		if( $actions > 0  && function_exists( 'rtmedia_who_like_html' ) ) {
+			ob_start();
+				rtmedia_who_like_html( $actions, $this->increase );
+				$like_html = ob_get_contents();
+			ob_end_clean();
+		}
+
 		/* label for "person/people like this" in media popup" */
 		if( 1 === $actions ){
-			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $this->person_label );
+			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $like_html );
 		} else {
-			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $this->person_plural_label );
+			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $like_html );
 		}
 
 		if ( $actions < 0 ) {

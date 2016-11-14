@@ -2698,16 +2698,46 @@ function show_rtmedia_like_counts() {
 		<div class='rtmedia-like-info <?php echo $class; ?>'>
 			<i class="rtmicon-thumbs-up rtmicon-fw"></i>
 			<span class="rtmedia-like-counter-wrap">
-				<span class="rtmedia-like-counter"><?php echo esc_html( $count ); ?></span>
 				<?php
-					$people_label = _n( 'person likes this', 'people like this', $count, 'buddypress-media' );
-					echo $people_label;
+				if ( class_exists( 'RTMediaLike' ) && function_exists( 'rtmedia_who_like_html' ) ) {
+					$rtmedialike = new RTMediaLike();
+					rtmedia_who_like_html( $count, $rtmedialike->is_liked( rtmedia_id() ) );
+				}
 				?>
 			</span>
+			<?php
+			?>
 		</div>
 		<?php
 	}
 
+}
+
+
+
+/**
+ * Print rtmedia who like html
+ *
+ * @param       int          $like_count ( Total like Count )
+ *
+ * @return      bool|string  $user_like_it ( login user like it or not )
+ */
+function rtmedia_who_like_html( $like_count, $user_like_it ){
+	if ( $like_count == 1 && $user_like_it ) {
+		esc_html_e( 'you like this', 'buddypress-media' );
+	} elseif ( $like_count ) {
+		if ( $like_count > 1 && $user_like_it ) {
+			esc_html_e( 'You and ', 'buddypress-media' );
+			/* if login user has like the comment then less from the total count */
+			$like_count --;
+		}
+		?>
+		<span class="rtmedia-like-counter">
+			<?php echo $like_count; ?>
+		</span>
+		<?php
+		echo _n( ' person likes this', ' people like this', $like_count, 'buddypress-media' );
+	}
 }
 
 /**
