@@ -1205,11 +1205,11 @@ function rtmedia_comments( $echo = true ) {
  * Render single comment,
  * And display show all comment link to display all comment
  * @param  [array] $comment [comment]
- * @param  [int] $count   [comment count]
- * @param  [int] $i       [increment with loop]
+ * @param  [int] $count   [default false other ways comment count]
+ * @param  [int] $i       [default false other ways increment with loop]
  * By: Yahil
  */
-function rmedia_single_comment( $comment, $count, $i ) {
+function rmedia_single_comment( $comment, $count = false, $i = false ) {
 
 	$html = '';
 	$class = '';
@@ -2699,7 +2699,7 @@ function show_rtmedia_like_counts() {
 			<i class="rtmicon-thumbs-up rtmicon-fw"></i>
 			<span class="rtmedia-like-counter-wrap">
 				<span class="rtmedia-like-counter"><?php echo esc_html( $count ); ?></span>
-				<?php 
+				<?php
 					$people_label = _n( 'person likes this', 'people like this', $count, 'buddypress-media' );
 					echo $people_label;
 				?>
