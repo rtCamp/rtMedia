@@ -83,6 +83,15 @@
   padding: 20px 30px;
   vertical-align: top;
 }
+.rtm-admin-tab-container .rtm-tabs-content #debug tbody {
+  display: block;
+  height: 400px;
+  overflow-y: auto;
+}
+.rtm-admin-tab-container .rtm-tabs-content #debug .rtm-download-debuginfo {
+  float: right;
+  margin-top: 14px;
+}
 
 .rtm-setting-container {
   background-color: #f5f5f5;
