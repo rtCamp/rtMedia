@@ -737,14 +737,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$debug_info['[php.ini] post_max_size'] = esc_html( ini_get( 'post_max_size' ) );
 			$debug_info['[php.ini] upload_max_filesize'] = esc_html( ini_get( 'upload_max_filesize' ) );
 			$debug_info['[php.ini] memory_limit'] = esc_html( ini_get( 'memory_limit' ) );
-			$active_theme                                 = wp_get_theme();
+			$active_theme = wp_get_theme();
 			$debug_info['Theme Name'] = esc_html( $active_theme->Name );
 			$debug_info['Theme Version'] = esc_html( $active_theme->Version );
 			$debug_info['Author URL'] = esc_url( $active_theme->{'Author URI'} );
 			$debug_info['Template Overrides'] = implode( ', '. PHP_EOL . str_repeat( ' ', 50 ) , $this->rtmedia_scan_template_files( RTMEDIA_PATH . '/templates/' ) );
 			$rtmedia_options = get_option( 'rtmedia-options' );
 			$rtmedia_options = array_merge( $debug_info, $rtmedia_options );
-			//echo '<pre>';print_r( $rtmedia_options );echo '</pre>';
 			$i=0;
 			if( ! empty( $rtmedia_options ) ) {
 				echo '==============================================================================' . PHP_EOL;
@@ -756,7 +755,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				}
 
 				readfile("debuginfo.txt");
-			    exit();
+				exit();
 			}
 
 		}
