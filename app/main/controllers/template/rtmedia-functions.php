@@ -2725,7 +2725,10 @@ function show_rtmedia_like_counts() {
  */
 if( ! function_exists( 'rtmedia_who_like_html' ) ){
 	function rtmedia_who_like_html( $like_count, $user_like_it ){
+		$like_count = ( $like_count ) ? $like_count : false;
+		$user_like_it = ( $user_like_it ) ? true : false;
 		$like_count_new = $like_count;
+		$html = "";
 		if ( $like_count == 1 && $user_like_it ) {
 			/**
 			* rtmedia you like text
