@@ -678,11 +678,11 @@ function rtm_album_media_count() {
 	 * @return [array]
 	 * by: Yahil
 	 */
-	$rtmedia_album_count_status = apply_filters( 'rtmedia_string_before_album_count', $rtmedia_album_count_status );
+	$rtmedia_album_count_status = apply_filters( 'rtmedia_string_album_count', $rtmedia_album_count_status );
 
 	if ( isset( $rtmedia_album_count_status ) && $rtmedia_album_count_status['status'] ) {
 		?>
-		<div class="rtmedia-album-media-count" title="<?php echo rtm_get_album_media_count( rtmedia_id() ) . ' ' . RTMEDIA_MEDIA_LABEL; ?>"><?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . rtm_get_album_media_count( rtmedia_id() ) . esc_html( $rtmedia_album_count_status['after_string'] ) ?></div>
+		<div class="rtmedia-album-media-count" title="<?php echo rtm_get_album_media_count( rtmedia_id() ) . RTMEDIA_MEDIA_LABEL; ?>"><?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . rtm_get_album_media_count( rtmedia_id() ) . esc_html( $rtmedia_album_count_status['after_string'] ) ?></div>
 		<?php
 	}
 	?>
