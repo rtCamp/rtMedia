@@ -908,7 +908,6 @@ jQuery( document ).ready( function( $ ) {
 				rtm_file_save_el = '#' + rtm_file_save_id;
 				jQuery( document.body ).on('click', rtm_file_save_el , function( e ) {
 					e.preventDefault();
-					alert( "sdfsd" )
 					rtm_file_title_id = 'text_' + file.id;
 					rtm_file_title_input = '#' + rtm_file_title_id;
 
