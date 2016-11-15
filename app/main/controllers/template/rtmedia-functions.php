@@ -1205,11 +1205,11 @@ function rtmedia_comments( $echo = true ) {
  * Render single comment,
  * And display show all comment link to display all comment
  * @param  [array] $comment [comment]
- * @param  [int] $count   [comment count]
- * @param  [int] $i       [increment with loop]
+ * @param  [int] $count   [default false other ways comment count]
+ * @param  [int] $i       [default false other ways increment with loop]
  * By: Yahil
  */
-function rmedia_single_comment( $comment, $count, $i ) {
+function rmedia_single_comment( $comment, $count = false, $i = false ) {
 
 	$html = '';
 	$class = '';
@@ -2698,16 +2698,87 @@ function show_rtmedia_like_counts() {
 		<div class='rtmedia-like-info <?php echo $class; ?>'>
 			<i class="rtmicon-thumbs-up rtmicon-fw"></i>
 			<span class="rtmedia-like-counter-wrap">
-				<span class="rtmedia-like-counter"><?php echo esc_html( $count ); ?></span>
-				<?php 
-					$people_label = _n( 'person likes this', 'people like this', $count, 'buddypress-media' );
-					echo $people_label;
+				<?php
+				if ( class_exists( 'RTMediaLike' ) && function_exists( 'rtmedia_who_like_html' ) ) {
+					$rtmedialike = new RTMediaLike();
+					echo rtmedia_who_like_html( $count, $rtmedialike->is_liked( rtmedia_id() ) );
+				}
 				?>
 			</span>
+			<?php
+			?>
 		</div>
 		<?php
 	}
 
+}
+
+
+
+/**
+ * Print rtmedia who like html
+ *
+ * @param       int          $like_count ( Total like Count )
+ * @param      bool|string  $user_like_it ( login user like it or not )
+ *
+ * @return      string  HTML
+ */
+if( ! function_exists( 'rtmedia_who_like_html' ) ){
+	function rtmedia_who_like_html( $like_count, $user_like_it ){
+		$like_count = ( $like_count ) ? $like_count : false;
+		$user_like_it = ( $user_like_it ) ? true : false;
+		$like_count_new = $like_count;
+		$html = "";
+		if ( $like_count == 1 && $user_like_it ) {
+			/**
+			 * rtmedia you like text
+			 * @param $html TEXT
+			 * @param int $like_count Total Like
+			 * @param int $user_like_it User Like it or Not
+			 * @return html TEXT to  display
+			*/
+			$html =  apply_filters( 'rtmedia_like_html_you_only_like', esc_html__( 'you like this', 'buddypress-media' ), $like_count, $user_like_it );
+		} elseif ( $like_count ) {
+			if ( $like_count > 1 && $user_like_it ) {
+				/**
+				* rtmedia you and
+				 * @param $html TEXT
+				 * @param int $like_count Total Like
+				 * @param int $user_like_it User Like it or Not
+				 * @return html TEXT to  display
+				*/
+				$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html__( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
+				$like_count_new--;
+			}
+
+			/**
+			 * rtmedia Disaply count
+			 * @param int $like_count Total Like
+			 * @param int $user_like_it User Like it or Not
+			 * @return INT Count to  display
+			*/
+			$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', $like_count, $user_like_it );
+
+			/**
+			 * rtmedia person or people likes it
+			 * @param $html TEXT
+			 * @param int $like_count Total Like
+			 * @param int $user_like_it User Like it or Not
+			 * @return html TEXT to  display
+			*/
+			$html .=  apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count_new, 'buddypress-media' ) ,$like_count, $user_like_it );
+		}
+
+		/**
+		 * rtmedia return whole HTML
+		 * @param $html TEXT
+		 * @param int $like_count Total Like
+		 * @param int $user_like_it User Like it or Not
+		 * @return html TEXT to  display
+		*/
+		$html =  apply_filters( 'rtmedia_who_like_html', $html ,$like_count, $user_like_it );
+		return $html;
+	}
 }
 
 /**

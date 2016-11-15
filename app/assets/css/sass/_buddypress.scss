@@ -48,3 +48,11 @@
 body.media.buddypress {
 	overflow-y: auto;
 }
+
+#buddypress input[type=submit]:focus {
+    background: #ededed;
+    border: 1px solid #bbb;
+    color: #555;
+    outline: 0;
+    text-decoration: none;
+}

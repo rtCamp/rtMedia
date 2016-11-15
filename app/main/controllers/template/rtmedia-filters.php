@@ -556,7 +556,7 @@ add_filter( 'attachment_link', 'rtmedia_attachment_link_callback', 99,2 );
 
 /**
  * [rtmedia_edit_media_on_database]
- * Update Media details on database while admin edit reporter media
+ * Update Media details on database while admin edit reported media
  * @param  [Array]  $data	     Image Details
  * @param  [Number] $post_ID     Media ID
  * @return [array]  $data
@@ -616,3 +616,14 @@ function rtmedia_edit_media_on_database( $data, $post_ID ) {
 	return $data;
 }
 add_filter( 'wp_update_attachment_metadata', 'rtmedia_edit_media_on_database', 10, 2 );
+
+
+
+function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_it ){
+	if ( $like_count > 1 && $user_like_it ) {
+		/* if login user has like the comment then less from the total count */
+		$like_count --;
+	}
+    return sprintf( '<span class="rtmedia-like-counter">%s</span>', $like_count );
+}
+add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );

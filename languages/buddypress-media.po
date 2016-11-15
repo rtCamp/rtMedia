@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.1.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-11-15 05:09:11+00:00\n"
+"POT-Creation-Date: 2016-11-15 07:57:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -107,7 +107,7 @@ msgstr ""
 msgid "Comments "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:645 app/main/controllers/media/RTMediaLike.php:21
+#: app/admin/RTMediaAdmin.php:644 app/main/controllers/media/RTMediaLike.php:21
 msgid "Likes"
 msgstr ""
 
@@ -2934,6 +2934,7 @@ msgstr ""
 msgid "Privacy : "
 msgstr ""
 
+<<<<<<< HEAD
 #: app/main/controllers/template/rtmedia-functions.php:2803
 msgid "Public"
 msgstr ""
@@ -2958,19 +2959,57 @@ msgstr ""
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2890
+#: app/main/controllers/template/rtmedia-functions.php:2742
+msgid "you like this"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-functions.php:2754
+msgid "You and "
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-functions.php:2777
+msgid " person likes this"
+msgid_plural " people like this"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/main/controllers/template/rtmedia-functions.php:2884
+msgid "Public"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-functions.php:2889
+msgid "All members"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-functions.php:2894
+msgid "Your friends"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-functions.php:2899
+msgid "Only you"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-functions.php:2904
+msgid "Blocked temporarily"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-functions.php:2957
+msgid "%s ago "
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-functions.php:2971
 msgid "1 second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2894
+#: app/main/controllers/template/rtmedia-functions.php:2975
 msgid "1 minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2898
+#: app/main/controllers/template/rtmedia-functions.php:2979
 msgid "1 hour"
 msgid_plural "%s hours"
 msgstr[0] ""

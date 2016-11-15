@@ -875,11 +875,13 @@ jQuery( document ).ready( function( $ ) {
 
 					rtm_file_title_id = 'text_' + file.id;
 					rtm_file_title_input = '#' + rtm_file_title_id;
+
 					rtm_file_title_wrapper_id = 'rtm_title_wp_' + file.id;
 					rtm_file_title_wrapper = '#' + rtm_file_title_wrapper_id;
 
 					rtm_file_desc_id = 'rtm_desc_' + file.id;
 					rtm_file_desc_input = '#' + rtm_file_desc_id;
+
 					rtm_file_desc_wrapper_id = 'rtm_desc_wp_' + file.id;
 					rtm_file_desc_wrapper = '#' + rtm_file_desc_wrapper_id;
 
@@ -900,27 +902,46 @@ jQuery( document ).ready( function( $ ) {
 
 					jQuery( rtm_file_title_input ).focus();
 
-					jQuery( rtm_file_save_el ).click( function() {
-						var file_title_val = jQuery( rtm_file_title_input ).val();
-						var file_desc_val = jQuery( rtm_file_desc_input ).val();
-						var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
+				} );
 
-						if ( file_title_val != '' ) {
-							file_name_wrapper_el.text( file_title_val + '.' + rtm_file_name_array[ 1 ] );
-							file.title = file_title_val;
-						}
+				rtm_file_save_id = 'save_' + file.id;
+				rtm_file_save_el = '#' + rtm_file_save_id;
+				jQuery( document.body ).on('click', rtm_file_save_el , function( e ) {
+					e.preventDefault();
+					rtm_file_title_id = 'text_' + file.id;
+					rtm_file_title_input = '#' + rtm_file_title_id;
 
-						if ( file_desc_val != '' ) {
-							file.description = file_desc_val;
-						}
+					rtm_file_desc_id = 'rtm_desc_' + file.id;
+					rtm_file_desc_input = '#' + rtm_file_desc_id;
 
-						jQuery( rtm_file_title_wrapper ).hide();
-						jQuery( rtm_file_desc_wrapper ).hide();
-						file_name_wrapper_el.show();
-						jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
-						jQuery( rtm_file_label ).show();
-						jQuery( this ).hide();
-					} );
+					rtm_file_title_wrapper_id = 'rtm_title_wp_' + file.id;
+					rtm_file_title_wrapper = '#' + rtm_file_title_wrapper_id;
+
+					rtm_file_desc_wrapper_id = 'rtm_desc_wp_' + file.id;
+					rtm_file_desc_wrapper = '#' + rtm_file_desc_wrapper_id;
+
+					var file_title_val = jQuery( rtm_file_title_input ).val();
+					var file_desc_val = jQuery( rtm_file_desc_input ).val();
+
+					rtm_file_label = '#label_' + file.id;
+
+					var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
+
+					if ( file_title_val != '' ) {
+						file_name_wrapper_el.text( file_title_val + '.' + rtm_file_name_array[ 1 ] );
+						file.title = file_title_val;
+					}
+
+					if ( file_desc_val != '' ) {
+						file.description = file_desc_val;
+					}
+
+					jQuery( rtm_file_title_wrapper ).hide();
+					jQuery( rtm_file_desc_wrapper ).hide();
+					file_name_wrapper_el.show();
+					jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
+					jQuery( rtm_file_label ).show();
+					jQuery( this ).hide();
 				} );
 			} );
 
@@ -1327,11 +1348,12 @@ jQuery( document ).ready( function( $ ) {
 
 				}
 				$( '.rtmedia-like span' ).html( data.next );
-				$( '.rtmedia-like-counter-wrap' ).html( '<span class="rtmedia-like-counter">' + data.count + '</span> ' + data.person_text );
+				$( '.rtmedia-like-counter-wrap' ).html( data.person_text );
 				$( '.rtm-like-loading' ).remove();
 				$( that ).removeAttr( 'disabled' );
+
 				//Update the like counter
-				$( '.rtmedia-like-counter' ).html( data.count );
+				// $( '.rtmedia-like-counter' ).html( data.count );
 				if ( data.count > 0 ) {
 					$( '.rtmedia-like-info' ).removeClass( 'hide' );
 				} else {
