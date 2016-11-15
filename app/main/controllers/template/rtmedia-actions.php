@@ -680,6 +680,31 @@ function rt_check_addon_status() {
 
 			$addon_active = get_option( 'edd_' . $addon_id . '_active' );
 
+			/**
+			 * Perform action before addon activation or license update
+			 *
+			 * @since 4.2
+			 *
+			 * @param array 			$addon 			Array containing the license_key, addon_id
+			 *                      	 	 			and addon name
+			 * @param object|boolean 	$addon_active 	Detailed license data of the addon, or boolean
+			 *                                    	  	false if data is not present
+			 */
+			do_action( 'rtmedia_before_addon_activate', $addon, $addon_active );
+
+			if ( isset( $addon_active->expires ) && 'lifetime' != $addon_active->expires ) {
+				$now        = current_time( 'timestamp' );
+				$expiration = strtotime( $addon_active->expires, current_time( 'timestamp' ) );
+
+				if ( $now > $expiration ) {
+
+					$addon_active->success 	= false;
+					$addon_active->error 	= 'expired';
+					update_option( 'edd_' . $addon_id . '_active', $addon_active );
+
+				}
+			}
+
 			// Listen for activate button to be clicked
 
 			// Also check if information about the addon in already fetched from the store
