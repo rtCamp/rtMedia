@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.1.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-11-09 09:45:53+00:00\n"
+"POT-Creation-Date: 2016-11-15 05:09:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,435 +24,435 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 
-#: app/admin/RTMediaAdmin.php:147
+#: app/admin/RTMediaAdmin.php:148
 msgid ""
 "Install <a href=\"https://wordpress.org/plugins/transcoder/\" "
 "target=\"_blank\">Transcoder plugin</a> to convert audio/video files and "
 "thumbnails generation."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:193
+#: app/admin/RTMediaAdmin.php:194
 msgid "View &#8220;%s&#8221;"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:193
+#: app/admin/RTMediaAdmin.php:194
 msgid "View"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:259
+#: app/admin/RTMediaAdmin.php:260
 msgid "Check 30+ premium rtMedia add-ons on our <a href=\"%s\">store</a>."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:262
+#: app/admin/RTMediaAdmin.php:263
 msgid "rtMedia: "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:317
+#: app/admin/RTMediaAdmin.php:318
 msgid "Meet InspireBook"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:319
+#: app/admin/RTMediaAdmin.php:320
 msgid " - First official rtMedia premium theme."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:403 app/admin/RTMediaAdmin.php:428
+#: app/admin/RTMediaAdmin.php:404 app/admin/RTMediaAdmin.php:429
 msgid "rtMedia:"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:403
+#: app/admin/RTMediaAdmin.php:404
 msgid " You must"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:403
+#: app/admin/RTMediaAdmin.php:404
 msgid "update permalink structure"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:403
+#: app/admin/RTMediaAdmin.php:404
 msgid "to something other than the default for it to work."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:429
+#: app/admin/RTMediaAdmin.php:430
 msgid "Please update all premium add-ons that you have purchased from"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:431
+#: app/admin/RTMediaAdmin.php:432
 msgid "your account"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:433
+#: app/admin/RTMediaAdmin.php:434
 msgid "Dismiss"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:548
+#: app/admin/RTMediaAdmin.php:549
 msgid "rtMedia Pro is released"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:569
+#: app/admin/RTMediaAdmin.php:570
 msgid "Media Stats"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:599
+#: app/admin/RTMediaAdmin.php:600
 msgid "Usage Stats"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:611
+#: app/admin/RTMediaAdmin.php:612
 msgid "Total "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:622
+#: app/admin/RTMediaAdmin.php:623
 msgid "With Media"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:633
+#: app/admin/RTMediaAdmin.php:634
 msgid "Comments "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:644 app/main/controllers/media/RTMediaLike.php:19
+#: app/admin/RTMediaAdmin.php:645 app/main/controllers/media/RTMediaLike.php:21
 msgid "Likes"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:654
+#: app/admin/RTMediaAdmin.php:655
 msgid "rtMedia Links:"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:655
+#: app/admin/RTMediaAdmin.php:656
 msgid "Homepage"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:657
+#: app/admin/RTMediaAdmin.php:658
 msgid "Free Support"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:660
+#: app/admin/RTMediaAdmin.php:661
 msgid "Premium Addons"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:677
+#: app/admin/RTMediaAdmin.php:678
 msgid "Right Now in rtMedia"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:712 app/admin/RTMediaAdmin.php:746
-#: app/admin/RTMediaAdmin.php:749 app/admin/RTMediaAdmin.php:924
-#: app/admin/RTMediaAdmin.php:1271
+#: app/admin/RTMediaAdmin.php:713 app/admin/RTMediaAdmin.php:747
+#: app/admin/RTMediaAdmin.php:750 app/admin/RTMediaAdmin.php:925
+#: app/admin/RTMediaAdmin.php:1272
 msgid "Settings"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:714 app/admin/RTMediaAdmin.php:770
-#: app/admin/RTMediaAdmin.php:773 app/admin/RTMediaAdmin.php:934
-#: app/admin/RTMediaAdmin.php:1297 app/helper/RTMediaSettings.php:221
-#: app/helper/RTMediaSupport.php:52 app/helper/RTMediaSupport.php:53
+#: app/admin/RTMediaAdmin.php:715 app/admin/RTMediaAdmin.php:771
+#: app/admin/RTMediaAdmin.php:774 app/admin/RTMediaAdmin.php:935
+#: app/admin/RTMediaAdmin.php:1298 app/helper/RTMediaSettings.php:221
+#: app/helper/RTMediaSupport.php:67 app/helper/RTMediaSupport.php:68
 msgid "Support"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:739 app/admin/RTMediaAdmin.php:1243
-#: app/admin/RTMediaAdmin.php:1244 app/importers/RTMediaActivityUpgrade.php:116
+#: app/admin/RTMediaAdmin.php:740 app/admin/RTMediaAdmin.php:1244
+#: app/admin/RTMediaAdmin.php:1245 app/importers/RTMediaActivityUpgrade.php:116
 #: app/importers/RTMediaMigration.php:68 app/main/RTMedia.php:939
 msgid "rtMedia"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:758 app/admin/RTMediaAdmin.php:761
-#: app/admin/RTMediaAdmin.php:929 app/admin/RTMediaAdmin.php:1276
+#: app/admin/RTMediaAdmin.php:759 app/admin/RTMediaAdmin.php:762
+#: app/admin/RTMediaAdmin.php:930 app/admin/RTMediaAdmin.php:1277
 msgid "Addons"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:782 app/admin/RTMediaAdmin.php:785
-#: app/admin/RTMediaAdmin.php:940 app/admin/RTMediaAdmin.php:1284
+#: app/admin/RTMediaAdmin.php:783 app/admin/RTMediaAdmin.php:786
+#: app/admin/RTMediaAdmin.php:941 app/admin/RTMediaAdmin.php:1285
 msgid "Themes"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:795 app/admin/RTMediaAdmin.php:798
-#: app/admin/RTMediaAdmin.php:947 app/admin/RTMediaAdmin.php:1290
+#: app/admin/RTMediaAdmin.php:796 app/admin/RTMediaAdmin.php:799
+#: app/admin/RTMediaAdmin.php:948 app/admin/RTMediaAdmin.php:1291
 msgid "Hire Us"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:808 app/admin/RTMediaAdmin.php:811
-#: app/admin/RTMediaAdmin.php:954 app/admin/RTMediaAdmin.php:1304
+#: app/admin/RTMediaAdmin.php:809 app/admin/RTMediaAdmin.php:812
+#: app/admin/RTMediaAdmin.php:955 app/admin/RTMediaAdmin.php:1305
 msgid "Licenses"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:862
+#: app/admin/RTMediaAdmin.php:863
 msgid "ON"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:863
+#: app/admin/RTMediaAdmin.php:864
 msgid "OFF"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:869
+#: app/admin/RTMediaAdmin.php:870
 msgid "Please do not refresh this page."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:870
+#: app/admin/RTMediaAdmin.php:871
 msgid "Something went wrong. Please "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:870
+#: app/admin/RTMediaAdmin.php:871
 msgid "refresh"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:870
+#: app/admin/RTMediaAdmin.php:871
 msgid " page."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:871
+#: app/admin/RTMediaAdmin.php:872
 msgid "This will subscribe you to the free plan."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:872
+#: app/admin/RTMediaAdmin.php:873
 msgid "Are you sure you want to disable the encoding service?"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:873
+#: app/admin/RTMediaAdmin.php:874
 msgid "Are you sure you want to enable the encoding service?"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:874
+#: app/admin/RTMediaAdmin.php:875
 msgid "Settings have changed, you should save them!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:875
+#: app/admin/RTMediaAdmin.php:876
 msgid ""
 "Number of video thumbnails to be generated should be greater than 0 in "
 "media sizes settings. Setting it to default value 2."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:876
+#: app/admin/RTMediaAdmin.php:877
 msgid ""
 "Invalid value for number of video thumbnails in media sizes settings. "
 "Setting it to round value"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:877
+#: app/admin/RTMediaAdmin.php:878
 msgid ""
 "Number of percentage in JPEG image quality should be greater than 0 in "
 "media sizes settings. Setting it to default value 90."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:878
+#: app/admin/RTMediaAdmin.php:879
 msgid ""
 "Number of percentage in JPEG image quality should be less than 100 in media "
 "sizes settings. Setting it to 100."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:879
+#: app/admin/RTMediaAdmin.php:880
 msgid ""
 "Invalid value for percentage in JPEG image quality in media sizes settings. "
 "Setting it to round value"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:880
+#: app/admin/RTMediaAdmin.php:881
 msgid ""
 "Please enter positive integer value only. Setting number of media per page "
 "value to default value 10."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:881
+#: app/admin/RTMediaAdmin.php:882
 msgid ""
 "Please enter positive integer value only. Setting number of media per page "
 "value to round value"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:882
+#: app/admin/RTMediaAdmin.php:883
 msgid "Request failed."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:890
+#: app/admin/RTMediaAdmin.php:891
 msgid "Please enter WP Admin Login."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:891
+#: app/admin/RTMediaAdmin.php:892
 msgid "Please enter WP Admin password."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:892
+#: app/admin/RTMediaAdmin.php:893
 msgid "Please enter SSH / FTP host."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:893
+#: app/admin/RTMediaAdmin.php:894
 msgid "Please enter SSH / FTP login."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:894
+#: app/admin/RTMediaAdmin.php:895
 msgid "Please enter SSH / FTP password."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:895
+#: app/admin/RTMediaAdmin.php:896
 msgid "Please fill all the fields."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1125
+#: app/admin/RTMediaAdmin.php:1126
 msgid "Empowering The Web With WordPress"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1146
+#: app/admin/RTMediaAdmin.php:1147
 msgid "Settings saved successfully!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1152 app/admin/RTMediaAdmin.php:1181
+#: app/admin/RTMediaAdmin.php:1153 app/admin/RTMediaAdmin.php:1182
 msgid "Save Settings"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1378 app/admin/RTMediaAdmin.php:1379
+#: app/admin/RTMediaAdmin.php:1379 app/admin/RTMediaAdmin.php:1380
 msgid "Display"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1387
+#: app/admin/RTMediaAdmin.php:1388
 msgid "rtMedia BuddyPress"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1388
+#: app/admin/RTMediaAdmin.php:1389
 msgid "BuddyPress"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1396
+#: app/admin/RTMediaAdmin.php:1397
 msgid "rtMedia Types"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1397
+#: app/admin/RTMediaAdmin.php:1398
 msgid "Types"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1404
+#: app/admin/RTMediaAdmin.php:1405
 msgid "rtMedia Sizes"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1405
+#: app/admin/RTMediaAdmin.php:1406
 msgid "Media Sizes"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1412
+#: app/admin/RTMediaAdmin.php:1413
 msgid "rtMedia Privacy"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1413
+#: app/admin/RTMediaAdmin.php:1414
 #: app/main/controllers/privacy/RTMediaPrivacy.php:417
 msgid "Privacy"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1419
+#: app/admin/RTMediaAdmin.php:1420
 msgid "rtMedia Custom CSS"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1420
+#: app/admin/RTMediaAdmin.php:1421
 msgid "Custom CSS"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1429 app/admin/RTMediaAdmin.php:1430
+#: app/admin/RTMediaAdmin.php:1430 app/admin/RTMediaAdmin.php:1431
 msgid "Other Settings"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1477
+#: app/admin/RTMediaAdmin.php:1478
 msgid "I use @rtMediaWP http://rt.cx/rtmedia on %s"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1479
+#: app/admin/RTMediaAdmin.php:1480
 msgid "Post to Twitter Now"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1479
+#: app/admin/RTMediaAdmin.php:1480
 msgid "Post to Twitter"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1480
+#: app/admin/RTMediaAdmin.php:1481
 msgid "Share on Facebook Now"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1480
+#: app/admin/RTMediaAdmin.php:1481
 msgid "Share on Facebook"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1481
+#: app/admin/RTMediaAdmin.php:1482
 msgid "Rate rtMedia on Wordpress.org"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1481
+#: app/admin/RTMediaAdmin.php:1482
 msgid "Rate on Wordpress.org"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1482
+#: app/admin/RTMediaAdmin.php:1483
 msgid "Subscribe to our Feeds"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1485
+#: app/admin/RTMediaAdmin.php:1486
 msgid "Spread the Word"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1491 app/admin/RTMediaAdmin.php:1498
+#: app/admin/RTMediaAdmin.php:1492 app/admin/RTMediaAdmin.php:1499
 msgid "Subscribe"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1529
+#: app/admin/RTMediaAdmin.php:1530
 msgid "Thank you for your time."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1542
+#: app/admin/RTMediaAdmin.php:1543
 msgid "Premium Add-ons"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1560
+#: app/admin/RTMediaAdmin.php:1561
 msgid ""
 "You have images enabled on rtMedia but your network allowed filetypes do "
 "not permit uploading of %s. Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1561 app/admin/RTMediaAdmin.php:1579
-#: app/admin/RTMediaAdmin.php:1597 app/admin/RTMediaFormHandler.php:435
+#: app/admin/RTMediaAdmin.php:1562 app/admin/RTMediaAdmin.php:1580
+#: app/admin/RTMediaAdmin.php:1598 app/admin/RTMediaFormHandler.php:435
 #: app/admin/RTMediaFormHandler.php:446 app/helper/RTMediaSettings.php:297
-#: app/helper/RTMediaSupport.php:385 app/helper/RTMediaSupport.php:654
+#: app/helper/RTMediaSupport.php:415 app/helper/RTMediaSupport.php:694
 msgid "here"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1562 app/admin/RTMediaAdmin.php:1580
-#: app/admin/RTMediaAdmin.php:1598
+#: app/admin/RTMediaAdmin.php:1563 app/admin/RTMediaAdmin.php:1581
+#: app/admin/RTMediaAdmin.php:1599
 msgid " to change your settings manually."
-msgstr ""
-
-#: app/admin/RTMediaAdmin.php:1564 app/admin/RTMediaAdmin.php:1582
-#: app/admin/RTMediaAdmin.php:1600
-msgid "Recommended:"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1565 app/admin/RTMediaAdmin.php:1583
 #: app/admin/RTMediaAdmin.php:1601
+msgid "Recommended:"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:1566 app/admin/RTMediaAdmin.php:1584
+#: app/admin/RTMediaAdmin.php:1602
 msgid "Update Network Settings Automatically"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1578
+#: app/admin/RTMediaAdmin.php:1579
 msgid ""
 "You have video enabled on BuddyPress Media but your network allowed "
 "filetypes do not permit uploading of mp4. Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1596
+#: app/admin/RTMediaAdmin.php:1597
 msgid ""
 "You have audio enabled on BuddyPress Media but your network allowed "
 "filetypes do not permit uploading of mp3. Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1617
+#: app/admin/RTMediaAdmin.php:1618
 msgid "Network settings updated successfully."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1670
+#: app/admin/RTMediaAdmin.php:1671
 msgid ""
 "Please update rtMedia template files if you have overridden the default "
 "rtMedia templates in your theme. If not, you can ignore and hide this "
 "notice."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1670
+#: app/admin/RTMediaAdmin.php:1671
 #: app/importers/RTMediaMediaSizeImporter.php:73
 #: app/importers/RTMediaMigration.php:68
 msgid "Hide"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1810
+#: app/admin/RTMediaAdmin.php:1811
 msgid ""
 "Your license keys can be found on <a href=\"%s\">my-account</a> page. For "
 "more details, please refer to <a href=\"%s\">License documentation</a> page."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1827
+#: app/admin/RTMediaAdmin.php:1828
 msgid ""
 "We found an invalid or expired license key for an rtMedia add-on. Please go "
 "to the <a href=\"%s\">Licenses page</a> to fix this issue."
@@ -1420,163 +1420,171 @@ msgid ""
 "a new issue on "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:403 app/helper/RTMediaSupport.php:436
+#: app/helper/RTMediaSettings.php:403 app/helper/RTMediaSupport.php:466
 msgid "GitHub"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:59 app/helper/RTMediaSupport.php:60
-#: app/helper/RTMediaSupport.php:327 app/helper/RTMediaSupport.php:619
+#: app/helper/RTMediaSupport.php:43 app/helper/RTMediaSupport.php:570
+msgid "Cheatin' uh?"
+msgstr ""
+
+#: app/helper/RTMediaSupport.php:44 app/helper/RTMediaSupport.php:571
+msgid "Can not verify request source."
+msgstr ""
+
+#: app/helper/RTMediaSupport.php:74 app/helper/RTMediaSupport.php:75
+#: app/helper/RTMediaSupport.php:350 app/helper/RTMediaSupport.php:657
 msgid "Debug Info"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:69 app/helper/RTMediaSupport.php:70
+#: app/helper/RTMediaSupport.php:84 app/helper/RTMediaSupport.php:85
 #: app/importers/RTMediaMigration.php:87
 msgid "Migration"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:142
+#: app/helper/RTMediaSupport.php:157
 msgid "Service"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:149
+#: app/helper/RTMediaSupport.php:164
 msgid "Premium Support"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:155
+#: app/helper/RTMediaSupport.php:170
 msgid "Bug Report"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:161
+#: app/helper/RTMediaSupport.php:176
 msgid "New Feature"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:163
+#: app/helper/RTMediaSupport.php:178
 msgid "Submit"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:210
+#: app/helper/RTMediaSupport.php:225
 msgid "by"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:210
+#: app/helper/RTMediaSupport.php:225
 msgid "version"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:379
+#: app/helper/RTMediaSupport.php:370
+msgid "Download Debug Info"
+msgstr ""
+
+#: app/helper/RTMediaSupport.php:409
 msgid "There is no media found to migrate."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:385
+#: app/helper/RTMediaSupport.php:415
 #: app/main/controllers/media/RTMediaLoginPopup.php:56
 msgid "Click"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:385
+#: app/helper/RTMediaSupport.php:415
 msgid "here to migrate media from rtMedia 2.x to rtMedia 3.0+."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:413
+#: app/helper/RTMediaSupport.php:443
 msgid "Submit a Bug Report"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:416
+#: app/helper/RTMediaSupport.php:446
 msgid "Submit a New Feature Request"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:419
+#: app/helper/RTMediaSupport.php:449
 msgid "Submit Support Request"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:428
+#: app/helper/RTMediaSupport.php:458
 msgid ""
 "If your site has some issues due to rtMedia and you want support, feel free "
 "to create a support topic on %s"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:429
+#: app/helper/RTMediaSupport.php:459
 msgid "Community Forum"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:435
+#: app/helper/RTMediaSupport.php:465
 msgid ""
 "If you have any suggestions, enhancements or bug reports, then you can open "
 "a new issue on %s"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:455
+#: app/helper/RTMediaSupport.php:485
 msgid "Name"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:460
+#: app/helper/RTMediaSupport.php:490
 msgid "Use actual user name which used during purchased."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:467
+#: app/helper/RTMediaSupport.php:497
 msgid "Email"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:472
+#: app/helper/RTMediaSupport.php:502
 msgid "Use email id which used during purchased"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:479
+#: app/helper/RTMediaSupport.php:509
 msgid "Website"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:487
+#: app/helper/RTMediaSupport.php:517
 msgid "Subject"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:495 templates/media/album-single-edit.php:20
+#: app/helper/RTMediaSupport.php:525 templates/media/album-single-edit.php:20
 #: templates/media/media-single-edit.php:17
 msgid "Details"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:533
-msgid "Cheatin' uh?"
+#: app/helper/RTMediaSupport.php:541
+msgid "Attachement"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:534
-msgid "Can not verify request source."
-msgstr ""
-
-#: app/helper/RTMediaSupport.php:549
+#: app/helper/RTMediaSupport.php:587
 msgid "rtMedia Premium Support Request from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:552
+#: app/helper/RTMediaSupport.php:590
 msgid "rtMedia New Feature Request from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:555
+#: app/helper/RTMediaSupport.php:593
 msgid "rtMedia Bug Report from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:558
+#: app/helper/RTMediaSupport.php:596
 msgid "rtMedia Contact from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:641
+#: app/helper/RTMediaSupport.php:681
 msgid "Thank you for your Feedback/Suggestion."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:643
+#: app/helper/RTMediaSupport.php:683
 msgid "Thank you for posting your support request."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:644
+#: app/helper/RTMediaSupport.php:684
 msgid "We will get back to you shortly."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:649
+#: app/helper/RTMediaSupport.php:689
 msgid "Your server failed to send an email."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:650
+#: app/helper/RTMediaSupport.php:690
 msgid "Kindly contact your server support to fix this."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:653
+#: app/helper/RTMediaSupport.php:693
 msgid "You can alternatively create a support request %s"
 msgstr ""
 
@@ -2674,10 +2682,19 @@ msgid "Delete this media"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaLike.php:18
-msgid "Like"
+#: app/main/controllers/template/rtmedia-functions.php:2703
+msgid "person likes this"
+msgstr ""
+
+#: app/main/controllers/media/RTMediaLike.php:19
+msgid "people like this"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaLike.php:20
+msgid "Like"
+msgstr ""
+
+#: app/main/controllers/media/RTMediaLike.php:22
 msgid "Unlike"
 msgstr ""
 
@@ -2895,7 +2912,7 @@ msgid "Type Comment..."
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-functions.php:1857
-#: templates/media/media-single.php:103 templates/media/media-single.php:146
+#: templates/media/media-single.php:103 templates/media/media-single.php:147
 msgid "Comment"
 msgstr ""
 
@@ -2917,47 +2934,43 @@ msgstr ""
 msgid "Privacy : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2699
-msgid "people like this"
-msgstr ""
-
-#: app/main/controllers/template/rtmedia-functions.php:2796
+#: app/main/controllers/template/rtmedia-functions.php:2803
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2801
+#: app/main/controllers/template/rtmedia-functions.php:2808
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2806
+#: app/main/controllers/template/rtmedia-functions.php:2813
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2811
+#: app/main/controllers/template/rtmedia-functions.php:2818
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2816
+#: app/main/controllers/template/rtmedia-functions.php:2823
 msgid "Blocked temporarily"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2869
+#: app/main/controllers/template/rtmedia-functions.php:2876
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2883
+#: app/main/controllers/template/rtmedia-functions.php:2890
 msgid "1 second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2887
+#: app/main/controllers/template/rtmedia-functions.php:2894
 msgid "1 minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2891
+#: app/main/controllers/template/rtmedia-functions.php:2898
 msgid "1 hour"
 msgid_plural "%s hours"
 msgstr[0] ""
