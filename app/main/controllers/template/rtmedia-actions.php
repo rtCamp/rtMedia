@@ -613,10 +613,10 @@ if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
 
 		$html = '';
 		if ( isset( $previous ) && $previous ) {
-			$html .= '<div class="previous-pagination"><a href="' . esc_url( get_rtmedia_permalink( $previous ) ) . '" title="' . esc_html__( 'previous', 'buddypress-media' ) . '">' . esc_html__( 'previous', 'buddypress-media' ) . '</a></div>';
+			$html .= '<div class="previous-pagination"><a href="' . esc_url( get_rtmedia_permalink( $previous ) ) . '" title="' . apply_filters( 'rtmedia_pagination_title_previous', esc_html__( 'previous', 'buddypress-media' ) ) . '">' . apply_filters( 'rtmedia_pagination_label_previous', esc_html__( 'previous', 'buddypress-media' ) ) . '</a></div>';
 		}
 		if ( isset( $next ) && $next ) {
-			$html .= '<div class="next-pagination"><a href="' . esc_url( get_rtmedia_permalink( $next ) ) . '" title="' . esc_html__( 'next media', 'buddypress-media' ) . '">' . esc_html__( 'next', 'buddypress-media' ) . '</a></div>';
+			$html .= '<div class="next-pagination"><a href="' . esc_url( get_rtmedia_permalink( $next ) ) . '" title="' . apply_filters( 'rtmedia_pagination_title_next', esc_html__( 'next', 'buddypress-media' ) ) . '">' . apply_filters( 'rtmedia_pagination_label_next', esc_html__( 'next', 'buddypress-media' ) ) . '</a></div>';
 		}
 		echo $html; // @codingStandardsIgnoreLine
 	}

@@ -556,7 +556,7 @@ add_filter( 'attachment_link', 'rtmedia_attachment_link_callback', 99,2 );
 
 /**
  * [rtmedia_edit_media_on_database]
- * Update Media details on database while admin edit reporter media
+ * Update Media details on database while admin edit reported media
  * @param  [Array]  $data	     Image Details
  * @param  [Number] $post_ID     Media ID
  * @return [array]  $data
