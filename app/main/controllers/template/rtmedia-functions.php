@@ -2727,62 +2727,60 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 	function rtmedia_who_like_html( $like_count, $user_like_it ){
 		if ( $like_count == 1 && $user_like_it ) {
 			/**
-			 * rtmedia you like text
-			 *
-			 * @param array $html TEXT
-			 * @param int $like_count Total Like
-			 * @param int $user_like_it User Like it or Not
-			 * @uses apply_filters() Calls 'rtmedia_like_html_you_only_like' with TEXT, like_count, user_like_it
-			 * @return html TEXT to  display
-			 */
+			* rtmedia you like text
+			*
+			* @param $html TEXT
+			* @param int $like_count Total Like
+			* @param int $user_like_it User Like it or Not
+			* @uses apply_filters() Calls 'rtmedia_like_html_you_only_like' with TEXT, like_count, user_like_it
+			* @return html TEXT to  display
+			*/
 			$html =  apply_filters( 'rtmedia_like_html_you_only_like', esc_html( 'you like this', 'buddypress-media' ), $like_count, $user_like_it );
 		} elseif ( $like_count ) {
 			if ( $like_count > 1 && $user_like_it ) {
 				/**
-				 * rtmedia you and
-				 *
-				 * @param array $html TEXT
-				 * @param int $like_count Total Like
-				 * @param int $user_like_it User Like it or Not
-				 * @uses apply_filters() Calls 'rtmedia_like_html_you_and_more_like' with TEXT, like_count, user_like_it
-				 * @return html TEXT to  display
-				 */
-				 $html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
-				/* if login user has like the comment then less from the total count */
-				$like_count --;
+				* rtmedia you and
+				*
+				* @param $html TEXT
+				* @param int $like_count Total Like
+				* @param int $user_like_it User Like it or Not
+				* @uses apply_filters() Calls 'rtmedia_like_html_you_and_more_like' with TEXT, like_count, user_like_it
+				* @return html TEXT to  display
+				*/
+				$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
 			}
 
 			/**
-			 * rtmedia Disaply count
-			 *
-			 * @param int $like_count Total Like ( if login user had like it it will be minutes 1 )
-			 * @param int $user_like_it User Like it or Not
-			 * @uses apply_filters() Calls 'rtmedia_like_html_you_and_more_like' like_count, user_like_it
-			 * @return INT Count to  display
-			 */
-	     	$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', $like_count, $user_like_it );
+			* rtmedia Disaply count
+			*
+			* @param int $like_count Total Like
+			* @param int $user_like_it User Like it or Not
+			* @uses apply_filters() Calls 'rtmedia_like_html_you_and_more_like' like_count, user_like_it
+			* @return INT Count to  display
+			*/
+			$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', $like_count, $user_like_it );
 
-	     	/**
-			 * rtmedia person or people likes it
-			 *
-			 * @param array $html TEXT
-			 * @param int $like_count Total Like ( if login user had like it it will be minutes 1 )
-			 * @param int $user_like_it User Like it or Not
-			 * @uses apply_filters() Calls 'rtmedia_like_html_othe_likes_this' with TEXT, like_count, user_like_it
-			 * @return html TEXT to  display
-			 */
-	     	$html .=  apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count, 'buddypress-media' ) ,$like_count, $user_like_it );
+			/**
+			* rtmedia person or people likes it
+			*
+			* @param $html TEXT
+			* @param int $like_count Total Like
+			* @param int $user_like_it User Like it or Not
+			* @uses apply_filters() Calls 'rtmedia_like_html_othe_likes_this' with TEXT, like_count, user_like_it
+			* @return html TEXT to  display
+			*/
+			$html .=  apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count, 'buddypress-media' ) ,$like_count, $user_like_it );
 		}
 
 		/**
-		 * rtmedia return hole HTML
-		 *
-		 * @param array $html TEXT
-		 * @param int $like_count Total Like ( if login user had like it it will be minutes 1 )
-		 * @param int $user_like_it User Like it or Not
-		 * @uses apply_filters() Calls 'rtmedia_who_like_html' with TEXT, like_count, user_like_it
-		 * @return html TEXT to  display
-		 */
+		* rtmedia return whole HTML
+		*
+		* @param $html TEXT
+		* @param int $like_count Total Like
+		* @param int $user_like_it User Like it or Not
+		* @uses apply_filters() Calls 'rtmedia_who_like_html' with TEXT, like_count, user_like_it
+		* @return html TEXT to  display
+		*/
 		$html =  apply_filters( 'rtmedia_who_like_html', $html ,$like_count, $user_like_it );
 		return $html;
 	}
