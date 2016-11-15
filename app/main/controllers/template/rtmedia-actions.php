@@ -614,19 +614,19 @@ if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
 		$html = '';
 
 		$pagination_label = array(
-			'previous_title'	=> esc_html__( 'Previous', 'buddypress-media' ),
-			'previous_label'	=> esc_html__( 'Previous', 'buddypress-media' ),
-			'next_title'		=> esc_html__( 'Next', 'buddypress-media' ),
-			'next_label'		=> esc_html__( 'Next', 'buddypress-media' ),
+			'previous_title'	=> __( 'Previous', 'buddypress-media' ),
+			'previous_label'	=> __( 'Previous', 'buddypress-media' ),
+			'next_title'		=> __( 'Next', 'buddypress-media' ),
+			'next_label'		=> __( 'Next', 'buddypress-media' ),
 		);
 
 		$pagination_label = apply_filters( 'rtmedia_media_pagination_label', $pagination_label );
 
 		if ( isset( $previous ) && $previous ) {
-			$html .= '<div class="previous-pagination"><a href="' . esc_url( get_rtmedia_permalink( $previous ) ) . '" title="' . $pagination_label['previous_title'] . '">' . $pagination_label['previous_label'] . '</a></div>';
+			$html .= '<div class="previous-pagination"><a href="' . esc_url( get_rtmedia_permalink( $previous ) ) . '" title="' . esc_html( $pagination_label['previous_title'] ) . '">' . esc_html( $pagination_label['previous_label'] ) . '</a></div>';
 		}
 		if ( isset( $next ) && $next ) {
-			$html .= '<div class="next-pagination"><a href="' . esc_url( get_rtmedia_permalink( $next ) ) . '" title="' . $pagination_label['next_title'] . '">' . $pagination_label['next_label'] . '</a></div>';
+			$html .= '<div class="next-pagination"><a href="' . esc_url( get_rtmedia_permalink( $next ) ) . '" title="' . esc_html( $pagination_label['next_title'] ) . '">' . esc_html( $pagination_label['next_label'] ) . '</a></div>';
 		}
 		echo $html; // @codingStandardsIgnoreLine
 	}
