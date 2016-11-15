@@ -662,8 +662,30 @@ function rtm_get_album_media_count( $album_id ) {
  * HTML markup for displaying Media Count of album in album list gallery
  */
 function rtm_album_media_count() {
+
+	$rtmedia_album_count_status = array(
+		'status'		=> true,
+		'before_string'	=> '',
+		'after_string'	=> '',
+	);
+
+	/**
+	 * $rtmedia_album_count_status Filter to update album count status, add string before/after count.
+	 * @var $rtmedia_album_count_status
+	 * status         boolean  true/false
+	 * before_string  string
+	 * after_string   string
+	 * @return [array]
+	 * by: Yahil
+	 */
+	$rtmedia_album_count_status = apply_filters( 'rtmedia_string_before_album_count', $rtmedia_album_count_status );
+
+	if ( $rtmedia_album_count_status['status'] ) {
+		?>
+		<div class="rtmedia-album-media-count" title="<?php echo rtm_get_album_media_count( rtmedia_id() ) . ' ' . RTMEDIA_MEDIA_LABEL; ?>"><?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . rtm_get_album_media_count( rtmedia_id() ) . esc_html( $rtmedia_album_count_status['after_string'] ) ?></div>
+		<?php
+	}
 	?>
-	<div class="rtmedia-album-media-count" title="<?php echo rtm_get_album_media_count( rtmedia_id() ) . ' ' . RTMEDIA_MEDIA_LABEL; ?>"><?php echo rtm_get_album_media_count( rtmedia_id() ); ?></div>
 	<?php
 }
 
