@@ -2725,6 +2725,7 @@ function show_rtmedia_like_counts() {
  */
 if( ! function_exists( 'rtmedia_who_like_html' ) ){
 	function rtmedia_who_like_html( $like_count, $user_like_it ){
+		$like_count_new = $like_count;
 		if ( $like_count == 1 && $user_like_it ) {
 			/**
 			* rtmedia you like text
@@ -2735,7 +2736,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 			* @uses apply_filters() Calls 'rtmedia_like_html_you_only_like' with TEXT, like_count, user_like_it
 			* @return html TEXT to  display
 			*/
-			$html =  apply_filters( 'rtmedia_like_html_you_only_like', esc_html( 'you like this', 'buddypress-media' ), $like_count, $user_like_it );
+			$html =  apply_filters( 'rtmedia_like_html_you_only_like', esc_html__( 'you like this', 'buddypress-media' ), $like_count, $user_like_it );
 		} elseif ( $like_count ) {
 			if ( $like_count > 1 && $user_like_it ) {
 				/**
@@ -2747,7 +2748,8 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 				* @uses apply_filters() Calls 'rtmedia_like_html_you_and_more_like' with TEXT, like_count, user_like_it
 				* @return html TEXT to  display
 				*/
-				$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
+				$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html__( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
+				$like_count_new--;
 			}
 
 			/**
@@ -2769,7 +2771,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 			* @uses apply_filters() Calls 'rtmedia_like_html_othe_likes_this' with TEXT, like_count, user_like_it
 			* @return html TEXT to  display
 			*/
-			$html .=  apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count, 'buddypress-media' ) ,$like_count, $user_like_it );
+			$html .=  apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count_new, 'buddypress-media' ) ,$like_count, $user_like_it );
 		}
 
 		/**
