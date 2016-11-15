@@ -670,13 +670,12 @@ function rtm_album_media_count() {
 	);
 
 	/**
-	 * $rtmedia_album_count_status Filter to update album count status, add string before/after count.
-	 * @var $rtmedia_album_count_status
-	 * status         boolean  true/false
-	 * before_string  string
-	 * after_string   string
-	 * @return [array]
-	 * by: Yahil
+	 * rtmedia_string_album_count Filter to update album count status, add string before/after count.
+	 *
+	 * @since 4.8
+	 *
+	 * @param array $rtmedia_album_count_status status, before_string, after_string
+	 *
 	 */
 	$rtmedia_album_count_status = apply_filters( 'rtmedia_string_album_count', $rtmedia_album_count_status );
 
