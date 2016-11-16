@@ -2934,7 +2934,6 @@ msgstr ""
 msgid "Privacy : "
 msgstr ""
 
-<<<<<<< HEAD
 #: app/main/controllers/template/rtmedia-functions.php:2803
 msgid "Public"
 msgstr ""
