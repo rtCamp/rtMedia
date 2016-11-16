@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.1.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-11-15 07:57:38+00:00\n"
+"POT-Creation-Date: 2016-11-16 11:10:19+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2850,23 +2850,30 @@ msgstr ""
 msgid "Contact Us"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:616
-msgid "previous"
+#: app/main/controllers/template/rtmedia-actions.php:617
+#: app/main/controllers/template/rtmedia-actions.php:618
+msgid "Previous"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-actions.php:619
-msgid "next media"
+#: app/main/controllers/template/rtmedia-actions.php:620
+#: templates/media/album-single-edit.php:121
+msgid "Next"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:619
-msgid "next"
+#: app/main/controllers/template/rtmedia-actions.php:801
+msgid "Settings has been saved successfully."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:738
+#: app/main/controllers/template/rtmedia-actions.php:805
+msgid "Refresh the page in case if license data is not showing correct."
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:823
 msgid "Posted a status update"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:740
+#: app/main/controllers/template/rtmedia-actions.php:825
 msgid "Updates"
 msgstr ""
 
@@ -2925,57 +2932,57 @@ msgstr ""
 msgid "Privacy : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2742
-msgid "you like this"
+#: app/main/controllers/template/rtmedia-functions.php:2740
+msgid "You like this"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2754
+#: app/main/controllers/template/rtmedia-functions.php:2750
 msgid "You and "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2777
+#: app/main/controllers/template/rtmedia-functions.php:2769
 msgid " person likes this"
 msgid_plural " people like this"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2884
+#: app/main/controllers/template/rtmedia-functions.php:2874
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2889
+#: app/main/controllers/template/rtmedia-functions.php:2879
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2894
+#: app/main/controllers/template/rtmedia-functions.php:2884
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2899
+#: app/main/controllers/template/rtmedia-functions.php:2889
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2904
+#: app/main/controllers/template/rtmedia-functions.php:2894
 msgid "Blocked temporarily"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2957
+#: app/main/controllers/template/rtmedia-functions.php:2947
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2971
+#: app/main/controllers/template/rtmedia-functions.php:2961
 msgid "1 second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2975
+#: app/main/controllers/template/rtmedia-functions.php:2965
 msgid "1 minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2979
+#: app/main/controllers/template/rtmedia-functions.php:2969
 msgid "1 hour"
 msgid_plural "%s hours"
 msgstr[0] ""
@@ -3108,10 +3115,6 @@ msgstr ""
 
 #: templates/media/album-single-edit.php:110
 msgid "Prev"
-msgstr ""
-
-#: templates/media/album-single-edit.php:121
-msgid "Next"
 msgstr ""
 
 #: templates/media/album-single-edit.php:124
