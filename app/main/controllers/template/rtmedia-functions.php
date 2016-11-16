@@ -3480,3 +3480,66 @@ function rtmedia_activity_comment( $activity_id ) {
 	}
 	return $activity_comment_content;
 }
+
+/**
+ * Send the request to the rtmedia server for addon license validation
+ * and activation
+ *
+ * @since 4.2
+ *
+ * @param array $addon 		Array containing the license_key, addon_id
+ *                      	and addon name
+ *
+ * @return obejct|boolean 	Addon license data/status from server or the false on error
+ */
+function rtmedia_activate_addon_license( $addon = array() ) {
+
+	if ( empty( $addon ) || ! is_array( $addon ) || count( $addon ) < 1 ) {
+		return false;
+	}
+
+	if ( ! isset( $addon['args'] ) ) {
+		return false;
+	}
+
+	if ( empty( $addon['args']['license_key'] ) || empty( $addon['name'] ) || empty( $addon['args']['addon_id'] ) ) {
+		return false;
+	}
+
+
+	$license 	= $addon['args']['license_key'];
+
+	$addon_name = $addon['name'];
+
+	$addon_id 	= $addon['args']['addon_id'];
+
+	// Get the store URL from the constant defined in the addon
+	$store_url 	= constant( 'EDD_' . strtoupper( $addon_id ) . '_STORE_URL' );
+
+	// If store URL not found in the addon, use the default store URL
+	if ( empty( $store_url ) ) {
+		$store_url = 'https://rtmedia.io/';
+	}
+
+	// data to send in our API request
+	$api_params = array(
+		'edd_action' => 'activate_license',
+		'license'    => $license,
+		'item_name'  => urlencode( $addon_name ), // the name of our product in EDD
+		'url'        => home_url(),
+	);
+
+    // Call the custom API.
+	$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $store_url ) ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+	// make sure the response came back okay
+	if ( is_wp_error( $response ) ) {
+		return false;
+	}
+
+	// decode the license data
+	$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+	return $license_data;
+
+}
