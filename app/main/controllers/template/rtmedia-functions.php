@@ -3507,12 +3507,10 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 		return false;
 	}
 
-	if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
+	if ( empty( $addon['args']['license_key'] ) || empty( $addon['name'] ) || empty( $addon['args']['addon_id'] ) ) {
 		return false;
 	}
 
-
-	$args = wp_parse_args( $linkdata, $defaults );
 
 	$license 	= $addon['args']['license_key'];
 
