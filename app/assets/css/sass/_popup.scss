@@ -1,14 +1,13 @@
 /*
 * popup autocomplete
  */
-#atwho-container{
-	#atwho-ground-comment_content{
-		.atwho-view{
-  			z-index: 2147483647;
+#atwho-container {
+	#atwho-ground-comment_content {
+		.atwho-view {
+			z-index: 2147483647;
 		}
 	}
 }
-
 
 // Additional Styles
 .mfp-content {
@@ -132,6 +131,8 @@
 			padding: 0 6px;
 			text-shadow: 0 0 0;
 			text-transform: none;
+			font-size: 13px;
+			text-align: left;
 		}
 
 		.rtmedia-delete-favlist {
@@ -305,7 +306,7 @@
 	.dashicons {
 		font-size: 14px;
 		line-height: 1.5;
-                margin-top: -2px;
+		margin-top: -2px;
 	}
 }
 
