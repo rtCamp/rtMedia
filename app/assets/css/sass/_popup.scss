@@ -119,6 +119,14 @@
 
 #buddypress #rtm-media-options-list {
 	.rtm-options {
+		form button {
+			font-size: small;
+		}
+	}
+}
+
+#buddypress #rtm-media-options-list {
+	.rtm-options {
 		.button {
 			background: transparent;
 			border: 0 none;
@@ -131,8 +139,6 @@
 			padding: 0 6px;
 			text-shadow: 0 0 0;
 			text-transform: none;
-			font-size: 13px;
-			text-align: left;
 		}
 
 		.rtmedia-delete-favlist {
