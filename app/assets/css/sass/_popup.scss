@@ -1,14 +1,13 @@
 /*
 * popup autocomplete
  */
-#atwho-container{
-	#atwho-ground-comment_content{
-		.atwho-view{
-  			z-index: 2147483647;
+#atwho-container {
+	#atwho-ground-comment_content {
+		.atwho-view {
+			z-index: 2147483647;
 		}
 	}
 }
-
 
 // Additional Styles
 .mfp-content {
@@ -115,6 +114,14 @@
 		color: #333;
 		margin: 0 auto;
 		padding: 0 4px 0 0;
+	}
+}
+
+#buddypress #rtm-media-options-list {
+	.rtm-options {
+		form button {
+			font-size: small;
+		}
 	}
 }
 
@@ -305,7 +312,7 @@
 	.dashicons {
 		font-size: 14px;
 		line-height: 1.5;
-                margin-top: -2px;
+		margin-top: -2px;
 	}
 }
 
