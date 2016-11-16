@@ -664,8 +664,9 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			add_filter( 'wp_mail_content_type', array( $this, 'rtmedia_mail_content_type' ) );
 
+			$debuglog_temp_path = sanitize_text_field( $form_data['debuglog_temp_path'] );
 			/* set attachment path for sending into mail */
-			$attachment_file = ( !empty( sanitize_text_field( $form_data['debuglog_temp_path'] ) ) ) ? sanitize_text_field( $form_data['debuglog_temp_path'] ) : '' ;
+			$attachment_file = ( ! empty( $debuglog_temp_path ) ) ? $debuglog_temp_path : '' ;
 			$attachments = array( $attachment_file );
 
 			$headers       = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
@@ -675,9 +676,9 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					'https://',
 			), '', $form_data['website'] ), stripslashes( $message ), $headers, $attachments ) ) {
 				/* delete file after sending it to mail. */
-				if ( $attachment_file )
+				if ( ! empty( $attachment_file ) ) {
 					unlink( $attachment_file );
-
+				}
 				echo '<div class="rtmedia-success" style="margin:10px 0;">';
 				if ( 'new_feature' === sanitize_text_field( $form_data['request_type'] ) ) {
 					echo '<p>' . esc_html__( 'Thank you for your Feedback/Suggestion.', 'buddypress-media' ) . '</p>';
