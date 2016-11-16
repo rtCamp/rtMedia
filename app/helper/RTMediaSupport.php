@@ -320,9 +320,10 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			/* get all rtMedia Settings */
 			$rtmedia_options = get_option( 'rtmedia-options' );
-
-			foreach ($rtmedia_options as $option => $value) {
-				$debug_info[ ucwords( str_replace( '_', ' ', $option ) ) ] = $value;
+			if ( is_array( $rtmedia_options ) ) {
+				foreach ( $rtmedia_options as $option => $value ) {
+					$debug_info[ ucwords( str_replace( '_', ' ', $option ) ) ] = $value;
+				}
 			}
 
 			$this->debug_info = $debug_info;
