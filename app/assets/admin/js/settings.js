@@ -753,10 +753,10 @@ jQuery( document ).ready( function ( $ ) {
 		offData = 'data-off-label="' + rtmedia_off_label + '"';
 
 	var files;
-	/* upload file immediately afte selecting it */
-	jQuery('input[type=file]').on('change', rtmedia_prepare_upload);
+	/* upload file immediately after selecting it */
+	jQuery( 'input[type=file]' ).on( 'change', rtmedia_prepare_upload );
 
-	function rtmedia_prepare_upload(event) {
+	function rtmedia_prepare_upload( event ) {
 		files = event.target.files;
 		rtmedia_upload_files( event );
 	}
@@ -861,14 +861,14 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	/* Upload file to temporary folder  */
-	function rtmedia_upload_files(event) {
+	function rtmedia_upload_files( event ) {
 		event.stopPropagation(); // Stop stuff happening
 		event.preventDefault(); // Totally stop stuff happening
 
 		/* Create a formdata object and add the files */
 		var data = new FormData();
-		jQuery.each(files, function(key, value) {
-			data.append(key, value);
+		jQuery.each( files, function( key, value ) {
+			data.append( key, value );
 		});
 
 		jQuery.ajax ({
@@ -881,7 +881,7 @@ jQuery( document ).ready( function ( $ ) {
 			contentType: false,
 			success: function( data ) {
 
-				if(typeof data.error === 'undefined') {
+				if( typeof data.error === 'undefined' ) {
 					if ( data.exceed_size_msg ) {
 						jQuery( '#debuglog' ).val( '' );
 						alert( data.exceed_size_msg );
@@ -891,8 +891,8 @@ jQuery( document ).ready( function ( $ ) {
 					jQuery('#debuglog_temp_path').val( data.debug_attachmanet );
 				} else {
 					jQuery( '#debuglog' ).val( '' );
-					/* Show error in console. */
-					alert('ERRORS: ' + data.error);
+					/* Show error in alert box. */
+					alert( 'ERRORS: ' + data.error );
 				}
 			}
 		});
