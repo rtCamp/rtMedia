@@ -680,15 +680,68 @@ function rt_check_addon_status() {
 	}
 
 	foreach ( $addons as $addon ) {
+
+		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ){
+
+			$addon_id = $addon['args']['addon_id'];
+
+			// If license key is not present, remove then remove the status from config
+			// This forces the `Deactivate License` to `Activate License`
+			if ( empty( $addon['args']['license_key'] ) ) {
+				delete_option( 'edd_' . $addon_id . '_license_status' );
+			}
+
+			$addon_data = get_option( 'edd_' . $addon_id . '_active' );
+
+			// Remove the license from the addon if black license/input is provided
+			// This allows user to remove the license from the addon
+			if ( ! empty( $addon_data ) && is_object( $addon_data ) && empty( $addon['args']['license_key'] ) ) {
+				if ( isset( $addon_data->success ) && isset( $addon_data->license ) ) {
+					if ( ( isset( $_POST[ 'edd_' . $addon_id . '_license_key' ] ) && '' == $_POST[ 'edd_' . $addon_id . '_license_key' ] ) || '' == $addon_data->success || 'invalid' == $addon_data->license ) {
+						delete_option( 'edd_' . $addon_id . '_license_status' );
+						delete_option( 'edd_' . $addon_id . '_active' );
+
+					}
+				}
+			}
+
+		}
+
 		if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
 
 			$license = $addon['args']['license_key'];
 
 			$addon_name = $addon['name'];
 
-			$addon_id = $addon['args']['addon_id'];
-
 			$addon_active = get_option( 'edd_' . $addon_id . '_active' );
+
+			/**
+			 * Perform action before addon activation or license update
+			 *
+			 * @since 4.2
+			 *
+			 * @param array 			$addon 			Array containing the license_key, addon_id
+			 *                      	 	 			and addon name
+			 * @param object|boolean 	$addon_active 	Detailed license data of the addon, or boolean
+			 *                                    	  	false if data is not present
+			 */
+			do_action( 'rtmedia_before_addon_activate', $addon, $addon_active );
+
+			if ( isset( $addon_active->expires ) && 'lifetime' != $addon_active->expires ) {
+				$now        = current_time( 'timestamp' );
+				$expiration = strtotime( $addon_active->expires, current_time( 'timestamp' ) );
+
+				if ( $now > $expiration ) {
+
+					// Get license key  information from the store
+					$license_data = rtmedia_activate_addon_license( $addon );
+					if ( $license_data ) {
+						// Store the data in database
+						update_option( 'edd_' . $addon_id . '_active', $license_data );
+					}
+
+				}
+			}
 
 			// Listen for activate button to be clicked
 
@@ -699,41 +752,42 @@ function rt_check_addon_status() {
 				continue;
 			}
 
-			// Get the store URL from the constant defined in the addon
-			$store_url = constant( 'EDD_' . strtoupper( $addon_id ) . '_STORE_URL' );
+			// Get license key  information from the store
+			$license_data = rtmedia_activate_addon_license( $addon );
 
-			// If store URL not found in the addon, use the default store URL
-			if ( empty( $store_url ) ) {
-				$store_url = 'https://rtmedia.io/';
+			if ( $license_data ) {
+				// Store the data in database
+				update_option( 'edd_' . $addon_id . '_active', $license_data );
 			}
-
-			// data to send in our API request
-			$api_params = array(
-				'edd_action' => 'activate_license',
-				'license'    => $license,
-				'item_name'  => urlencode( $addon_name ), // the name of our product in EDD
-				'url'        => home_url(),
-			);
-
-	        // Call the custom API.
-			$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $store_url ) ), array( 'timeout' => 15, 'sslverify' => false ) );
-
-			// make sure the response came back okay
-			if ( is_wp_error( $response ) ) {
-				return false;
-			}
-
-			// decode the license data
-			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-			// Store the data in database
-			update_option( 'edd_' . $addon_id . '_active', $license_data );
 		}// End if().
 	}// End foreach().
 }
 
 add_action( 'admin_init', 'rt_check_addon_status' );
 
+/**
+ * Display admin notices when license is saved
+ */
+function rtmedia_addons_admin_notice() {
+
+	$screen = get_current_screen();
+
+	if ( $screen->id === 'rtmedia_page_rtmedia-license' ) {
+
+		if ( isset( $_POST ) && count( $_POST ) > 0 ) { ?>
+
+			<div class="notice notice-success is-dismissible">
+				<p><?php _e('Settings has been saved successfully.', 'buddypress-media'); ?></p>
+			</div>
+
+			<div class="notice notice-error is-dismissible">
+				<p><?php _e('Refresh the page in case if license data is not showing correct.', 'buddypress-media'); ?></p>
+			</div>
+	<?php
+		}
+	}
+}
+add_action('admin_notices', 'rtmedia_addons_admin_notice');
 
 /**
  * Function to add buddypress language conversion to Media activities.
