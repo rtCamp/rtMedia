@@ -2,7 +2,7 @@
 $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require_once( $parse_uri[0] . 'wp-load.php' );
 $data = array();
-if ( ! empty( isset( $_FILES ) ) ) {
+if ( ! empty( $_FILES ) ) {
 	$error = false;
 	$files = array();
 	/* get wp's uploads directory paths and urls. */
