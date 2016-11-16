@@ -103,7 +103,7 @@ class RTMediaMigration {
 		$count                            = intval( $_SESSION['migration_user_album'] );
 
 		if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
-			$sql_album_groupcount              = $wpdb->prepare( "select count(*) FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album'" ); // @codingStandardsIgnoreLine
+			$sql_album_groupcount              = $wpdb->prepare( "select count(*) FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='%s'", 'bp_media_default_album' ); // @codingStandardsIgnoreLine
 			$_SESSION['migration_group_album'] = $wpdb->get_var( $sql_album_groupcount ); // @codingStandardsIgnoreLine
 			$count += intval( $_SESSION['migration_group_album'] );
 		}
