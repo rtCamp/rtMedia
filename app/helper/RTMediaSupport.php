@@ -668,7 +668,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$attachments = array( $attachment_file );
 
 			$headers       = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
-			$support_email = 'bhargav.bhandari@rtcamp.com';
+			$support_email = 'support@rtcamp.com';
 			if ( wp_mail( $support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace( array(
 					'http://',
 					'https://',
