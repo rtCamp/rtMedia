@@ -863,7 +863,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_off_label', esc_html__( 'OFF', 'buddypress-media' ) );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_ajax', $admin_ajax );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_url', admin_url() );
-				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_url', admin_url() );
+				/* path for file upload using ajax */
+				wp_localize_script( 'rtmedia-admin', 'rtmedia_fileupload_url', RTMEDIA_URL.'app/helper/rtUploadAttachment.php' );
 
 				$rtmedia_admin_strings = array(
 					'no_refresh'           	  		=> esc_html__( 'Please do not refresh this page.', 'buddypress-media' ),

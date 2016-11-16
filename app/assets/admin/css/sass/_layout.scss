@@ -16,6 +16,20 @@ $container-min-height: 300px;
 		min-height: $container-min-height;
 		padding: 20px 30px;
 		vertical-align: top;
+
+		#debug {
+			tbody {
+				display: block;
+				height: 400px;
+				overflow-y: auto;
+			}
+
+			.rtm-download-debuginfo {
+				float: right;
+				margin-top: 14px;
+			}
+		}
+
 	}
 }
 
