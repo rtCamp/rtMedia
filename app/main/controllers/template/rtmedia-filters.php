@@ -520,29 +520,29 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
 
 /**
- * Function to edit attachment link on comment section for rtMedia Media
- * @param  string $link    Media comment link
- * @param  array $comment  return comment data array
- * @param  array $args
- * @param  array $cpage
+ * Function to edit comment link for media
+ *
+ * @param  string $link Media comment link
+ * @param  object $comment comment data
+ *
  * @return string  $link  media comment link
  */
-function rt_get_comment_link_callback( $link, $comment, $args, $cpage ) {
+function rt_get_comment_link_callback( $link, $comment ) {
 	$rtmedia_media_id = rtmedia_id( $comment->comment_post_ID );
 	if ( get_post_type( $comment->comment_post_ID ) == 'attachment' && is_admin() && ! empty( $rtmedia_media_id ) ) {
 		$link = esc_url( get_rtmedia_permalink( $rtmedia_media_id ) ) . '#rtmedia_comment_ul';
 	}
 	return $link;
 }
-add_filter( 'get_comment_link', 'rt_get_comment_link_callback', 99,4 );
+add_filter( 'get_comment_link', 'rt_get_comment_link_callback', 99, 2 );
 
 /**
- * Function to edit attachment in response link on comment section for rtMedia Media
- * @param  string $link    Media comment link
- * @param  array $comment  return comment data array
- * @param  array $args
- * @param  array $cpage
- * @return string  $link  media comment link
+ * Function to edit attachment for media
+ *
+ * @param  string $permalink  attachment permalink
+ * @param  array $post_id  return attachment post id
+ *
+ * @return string attachment post permalink
  */
 function rtmedia_attachment_link_callback( $permalink, $post_id ) {
 	$rtmedia_media_id = rtmedia_id( $post_id );
@@ -619,11 +619,11 @@ add_filter( 'wp_update_attachment_metadata', 'rtmedia_edit_media_on_database', 1
 
 
 
-function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_it ){
+function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_it ) {
 	if ( $like_count > 1 && $user_like_it ) {
 		/* if login user has like the comment then less from the total count */
 		$like_count --;
 	}
-    return sprintf( '<span class="rtmedia-like-counter">%s</span>', $like_count );
+	return sprintf( '<span class="rtmedia-like-counter">%s</span>', $like_count );
 }
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
