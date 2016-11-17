@@ -2737,7 +2737,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 			 * @param int $user_like_it User Like it or Not
 			 * @return html TEXT to  display
 			*/
-			$html =  apply_filters( 'rtmedia_like_html_you_only_like', esc_html__( 'you like this', 'buddypress-media' ), $like_count, $user_like_it );
+			$html =  apply_filters( 'rtmedia_like_html_you_only_like', esc_html__( 'You like this', 'buddypress-media' ), $like_count, $user_like_it );
 		} elseif ( $like_count ) {
 			if ( $like_count > 1 && $user_like_it ) {
 				/**
