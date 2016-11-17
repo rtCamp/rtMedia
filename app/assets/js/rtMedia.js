@@ -522,7 +522,7 @@ jQuery( 'document' ).ready( function( $ ) {
 	jQuery( document )
 			.on( 'dragover', function( e ) {
 				e.preventDefault();
-				/* check if media is graging on same page */
+				/* check if media is dragging on same page */
 				if ( e.target == this ) {
 					return;
 				}
@@ -536,7 +536,6 @@ jQuery( 'document' ).ready( function( $ ) {
 			} )
 			.on( 'dragleave', function( e ) {
 				e.preventDefault();
-				/* Check if cursor is on not ( 0, 0 ) position */
 				if ( e.originalEvent.pageX != 0 && e.originalEvent.pageY != 0 ) {
 					return false;
 				}
@@ -550,7 +549,7 @@ jQuery( 'document' ).ready( function( $ ) {
 			} )
 			.on( 'drop', function( e ) {
 				e.preventDefault();
-				/* Put cursor into textarea after dropping any media */
+				/* Put cursor into activity box after dropping any media */
 				jQuery( '.bp-suggestions' ).focus();
 				if ( typeof rtmedia_bp_enable_activity != 'undefined' && rtmedia_bp_enable_activity == '1' ) {
 					activityArea.removeClass( 'rtm-drag-drop-active' );
