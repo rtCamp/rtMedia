@@ -1,5 +1,5 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, sanket.parmar, pranalipatel, jignesh.nakrani, mangeshp, manishsongirkar36, kiranpotphode, yahil, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, supercoder, bhargavbhandari90, deepak1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
@@ -87,7 +87,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
  34. **[Album-Privacy](https://rtmedia.io/products/rtmedia-album-privacy/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Album Privacy")** - Set album privacy when user create new albums or edit album.
  35. **[BuddyPress-Group-Media-Control](https://rtmedia.io/products/rtmedia-buddypress-group-media-control/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia BuddyPress Group Media Control")** - Allow group owner to provide media upload feature for their group.
  36. **[Set-Custom-Thumbnail-for-Audio/Video](https://rtmedia.io/products/rtmedia-set-custom-thumbnail-for-audiovideo/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Set Custom Thumbnail for Audio/Video")** - Allow media owner to change the thumbnail of uploaded audio/video files.
- 37. **[rtMedia-SEO](https://rtmedia.io/products/rtmedia-seo/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia SEO")** - Generate XML sitemap of all the public media files uploaded via rtMedia plugin, also compatible with [Yoast-SEO](https://wordpress.org/plugins/wordpress-seo/ "Yoast SEO") plugin if you are already using on your site. 
+ 37. **[rtMedia-SEO](https://rtmedia.io/products/rtmedia-seo/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia SEO")** - Generate XML sitemap of all the public media files uploaded via rtMedia plugin, also compatible with [Yoast-SEO](https://wordpress.org/plugins/wordpress-seo/ "Yoast SEO") plugin if you are already using on your site.
 
 
 = Important Links =
@@ -140,18 +140,18 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 = 4.2 [Nov 17, 2016] =
 
 * NEW FEATURES
- 
+
  * Albums will now display media count by default
  * "@mentions" in comments added to lightbox and single media page
  * Added "Next" / "Previous" navigation links to single media page
 
 * ENHANCEMENTS
- 
+
  * rtMedia "Support" tab improvements- Directly attach a screenshot while submitting a support ticket Debug Info can now be easily downloaded as a .txt file
  * Added: "Show more comments" link in media pop-up (lightbox) and single media page
  * Added: Action to target area below media comments in lightbox or single media page
  * Added: Filter to add extra component to comments
- * Added: Filter to disallow blank text field while uploading media in Activity 
+ * Added: Filter to disallow blank text field while uploading media in Activity
  * Added: Filter to modify "Options" & "Upload" labels in Media Gallery
 
 * FIXED
