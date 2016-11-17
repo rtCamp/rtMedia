@@ -139,13 +139,13 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 = 4.2 [Nov 17, 2016] =
 
-*NEW FEATURES
+* NEW FEATURES
  
  * Albums will now display media count by default
  * "@mentions" in comments added to lightbox and single media page
  * Added "Next" / "Previous" navigation links to single media page
 
-*ENHANCEMENTS
+* ENHANCEMENTS
  
  * rtMedia "Support" tab improvements- Directly attach a screenshot while submitting a support ticket Debug Info can now be easily downloaded as a .txt file
  * Added: "Show more comments" link in media pop-up (lightbox) and single media page
