@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.1.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-11-17 05:53:39+00:00\n"
+"POT-Creation-Date: 2016-11-17 07:06:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1961,7 +1961,7 @@ msgid "rtMedia: Upgrade rtMedia activity"
 msgstr ""
 
 #: app/importers/RTMediaActivityUpgrade.php:179
-#: app/importers/RTMediaMediaSizeImporter.php:108
+#: app/importers/RTMediaMediaSizeImporter.php:109
 msgid "%s (estimated)"
 msgstr ""
 
@@ -1970,10 +1970,10 @@ msgid "Media Size Import"
 msgstr ""
 
 #: app/importers/RTMediaMediaSizeImporter.php:73
-msgid "to import media sizes. "
+msgid " to import media sizes. "
 msgstr ""
 
-#: app/importers/RTMediaMediaSizeImporter.php:105
+#: app/importers/RTMediaMediaSizeImporter.php:106
 msgid "rtMedia: Import Media Size"
 msgstr ""
 

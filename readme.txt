@@ -1,12 +1,12 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, sanket.parmar, pranalipatel, jignesh.nakrani, mangeshp, manishsongirkar36, kiranpotphode, yahil, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, supercoder, bhargavbhandari90, deepak1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 4.6.1
-Stable tag: 4.1.8
+Stable tag: 4.2
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -87,6 +87,8 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
  34. **[Album-Privacy](https://rtmedia.io/products/rtmedia-album-privacy/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Album Privacy")** - Set album privacy when user create new albums or edit album.
  35. **[BuddyPress-Group-Media-Control](https://rtmedia.io/products/rtmedia-buddypress-group-media-control/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia BuddyPress Group Media Control")** - Allow group owner to provide media upload feature for their group.
  36. **[Set-Custom-Thumbnail-for-Audio/Video](https://rtmedia.io/products/rtmedia-set-custom-thumbnail-for-audiovideo/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Set Custom Thumbnail for Audio/Video")** - Allow media owner to change the thumbnail of uploaded audio/video files.
+ 37. **[rtMedia-SEO](https://rtmedia.io/products/rtmedia-seo/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia SEO")** - Generate XML sitemap of all the public media files uploaded via rtMedia plugin, also compatible with [Yoast-SEO](https://wordpress.org/plugins/wordpress-seo/ "Yoast SEO") plugin if you are already using on your site.
+
 
 = Important Links =
 
@@ -134,6 +136,39 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.2 [Nov 17, 2016] =
+
+* NEW FEATURES
+
+ * Albums will now display media count by default
+ * "@mentions" in comments added to lightbox and single media page
+ * Added "Next" / "Previous" navigation links to single media page
+
+* ENHANCEMENTS
+
+ * rtMedia "Support" tab improvements- Directly attach a screenshot while submitting a support ticket Debug Info can now be easily downloaded as a .txt file
+ * Added: "Show more comments" link in media pop-up (lightbox) and single media page
+ * Added: Action to target area below media comments in lightbox or single media page
+ * Added: Filter to add extra component to comments
+ * Added: Filter to disallow blank text field while uploading media in Activity
+ * Added: Filter to modify "Options" & "Upload" labels in Media Gallery
+
+* FIXED
+
+ * After uploading media, the Upload panel will now collapse
+ * Incorrect pagination text display in Media tab
+ * "posted an update" string not getting translated in Activity feed for posts with attached media. Added translation support for all "rtmedia_update" Activity type
+ * Duplicate activity generation when "Post Update" is clicked multiple times
+ * Singular/plural form of "n people liked this" string
+ * BuddyPress Group Media tab not displaying in Beta version 2.7.2
+ * Media description not saving properly when uploading multiple media
+ * Link to comment in WordPress backend not leading back to comment
+ * Video popup UI for vertical videos
+ * CSS-related responsive video layout issue
+ * Fixed broken "Import media sizes" anchor link in admin notice
+ * Fixed "Activate License" event bug in License tab
+ * Lightbox privacy symbol alignment issue
 
 = 4.1.8 [Oct 05, 2016] =
 * Fix fatal error for older PHP version
@@ -1243,8 +1278,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.1.8 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fix UI/media broken on activity page also fixed the fixed fatal error for older PHP version.
+= 4.2 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Album media count, @mention functionality on media comments, Next previous link on media page, filter to allow/disallow text in activity media upload, "posted an update" string translation, duplicate activity entry on multiple post update, Video pop-up issues.
 
 == Sponsors ==
 
