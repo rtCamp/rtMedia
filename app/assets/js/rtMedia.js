@@ -526,17 +526,24 @@ jQuery( 'document' ).ready( function( $ ) {
 	}
 	jQuery( document )
 			.on( 'dragover', function( e ) {
+				e.preventDefault();
+				/* check if media is dragging on same page */
+				if ( e.target == this ) {
+					return;
+				}
 				jQuery( '#rtm-media-gallery-uploader' ).show();
 				if ( typeof rtmedia_bp_enable_activity != 'undefined' && rtmedia_bp_enable_activity == '1' ) {
 					activityArea.addClass( 'rtm-drag-drop-active' );
 				}
 
-				//            ActivityArea.css('height','150px');
 				dragArea.addClass( 'rtm-drag-drop-active' );
 				jQuery( '#rtm-drop-files-title' ).show();
 			} )
 			.on( 'dragleave', function( e ) {
 				e.preventDefault();
+				if ( e.originalEvent.pageX != 0 && e.originalEvent.pageY != 0 ) {
+					return false;
+				}
 				if ( typeof rtmedia_bp_enable_activity != 'undefined' && rtmedia_bp_enable_activity == '1' ) {
 					activityArea.removeClass( 'rtm-drag-drop-active' );
 					activityArea.removeAttr( 'style' );
@@ -547,6 +554,8 @@ jQuery( 'document' ).ready( function( $ ) {
 			} )
 			.on( 'drop', function( e ) {
 				e.preventDefault();
+				/* Put cursor into activity box after dropping any media */
+				jQuery( '.bp-suggestions' ).focus();
 				if ( typeof rtmedia_bp_enable_activity != 'undefined' && rtmedia_bp_enable_activity == '1' ) {
 					activityArea.removeClass( 'rtm-drag-drop-active' );
 					activityArea.removeAttr( 'style' );
