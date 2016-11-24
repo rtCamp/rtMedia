@@ -91,7 +91,7 @@ class RTMediaUploadEndpoint {
 							'media_author' => $media[0]->media_author,
 						) );
 					}
-					if ( false !== $create_activity && class_exists( 'BuddyPress' ) ) {
+					if ( false !== $create_activity && class_exists( 'BuddyPress' ) && bp_is_active( 'activity' ) ) {
 						$allow_single_activity = apply_filters( 'rtmedia_media_single_activity', false );
 
 						// Following will not apply to activity uploads. For first time activity won't be generated.
