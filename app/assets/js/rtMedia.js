@@ -92,8 +92,11 @@ function apply_rtMagnificPopup( selector ) {
 						$( '.mfp-content .mejs-audio .mejs-controls' ).css( 'position', 'relative' );
 						rtMediaHook.call( 'rtmedia_js_popup_after_content_added', [ ] );
 
-						$( '#atwho-container #atwho-ground-comment_content' ).remove();
-						$( '#comment_content' ).bp_mentions( bp.mentions.users );
+
+						if( typeof bp.mentions != 'undefined' ){
+							$( '#atwho-container #atwho-ground-comment_content' ).remove();
+							$( '#comment_content' ).bp_mentions( bp.mentions.users );
+						}
 					},
 					close: function( e ) {
 						//Console.log(e);
