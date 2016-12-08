@@ -97,6 +97,17 @@ class RTMediaRouter {
 			$return           = true;
 		}
 
+		// set is_page to true for 'media' page
+		if ( $return && in_array( RTMEDIA_MEDIA_SLUG , $wp_query->query_vars ) ) {
+			/**
+			 * Filters the is_page variable. If user wants to set media page is not a page,
+			 * just pass the boolean false value to this filter.
+			 *
+			 * @param boolean Default value is true
+			 */
+			$wp_query->is_page = apply_filters( 'rtmedia_is_page', true, $return );
+		}
+
 		return $return;
 	}
 
