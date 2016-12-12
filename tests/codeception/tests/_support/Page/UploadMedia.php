@@ -17,6 +17,8 @@ class UploadMedia
     public static $loadMore = 'a#rtMedia-galary-next';
     public static $paginationPattern = '.rtm-pagination .rtmedia-page-no';
     public static $closeButton = '.rtm-mfp-close';
+    public static $uploadMediaButtonOnActivity = '.rtmedia-add-media-button';
+    public static $whatIsNewTextarea = '#whats-new';
 
     /**
      * Basic route example for your current URL
@@ -42,10 +44,23 @@ class UploadMedia
     public function gotoMediaPage($userName,$I){
 
         $url = 'members/'.$userName.'/media/photo/';
+
         $I->amonPage($url);
+        $I->wait(10);
+
         $I->seeElement(self::$galleryLable);
+        $I->scrollTo(self::$galleryLable);
 
     }
+
+    public function uploadTermasCheckbox($I){
+
+        $I->dontSeeCheckboxIsChecked(self::$uploadTermsCheckbox);
+        $I->checkOption(self::$uploadTermsCheckbox); //Assuming that "rtMedia Uplaod terms" plugin is enabled
+        $I->seeCheckboxIsChecked(self::$uploadTermsCheckbox);
+
+    }
+
 
     /**
     * uploadMedia() -> Will perform neccessary steps to uplpad media. In this case it will work for image media type.
@@ -53,14 +68,16 @@ class UploadMedia
     public function uploadMedia($userName,$I){
 
         self::gotoMediaPage($userName, $I);
+
         $I->seeElement(self::$uploadLink);
         $I->click(self::$uploadLink);
+        $I->wait(2);
+
         $I->seeElement(self::$selectFileButton);
         $I->attachFile('input[type="file"]','test.jpg');
         $I->wait(5);
+
         $I->seeElement(self::$fileList);
-        $I->click(self::$uploadTermsCheckbox); //Assuming that "rtMedia Uplaod terms" plugin is enabled
-        $I->seeCheckboxIsChecked(self::$uploadTermsCheckbox);
 
     }
 
@@ -73,8 +90,11 @@ class UploadMedia
 
         self::uploadMedia($userName,$I);
 
+        self::uploadTermasCheckbox($I);
+
         $I->seeElement(self::$uploadMediaButton);
         $I->click(self::$uploadMediaButton);
+
         $I->wait(3);
 
         return $this;
@@ -82,7 +102,7 @@ class UploadMedia
     }
 
     /**
-    * uploadMediaUsingStartUplaodButton() -> Will the media when 'Direct Uplaod' is enabled
+    * uploadMediaDirectly() -> Will the media when 'Direct Uplaod' is enabled
     */
     public function uploadMediaDirectly($userName){
 
@@ -91,11 +111,35 @@ class UploadMedia
         self::uploadMedia($userName,$I);
 
         $I->dontSeeElement(self::$uploadMediaButton);
+
+        self::uploadTermasCheckbox($I);
+
         $I->wait(3);
 
         return $this;
 
     }
+
+    public function uploadMediaFromActivity($I){
+
+        $I->click(self::$whatIsNewTextarea);
+        $I->waitForElementVisible(self::$uploadMediaButtonOnActivity,2);
+        $I->click(self::$uploadMediaButtonOnActivity);
+        $I->pressKey(self::$uploadMediaButtonOnActivity,array('command','tab'));
+        $I->wait(3);
+        $I->pressKey(self::$uploadMediaButtonOnActivity,array('shift','command','g'));
+        $I->sendKeys('/Users/javalnanda/Desktop/1.jpeg');
+        $I->pressKey(self::$uploadMediaButtonOnActivity,\Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->wait(5);
+
+        // $I->pressKey('#page','a'); // => olda
+        // $I->pressKey('#page',array('ctrl','a'),'new'); //=> new
+        // $I->pressKey('#page',array('shift','111'),'1','x'); //=> old!!!1x
+        // $I->pressKey('descendant-or-self::*[ * `id='page']','u');
+        // $I->pressKey('#name', array('ctrl', 'a'), \Facebook\WebDriver\WebDriverKeys::DELETE);
+
+    }
+
 
     /**
     * fisrtThumbnailMedia() -> Will click on the first element(media thumbnail) from the list

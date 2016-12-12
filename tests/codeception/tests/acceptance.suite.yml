@@ -13,14 +13,17 @@ modules:
           WPWebDriver:
             host: 'hub-cloud.browserstack.com'
             port: 80
-            browser: 'chrome'
+            browser: 'firefox'
             url: 'http://demo.rtmedia.io/'
             adminUsername: ''
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-              'browserstack.user': ''
-              'browserstack.key': ''
+              'browserstack.user': 'test11741'
+              'browserstack.key': 'AsBQK77an9x3yHaton7y'
+            #   'os': 'OS X'
+            #   'os_version' : 'El Capitan'
               'os': 'OS X'
-              'os_version' : 'El Capitan'
+              'os_version': 'Sierra'
+            #   'resolution': '1024x768'
               'browserstack.debug': 'true'
