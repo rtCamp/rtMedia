@@ -8,9 +8,9 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
-    $userName = 'admin';
-    $password = 'rtdemo@18mar2016';
-
+    $userName = 'krupa';
+    $password = 'Test123';
+    
     $I = new AcceptanceTester($scenario);
     $I->wantTo('To check if the user is allowed to upload the media directly');
 

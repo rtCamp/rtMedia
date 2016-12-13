@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : Should not allow the user to upload media directly.
+* Scenario : To check if Load More - Media display pagination option is enabled
 */
 
     use Page\Login as LoginPage;
@@ -12,17 +12,19 @@
     $password = 'Test123';
 
     $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if the user is allowed to upload the media directly');
+    $I->wantTo('To check if Load More - Media display pagination option is enabled');
 
     $loginPage = new LoginPage($I);
     $loginPage->loginAsAdmin($userName,$password);
 
     $settings = new DashboardSettingsPage($I);
-    $settings->disableDirectUpload($I);
+    $settings->checkLoadmoreOption($I);
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($userName);
+    $loadMore = new UploadMediaPage($I);
+    $loadMore->gotoMediaPage($userName,$I);
 
+    $I->wait(3);
 
+    $I->seeElementInDOM(UploadMediaPage::$loadMore);
 
 ?>

@@ -7,8 +7,8 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
-    $userName = 'admin';
-    $password = 'rtdemo@18mar2016';
+    $userName = 'krupa';
+    $password = 'Test123';
 
     $I = new AcceptanceTester($scenario);
     $I->wantTo('User should not allowed to comment on uploaded media');

@@ -2,26 +2,29 @@
 
 /**
 * Scenario : To check if mesonry layout is enabled.
-* Pre-requisite : In backend - Goto rtMedia settings -> MASONRY VIEW -> Enable Masonry Cascading grid layout. Assuming this option is on.
 */
 
     use Page\Login as LoginPage;
     use Page\UploadMedia as UploadMediaPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
 
-    $userName = 'demo';
-    $password = 'demo';
+    $userName = 'krupa';
+    $password = 'Test123';
 
     $I = new AcceptanceTester($scenario);
     $I->wantTo('To check if mesonry layout is enabled.');
 
     $loginPage = new LoginPage($I);
-    $loginPage->login($userName,$password);
+    $loginPage->loginAsAdmin($userName,$password);
+
+    $settings = new DashboardSettingsPage($I);
+    $settings->enableMasonayLayout($I);
 
     $masonryLayout = new UploadMediaPage($I);
     $masonryLayout->gotoMediaPage($userName,$I);
 
     $I->wait(5);
 
-    $I->seeElement(UploadMediaPage::$masonryLayout);
+    $I->seeElementInDOM(UploadMediaPage::$masonryLayoutXpath);
 
 ?>

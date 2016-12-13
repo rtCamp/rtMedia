@@ -7,8 +7,8 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
-    $userName = 'admin';
-    $password = 'rtdemo@18mar2016';
+    $userName = 'krupa';
+    $password = 'Test123';
     $commentStr = 'test comment';
 
     $I = new AcceptanceTester($scenario);

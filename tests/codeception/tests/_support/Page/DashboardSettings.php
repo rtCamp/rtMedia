@@ -3,15 +3,15 @@ namespace Page;
 
 class DashboardSettings
 {
-
     public static $Url = '/wp-admin/admin.php?page=rtmedia-settings';
-    public static $saveSettingsButton = '.rtm-button-container.top .rtmedia-settings-submit';
     public static $saveSettingsButtonBottom = '.rtm-button-container.bottom .rtmedia-settings-submit';
     public static $rtMediaSeetings = '#toplevel_page_rtmedia-settings';
-    public static $displayTab = '#tab-rtmedia-display';
+    public static $displayTab = 'a#tab-rtmedia-display';
     public static $commentCheckbox = 'input[name="rtmedia-options[general_enableComments]"]';
     public static $directUploadCheckbox = 'input[name="rtmedia-options[general_direct_upload]"]';
     public static $lightboxCheckbox = 'input[name="rtmedia-options[general_enableLightbox]"]';
+    public static $masonaryCheckbox = 'input[name="rtmedia-options[general_masonry_layout]"]';
+    public static $loadmoreRadioButton = '#rtm-form-radio-0';
 
 
     public function route($param)
@@ -27,7 +27,6 @@ class DashboardSettings
     /**
     * saveSettings() -> Will save the settings after any changes made by the user in backend.
     */
-
     public function saveSettings($I){
 
         $I->seeElementInDOM(self::$saveSettingsButtonBottom);
@@ -37,7 +36,6 @@ class DashboardSettings
         $I->see('Settings saved successfully!');
 
     }
-
     /**
     * gotortMediaSettings() -> Will goto rtmedia-settings tab.
     */
@@ -53,12 +51,9 @@ class DashboardSettings
     /**
     * gotoDisplayTab() -> Will goto Display tab under rtmedia-settings tab.
     */
-
     public function gotoDisplayTab($I){
 
         self::gotortMediaSettings($I);
-
-        $displayTabUrl = self::$Url.'#rtmedia-display';
 
         $I->seeElement(self::$displayTab);
         $I->click(self::$displayTab);
@@ -68,9 +63,8 @@ class DashboardSettings
     }
 
     /**
-    * enableComment() -> Will enable the comment.
+    * enableComment() -> Will enable the comment option.
     */
-
     public function enableComment($I){
 
         $I = $this->tester;
@@ -93,9 +87,8 @@ class DashboardSettings
     }
 
     /**
-    * disableComment() -> Will disable the comment.
+    * disableComment() -> Will disable the comment option.
     */
-
     public function disableComment($I){
 
         $I = $this->tester;
@@ -116,6 +109,9 @@ class DashboardSettings
 
     }
 
+    /**
+    * enableLightbox() -> Will enable the lightbox settings.
+    */
     public function enableLightbox($I){
 
         $I = $this->tester;
@@ -138,6 +134,9 @@ class DashboardSettings
         return $this;
     }
 
+    /**
+    * disableLightbox() -> Will disable the lightbox settings.
+    */
     public function disableLightbox($I){
 
         $I = $this->tester;
@@ -164,7 +163,6 @@ class DashboardSettings
     /**
     * enableDirectUpload() -> Will enable the direct upload.
     */
-
     public function enableDirectUpload($I){
 
         $I = $this->tester;
@@ -191,7 +189,6 @@ class DashboardSettings
     /**
     * disableDirectUpload() -> Will disable the direct upload.
     */
-
     public function disableDirectUpload($I){
 
         $I = $this->tester;
@@ -211,4 +208,103 @@ class DashboardSettings
 
     }
 
+    /**
+    * enableMasonayLayout() -> Will enable masonary layout settings.
+    */
+    public function enableMasonayLayout($I){
+
+        $I = $this->tester;
+
+        self::gotoDisplayTab($I);
+
+        $I->see('Enable Masonry Cascading grid layout');
+
+        $I->scrollTo('//*[@id="rtmedia-display"]/div[5]/h3');
+
+        $I->seeElementInDOM(self::$masonaryCheckbox);
+        $I->dontSeeCheckboxIsChecked(self::$masonaryCheckbox);
+        $I->checkOption(self::$masonaryCheckbox);
+
+        $I->wait(3);
+
+        self::saveSettings($I);
+
+        $I->seeCheckboxIsChecked(self::$masonaryCheckbox);
+
+        return $this;
+    }
+
+    /**
+    * disableMasonayLayout() -> Will disbale masonary layout settings.
+    */
+    public function disableMasonayLayout($I){
+
+        $I = $this->tester;
+
+        self::gotoDisplayTab($I);
+
+        $I->see('Enable Masonry Cascading grid layout');
+
+        $I->scrollTo('//*[@id="rtmedia-display"]/div[5]/h3');
+
+        $I->seeElementInDOM(self::$masonaryCheckbox);
+        $I->seeCheckboxIsChecked(self::$masonaryCheckbox);
+        $I->uncheckOption(self::$masonaryCheckbox);
+
+        $I->wait(3);
+
+        self::saveSettings($I);
+
+        $I->dontSeeCheckboxIsChecked(self::$masonaryCheckbox);
+
+        return $this;
+    }
+
+    /**
+    * checkPaginationOption() -> Will enable the pagination option.
+    */
+    public function checkPaginationOption($I){
+
+        $I = $this->tester;
+
+        self::gotoDisplayTab($I);
+
+        $I->see('Media display pagination option');
+
+        $I->scrollTo('//*[@id="rtmedia-display"]/div[4]/h3');
+
+        $I->checkOption('input[value="pagination"]');
+
+        $I->wait(3);
+
+        self::saveSettings($I);
+
+        return $this;
+
+
+    }
+
+    /**
+    * checkLoadmoreOption() -> Will enable the loadmore option.
+    */
+    public function checkLoadmoreOption($I){
+
+        $I = $this->tester;
+
+        self::gotoDisplayTab($I);
+
+        $I->see('Media display pagination option');
+
+        $I->scrollTo('//*[@id="rtmedia-display"]/div[4]/h3');
+
+        $I->checkOption('input[value="load_more"]');
+
+        $I->wait(3);
+
+        self::saveSettings($I);
+
+        return $this;
+
+
+    }
 }

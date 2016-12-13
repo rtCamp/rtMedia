@@ -2,7 +2,6 @@
 
 /**
 * Scenario : To Check if the media is opening in Light Box.
-* Pre-requisite : In backend - Goto rtMedia settings -> Display -> LIST MEDIA VIEW -> Use lightbox to display media. Assuming this option is on.
 */
 
     use Page\Login as LoginPage;
@@ -10,8 +9,8 @@
     use Page\Lightbox as LightboxPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
-    $userName = 'admin';
-    $password = 'rtdemo@18mar2016';
+    $userName = 'krupa';
+    $password = 'Test123';
 
     $I = new AcceptanceTester($scenario);
     $I->wantTo('To check if the lightbox is enabled');
@@ -23,7 +22,7 @@
     $settings->enableLightbox($I);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($userName);
+    $uploadmedia->uploadMediaUsingStartUploadButton($userName); //Assuming direct uplaod is disabled
     $uploadmedia->fisrtThumbnailMedia($I);
 
     $I->seeElement(LightboxPage::$closeButton);   //The close button will only be visible if the media is opened in Lightbox
