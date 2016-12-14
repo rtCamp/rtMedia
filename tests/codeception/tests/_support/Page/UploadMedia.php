@@ -13,8 +13,6 @@ class UploadMedia
     public static $firstChild = 'ul.rtm-gallery-list li:first-child';
     public static $commentTextArea = '#comment_content';
     public static $commentSubmitButton = '.rt_media_comment_submit';
-    public static $masonryLayout = 'ul.masonry';
-    public static $masonryLayoutXpath = '//*[@id="rtm-gallery-title-container"]/h2';
     public static $loadMore = 'a#rtMedia-galary-next';
     public static $paginationPattern = '.rtm-pagination .rtmedia-page-no';
     public static $closeButton = '.rtm-mfp-close';

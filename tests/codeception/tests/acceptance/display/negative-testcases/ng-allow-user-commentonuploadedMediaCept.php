@@ -6,21 +6,19 @@
     use Page\Login as LoginPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
-
-    $userName = 'krupa';
-    $password = 'Test123';
+    use Page\Constants as ConstantsPage;
 
     $I = new AcceptanceTester($scenario);
     $I->wantTo('User should not allowed to comment on uploaded media');
 
     $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin($userName,$password);
+    $loginPage->loginAsAdmin(ConstantsPage::$userName,ConstantsPage::$password);
 
     $settings = new DashboardSettingsPage($I);
-    $settings->disableComment($I);
+    $settings->disableSetting($I,ConstantsPage::$strCommentCheckboxLabel,ConstantsPage::$commentCheckbox);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($userName);
+    $uploadmedia->uploadMediaUsingStartUploadButton(ConstantsPage::$userName);
 
     $I->reloadPage();
     $I->wait(7);

@@ -12,12 +12,16 @@ class DashboardSettings
     public static $lightboxCheckbox = 'input[name="rtmedia-options[general_enableLightbox]"]';
     public static $masonaryCheckbox = 'input[name="rtmedia-options[general_masonry_layout]"]';
     public static $loadmoreRadioButton = '#rtm-form-radio-0';
+    public static $listMediaViewLable = '//*[@id="rtmedia-display"]/div[4]/h3';
+    public static $directUploadLabel = '//*[@id="rtmedia-display"]/div[6]/h3';
+    public static $masonaryViewLabel = '//*[@id="rtmedia-display"]/div[5]/h3';
 
 
     public function route($param)
     {
         return static::$URL.$param;
     }
+
     protected $tester;
     public function __construct(\AcceptanceTester $I)
     {
@@ -39,7 +43,6 @@ class DashboardSettings
     /**
     * gotortMediaSettings() -> Will goto rtmedia-settings tab.
     */
-
     public function gotortMediaSettings($I){
 
         $I->click(self::$rtMediaSeetings);
@@ -63,248 +66,59 @@ class DashboardSettings
     }
 
     /**
-    * enableComment() -> Will enable the comment option.
+    * enableSetting() -> Will enable the respective checkbox under rtmedia-settings tab.
     */
-    public function enableComment($I){
+    public function enableSetting($I,$strLabel,$checkboxSelector,$scrollPosition='no'){
 
         $I = $this->tester;
 
         self::gotoDisplayTab($I);
 
-        $I->see('Allow user to comment on uploaded media');
+        $I->see($strLabel);
 
-        $I->seeElementInDOM(self::$commentCheckbox);
+        if('no' !== $scrollPosition){
+            $I->scrollTo($scrollPosition);
+        }
+
+        $I->seeElementInDOM($checkboxSelector);
         $I->wait(3);
-        $I->dontSeeCheckboxIsChecked(self::$commentCheckbox);
-        $I->checkOption(self::$commentCheckbox);
+        $I->dontSeeCheckboxIsChecked($checkboxSelector);
+        $I->checkOption($checkboxSelector);
 
         self::saveSettings($I);
 
-        $I->seeCheckboxIsChecked(self::$commentCheckbox);
+        $I->seeCheckboxIsChecked($checkboxSelector);
 
         return $this;
 
     }
 
     /**
-    * disableComment() -> Will disable the comment option.
+    * disableSetting() -> Will disable the respective checkbox under rtmedia-settings tab.
     */
-    public function disableComment($I){
+    public function disableSetting($I,$strLabel,$checkboxSelector,$scrollPosition='no'){
 
         $I = $this->tester;
 
         self::gotoDisplayTab($I);
 
-        $I->see('Allow user to comment on uploaded media');
+        $I->see($strLabel);
 
-        $I->seeElementInDOM(self::$commentCheckbox);
-        $I->seeCheckboxIsChecked(self::$commentCheckbox);
-        $I->uncheckOption(self::$commentCheckbox);
+        if('no' !== $scrollPosition){
+            $I->scrollTo($scrollPosition);
+        }
 
-        self::saveSettings($I);
-
-        $I->dontSeeCheckboxIsChecked(self::$commentCheckbox);
-
-        return $this;
-
-    }
-
-    /**
-    * enableLightbox() -> Will enable the lightbox settings.
-    */
-    public function enableLightbox($I){
-
-        $I = $this->tester;
-
-        self::gotoDisplayTab($I);
-
-        $I->see('Use lightbox to display media');
-
-        $I->scrollTo('//*[@id="rtmedia-display"]/div[4]/h3');
-        $I->seeElementInDOM(self::$lightboxCheckbox);
-        $I->dontSeeCheckboxIsChecked(self::$lightboxCheckbox);
-        $I->checkOption(self::$lightboxCheckbox);
-
+        $I->seeElementInDOM($checkboxSelector);
         $I->wait(3);
+        $I->seeCheckboxIsChecked($checkboxSelector);
+        $I->uncheckOption($checkboxSelector);
 
         self::saveSettings($I);
 
-        $I->seeCheckboxIsChecked(self::$lightboxCheckbox);
-
-        return $this;
-    }
-
-    /**
-    * disableLightbox() -> Will disable the lightbox settings.
-    */
-    public function disableLightbox($I){
-
-        $I = $this->tester;
-
-        self::gotoDisplayTab($I);
-
-        $I->see('Use lightbox to display media');
-
-        $I->scrollTo('//*[@id="rtmedia-display"]/div[4]/h3');
-        $I->seeElementInDOM(self::$lightboxCheckbox);
-        $I->seeCheckboxIsChecked(self::$lightboxCheckbox);
-        $I->uncheckOption(self::$lightboxCheckbox);
-
-        $I->wait(3);
-
-        self::saveSettings($I);
-
-        $I->dontSeeCheckboxIsChecked(self::$lightboxCheckbox);
-
-        return $this;
-    }
-
-
-    /**
-    * enableDirectUpload() -> Will enable the direct upload.
-    */
-    public function enableDirectUpload($I){
-
-        $I = $this->tester;
-
-        self::gotoDisplayTab($I);
-
-        $I->see('Enable Direct Upload');
-
-        $I->scrollTo('//*[@id="rtmedia-display"]/div[6]/h3');
-        $I->seeElementInDOM(self::$directUploadCheckbox);
-        $I->dontSeeCheckboxIsChecked(self::$directUploadCheckbox);
-        $I->checkOption(self::$directUploadCheckbox);
-
-        $I->wait(3);
-
-        self::saveSettings($I);
-
-        $I->seeCheckboxIsChecked(self::$directUploadCheckbox);
+        $I->dontSeeCheckboxIsChecked($checkboxSelector);
 
         return $this;
 
     }
 
-    /**
-    * disableDirectUpload() -> Will disable the direct upload.
-    */
-    public function disableDirectUpload($I){
-
-        $I = $this->tester;
-
-        self::gotoDisplayTab($I);
-
-        $I->scrollTo('//*[@id="rtmedia-display"]/div[6]/h3');
-        $I->seeElementInDOM(self::$directUploadCheckbox);
-        $I->seeCheckboxIsChecked(self::$directUploadCheckbox);
-        $I->uncheckOption(self::$directUploadCheckbox);
-
-        self::saveSettings($I);
-
-        $I->dontSeeCheckboxIsChecked(self::$directUploadCheckbox);
-
-        return $this;
-
-    }
-
-    /**
-    * enableMasonayLayout() -> Will enable masonary layout settings.
-    */
-    public function enableMasonayLayout($I){
-
-        $I = $this->tester;
-
-        self::gotoDisplayTab($I);
-
-        $I->see('Enable Masonry Cascading grid layout');
-
-        $I->scrollTo('//*[@id="rtmedia-display"]/div[5]/h3');
-
-        $I->seeElementInDOM(self::$masonaryCheckbox);
-        $I->dontSeeCheckboxIsChecked(self::$masonaryCheckbox);
-        $I->checkOption(self::$masonaryCheckbox);
-
-        $I->wait(3);
-
-        self::saveSettings($I);
-
-        $I->seeCheckboxIsChecked(self::$masonaryCheckbox);
-
-        return $this;
-    }
-
-    /**
-    * disableMasonayLayout() -> Will disbale masonary layout settings.
-    */
-    public function disableMasonayLayout($I){
-
-        $I = $this->tester;
-
-        self::gotoDisplayTab($I);
-
-        $I->see('Enable Masonry Cascading grid layout');
-
-        $I->scrollTo('//*[@id="rtmedia-display"]/div[5]/h3');
-
-        $I->seeElementInDOM(self::$masonaryCheckbox);
-        $I->seeCheckboxIsChecked(self::$masonaryCheckbox);
-        $I->uncheckOption(self::$masonaryCheckbox);
-
-        $I->wait(3);
-
-        self::saveSettings($I);
-
-        $I->dontSeeCheckboxIsChecked(self::$masonaryCheckbox);
-
-        return $this;
-    }
-
-    /**
-    * checkPaginationOption() -> Will enable the pagination option.
-    */
-    public function checkPaginationOption($I){
-
-        $I = $this->tester;
-
-        self::gotoDisplayTab($I);
-
-        $I->see('Media display pagination option');
-
-        $I->scrollTo('//*[@id="rtmedia-display"]/div[4]/h3');
-
-        $I->checkOption('input[value="pagination"]');
-
-        $I->wait(3);
-
-        self::saveSettings($I);
-
-        return $this;
-
-
-    }
-
-    /**
-    * checkLoadmoreOption() -> Will enable the loadmore option.
-    */
-    public function checkLoadmoreOption($I){
-
-        $I = $this->tester;
-
-        self::gotoDisplayTab($I);
-
-        $I->see('Media display pagination option');
-
-        $I->scrollTo('//*[@id="rtmedia-display"]/div[4]/h3');
-
-        $I->checkOption('input[value="load_more"]');
-
-        $I->wait(3);
-
-        self::saveSettings($I);
-
-        return $this;
-
-
-    }
 }
