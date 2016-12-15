@@ -2,23 +2,25 @@
 
 /**
 * Scenario : To check if media tab appears on profile
-* Pre-requisite : In backend - Goto rtMedia settings -> Buddypress -> INTEGRATION WITH BUDDYPRESS FEATURES -> Enable media in profile. This option must be selected.
 */
 
     use Page\Login as LoginPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
-
-    $userName = 'demo';
-    $password = 'demo';
 
     $I = new AcceptanceTester($scenario);
     $I->wantTo('To check if media tab appears on profile');
 
     $loginPage = new LoginPage($I);
-    $loginPage->login($userName,$password);
+    $loginPage->loginAsAdmin(ConstantsPage::$userName,ConstantsPage::$password);
 
-    $gotoProfile = new BuddypressSettingsPage($I);
-    $gotoProfile->gotoProfilePage($userName,$I);
+    $settings = new DashboardSettingsPage($I);
+    $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
+    $settings->enableSetting($I,ConstantsPage::$strEnableMediaInProLabel,ConstantsPage::$enableMediaInProCheckbox);
 
-    $I->seeElement(BuddypressSettingsPage::$mediaLinkOnProfile);
+    $url = 'members/'.ConstantsPage::$userName.'/profile';
+    $I->amOnPage($url);
+
+    $I->seeElement(ConstantsPage::$mediaLinkOnProfile);
 ?>

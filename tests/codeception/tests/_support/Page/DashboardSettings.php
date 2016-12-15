@@ -126,4 +126,17 @@ class DashboardSettings
 
     }
 
+    public function setValue($I,$strLabel,$cssSelector,$mediaPerPage){
+
+        $I->see($strLabel);
+
+        $I->seeElementInDOM($cssSelector);
+        $I->fillField($cssSelector,$mediaPerPage);
+
+        self::saveSettings($I);
+
+        return $this;
+
+    }
+
 }
