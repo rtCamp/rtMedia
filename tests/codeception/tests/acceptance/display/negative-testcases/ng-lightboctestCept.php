@@ -16,10 +16,11 @@
     $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
 
     $settings = new DashboardSettingsPage($I);
-    $settings->disableSetting($I,ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$lightboxScrollPosition);
+    $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
+    $settings->disableSetting($I,ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($userName); //Assuming direct uplaod is disabled
+    $uploadmedia->uploadMediaUsingStartUploadButton(ConstantsPage::$userName); //Assuming direct uplaod is disabled
     $uploadmedia->fisrtThumbnailMedia($I);
 
     $I->dontSeeElement(ConstantsPage::$closeButton);   //The close button will only be visible if the media is opened in Lightbox

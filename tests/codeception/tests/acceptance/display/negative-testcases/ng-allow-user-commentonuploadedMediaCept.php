@@ -15,6 +15,7 @@
     $loginPage->loginAsAdmin(ConstantsPage::$userName,ConstantsPage::$password);
 
     $settings = new DashboardSettingsPage($I);
+    $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
     $settings->disableSetting($I,ConstantsPage::$strCommentCheckboxLabel,ConstantsPage::$commentCheckbox);
 
     $uploadmedia = new UploadMediaPage($I);

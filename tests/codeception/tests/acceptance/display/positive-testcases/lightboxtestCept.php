@@ -16,7 +16,8 @@
     $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
 
     $settings = new DashboardSettingsPage($I);
-    $settings->enableSetting($I,ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$lightboxScrollPosition);
+    $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
+    $settings->enableSetting($I,ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox);
 
     $uploadmedia = new UploadMediaPage($I);
     $uploadmedia->uploadMediaUsingStartUploadButton(ConstantsPage::$userName); //Assuming direct uplaod is disabled

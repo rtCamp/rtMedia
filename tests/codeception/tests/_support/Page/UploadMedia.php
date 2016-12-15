@@ -13,17 +13,8 @@ class UploadMedia
     public static $firstChild = 'ul.rtm-gallery-list li:first-child';
     public static $commentTextArea = '#comment_content';
     public static $commentSubmitButton = '.rt_media_comment_submit';
-    public static $loadMore = 'a#rtMedia-galary-next';
-    public static $paginationPattern = '.rtm-pagination .rtmedia-page-no';
-    public static $closeButton = '.rtm-mfp-close';
     public static $uploadMediaButtonOnActivity = '.rtmedia-add-media-button';
     public static $whatIsNewTextarea = '#whats-new';
-
-    /**
-     * Basic route example for your current URL
-     * You can append any additional parameter to URL
-     * and use it in tests like: Page\Edit::route('/123-post');
-     */
 
     public static function route($param)
     {
@@ -57,7 +48,6 @@ class UploadMedia
 
         $I->dontSeeCheckboxIsChecked(self::$uploadTermsCheckbox);
         $I->checkOption(self::$uploadTermsCheckbox); //Assuming that "rtMedia Uplaod terms" plugin is enabled
-    //    $I->seeCheckboxIsChecked(self::$uploadTermsCheckbox);
 
     }
 
@@ -145,8 +135,6 @@ class UploadMedia
     * fisrtThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
     */
     public function fisrtThumbnailMedia($I){
-
-        $I = $this->tester;
 
         $I->click(self::$firstChild);
         $I->wait(5);

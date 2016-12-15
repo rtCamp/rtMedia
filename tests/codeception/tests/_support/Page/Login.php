@@ -10,13 +10,14 @@ class Login
      * public static $formSubmitButton = "#mainForm input[type=submit]";
      */
 
-     public static $userNameField = 'input#bp-login-widget-user-login';
-     public static $passwordField = 'input#bp-login-widget-user-pass';
-     public static $loginButton = 'input#bp-login-widget-submit';
-     public static $titleTag = 'rtMedia Demo Site';
+    //  public static $userNameField = 'input#bp-login-widget-user-login';
+    //  public static $passwordField = 'input#bp-login-widget-user-pass';
+    //  public static $loginButton = 'input#bp-login-widget-submit';
+    //  public static $titleTag = 'rtMedia Demo Site';
      public static $wpUserNameField = 'input#user_login';
      public static $wpPasswordField = 'input#user_pass';
      public static $wpSubmitButton = 'input#wp-submit';
+     public static $currentUrl = 'http://krupa.rtcamp.info/wp-admin/';
 
     /**
      * Basic route example for your current URL

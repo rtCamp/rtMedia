@@ -5,7 +5,6 @@
 */
 
     use Page\Login as LoginPage;
-    use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
 
@@ -16,10 +15,11 @@
     $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
 
     $settings = new DashboardSettingsPage($I);
-    $settings->disableSetting($I,ConstantsPage::$strMasonaryCheckboxLabel, ConstantsPage::$masonaryCheckbox, ConstantsPage::$masonaryScrollPostion);
+    $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
+    $settings->disableSetting($I,ConstantsPage::$strMasonaryCheckboxLabel, ConstantsPage::$masonaryCheckbox);
 
-    $masonryLayout = new UploadMediaPage($I);
-    $masonryLayout->gotoMediaPage(ConstantsPage::$userName,$I);
+    $url = 'members/'.ConstantsPage::$userName.'/media/photo/';
+    $I->amOnPage($url);
 
     $I->wait(5);
 

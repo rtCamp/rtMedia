@@ -5,26 +5,24 @@
 */
 
     use Page\Login as LoginPage;
-    use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
-
-    $userName = 'krupa';
-    $password = 'Test123';
+    use Page\Constants as ConstantsPage;
 
     $I = new AcceptanceTester($scenario);
     $I->wantTo('To check if Load More - Media display pagination option is enabled');
 
     $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin($userName,$password);
+    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
 
     $settings = new DashboardSettingsPage($I);
-    $settings->checkLoadmoreOption($I);
+    $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
+    $settings->selectPaginationPattern($I,ConstantsPage::$strMediaDisplayPaginationLabel,ConstantsPage::$loadmoreRadioButton);
 
-    $loadMore = new UploadMediaPage($I);
-    $loadMore->gotoMediaPage($userName,$I);
+    $url = 'members/'.ConstantsPage::$userName.'/media/photo/';
+    $I->amOnPage($url);
 
     $I->wait(3);
 
-    $I->seeElementInDOM(UploadMediaPage::$loadMore);
+    $I->seeElementInDOM(ConstantsPage::$loadMore);
 
 ?>
