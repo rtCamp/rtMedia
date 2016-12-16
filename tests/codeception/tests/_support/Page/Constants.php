@@ -3,11 +3,6 @@ namespace Page;
 
 class Constants
 {
-    // include url of current page
-    public static $URL = '';
-
-    //public static $rtmediaSettingUrl = '/wp-admin/admin.php?page=rtmedia-settings'
-
     public static $userName = 'rtcamp';
     public static $password = 'Test@1230';
 
@@ -25,13 +20,17 @@ class Constants
     public static $numOfMediaLabel = 'Number of media per page';
     public static $strMasonaryCheckboxLabel = 'Enable Masonry Cascading grid layout';
     public static $strMediaDisplayPaginationLabel = 'Media display pagination option';
+    public static $numOfMediaLabelActivity = 'Number of media items to show in activity stream';
+    public static $strEnableAlbumLabel = 'Organize media into albums';
 
     public static $strEnableMediaInProLabel = 'Enable media in profile';
+    public static $strEnableMediaInGrpLabel = 'Enable media in group';
 
     public static $adminbarMenuLabel = 'Admin bar menu integrat';
     public static $footerLinkLabel = 'Add a link to rtMedia in footer';
 
-    public static $numOfMediaTextbox = 'input#rtm-form-number-0';
+    public static $numOfMediaTextbox = 'input[name="rtmedia-options[general_perPageMedia]"]';
+    public static $numOfMediaTextboxActivity = 'input[name="rtmedia-options[buddypress_limitOnActivity]"]';
 
     public static $commentCheckbox = 'input[name="rtmedia-options[general_enableComments]"]';
     public static $directUploadCheckbox = 'input[name="rtmedia-options[general_direct_upload]"]';
@@ -39,6 +38,8 @@ class Constants
     public static $masonaryCheckbox = 'input[name="rtmedia-options[general_masonry_layout]"]';
 
     public static $enableMediaInProCheckbox = 'input[name="rtmedia-options[buddypress_enableOnProfile]"]';
+    public static $enableMediaInGrpCheckbox = 'input[name="rtmedia-options[buddypress_enableOnGroup]"]';
+    public static $enableAlbumCheckbox = 'input[name="rtmedia-options[general_enableAlbums]"]';
 
     public static $adminbarMenuCheckbox = 'input[name="rtmedia-options[general_showAdminMenu]"]';
     public static $footerLinkCheckbox = 'input[name="rtmedia-options[rtmedia_add_linkback]"]';
@@ -60,6 +61,8 @@ class Constants
     public static $footerLink = '.rtmedia-footer-link';
     public static $loadMore = 'a#rtMedia-galary-next';
     public static $paginationPattern = '.rtm-pagination .rtmedia-page-no';
-
+    public static $mediaLinkOnProfile = 'a#user-media';
+    public static $mediaLinkOnGroup = 'a#media';
+    public static $mediaAlbumLink = 'a#rtmedia-nav-item-albums';
 
 }

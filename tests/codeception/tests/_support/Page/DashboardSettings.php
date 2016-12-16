@@ -61,7 +61,6 @@ class DashboardSettings
         $I->wait(5);
         $I->seeInCurrentUrl($urlStr);
 
-        return $this;
     }
 
     /**
@@ -84,8 +83,6 @@ class DashboardSettings
 
         $I->seeCheckboxIsChecked($checkboxSelector);
 
-        return $this;
-
     }
 
     /**
@@ -107,9 +104,6 @@ class DashboardSettings
         self::saveSettings($I);
 
         $I->dontSeeCheckboxIsChecked($checkboxSelector);
-
-        return $this;
-
     }
 
     public function selectPaginationPattern($I,$strLabel,$radioButtonSelector){
@@ -122,8 +116,6 @@ class DashboardSettings
 
         self::saveSettings($I);
 
-        return $this;
-
     }
 
     public function setValue($I,$strLabel,$cssSelector,$mediaPerPage){
@@ -134,8 +126,6 @@ class DashboardSettings
         $I->fillField($cssSelector,$mediaPerPage);
 
         self::saveSettings($I);
-
-        return $this;
 
     }
 

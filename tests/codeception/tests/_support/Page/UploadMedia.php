@@ -139,8 +139,6 @@ class UploadMedia
         $I->click(self::$firstChild);
         $I->wait(5);
 
-        return $this;
-
     }
 
 }
