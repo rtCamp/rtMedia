@@ -21,6 +21,7 @@ modules:
             capabilities:
               'browserstack.user': ''
               'browserstack.key': ''
+              'browser_version': 50.0
               'os': 'OS X'
-              'os_version': 'Sierra'
+              'os_version': 'El Capitan'
               'browserstack.debug': 'true'

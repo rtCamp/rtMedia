@@ -13,8 +13,9 @@ class UploadMedia
     public static $firstChild = 'ul.rtm-gallery-list li:first-child';
     public static $commentTextArea = '#comment_content';
     public static $commentSubmitButton = '.rt_media_comment_submit';
-    public static $uploadMediaButtonOnActivity = '.rtmedia-add-media-button';
     public static $whatIsNewTextarea = '#whats-new';
+    public static $scrollPosOnActivityPage = '#user-activity';
+    public static $postUpdateButton = 'input#aw-whats-new-submit';
 
     public static function route($param)
     {
@@ -110,26 +111,26 @@ class UploadMedia
 
     }
 
+    /**
+    * uploadMediaFromActivity() -> Will the media from activity page when it is enabled from dashboard
+    */
     public function uploadMediaFromActivity($I){
 
+        $I->seeElementInDOM(self::$scrollPosOnActivityPage);
+        $I->scrollTo(self::$scrollPosOnActivityPage);
+
+        $I->seeElementInDOM(self::$whatIsNewTextarea);
         $I->click(self::$whatIsNewTextarea);
-        $I->waitForElementVisible(self::$uploadMediaButtonOnActivity,2);
-        $I->click(self::$uploadMediaButtonOnActivity);
-        $I->pressKey(self::$uploadMediaButtonOnActivity,array('command','tab'));
         $I->wait(3);
-        $I->pressKey(self::$uploadMediaButtonOnActivity,array('shift','command','g'));
-        $I->sendKeys('/Users/javalnanda/Desktop/1.jpeg');
-        $I->pressKey(self::$uploadMediaButtonOnActivity,\Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->fillfield(self::$whatIsNewTextarea,"test from activity stream");
+
+        $I->attachFile('input[type="file"]','test.jpg');
         $I->wait(5);
 
-        // $I->pressKey('#page','a'); // => olda
-        // $I->pressKey('#page',array('ctrl','a'),'new'); //=> new
-        // $I->pressKey('#page',array('shift','111'),'1','x'); //=> old!!!1x
-        // $I->pressKey('descendant-or-self::*[ * `id='page']','u');
-        // $I->pressKey('#name', array('ctrl', 'a'), \Facebook\WebDriver\WebDriverKeys::DELETE);
+        $I->click(self::$postUpdateButton);
+        $I->wait(5);
 
     }
-
 
     /**
     * fisrtThumbnailMedia() -> Will click on the first element(media thumbnail) from the list

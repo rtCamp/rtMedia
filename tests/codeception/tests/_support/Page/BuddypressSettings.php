@@ -15,6 +15,7 @@ class BuddypressSettings
 
         $url = 'members/'.$userName.'/profile';
         $I->amOnPage($url);
+        $I->wait(5);
 
     }
 
@@ -30,6 +31,14 @@ class BuddypressSettings
         $I->seeElement(self::$groupNameLink);
         $I->click(self::$groupNameLink);
         $I->wait(3);
+
+    }
+
+    public function gotoActivityPage($I,$userName){
+
+        $url = 'members/'.$userName;
+        $I->amOnPage($url);
+        $I->wait(5);
 
     }
 }

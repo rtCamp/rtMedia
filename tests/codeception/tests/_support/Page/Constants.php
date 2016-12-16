@@ -20,11 +20,15 @@ class Constants
     public static $numOfMediaLabel = 'Number of media per page';
     public static $strMasonaryCheckboxLabel = 'Enable Masonry Cascading grid layout';
     public static $strMediaDisplayPaginationLabel = 'Media display pagination option';
-    public static $numOfMediaLabelActivity = 'Number of media items to show in activity stream';
-    public static $strEnableAlbumLabel = 'Organize media into albums';
 
     public static $strEnableMediaInProLabel = 'Enable media in profile';
     public static $strEnableMediaInGrpLabel = 'Enable media in group';
+    public static $numOfMediaLabelActivity = 'Number of media items to show in activity stream';
+    public static $strEnableAlbumLabel = 'Organize media into albums';
+    public static $strMediaNotificationLabel = 'Enable media notification';
+    public static $strActivityMediaLikeLabel = 'Create activity for media likes';
+    public static $strActivityMediaCommentLabel = 'Create activity for media comments';
+    public static $strMediaUploadFromActivityLabel = 'Allow upload from activity stream';
 
     public static $adminbarMenuLabel = 'Admin bar menu integrat';
     public static $footerLinkLabel = 'Add a link to rtMedia in footer';
@@ -40,6 +44,10 @@ class Constants
     public static $enableMediaInProCheckbox = 'input[name="rtmedia-options[buddypress_enableOnProfile]"]';
     public static $enableMediaInGrpCheckbox = 'input[name="rtmedia-options[buddypress_enableOnGroup]"]';
     public static $enableAlbumCheckbox = 'input[name="rtmedia-options[general_enableAlbums]"]';
+    public static $mediaNotificationCheckbox = 'input[name="rtmedia-options[buddypress_enableNotification]"]';
+    public static $activityMediaLikeCheckbox = 'input[name="rtmedia-options[buddypress_mediaLikeActivity]"]';
+    public static $activityMediaCommentCheckbox = 'input[name="rtmedia-options[buddypress_mediaCommentActivity]"]';
+    public static $mediaUploadFromActivityCheckbox = 'input[name="rtmedia-options[buddypress_enableOnActivity]"]';
 
     public static $adminbarMenuCheckbox = 'input[name="rtmedia-options[general_showAdminMenu]"]';
     public static $footerLinkCheckbox = 'input[name="rtmedia-options[rtmedia_add_linkback]"]';
@@ -64,5 +72,6 @@ class Constants
     public static $mediaLinkOnProfile = 'a#user-media';
     public static $mediaLinkOnGroup = 'a#media';
     public static $mediaAlbumLink = 'a#rtmedia-nav-item-albums';
+    public static $uploadButtonOnAtivityPage = '.rtmedia-add-media-button';
 
 }
