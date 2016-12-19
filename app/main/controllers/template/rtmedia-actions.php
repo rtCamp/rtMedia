@@ -395,7 +395,7 @@ function rtmedia_custom_css() {
 	$options = $rtmedia->options;
 
 	if ( ! empty( $options['styles_custom'] ) ) {
-		echo "<style type='text/css'> " . stripslashes( $options['styles_custom'] ) . ' </style>'; // @codingStandardsIgnoreLine
+		echo "<style type='text/css'> " . stripslashes( wp_filter_nohtml_kses( $options['styles_custom'] ) ) . ' </style>'; // @codingStandardsIgnoreLine
 	}
 
 }
