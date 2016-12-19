@@ -187,7 +187,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$rtmedia->options = $options;
 			// Save Settings first then proceed.
 			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_STRING );
-			if ( isset( $rtmedia_option_save ) ) {
+			if ( isset( $rtmedia_option_save ) && current_user_can('manage_options') ) {
 				$options               = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 				$options               = $this->sanitize_before_save_options( $options );
 				$options               = apply_filters( 'rtmedia_pro_options_save_settings', $options );
