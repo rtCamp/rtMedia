@@ -181,7 +181,7 @@ jQuery( document ).ready( function( $ ) {
 	var listView = new ListView();
 
 	/* Prevent license key validation by Enter Key as it deactivates the first plugin's license. */
-	jQuery( '.license-form .regular-text' ).each( function(){
+	jQuery( '#rtm-licenses .regular-text' ).each( function(){
 		jQuery( this ).keypress(function (event) {
 			var keycode = (event.keyCode ? event.keyCode : event.which);
 			/* check if key pressed is "Enter key" or not */
