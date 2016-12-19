@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : Allow the user to enable Json API.
+* Scenario : Allow the user to disable Data tracking.
 */
 
     use Page\Login as LoginPage;
@@ -10,7 +10,7 @@
 
 
     $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if the user is allowed to enable Json API.');
+    $I->wantTo('To check if the user is allowed to disable data tracking.');
 
     $loginPage = new LoginPage($I);
     $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
