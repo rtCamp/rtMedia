@@ -5,13 +5,17 @@ class Constants
 {
     public static $userName = 'rtcamp';
     public static $password = 'Test@1230';
+    public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
+    public static $customCssEmptyValue = '';
 
     public static $displayTabUrl = '#rtmedia-display';
     public static $buddypressTabUrl = '#rtmedia-bp';
+    public static $customCssTabUrl = '#rtmedia-custom-css-settings';
     public static $otherSeetingsTabUrl = '#rtmedia-general';
 
     public static $displayTab = 'a#tab-rtmedia-display';
     public static $buddypressTab = 'a#tab-rtmedia-bp';
+    public static $customCssTab = 'a#tab-rtmedia-custom-css-settings';
     public static $otherSeetingsTab = 'a#tab-rtmedia-general';
 
     public static $strCommentCheckboxLabel = 'Allow user to comment on uploaded media';
@@ -30,6 +34,11 @@ class Constants
     public static $strActivityMediaCommentLabel = 'Create activity for media comments';
     public static $strMediaUploadFromActivityLabel = 'Allow upload from activity stream';
 
+    public static $defaultStyleLabel = 'rtMedia default styles';
+    public static $customCssLabel = 'Paste your CSS code';
+
+    public static $strEnableJsonDataLabel = 'Enable JSON API';
+    public static $strEnableUsageDataTrackingLabel = 'Allow usage data tracking';
     public static $adminbarMenuLabel = 'Admin bar menu integrat';
     public static $footerLinkLabel = 'Add a link to rtMedia in footer';
 
@@ -49,18 +58,16 @@ class Constants
     public static $activityMediaCommentCheckbox = 'input[name="rtmedia-options[buddypress_mediaCommentActivity]"]';
     public static $mediaUploadFromActivityCheckbox = 'input[name="rtmedia-options[buddypress_enableOnActivity]"]';
 
+    public static $defaultStyleCheckbox = 'input[name="rtmedia-options[styles_enabled]"]';
+    public static $cssTextaear= '.rtm-form-textarea';
+
+    public static $enableJsonDataCheckbox = 'input[name="rtmedia-options[rtmedia_enable_api]"]';
+    public static $enableUsageDataTrackingCheckbox = 'input[name="rtmedia-options[general_AllowUserData]"]';
     public static $adminbarMenuCheckbox = 'input[name="rtmedia-options[general_showAdminMenu]"]';
     public static $footerLinkCheckbox = 'input[name="rtmedia-options[rtmedia_add_linkback]"]';
 
     public static $loadmoreRadioButton = 'input[value="load_more"]';
     public static $paginationRadioButton = 'input[value="pagination"]';
-
-    // public static $directUploadScrollPosition = '//*[@id="rtmedia-display"]/div[6]/h3';
-    // public static $lightboxScrollPosition = '//*[@id="rtmedia-display"]/div[2]/h3';
-    // public static $masonaryScrollPostion = '//*[@id="rtmedia-display"]/div[3]/h3';
-    // public static $othersSettingsTabScrollPos = 'a.rtmedia-tab-title.privacy';
-    // public static $adminbarScrollPos = '//*[@id="rtmedia-general"]/div[1]/h3';
-    // public static $footerLinkScrollPos = '//*[@id="rtmedia-general"]/div[8]/h3';
 
     public static $closeButton = '.rtm-mfp-close';
     public static $masonryLayoutXpath = '//*[@id="rtm-gallery-title-container"]/h2';

@@ -118,12 +118,12 @@ class DashboardSettings
 
     }
 
-    public function setValue($I,$strLabel,$cssSelector,$mediaPerPage){
+    public function setValue($I,$strLabel,$cssSelector,$valueToBeSet){
 
         $I->see($strLabel);
 
         $I->seeElementInDOM($cssSelector);
-        $I->fillField($cssSelector,$mediaPerPage);
+        $I->fillField($cssSelector,$valueToBeSet);
 
         self::saveSettings($I);
 
