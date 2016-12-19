@@ -112,17 +112,26 @@ class UploadMedia
     }
 
     /**
-    * uploadMediaFromActivity() -> Will the media from activity page when it is enabled from dashboard
+    * addStatus() -> Will perform the neccessary steps to add status
     */
-    public function uploadMediaFromActivity($I){
-
+    public function addStatus($I){
         $I->seeElementInDOM(self::$scrollPosOnActivityPage);
         $I->scrollTo(self::$scrollPosOnActivityPage);
 
         $I->seeElementInDOM(self::$whatIsNewTextarea);
         $I->click(self::$whatIsNewTextarea);
         $I->wait(3);
+    }
+
+    /**
+    * uploadMediaFromActivity() -> Will upload the media from activity page when it is enabled from dashboard
+    */
+    public function uploadMediaFromActivity($I){
+
+        self::addStatus($I);
+
         $I->fillfield(self::$whatIsNewTextarea,"test from activity stream");
+        $I->wait(3);
 
         $I->attachFile('input[type="file"]','test.jpg');
         $I->wait(5);

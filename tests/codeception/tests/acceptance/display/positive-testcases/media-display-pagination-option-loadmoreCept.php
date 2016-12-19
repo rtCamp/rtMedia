@@ -16,7 +16,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
-    $settings->selectPaginationPattern($I,ConstantsPage::$strMediaDisplayPaginationLabel,ConstantsPage::$loadmoreRadioButton);
+    $settings->selectOption($I,ConstantsPage::$strMediaDisplayPaginationLabel,ConstantsPage::$loadmoreRadioButton);
 
     $url = 'members/'.ConstantsPage::$userName.'/media/photo/';
     $I->amOnPage($url);

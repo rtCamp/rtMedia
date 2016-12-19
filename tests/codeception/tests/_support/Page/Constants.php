@@ -10,11 +10,13 @@ class Constants
 
     public static $displayTabUrl = '#rtmedia-display';
     public static $buddypressTabUrl = '#rtmedia-bp';
+    public static $privacyTabUrl = '#rtmedia-privacy';
     public static $customCssTabUrl = '#rtmedia-custom-css-settings';
     public static $otherSeetingsTabUrl = '#rtmedia-general';
 
     public static $displayTab = 'a#tab-rtmedia-display';
     public static $buddypressTab = 'a#tab-rtmedia-bp';
+    public static $privacyTab = 'a#tab-rtmedia-privacy';
     public static $customCssTab = 'a#tab-rtmedia-custom-css-settings';
     public static $otherSeetingsTab = 'a#tab-rtmedia-general';
 
@@ -34,6 +36,10 @@ class Constants
     public static $strActivityMediaCommentLabel = 'Create activity for media comments';
     public static $strMediaUploadFromActivityLabel = 'Allow upload from activity stream';
 
+    public static $privacyLabel = 'Enable privacy';
+    public static $defaultPrivacyLabel = 'Default privacy';
+    public static $privacyUserOverrideLabel = 'Allow users to set privacy for their content';
+
     public static $defaultStyleLabel = 'rtMedia default styles';
     public static $customCssLabel = 'Paste your CSS code';
 
@@ -49,6 +55,8 @@ class Constants
     public static $directUploadCheckbox = 'input[name="rtmedia-options[general_direct_upload]"]';
     public static $lightboxCheckbox = 'input[name="rtmedia-options[general_enableLightbox]"]';
     public static $masonaryCheckbox = 'input[name="rtmedia-options[general_masonry_layout]"]';
+    public static $loadmoreRadioButton = 'input[value="load_more"]';
+    public static $paginationRadioButton = 'input[value="pagination"]';
 
     public static $enableMediaInProCheckbox = 'input[name="rtmedia-options[buddypress_enableOnProfile]"]';
     public static $enableMediaInGrpCheckbox = 'input[name="rtmedia-options[buddypress_enableOnGroup]"]';
@@ -58,6 +66,12 @@ class Constants
     public static $activityMediaCommentCheckbox = 'input[name="rtmedia-options[buddypress_mediaCommentActivity]"]';
     public static $mediaUploadFromActivityCheckbox = 'input[name="rtmedia-options[buddypress_enableOnActivity]"]';
 
+    public static $privacyCheckbox = 'input[name="rtmedia-options[privacy_enabled]"]';
+    public static $privateRadioButton = 'input[value="60"]';
+    public static $loggedInUsersRadioButton = 'input[value="20"]';
+    public static $publicRadioButton = 'input#rtm-form-radio-4';
+    public static $privacyUserOverrideCheckbox = 'input[name="rtmedia-options[privacy_userOverride]"]';
+
     public static $defaultStyleCheckbox = 'input[name="rtmedia-options[styles_enabled]"]';
     public static $cssTextaear= '.rtm-form-textarea';
 
@@ -65,9 +79,6 @@ class Constants
     public static $enableUsageDataTrackingCheckbox = 'input[name="rtmedia-options[general_AllowUserData]"]';
     public static $adminbarMenuCheckbox = 'input[name="rtmedia-options[general_showAdminMenu]"]';
     public static $footerLinkCheckbox = 'input[name="rtmedia-options[rtmedia_add_linkback]"]';
-
-    public static $loadmoreRadioButton = 'input[value="load_more"]';
-    public static $paginationRadioButton = 'input[value="pagination"]';
 
     public static $closeButton = '.rtm-mfp-close';
     public static $masonryLayoutXpath = '//*[@id="rtm-gallery-title-container"]/h2';
@@ -80,5 +91,6 @@ class Constants
     public static $mediaLinkOnGroup = 'a#media';
     public static $mediaAlbumLink = 'a#rtmedia-nav-item-albums';
     public static $uploadButtonOnAtivityPage = '.rtmedia-add-media-button';
+    public static $privacyDropdown = 'select#rtSelectPrivacy';
 
 }

@@ -106,7 +106,7 @@ class DashboardSettings
         $I->dontSeeCheckboxIsChecked($checkboxSelector);
     }
 
-    public function selectPaginationPattern($I,$strLabel,$radioButtonSelector){
+    public function selectOption($I,$strLabel,$radioButtonSelector){
 
         $I->see($strLabel);
 

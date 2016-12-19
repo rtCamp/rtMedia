@@ -34,6 +34,9 @@ class BuddypressSettings
 
     }
 
+    /**
+    * gotoActivityPage() -> Will take the user to activity page
+    */
     public function gotoActivityPage($I,$userName){
 
         $url = 'members/'.$userName;
