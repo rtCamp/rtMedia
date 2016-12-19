@@ -822,7 +822,7 @@ function rtmedia_activity_register_activity_actions_callback() {
 		'rtmedia_update',
 		__( 'Posted a status update', 'buddypress-media' ),
 		'bp_activity_format_activity_action_activity_update',
-		__( 'Updates', 'buddypress-media' ),
+		__( 'rtMedia Updates', 'buddypress-media' ),
 		array( 'activity', 'group', 'member', 'member_groups' )
 	);
 }
