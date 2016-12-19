@@ -23,7 +23,7 @@ class RTMediaLicense {
 			 * Design Credits: Pippin Williamson (https://easydigitaldownloads.com/)
 			 */
 			?>
-			<form method="post" class="license-form" id="rtm-licenses">
+			<form method="post" class="license-form">
 				<div id="rtm-licenses" class="license-row">
 					<?php
 					foreach ( $tabs as $key => $tab ) {
