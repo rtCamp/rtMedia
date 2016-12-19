@@ -878,7 +878,7 @@ class RTMediaFormHandler {
 				'args'		=> array(
 					'id'	=> 'rtmedia-custom-css',
 					'key'	=> 'styles_custom',
-					'value'	=> stripcslashes( $options['styles_custom'] ),
+					'value'	=> wp_filter_nohtml_kses( $options['styles_custom'] ),
 					'desc'	=> esc_html__( 'Custom rtMedia CSS container', 'buddypress-media' ),
 				),
 				'group'    => 10,
