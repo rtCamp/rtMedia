@@ -17,7 +17,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I, ConstantsPage::$customCssTab, ConstantsPage::$customCssTabUrl);
-    $settings->disableSetting($I,ConstantsPage::$defaultStyleLabel, ConstantsPage::$defaultStyleCheckbox);
+    $settings->verifyDisableStatus($I,ConstantsPage::$defaultStyleLabel, ConstantsPage::$defaultStyleCheckbox);
     $settings->setValue($I,ConstantsPage::$customCssLabel,ConstantsPage::$cssTextaear,ConstantsPage::$customCssValue);
 
     $buddypress = new BuddypressSettingsPage($I);

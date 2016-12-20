@@ -17,7 +17,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->disableSetting($I,ConstantsPage::$strEnableAlbumLabel,ConstantsPage::$enableAlbumCheckbox);
+    $settings->verifyDisableStatus($I,ConstantsPage::$strEnableAlbumLabel,ConstantsPage::$enableAlbumCheckbox);
 
 
     $gotoMediaPage = new UploadMediaPage($I);

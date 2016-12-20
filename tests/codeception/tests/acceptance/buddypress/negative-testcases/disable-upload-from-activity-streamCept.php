@@ -19,7 +19,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->disableSetting($I,ConstantsPage::$strMediaUploadFromActivityLabel,ConstantsPage::$mediaUploadFromActivityCheckbox);
+    $settings->verifyDisableStatus($I,ConstantsPage::$strMediaUploadFromActivityLabel,ConstantsPage::$mediaUploadFromActivityCheckbox);
 
     $buddypress = new BuddypressSettingsPage($I);
     $buddypress->gotoActivityPage($I,ConstantsPage::$userName);

@@ -2,7 +2,6 @@
 
 /**
 * Scenario : To set default privacy with public.
-* Prerequisites : This option must be on -> 'Allow users to set privacy for their content'
 */
 
     use Page\Login as LoginPage;
@@ -19,7 +18,8 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$privacyTab,ConstantsPage::$privacyTabUrl);
-    $settings->selectOption($I,ConstantsPage::$defaultPrivacyLabel,ConstantsPage::$loggedInUsersRadioButton);
+    $settings->verifyEnableStatus($I,ConstantsPage::$privacyUserOverrideLabel,ConstantsPage::$privacyUserOverrideCheckbox);
+    $settings->verifySelectOption($I,ConstantsPage::$defaultPrivacyLabel,ConstantsPage::$loggedInUsersRadioButton);
 
     $buddypress = new BuddypressSettingsPage($I);
     $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
@@ -29,14 +29,10 @@
 
     $I->seeElement(ConstantsPage::$privacyDropdown);
 
-    $temp = $I->grabValueFrom(ConstantsPage::$privacyDropdown);
-    echo "Value from select box = ";
-    echo $temp;
-
-    if($temp == '20'){
-        echo "Test Passed";
+    if($I->grabValueFrom(ConstantsPage::$privacyDropdown) == '20'){
+        echo nl2br("Default Privacy --> Loggedin Users \n");
     }else{
-        echo "Test Failed";
+        echo nl2br("Test Failed \n");
     }
 
 ?>

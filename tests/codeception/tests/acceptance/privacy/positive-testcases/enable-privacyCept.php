@@ -18,6 +18,6 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$privacyTab,ConstantsPage::$privacyTabUrl);
-    $settings->enableSetting($I,ConstantsPage::$privacyLabel,ConstantsPage::$privacyCheckbox);
+    $settings->verifyEnableStatus($I,ConstantsPage::$privacyLabel,ConstantsPage::$privacyCheckbox);
 
 ?>

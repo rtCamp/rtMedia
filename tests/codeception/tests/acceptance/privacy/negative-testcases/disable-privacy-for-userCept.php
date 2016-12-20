@@ -18,7 +18,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$privacyTab,ConstantsPage::$privacyTabUrl);
-    $settings->disableSetting($I,ConstantsPage::$privacyUserOverrideLabel,ConstantsPage::$privacyUserOverrideCheckbox);
+    $settings->verifyDisableStatus($I,ConstantsPage::$privacyUserOverrideLabel,ConstantsPage::$privacyUserOverrideCheckbox);
 
     $buddypress = new BuddypressSettingsPage($I);
     $buddypress->gotoActivityPage($I,ConstantsPage::$userName);

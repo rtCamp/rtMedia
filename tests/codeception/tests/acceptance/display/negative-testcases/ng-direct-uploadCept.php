@@ -17,7 +17,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
-    $settings->disableSetting($I,ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox);
+    $settings->verifyDisableStatus($I,ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox);
 
     $uploadmedia = new UploadMediaPage($I);
     $uploadmedia->uploadMediaUsingStartUploadButton(ConstantsPage::$userName);

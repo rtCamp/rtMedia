@@ -16,6 +16,6 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->enableSetting($I,ConstantsPage::$strActivityMediaLikeLabel,ConstantsPage::$activityMediaLikeCheckbox);
+    $settings->verifyEnableStatus($I,ConstantsPage::$strActivityMediaLikeLabel,ConstantsPage::$activityMediaLikeCheckbox);
 
 ?>

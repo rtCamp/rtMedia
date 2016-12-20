@@ -17,6 +17,6 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I, ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl);
-    $settings->disableSetting($I,ConstantsPage::$strEnableUsageDataTrackingLabel, ConstantsPage::$enableUsageDataTrackingCheckbox);
+    $settings->verifyDisableStatus($I,ConstantsPage::$strEnableUsageDataTrackingLabel, ConstantsPage::$enableUsageDataTrackingCheckbox);
 
 ?>

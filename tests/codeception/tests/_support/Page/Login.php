@@ -7,8 +7,7 @@ class Login
      public static $wpUserNameField = 'input#user_login';
      public static $wpPasswordField = 'input#user_pass';
      public static $wpSubmitButton = 'input#wp-submit';
-     public static $currentUrl = 'http://krupa.rtcamp.info/wp-admin/';
-
+     public static $loginLink = 'li#wp-admin-bar-bp-login';
 
     public static function route($param)
     {
@@ -39,12 +38,26 @@ class Login
     public function loginAsAdmin($wpUserName,$wpPassword)
     {
         $I = $this->tester;
-        $I->amOnPage('/wp-login.php?redirect_to=http%3A%2F%2Fdemo.rtmedia.io%2Fwp-admin%2F&reauth=1');
+        $I->amOnPage('/');
         $I->wait(5);
+
+        $I->seeElementInDOM(self::$loginLink);
+        $I->click(self::$loginLink);
+        $I->wait(10);
+
+        $I->seeElementInDOM(self::$wpUserNameField);
         $I->fillfield(self::$wpUserNameField,$wpUserName);
+
+        $I->seeElementInDOM(self::$wpPasswordField);
         $I->fillfield(self::$wpPasswordField,$wpPassword);
+
+        $I->seeElementInDOM(self::$wpSubmitButton);
         $I->click(self::$wpSubmitButton);
         $I->wait(5);
+
+        $I->amOnPage('/wp-admin');
+        $I->wait(5);
+
         $I->see('Dashboard');
         $I->maximizeWindow();
         $I->seeElement('#toplevel_page_rtmedia-settings');

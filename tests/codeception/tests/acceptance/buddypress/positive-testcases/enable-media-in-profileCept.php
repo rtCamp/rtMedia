@@ -18,7 +18,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->enableSetting($I,ConstantsPage::$strEnableMediaInProLabel,ConstantsPage::$enableMediaInProCheckbox);
+    $settings->verifyEnableStatus($I,ConstantsPage::$strEnableMediaInProLabel,ConstantsPage::$enableMediaInProCheckbox);
 
     $buddypress = new BuddypressSettingsPage($I);
     $buddypress->gotoProfile($I,ConstantsPage::$userName);

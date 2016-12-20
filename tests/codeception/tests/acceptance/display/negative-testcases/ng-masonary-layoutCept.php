@@ -16,7 +16,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
-    $settings->disableSetting($I,ConstantsPage::$strMasonaryCheckboxLabel, ConstantsPage::$masonaryCheckbox);
+    $settings->verifyDisableStatus($I,ConstantsPage::$strMasonaryCheckboxLabel, ConstantsPage::$masonaryCheckbox);
 
     $url = 'members/'.ConstantsPage::$userName.'/media/photo/';
     $I->amOnPage($url);

@@ -16,6 +16,6 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->disableSetting($I,ConstantsPage::$strActivityMediaLike,ConstantsPage::$activityMediaLikeCheckbox);
+    $settings->verifyDisableStatus($I,ConstantsPage::$strActivityMediaLike,ConstantsPage::$activityMediaLikeCheckbox);
 
 ?>

@@ -7,15 +7,21 @@ class Constants
     public static $password = 'Test@1230';
     public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
     public static $customCssEmptyValue = '';
+    public static $thumbnailWidth = '150';
+    public static $thumbnailHeight = '150';
+
+    public static $topSaveButton = '.rtm-button-container.top input.rtmedia-settings-submit';
 
     public static $displayTabUrl = '#rtmedia-display';
     public static $buddypressTabUrl = '#rtmedia-bp';
+    public static $mediaSizesTabUrl  = '#rtmedia-sizes';
     public static $privacyTabUrl = '#rtmedia-privacy';
     public static $customCssTabUrl = '#rtmedia-custom-css-settings';
     public static $otherSeetingsTabUrl = '#rtmedia-general';
 
     public static $displayTab = 'a#tab-rtmedia-display';
     public static $buddypressTab = 'a#tab-rtmedia-bp';
+    public static $mediaSizesTab = 'a#tab-rtmedia-sizes';
     public static $privacyTab = 'a#tab-rtmedia-privacy';
     public static $customCssTab = 'a#tab-rtmedia-custom-css-settings';
     public static $otherSeetingsTab = 'a#tab-rtmedia-general';
@@ -36,6 +42,9 @@ class Constants
     public static $strActivityMediaCommentLabel = 'Create activity for media comments';
     public static $strMediaUploadFromActivityLabel = 'Allow upload from activity stream';
 
+    public static $mediaPhotoLabel = 'Photo';
+    public static $photoThumbnailLabel = 'Thumbnail';
+
     public static $privacyLabel = 'Enable privacy';
     public static $defaultPrivacyLabel = 'Default privacy';
     public static $privacyUserOverrideLabel = 'Allow users to set privacy for their content';
@@ -45,7 +54,7 @@ class Constants
 
     public static $strEnableJsonDataLabel = 'Enable JSON API';
     public static $strEnableUsageDataTrackingLabel = 'Allow usage data tracking';
-    public static $adminbarMenuLabel = 'Admin bar menu integrat';
+    public static $adminbarMenuLabel = 'Admin bar menu integration';
     public static $footerLinkLabel = 'Add a link to rtMedia in footer';
 
     public static $numOfMediaTextbox = 'input[name="rtmedia-options[general_perPageMedia]"]';
@@ -65,6 +74,10 @@ class Constants
     public static $activityMediaLikeCheckbox = 'input[name="rtmedia-options[buddypress_mediaLikeActivity]"]';
     public static $activityMediaCommentCheckbox = 'input[name="rtmedia-options[buddypress_mediaCommentActivity]"]';
     public static $mediaUploadFromActivityCheckbox = 'input[name="rtmedia-options[buddypress_enableOnActivity]"]';
+
+    public static $thumbnailWidthTextbox = 'input[name="rtmedia-options[defaultSizes_photo_thumbnail_width]"]';
+    public static $thumbnailHeightTextbox = 'input[name="rtmedia-options[defaultSizes_photo_thumbnail_height]"]';
+    public static $thumbnailCropCheckbox = 'input[name="rtmedia-options[defaultSizes_photo_thumbnail_crop]"]';
 
     public static $privacyCheckbox = 'input[name="rtmedia-options[privacy_enabled]"]';
     public static $privateRadioButton = 'input[value="60"]';

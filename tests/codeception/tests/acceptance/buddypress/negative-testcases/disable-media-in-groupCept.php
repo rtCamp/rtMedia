@@ -17,7 +17,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->disableSetting($I,ConstantsPage::$strEnableMediaInGrpLabel,ConstantsPage::$enableMediaInGrpCheckbox);
+    $settings->verifyDisableStatus($I,ConstantsPage::$strEnableMediaInGrpLabel,ConstantsPage::$enableMediaInGrpCheckbox);
 
     $buddypress = new BuddypressSettingsPage($I);
     $buddypress->gotoGroup($I);

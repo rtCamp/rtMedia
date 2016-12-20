@@ -17,7 +17,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I, ConstantsPage::$customCssTab, ConstantsPage::$customCssTabUrl);
-    $settings->enableSetting($I,ConstantsPage::$defaultStyleLabel, ConstantsPage::$defaultStyleCheckbox);
+    $settings->verifyEnableStatus($I,ConstantsPage::$defaultStyleLabel, ConstantsPage::$defaultStyleCheckbox);
 
     $value = $I->grabValueFrom(ConstantsPage::$cssTextaear);
     $settings->setValue($I,ConstantsPage::$customCssLabel,ConstantsPage::$cssTextaear,ConstantsPage::$customCssValue);
@@ -25,6 +25,6 @@
     $buddypress = new BuddypressSettingsPage($I);
     $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
 
-    $I->seeInPageSource(ConstantsPage::$customCssValue);
+    $I->seeInSource(ConstantsPage::$customCssValue);
 
 ?>

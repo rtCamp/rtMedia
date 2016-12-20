@@ -16,6 +16,6 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->enableSetting($I,ConstantsPage::$strMediaNotificationLabel,ConstantsPage::$mediaNotificationCheckbox);
+    $settings->verifyEnableStatus($I,ConstantsPage::$strMediaNotificationLabel,ConstantsPage::$mediaNotificationCheckbox);
 
 ?>

@@ -16,7 +16,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$otherSeetingsTab,ConstantsPage::$otherSeetingsTabUrl);
-    $settings->disableSetting($I,ConstantsPage::$adminbarMenuLabel, ConstantsPage::$adminbarMenuCheckbox);
+    $settings->verifyDisableStatus($I,ConstantsPage::$adminbarMenuLabel, ConstantsPage::$adminbarMenuCheckbox);
 
     $I->dontSeeElement(ConstantsPage::$rtMediaAdminbar);
 

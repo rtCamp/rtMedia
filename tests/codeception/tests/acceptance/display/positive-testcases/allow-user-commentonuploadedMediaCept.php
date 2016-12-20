@@ -18,7 +18,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
-    $settings->enableSetting($I,ConstantsPage::$strCommentCheckboxLabel,ConstantsPage::$commentCheckbox);
+    $settings->verifyEnableStatus($I,ConstantsPage::$strCommentCheckboxLabel,ConstantsPage::$commentCheckbox);
 
     $uploadmedia = new UploadMediaPage($I);
     $uploadmedia->uploadMediaUsingStartUploadButton(ConstantsPage::$userName);

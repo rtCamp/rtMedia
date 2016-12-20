@@ -16,7 +16,7 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$otherSeetingsTab,ConstantsPage::$otherSeetingsTabUrl);
-    $settings->enableSetting($I,ConstantsPage::$adminbarMenuLabel, ConstantsPage::$adminbarMenuCheckbox);
+    $settings->verifyEnableStatus($I,ConstantsPage::$adminbarMenuLabel,ConstantsPage::$adminbarMenuCheckbox);
 
     $I->seeElement(ConstantsPage::$rtMediaAdminbar);
 

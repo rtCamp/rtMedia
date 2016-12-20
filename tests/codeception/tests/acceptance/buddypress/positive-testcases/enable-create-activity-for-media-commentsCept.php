@@ -16,6 +16,6 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->enableSetting($I,ConstantsPage::$strActivityMediaCommentLabel,ConstantsPage::$activityMediaCommentCheckbox);
+    $settings->verifyEnableStatus($I,ConstantsPage::$strActivityMediaCommentLabel,ConstantsPage::$activityMediaCommentCheckbox);
 
 ?>
