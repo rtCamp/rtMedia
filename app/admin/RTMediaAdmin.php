@@ -881,6 +881,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'per_page_media_negative_value'	=> esc_html__( 'Please enter positive integer value only. Setting number of media per page value to default value 10.', 'buddypress-media' ),
 					'per_page_media_positive_error'	=> esc_html__( 'Please enter positive integer value only. Setting number of media per page value to round value', 'buddypress-media' ),
 					'request_failed'				=> esc_html__( 'Request failed.', 'buddypress-media' ),
+					'wrong_css_input'				=> esc_html__( 'Please do not insert @import', 'buddypress-media' ),
 				);
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
