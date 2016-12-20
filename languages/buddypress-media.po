@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.2\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-12-19 13:28:53+00:00\n"
+"POT-Creation-Date: 2016-12-20 07:07:06+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -139,7 +139,7 @@ msgstr ""
 
 #: app/admin/RTMediaAdmin.php:714 app/admin/RTMediaAdmin.php:770
 #: app/admin/RTMediaAdmin.php:773 app/admin/RTMediaAdmin.php:935
-#: app/admin/RTMediaAdmin.php:1298 app/helper/RTMediaSettings.php:221
+#: app/admin/RTMediaAdmin.php:1298 app/helper/RTMediaSettings.php:234
 #: app/helper/RTMediaSupport.php:67 app/helper/RTMediaSupport.php:68
 msgid "Support"
 msgstr ""
@@ -397,7 +397,7 @@ msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1562 app/admin/RTMediaAdmin.php:1580
 #: app/admin/RTMediaAdmin.php:1598 app/admin/RTMediaFormHandler.php:435
-#: app/admin/RTMediaFormHandler.php:446 app/helper/RTMediaSettings.php:297
+#: app/admin/RTMediaFormHandler.php:446 app/helper/RTMediaSettings.php:310
 #: app/helper/RTMediaSupport.php:416 app/helper/RTMediaSupport.php:697
 msgid "here"
 msgstr ""
@@ -649,7 +649,7 @@ msgstr ""
 msgid "Media Types Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:557 app/helper/RTMediaSettings.php:319
+#: app/admin/RTMediaFormHandler.php:557 app/helper/RTMediaSettings.php:332
 msgid "Media Type"
 msgstr ""
 
@@ -1354,73 +1354,73 @@ msgstr ""
 msgid "other friends liked your"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:216
+#: app/helper/RTMediaSettings.php:229
 msgid "BuddyPress Media Addons for Photos"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:226
+#: app/helper/RTMediaSettings.php:239
 msgid "rtMedia Themes"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:296
+#: app/helper/RTMediaSettings.php:309
 msgid ""
 "Currently your network allows uploading of the following file types. You "
 "can change the settings %s"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:317 app/helper/RTMediaSettings.php:319
+#: app/helper/RTMediaSettings.php:330 app/helper/RTMediaSettings.php:332
 msgid "Atleast one Media Type Must be selected"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:328 app/helper/RTMediaSettings.php:330
+#: app/helper/RTMediaSettings.php:341 app/helper/RTMediaSettings.php:343
 msgid "\"Number of media\" count value should be numeric and greater than 0."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:330
+#: app/helper/RTMediaSettings.php:343
 msgid "Default Count"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:335
+#: app/helper/RTMediaSettings.php:348
 msgid "Settings saved."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:359
+#: app/helper/RTMediaSettings.php:372
 msgid "If you make changes to width, height or crop settings, you must use "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:360
+#: app/helper/RTMediaSettings.php:373
 msgid "Regenerate Thumbnail Plugin"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:361
+#: app/helper/RTMediaSettings.php:374
 msgid " to regenerate old images."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:384
+#: app/helper/RTMediaSettings.php:397
 msgid "BuddyPress Media 2.6 requires a database upgrade. "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:385
+#: app/helper/RTMediaSettings.php:398
 msgid "Update Database"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:399
+#: app/helper/RTMediaSettings.php:412
 msgid ""
 "If your site has some issues due to rtMedia and you want one on one support "
 "then you can create a support topic on the "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:400
+#: app/helper/RTMediaSettings.php:413
 msgid "rtMedia Support Forum"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:402
+#: app/helper/RTMediaSettings.php:415
 msgid ""
 "If you have any suggestions, enhancements or bug reports, then you can open "
 "a new issue on "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:403 app/helper/RTMediaSupport.php:467
+#: app/helper/RTMediaSettings.php:416 app/helper/RTMediaSupport.php:467
 msgid "GitHub"
 msgstr ""
 
@@ -1795,15 +1795,15 @@ msgstr ""
 msgid "The method expects an array in arguments for %s provided."
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:30
+#: app/helper/rtUploadAttachment.php:35
 msgid "You can not upload more than 2 MB."
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:36
+#: app/helper/rtUploadAttachment.php:41
 msgid "There was an error uploading your files"
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:39
+#: app/helper/rtUploadAttachment.php:44
 msgid "Form was submitted"
 msgstr ""
 
@@ -2885,20 +2885,20 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:801
+#: app/main/controllers/template/rtmedia-actions.php:816
 msgid "Settings has been saved successfully."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:805
+#: app/main/controllers/template/rtmedia-actions.php:820
 msgid "Refresh the page in case if license data is not showing correct."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:823
+#: app/main/controllers/template/rtmedia-actions.php:838
 msgid "Posted a status update"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:825
-msgid "Updates"
+#: app/main/controllers/template/rtmedia-actions.php:840
+msgid "rtMedia Updates"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:50
