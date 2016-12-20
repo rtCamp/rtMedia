@@ -148,7 +148,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				}
 			}
 
-			/* Check if @import is inserted into css or not. If yes then remove that line */
+			/* Check if @import is inserted into css or not. If yes then remove that line before save. */
 			if ( isset( $options['styles_custom'] ) && ! empty( $options['styles_custom'] ) ) {
 				$css = $options['styles_custom'];
 
@@ -156,7 +156,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				 * Filters css validation status weather apply it or not.
 				 * Return true if you want to validate css.
 				 *
-				 * @param bool true By default apply validation.
+				 * @param bool false By default do not apply validation.
 				 */
 				$apply_css_validation = apply_filters( 'rtmedia_css_validation', false );
 
