@@ -97,27 +97,6 @@ class RTMediaRouter {
 			$return           = true;
 		}
 
-		// set is_page to true for 'media' page
-		if ( array_key_exists( RTMEDIA_MEDIA_SLUG , $wp_query->query_vars ) ) {
-			/**
-			 * Filters the is_page variable. If user wants to set media page is not a page,
-			 * just pass the boolean false value to this filter.
-			 *
-			 * @param boolean Default value is true
-			 */
-			$wp_query->is_page = apply_filters( 'rtmedia_is_page', true, $return );
-
-			$is_single = ! empty( $wp_query->query_vars[ RTMEDIA_MEDIA_SLUG ] ) ? true : '';
-
-			/**
-			 * Filters the is_single variable. If user wants to set single media page is not a single page,
-			 * just pass the boolean false value to this filter.
-			 *
-			 * @param string|number Media ID or the media type
-			 */
-			$wp_query->is_single = apply_filters( 'rtmedia_is_single', $wp_query->query_vars[ RTMEDIA_MEDIA_SLUG ], $return );
-		}
-
 		return $return;
 	}
 
