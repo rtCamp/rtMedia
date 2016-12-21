@@ -109,7 +109,13 @@ class RTMediaRouter {
 
 			$is_single = ! empty( $wp_query->query_vars[ RTMEDIA_MEDIA_SLUG ] ) ? true : '';
 
-			$wp_query->is_single = apply_filters( 'rtmedia_is_single', $is_single, $return );
+			/**
+			 * Filters the is_single variable. If user wants to set single media page is not a single page,
+			 * just pass the boolean false value to this filter.
+			 *
+			 * @param string|number Media ID or the media type
+			 */
+			$wp_query->is_single = apply_filters( 'rtmedia_is_single', $wp_query->query_vars[ RTMEDIA_MEDIA_SLUG ], $return );
 
 		}
 
