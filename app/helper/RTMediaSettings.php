@@ -153,7 +153,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				$css = $options['styles_custom'];
 
 				/**
-				 * Filters css validation status weather apply it or not.
+				 * Filters css validation status whether apply it or not.
 				 * Return true if you want to validate css.
 				 *
 				 * @param bool false By default do not apply validation.
