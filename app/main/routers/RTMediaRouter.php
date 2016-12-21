@@ -98,7 +98,7 @@ class RTMediaRouter {
 		}
 
 		// set is_page to true for 'media' page
-		if ( $return && array_key_exists( RTMEDIA_MEDIA_SLUG , $wp_query->query_vars ) ) {
+		if ( array_key_exists( RTMEDIA_MEDIA_SLUG , $wp_query->query_vars ) ) {
 			/**
 			 * Filters the is_page variable. If user wants to set media page is not a page,
 			 * just pass the boolean false value to this filter.
@@ -116,7 +116,6 @@ class RTMediaRouter {
 			 * @param string|number Media ID or the media type
 			 */
 			$wp_query->is_single = apply_filters( 'rtmedia_is_single', $wp_query->query_vars[ RTMEDIA_MEDIA_SLUG ], $return );
-
 		}
 
 		return $return;
