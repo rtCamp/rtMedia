@@ -137,6 +137,22 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 4.2.1 [Dec 21, 2016] ####
+
+* FIXED
+
+ * Security issues pointed out by James Golovich
+ * Direct access of a file
+ * Access rights to modify/update the rtMedia settings
+ * Added validation on custom CSS before saving
+ * Section fluctuation when user drags media into activity box
+ * Audio / Video autoplay in Safari browser
+ * JS error on media comments when activity stream is disabled from the backend
+ * Media upload error when activity stream is disabled from the backend
+ * Invalid license key notice appearing even when all keys are valid
+ * Addon validation checks will happen every six hours (only if addons installed)
+ * Changed plugin's review link to rate on WordPress.org
+
 #### 4.2 [Nov 17, 2016] ####
 
 * NEW FEATURES
@@ -1275,8 +1291,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.2 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Album media count, @mention functionality on media comments, Next previous link on media page, filter to allow/disallow text in activity media upload, "posted an update" string translation, duplicate activity entry on multiple post update, Video pop-up issues.
+#### 4.2.1 ####
+Fix the media autoplay in safari browser and improved the security related checks. Please update/re-save the permalink structure after the plugin update.
 
 ## Sponsors ##
 
