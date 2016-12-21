@@ -148,6 +148,26 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				}
 			}
 
+			/* Check if @import is inserted into css or not. If yes then remove that line before save. */
+			if ( isset( $options['styles_custom'] ) && ! empty( $options['styles_custom'] ) ) {
+				$css = $options['styles_custom'];
+
+				/**
+				 * Filters css validation status weather apply it or not.
+				 * Return true if you want to validate css.
+				 *
+				 * @param bool false By default do not apply validation.
+				 */
+				$apply_css_validation = apply_filters( 'rtmedia_css_validation', false );
+
+				if ( true === $apply_css_validation && preg_match( '/@import\s*(url)?\s*\(?([^;]+?)\)?;/', $css, $matches ) ) {
+					$removable_line = $matches[0];
+					if ( ! empty( $removable_line ) ) {
+						$options['styles_custom'] = str_replace( $removable_line, '', $css );
+					}
+				}
+			}
+
 			if ( isset( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) > 10 ) {
 				$options['general_videothumbs'] = 10;
 			}
