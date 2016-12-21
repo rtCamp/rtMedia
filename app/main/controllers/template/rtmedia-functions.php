@@ -3513,8 +3513,11 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 
 	$addon_id 	= $addon['args']['addon_id'];
 
-	// Get the store URL from the constant defined in the addon
-	$store_url 	= constant( 'EDD_' . strtoupper( $addon_id ) . '_STORE_URL' );
+	$store_url = '';
+	if ( defined( 'EDD_' . strtoupper( $addon_id ) . '_STORE_URL' ) ) {
+		// Get the store URL from the constant defined in the addon
+		$store_url 	= constant( 'EDD_' . strtoupper( $addon_id ) . '_STORE_URL' );
+	}
 
 	// If store URL not found in the addon, use the default store URL
 	if ( empty( $store_url ) ) {

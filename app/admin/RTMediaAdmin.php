@@ -881,6 +881,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'per_page_media_negative_value'	=> esc_html__( 'Please enter positive integer value only. Setting number of media per page value to default value 10.', 'buddypress-media' ),
 					'per_page_media_positive_error'	=> esc_html__( 'Please enter positive integer value only. Setting number of media per page value to round value', 'buddypress-media' ),
 					'request_failed'				=> esc_html__( 'Request failed.', 'buddypress-media' ),
+					'wrong_css_input'				=> esc_html__( 'You can not use @import statement in custom css', 'buddypress-media' ),
 				);
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
@@ -1479,7 +1480,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$addons       = '<div id="social" class="rtm-social-share">
 							<p><a href="http://twitter.com/home/?status=' . esc_attr( $message ) . '" class="button twitter" target= "_blank" title="' . esc_attr__( 'Post to Twitter Now', 'buddypress-media' ) . '">' . esc_html__( 'Post to Twitter', 'buddypress-media' ) . '<span class="dashicons dashicons-twitter"></span></a></p>
 							<p><a href="https://www.facebook.com/sharer/sharer.php?u=https://rtmedia.io/" class="button facebook" target="_blank" title="' . esc_attr__( 'Share on Facebook Now', 'buddypress-media' ) . '">' . esc_html__( 'Share on Facebook', 'buddypress-media' ) . '<span class="dashicons dashicons-facebook"></span></a></p>
-							<p><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button wordpress" target= "_blank" title="' . esc_attr__( 'Rate rtMedia on Wordpress.org', 'buddypress-media' ) . '">' . esc_html__( 'Rate on Wordpress.org', 'buddypress-media' ) . '<span class="dashicons dashicons-wordpress"></span></a></p>
+							<p><a href="https://wordpress.org/support/plugin/buddypress-media/reviews/#new-post" class="button wordpress" target= "_blank" title="' . esc_attr__( 'Rate rtMedia on Wordpress.org', 'buddypress-media' ) . '">' . esc_html__( 'Rate on Wordpress.org', 'buddypress-media' ) . '<span class="dashicons dashicons-wordpress"></span></a></p>
 							<p><a href="' . sprintf( '%s', 'https://rtmedia.io/feed/' ) . '" class="button rss" target="_blank" title="' . esc_attr__( 'Subscribe to our Feeds', 'buddypress-media' ) . '">' . esc_html__( 'Subscribe to our Feeds', 'buddypress-media' ) . '<span class="dashicons dashicons-rss"></span></a></p>
 							</div>';
 

@@ -395,7 +395,7 @@ function rtmedia_custom_css() {
 	$options = $rtmedia->options;
 
 	if ( ! empty( $options['styles_custom'] ) ) {
-		echo "<style type='text/css'> " . stripslashes( $options['styles_custom'] ) . ' </style>'; // @codingStandardsIgnoreLine
+		echo "<style type='text/css'> " . stripslashes( wp_filter_nohtml_kses( $options['styles_custom'] ) ) . ' </style>'; // @codingStandardsIgnoreLine
 	}
 
 }
@@ -705,8 +705,7 @@ function rt_check_addon_status() {
 		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ){
 
 			$addon_id = $addon['args']['addon_id'];
-
-			// If license key is not present, remove then remove the status from config
+			// If license key is not present, then remove the status from config
 			// This forces the `Deactivate License` to `Activate License`
 			if ( empty( $addon['args']['license_key'] ) ) {
 				delete_option( 'edd_' . $addon_id . '_license_status' );
@@ -752,7 +751,17 @@ function rt_check_addon_status() {
 				$now        = current_time( 'timestamp' );
 				$expiration = strtotime( $addon_active->expires, current_time( 'timestamp' ) );
 
-				if ( $now > $expiration ) {
+				// For regularly check for license key is expired from store or not
+				// Check if last verification attempt is expired or not
+				// Will return false if it is expired
+				// It will check for every 6 hours
+				if ( is_multisite() ) {
+					$dont_check_verification = get_site_transient( 'check_rtmedia_license_verifiction_' . $addon_id );
+				} else {
+					$dont_check_verification = get_transient( 'check_rtmedia_license_verifiction_' . $addon_id );
+				}
+
+				if ( $now > $expiration || ( false === $dont_check_verification ) ) {
 
 					// Get license key  information from the store
 					$license_data = rtmedia_activate_addon_license( $addon );
@@ -761,6 +770,12 @@ function rt_check_addon_status() {
 						update_option( 'edd_' . $addon_id . '_active', $license_data );
 					}
 
+					// Once license status is checked from the store, then set the transient to check again
+					if ( is_multisite() ) {
+						set_site_transient( 'check_rtmedia_license_verifiction_' . $addon_id, $license_data, 6 * HOUR_IN_SECONDS );
+					} else {
+						set_transient( 'check_rtmedia_license_verifiction_' . $addon_id, $license_data, 6 * HOUR_IN_SECONDS );
+					}
 				}
 			}
 
@@ -822,7 +837,7 @@ function rtmedia_activity_register_activity_actions_callback() {
 		'rtmedia_update',
 		__( 'Posted a status update', 'buddypress-media' ),
 		'bp_activity_format_activity_action_activity_update',
-		__( 'Updates', 'buddypress-media' ),
+		__( 'rtMedia Updates', 'buddypress-media' ),
 		array( 'activity', 'group', 'member', 'member_groups' )
 	);
 }
