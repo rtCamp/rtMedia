@@ -1578,6 +1578,17 @@ img.mfp-img {
   text-decoration: underline;
 }
 
+.rtmedia-uploader-div {
+  opacity: 0;
+  display: none;
+  visibility: hidden;
+}
+
+#whats-new-options {
+  opacity: 0;
+  display: none;
+}
+
 .rtmedia-album-edit .rtm-checkbox-wrap {
   background: rgba(255, 255, 255, 0.9);
   height: 30px;
