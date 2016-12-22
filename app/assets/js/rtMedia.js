@@ -873,6 +873,10 @@ window.onload = function() {
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_reload( rtm_masonry_container );
 	}
+	jQuery( ' #whats-new-options' ).css({
+	    'opacity': '1'
+
+	});
 };
 
 // Get query string parameters from url
