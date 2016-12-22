@@ -21,7 +21,7 @@
     $settings->verifyEnableStatus($I,ConstantsPage::$strCommentCheckboxLabel,ConstantsPage::$commentCheckbox);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton(ConstantsPage::$userName);
+    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);
 
     $I->reloadPage();
     $I->wait(7);

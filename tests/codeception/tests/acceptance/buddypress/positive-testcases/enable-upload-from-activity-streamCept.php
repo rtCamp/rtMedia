@@ -27,6 +27,6 @@
     $I->seeElementInDOM(ConstantsPage::$uploadButtonOnAtivityPage);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaFromActivity($I);  //Assuming Direct upload is not enabled
+    $uploadmedia->uploadMediaFromActivity($I,ConstantsPage::$imageName);    //Assuming Direct upload is disabled
 
 ?>

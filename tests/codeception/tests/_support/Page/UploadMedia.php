@@ -16,27 +16,22 @@ class UploadMedia
     public static $whatIsNewTextarea = '#whats-new';
     public static $scrollPosOnActivityPage = '#user-activity';
     public static $postUpdateButton = 'input#aw-whats-new-submit';
-
-    public static function route($param)
-    {
-        return static::$URL.$param;
-    }
-
-    protected $tester;
-
-    public function __construct(\AcceptanceTester $I)
-    {
-        $this->tester = $I;
-    }
+    public static $mediaPageScrollPos = '#user-activity';
 
     /**
     * gotoMediaPage() -> Will take the user to media page
     */
-    public function gotoMediaPage($userName,$I){
+    public function gotoMediaPage($I,$userName,$link){
 
-        $url = 'members/'.$userName.'/media/photo/';
-
+        $url = 'members/'.$userName.'/media';
         $I->amonPage($url);
+
+        $I->wait(10);
+
+        $I->seeElementInDOM($link);
+        $I->scrollTo(self::$mediaPageScrollPos);
+        $I->wait(2);
+        $I->click($link);
         $I->wait(10);
 
         $I->seeElement(self::$galleryLable);
@@ -45,6 +40,9 @@ class UploadMedia
 
     }
 
+    /**
+    * uploadTermasCheckbox() -> will check `terms of service checkbox`
+    */
     public function uploadTermasCheckbox($I){
 
         $I->dontSeeCheckboxIsChecked(self::$uploadTermsCheckbox);
@@ -52,21 +50,20 @@ class UploadMedia
 
     }
 
-
     /**
     * uploadMedia() -> Will perform neccessary steps to uplpad media. In this case it will work for image media type.
     */
-    public function uploadMedia($userName,$I){
+    public function uploadMedia($I,$userName,$mediaFile,$link){
 
-        self::gotoMediaPage($userName, $I);
+        self::gotoMediaPage($I,$userName,$link);
 
         $I->seeElement(self::$uploadLink);
         $I->click(self::$uploadLink);
         $I->wait(2);
 
         $I->seeElement(self::$selectFileButton);
-        $I->attachFile('input[type="file"]','test.jpg');
-        $I->wait(5);
+        $I->attachFile('input[type="file"]',$mediaFile);
+        $I->wait(10);
 
         $I->seeElement(self::$fileList);
 
@@ -75,31 +72,25 @@ class UploadMedia
     /**
     * uploadMediaUsingStartUplaodButton() -> Will the media when 'Direct Uplaod' is not enabled
     */
-    public function uploadMediaUsingStartUploadButton($userName){
+    public function uploadMediaUsingStartUploadButton($I,$userName,$mediaFile,$link){
 
-        $I = $this->tester;
-
-        self::uploadMedia($userName,$I);
+        self::uploadMedia($I,$userName,$mediaFile,$link);
 
         self::uploadTermasCheckbox($I);
 
         $I->seeElement(self::$uploadMediaButton);
         $I->click(self::$uploadMediaButton);
 
-        $I->wait(3);
-
-        return $this;
+        $I->wait(10);
 
     }
 
     /**
     * uploadMediaDirectly() -> Will the media when 'Direct Uplaod' is enabled
     */
-    public function uploadMediaDirectly($userName){
+    public function uploadMediaDirectly($I,$userName,$mediaFile,$link){
 
-        $I = $this->tester;
-
-        self::uploadMedia($userName,$I);
+        self::uploadMedia($I,$userName,$mediaFile,$link);
 
         $I->dontSeeElement(self::$uploadMediaButton);
 
@@ -107,14 +98,13 @@ class UploadMedia
 
         $I->wait(3);
 
-        return $this;
-
     }
 
     /**
     * addStatus() -> Will perform the neccessary steps to add status
     */
     public function addStatus($I){
+
         $I->seeElementInDOM(self::$scrollPosOnActivityPage);
         $I->scrollTo(self::$scrollPosOnActivityPage);
 
@@ -126,14 +116,14 @@ class UploadMedia
     /**
     * uploadMediaFromActivity() -> Will upload the media from activity page when it is enabled from dashboard
     */
-    public function uploadMediaFromActivity($I){
+    public function uploadMediaFromActivity($I,$mediaFile){
 
         self::addStatus($I);
 
         $I->fillfield(self::$whatIsNewTextarea,"test from activity stream");
         $I->wait(3);
 
-        $I->attachFile('input[type="file"]','test.jpg');
+        $I->attachFile('input[type="file"]',$mediaFile);
         $I->wait(5);
 
         $I->click(self::$postUpdateButton);
@@ -150,5 +140,4 @@ class UploadMedia
         $I->wait(5);
 
     }
-
 }

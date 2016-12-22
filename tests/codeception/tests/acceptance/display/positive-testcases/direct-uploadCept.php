@@ -20,6 +20,6 @@
     $settings->verifyEnableStatus($I,ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaDirectly(ConstantsPage::$userName);
+    $uploadmedia->uploadMediaDirectly($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);
 
 ?>

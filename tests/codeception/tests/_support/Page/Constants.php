@@ -5,10 +5,28 @@ class Constants
 {
     public static $userName = 'rtcamp';
     public static $password = 'Test@1230';
+
+    public static $imageName = 'test.jpg';
+    public static $videoName = 'sampleVideo.mp4';
+    public static $audioName = '';
+
     public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
     public static $customCssEmptyValue = '';
+
     public static $thumbnailWidth = '150';
     public static $thumbnailHeight = '150';
+
+    public static $mediumWidth = '320';
+    public static $mediummHeight = '240';
+
+    public static $LargeWidth = '700';
+    public static $LargeHeight = '0';
+
+    public static $activityVideoPlayerWidth = '320';
+    public static $activityVideoPlayerHeight = '240';
+
+    public static $singleVideoWidth = '500';
+    public static $singleVideoHeight = '480';
 
     public static $topSaveButton = '.rtm-button-container.top input.rtmedia-settings-submit';
 
@@ -44,6 +62,12 @@ class Constants
 
     public static $mediaPhotoLabel = 'Photo';
     public static $photoThumbnailLabel = 'Thumbnail';
+    public static $photoMediumLabel = 'Medium';
+    public static $photoLargeLabel = 'Large';
+    public static $activityPlayerLabel = 'ActivityPlayer';
+    public static $singlePlayerLabel = 'SinglePlayer';
+    public static $featuredLabel = 'Featured';
+    public static $imgQualityLabel = 'JPEG/JPG image quality (1-100)';
 
     public static $privacyLabel = 'Enable privacy';
     public static $defaultPrivacyLabel = 'Default privacy';
@@ -79,6 +103,27 @@ class Constants
     public static $thumbnailHeightTextbox = 'input[name="rtmedia-options[defaultSizes_photo_thumbnail_height]"]';
     public static $thumbnailCropCheckbox = 'input[name="rtmedia-options[defaultSizes_photo_thumbnail_crop]"]';
 
+    public static $mediumWidthTextbox = 'input[name="rtmedia-options[defaultSizes_photo_medium_width]"]';
+    public static $mediumHeightTextbox = 'input[name="rtmedia-options[defaultSizes_photo_medium_height]"]';
+    public static $mediumCropCheckbox = 'input[name="rtmedia-options[defaultSizes_photo_medium_crop]"]';
+
+    public static $largeWidthTextbox = 'input[name="rtmedia-options[defaultSizes_photo_large_width]"]';
+    public static $largeHeightTextbox = 'input[name="rtmedia-options[defaultSizes_photo_large_height]"]';
+    public static $largeCropChrckbox = 'input[name="rtmedia-options[defaultSizes_photo_large_crop]"]';
+
+    public static $activityVideoWidthTextbox = 'input[name="rtmedia-options[defaultSizes_video_activityPlayer_width]"]';
+    public static $activityVideoHeightTextbox = 'input[name="rtmedia-options[defaultSizes_video_activityPlayer_height]"]';
+    public static $singleVideoWidthTextbox = 'input[name="rtmedia-options[defaultSizes_video_singlePlayer_width]"]';
+    public static $singleVideoHeightTextbox = 'input[name="rtmedia-options[defaultSizes_video_singlePlayer_height]"]';
+
+    public static $activityMusicWidthTextbox = 'input[name="rtmedia-options[defaultSizes_music_activityPlayer_width]"]';
+    public static $singleMusicWidthTextbox = 'input[name="rtmedia-options[defaultSizes_music_singlePlayer_width]"]';
+
+    public static $featuredWidthTextbox = 'input[name="rtmedia-options[defaultSizes_featured_default_width]"]';
+    public static $featuredHeightTextbox = 'input[name="rtmedia-options[defaultSizes_featured_default_height]"]';
+
+    public static $imgQualityTextbox = 'input[name="rtmedia-options[general_jpeg_image_quality]"]';
+
     public static $privacyCheckbox = 'input[name="rtmedia-options[privacy_enabled]"]';
     public static $privateRadioButton = 'input[value="60"]';
     public static $loggedInUsersRadioButton = 'input[value="20"]';
@@ -93,6 +138,12 @@ class Constants
     public static $adminbarMenuCheckbox = 'input[name="rtmedia-options[general_showAdminMenu]"]';
     public static $footerLinkCheckbox = 'input[name="rtmedia-options[rtmedia_add_linkback]"]';
 
+    public static $photoLink = 'a#rtmedia-nav-item-photo';
+    public static $videoLink = 'a#rtmedia-nav-item-video';
+
+    public static $thumbnailSelector = '.rtmedia-item-thumbnail img';
+    public static $videoSelector = 'div#rtm-mejs-video-container';
+
     public static $closeButton = '.rtm-mfp-close';
     public static $masonryLayoutXpath = '//*[@id="rtm-gallery-title-container"]/h2';
     public static $masonryLayout = 'ul.masonry';
@@ -105,5 +156,6 @@ class Constants
     public static $mediaAlbumLink = 'a#rtmedia-nav-item-albums';
     public static $uploadButtonOnAtivityPage = '.rtmedia-add-media-button';
     public static $privacyDropdown = 'select#rtSelectPrivacy';
+
 
 }

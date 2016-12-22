@@ -184,7 +184,5 @@ class DashboardSettings
             echo nl2br("Call to selectOption()... \n");
             self::selectOption($I,$cssSelector);
         }
-
     }
-
 }

@@ -21,7 +21,7 @@
 
 
     $gotoMediaPage = new UploadMediaPage($I);
-    $gotoMediaPage->gotoMediaPage(ConstantsPage::$userName,$I);
+    $gotoMediaPage->gotoMediaPage($I,ConstantsPage::$userName,ConstantsPage::$photoLink);
 
     $I->dontSeeElement(ConstantsPage::$mediaAlbumLink);
 
