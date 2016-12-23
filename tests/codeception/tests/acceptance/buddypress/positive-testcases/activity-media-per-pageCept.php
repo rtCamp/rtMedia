@@ -5,10 +5,10 @@
 */
 
     use Page\Login as LoginPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
-
-    $numOfMediaPerPage = '5';
+    use Page\UploadMedia as UploadMediaPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester($scenario);
     $I->wantTo('To set the number media on Activity page while bulk upload.');
@@ -18,15 +18,21 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->setValue($I,ConstantsPage::$numOfMediaLabelActivity,ConstantsPage::$numOfMediaTextboxActivity,$numOfMediaPerPage);
+    $settings->setValue($I,ConstantsPage::$numOfMediaLabelActivity,ConstantsPage::$numOfMediaTextboxActivity,ConstantsPage::$numOfMediaPerPageOnActivity);
 
-    $temp = $I->grabValueFrom(ConstantsPage::$numOfMediaTextbox);
-    $I->wait(3);
+    $buddypress = new BuddypressSettingsPage($I);
+    $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
 
-    if($temp == $numOfMediaPerPage){
-        echo "Value matched!";
+    $I->seeElementInDOM(ConstantsPage::$uploadButtonOnAtivityPage);
+
+    $uploadmedia = new UploadMediaPage($I);
+    $uploadmedia->bulkUploadMediaFromActivity($I,ConstantsPage::$imageName,ConstantsPage::$numOfMediaPerPageOnActivity);    //Assuming Direct upload is disabled
+
+    if(ConstantsPage::$numOfMediaPerPageOnActivity > 0){
+            $I->seeNumberOfElements(ConstantsPage::$mediaPerPageActivitySelector,ConstantsPage::$numOfMediaPerPageOnActivity);
+    }else{
+        $temp = 5;
+        $I->seeNumberOfElements(ConstantsPage::$mediaPerPageActivitySelector,$temp);
     }
-
-
 
 ?>

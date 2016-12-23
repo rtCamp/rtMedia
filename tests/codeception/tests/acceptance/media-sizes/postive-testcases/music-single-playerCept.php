@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : To set height and width of single video player.
+* Scenario : To set width of single music player.
 */
 
     use Page\Login as LoginPage;
@@ -10,19 +10,19 @@
     use Page\DashboardSettings as DashboardSettingsPage;
 
     $I = new AcceptanceTester($scenario);
-    $I->wantTo('To set height and width of single video player.');
+    $I->wantTo(' To set width of single music player.');
 
     $loginPage = new LoginPage($I);
     $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl);
-    $settings->setMediaSize($I,ConstantsPage::$singlePlayerLabel,ConstantsPage::$singleVideoWidthTextbox,ConstantsPage::$singleVideoWidth,ConstantsPage::$singleVideoHeightTextbox,ConstantsPage::$singleVideoHeight);
+    $settings->setMediaSize($I,ConstantsPage::$singlePlayerLabel,ConstantsPage::$singleMusicWidthTextbox,ConstantsPage::$singleMusicPlayerWidth);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$videoName,ConstantsPage::$videoLink);
+    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$audioName,ConstantsPage::$musicLink);
     $uploadmedia->fisrtThumbnailMedia($I);
 
-    echo $I->grabAttributeFrom(ConstantsPage::$videoSelectorSingle,'style');
+    echo $I->grabAttributeFrom(ConstantsPage::$audioSelectorSingle,'style');
 
 ?>

@@ -63,15 +63,17 @@ class DashboardSettings
         $I->wait(3);
     }
 
-    public function setMediaSize($I,$strLabel,$widthTextbox,$width,$heightTextbox,$height){
+    public function setMediaSize($I,$strLabel,$widthTextbox,$width,$heightTextbox='no',$height='no'){
 
         $I->see($strLabel);
 
         $I->seeElementInDOM($widthTextbox);
         $I->fillField($widthTextbox,$width);
 
-        $I->seeElementInDOM($heightTextbox);
-        $I->fillField($heightTextbox,$height);
+        if('no' !== $heightTextbox && 'no' != $height){
+            $I->seeElementInDOM($heightTextbox);
+            $I->fillField($heightTextbox,$height);
+        }
 
         self::saveSettings($I);
 

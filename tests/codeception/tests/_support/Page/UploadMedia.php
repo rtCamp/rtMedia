@@ -130,6 +130,34 @@ class UploadMedia
         $I->wait(5);
 
     }
+    /**
+    * bulkUploadMediaFromActivity() -> Will upload the media in bulk from activity page when it is enabled from dashboard
+    */
+    public function bulkUploadMediaFromActivity($I,$mediaFile,$numOfMedia){
+
+        self::addStatus($I);
+
+        $I->fillfield(self::$whatIsNewTextarea,"test from activity stream");
+        $I->wait(3);
+
+        //if $numOfMedia > 0 then it will execute if condition else for $numOfMedia = 0 it will execute else part
+        if($numOfMedia > 0){
+            for ($i = 0; $i < $numOfMedia; $i++) {
+                $I->attachFile('input[type="file"]',$mediaFile);
+                $I->wait(3);
+            }
+        }else{
+            $tempMedia = 5;
+            for ($i = 0; $i < $tempMedia; $i++) {
+                $I->attachFile('input[type="file"]',$mediaFile);
+                $I->wait(3);
+            }
+        }
+
+        $I->click(self::$postUpdateButton);
+        $I->wait(5);
+
+    }
 
     /**
     * fisrtThumbnailMedia() -> Will click on the first element(media thumbnail) from the list

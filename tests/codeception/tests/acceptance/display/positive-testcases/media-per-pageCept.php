@@ -8,8 +8,6 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
 
-    $numOfMediaPerPage = '2';
-
     $I = new AcceptanceTester($scenario);
     $I->wantTo('To set the number media per page');
 
@@ -18,15 +16,11 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
-    $settings->setValue($I,ConstantsPage::$numOfMediaLabel,ConstantsPage::$numOfMediaTextbox,$numOfMediaPerPage);
+    $settings->setValue($I,ConstantsPage::$numOfMediaLabel,ConstantsPage::$numOfMediaTextbox,ConstantsPage::$numOfMediaPerPage);
 
-    $temp = $I->grabValueFrom(ConstantsPage::$numOfMediaTextbox);
-    $I->wait(3);
+    $I->amOnPage('/members/rtcamp/media/');
 
-    if($temp == $numOfMediaPerPage){
-        echo "Value matched!";
-    }
-
-
+    echo nl2br("No. of media per page = \n");
+    $I->seeNumberOfElements(ConstantsPage::$mediaPerPageOnMediaSelector,ConstantsPage::$numOfMediaPerPage); //This will count the number of <li> tag.
 
 ?>

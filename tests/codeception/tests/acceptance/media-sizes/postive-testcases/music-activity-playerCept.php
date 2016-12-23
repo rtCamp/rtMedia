@@ -1,7 +1,8 @@
 <?php
 
 /**
-* Scenario : To set height and width of video player for activity page.
+* Scenario : To set width of Music player for activity page.
+*Prerequisite : Lightbox settings must be off.
 */
 
     use Page\Login as LoginPage;
@@ -18,14 +19,13 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl);
-    $settings->setMediaSize($I,ConstantsPage::$activityPlayerLabel,ConstantsPage::$activityVideoWidthTextbox,ConstantsPage::$activityVideoPlayerWidth,ConstantsPage::$activityVideoHeightTextbox,ConstantsPage::$activityVideoPlayerHeight);
+    $settings->setMediaSize($I,ConstantsPage::$activityPlayerLabel,ConstantsPage::$activityMusicWidthTextbox,ConstantsPage::$activityMusicPlayerWidth);
 
     $buddypress = new BuddypressSettingsPage($I);
     $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaFromActivity($I,ConstantsPage::$videoName);
+    $uploadmedia->uploadMediaFromActivity($I,ConstantsPage::$audioName);
 
-    echo $I->grabAttributeFrom(ConstantsPage::$videoSelectorActivity,'style');
-
+    echo $I->grabAttributeFrom(ConstantsPage::$audioSelectorActivity,'style');
 ?>

@@ -8,30 +8,36 @@ class Constants
 
     public static $imageName = 'test.jpg';
     public static $videoName = 'sampleVideo.mp4';
-    public static $audioName = '';
+    public static $audioName = 'audio.mp3';
 
     public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
     public static $customCssEmptyValue = '';
 
+    public static $numOfMediaPerPage = '10';
+    public static $numOfMediaPerPageOnActivity = '0';
+
     public static $thumbnailWidth = '150';
     public static $thumbnailHeight = '150';
-
     public static $mediumWidth = '320';
     public static $mediummHeight = '240';
-
     public static $LargeWidth = '700';
     public static $LargeHeight = '0';
 
     public static $activityVideoPlayerWidth = '320';
     public static $activityVideoPlayerHeight = '240';
-
     public static $singleVideoWidth = '500';
     public static $singleVideoHeight = '480';
+
+    public static $activityMusicPlayerWidth = '350';
+    public static $singleMusicPlayerWidth = '640';
+
+    public static $imgQualityValue = '80';
 
     public static $topSaveButton = '.rtm-button-container.top input.rtmedia-settings-submit';
 
     public static $displayTabUrl = '#rtmedia-display';
     public static $buddypressTabUrl = '#rtmedia-bp';
+    public static $typesTabUrl = '#rtmedia-types';
     public static $mediaSizesTabUrl  = '#rtmedia-sizes';
     public static $privacyTabUrl = '#rtmedia-privacy';
     public static $customCssTabUrl = '#rtmedia-custom-css-settings';
@@ -39,6 +45,7 @@ class Constants
 
     public static $displayTab = 'a#tab-rtmedia-display';
     public static $buddypressTab = 'a#tab-rtmedia-bp';
+    public static $typesTab = 'a#tab-rtmedia-types';
     public static $mediaSizesTab = 'a#tab-rtmedia-sizes';
     public static $privacyTab = 'a#tab-rtmedia-privacy';
     public static $customCssTab = 'a#tab-rtmedia-custom-css-settings';
@@ -59,6 +66,10 @@ class Constants
     public static $strActivityMediaLikeLabel = 'Create activity for media likes';
     public static $strActivityMediaCommentLabel = 'Create activity for media comments';
     public static $strMediaUploadFromActivityLabel = 'Allow upload from activity stream';
+
+    public static $photoLabel = 'Photo';
+    public static $videoLabel = 'Video';
+    public static $musicLabel = 'Music';
 
     public static $mediaPhotoLabel = 'Photo';
     public static $photoThumbnailLabel = 'Thumbnail';
@@ -81,15 +92,13 @@ class Constants
     public static $adminbarMenuLabel = 'Admin bar menu integration';
     public static $footerLinkLabel = 'Add a link to rtMedia in footer';
 
-    public static $numOfMediaTextbox = 'input[name="rtmedia-options[general_perPageMedia]"]';
-    public static $numOfMediaTextboxActivity = 'input[name="rtmedia-options[buddypress_limitOnActivity]"]';
-
     public static $commentCheckbox = 'input[name="rtmedia-options[general_enableComments]"]';
     public static $directUploadCheckbox = 'input[name="rtmedia-options[general_direct_upload]"]';
     public static $lightboxCheckbox = 'input[name="rtmedia-options[general_enableLightbox]"]';
     public static $masonaryCheckbox = 'input[name="rtmedia-options[general_masonry_layout]"]';
     public static $loadmoreRadioButton = 'input[value="load_more"]';
     public static $paginationRadioButton = 'input[value="pagination"]';
+    public static $numOfMediaTextbox = 'input[name="rtmedia-options[general_perPageMedia]"]';
 
     public static $enableMediaInProCheckbox = 'input[name="rtmedia-options[buddypress_enableOnProfile]"]';
     public static $enableMediaInGrpCheckbox = 'input[name="rtmedia-options[buddypress_enableOnGroup]"]';
@@ -98,6 +107,11 @@ class Constants
     public static $activityMediaLikeCheckbox = 'input[name="rtmedia-options[buddypress_mediaLikeActivity]"]';
     public static $activityMediaCommentCheckbox = 'input[name="rtmedia-options[buddypress_mediaCommentActivity]"]';
     public static $mediaUploadFromActivityCheckbox = 'input[name="rtmedia-options[buddypress_enableOnActivity]"]';
+    public static $numOfMediaTextboxActivity = 'input[name="rtmedia-options[buddypress_limitOnActivity]"]';
+
+    public static $photoCheckbox = 'input[name="rtmedia-options[allowedTypes_photo_enabled]"]';
+    public static $videoCheckbox = 'input[name="rtmedia-options[allowedTypes_video_enabled]"]';
+    public static $musicCheckbox = 'input[name="rtmedia-options[allowedTypes_music_enabled]"]';
 
     public static $thumbnailWidthTextbox = 'input[name="rtmedia-options[defaultSizes_photo_thumbnail_width]"]';
     public static $thumbnailHeightTextbox = 'input[name="rtmedia-options[defaultSizes_photo_thumbnail_height]"]';
@@ -140,9 +154,13 @@ class Constants
 
     public static $photoLink = 'a#rtmedia-nav-item-photo';
     public static $videoLink = 'a#rtmedia-nav-item-video';
+    public static $musicLink = 'a#rtmedia-nav-item-music';
 
     public static $thumbnailSelector = '.rtmedia-item-thumbnail img';
-    public static $videoSelector = 'div#rtm-mejs-video-container';
+    public static $videoSelectorSingle = 'div#rtm-mejs-video-container';
+    public static $videoSelectorActivity = 'div.mejs-container.svg.wp-video-shortcode.mejs-video';
+    public static $audioSelectorActivity = 'div.mejs-container.svg.wp-audio-shortcode.mejs-audio';
+    public static $audioSelectorSingle = 'div.mejs-container.svg.wp-audio-shortcode.mejs-audio';
 
     public static $closeButton = '.rtm-mfp-close';
     public static $masonryLayoutXpath = '//*[@id="rtm-gallery-title-container"]/h2';
@@ -157,5 +175,7 @@ class Constants
     public static $uploadButtonOnAtivityPage = '.rtmedia-add-media-button';
     public static $privacyDropdown = 'select#rtSelectPrivacy';
 
+    public static $mediaPerPageActivitySelector = 'ul#activity-stream  > li:first-child ul li';
+    public static $mediaPerPageOnMediaSelector = 'ul.rtm-gallery-list li';
 
 }
