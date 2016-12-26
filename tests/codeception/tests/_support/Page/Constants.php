@@ -6,6 +6,8 @@ class Constants
     public static $userName = 'rtcamp';
     public static $password = 'Test@1230';
 
+    public static $plugin = 'li#menu-plugins';
+
     public static $imageName = 'test.jpg';
     public static $videoName = 'sampleVideo.mp4';
     public static $audioName = 'audio.mp3';

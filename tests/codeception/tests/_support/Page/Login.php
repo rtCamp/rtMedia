@@ -60,7 +60,6 @@ class Login
 
         $I->see('Dashboard');
         $I->maximizeWindow();
-        $I->seeElement('#toplevel_page_rtmedia-settings');
 
         return $this;
     }
