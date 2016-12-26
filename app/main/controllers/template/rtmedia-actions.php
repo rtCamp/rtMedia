@@ -321,6 +321,8 @@ function add_upload_button() {
 add_action( 'rtmedia_media_gallery_actions', 'add_upload_button', 99 );
 add_action( 'rtmedia_album_gallery_actions', 'add_upload_button', 99 );
 
+
+
 /**
  * Add music cover art
  *
@@ -702,7 +704,7 @@ function rt_check_addon_status() {
 
 	foreach ( $addons as $addon ) {
 
-		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ){
+		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ) {
 
 			$addon_id = $addon['args']['addon_id'];
 			// If license key is not present, then remove the status from config
@@ -724,7 +726,6 @@ function rt_check_addon_status() {
 					}
 				}
 			}
-
 		}
 
 		if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
@@ -813,17 +814,17 @@ function rtmedia_addons_admin_notice() {
 		if ( isset( $_POST ) && count( $_POST ) > 0 ) { ?>
 
 			<div class="notice notice-success is-dismissible">
-				<p><?php _e('Settings has been saved successfully.', 'buddypress-media'); ?></p>
+				<p><?php _e( 'Settings has been saved successfully.', 'buddypress-media' ); ?></p>
 			</div>
 
 			<div class="notice notice-error is-dismissible">
-				<p><?php _e('Refresh the page in case if license data is not showing correct.', 'buddypress-media'); ?></p>
+				<p><?php _e( 'Refresh the page in case if license data is not showing correct.', 'buddypress-media' ); ?></p>
 			</div>
 	<?php
 		}
 	}
 }
-add_action('admin_notices', 'rtmedia_addons_admin_notice');
+add_action( 'admin_notices', 'rtmedia_addons_admin_notice' );
 
 /**
  * Function to add buddypress language conversion to Media activities.
@@ -842,3 +843,25 @@ function rtmedia_activity_register_activity_actions_callback() {
 	);
 }
 add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
+
+function add_search_filter() {
+	$html = "<div class='media_search'>";
+	$html .= "<input type='text' id='media_search_input' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
+	$html .= "<button id='media_search'><i class='dashicons dashicons-admin-generic rtmicon'></i></button>";
+	$html .= '</div>';
+	echo apply_filters( 'rtmedia_gallery_search', $html );
+}
+add_action( 'rtmedia_media_gallery_actions', 'add_search_filter', 99 );
+
+
+function rtmedia0( $where, $table_name, $join ) {
+	global $wpdb;
+	 // echo $where;
+	 $where .= $wpdb->prepare( " AND $table_name.media_title = 'abcd'" );
+	 // echo '<br />';
+	 // echo $where;
+	 // exit;
+	return $where;
+
+}
+// add_filter( 'rtmedia-model-where-query', 'rtmedia0', 10, 3 );
