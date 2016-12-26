@@ -60,8 +60,13 @@ class RTMediaContext {
 			$this->type = $post->post_type;
 			$this->id   = $post->ID;
 		} else {
-			$this->type = 'profile';
-			$this->id   = get_current_user_id();
+			if ( isset( $_REQUEST['context'] ) && 'page' === $_REQUEST['context'] ) {
+				$this->type = $_REQUEST['context'];
+				$this->id   = $_REQUEST['context_id'];
+			} else {
+				$this->type = 'profile';
+				$this->id   = get_current_user_id();
+			}
 		}
 		$this->type = apply_filters( 'rtmedia_wp_context_type', $this->type );
 		$this->id   = apply_filters( 'rtmedia_wp_context_id', $this->id );

@@ -1430,7 +1430,11 @@ function rtmedia_pagination_next_link() {
  */
 function rtmedia_pagination_page_link( $page_no = '' ) {
 
-	global $rtmedia_interaction, $rtmedia_query;
+	global $rtmedia_interaction, $rtmedia_query, $post;
+
+	if ( isset( $_GET['context'] ) && 'page' === $_GET['context'] && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
+		$post = get_post( intval( $_GET['context_id'] ) );
+	}
 
 	$page_url    = 'pg/' . $page_no;
 	$site_url    = ( is_multisite() ) ? trailingslashit( get_site_url( get_current_blog_id() ) ) : trailingslashit( get_site_url() );
@@ -1448,6 +1452,9 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			if ( function_exists( 'bp_get_current_group_slug' ) ) {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
+		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'page' === $rtmedia_interaction->context->type ) {
+			// Make sure that only one slash is at the end of url
+			$link .= rtrim( get_permalink( $post ), '/' ) . '/';
 		} elseif ( isset( $rtmedia_query->media->media_id ) ) {
 			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
 
@@ -1455,7 +1462,10 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		}
 	}
 
-	$link .= RTMEDIA_MEDIA_SLUG . '/';
+	// Do not add media slug for gallery shortcode
+	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'page' !== $rtmedia_interaction->context->type ) {
+			$link .= RTMEDIA_MEDIA_SLUG . '/';
+	}
 
 	if ( isset( $rtmedia_query->media_query['album_id'] ) && intval( $rtmedia_query->media_query['album_id'] ) > 0 ) {
 		$link .= $rtmedia_query->media_query['album_id'] . '/';
