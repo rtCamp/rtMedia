@@ -842,3 +842,36 @@ function rtmedia_activity_register_activity_actions_callback() {
 	);
 }
 add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
+
+
+/**
+ * rtmedia_gallery_shortcode_json_query_vars Set query vars for json response
+ *
+ * @param  object $wp_query WP query object
+ *
+ */
+function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
+
+	global $wp_query;
+
+	$pagename = explode( '/', $wp_query->query_vars['pagename'] );
+	if ( ! empty( $pagename ) && isset( $_REQUEST['json'] ) && 'true' === $_REQUEST['json'] && isset( $_REQUEST['rtmedia_shortcode'] ) && 'true' === $_REQUEST['rtmedia_shortcode'] ) {
+		$pagename = $pagename[0];
+		$wp_query->query_vars['pagename'] = '';
+		$wp_query->query['pagename'] = $pagename . '/pg';
+		$wp_query->query['media'] = '';
+		$wp_query->query_vars['media'] = '';
+	}
+	return $wp_query;
+}
+add_action( 'pre_get_posts', 'rtmedia_gallery_shortcode_json_query_vars', 99 );
+
+/**
+ *
+ * Rule for pagination for rtmedia gallery shortcode
+ *
+ */
+function rtmedia_gallery_shortcode_rewrite_rules() {
+	add_rewrite_rule( '([^/?]+)/pg/([0-9]*)/?', 'index.php?pg=$matches[2]&pagename=$matches[1]', 'top' );
+}
+add_action( 'rtmedia_add_rewrite_rules', 'rtmedia_gallery_shortcode_rewrite_rules' );

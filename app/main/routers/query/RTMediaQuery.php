@@ -232,6 +232,11 @@ class RTMediaQuery {
 		$modifier_value = false;
 		$format         = '';
 		$pageno         = 1;
+
+		if ( ! empty( $_REQUEST['json'] ) ) {
+			$pageno = ( isset( $_REQUEST['rtmedia_page'] ) && ! empty( $_REQUEST['rtmedia_page'] ) ) ? intval( $_REQUEST['rtmedia_page'] ) : 1;
+		}
+
 		$attributes     = '';
 
 		// The first part of the query /media/{*}/
