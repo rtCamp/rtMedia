@@ -854,7 +854,10 @@ function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
 
 	global $wp_query;
 
-	$pagename = explode( '/', $wp_query->query_vars['pagename'] );
+	$pagename = '';
+	if ( isset( $wp_query->query_vars['pagename'] ) ) {
+		$pagename = explode( '/', $wp_query->query_vars['pagename'] );
+	}
 	if ( ! empty( $pagename ) && isset( $_REQUEST['json'] ) && 'true' === $_REQUEST['json'] && isset( $_REQUEST['rtmedia_shortcode'] ) && 'true' === $_REQUEST['rtmedia_shortcode'] ) {
 		$pagename = $pagename[0];
 		$wp_query->query_vars['pagename'] = '';
