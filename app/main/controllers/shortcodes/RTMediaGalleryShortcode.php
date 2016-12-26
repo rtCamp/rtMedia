@@ -195,6 +195,8 @@ class RTMediaGalleryShortcode {
 				if ( ! $rtmedia_query ) {
 					$rtmedia_query = new RTMediaQuery( $attr['attr'] );
 				}
+				$page_number = ( get_query_var( 'pg' ) ) ? get_query_var( 'pg' ) : 1; // get page number
+				$rtmedia_query->action_query->page = intval( $page_number );
 				$rtmedia_query->is_gallery_shortcode = true;// to check if gallery shortcode is executed to display the gallery.
 
 				$template         = new RTMediaTemplate();
@@ -228,3 +230,6 @@ class RTMediaGalleryShortcode {
 		return $where;
 	}
 }
+
+
+//This issue has been fixed earlier. Closing this issue now.
