@@ -1,17 +1,17 @@
 body {
-    article.bp_members.bp_member,
-    div.bp_members.bp_member {
-        .entry-content {
-            width: 100%;
-        }
-    }
+	article.bp_members.bp_member,
+	div.bp_members.bp_member {
+		.entry-content {
+			width: 100%;
+		}
+	}
 }
 
 .rtm-media-gallery-uploader {
 	display: none;
 }
 
-.rtmedia-uploader{
+.rtmedia-uploader {
 	.drag-drop {
 		border: 4px dashed #DDD;
 		text-align: center;
@@ -53,37 +53,39 @@ body {
 	}
 }
 
-
 .rtm-uploader-main-wrapper {
-    .rtm-uploader-tabs {
-        margin-bottom: 10px;
-        text-align: left;
-    }
-    ul{
-        border-bottom: 1px solid #CCC;
-    }
-    li{
-        margin: 0 0 -1px 10px;
-        display: inline-block;
-        padding: 5px 10px;
-        line-height: 25px;
-        background-color: #e4e4e4;
-        border: 1px solid #CCC;
-        &.active{
-            background: transparent;
-            border-left: 1px solid #CCC;
-            border-top: 1px solid #CCC;
-            border-right: 1px solid #CCC;
-            border-bottom: 1px solid #fafafa;
-        }
-        &:hover{
-            cursor: pointer;
-        }
-    }
+	.rtm-uploader-tabs {
+		margin-bottom: 10px;
+		text-align: left;
+	}
+
+	ul {
+		border-bottom: 1px solid #CCC;
+	}
+
+	li {
+		margin: 0 0 -1px 10px;
+		display: inline-block;
+		padding: 5px 10px;
+		line-height: 25px;
+		background-color: #e4e4e4;
+		border: 1px solid #CCC;
+
+		&.active {
+			background: transparent;
+			border-left: 1px solid #CCC;
+			border-top: 1px solid #CCC;
+			border-right: 1px solid #CCC;
+			border-bottom: 1px solid #fafafa;
+		}
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
 }
 
 .rtmedia-container .rtmedia-list {
-
 	margin: 10px -5px;
 
 	.rtmedia-list-item {
@@ -145,6 +147,8 @@ body {
 .rtm-media-options {
 	line-height: 1.4;
 	margin-bottom: 10px;
+	overflow: hidden;
+	height: auto;
 
 	& > div {
 		display: inline-block;
@@ -157,17 +161,36 @@ body {
 		position: relative;
 	}
 
-  	& > * {
-	    border-right: 1px solid #999;
+	& > * {
+		border-right: 1px solid #999;
 
-        &:last-child {
-          border-right: none;
-        }
-    }
+		&:last-child {
+			border-right: none;
+		}
+	}
 
 	.dashicons {
 		font-size: inherit;
 		line-height: 1.4;
+	}
+
+	.media_search {
+		float: right;
+		border: 1px solid #ccc;
+
+		.media_search_input {
+			max-width: 200px;
+			padding: 5px 6px;
+			border: none;
+			background: transparent;
+			float: left;
+		}
+
+		#media_search {
+			padding: 0;
+			background: transparent;
+			color: #000;
+		}
 	}
 }
 
@@ -178,7 +201,6 @@ body {
 a.rtmedia-upload-media-link {
 	border: none;
 }
-
 
 .rtm-album-privacy {
 	span {

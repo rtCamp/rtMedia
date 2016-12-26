@@ -2430,6 +2430,8 @@ body div.bp_members.bp_member .entry-content {
 .rtm-media-options {
   line-height: 1.4;
   margin-bottom: 10px;
+  overflow: hidden;
+  height: auto;
 }
 .rtm-media-options > div {
   display: inline-block;
@@ -2449,6 +2451,22 @@ body div.bp_members.bp_member .entry-content {
 .rtm-media-options .dashicons {
   font-size: inherit;
   line-height: 1.4;
+}
+.rtm-media-options .media_search {
+  float: right;
+  border: 1px solid #ccc;
+}
+.rtm-media-options .media_search .media_search_input {
+  max-width: 200px;
+  padding: 5px 6px;
+  border: none;
+  background: transparent;
+  float: left;
+}
+.rtm-media-options .media_search #media_search {
+  padding: 0;
+  background: transparent;
+  color: #000;
 }
 
 .rtmedia-upload-media-link {
