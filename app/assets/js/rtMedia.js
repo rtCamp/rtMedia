@@ -277,6 +277,8 @@ jQuery( 'document' ).ready( function( $ ) {
 		jQuery( '.rtmedia-list-item' ).addClass( 'bulk-selected' );
 	} );
 
+
+
 	jQuery( '.rtmedia-container' ).on( 'click', '.unselect-all', function( e ) {
 		jQuery( this ).toggleClass( 'select-all' ).toggleClass( 'unselect-all' );
 		jQuery( this ).attr( 'title', rtmedia_select_all_visible );
@@ -873,8 +875,10 @@ window.onload = function() {
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_reload( rtm_masonry_container );
 	}
-	jQuery( ' #whats-new-options' ).css({
-	    'opacity': '1'
+	jQuery( ' #whats-new-options, .rtmedia-uploader-div' ).css({
+	    'opacity': '1',
+	    'display': 'block',
+	    'visibility': 'visible'
 
 	});
 };
