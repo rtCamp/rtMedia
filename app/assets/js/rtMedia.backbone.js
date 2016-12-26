@@ -246,7 +246,6 @@ jQuery( function( $ ) {
 			}
 		},
 		appendTo: function( media ) {
-			//Console.log("append");
 			var mediaView = new rtMedia.MediaView( {
 				model: media
 			} );
@@ -333,7 +332,6 @@ jQuery( function( $ ) {
 
 				/* Set page url for input type num pagination */
 				page_base_url = $( this ).data( 'page-base-url' );
-				console.log($( this ));
 				href = page_base_url + nextpage;
 				}
 
@@ -342,8 +340,6 @@ jQuery( function( $ ) {
 				} else {
 					galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
 			}
-
-			console.log(href);
 
 			change_rtBrowserAddressUrl( href, '' );
 
