@@ -277,8 +277,6 @@ jQuery( 'document' ).ready( function( $ ) {
 		jQuery( '.rtmedia-list-item' ).addClass( 'bulk-selected' );
 	} );
 
-
-
 	jQuery( '.rtmedia-container' ).on( 'click', '.unselect-all', function( e ) {
 		jQuery( this ).toggleClass( 'select-all' ).toggleClass( 'unselect-all' );
 		jQuery( this ).attr( 'title', rtmedia_select_all_visible );
@@ -422,6 +420,23 @@ jQuery( 'document' ).ready( function( $ ) {
 				jQuery( that ).siblings( '.rtm-ac-privacy-updated' ).remove();
 			}, 2000 );
 		} );
+	} );
+
+	jQuery( "#media_search" ).click(function() {
+		var search_key = jQuery( '#media_search_input' ).val();
+
+		var data = {
+			action		: 'search_gallery_media',
+			search_key	: search_key,
+			template	: 'media-gallery-item',
+		}
+		jQuery.post( ajaxurl, data, function( response ) {
+			var abcd = jQuery.parseJSON(response);
+			console.log( abcd );
+
+		} );
+
+
 	} );
 
 	function rtmedia_media_view_counts() {
