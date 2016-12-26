@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.2.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-12-22 09:29:21+00:00\n"
+"POT-Creation-Date: 2016-12-26 05:04:30+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -472,7 +472,7 @@ msgid "Need to specify atleast two radios, else use a checkbox instead"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:278 templates/media/album-gallery.php:60
-#: templates/media/media-gallery.php:68
+#: templates/media/media-gallery.php:69
 msgid "Load More"
 msgstr ""
 
@@ -2846,62 +2846,62 @@ msgstr ""
 msgid "Merge"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:358
+#: app/main/controllers/template/rtmedia-actions.php:360
 msgid "Empowering your community with "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:359
+#: app/main/controllers/template/rtmedia-actions.php:361
 msgid "The only complete media solution for WordPress, BuddyPress and bbPress"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:378
+#: app/main/controllers/template/rtmedia-actions.php:380
 msgid "Close (Esc)"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:523
+#: app/main/controllers/template/rtmedia-actions.php:525
 msgid "You can consider rtMedia Team for following :"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:525
+#: app/main/controllers/template/rtmedia-actions.php:527
 msgid "rtMedia Customization ( in Upgrade Safe manner )"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:526
+#: app/main/controllers/template/rtmedia-actions.php:528
 msgid "WordPress/BuddyPress Theme Design and Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:527
+#: app/main/controllers/template/rtmedia-actions.php:529
 msgid "WordPress/BuddyPress Plugin Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:530
+#: app/main/controllers/template/rtmedia-actions.php:532
 msgid "Contact Us"
-msgstr ""
-
-#: app/main/controllers/template/rtmedia-actions.php:617
-#: app/main/controllers/template/rtmedia-actions.php:618
-msgid "Previous"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-actions.php:619
 #: app/main/controllers/template/rtmedia-actions.php:620
+msgid "Previous"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:621
+#: app/main/controllers/template/rtmedia-actions.php:622
 #: templates/media/album-single-edit.php:121
 msgid "Next"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:816
+#: app/main/controllers/template/rtmedia-actions.php:817
 msgid "Settings has been saved successfully."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:820
+#: app/main/controllers/template/rtmedia-actions.php:821
 msgid "Refresh the page in case if license data is not showing correct."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:838
+#: app/main/controllers/template/rtmedia-actions.php:839
 msgid "Posted a status update"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:840
+#: app/main/controllers/template/rtmedia-actions.php:841
 msgid "rtMedia Updates"
 msgstr ""
 
