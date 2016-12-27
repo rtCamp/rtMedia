@@ -49,6 +49,11 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function bp_activity_deleted_activities( $activity_ids_deleted ) {
+		//If delete on admin dashboard return
+		if ( is_admin() ) {
+			return;
+		}
+
 		$rt_model  = new RTMediaModel();
 		$all_media = $rt_model->get( array( 'activity_id' => $activity_ids_deleted ) );
 		if ( $all_media ) {
