@@ -23,8 +23,4 @@
     $setup = new SetupPage($I);
     $setup->searchAndInstallPlugin($I);
 
-
-
-
-
 ?>

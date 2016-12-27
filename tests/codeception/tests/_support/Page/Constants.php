@@ -16,7 +16,7 @@ class Constants
     public static $customCssEmptyValue = '';
 
     public static $numOfMediaPerPage = '10';
-    public static $numOfMediaPerPageOnActivity = '0';
+    public static $numOfMediaPerPageOnActivity = '3';
 
     public static $thumbnailWidth = '150';
     public static $thumbnailHeight = '150';

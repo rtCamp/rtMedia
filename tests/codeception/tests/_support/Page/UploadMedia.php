@@ -110,6 +110,7 @@ class UploadMedia
 
         $I->seeElementInDOM(self::$whatIsNewTextarea);
         $I->click(self::$whatIsNewTextarea);
+
         $I->wait(3);
     }
 
@@ -125,6 +126,8 @@ class UploadMedia
 
         $I->attachFile('input[type="file"]',$mediaFile);
         $I->wait(5);
+
+        self::uploadTermasCheckbox($I);
 
         $I->click(self::$postUpdateButton);
         $I->wait(5);
@@ -153,6 +156,8 @@ class UploadMedia
                 $I->wait(3);
             }
         }
+
+        self::uploadTermasCheckbox($I);
 
         $I->click(self::$postUpdateButton);
         $I->wait(5);

@@ -18,6 +18,10 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$privacyTab,ConstantsPage::$privacyTabUrl);
+    $settings->verifyEnableStatus($I,ConstantsPage::$privacyLabel,ConstantsPage::$privacyCheckbox);
+
+    $I->scrollTo(ConstantsPage::$topSaveButton);
+
     $settings->verifyEnableStatus($I,ConstantsPage::$privacyUserOverrideLabel,ConstantsPage::$privacyUserOverrideCheckbox);
 
     $buddypress = new BuddypressSettingsPage($I);

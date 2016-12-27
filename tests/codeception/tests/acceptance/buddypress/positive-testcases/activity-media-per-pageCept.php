@@ -18,6 +18,10 @@
 
     $settings = new DashboardSettingsPage($I);
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
+    $settings->verifyEnableStatus($I,ConstantsPage::$strMediaUploadFromActivityLabel,ConstantsPage::$mediaUploadFromActivityCheckbox);
+
+    $I->scrollTo(ConstantsPage::$topSaveButton);
+
     $settings->setValue($I,ConstantsPage::$numOfMediaLabelActivity,ConstantsPage::$numOfMediaTextboxActivity,ConstantsPage::$numOfMediaPerPageOnActivity);
 
     $buddypress = new BuddypressSettingsPage($I);

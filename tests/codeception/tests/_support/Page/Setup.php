@@ -58,9 +58,8 @@ class Setup
         $I->click('a.page-title-action');
         $I->wait(10);
         $I->seeInCurrentUrl('/wp-admin/plugin-install.php');
-        $I->see('Upload Plugin');
         $I->seeElementInDOM('input.wp-filter-search');
-        $I->fillField('input.wp-filter-search','rtMedia');
+        $I->fillField('input.wp-filter-search','rtmedia');
         $I->wait(5);
         $I->see('rtMedia for WordPress, BuddyPress and bbPress');
         $I->seeElementInDOM('#the-list > div.plugin-card.plugin-card-buddypress-media > div.plugin-card-top > div.action-links > ul > li:nth-child(1) > a');
