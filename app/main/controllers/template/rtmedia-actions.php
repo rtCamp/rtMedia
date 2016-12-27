@@ -852,16 +852,3 @@ function add_search_filter() {
 	echo apply_filters( 'rtmedia_gallery_search', $html );
 }
 add_action( 'rtmedia_media_gallery_actions', 'add_search_filter', 99 );
-
-
-function rtmedia0( $where, $table_name, $join ) {
-	global $wpdb;
-	 // echo $where;
-	 $where .= $wpdb->prepare( " AND $table_name.media_title = 'abcd'" );
-	 // echo '<br />';
-	 // echo $where;
-	 // exit;
-	return $where;
-
-}
-// add_filter( 'rtmedia-model-where-query', 'rtmedia0', 10, 3 );
