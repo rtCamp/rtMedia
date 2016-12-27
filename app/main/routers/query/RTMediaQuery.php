@@ -233,8 +233,14 @@ class RTMediaQuery {
 		$format         = '';
 		$pageno         = 1;
 
+		// Get page number for json response
 		if ( ! empty( $_REQUEST['json'] ) ) {
 			$pageno = ( isset( $_REQUEST['rtmedia_page'] ) && ! empty( $_REQUEST['rtmedia_page'] ) ) ? intval( $_REQUEST['rtmedia_page'] ) : 1;
+		}
+
+		// Get page number for none json response
+		if ( ! isset( $_REQUEST['json'] ) && empty( $_REQUEST['json'] ) ) {
+			$pageno = ( get_query_var( 'pg' ) ) ? get_query_var( 'pg' ) : 1;
 		}
 
 		$attributes     = '';
