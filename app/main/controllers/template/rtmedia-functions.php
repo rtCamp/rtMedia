@@ -1455,6 +1455,17 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'page' === $rtmedia_interaction->context->type ) {
 			// Make sure that only one slash is at the end of url
 			$link .= rtrim( get_permalink( $post ), '/' ) . '/';
+		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'rtmedia_album' === $rtmedia_interaction->context->type ) { // url for rtmedia album
+			global $rtmedia;
+			$options = $rtmedia->options;
+			// Get album slug
+			$album_slug = $options['rtmedia_wp_album_slug'];
+
+			if ( empty( $album_slug ) ) {
+				$album_slug = 'rtmedia-album';
+			}
+			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
+			$link .= $site_url . $album_slug . '/' . $post->post_name . '/';
 		} elseif ( isset( $rtmedia_query->media->media_id ) ) {
 			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
 
@@ -1462,8 +1473,8 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		}
 	}
 
-	// Do not add media slug for gallery shortcode
-	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'page' !== $rtmedia_interaction->context->type ) {
+	// Do not add media slug for gallery shortcode and sitewide gallery
+	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && ! in_array( $rtmedia_interaction->context->type, array( 'page', 'rtmedia_album' ) ) ) {
 			$link .= RTMEDIA_MEDIA_SLUG . '/';
 	}
 
@@ -1592,7 +1603,7 @@ function rtmedia_get_pagination_values() {
 			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='next' href='" . esc_url( $page_url ) . "'><i class='dashicons dashicons-arrow-right-alt2'></i></a>";
 		}
 
-		$rtmedia_media_pages .= "</div></div>\n";
+		$rtmedia_media_pages .= "</div></div>";
 	}// End if().
 
 	return $rtmedia_media_pages;
