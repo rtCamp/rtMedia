@@ -627,3 +627,44 @@ function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_i
 	return sprintf( '<span class="rtmedia-like-counter">%s</span>', $like_count );
 }
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
+
+
+
+function rtmedia_bp_activity_entry_comments_id_callback( $id, $type ){
+	if( class_exists( 'RTMediaComment' ) ){
+		/*add media in comment*/
+		RTMediaComment::add_uplaod_media_button( $id, $type );
+	}
+}
+
+
+function rtmedia_add_comments_extra_callback(){
+	$rtmedia_id = rtmedia_id();
+	if( $rtmedia_id ){
+		rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia' );
+	}
+}
+
+
+function rtmedia_bp_activity_entry_comments_callback(){
+	$activity_id = bp_get_activity_id();
+	if( $activity_id ){
+		add_action( 'before_rtmedia_uploader_display', 'rtmedia_before_rtmedia_uploader_display_callback', 10 );
+			rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity' );
+		remove_action( 'before_rtmedia_uploader_display', 'rtmedia_before_rtmedia_uploader_display_callback', 10 );
+	}
+}
+
+function rtmedia_before_rtmedia_uploader_display_callback( $flag ){
+	return true;
+}
+
+/*
+ * Add Comment Media in rtMedia Popup
+*/
+add_action( 'rtmedia_add_comments_extra', 'rtmedia_add_comments_extra_callback', 10 );
+
+/*
+ * Add Media Upload in Activity
+*/
+add_action( 'bp_activity_entry_comments', 'rtmedia_bp_activity_entry_comments_callback', 10 );
