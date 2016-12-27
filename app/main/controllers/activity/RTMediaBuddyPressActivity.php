@@ -49,18 +49,16 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function bp_activity_deleted_activities( $activity_ids_deleted ) {
-		//If delete on admin dashboard return
-		if ( is_admin() ) {
-			return;
-		}
-
-		$rt_model  = new RTMediaModel();
-		$all_media = $rt_model->get( array( 'activity_id' => $activity_ids_deleted ) );
-		if ( $all_media ) {
-			$media = new RTMediaMedia();
-			remove_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
-			foreach ( $all_media as $single_media ) {
-				$media->delete( $single_media->id, false, false );
+		//Allo delete activity othe media only of request from activity ajax
+		if ( ( is_admin() && '1' == DOING_AJAX ) || ! is_admin() ) {
+			$rt_model  = new RTMediaModel();
+			$all_media = $rt_model->get( array( 'activity_id' => $activity_ids_deleted ) );
+			if ( $all_media ) {
+				$media = new RTMediaMedia();
+				remove_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
+				foreach ( $all_media as $single_media ) {
+					$media->delete( $single_media->id, false, false );
+				}
 			}
 		}
 	}
