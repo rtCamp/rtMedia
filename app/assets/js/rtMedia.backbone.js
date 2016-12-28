@@ -92,7 +92,8 @@ jQuery( function( $ ) {
 			}
 			return url;
 		},
-		getNext: function( page, el, element ) {
+		getNext: function( page, el, element) {
+
 			if ( jQuery( '.rtmedia-no-media-found' ).length > 0 ) {
 				jQuery( '.rtmedia-no-media-found' ).replaceWith( '<ul class=\'rtmedia-list rtmedia-list-media\'></ul>' );
 			}
@@ -106,15 +107,31 @@ jQuery( function( $ ) {
 				}
 				$( '#rtmedia-gallery-item-template' ).load( template_url, { backbone: true, is_album: o_is_album, is_edit_allowed: o_is_edit_allowed }, function() {
 					rtmedia_load_template_flag = false;
-					that.getNext( page, el, element );
+					that.getNext( page, el, element);
 				} );
 			}
 
 			if ( ! rtmedia_load_template_flag ) {
 				var query = {
 					json: true,
-					rtmedia_page: nextpage
 				};
+
+				//media search
+				if( check_condition( 'search' ) ) {
+					if( ! check_condition( 'pg' ) ) {
+						this.url = window.location.pathname;
+					} else {
+						this.url = window.location.href.replace(window.location.search, "");
+					}
+					if ( $( '#media_search_input' ).val() != '' ) {
+						query.search = $( '#media_search_input' ).val();
+					} else {
+						query.rtmedia_page = 1;
+					}
+				} else {
+					query.rtmedia_page = nextpage;
+				}
+
 				if ( el == undefined ) {
 					el = jQuery( '.rtmedia-list' ).parent().parent();
 				}
@@ -134,10 +151,10 @@ jQuery( function( $ ) {
 						}
 					} );
 				}
-
 				this.fetch( {
 					data: query,
 					success: function( model, response ) {
+
 						jQuery( '.rtm-media-loading' ).hide();
 						var list_el = '';
 
@@ -150,7 +167,6 @@ jQuery( function( $ ) {
 						} else {
 							list_el = element.parent().siblings( '.rtmedia-list' );
 						}
-
 						nextpage = response.next;
 
 						if ( nextpage < 1 ) {
@@ -315,7 +331,7 @@ jQuery( function( $ ) {
 				jQuery( '.rtm-media-loading' ).show();
 			}
 
-				e.preventDefault();
+			e.preventDefault();
 			if ( $( this ).data( 'page-type' ) == 'page' ) {
 				nextpage = $( this ).data( 'page' );
 			} else if ( $( this ).data( 'page-type' ) == 'prev' ) {
@@ -336,14 +352,33 @@ jQuery( function( $ ) {
 			href = page_base_url + nextpage;
 			}
 
+			if( check_condition( 'search' ) ) {
+				href += '?search=' + $( '#media_search_input' ).val();
+			}
+			change_rtBrowserAddressUrl( href, '' );
 			if ( $( this ).data( 'page-type' ) == 'num' ) {
 				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
 			} else {
 				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
-		}
-		change_rtBrowserAddressUrl( href, '' );
+			}
+
 
 		} );
+
+	// media search
+	$( document ).on( 'click', '#media_search', function( e ) {
+		if( $( '#media_search_input' ).val() == '' ) {
+			return;
+		}
+
+		var href = window.location.href;
+		path = window.location;
+		remove_url = path.pathname.substr(path.pathname.indexOf('media')+6);
+		href = window.location.pathname.replace(remove_url,'') + '?search=' + $( '#media_search_input' ).val();
+		change_rtBrowserAddressUrl( href, '' );
+
+		galleryObj.getNext( 1, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent().parent().next().next().next().find('.rtm-pagination.clearfix'));
+	} );
 
 		if ( window.location.pathname.indexOf( rtmedia_media_slug ) != -1 ) {
 			var tempNext = window.location.pathname.substring( window.location.pathname.lastIndexOf( 'pg/' ) + 5, window.location.pathname.lastIndexOf( '/' ) );
@@ -1496,5 +1531,17 @@ function change_rtBrowserAddressUrl( url, page ) {
 	if ( typeof ( history.pushState ) != 'undefined' ) {
 		var obj = { Page: page, Url: url };
 		history.pushState( obj, obj.Page, obj.Url );
+	}
+}
+
+function getQueryStringValue (key) {
+  return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+}
+
+function check_condition( key ) {
+	if( window.location.href.indexOf(key) > 0 ) {
+		return true;
+	} else {
+		return false;
 	}
 }
