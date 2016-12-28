@@ -1,4 +1,11 @@
-<div class="rtmedia-container">
+<?php
+
+// Generate random number for gallery container
+// This will be useful when multiple gallery shortcodes are used in a single page
+$rand_id = rand( 0, 1000 );
+
+?>
+<div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo $rand_id;?>">
 	<?php
 	do_action( 'rtmedia_before_album_gallery' );
 
