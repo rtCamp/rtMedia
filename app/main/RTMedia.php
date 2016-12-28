@@ -1151,7 +1151,6 @@ class RTMedia {
 			'runtimes'            => 'html5,flash,html4',
 			'browse_button'       => 'rtmedia-comment-media-upload',
 			'container'           => 'rtmedia-comment-media-upload-container',
-			'drop_element'        => 'comment_media_content',
 			'filters'             => apply_filters( 'rtmedia_plupload_files_filter', array(
 				array(
 					'title'      => 'Media Files',
