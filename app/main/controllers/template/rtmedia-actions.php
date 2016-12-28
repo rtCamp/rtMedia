@@ -846,7 +846,7 @@ add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_
 
 function add_search_filter() {
 	$html = "<div class='media_search'>";
-	$html .= "<input type='text' id='media_search_input' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
+	$html .= "<input type='text' id='media_search_input' value='". $_GET['search'] ."' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
 	$html .= "<button id='media_search'><i class='dashicons dashicons-admin-generic rtmicon'></i></button>";
 	$html .= '</div>';
 	echo apply_filters( 'rtmedia_gallery_search', $html );
