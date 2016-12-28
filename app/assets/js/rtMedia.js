@@ -422,23 +422,6 @@ jQuery( 'document' ).ready( function( $ ) {
 		} );
 	} );
 
-	jQuery( "#media_search" ).click(function() {
-		var search_key = jQuery( '#media_search_input' ).val();
-
-		var data = {
-			action		: 'search_gallery_media',
-			search_key	: search_key,
-			template	: 'media-gallery-item',
-		}
-		jQuery.post( ajaxurl, data, function( response ) {
-			var abcd = jQuery.parseJSON(response);
-			console.log( abcd );
-
-		} );
-
-
-	} );
-
 	function rtmedia_media_view_counts() {
 		//Var view_count_action = jQuery('#rtmedia-media-view-form').attr("action");
 		if ( jQuery( '#rtmedia-media-view-form' ).length > 0 ) {
