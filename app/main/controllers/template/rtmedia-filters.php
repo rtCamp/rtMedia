@@ -627,3 +627,29 @@ function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_i
 	return sprintf( '<span class="rtmedia-like-counter">%s</span>', $like_count );
 }
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
+
+
+function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
+	global $wpdb;
+
+	if ( $_REQUEST['search'] ) {
+		$where .= " AND ( ";
+		$where .= " $table_name.media_title = '".$_REQUEST['search']."' ";
+		$where .= " OR {$wpdb->base_prefix}posts.post_content LIKE '%".$_REQUEST['search']."%'";
+		$where .= " )";
+	}
+
+	return $where;
+}
+
+add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 10, 3 );
+
+
+function rtmedia_search_fillter_join_query( $join, $table_name ) {
+	global $wpdb;
+
+	$join .= "LEFT JOIN {$wpdb->base_prefix}posts ON $table_name.media_id = {$wpdb->base_prefix}posts.ID";
+	return $join;
+}
+
+add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 10, 2 );
