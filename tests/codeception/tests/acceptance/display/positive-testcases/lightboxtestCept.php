@@ -20,10 +20,28 @@
     $settings->verifyEnableStatus($I,ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);(ConstantsPage::$userName); //Assuming direct uplaod is disabled
-    $uploadmedia->fisrtThumbnailMedia($I);
 
-    $I->seeElement(ConstantsPage::$closeButton);   //The close button will only be visible if the media is opened in Lightbox
-    $I->click(ConstantsPage::$closeButton);
+    $url = '/members'.ConstantsPage::$userName.'/media';
+    $I->amOnPage($url);
+
+    $tempArray = $I->grabMultiple('ul.rtm-gallery-list li');
+    codecept_debug($tempArray);
+    echo count($tempArray);
+
+    if(count($tempArray) >= ConstantsPage::$minvalue){
+
+        $uploadmedia->fisrtThumbnailMedia($I);
+
+        $I->seeElement(ConstantsPage::$closeButton);   //The close button will only be visible if the media is opened in Lightbox
+        $I->click(ConstantsPage::$closeButton);
+
+    }else{
+
+        $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);(ConstantsPage::$userName); //Assuming direct uplaod is disabled
+        $uploadmedia->fisrtThumbnailMedia($I);
+
+        $I->seeElement(ConstantsPage::$closeButton);   //The close button will only be visible if the media is opened in Lightbox
+        $I->click(ConstantsPage::$closeButton);
+    }
 
 ?>

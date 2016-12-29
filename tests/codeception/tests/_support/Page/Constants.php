@@ -15,8 +15,9 @@ class Constants
     public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
     public static $customCssEmptyValue = '';
 
-    public static $numOfMediaPerPage = '10';
+    public static $numOfMediaPerPage = '3';
     public static $numOfMediaPerPageOnActivity = '3';
+    public static $minvalue = '1';
 
     public static $thumbnailWidth = '150';
     public static $thumbnailHeight = '150';

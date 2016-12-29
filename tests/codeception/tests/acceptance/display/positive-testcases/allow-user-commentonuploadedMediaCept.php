@@ -20,21 +20,46 @@
     $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
     $settings->verifyEnableStatus($I,ConstantsPage::$strCommentCheckboxLabel,ConstantsPage::$commentCheckbox);
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);
+    $url = '/members'.ConstantsPage::$userName.'/media';
+    $I->amOnPage($url);
 
-    $I->reloadPage();
-    $I->wait(7);
+    $tempArray = $I->grabMultiple('ul.rtm-gallery-list li');
+    codecept_debug($tempArray);
+    echo count($tempArray);
 
-    $uploadmedia->fisrtThumbnailMedia($I);
+    $uploadMedia = new UploadMediaPage($I);
 
-    $I->seeElement(UploadMediaPage::$commentTextArea);
-    $I->fillfield(UploadMediaPage::$commentTextArea,$commentStr);
-    $I->click(UploadMediaPage::$commentSubmitButton);
-    $I->wait(5);
-    $I->see($commentStr);
+    if(count($tempArray) >= ConstantsPage::$minvalue){
 
-    $I->reloadPage();
-    $I->wait(5);
+        $uploadMedia->fisrtThumbnailMedia($I);
+
+        $I->seeElement(UploadMediaPage::$commentTextArea);
+        $I->fillfield(UploadMediaPage::$commentTextArea,$commentStr);
+        $I->click(UploadMediaPage::$commentSubmitButton);
+        $I->wait(5);
+        $I->see($commentStr);
+
+        $I->reloadPage();
+        $I->wait(5);
+
+    }else{
+
+        $uploadMedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);
+
+        $I->reloadPage();
+        $I->wait(7);
+
+        $uploadMedia->fisrtThumbnailMedia($I);
+
+        $I->seeElement(UploadMediaPage::$commentTextArea);
+        $I->fillfield(UploadMediaPage::$commentTextArea,$commentStr);
+        $I->click(UploadMediaPage::$commentSubmitButton);
+        $I->wait(5);
+        $I->see($commentStr);
+
+        $I->reloadPage();
+        $I->wait(5);
+
+    }
 
 ?>
