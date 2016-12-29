@@ -208,8 +208,12 @@ class RTMediaUploadView {
 		}
 		if ( $attr && is_array( $attr ) ) {
 			foreach ( $attr as $key => $val ) {
+				$selector = "id";
+				if( ( $key == 'upload_parent_id'  && ! empty( $key ) ) || ( $key == 'upload_parent_id_type'  && ! empty( $key ) ) ){
+					$selector = "class";
+				}
 				?>
-				<input type='hidden' id="rt_upload_hf_<?php echo esc_attr( $key ); ?>"
+				<input type='hidden' <?php echo $selector; ?>="rt_upload_hf_<?php echo esc_attr( $key ); ?>"
 				       value='<?php echo esc_attr( $val ); ?>'
 				       name='<?php echo esc_attr( $key ); ?>'/>
 				<?php
