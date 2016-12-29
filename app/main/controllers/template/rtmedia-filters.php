@@ -668,3 +668,23 @@ add_action( 'rtmedia_add_comments_extra', 'rtmedia_add_comments_extra_callback',
  * Add Media Upload in Activity
 */
 add_action( 'bp_activity_entry_comments', 'rtmedia_bp_activity_entry_comments_callback', 10 );
+
+
+
+
+
+/*
+ * Change the BuddyPress activity Comment reply content
+*/
+function rtmedia_bp_activity_comment_content_callback( $content ){
+	$new_content = $content;
+	if( isset( $_REQUEST['rtMedia_attached_files'] )  && is_array( $_REQUEST['rtMedia_attached_files'] ) && class_exists( 'RTMediaActivity' ) ){
+		$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		if( ! empty( $rtMedia_attached_files[0] ) ){
+			$obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $content );
+			$new_content = $obj_comment->create_activity_html();
+		}
+	}
+	return $new_content;
+}
+add_action( 'bp_activity_comment_content', 'rtmedia_bp_activity_comment_content_callback', 1000, 1 );

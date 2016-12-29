@@ -1429,6 +1429,7 @@ jQuery( document ).ready( function( $ ) {
 	};
 } );
 
+
 function rtmedia_selected_file_list( plupload, file, uploader, error, comment_media_id ) {
 	var icon = '', err_msg = '', upload_progress = '', title = '';
 
@@ -1525,8 +1526,6 @@ function change_rtBrowserAddressUrl( url, page ) {
 
 
 
-
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -1558,6 +1557,93 @@ function rtmedia_comment_media_enable_diable_media_comment( that ){
 		jQuery( '.rt_media_comment_form_with_media .rtmedia-comment-media-upload' ).prop( 'disabled', false );
 	}
 }
+
+
+function rtmedia_add_comment_media_button_click( widget_id ){
+	jQuery( '.'+comment_media_uplaod_class+widget_id ).on( 'click', function( e ){
+		e.preventDefault();
+		var media = jQuery( this ).attr( 'media' );
+		if( typeof media != 'undefined'  && media == 1 ){
+			rtmedia_comment_media_upload_button_post_disable( widget_id, true );
+			rtmedia_comment_media_uplaod_button_disble( widget_id, true );
+			rtmedia_add_text_to_comment_when_media_id_add( widget_id );
+			jQuery( this ).attr( 'media', 0 );
+			commentObj[ widget_id ].uploadFiles();
+			return false;
+		}
+	});
+}
+
+
+function rtmedia_add_text_to_comment_when_media_id_add( widget_id ){
+	var form_class = '.'+comment_media_class+widget_id;
+	if( jQuery( form_class ).length > 0 ){
+		if( jQuery( form_class ).find('textarea.ac-input').length > 0 ){
+			var textarea = jQuery( form_class ).find('textarea.ac-input').val();
+			if( textarea == "" ){
+				jQuery( form_class ).find('textarea.ac-input').val( '&nbsp;' );
+				jQuery( form_class ).find( 'textarea' ).css( 'color', 'transparent' );
+			}
+		}
+	}
+}
+
+
+function rtmedia_comment_media_upload_button_post_disable( widget_id, $value ){
+	if( typeof $value != 'undefined' ){
+		jQuery( '.'+comment_media_uplaod_class+widget_id ).prop( 'disabled', $value );
+	}
+}
+
+
+function rtmedia_activity_comment_js_add_media_id(){
+	jQuery.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+		// Modify options, control originalOptions, store jqXHR, etc
+		try {
+			if ( originalOptions.data == null || typeof ( originalOptions.data ) == 'undefined' || typeof ( originalOptions.data.action ) == 'undefined' ) {
+				return true;
+			}
+		} catch ( e ) {
+			return true;
+		}
+
+		if ( originalOptions.data.action == 'new_activity_comment' ) {
+			widget_id = 'activity-'+originalOptions.data.form_id
+
+			var temp = jQuery( '.'+comment_media_class+widget_id ).find( 'input[name="rtMedia_attached_files[]"]' ).val();
+
+			if( typeof temp == 'undefined' ){
+				temp = 0;
+			}
+
+			if( typeof temp == '' ){
+				temp = 0;
+			}
+			options.data += '&rtMedia_attached_files[]=' + temp;
+
+			activity_attachemnt_ids = temp;
+
+			var orignalSuccess = originalOptions.success;
+			options.beforeSend = function() {
+				if ( originalOptions.data.action == 'new_activity_comment' ) {
+					if ( originalOptions.data.content == '' && activity_attachemnt_ids == 0 ) {
+						jQuery( '.'+comment_media_class+widget_id ).prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
+						jQuery( '.'+comment_media_class+widget_id ).removeAttr( 'disabled' );
+						return false;
+					}
+
+					if( originalOptions.data.form_id != originalOptions.data.comment_id ){
+						jQuery( '.'+comment_media_class+widget_id ).prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
+						jQuery( '.'+comment_media_class+widget_id ).removeAttr( 'disabled' );
+						return false;
+					}
+				}
+			};
+		}
+	} );
+}
+
+
 jQuery(function($) {
 
 
@@ -1571,11 +1657,7 @@ jQuery(function($) {
 		jQuery( '.'+comment_media_uplaod_class+widget_id ).attr( 'widget_id', widget_id );
 	}
 
-	function rtmedia_comment_media_upload_button_post_disable( widget_id, $value ){
-		if( typeof $value != 'undefined' ){
-			jQuery( '.'+comment_media_uplaod_class+widget_id ).prop( 'disabled', $value );
-		}
-	}
+
 
 	function rtmedia_comment_media_upload_button_has_media( widget_id ,$value ){
 		if( typeof $value != 'undefined' ){
@@ -1589,20 +1671,6 @@ jQuery(function($) {
 			jQuery( '.'+comment_media_class+widget_id ).append( '<input type=\'hidden\' name=\'rtMedia_attached_files[]\' data-mode=\'rtmedia-update\' id=\'rtmedia_attached_id_' + media_id + '\' value=\'' +
 			media_id + '\' />' );
 		}
-	}
-
-	function rtmedia_add_comment_media_button_click( widget_id ){
-		jQuery( '.'+comment_media_uplaod_class+widget_id ).on( 'click', function( e ){
-			e.preventDefault();
-			var media = jQuery( this ).attr( 'media' );
-			if( typeof media != 'undefined'  && media == 1 ){
-				rtmedia_comment_media_upload_button_post_disable( widget_id, true );
-				rtmedia_comment_media_uplaod_button_disble( widget_id, true );
-				jQuery( this ).attr( 'media', 0 );
-				commentObj[ widget_id ].uploadFiles();
-				return false;
-			}
-		});
 	}
 
 	function rtmedia_add_comment_media_button_trigger( widget_id ){
@@ -1952,5 +2020,6 @@ jQuery(function($) {
 		rtmedia_comment_media_upload( single_upload_comment );
 	}
 	rtmedia_comment_media_single_page();
+	rtmedia_activity_comment_js_add_media_id();
 
 });

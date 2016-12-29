@@ -50,9 +50,17 @@ body.media.buddypress {
 }
 
 #buddypress input[type=submit]:focus {
-    background: #ededed;
-    border: 1px solid #bbb;
-    color: #555;
-    outline: 0;
-    text-decoration: none;
+	background: #ededed;
+	border: 1px solid #bbb;
+	color: #555;
+	outline: 0;
+	text-decoration: none;
+}
+
+#buddypress ul.activity-list li.activity-item {
+	.activity-comments {
+		ul li form.ac-form .rtmedia-container {
+			display: none !important;
+		}
+	}
 }
