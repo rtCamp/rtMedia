@@ -1511,15 +1511,73 @@ function change_rtBrowserAddressUrl( url, page ) {
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-var   commentObj = {};
-var   plupload_comment_main = {};
+var 	commentObj = {};
+var 	plupload_comment_main = {};
+var 	comment_media_class = 'comment-media-';
+var 	comment_media_uplaod_class = 'comment-media-uplaod-';
+var 	comment_media_button = 'rtmedia-comment-media-upload-';
 jQuery(function($) {
+
+
+	function rtmedia_comment_media_upload_button_class( widget_id ){
+		jQuery( 'form.'+comment_media_class+widget_id ).find( 'input[type="submit"].rt_media_comment_submit' ).addClass( comment_media_uplaod_class+widget_id );
+		jQuery( 'form.'+comment_media_class+widget_id ).find( 'input[name="ac_form_submit"]' ).addClass( comment_media_uplaod_class+widget_id );
+	}
+
+	function rtmedia_comment_media_upload_button_post_disable( widget_id, $value ){
+		if( typeof $value != 'undefined' ){
+			jQuery( '.'+comment_media_uplaod_class+widget_id ).prop( 'disabled', $value );
+		}
+	}
+
+	function rtmedia_comment_media_uplaod_button_disble( widget_id, $value ){
+		if( typeof $value != 'undefined' ){
+			jQuery( '#'+comment_media_button+widget_id ).prop( 'disabled', $value );
+		}
+	}
+
+	function rtmedia_comment_media_upload_button_has_media( widget_id ,$value ){
+		if( typeof $value != 'undefined' ){
+			jQuery( '.'+comment_media_uplaod_class+widget_id ).attr( 'media', $value );
+		}
+	}
+
+	function rtmedia_comment_media_media_id( widget_id, media_id ){
+		if ( jQuery( '.'+comment_media_class+widget_id ).find( '#rtmedia_attached_id_' + media_id ).length < 1 ) {
+			jQuery( '.'+comment_media_class+widget_id ).find( 'input[name="rtMedia_attached_files[]"]' ).remove();
+			jQuery( '.'+comment_media_class+widget_id ).append( '<input type=\'hidden\' name=\'rtMedia_attached_files[]\' data-mode=\'rtmedia-update\' id=\'rtmedia_attached_id_' + media_id + '\' value=\'' +
+			media_id + '\' />' );
+		}
+	}
+
+	function rtmedia_add_comment_media_button_click( widget_id ){
+		jQuery( '.'+comment_media_uplaod_class+widget_id ).on( 'click', function( e ){
+			e.preventDefault();
+			var media = jQuery( this ).attr( 'media' );
+			if( typeof media != 'undefined'  && media == 1 ){
+				rtmedia_comment_media_upload_button_post_disable( widget_id, true );
+				rtmedia_comment_media_uplaod_button_disble( widget_id, true );
+				commentObj[ widget_id ].uploadFiles();
+				return false;
+			}
+		});
+	}
+
+	function rtmedia_add_comment_media_button_trigger( widget_id ){
+		if( jQuery( '.'+comment_media_uplaod_class+widget_id ).length > 0 ){
+			jQuery( '.'+comment_media_uplaod_class+widget_id ).trigger('click');
+		}
+	}
+
    	function renderUploadercomment_media(widget_id) {
-	   	var button = 'rtmedia-comment-media-upload-'+widget_id;
+	   	var button = comment_media_button+widget_id;
 
 	    //sidebar widget uploader config script
 	    if ( $( '#'+button ).length > 0) {
+
+	    	jQuery( '#'+button ).closest('form').addClass( comment_media_class+widget_id );
+
+	    	rtmedia_comment_media_upload_button_class( widget_id );
 
 	    	if ( typeof rtMedia_update_plupload_comment == 'undefined' ) {
 				return false;
@@ -1541,21 +1599,27 @@ jQuery(function($) {
 	        $("#rtMedia-start-upload-"+widget_id).click(function(e) {
 
 				//Enable 'post update' button when media get select
-				jQuery( this ).closest( 'form' ).find( '.rt_media_comment_submits' ).prop( 'disabled', true );
-				jQuery( this ).closest( 'form' ).find( 'input[name="ac_form_submit"]' ).prop( 'disabled', true );
+				rtmedia_comment_media_upload_button_post_disable( widget_id, true );
 
 	            commentObj[widget_id].uploadFiles(e);
 	            commentObj[ widget_id ].uploader.refresh();
 	        });
 
+	        rtmedia_add_comment_media_button_click( widget_id );
+
 
 	        commentObj[widget_id].uploader.bind('FilesAdded', function(upl, rfiles) {
+
+	        	/* doest not allow multipal uplaod in comment media */
+	        	while (upl.files.length > 1) {
+			        upl.removeFile(upl.files[0]);
+			    }
 
 				/* remove the last file that has being added to the comment media */
 				commentObj[ widget_id ].upload_remove_array = [ ];
 				jQuery( '#rtmedia_uploader_filelist-'+widget_id+' li.plupload_queue_li' ).remove();
 
-
+				rtmedia_comment_media_upload_button_has_media( widget_id, 1 );
 
 				jQuery.each( rfiles, function( i, file ) {
 
@@ -1686,6 +1750,7 @@ jQuery(function($) {
 					}
 				} );
 
+
 	        	if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
 
 					//Call upload event direct when direct upload is enabled (removed UPLOAD button and its triggered event)
@@ -1695,9 +1760,8 @@ jQuery(function($) {
 						return false;
 					}
 
-					jQuery( '#rt_media_comment_submit' ).prop( 'disabled', true );
-
-					jQuery( '.ac_form_submit' ).prop( 'disabled', false );
+					rtmedia_comment_media_upload_button_post_disable( widget_id, true );
+					rtmedia_comment_media_upload_button_disable( widget_id, true );
 
 					commentObj[ widget_id ].uploadFiles();
 				}
@@ -1723,7 +1787,10 @@ jQuery(function($) {
 						var objIds = JSON.parse( res.response );
 						jQuery.each( objIds, function( key, val ) {
 							/* after id of the images get */
-							console.log( val );
+							rtmedia_comment_media_upload_button_has_media( widget_id, 0 );
+							rtmedia_comment_media_upload_button_post_disable( widget_id, false );
+							rtmedia_comment_media_media_id( widget_id, val );
+							rtmedia_add_comment_media_button_trigger( widget_id );
 						} );
 					} catch ( e ) {
 
@@ -1732,7 +1799,11 @@ jQuery(function($) {
 				}
 			} );
 
+
 	        commentObj[ widget_id ].uploader.bind( 'Error', function( up, err ) {
+
+	        	rtmedia_comment_media_upload_button_post_disable( widget_id, false );
+
 				if ( err.code == -600 ) { //File size error // if file size is greater than server's max allowed size
 					var tmp_array;
 					var ext = tr = '';
@@ -1765,7 +1836,7 @@ jQuery(function($) {
 				jQuery.each( commentObj[ widget_id ].upload_remove_array, function( i, rfile ) {
 					if ( up.getFile( rfile ) ) {
 						up.removeFile( up.getFile( rfile ) );
-						}
+					}
 				} );
 
 				item_id = 0;
@@ -1786,7 +1857,9 @@ jQuery(function($) {
 			} );
 
 	        commentObj[ widget_id ].uploader.bind( 'UploadComplete', function( up, files ) {
-				jQuery( '#rtmedia_uploader_filelist-'+widget_id+' .rtMedia-queue-list li').remove();
+
+				jQuery( '#rtmedia_uploader_filelist-'+widget_id+' li').remove();
+
 				window.onbeforeunload = null;
 			} );
 
