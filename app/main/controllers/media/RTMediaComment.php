@@ -67,7 +67,7 @@ class RTMediaComment {
 						'comment_author'    => $this->get_current_author(),
 						'comment_date'      => current_time( 'mysql' ),
 				);
-			   $attr['comment_content'] = wp_kses( $attr['comment_content'], $allowedtags );
+			   $attr['comment_content'] = rtmedia_wp_kses_of_buddypress( $attr['comment_content'], $allowedtags );
 				$params = wp_parse_args( $attr, $defaults );
 			   $id = $this->rtmedia_comment_model->insert( $params );
 			   global $rtmedia_points_media_id;

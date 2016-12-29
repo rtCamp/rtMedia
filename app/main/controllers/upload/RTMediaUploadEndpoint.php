@@ -64,6 +64,29 @@ class RTMediaUploadEndpoint {
 						$this->upload['privacy'] = '0';
 					}
 				}
+
+				// if media is add in from the comment media section
+				if( isset( $this->upload['rtMedia_attached_files'] ) && ! empty( $this->upload['rtMedia_attached_files'] ) ){
+					// if group is public, then set media privacy as 0
+					$this->upload['privacy'] = '0';
+
+					$comment_media = false;
+					$current_media_id = filter_var( $this->upload['rtMedia_attached_files'] , FILTER_SANITIZE_NUMBER_INT);
+					if( $current_media_id ){
+						$comment_media = true;
+						$media_obj    = new RTMediaMedia();
+						$media        = $media_obj->model->get( array( 'id' => $current_media_id ) );
+						if( isset( $media[0]->album_id )  && ! empty( $media[0]->album_id ) ){
+							$this->upload['album_id'] = $media[0]->album_id;
+						}
+
+						if( isset( $media[0]->privacy )  && ! empty( $media[0]->privacy ) ){
+							$this->upload['privacy'] = $media[0]->privacy;
+						}
+					}
+
+				}
+
 				$this->upload = apply_filters( 'rtmedia_media_param_before_upload', $this->upload );
 				$rtupload     = new RTMediaUpload( $this->upload );
 				$media_obj    = new RTMediaMedia();

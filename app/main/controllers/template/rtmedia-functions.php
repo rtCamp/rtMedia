@@ -1258,7 +1258,8 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 		$comment_content = $activity_comment_content;
 	}
 
-	$comment_string = wp_kses( $comment_content, $allowedtags );
+
+	$comment_string = rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags );
 
 	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( apply_filters( 'bp_get_activity_content', $comment_string ) ) ) . '</div>';
 	$html .= '<div class="rtmedia-comment-extra">' . apply_filters( 'rtmedia_comment_extra', '', $comment ) . '</div>';
@@ -3548,4 +3549,16 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 
 	return $license_data;
 
+}
+
+
+
+
+function rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags ){
+	if( function_exists( 'bp_activity_filter_kses' ) ){
+		$comment_string = bp_activity_filter_kses( $comment_content, $allowedtags );
+	}else{
+		$comment_string = wp_kses( $comment_content, $allowedtags );
+	}
+	return $comment_string;
 }

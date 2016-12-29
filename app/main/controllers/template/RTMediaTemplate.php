@@ -630,14 +630,22 @@ class RTMediaTemplate {
 			$comment_content = isset( $_REQUEST['comment_content'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['comment_content'] ) ) : '';
 
 			if ( wp_verify_nonce( $nonce, 'rtmedia_comment_nonce' ) ) {
-				if ( empty( $comment_content ) ) {
-					return false;
+				$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+				if ( empty( $comment_content ) &&  is_array( $rtMedia_attached_files ) && empty( $rtMedia_attached_files ) ) {
+ 					return false;
+ 				}
+
+ 				if( ! empty( $rtMedia_attached_files ) ){
+ 					$obj_comment = new RTMediaActivity( $rtMedia_attached_files, 0, $comment_content );
+					$comment_content = $obj_comment->create_activity_html();
 				}
 
 				$comment     = new RTMediaComment();
 				$attr        = $_POST;
 				$media_model = new RTMediaModel();
 				$result      = $media_model->get( array( 'id' => $rtmedia_query->action_query->id ) );
+				$attr[ 'comment_content' ] = $comment_content;
 
 				if ( ! isset( $attr['comment_post_ID'] ) ) {
 					$attr['comment_post_ID'] = $result[0]->media_id;
