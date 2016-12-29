@@ -672,19 +672,17 @@ add_action( 'bp_activity_entry_comments', 'rtmedia_bp_activity_entry_comments_ca
 
 
 
-
 /*
- * Change the BuddyPress activity Comment reply content
-*/
+ * Change the BuddyPress activity Comment reply conten*/
 function rtmedia_bp_activity_comment_content_callback( $content ){
-	$new_content = $content;
-	if( isset( $_REQUEST['rtMedia_attached_files'] )  && is_array( $_REQUEST['rtMedia_attached_files'] ) && class_exists( 'RTMediaActivity' ) ){
-		$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if( ! empty( $rtMedia_attached_files[0] ) ){
-			$obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $content );
-			$new_content = $obj_comment->create_activity_html();
-		}
-	}
-	return $new_content;
+    $new_content = $content;
+    if( isset( $_REQUEST['rtMedia_attached_files'] )  && isset( $_REQUEST['comment_id'] ) && isset( $_REQUEST['form_id'] ) ){
+        $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+        if( ! empty( $rtMedia_attached_files[0] )  && is_array( $rtMedia_attached_files ) && class_exists( 'RTMediaActivity' ) ){
+            $obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $content );
+            $new_content = $obj_comment->create_activity_html();
+        }
+    }
+    return $new_content;
 }
-add_action( 'bp_activity_comment_content', 'rtmedia_bp_activity_comment_content_callback', 1000, 1 );
+add_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
