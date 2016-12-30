@@ -65,13 +65,15 @@ class RTMediaUploadEndpoint {
 					}
 				}
 
+
+				$comment_media = false;
 				// if media is add in from the comment media section
-				if( isset( $this->upload['rtMedia_attached_files'] ) && ! empty( $this->upload['rtMedia_attached_files'] ) ){
+				if( isset( $this->upload['comment_media_activity_id'] ) && ! empty( $this->upload['comment_media_activity_id'] ) ){
 					// if group is public, then set media privacy as 0
 					$this->upload['privacy'] = '0';
 
-					$comment_media = false;
-					$current_media_id = filter_var( $this->upload['rtMedia_attached_files'] , FILTER_SANITIZE_NUMBER_INT);
+					$current_media_id = preg_replace( '/[^0-9]/', '', $this->upload['comment_media_activity_id'] );
+
 					if( $current_media_id ){
 						$comment_media = true;
 						$media_obj    = new RTMediaMedia();
@@ -89,6 +91,16 @@ class RTMediaUploadEndpoint {
 
 				$this->upload = apply_filters( 'rtmedia_media_param_before_upload', $this->upload );
 				$rtupload     = new RTMediaUpload( $this->upload );
+
+
+				if( $comment_media ){
+					add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media', true );
+					if( ! empty( $current_media_id ) ){
+						add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media_id', $current_media_id );
+					}
+				}
+
+
 				$media_obj    = new RTMediaMedia();
 				$media        = $media_obj->model->get( array( 'id' => $rtupload->media_ids[0] ) );
 				$rtmedia_nav  = new RTMediaNav();

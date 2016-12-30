@@ -686,3 +686,22 @@ function rtmedia_bp_activity_comment_content_callback( $content ){
     return $new_content;
 }
 add_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
+
+
+
+
+
+
+/*  deepak.gupta@rtcamp.com */
+function rtmedia_delete_comment_callback( $comment_id ){
+	$comment_media_id = get_comment_meta( $comment_id, 'rtmedia_comment_media_id', true );
+	if( class_exists( 'RTMediaMedia' ) && ! empty( $comment_media_id ) ){
+		$media 			= new RTMediaMedia();
+		foreach ( $comment_media_id as $key => $media_id ) {
+			if( ! empty( $media_id ) ){
+				$media->delete( $media_id, false, false );
+			}
+		}
+	}
+}
+add_action( 'delete_comment', 'rtmedia_delete_comment_callback', 1000, 1 );

@@ -636,8 +636,10 @@ class RTMediaTemplate {
  					return false;
  				}
 
+ 				$comment_with_media = false;
  				if( ! empty( $rtMedia_attached_files ) ){
- 					$obj_comment = new RTMediaActivity( $rtMedia_attached_files, 0, $comment_content );
+ 					$comment_with_media = true;
+ 					$obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content );
 					$comment_content = $obj_comment->create_activity_html();
 				}
 
@@ -652,6 +654,10 @@ class RTMediaTemplate {
 				}
 
 				$id = $comment->add( $attr );
+
+				if( $comment_with_media  && $id ){
+					update_comment_meta( $id, 'rtmedia_comment_media_id', $rtMedia_attached_files[0] );
+				}
 
 				if ( ! is_null( $result[0]->activity_id ) ) {
 					global $rtmedia_buddypress_activity;
