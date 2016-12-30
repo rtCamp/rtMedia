@@ -1759,6 +1759,7 @@ jQuery(function($) {
 
 	    	jQuery( '#'+button ).closest('form').addClass( comment_media_wrapper+widget_id );
 
+
 	    	rtmedia_comment_media_upload_button_class( widget_id );
 
 	    	if ( typeof rtMedia_update_plupload_comment == 'undefined' ) {
@@ -1775,6 +1776,20 @@ jQuery(function($) {
 	        commentObj[widget_id] = new UploadView(eval( plupload_comment_main[ widget_id ] ));
 
 	        commentObj[widget_id].initUploader(false);
+
+
+
+    		var form_html = jQuery( "."+comment_media_wrapper+widget_id );
+    		if( jQuery( form_html ).find('div.rtmedia-plupload-container').length ){
+    			if( parent_id_type == "activity" ){
+    				form_html.find('.ac-reply-content .ac-textarea').after( form_html.find('div.rtmedia-plupload-container') );
+    			}
+
+    			if( parent_id_type == "rtmedia" ){
+    				form_html.find('textarea').after( form_html.find('div.rtmedia-plupload-container') );
+    			}
+    		}
+
 
 	        $("#"+comment_media_uplaod_media+widget_id).hide();
 
