@@ -1600,8 +1600,21 @@ function rtmedia_comment_media_input_button( widget_id, $value ){
 	rtmedia_comment_media_upload_button_post_disable( widget_id, $value );
 
 	rtmedia_comment_media_uplaod_button_disble( widget_id, $value );
+
+	rtmedia_uploaded_media_edit_disable( widget_id, $value );
 }
 
+
+
+function rtmedia_uploaded_media_edit_disable( widget_id, $value ){
+	if( $value ){
+		jQuery( '.'+comment_media_wrapper+widget_id ).find( '.dashicons' ).hide()
+		jQuery( '.'+comment_media_wrapper+widget_id ).find( '.plupload_file_action' ).hide()
+	}else{
+		jQuery( '.'+comment_media_wrapper+widget_id ).find( '.plupload_file_action' ).show()
+		jQuery( '.'+comment_media_wrapper+widget_id ).find( '.dashicons' ).show()
+	}
+}
 
 function rtmedia_comment_media_textbox_val( widget_id, $value ){
 	var form_class = '.'+comment_media_wrapper+widget_id;
@@ -1691,7 +1704,9 @@ function rtmedia_activity_comment_js_add_media_id(){
 
 						rtmedia_comment_media_input_button( widget_id, false );
 
-						rtmedia_apply_popup_to_media();
+						setTimeout( function() {
+							rtmedia_apply_popup_to_media();
+						}, 500 );
 
 						rtMediaHook.call( 'rtmedia_js_after_comment_added', [ ] );
 					}
@@ -2099,19 +2114,18 @@ jQuery(function($) {
 	    });
 	}
 
+
     rtMediaHook.register( 'rtmedia_js_popup_after_content_added', function() {
-
 		var popup_upload_comment = jQuery( '.rtmedia-single-container .rtmedia-single-meta .rtm-media-single-comments form' );
-
 		rtmedia_comment_media_upload( popup_upload_comment );
-
+		rtmedia_apply_popup_to_media();
+		return true;
 	} );
 
 	rtMediaHook.register( 'rtmedia_js_after_activity_added', function() {
-
 		rtmedia_activity_stream_comment_media();
-
 		rtmedia_apply_popup_to_media();
+		return true;
 	} );
 
 

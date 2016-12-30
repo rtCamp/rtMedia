@@ -59,7 +59,9 @@
 }
 
 // Uploader
-#rtmedia-uploader-form .rtm-plupload-list, #rtmedia_uploader_filelist {
+#rtmedia-uploader-form .rtm-plupload-list,
+form .rtmedia-container .rtm-plupload-list,
+#rtmedia_uploader_filelist {
 	list-style: none;
 	margin-left: -4px;
 	margin-right: -4px;

@@ -98,6 +98,8 @@ function apply_rtMagnificPopup( selector ) {
 							    $( '#comment_content' ).bp_mentions( bp.mentions.users );
 							}
 						}
+
+						apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
 					},
 					close: function( e ) {
 						//Console.log(e);
