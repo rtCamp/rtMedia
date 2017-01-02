@@ -636,6 +636,11 @@ class RTMediaTemplate {
  					return false;
  				}
 
+ 				/* is comment is empty then add content content space */
+ 				if( strstr($comment_content, 'nbsp') ){
+ 					$comment_content = "&nbsp;";
+ 				}
+
  				$comment_with_media = false;
  				if( ! empty( $rtMedia_attached_files ) ){
  					$comment_with_media = true;
