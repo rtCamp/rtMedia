@@ -243,9 +243,11 @@ form .rtmedia-container .rtm-plupload-list .rtm-upload-edit-desc-wrapper input.r
   clear: both;
 }
 
+.rtm-upload-button-wrapper button.rtmedia-comment-media-upload,
 button.rtmedia-comment-media-upload {
   padding: 3px 6px;
 }
+.rtm-upload-button-wrapper button.rtmedia-comment-media-upload .dashicons,
 button.rtmedia-comment-media-upload .dashicons {
   font-size: 18px;
   line-height: 20px;

@@ -1632,11 +1632,11 @@ function rtmedia_comment_media_input_button( widget_id, $value ){
 
 function rtmedia_uploaded_media_edit_disable( widget_id, $value ){
 	if( $value ){
-		jQuery( '.'+comment_media_wrapper+widget_id ).find( '.dashicons' ).hide()
+		jQuery( '.'+comment_media_wrapper+widget_id ).find( '.plupload_filelist_content .dashicons' ).hide()
 		jQuery( '.'+comment_media_wrapper+widget_id ).find( '.plupload_file_action' ).hide()
 	}else{
 		jQuery( '.'+comment_media_wrapper+widget_id ).find( '.plupload_file_action' ).show()
-		jQuery( '.'+comment_media_wrapper+widget_id ).find( '.dashicons' ).show()
+		jQuery( '.'+comment_media_wrapper+widget_id ).find( '.plupload_filelist_content .dashicons' ).show()
 	}
 }
 
