@@ -629,14 +629,38 @@ function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_i
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
 
 
+function rtmedia_search_media_filter( $filter ) {
+	$filter = array(
+		'title'			=> true,
+		'description'	=> true,
+		'attribute'		=> true,
+		'author'		=> true,
+	);
+
+	return $filter;
+}
+
+add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
+
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	global $wpdb;
 
-	if ( $_REQUEST['search'] ) {
-		$where .= " AND ( ";
-		$where .= " $table_name.media_title = '".$_REQUEST['search']."' ";
-		$where .= " OR {$wpdb->base_prefix}posts.post_content LIKE '%".$_REQUEST['search']."%'";
-		$where .= " )";
+	if ( isset( $_REQUEST['search'] ) && $_REQUEST['search'] ) {
+		$where .= ' AND ( ';
+
+		if ( isset( $_REQUEST['search_by'] ) ) {
+			if ( $_REQUEST['search_by'] ) {
+				if ( 'title' == $_REQUEST['search_by'] ) {
+					$where .= " $table_name.media_title = '" . $_REQUEST['search'] . "' ";
+				} else if ( 'description' == $_REQUEST['search_by'] ) {
+					$where .= " {$wpdb->base_prefix}posts.post_content LIKE '%" . $_REQUEST['search'] . "%'";
+				}
+			}
+		} else {
+			$where .= " $table_name.media_title = '" . $_REQUEST['search'] . "' ";
+			$where .= " OR {$wpdb->base_prefix}posts.post_content LIKE '%" . $_REQUEST['search'] . "%'";
+		}
+		$where .= ' )';
 	}
 
 	return $where;
@@ -647,8 +671,9 @@ add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 1
 
 function rtmedia_search_fillter_join_query( $join, $table_name ) {
 	global $wpdb;
-
-	$join .= "LEFT JOIN {$wpdb->base_prefix}posts ON $table_name.media_id = {$wpdb->base_prefix}posts.ID";
+	if ( isset( $_REQUEST['search_by'] ) && isset( $_REQUEST['search_by'] ) && 'description' == $_REQUEST['search_by'] ) {
+		$join .= "LEFT JOIN {$wpdb->base_prefix}posts ON $table_name.media_id = {$wpdb->base_prefix}posts.ID";
+	}
 	return $join;
 }
 
