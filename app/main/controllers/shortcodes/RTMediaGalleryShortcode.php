@@ -185,8 +185,8 @@ class RTMediaGalleryShortcode {
 					}
 				}
 
-				if( isset( $attr['attr']['search_filter'] ) ) {
-					add_search_filter();
+				if ( isset( $attr['attr']['search_filter'] ) ) {
+					add_search_filter( true );
 				}
 
 				if ( ! isset( $attr['attr']['context'] ) && isset( $post->post_type ) ) {
