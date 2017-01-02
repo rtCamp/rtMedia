@@ -683,6 +683,19 @@ class RTMediaTemplate {
 						update_comment_meta( $id, 'activity_comment_content', $rtmedia_activity_comment['content'] );
 					}
 					update_comment_meta( $id, 'activity_id', $comment_activity_id );
+
+
+					if( $comment_with_media  && is_array( $rtMedia_attached_files )  && ! empty( $rtMedia_attached_files[0] )  && class_exists( 'RTMediaModel' ) ){
+						$rtmedia_model = new RTMediaModel();
+						$rtmedia_model->update(
+							array(
+								'activity_id' => $comment_activity_id
+							),
+							array(
+								'id' => $rtMedia_attached_files[0]
+							)
+						);
+					}
 				}
 				$_rt_ajax = filter_input( INPUT_POST, 'rtajax', FILTER_SANITIZE_STRING );
 

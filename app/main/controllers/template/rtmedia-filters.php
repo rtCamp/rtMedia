@@ -691,8 +691,6 @@ add_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_cont
 
 
 
-
-/*  deepak.gupta@rtcamp.com */
 function rtmedia_delete_comment_callback( $comment_id ){
 	$comment_media_id = get_comment_meta( $comment_id, 'rtmedia_comment_media_id', true );
 	if( class_exists( 'RTMediaMedia' ) && ! empty( $comment_media_id ) ){
@@ -705,3 +703,25 @@ function rtmedia_delete_comment_callback( $comment_id ){
 	}
 }
 add_action( 'delete_comment', 'rtmedia_delete_comment_callback', 1000, 1 );
+
+
+
+
+function rtmedia_bp_activity_after_save_callback( $activity_data ){
+	if( ! empty( $activity_data )  && $activity_data->type == 'activity_comment' ){
+		if( isset( $_REQUEST['rtMedia_attached_files'] ) && isset( $activity_data->id ) ){
+	        $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+			if( is_array( $rtMedia_attached_files )  && ! empty( $rtMedia_attached_files[0] )  && class_exists( 'RTMediaModel' ) ){
+				$rtmedia_model = new RTMediaModel();
+				$rtmedia_model->update(
+					array(
+						'activity_id' => $activity_data->id					),
+					array(
+						'id' => $rtMedia_attached_files[0]
+					)
+				);
+			}
+	    }
+	}
+}
+add_action( 'bp_activity_after_save', 'rtmedia_bp_activity_after_save_callback', 1000, 1 );
