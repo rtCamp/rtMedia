@@ -98,11 +98,25 @@
 						<?php if ( rtmedia_comments_enabled() ) { ?>
 							<div class="rtmedia-item-comments">
 								<div class="rtmedia-actions-before-comments clearfix">
+
 									<?php do_action( 'rtmedia_actions_before_comments' ); ?>
+
 									<?php if ( is_user_logged_in() && empty( $comment_media )  ) { ?>
-										<span><a href='#'
-										         class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a></span>
-									<?php } ?>
+											<span>
+												<a href='#' class='rtmedia-comment-link'>
+													<?php esc_html_e( 'Comment', 'buddypress-media' ); ?>
+												</a>
+											</span>
+									<?php }
+									elseif ( isset( $rtmedia_media->activity_id )  && ! empty( $rtmedia_media->activity_id ) ) { ?>
+										<span>
+											<a href="<?php echo bp_activity_get_permalink( $rtmedia_media->activity_id ); ?>"
+											class="rtmedia-view-conversation" >
+												<?php _e( 'View Conversation', 'buddypress-media' ); ?>
+											</a>
+										</span>
+										<?php
+									} ?>
 								</div>
 								<div class="rtm-like-comments-info">
 									<?php show_rtmedia_like_counts(); ?>
@@ -150,7 +164,16 @@
 								<?php if ( is_user_logged_in() && empty( $comment_media ) ) { ?>
 									<span><a href='#'
 									         class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a></span>
-								<?php } ?>
+								<?php }
+								elseif ( isset( $rtmedia_media->activity_id )  && ! empty( $rtmedia_media->activity_id ) ) { ?>
+									<span>
+										<a href="<?php echo bp_activity_get_permalink( $rtmedia_media->activity_id ); ?>"
+										class="rtmedia-view-conversation" >
+											<?php _e( 'View Conversation', 'buddypress-media' ); ?>
+										</a>
+									</span>
+									<?php
+								} ?>
 							</div>
 
 							<div class="rtm-like-comments-info">

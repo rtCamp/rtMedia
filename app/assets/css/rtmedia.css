@@ -1322,7 +1322,8 @@ img.mfp-img {
   float: left;
   margin-right: 10px;
 }
-.rtmedia-actions-before-comments .rtmedia-comment-link, #buddypress .rtmedia-actions-before-comments .rtmedia-like {
+.rtmedia-actions-before-comments .rtmedia-comment-link,
+.rtmedia-actions-before-comments .rtmedia-view-conversation, #buddypress .rtmedia-actions-before-comments .rtmedia-like {
   border: 0;
   font-size: 13px;
   font-weight: normal;
@@ -1330,7 +1331,8 @@ img.mfp-img {
   padding: 0;
   text-transform: none;
 }
-.rtmedia-actions-before-comments .rtmedia-comment-link:hover, #buddypress .rtmedia-actions-before-comments .rtmedia-like:hover {
+.rtmedia-actions-before-comments .rtmedia-comment-link:hover,
+.rtmedia-actions-before-comments .rtmedia-view-conversation:hover, #buddypress .rtmedia-actions-before-comments .rtmedia-like:hover {
   background: transparent;
 }
 
