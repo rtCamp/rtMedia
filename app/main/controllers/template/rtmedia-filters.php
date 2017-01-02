@@ -633,7 +633,7 @@ add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_mo
 function rtmedia_bp_activity_entry_comments_id_callback( $id, $type ){
 	if( class_exists( 'RTMediaComment' ) ){
 		/*add media in comment*/
-		RTMediaComment::add_uplaod_media_button( $id, $type );
+		return RTMediaComment::add_uplaod_media_button( $id, $type );
 	}
 }
 
@@ -641,7 +641,7 @@ function rtmedia_bp_activity_entry_comments_id_callback( $id, $type ){
 function rtmedia_add_comments_extra_callback(){
 	$rtmedia_id = rtmedia_id();
 	if( $rtmedia_id ){
-		rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia' );
+		echo rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia' );
 	}
 }
 
@@ -650,7 +650,7 @@ function rtmedia_bp_activity_entry_comments_callback(){
 	$activity_id = bp_get_activity_id();
 	if( $activity_id ){
 		add_action( 'before_rtmedia_uploader_display', 'rtmedia_before_rtmedia_uploader_display_callback', 10 );
-			rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity' );
+			echo rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity' );
 		remove_action( 'before_rtmedia_uploader_display', 'rtmedia_before_rtmedia_uploader_display_callback', 10 );
 	}
 }

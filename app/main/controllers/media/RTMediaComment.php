@@ -130,6 +130,7 @@ class RTMediaComment {
 	 * @return string|void
 	 */
 	static function pre_comment_render( $attr ) {
+		ob_start();
 		if ( rtmedia_is_uploader_view_allowed( true, 'comment_media' ) ) {
 
 			if ( isset( $attr['context'] ) && ! empty( $attr['context'] ) ) {
@@ -147,14 +148,16 @@ class RTMediaComment {
 				if( isset( $attr['upload_parent_id_type'] )  && isset( $attr['upload_parent_id'] ) ){
 					$template = 'comment-media';
 				}
-				ob_start();
 				$view = new RTMediaUploadView( $attr );
-				return $view->render( $template );
-				return ob_get_clean();
+				echo $view->render( $template );
+
 			}
 		} else {
 			echo "<div class='rtmedia-upload-not-allowed'>" . wp_kses( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.','buddypress-media' ), 'uploader_shortcode' ), RTMediaUpload::$wp_kses_allowed_tags ) . '</div>';
 		}
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
 	}
 
 
@@ -172,6 +175,6 @@ class RTMediaComment {
 			'upload_parent_id' => $id,
 			'upload_parent_id_type' => $type
 		 );
-		echo RTMediaComment::pre_comment_render( $attr );
+		return RTMediaComment::pre_comment_render( $attr );
 	}
 }
