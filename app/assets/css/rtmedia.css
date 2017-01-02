@@ -2468,6 +2468,11 @@ body div.bp_members.bp_member .entry-content {
   background: transparent;
   color: #000;
 }
+.rtm-media-options .media_search .search_by {
+  background: transparent;
+  margin-top: 3px;
+  float: left;
+}
 
 .rtmedia-upload-media-link {
   cursor: pointer;
