@@ -1986,15 +1986,7 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 
         	if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
 
-				//Call upload event direct when direct upload is enabled (removed UPLOAD button and its triggered event)
-				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
-
-				if ( allow_upload == false ) {
-					return false;
-				}
-
 				rtmedia_comment_media_upload_button_post_disable( widget_id, true );
-				rtmedia_comment_media_upload_button_disable( widget_id, true );
 
 				commentObj[ widget_id ].uploadFiles();
 			}
