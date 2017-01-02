@@ -445,6 +445,9 @@ jQuery( 'document' ).ready( function( $ ) {
 			}
 
 				rtmedia_disable_popup_navigation_comment_focus();
+
+				rtmedia_disable_popup_navigation_comment_media_focus();
+
 				var height = $( window ).height();
 				jQuery( '.rtm-lightbox-container .mejs-video' ).css( { 'height': height * 0.8, 'over-flow': 'hidden' } );
 				jQuery( '.mfp-content .rtmedia-media' ).css( { 'max-height': height * 0.87, 'over-flow': 'hidden' } );
@@ -504,19 +507,7 @@ jQuery( 'document' ).ready( function( $ ) {
 	}
 
 	function rtmedia_disable_popup_navigation_comment_focus() {
-		jQuery( document ).on( 'focusin', '#comment_content', function() {
-			jQuery( document ).unbind( 'keydown' );
-		} );
-		jQuery( document ).on( 'focusout', '#comment_content', function() {
-			var rtm_mfp = jQuery.magnificPopup.instance;
-			jQuery( document ).on( 'keydown', function( e ) {
-				if ( e.keyCode === 37 ) {
-					rtm_mfp.prev();
-				} else if ( e.keyCode === 39 ) {
-					rtm_mfp.next();
-				}
-			} );
-		} );
+		rtmedia_disable_popup_navigation( '#comment_content' );
 	}
 
 	var dragArea = jQuery( '#drag-drop-area' );

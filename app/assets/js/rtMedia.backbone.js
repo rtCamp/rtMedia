@@ -2144,3 +2144,25 @@ function rtmedia_comment_media_single_page(){
 }
 
 
+function rtmedia_disable_popup_navigation_comment_media_focus() {
+	rtmedia_disable_popup_navigation( '.plupload_filelist_content li input.rtm-upload-edit-title' );
+	rtmedia_disable_popup_navigation( '.plupload_filelist_content li textarea.rtm-upload-edit-desc' );
+}
+
+
+function rtmedia_disable_popup_navigation( $selector ){
+	jQuery( document ).on( 'focusin', $selector, function() {
+		jQuery( document ).unbind( 'keydown' );
+	} );
+
+	jQuery( document ).on( 'focusout', $selector, function() {
+		var rtm_mfp = jQuery.magnificPopup.instance;
+		jQuery( document ).on( 'keydown', function( e ) {
+			if ( e.keyCode === 37 ) {
+				rtm_mfp.prev();
+			} else if ( e.keyCode === 39 ) {
+				rtm_mfp.next();
+			}
+		} );
+	} );
+}
