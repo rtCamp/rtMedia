@@ -185,6 +185,10 @@ class RTMediaGalleryShortcode {
 					}
 				}
 
+				if( isset( $attr['attr']['search_filter'] ) ) {
+					add_search_filter();
+				}
+
 				if ( ! isset( $attr['attr']['context'] ) && isset( $post->post_type ) ) {
 					$attr['attr']['context'] = $post->post_type;
 				}
