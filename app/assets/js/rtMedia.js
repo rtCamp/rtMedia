@@ -634,9 +634,9 @@ jQuery( 'document' ).ready( function( $ ) {
 				jQuery( this ).addClass( 'active' );
 
 				if ( class_name != 'rtm-upload-tab' ) {
-					jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).hide();
+					jQuery( 'div.moxie-shim' ).hide();
 				} else {
-					jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).show();
+					jQuery( 'div.moxie-shim' ).show();
 				}
 			}
 		});

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.2.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-01-02 13:25:55+00:00\n"
+"POT-Creation-Date: 2017-01-02 14:19:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -402,7 +402,7 @@ msgstr ""
 #: app/admin/RTMediaAdmin.php:1563 app/admin/RTMediaAdmin.php:1581
 #: app/admin/RTMediaAdmin.php:1599 app/admin/RTMediaFormHandler.php:435
 #: app/admin/RTMediaFormHandler.php:446 app/helper/RTMediaSettings.php:317
-#: app/helper/RTMediaSupport.php:416 app/helper/RTMediaSupport.php:697
+#: app/helper/RTMediaSupport.php:416 app/helper/RTMediaSupport.php:694
 msgid "here"
 msgstr ""
 
@@ -1572,27 +1572,27 @@ msgstr ""
 msgid "rtMedia Contact from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:684
+#: app/helper/RTMediaSupport.php:681
 msgid "Thank you for your Feedback/Suggestion."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:686
+#: app/helper/RTMediaSupport.php:683
 msgid "Thank you for posting your support request."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:687
+#: app/helper/RTMediaSupport.php:684
 msgid "We will get back to you shortly."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:692
+#: app/helper/RTMediaSupport.php:689
 msgid "Your server failed to send an email."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:693
+#: app/helper/RTMediaSupport.php:690
 msgid "Kindly contact your server support to fix this."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:696
+#: app/helper/RTMediaSupport.php:693
 msgid "You can alternatively create a support request %s"
 msgstr ""
 
@@ -1799,15 +1799,15 @@ msgstr ""
 msgid "The method expects an array in arguments for %s provided."
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:35
+#: app/helper/rtUploadAttachment.php:36
 msgid "You can not upload more than 2 MB."
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:41
+#: app/helper/rtUploadAttachment.php:42
 msgid "There was an error uploading your files"
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:44
+#: app/helper/rtUploadAttachment.php:45
 msgid "Form was submitted"
 msgstr ""
 
