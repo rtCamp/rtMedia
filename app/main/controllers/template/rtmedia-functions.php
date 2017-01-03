@@ -2382,7 +2382,7 @@ function is_rtmedia_privacy_user_overide() {
 function rtmedia_edit_media_privacy_ui() {
 
 	global $rtmedia_query;
-	$comment_media = get_rtmedia_meta( rtmedia_id(), 'rtmedia_comment_media' );*
+	$comment_media = get_rtmedia_meta( rtmedia_id(), 'rtmedia_comment_media' );
 
 	if ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
 		//if context is group i.e editing a group media, dont show the privacy dropdown
