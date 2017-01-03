@@ -34,14 +34,14 @@ class RTMediaActivity {
 		$this->privacy       = $privacy;
 	}
 
-	function create_activity_html() {
+	function create_activity_html( $type = 'activity' ) {
 
 		$html = '';
 
-		$html .= '<div class="rtmedia-activity-container">';
+		$html .= '<div class="rtmedia-'.$type.'-container">';
 
 		if ( ! empty( $this->activity_text ) ) {
-			$html .= '<div class="rtmedia-activity-text"><span>';
+			$html .= '<div class="rtmedia-'.$type.'-text"><span>';
 			$html .= $this->activity_text;
 			$html .= '</span></div>';
 		}
@@ -59,7 +59,7 @@ class RTMediaActivity {
 		if ( intval( $limit_activity_feed ) > 0 ) {
 			$media_details = array_slice( $media_details, 0, $limit_activity_feed, true );
 		}
-		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_activity_ul_class', 'rtm-activity-media-list' );
+		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_'.$type.'_ul_class', 'rtm-activity-media-list' );
 		$li_content                = '';
 		$count                     = 0;
 		foreach ( $media_details as $media ) {
@@ -92,7 +92,13 @@ class RTMediaActivity {
 			$li_content .= '</li>';
 			$count ++;
 		}
-		$html .= '<ul class="rtmedia-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
+
+		if( 'activity' == $type ){
+			$html .= '<ul class="rtmedia-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
+		}else{
+			$html .= '<ul class="rtmedia-'.$type.'-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
+		}
+
 		$html .= $li_content;
 		$html .= '</ul>';
 		$html .= '</div>';

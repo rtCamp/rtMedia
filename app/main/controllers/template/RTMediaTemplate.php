@@ -645,7 +645,7 @@ class RTMediaTemplate {
  				if( ! empty( $rtMedia_attached_files ) ){
  					$comment_with_media = true;
  					$obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content );
-					$comment_content = $obj_comment->create_activity_html();
+					$comment_content = $obj_comment->create_activity_html( 'comment-media' );
 				}
 
 				$comment     = new RTMediaComment();

@@ -1365,7 +1365,7 @@ jQuery( document ).ready( function( $ ) {
 						current_comment.closest( 'li' ).remove();
 					} );
 				} else {
-					current_comment.css( 'opacity', '1' );
+					current_comment_parent.css( 'opacity', '1' );
 				}
 				rtMediaHook.call( 'rtmedia_js_after_comment_deleted', [ ] );
 			}
@@ -1570,6 +1570,7 @@ jQuery(document).ready(function($) {
 		return true;
 	} );
 
+    rtmedia_apply_popup_to_media();
 	rtmedia_comment_media_single_page();
 	rtmedia_activity_comment_js_add_media_id();
 	rtmedia_activity_stream_comment_media();
@@ -1585,7 +1586,7 @@ function rtmedia_comment_media_uplaod_button_disble( widget_id, $value ){
 
 function rtmedia_apply_popup_to_media(){
 	if ( typeof( rtmedia_lightbox_enabled ) != 'undefined' && rtmedia_lightbox_enabled == '1' ) {
-		apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
+		apply_rtMagnificPopup( '.rtmedia-comment-media-container ul.rtmedia-comment-media-list, .rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
 	}
 }
 

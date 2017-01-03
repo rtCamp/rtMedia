@@ -143,6 +143,11 @@ body.media.buddypress {
 #buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-container {
   display: none !important;
 }
+#buddypress ul.activity-list li.activity-item .activity-comments .rtmedia-uploader-div {
+  color: #767676;
+  margin-left: 50px;
+  padding-left: 15px;
+}
 
 .rtmedia-container {
   box-sizing: border-box;
@@ -1432,12 +1437,12 @@ img.mfp-img {
 }
 
 .rtm-media-single-comments {
-  background-color: #edeff4;
   bottom: 20px;
   padding: 10px;
   width: 100%;
 }
 .rtm-media-single-comments textarea {
+  background-color: #edeff4;
   font-size: 12px;
   line-height: 14px;
   max-height: 40px;

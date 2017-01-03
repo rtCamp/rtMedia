@@ -336,7 +336,7 @@ class RTMediaMedia {
 		if ( $media ) {
 
 			/* delete comment if media is in the comment */
-			if( class_exists( 'RTMediaTemplate' ) && isset( $media[0]->id ) ){
+			if( class_exists( 'RTMediaTemplate' ) && isset( $media[0]->id )  && ! isset( $_POST['comment_id'] ) ){
 				$rtmedia_media_used = get_rtmedia_meta( $media[0]->id, 'rtmedia_media_used' );
 				if( isset( $rtmedia_media_used[ 'comment' ] ) && ! empty( $rtmedia_media_used[ 'comment' ] ) ){
 					$template = new RTMediaTemplate();
