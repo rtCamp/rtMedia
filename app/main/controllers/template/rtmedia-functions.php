@@ -1170,28 +1170,33 @@ function rtmedia_actions() {
 function rtmedia_comments( $echo = true ) {
 
 	global $rtmedia_media;
+	$comment_media = get_rtmedia_meta( rtmedia_id(), 'rtmedia_comment_media' );
+	$html = "";
 
-	$html         = '<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="' . esc_url( get_rtmedia_permalink( rtmedia_id() ) ) . 'delete-comment/">';
-	$comments     = get_comments( array(
-		'post_id' => $rtmedia_media->media_id,
-		'order'   => 'ASC',
-	) );
-	$comment_list = '';
-	$count = count( $comments );
-	$i = 0;
+	if( empty( $comment_media ) ){
+		$html         = '<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="' . esc_url( get_rtmedia_permalink( rtmedia_id() ) ) . 'delete-comment/">';
+		$comments     = get_comments( array(
+			'post_id' => $rtmedia_media->media_id,
+			'order'   => 'ASC',
+		) );
+		$comment_list = '';
+		$count = count( $comments );
+		$i = 0;
 
-	foreach ( $comments as $comment ) {
-		$comment_list .= rmedia_single_comment( (array) $comment, $count, $i );
-		$i++;
+		foreach ( $comments as $comment ) {
+			$comment_list .= rmedia_single_comment( (array) $comment, $count, $i );
+			$i++;
+		}
+
+		if ( ! empty( $comment_list ) ) {
+			$html .= $comment_list;
+		} else {
+			$html .= "<li id='rtmedia-no-comments' class='rtmedia-no-comments'>" . apply_filters( 'rtmedia_single_media_no_comment_messege', esc_html__( 'There are no comments on this media yet.', 'buddypress-media' ) ) . '</li>';
+		}
+
+		$html .= '</ul>';
 	}
 
-	if ( ! empty( $comment_list ) ) {
-		$html .= $comment_list;
-	} else {
-		$html .= "<li id='rtmedia-no-comments' class='rtmedia-no-comments'>" . apply_filters( 'rtmedia_single_media_no_comment_messege', esc_html__( 'There are no comments on this media yet.', 'buddypress-media' ) ) . '</li>';
-	}
-
-	$html .= '</ul>';
 
 	if ( $html ) {
 		echo $html; // @codingStandardsIgnoreLine
@@ -1850,8 +1855,8 @@ function get_video_without_thumbs() {
  * Rendering single media comment form
  */
 function rtmedia_comment_form() {
-
-	if ( is_user_logged_in() ) {
+	$comment_media = get_rtmedia_meta( rtmedia_id(), 'rtmedia_comment_media' );
+	if ( is_user_logged_in() && empty( $comment_media ) ) {
 		?>
 		<form method="post" id="rt_media_comment_form" class="rt_media_comment_form" action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
 			<textarea style="width:100%" placeholder="<?php esc_attr_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"  class="bp-suggestions ac-input"></textarea>

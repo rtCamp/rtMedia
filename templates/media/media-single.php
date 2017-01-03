@@ -120,13 +120,9 @@
 								</div>
 								<div class="rtm-like-comments-info">
 									<?php show_rtmedia_like_counts(); ?>
-									<?php
-									if( empty( $comment_media ) ){ ?>
-										<div class="rtmedia-comments-container">
-											<?php rtmedia_comments(); ?>
-										</div>
-									<?php
-									} ?>
+									<div class="rtmedia-comments-container">
+										<?php rtmedia_comments(); ?>
+									</div>
 								</div>
 							</div>
 						<?php } ?>
@@ -134,7 +130,7 @@
 
 					</div>
 
-					<?php if ( rtmedia_comments_enabled() && is_user_logged_in() && empty( $comment_media ) ) { ?>
+					<?php if ( rtmedia_comments_enabled() && is_user_logged_in() ) { ?>
 						<div class='rtm-media-single-comments'>
 							<?php rtmedia_comment_form(); ?>
 						</div>
@@ -178,17 +174,13 @@
 
 							<div class="rtm-like-comments-info">
 								<?php show_rtmedia_like_counts(); ?>
-								<?php
-								if( empty( $comment_media ) ){ ?>
-									<div class="rtmedia-comments-container">
-										<?php rtmedia_comments(); ?>
-									</div>
-								<?php
-								} ?>
+								<div class="rtmedia-comments-container">
+									<?php rtmedia_comments(); ?>
+								</div>
 							</div>
 
 							<?php
-							if ( is_user_logged_in() && empty( $comment_media ) ) {
+							if ( is_user_logged_in() ) {
 								rtmedia_comment_form();
 							}
 							?>
