@@ -3,7 +3,6 @@
 	if ( have_rtmedia() ) : rtmedia();
 		if ( rtmedia_edit_allowed() ) {
 			global $rtmedia_media;
-			$comment_media = get_rtmedia_meta( rtmedia_id(), 'rtmedia_comment_media' );
 			?>
 			<div class="rtmedia-single-edit-title-container">
 				<h2 class="rtmedia-title"><?php esc_html_e( 'Edit Media', 'buddypress-media' ); ?></h2>
@@ -29,11 +28,7 @@
 								<?php rtmedia_title_input(); ?>
 							</div>
 							<!--This function shows the privacy dropdown-->
-							<?php
-							/* if comment media then privacy option is depend  on the top activity */
-							if( empty( $comment_media ) ){
-								echo rtmedia_edit_media_privacy_ui(); // @codingStandardsIgnoreLine
-							} ?>
+							<?php echo rtmedia_edit_media_privacy_ui(); // @codingStandardsIgnoreLine ?>
 							<div class="rtmedia-editor-description rtm-field-wrap">
 								<label><?php esc_html_e( 'Description: ', 'buddypress-media' ) ?></label>
 								<?php
