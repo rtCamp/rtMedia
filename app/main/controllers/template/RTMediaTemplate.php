@@ -662,6 +662,7 @@ class RTMediaTemplate {
 
 				if( $comment_with_media  && $id ){
 					update_comment_meta( $id, 'rtmedia_comment_media_id', $rtMedia_attached_files[0] );
+					add_rtmedia_meta( $rtMedia_attached_files[0], 'rtmedia_media_used', array( 'comment' => $id ) );
 				}
 
 				if ( ! is_null( $result[0]->activity_id ) ) {
@@ -734,25 +735,31 @@ class RTMediaTemplate {
 				return false;
 			}
 
-			$comment     = new RTMediaComment();
-			$id          = $_comment_id;
-			$activity_id = get_comment_meta( $id, 'activity_id', true );
+			echo $this->rtmedia_delete_comment_and_activity( $_comment_id );
 
-			if ( ! empty( $activity_id ) ) {
-				if ( function_exists( 'bp_activity_delete_comment' ) ) { //if buddypress is active
-					$activity_deleted = bp_activity_delete_comment( $activity_id, $id );
-					$delete           = bp_activity_delete( array(
-						'id'   => $activity_id,
-						'type' => 'activity_comment',
-					) );
-				}
-			}
-
-			$comment_deleted = $comment->remove( $id );
-
-			echo $comment_deleted; // @codingStandardsIgnoreLine
 			exit;
 		}
+	}
+
+
+	function rtmedia_delete_comment_and_activity( $_comment_id ){
+		$comment     = new RTMediaComment();
+		$id          = $_comment_id;
+		$activity_id = get_comment_meta( $id, 'activity_id', true );
+
+		if ( ! empty( $activity_id ) ) {
+			if ( function_exists( 'bp_activity_delete_comment' ) ) { //if buddypress is active
+				$activity_deleted = bp_activity_delete_comment( $activity_id, $id );
+				$delete           = bp_activity_delete( array(
+					'id'   => $activity_id,
+					'type' => 'activity_comment',
+				) );
+			}
+		}
+
+		$comment_deleted = $comment->remove( $id );
+
+		return $comment_deleted; // @codingStandardsIgnoreLine
 	}
 
 	/**

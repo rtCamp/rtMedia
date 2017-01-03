@@ -334,6 +334,16 @@ class RTMediaMedia {
 		$status = 0;
 
 		if ( $media ) {
+
+			/* delete comment if media is in the comment */
+			if( class_exists( 'RTMediaTemplate' ) && isset( $media[0]->id ) ){
+				$rtmedia_media_used = get_rtmedia_meta( $media[0]->id, 'rtmedia_media_used' );
+				if( isset( $rtmedia_media_used[ 'comment' ] ) && ! empty( $rtmedia_media_used[ 'comment' ] ) ){
+					$template = new RTMediaTemplate();
+					$template->rtmedia_delete_comment_and_activity( $rtmedia_media_used[ 'comment' ] );
+				}
+			}
+
 			/* delete meta */
 			if ( $delete_activity ) {
 				if ( $media[0]->activity_id && function_exists( 'bp_activity_delete_by_activity_id' ) ) {
