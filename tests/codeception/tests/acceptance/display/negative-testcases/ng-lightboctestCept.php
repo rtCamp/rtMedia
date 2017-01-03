@@ -20,7 +20,7 @@
     $settings->verifyDisableStatus($I,ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox);
 
     $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);(ConstantsPage::$userName); //Assuming direct uplaod is disabled
+    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink); //Assuming direct uplaod is disabled
     $uploadmedia->fisrtThumbnailMedia($I);
 
     $I->dontSeeElement(ConstantsPage::$closeButton);   //The close button will only be visible if the media is opened in Lightbox

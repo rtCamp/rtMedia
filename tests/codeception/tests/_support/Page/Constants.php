@@ -17,7 +17,7 @@ class Constants
 
     public static $numOfMediaPerPage = '3';
     public static $numOfMediaPerPageOnActivity = '3';
-    public static $minvalue = '1';
+    public static $minValue = '1';
 
     public static $thumbnailWidth = '150';
     public static $thumbnailHeight = '150';
@@ -180,5 +180,13 @@ class Constants
 
     public static $mediaPerPageActivitySelector = 'ul#activity-stream  > li:first-child ul li';
     public static $mediaPerPageOnMediaSelector = 'ul.rtm-gallery-list li';
+
+    public static $groupListSelector = 'div#groups-dir-list > ul#groups-list li';
+    public static $createGroupLink = 'ul li#group-create-nav';
+    public static $createGroupTabs = 'div#group-create-tabs';
+    public static $groupNameTextbox = 'input#group-name';
+    public static $groupDescTextarea = 'textarea#group-desc';
+    public static $createGroupButton = 'input#group-creation-create';
+    
 
 }

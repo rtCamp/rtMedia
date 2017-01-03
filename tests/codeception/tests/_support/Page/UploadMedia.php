@@ -18,6 +18,13 @@ class UploadMedia
     public static $postUpdateButton = 'input#aw-whats-new-submit';
     public static $mediaPageScrollPos = '#user-activity';
 
+    protected $tester;
+
+    public function __construct( \AcceptanceTester $I )
+    {
+        $this->tester = $I;
+    }
+
     /**
     * gotoMediaPage() -> Will take the user to media page
     */
@@ -173,4 +180,17 @@ class UploadMedia
         $I->wait(5);
 
     }
+
+    public function countMedia( $selector ){
+
+        $I = $this->tester;
+
+        $mediaArray = $I->grabMultiple( $selector ); // This will grab the no. of media available on media page
+        echo nl2br( 'No of media on page = '. count( $mediaArray ) );
+
+        return count( $mediaArray );
+
+    }
+
+
 }

@@ -19,8 +19,24 @@
     $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
     $settings->verifyEnableStatus($I,ConstantsPage::$strEnableMediaInGrpLabel,ConstantsPage::$enableMediaInGrpCheckbox);
 
-    $buddypress = new BuddypressSettingsPage($I);
-    $buddypress->gotoGroup($I);
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoGroup();
 
-    $I->seeElement(ConstantsPage::$mediaLinkOnGroup);
+    $temp = $buddypress->countGroup( ConstantsPage::$groupListSelector );
+    echo $temp;
+
+    if( $temp > 0 ){
+
+        $buddypress->checkMediaInGroup();
+        $I->seeElement( ConstantsPage::$mediaLinkOnGroup );
+
+    }else{
+
+        $buddypress->createGroup();
+        echo "group is created!";
+        $buddypress->checkMediaInGroup();
+        $I->seeElement( ConstantsPage::$mediaLinkOnGroup );
+
+    }
+
 ?>

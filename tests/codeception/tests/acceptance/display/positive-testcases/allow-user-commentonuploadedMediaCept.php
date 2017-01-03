@@ -7,6 +7,7 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $commentStr = 'test comment';
 
@@ -20,18 +21,15 @@
     $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
     $settings->verifyEnableStatus($I,ConstantsPage::$strCommentCheckboxLabel,ConstantsPage::$commentCheckbox);
 
-    $url = '/members'.ConstantsPage::$userName.'/media';
-    $I->amOnPage($url);
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoPhotoPage( ConstantsPage::$userName );
 
-    $tempArray = $I->grabMultiple('ul.rtm-gallery-list li');
-    codecept_debug($tempArray);
-    echo count($tempArray);
+    $uploadmedia = new UploadMediaPage($I);
+    $temp = $uploadmedia->countMedia(ConstantsPage::$mediaPerPageOnMediaSelector); // $temp will receive the available no. of media
 
-    $uploadMedia = new UploadMediaPage($I);
+    if($temp >= ConstantsPage::$minValue){
 
-    if(count($tempArray) >= ConstantsPage::$minvalue){
-
-        $uploadMedia->fisrtThumbnailMedia($I);
+        $uploadmedia->fisrtThumbnailMedia($I);
 
         $I->seeElement(UploadMediaPage::$commentTextArea);
         $I->fillfield(UploadMediaPage::$commentTextArea,$commentStr);
@@ -44,12 +42,18 @@
 
     }else{
 
-        $uploadMedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);
+        $I->amOnPage('/wp-admin');
+        $I->wait(10);
+
+        $settings->gotoTab( $I, ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+        $settings->verifyDisableStatus( $I, ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox); //This will check if the direct upload is disabled
+
+        $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);
 
         $I->reloadPage();
         $I->wait(7);
 
-        $uploadMedia->fisrtThumbnailMedia($I);
+        $uploadmedia->fisrtThumbnailMedia($I);
 
         $I->seeElement(UploadMediaPage::$commentTextArea);
         $I->fillfield(UploadMediaPage::$commentTextArea,$commentStr);
