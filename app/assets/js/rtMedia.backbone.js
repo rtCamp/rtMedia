@@ -310,7 +310,7 @@ jQuery( function( $ ) {
 				var href = page_base_url + nextpage;
 				change_rtBrowserAddressUrl( href, '' );
 
-				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
+				galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
 				return false;
 			}
 		} );
@@ -349,11 +349,10 @@ jQuery( function( $ ) {
 				page_base_url = $( this ).data( 'page-base-url' );
 				href = page_base_url + nextpage;
 				}
-
 				if ( $( this ).data( 'page-type' ) == 'num' ) {
-					galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
+					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
 				} else {
-					galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
+					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
 			}
 
 			change_rtBrowserAddressUrl( href, '' );
