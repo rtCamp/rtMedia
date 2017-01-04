@@ -65,8 +65,10 @@ function apply_rtMagnificPopup( selector ) {
 							settings.pluginPath = _wpmejsSettings.pluginPath;
 						}
 						var $single_meta_h = jQuery( ".rtmedia-container .rtmedia-single-meta" ).height();
-						$( '.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video' ).attr( 'autoplay', true );
-						$( '.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video' ).mediaelementplayer( {
+						/* adding auto play button in the popup */
+						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).attr( 'autoplay', true );
+
+						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).mediaelementplayer( {
 							// If the <video width> is not specified, this is the default
 							defaultVideoWidth: 480,
 							// If the <video height> is not specified, this is the default
