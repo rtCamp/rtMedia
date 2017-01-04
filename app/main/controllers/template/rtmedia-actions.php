@@ -844,33 +844,37 @@ function rtmedia_activity_register_activity_actions_callback() {
 }
 add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
 
-function add_search_filter( $search_filter = false ) {
+function add_search_filter() {
+	global $rtmedia;
+	if ( isset( $rtmedia->options['general_enableGallerysearch'] ) && $rtmedia->options['general_enableGallerysearch'] ) {
+		$html = "<div class='media_search'>";
+		$html .= "<input type='text' id='media_search_input' value='" . $_GET['search'] . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
 
-	$html = "<div class='media_search'>";
-	$html .= "<input type='text' id='media_search_input' value='" . $_GET['search'] . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
+		$search_by = '';
+		$search_by = apply_filters( 'rtmedia_media_search_by', $search_by );
 
-	$search_by = '';
-	$search_by = apply_filters( 'rtmedia_media_search_by', $search_by );
-
-	if ( $search_by ) {
-		$html .= "<select id='search_by' class='search_by'>";
-		foreach ( $search_by as $key => $value ) {
-			if ( $search_by[ $key ] ) {
-
-				if ( ! $search_filter && 'author' !== $key ) {
-					$html .= "<option value='$key'>$key</option>";
-				} elseif ( $search_filter ) {
-					$html .= "<option value='$key'>$key</option>";
+		if ( $search_by ) {
+			$html .= "<select id='search_by' class='search_by'>";
+			if ( strpos( $_SERVER['REQUEST_URI'], 'members' ) ) {
+				unset( $search_by['author'] );
+			}
+			if ( function_exists( 'is_plugin_active' ) && ! is_plugin_active( 'rtmedia-custom-attributes/index.php' ) ) {
+				unset( $search_by['attribute'] );
+			}
+			foreach ( $search_by as $key => $value ) {
+				$selected = ( $_REQUEST['search_by'] == $key ? 'selected' : '' );
+				if ( $search_by[ $key ] ) {
+					$html .= "<option value='$key' $selected >$key</option>";
 				}
 			}
+			$html .= '</select>';
 		}
-		$html .= '</select>';
+
+		$html .= "<button id='media_search'><i class='dashicons dashicons-search rtmicon'></i></button>";
+		$html .= '</div>';
+
+		echo apply_filters( 'rtmedia_gallery_search', $html );
 	}
-
-	$html .= "<button id='media_search'><i class='dashicons dashicons-admin-generic rtmicon'></i></button>";
-	$html .= '</div>';
-
-	echo apply_filters( 'rtmedia_gallery_search', $html );
 }
 add_action( 'rtmedia_media_gallery_actions', 'add_search_filter', 99 );
 
