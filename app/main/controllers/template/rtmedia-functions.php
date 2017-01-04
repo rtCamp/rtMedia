@@ -1249,20 +1249,6 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 	$html .= '<span class ="rtmedia-comment-date"> ' . apply_filters( 'rtmedia_comment_date_format', rtmedia_convert_date( $comment['comment_date_gmt'] ), $comment ) . '</span>';
 
 	$comment_content = $comment['comment_content'];
-	$activity_comment_content = get_comment_meta( $comment['comment_ID'], 'activity_comment_content', true );
-	if ( empty( $activity_comment_content ) ) {
-		$activity_id = (int) get_comment_meta( $comment['comment_ID'], 'activity_id', true );
-		if ( $activity_id ) {
-			$rtmedia_activity_comment = rtmedia_activity_comment( $activity_id );
-			if ( $rtmedia_activity_comment['content'] ) {
-				$comment_content = $rtmedia_activity_comment['content'];
-				update_comment_meta( $comment['comment_ID'], 'activity_comment_content', $rtmedia_activity_comment['content'] );
-			}
-		}
-	} else {
-		$comment_content = $activity_comment_content;
-	}
-
 
 	$comment_string = rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags );
 
@@ -3470,27 +3456,6 @@ function rtt_is_video_exists( $medias, $media_type = 'mp4' ) {
 	}
 }
 
-
-
-
-/**
- * Return the buddpress activity  table content
- *
- * @param       int       $activity_id
- *
- * @return      array     buddpres_activity
- */
-function rtmedia_activity_comment( $activity_id ) {
-	$activity_id = ( $activity_id ) ? (int) $activity_id : false;
-	$activity_comment_content = false;
-	if ( $activity_id ) {
-		global $wpdb;
-		global $bp;
-		$table_name = $bp->activity->table_name;
-		$activity_comment_content = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $activity_id ), ARRAY_A );
-	}
-	return $activity_comment_content;
-}
 
 /**
  * Send the request to the rtmedia server for addon license validation

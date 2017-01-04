@@ -623,14 +623,42 @@ class RTMediaBuddyPressActivity {
 						}
 					}
 
-					$comment_content = $params['comment_content'];
+					$activity_content = $params['comment_content'];
+
+					/* if activity is add from comment media  */
+				    if( isset( $_REQUEST['comment_content'] ) ){
+				        /* comment content */
+				        $comment_content = $_REQUEST['comment_content'];
+
+				        /* is comment is empty then add content content space */
+			            if( strstr($comment_content, 'nbsp') ){
+			                $comment_content = "&nbsp;";
+			            }
+
+
+				        /* if comment has comment media then create new html for it */
+				        if ( isset( $_REQUEST['rtMedia_attached_files'] ) ) {
+				            $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+				            /*if media media is not array and is not empty to*/
+				            if( class_exists( 'RTMediaActivity' )  && is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files ) ){
+			                    $obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content );
+			                	$comment_content = $obj_comment->create_activity_html();
+				            }
+				        }
+
+				        /* add the new content to the activity */
+				        $activity_content = $comment_content;
+				    }
+
+
 					$wp_comment_id   = $params['comment_id'];
 
 					// prepare activity arguments
 					$activity_args = array(
 							'user_id'           => $user_id,
 							'action'            => $action,
-							'content'           => $comment_content,
+							'content'           => $activity_content,
 							'type'              => 'rtmedia_comment_activity',
 							'primary_link'      => $primary_link,
 							'item_id'           => $media_id,
