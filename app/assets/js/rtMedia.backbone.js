@@ -118,11 +118,11 @@ jQuery( function( $ ) {
 
 				//media search
 				if( check_condition( 'search' ) ) {
-					if( ! check_condition( 'pg' ) ) {
-						this.url = window.location.pathname;
-					} else {
-						this.url = window.location.href.replace(window.location.search, "");
-					}
+					// if( ! check_condition( 'pg' ) ) {
+					// 	this.url = window.location.pathname;
+					// } else {
+					// 	this.url = window.location.href.replace(window.location.search, "");
+					// }
 					if ( $( '#media_search_input' ).val() != '' ) {
 						query.search = $( '#media_search_input' ).val();
 						if ( check_condition( 'search_by' ) ) {
@@ -373,13 +373,19 @@ jQuery( function( $ ) {
 
 	// media search
 	$( document ).on( 'click', '#media_search', function( e ) {
+		nextpage = 1;
 		if( $( '#media_search_input' ).val() == '' ) {
 			return;
 		}
 
 		var href = window.location.href;
+		var remove_url = '';
 		path = window.location;
-		remove_url = path.pathname.substr(path.pathname.indexOf('media')+6);
+		if ( check_condition( '/media' ) ) {
+			remove_url = path.pathname.substr(path.pathname.indexOf('media')+6);
+		} else {
+
+		}
 
 		href = window.location.pathname.replace(remove_url,'') + '?';
 		href += 'search=' + $( '#media_search_input' ).val();
@@ -389,7 +395,7 @@ jQuery( function( $ ) {
 
 		change_rtBrowserAddressUrl( href, '' );
 
-		galleryObj.getNext( 1, $( this ).parent().parent().parent().parent().parent());
+		galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
 	} );
 
 		if ( window.location.pathname.indexOf( rtmedia_media_slug ) != -1 ) {
