@@ -875,6 +875,24 @@ add_action( 'pre_get_posts', 'rtmedia_gallery_shortcode_json_query_vars', 99 );
  *
  */
 function rtmedia_gallery_shortcode_rewrite_rules() {
+
+	// Rule for pages
 	add_rewrite_rule( '([^/?]+)/pg/([0-9]*)/?', 'index.php?pg=$matches[2]&pagename=$matches[1]', 'top' );
+
+	// Rule for Day and name
+	add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/?]+)/pg/([0-9]*)/?', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&pg=$matches[5]', 'top' );
+
+	// Rule for Month and name
+	add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([^/?]+)/pg/([0-9]*)/?', 'index.php?year=$matches[1]&monthnum=$matches[2]&name=$matches[3]&pg=$matches[4]', 'top' );
+
+	// Rule for Numeric
+	add_rewrite_rule( 'archives/([0-9]+)/pg/([0-9]*)/?', 'index.php?p=$matches[1]&pg=$matches[2]', 'top' );
+
+	// Rule for posts
+	add_rewrite_rule( '(.?.+?)/pg/?([0-9]{1,})/?$', 'index.php?pg=$matches[2]&name=$matches[1]', 'top' );
+
+	// Rule for homepage
+	add_rewrite_rule( 'pg/?([0-9]{1,})/?$', 'index.php?&pg=$matches[1]', 'top' );
+
 }
 add_action( 'rtmedia_add_rewrite_rules', 'rtmedia_gallery_shortcode_rewrite_rules' );

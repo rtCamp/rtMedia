@@ -1441,6 +1441,8 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	$author_name = get_query_var( 'author_name' );
 	$link        = '';
 
+	//echo '<pre>';print_r($rtmedia_interaction);echo '</pre>';
+
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'profile' === $rtmedia_interaction->context->type ) {
 		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->media_query['context_id'] ) ) {
 			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query['context_id'] ) );
@@ -1452,7 +1454,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			if ( function_exists( 'bp_get_current_group_slug' ) ) {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
-		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'page' === $rtmedia_interaction->context->type ) {
+		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, array( 'page', 'post' ) ) ) {
 			// Make sure that only one slash is at the end of url
 			$link .= rtrim( get_permalink( $post ), '/' ) . '/';
 		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'rtmedia_album' === $rtmedia_interaction->context->type ) { // url for rtmedia album
@@ -1474,7 +1476,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	}
 
 	// Do not add media slug for gallery shortcode and sitewide gallery
-	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && ! in_array( $rtmedia_interaction->context->type, array( 'page', 'rtmedia_album' ) ) ) {
+	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && ! in_array( $rtmedia_interaction->context->type, array( 'page', 'rtmedia_album', 'post' ) ) ) {
 			$link .= RTMEDIA_MEDIA_SLUG . '/';
 	}
 
