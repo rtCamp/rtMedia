@@ -188,7 +188,7 @@ class RTMediaUploadView {
 								. $up_privacy
 							. '</div>'
 						. '</div>'
-						. apply_filters( 'rtmedia_uploader_after_activity_upload_button', '' )
+						. apply_filters( 'rtmedia_uploader_after_comment_upload_button', '' )
 						. '<div class="rtmedia-plupload-notice">'
 							. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="'. $rtmedia_comment_filelist .'"></ul>'
 						. '</div>',
