@@ -179,10 +179,14 @@ jQuery( function( $ ) {
 							//$("#rtMedia-galary-next").show();
 						}
 
+						rtMedia.gallery = {};
+						rtMedia.gallery.page = page;
 						var galleryViewObj = new rtMedia.GalleryView( {
 							collection: new rtMedia.Gallery( response.data ),
-							el: list_el
+							el: list_el,
+							xyz: 34
 						} );
+
 						//Element.show();
 
 						rtMediaHook.call( 'rtmedia_after_gallery_load' );
@@ -234,6 +238,7 @@ jQuery( function( $ ) {
 		tagName: 'ul',
 		className: 'rtmedia-list',
 		initialize: function() {
+
 			this.template = _.template( $( '#rtmedia-gallery-item-template' ).html() );
 			this.render();
 		},
@@ -245,7 +250,7 @@ jQuery( function( $ ) {
 				$( that.el ).html( '' );
 			}
 
-			if ( typeof ( rtmedia_load_more_or_pagination ) != 'undefined' && rtmedia_load_more_or_pagination == 'pagination' ) {
+			if ( typeof ( rtmedia_load_more_or_pagination ) != 'undefined' && rtmedia_load_more_or_pagination == 'pagination' || ( 1 == rtMedia.gallery.page ) ) {
 				$( that.el ).html( '' );
 			}
 
@@ -373,10 +378,10 @@ jQuery( function( $ ) {
 
 	// media search
 	$( document ).on( 'click', '#media_search', function( e ) {
-		nextpage = 1;
 		if( $( '#media_search_input' ).val() == '' ) {
 			return;
 		}
+		nextpage = 1;
 
 		var href = window.location.href;
 		var remove_url = '';
@@ -394,8 +399,19 @@ jQuery( function( $ ) {
 		}
 
 		change_rtBrowserAddressUrl( href, '' );
-
 		galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
+
+		$( '#media_search_remove' ).show();
+	} );
+
+	// media search remove
+	$( document ).on( 'click', '#media_search_remove', function( e ) {
+		jQuery( '#media_search_input' ).val('');
+		nextpage = 1;
+		var href = window.location.pathname;
+		change_rtBrowserAddressUrl( href, '' );
+		galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
+		$( '#media_search_remove' ).hide();
 	} );
 
 		if ( window.location.pathname.indexOf( rtmedia_media_slug ) != -1 ) {

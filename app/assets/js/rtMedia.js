@@ -882,6 +882,9 @@ window.onload = function() {
 	jQuery( ' #whats-new-options ' ).css({
 	    'opacity': '1',
 	});
+	if ( check_condition( 'search' ) ) {
+		jQuery( '#media_search_remove' ).show();
+	}
 };
 
 // Get query string parameters from url
