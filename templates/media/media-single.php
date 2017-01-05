@@ -7,7 +7,10 @@
 		if ( have_rtmedia() ) : rtmedia();
 
 			global $rtmedia_media;
-			$comment_media = get_rtmedia_meta( rtmedia_id(), 'rtmedia_comment_media' );
+
+			/* check is comment media */
+			$comment_media = rtmedia_is_comment_media( rtmedia_id() );
+
 			$type = ! empty( $rtmedia_media->media_type ) ? $rtmedia_media->media_type : 'none';
 			?>
 			<div id="rtmedia-single-media-container"

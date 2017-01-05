@@ -1170,7 +1170,10 @@ function rtmedia_actions() {
 function rtmedia_comments( $echo = true ) {
 
 	global $rtmedia_media;
-	$comment_media = get_rtmedia_meta( rtmedia_id(), 'rtmedia_comment_media' );
+
+	/* check is comment media */
+	$comment_media = rtmedia_is_comment_media( rtmedia_id() );
+
 	$html = "";
 
 	if( empty( $comment_media ) ){
@@ -1841,7 +1844,10 @@ function get_video_without_thumbs() {
  * Rendering single media comment form
  */
 function rtmedia_comment_form() {
-	$comment_media = get_rtmedia_meta( rtmedia_id(), 'rtmedia_comment_media' );
+
+	/* check is comment media */
+	$comment_media = rtmedia_is_comment_media( rtmedia_id() );
+
 	if ( is_user_logged_in() && empty( $comment_media ) ) {
 		?>
 		<form method="post" id="rt_media_comment_form" class="rt_media_comment_form" action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
@@ -2373,7 +2379,9 @@ function is_rtmedia_privacy_user_overide() {
 function rtmedia_edit_media_privacy_ui() {
 
 	global $rtmedia_query;
-	$comment_media = get_rtmedia_meta( rtmedia_id(), 'rtmedia_comment_media' );
+
+	/* check is comment media */
+	$comment_media = rtmedia_is_comment_media( rtmedia_id() );
 
 	if ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
 		//if context is group i.e editing a group media, dont show the privacy dropdown
@@ -3533,4 +3541,14 @@ function rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags ){
 		$comment_string = wp_kses( $comment_content, $allowedtags );
 	}
 	return $comment_string;
+}
+
+
+/*
+ * is media is uploaded in the comment
+ * parameter media_id int
+ * return true/false value
+*/
+function rtmedia_is_comment_media( $rtmedia_id ){
+	return get_rtmedia_meta( $rtmedia_id, 'rtmedia_comment_media' );
 }

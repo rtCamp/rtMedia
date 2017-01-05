@@ -104,7 +104,7 @@ add_action( 'rtmedia_add_edit_tab_content', 'rtmedia_image_editor_content', 12, 
  */
 function rtmedia_add_album_selection_field( $media_type ) {
 	/* if comment media then album option is depend  on the top activity */
-	$comment_media = get_rtmedia_meta( rtmedia_id(), 'rtmedia_comment_media' );
+	$comment_media = rtmedia_is_comment_media( rtmedia_id() );
 
 	if ( empty( $comment_media ) && is_rtmedia_album_enable() && isset( $media_type ) && 'album' != $media_type && apply_filters( 'rtmedia_edit_media_album_select', true ) ) {
 		global $rtmedia_query;
