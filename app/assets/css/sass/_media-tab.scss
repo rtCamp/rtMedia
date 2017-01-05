@@ -173,30 +173,34 @@ body {
 		font-size: inherit;
 		line-height: 1.4;
 	}
+}
 
-	.media_search {
-		float: right;
-		border: 1px solid #ccc;
+.media_search.media_search {
+	float: right;
+	border: 1px solid #ccc;
 
-		.media_search_input {
-			max-width: 200px;
-			padding: 5px 6px;
-			border: none;
-			background: transparent;
-			float: left;
-		}
+	.media_search_input {
+		max-width: 200px;
+		padding: 5px 6px;
+		border: none;
+		background: transparent;
+		float: left;
+	}
 
-		#media_search {
-			padding: 0;
-			background: transparent;
-			color: #000;
-		}
+	.search_option {
+		padding: 0;
+		background: transparent;
+		color: #000;
+	}
 
-		.search_by {
-			background: transparent;
-			margin-top: 3px;
-			float: left;
-		}
+	.media_search_remove.search_option {
+		display: none;
+	}
+
+	.search_by {
+		background: transparent;
+		margin-top: 3px;
+		float: left;
 	}
 }
 
