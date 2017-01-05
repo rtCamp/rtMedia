@@ -1663,6 +1663,11 @@ function rtmedia_comment_media_textbox_val( widget_id, $value ){
 function rtmedia_comment_media_upload_button_post_disable( widget_id, $value ){
 	if( typeof $value != 'undefined' ){
 		jQuery( '.'+rtmedia_comment_media_submit+widget_id ).prop( 'disabled', $value );
+		if( $value == true ){
+			jQuery( '.'+rtmedia_comment_media_submit+widget_id ).closest( 'div.ac-reply-content' ).find( 'a.ac-reply-cancel' ).attr("disabled", "disabled");
+		}else{
+			jQuery( '.'+rtmedia_comment_media_submit+widget_id ).closest( 'div.ac-reply-content' ).find( 'a.ac-reply-cancel' ).removeAttr("disabled");
+		}
 	}
 }
 
@@ -1983,14 +1988,6 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 					upl.removeFile( upl.getFile( rfile ) );
 				}
 			} );
-
-
-        	if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-
-				rtmedia_comment_media_upload_button_post_disable( widget_id, true );
-
-				commentObj[ widget_id ].uploadFiles();
-			}
         });
 
 
