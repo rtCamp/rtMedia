@@ -863,7 +863,7 @@ function add_search_filter() {
 				unset( $search_by['attribute'] );
 			}
 			foreach ( $search_by as $key => $value ) {
-				$selected = ( isset( $_REQUEST['search_by'] ) == $key ? 'selected' : '' );
+				$selected = ( isset( $_REQUEST['search_by'] ) && $_REQUEST['search_by'] == $key ? 'selected' : '' );
 				if ( $search_by[ $key ] ) {
 					$html .= "<option value='$key' $selected >$key</option>";
 				}
