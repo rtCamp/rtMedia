@@ -645,11 +645,11 @@ add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	global $wpdb;
 	$posts_table = $wpdb->posts;
-	$author_id = get_user_by( 'slug', $_REQUEST['search'] );
 
 	if ( isset( $_REQUEST['search'] ) && $_REQUEST['search'] ) {
-		$where .= ' AND ';
+		$author_id = get_user_by( 'slug', $_REQUEST['search'] );
 
+		$where .= ' AND ';
 		if ( isset( $_REQUEST['search_by'] ) ) {
 			if ( $_REQUEST['search_by'] ) {
 				if ( 'title' == $_REQUEST['search_by'] ) {

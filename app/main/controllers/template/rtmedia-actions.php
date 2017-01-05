@@ -848,7 +848,8 @@ function add_search_filter() {
 	global $rtmedia;
 	if ( isset( $rtmedia->options['general_enableGallerysearch'] ) && $rtmedia->options['general_enableGallerysearch'] ) {
 		$html = "<div class='media_search'>";
-		$html .= "<input type='text' id='media_search_input' value='" . $_GET['search'] . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
+		$search_value = ( isset( $_GET['search'] ) ? $_GET['search'] : '' );
+		$html .= "<input type='text' id='media_search_input' value='" . $search_value . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
 
 		$search_by = '';
 		$search_by = apply_filters( 'rtmedia_media_search_by', $search_by );
@@ -862,7 +863,7 @@ function add_search_filter() {
 				unset( $search_by['attribute'] );
 			}
 			foreach ( $search_by as $key => $value ) {
-				$selected = ( $_REQUEST['search_by'] == $key ? 'selected' : '' );
+				$selected = ( isset( $_REQUEST['search_by'] ) == $key ? 'selected' : '' );
 				if ( $search_by[ $key ] ) {
 					$html .= "<option value='$key' $selected >$key</option>";
 				}
