@@ -1900,6 +1900,10 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 				 //Delete Function
                 jQuery( "#" + file.id + " .plupload_delete-" + widget_id + " .remove-from-queue" ).click( function ( e ) {
                     e.preventDefault();
+
+                    /* submit button with no media */
+					jQuery( "."+rtmedia_comment_media_submit+widget_id ).attr( 'media', '0' );
+
                     commentObj[widget_id].uploader.removeFile(upl.getFile(file.id));
                     jQuery("#" + file.id).remove();
                     return false;
@@ -2047,6 +2051,10 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 
 			jQuery( '.plupload_delete-'+widget_id ).on( 'click', function( e ) {
 				e.preventDefault();
+
+				/* submit button with no media */
+				jQuery( "."+rtmedia_comment_media_submit+widget_id ).attr( 'media', '0' );
+
 				jQuery( this ).parent().parent( 'li' ).remove();
 			} );
 
