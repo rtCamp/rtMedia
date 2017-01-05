@@ -640,7 +640,7 @@ function rtmedia_search_media_filter( $filter ) {
 	return $filter;
 }
 
-// add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
+add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
 
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	global $wpdb;
@@ -668,9 +668,10 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 		} else {
 			$where .= ' ( ';
 			$where .= " $table_name.media_title = '" . $_REQUEST['search'] . "' ";
-
-			if ( is_array( $author_id ) && $author_id->data->ID ) {
-				$where .= " OR $table_name.media_author = '" . $author_id->data->ID . "' ";
+			if ( $author_id ) {
+				if ( $author_id->data->ID ) {
+					$where .= " OR $table_name.media_author = '" . $author_id->data->ID . "' ";
+				}
 			}
 			$where .= " OR $posts_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
 			$where .= ' ) ';
