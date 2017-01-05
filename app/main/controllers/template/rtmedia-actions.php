@@ -808,22 +808,22 @@ function rtmedia_addons_admin_notice() {
 
 	$screen = get_current_screen();
 
-	if ( $screen->id === 'rtmedia_page_rtmedia-license' ) {
+	if ( 'rtmedia_page_rtmedia-license' === $screen->id ) {
 
 		if ( isset( $_POST ) && count( $_POST ) > 0 ) { ?>
 
 			<div class="notice notice-success is-dismissible">
-				<p><?php _e('Settings has been saved successfully.', 'buddypress-media'); ?></p>
+				<p><?php _e( 'Settings has been saved successfully.', 'buddypress-media' ); ?></p>
 			</div>
 
 			<div class="notice notice-error is-dismissible">
-				<p><?php _e('Refresh the page in case if license data is not showing correct.', 'buddypress-media'); ?></p>
+				<p><?php _e( 'Refresh the page in case if license data is not showing correct.', 'buddypress-media' ); ?></p>
 			</div>
 	<?php
 		}
 	}
 }
-add_action('admin_notices', 'rtmedia_addons_admin_notice');
+add_action( 'admin_notices', 'rtmedia_addons_admin_notice' );
 
 /**
  * Function to add buddypress language conversion to Media activities.
@@ -853,6 +853,8 @@ add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_
 function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
 
 	global $wp_query;
+
+	echo get_query_var( 'pg' );
 
 	$pagename = '';
 	if ( isset( $wp_query->query_vars['pagename'] ) ) {
