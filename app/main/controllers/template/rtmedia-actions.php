@@ -854,8 +854,6 @@ function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
 
 	global $wp_query;
 
-	echo get_query_var( 'pg' );
-
 	$pagename = '';
 	if ( isset( $wp_query->query_vars['pagename'] ) ) {
 		$pagename = explode( '/', $wp_query->query_vars['pagename'] );
