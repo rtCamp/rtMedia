@@ -871,7 +871,8 @@ function add_search_filter() {
 			$html .= '</select>';
 		}
 
-		$html .= "<button id='media_search'><i class='dashicons dashicons-search rtmicon'></i></button>";
+		$html .= "<button id='media_search_remove' class='media_search_remove search_option'><i class='dashicons dashicons-no rtmicon'></i></button>";
+		$html .= "<button id='media_search' class='search_option'><i class='dashicons dashicons-search rtmicon'></i></button>";
 		$html .= '</div>';
 
 		echo apply_filters( 'rtmedia_gallery_search', $html );
