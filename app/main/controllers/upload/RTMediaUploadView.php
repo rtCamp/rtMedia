@@ -118,6 +118,7 @@ class RTMediaUploadView {
 		$rtmedia_comment_container = "rtmedia-comment-media-upload-container";
 		$rtmedia_comment_button = "rtmedia-comment-media-upload";
 		$rtmedia_comment_filelist = "rtmedia_uploader_filelist";
+		$rtmedia_comment_context = "activity";
 		if(
 			( isset( $this->attributes['upload_parent_id'] )  && ! empty( $this->attributes['upload_parent_id'] )  )
 			&&
@@ -129,6 +130,9 @@ class RTMediaUploadView {
 			$rtmedia_comment_button .= $main_id;
 			$rtmedia_comment_filelist .= $main_id;
 			$up_privacy = $privacy = "<input type='hidden' name='privacy' value='" . esc_attr( 0 ) . "' />";
+			if( isset( $this->attributes['upload_parent_id_context'] ) ){
+				$rtmedia_comment_context = $this->attributes['upload_parent_id_context'];
+			}
 		}
 
 		$upload_button = '<input type="button" class="start-media-upload" value="' . esc_attr__( 'Start upload', 'buddypress-media' ) . '"/>';
@@ -180,7 +184,7 @@ class RTMediaUploadView {
 								. '<div class="rtm-upload-button-wrapper">'
 									. '<div id="'.$rtmedia_comment_container.'">'
 									. '</div>'
-									. '<button type="button" class="rtmedia-comment-media-upload" id="' . $rtmedia_comment_button . '" title="' . apply_filters( 'rtmedia_comment_attach_media_button_title', esc_attr__( 'Attach Media', 'buddypress-media' ) ) . '">'
+									. '<button type="button" class="rtmedia-comment-media-upload" data-media_context="'.$rtmedia_comment_context.'" id="' . $rtmedia_comment_button . '" title="' . apply_filters( 'rtmedia_comment_attach_media_button_title', esc_attr__( 'Attach Media', 'buddypress-media' ) ) . '">'
 										. '<span class="dashicons dashicons-admin-media"></span>'
 										. apply_filters( 'rtmedia_attach_file_message', '' )
 									. '</button>'

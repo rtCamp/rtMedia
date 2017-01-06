@@ -169,12 +169,13 @@ class RTMediaComment {
 	 *
 	 * @return HTML
 	*/
-	static function add_uplaod_media_button( $id, $type ){
+	static function add_uplaod_media_button( $id, $type, $context ){
 		$attr = array(
 			'comment' => true,
 			'privacy' => 0,
 			'upload_parent_id' => $id,
-			'upload_parent_id_type' => $type
+			'upload_parent_id_type' => $type,
+			'upload_parent_id_context' => $context
 		 );
 		return RTMediaComment::pre_comment_render( $attr );
 	}

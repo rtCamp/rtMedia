@@ -630,18 +630,24 @@ add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_mo
 
 
 
-function rtmedia_bp_activity_entry_comments_id_callback( $id, $type ){
+function rtmedia_bp_activity_entry_comments_id_callback( $id, $type, $context = "activity" ){
 	if( class_exists( 'RTMediaComment' ) ){
 		/*add media in comment*/
-		return RTMediaComment::add_uplaod_media_button( $id, $type );
+		return RTMediaComment::add_uplaod_media_button( $id, $type, $context );
 	}
 }
 
 
 function rtmedia_add_comments_extra_callback(){
+	global $rtmedia_media;
+	$context = 'activity';
+
+	if( is_array( $rtmedia_media->context ) ){
+		$context = $rtmedia_media->context;
+	}
 	$rtmedia_id = rtmedia_id();
 	if( $rtmedia_id ){
-		echo rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia' );
+		echo rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia', $context );
 	}
 }
 
@@ -658,7 +664,7 @@ function rtmedia_bp_activity_entry_comments_callback(){
 	/* if activity id is not empty and the type is not as $allow_media_activity_type */
 	if( $activity_id && isset( $activities_template->activity->type ) && ! in_array( $activities_template->activity->type , $allow_media_activity_type ) ){
 		add_action( 'before_rtmedia_uploader_display', 'rtmedia_before_rtmedia_uploader_display_callback', 10 );
-			echo rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity' );
+			echo rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity', $activities_template->activity->component );
 		remove_action( 'before_rtmedia_uploader_display', 'rtmedia_before_rtmedia_uploader_display_callback', 10 );
 	}
 }
@@ -698,6 +704,54 @@ function rtmedia_bp_activity_comment_content_callback( $content ){
 add_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
 
 
+/*
+ * Runes when activity is add in buddypress
+*/
+function rtmedia_bp_activity_after_save_callback( $activity_data ){
+	/* check is  activity reply*/
+	if( ! empty( $activity_data )  && $activity_data->type == 'activity_comment' ){
+		/* check  that it has any media in it */
+		if( isset( $_REQUEST['rtMedia_attached_files'] ) && isset( $activity_data->id ) ){
+	        $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+	        /*  check is class exits or not */
+			if( is_array( $rtMedia_attached_files )  && ! empty( $rtMedia_attached_files[0] )  && class_exists( 'RTMediaModel' ) ){
+				$rtmedia_model = new RTMediaModel();
+				$rtmedia_model->update(
+					array(
+						'activity_id' => $activity_data->id					),
+					array(
+						'id' => $rtMedia_attached_files[0]
+					)
+				);
+
+				$privacy     = -1;
+				$form_id = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_NUMBER_INT );
+
+				$rtm_activity_model  = new RTMediaActivityModel();
+				$columns = array(
+					'activity_id' => $form_id,
+					'blog_id'     => get_current_blog_id(),
+				);
+
+				$is_ac_privacy_exist = $rtm_activity_model->get( $columns );
+
+				/*  changing privacy according to it parent */
+				if ( isset( $is_ac_privacy_exist[0] )  && ! empty( $is_ac_privacy_exist[0] ) && isset( $is_ac_privacy_exist[0]->privacy ) ) {
+					$privacy = $is_ac_privacy_exist[0]->privacy;
+				}
+
+				// Very first privacy entry for this activity
+				$status = $rtm_activity_model->insert( array(
+					'privacy'     => $privacy,
+					'activity_id' => $activity_data->id,
+					'user_id'     => get_current_user_id(),
+				) );
+			}
+	    }
+	}
+}
+add_action( 'bp_activity_after_save', 'rtmedia_bp_activity_after_save_callback', 1000, 1 );
+
 
 
 function rtmedia_delete_comment_callback( $comment_id ){
@@ -712,25 +766,3 @@ function rtmedia_delete_comment_callback( $comment_id ){
 	}
 }
 add_action( 'delete_comment', 'rtmedia_delete_comment_callback', 1000, 1 );
-
-
-
-
-function rtmedia_bp_activity_after_save_callback( $activity_data ){
-	if( ! empty( $activity_data )  && $activity_data->type == 'activity_comment' ){
-		if( isset( $_REQUEST['rtMedia_attached_files'] ) && isset( $activity_data->id ) ){
-	        $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-			if( is_array( $rtMedia_attached_files )  && ! empty( $rtMedia_attached_files[0] )  && class_exists( 'RTMediaModel' ) ){
-				$rtmedia_model = new RTMediaModel();
-				$rtmedia_model->update(
-					array(
-						'activity_id' => $activity_data->id					),
-					array(
-						'id' => $rtMedia_attached_files[0]
-					)
-				);
-			}
-	    }
-	}
-}
-add_action( 'bp_activity_after_save', 'rtmedia_bp_activity_after_save_callback', 1000, 1 );
