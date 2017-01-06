@@ -845,6 +845,22 @@ add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_
 
 
 /**
+ *
+ * rtmedia_override_canonical Redirect homepage as per parameters passed to query string.
+ * This is added for a page set as a "Front page" in which gallery short-code is there,
+ * so pagination for gallery short-code can work properly.
+ *
+ */
+function rtmedia_override_canonical( $redirect_url, $requested_url ) {
+	if ( is_front_page() && get_query_var( 'pg' ) ) {
+		return $requested_url;
+	} else {
+		return $redirect_url;
+	}
+}
+add_filter( 'redirect_canonical', 'rtmedia_override_canonical', 10, 2 );
+
+/**
  * rtmedia_gallery_shortcode_json_query_vars Set query vars for json response
  *
  * @param  object $wp_query WP query object
@@ -865,7 +881,9 @@ function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
 		$wp_query->query['media'] = '';
 		$wp_query->query_vars['media'] = '';
 	}
+
 	return $wp_query;
+
 }
 add_action( 'pre_get_posts', 'rtmedia_gallery_shortcode_json_query_vars', 99 );
 
@@ -892,7 +910,7 @@ function rtmedia_gallery_shortcode_rewrite_rules() {
 	add_rewrite_rule( '(.?.+?)/pg/?([0-9]{1,})/?$', 'index.php?pg=$matches[2]&name=$matches[1]', 'top' );
 
 	// Rule for homepage
-	add_rewrite_rule( 'pg/?([0-9]{1,})/?$', 'index.php?&pg=$matches[1]', 'top' );
+	add_rewrite_rule( 'pg/([0-9]*)/?', 'index.php?page_id=' . get_option( 'page_on_front' ) . '&pg=$matches[1]', 'top' );
 
 }
 add_action( 'rtmedia_add_rewrite_rules', 'rtmedia_gallery_shortcode_rewrite_rules' );
