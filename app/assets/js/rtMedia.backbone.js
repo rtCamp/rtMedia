@@ -118,15 +118,12 @@ jQuery( function( $ ) {
 
 				//media search
 				if( check_condition( 'search' ) ) {
-					// if( ! check_condition( 'pg' ) ) {
-					// 	this.url = window.location.pathname;
-					// } else {
-					// 	this.url = window.location.href.replace(window.location.search, "");
-					// }
 					if ( $( '#media_search_input' ).val() != '' ) {
-						query.search = $( '#media_search_input' ).val();
+						var search = check_url( 'search' );
+						query.search = search;
 						if ( check_condition( 'search_by' ) ) {
-							query.search_by = $( '#search_by' ).val();
+							var search_by = check_url( 'search_by' );
+							query.search_by = search_by;
 						}
 					} else {
 						query.rtmedia_page = 1;
@@ -361,9 +358,12 @@ jQuery( function( $ ) {
 			}
 
 			if( check_condition( 'search' ) ) {
-				href += '?search=' + $( '#media_search_input' ).val();
+
+				var search_val = check_url( 'search' );
+				href += '?search=' + search_val;
 				if( check_condition( 'search_by' ) ) {
-					href += '&search_by=' + $( '#search_by' ).val();
+					var search_by = check_url( 'search_by' );
+					href += '&search_by=' + search_by ;
 				}
 			}
 			change_rtBrowserAddressUrl( href, '' );
@@ -409,6 +409,11 @@ jQuery( function( $ ) {
 		jQuery( '#media_search_input' ).val('');
 		nextpage = 1;
 		var href = window.location.pathname;
+		if ( check_condition( '/pg' ) ) {
+			remove_index = href.indexOf('pg');
+			remove_href =  href.substring( remove_index );
+			href = href.replace( remove_href, '' );
+		}
 		change_rtBrowserAddressUrl( href, '' );
 		galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
 		$( '#media_search_remove' ).hide();
@@ -1578,4 +1583,17 @@ function check_condition( key ) {
 	} else {
 		return false;
 	}
+}
+
+function check_url( query ) {
+	query = query.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var expr = "[\\?&]"+query+"=([^&#]*)";
+    var regex = new RegExp( expr );
+    var results = regex.exec( window.location.href );
+    if( results !== null ) {
+        return results[1];
+        return decodeURIComponent(results[1].replace(/\+/g, " "));
+    } else {
+        return false;
+    }
 }
