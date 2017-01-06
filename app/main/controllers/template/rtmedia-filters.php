@@ -628,20 +628,6 @@ function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_i
 }
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
 
-
-function rtmedia_search_media_filter( $filter ) {
-	$filter = array(
-		'title'			=> true,
-		'description'	=> true,
-		'attribute'		=> true,
-		'author'		=> true,
-	);
-
-	return $filter;
-}
-
-// add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
-
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	global $wpdb;
 	$posts_table = $wpdb->posts;
