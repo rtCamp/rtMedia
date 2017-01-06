@@ -97,6 +97,7 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 
 // Video/Music title make center align
 .rtmedia-list-item {
+	&.media-type-photo,
 	&.media-type-document,
 	&.media-type-music,
 	&.media-type-video {

@@ -1595,7 +1595,7 @@ form.rt_media_comment_form .rtmedia-plupload-container {
   margin-right: 10px;
 }
 
-.rtmedia-list-item.media-type-document, .rtmedia-list-item.media-type-music, .rtmedia-list-item.media-type-video {
+.rtmedia-list-item.media-type-photo, .rtmedia-list-item.media-type-document, .rtmedia-list-item.media-type-music, .rtmedia-list-item.media-type-video {
   display: inline-block;
 }
 
