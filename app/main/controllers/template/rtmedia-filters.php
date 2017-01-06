@@ -640,11 +640,14 @@ function rtmedia_search_media_filter( $filter ) {
 	return $filter;
 }
 
-add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
+// add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
 
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	global $wpdb;
 	$posts_table = $wpdb->posts;
+	$terms_table = $wpdb->terms;
+	$term_relationships_table = $wpdb->term_relationships;
+	$term_taxonomy_table = $wpdb->term_taxonomy;
 
 	if ( isset( $_REQUEST['search'] ) && $_REQUEST['search'] ) {
 		$author_id = get_user_by( 'slug', $_REQUEST['search'] );
@@ -666,6 +669,20 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 				}
 			}
 		} else {
+			$x = '';
+			$sql = "SELECT $table_name.id FROM $table_name
+					INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = 'attachment' )
+					INNER JOIN $terms_table ON ( $terms_table.slug IN ( '" . $_REQUEST['search'] . "' ) )
+					INNER JOIN $term_taxonomy_table ON ( $term_taxonomy_table.term_id = $terms_table.term_id )
+					INNER JOIN $term_relationships_table ON ( $term_relationships_table.term_taxonomy_id = $term_taxonomy_table.term_taxonomy_id AND $term_relationships_table.object_id = $posts_table.ID )";
+			$att_id = $wpdb->get_results( $sql, ARRAY_N );
+			foreach ( $att_id as $key => $value ) {
+				$x .= $value[0] . ',';
+			}
+			if ( isset( $x )  && $x ) {
+				$x = rtrim( $x, ',' );
+			}
+
 			$where .= ' ( ';
 			$where .= " $table_name.media_title = '" . $_REQUEST['search'] . "' ";
 			if ( $author_id ) {
@@ -673,8 +690,12 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 					$where .= " OR $table_name.media_author = '" . $author_id->data->ID . "' ";
 				}
 			}
-			$where .= " OR $posts_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
+			$where .= " OR post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
+			if ( isset( $x )  && $x ) {
+				$where .= " OR $table_name.id IN ( $x )";
+			}
 			$where .= ' ) ';
+
 		}
 	}
 
@@ -692,9 +713,8 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 	$term_taxonomy_table = $wpdb->term_taxonomy;
 
 	if ( isset( $_REQUEST['search'] ) ) {
-
 		if ( false == strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {
-			$join .= "INNER JOIN $posts_table ON $table_name.media_id = $posts_table.ID";
+			$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
 		}
 
 		if ( isset( $_REQUEST['search_by'] ) && 'attribute' == $_REQUEST['search_by'] ) {
@@ -707,4 +727,4 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 	return $join;
 }
 
-add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 9, 2 );
+add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11, 2 );
