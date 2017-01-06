@@ -698,7 +698,7 @@ add_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_cont
 
 
 function rtmedia_delete_comment_callback( $comment_id ){
-	$comment_media_id = get_comment_meta( $comment_id, 'rtmedia_comment_media_id', true );
+	$comment_media_id = get_comment_meta( $comment_id, 'rtmedia_comment_media_id' );
 	if( class_exists( 'RTMediaMedia' ) && ! empty( $comment_media_id ) ){
 		$media 			= new RTMediaMedia();
 		foreach ( $comment_media_id as $key => $media_id ) {
