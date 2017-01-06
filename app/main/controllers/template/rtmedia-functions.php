@@ -1441,13 +1441,17 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	$author_name = get_query_var( 'author_name' );
 	$link        = '';
 
-	//echo '<pre>';print_r($rtmedia_interaction);echo '</pre>';
+	$is_shortcode_pn_home = ( isset( $_GET['is_on_home'] ) && '1' === $_GET['is_on_home'] && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] && isset( $_GET['context_id'] ) && $_GET['context_id'] === get_option( 'page_on_front' ) ) ? true : false;
 
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'profile' === $rtmedia_interaction->context->type ) {
 		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->media_query['context_id'] ) ) {
 			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query['context_id'] ) );
 		} else {
-			$link .= $site_url . 'author/' . $author_name . '/';
+			if ( $is_shortcode_pn_home ) {
+				$link .= $site_url;
+			} else {
+				$link .= $site_url . 'author/' . $author_name . '/';
+			}
 		}
 	} else {
 		if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'group' === $rtmedia_interaction->context->type ) {
@@ -1476,7 +1480,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	}
 
 	// Do not add media slug for gallery shortcode and sitewide gallery
-	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && ! in_array( $rtmedia_interaction->context->type, array( 'page', 'rtmedia_album', 'post' ) ) ) {
+	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && ! in_array( $rtmedia_interaction->context->type, array( 'page', 'rtmedia_album', 'post' ) ) && ! $is_shortcode_pn_home ) {
 			$link .= RTMEDIA_MEDIA_SLUG . '/';
 	}
 
