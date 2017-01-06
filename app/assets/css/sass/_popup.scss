@@ -23,6 +23,13 @@
 				margin: 5px 0; */
 			}
 		}
+
+		.rtmedia-comment-media-list {
+			.mejs-container.mejs-video {
+				min-height: 200px;
+				min-width: 200px;
+			}
+		}
 	}
 
 	.rtm-single-meta {

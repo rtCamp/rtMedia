@@ -69,7 +69,7 @@ class RTMediaActivity {
 			}
 			$li_content .= '<div class="rtmedia-item-thumbnail">';
 
-			$li_content .= $this->media( $media, $type );
+			$li_content .= $this->media( $media );
 
 			$li_content .= '</div>';
 
@@ -117,9 +117,6 @@ class RTMediaActivity {
 		$html = false;
 
 		$video_class = 'wp-video-shortcode';
-		if( 'activity' != $type ){
-			$video_class = $video_class.'-'.$type;
-		}
 
 		if ( isset( $media->media_type ) ) {
 			global $rtmedia;

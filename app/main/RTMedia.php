@@ -307,6 +307,8 @@ class RTMedia {
 		max-height: <?php echo esc_attr( $this->options['defaultSizes_photo_medium_height'] ); ?>px;
 		overflow: hidden;
 		}
+
+		.rtmedia-comment-media-container .mejs-container.mejs-video,
 		.rtmedia-activity-container .mejs-container.mejs-video{
 		min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
 		min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;

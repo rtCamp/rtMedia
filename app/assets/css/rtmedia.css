@@ -1087,6 +1087,10 @@ img.mfp-img {
   overflow-y: auto;
   margin: 5px 0; */
 }
+.mfp-content .rtm-lightbox-container .rtmedia-comment-media-list .mejs-container.mejs-video {
+  min-height: 200px;
+  min-width: 200px;
+}
 .mfp-content .rtm-single-meta {
   background: #FFFFFF;
   overflow: hidden;

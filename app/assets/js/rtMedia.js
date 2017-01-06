@@ -101,10 +101,15 @@ function apply_rtMagnificPopup( selector ) {
 							}
 						}
 
+						rtmedia_reset_video_and_audio_for_popup();
+
 						apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
 					},
 					close: function( e ) {
 						//Console.log(e);
+
+						rtmedia_single_page_popup_close();
+
 						rtmedia_init_action_dropdown();
 					},
 					BeforeChange: function( e ) {
