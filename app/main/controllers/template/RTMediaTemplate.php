@@ -169,7 +169,9 @@ class RTMediaTemplate {
 	function add_hidden_fields_in_gallery() {
 		global $rtmedia_query;
 
+		$is_on_home = ( is_front_page() ) ? true : false;
 		$return_str = "<input name='rtmedia_shortcode' value='true' type='hidden' />";
+		$return_str .= "<input name='is_on_home' value='$is_on_home' type='hidden' />";
 
 		if ( $rtmedia_query->original_query && is_array( $rtmedia_query->original_query ) ) {
 			foreach ( $rtmedia_query->original_query as $key => $val ) {
