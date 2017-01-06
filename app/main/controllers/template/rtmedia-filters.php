@@ -647,13 +647,16 @@ function rtmedia_add_comments_extra_callback(){
 
 
 function rtmedia_bp_activity_entry_comments_callback(){
-	// global $activities_template;
+	global $activities_template;
 
-	// $allow_media_activity_type = array( 'activity_update', 'bbp_topic_create', 'friendship_created', 'joined_group', 'new_blog_post', 'rtmedia_update' );
-	// if( $activity_id && isset( $activities_template->activity->type ) && in_array( $activities_template->activity->type , $allow_media_activity_type ) ){
+	/* comment media activity is created so media is not allow */
+	$allow_media_activity_type = array( 'rtmedia_comment_activity' );
 
+	/* parent activity id */
 	$activity_id = bp_get_activity_id();
-	if( $activity_id ){
+
+	/* if activity id is not empty and the type is not as $allow_media_activity_type */
+	if( $activity_id && isset( $activities_template->activity->type ) && ! in_array( $activities_template->activity->type , $allow_media_activity_type ) ){
 		add_action( 'before_rtmedia_uploader_display', 'rtmedia_before_rtmedia_uploader_display_callback', 10 );
 			echo rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity' );
 		remove_action( 'before_rtmedia_uploader_display', 'rtmedia_before_rtmedia_uploader_display_callback', 10 );
