@@ -85,6 +85,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 			$defaults['buddypress_enableOnGroup']        = 1;
 			$defaults['buddypress_enableOnActivity']     = 1;
+			$defaults['buddypress_enableOnComment']      = 1;
 			$defaults['buddypress_enableOnProfile']      = 1;
 			$defaults['buddypress_limitOnActivity']      = 0;
 			$defaults['buddypress_enableNotification']   = 0;

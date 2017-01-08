@@ -833,6 +833,10 @@ class RTMedia {
 		global $rtmediajsonapi;
 		$rtmediajsonapi = new RTMediaJsonApi();
 
+		if( function_exists( 'rtmedia_enable_comment_media_uplaod' ) ){
+			rtmedia_enable_comment_media_uplaod();
+		}
+
 		do_action( 'bp_media_init' ); // legacy For plugin using this actions
 		do_action( 'rtmedia_init' );
 	}

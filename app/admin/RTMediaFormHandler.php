@@ -1006,6 +1006,17 @@ class RTMediaFormHandler {
 				),
 				'group'    => 10,
 			),
+			'rtmedia-enable-on-comment'      => array(
+				'title'		=> esc_html__( 'Allow upload from Comment', 'buddypress-media' ),
+				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'		=> array(
+					'key'	=> 'buddypress_enableOnComment',
+					'value'	=> $options['buddypress_enableOnComment'],
+					'desc'	=> esc_html__( 'Enable Media on Comment', 'buddypress-media' ),
+					'id'	=> 'rtmedia-bp-enable-comment',
+				),
+				'group'    => 10,
+			),
 			'rtmedia-activity-feed-limit'     => array(
 				'title'		=> esc_html__( 'Number of media items to show in activity stream', 'buddypress-media' ),
 				'callback'	=> array( 'RTMediaFormHandler', 'number' ),

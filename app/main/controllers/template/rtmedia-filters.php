@@ -674,18 +674,6 @@ function rtmedia_before_rtmedia_uploader_display_callback( $flag ){
 	return true;
 }
 
-/*
- * Add Comment Media in rtMedia Popup
-*/
-add_action( 'rtmedia_add_comments_extra', 'rtmedia_add_comments_extra_callback', 10 );
-
-/*
- * Add Media Upload in Activity
-*/
-add_action( 'bp_activity_entry_comments', 'rtmedia_bp_activity_entry_comments_callback', 10 );
-
-
-
 
 /*
  * Change the BuddyPress activity Comment reply content
@@ -766,3 +754,20 @@ function rtmedia_delete_comment_callback( $comment_id ){
 	}
 }
 add_action( 'delete_comment', 'rtmedia_delete_comment_callback', 1000, 1 );
+
+
+
+function rtmedia_enable_comment_media_uplaod(){
+	global $rtmedia;
+	if ( 0 !== intval( $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ) {
+		/*
+		 * Add Comment Media in rtMedia Popup
+		*/
+		add_action( 'rtmedia_add_comments_extra', 'rtmedia_add_comments_extra_callback', 10 );
+
+		/*
+		 * Add Media Upload in Activity
+		*/
+		add_action( 'bp_activity_entry_comments', 'rtmedia_bp_activity_entry_comments_callback', 10 );
+	}
+}
