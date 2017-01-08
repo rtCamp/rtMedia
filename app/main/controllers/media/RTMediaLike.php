@@ -240,9 +240,13 @@ class RTMediaLike extends RTMediaUserInteraction {
 	}
 
 	function before_render() {
+		/* is comment media */
+		$comment_media = rtmedia_is_comment_media( rtmedia_id() );
 		$enable_like = true;
 		$enable_like = apply_filters( 'rtmedia_check_enable_disable_like', $enable_like );
-		if ( ! $enable_like ) {
+
+		/* if is comment media then return false */
+		if ( ! $enable_like || ! empty( $comment_media ) ) {
 			return false;
 		}
 		if ( $this->is_liked() ) {
