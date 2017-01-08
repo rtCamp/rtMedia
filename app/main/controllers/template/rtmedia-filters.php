@@ -742,21 +742,6 @@ add_action( 'bp_activity_after_save', 'rtmedia_bp_activity_after_save_callback',
 
 
 
-function rtmedia_delete_comment_callback( $comment_id ){
-	$comment_media_id = get_comment_meta( $comment_id, 'rtmedia_comment_media_id' );
-	if( class_exists( 'RTMediaMedia' ) && ! empty( $comment_media_id ) ){
-		$media 			= new RTMediaMedia();
-		foreach ( $comment_media_id as $key => $media_id ) {
-			if( ! empty( $media_id ) ){
-				$media->delete( $media_id, false, false );
-			}
-		}
-	}
-}
-add_action( 'delete_comment', 'rtmedia_delete_comment_callback', 1000, 1 );
-
-
-
 function rtmedia_enable_comment_media_uplaod(){
 	global $rtmedia;
 	if ( 0 !== intval( $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ) {
