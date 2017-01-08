@@ -116,6 +116,16 @@ class RTMediaBuddyPressActivity {
 		$media      = $mediamodel->get( array( 'activity_id' => $param['activity_id'] ) );
 		// if there is only single media in activity
 		if ( 1 === count( $media ) && isset( $media[0]->media_id ) ) {
+
+			/* has media in comment */
+			$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+			/* if the media is not empty */
+			if ( is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files[0] ) && class_exists( 'RTMediaActivity' ) ) {
+				/* create new html for comment content */
+				$obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $param['content'] );
+				$param['content'] = $obj_comment->create_activity_html( 'comment-media' );
+			}
+
 			$media_id = $media[0]->media_id;
 			$comment  = new RTMediaComment();
 			$id       = $comment->add( array(
