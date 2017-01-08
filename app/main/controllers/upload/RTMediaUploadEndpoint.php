@@ -77,13 +77,28 @@ class RTMediaUploadEndpoint {
 					if( $current_media_id ){
 						$comment_media = true;
 						$media_obj    = new RTMediaMedia();
+						/* search from media id*/
 						$media        = $media_obj->model->get( array( 'id' => $current_media_id ) );
+
+						if( $media[0]  == false ){
+							/* search from activity id*/
+							$media        = $media_obj->model->get( array( 'activity_id' => $current_media_id ) );
+						}
+
 						if( isset( $media[0]->album_id )  && ! empty( $media[0]->album_id ) ){
 							$this->upload['album_id'] = $media[0]->album_id;
 						}
 
 						if( isset( $media[0]->privacy )  && ! empty( $media[0]->privacy ) ){
 							$this->upload['privacy'] = $media[0]->privacy;
+						}
+
+						if( isset( $media[0]->context )  && ! empty( $media[0]->context ) ){
+							$this->upload['context'] = $media[0]->context;
+						}
+
+						if( isset( $media[0]->context_id )  && ! empty( $media[0]->context_id ) ){
+							$this->upload['context_id'] = $media[0]->context_id;
 						}
 					}
 
