@@ -1869,11 +1869,11 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 		var form_html = jQuery( "."+comment_media_wrapper+widget_id );
 		if( jQuery( form_html ).find('div.rtmedia-plupload-container').length ){
 			if( parent_id_type == "activity" ){
-				form_html.find('.ac-reply-content .ac-textarea').after( form_html.find('div.rtmedia-plupload-container') );
+				form_html.find('.ac-reply-content .ac-textarea').after( form_html.find('div.rtmedia-plupload-container .rtmedia-comment-media-upload') );
 			}
 
 			if( parent_id_type == "rtmedia" ){
-				form_html.find('textarea').after( form_html.find('div.rtmedia-plupload-container') );
+				form_html.find('textarea').after( form_html.find('div.rtmedia-plupload-container .rtmedia-comment-media-upload') );
 			}
 		}
 
