@@ -744,7 +744,17 @@ add_action( 'bp_activity_after_save', 'rtmedia_bp_activity_after_save_callback',
 
 function rtmedia_enable_comment_media_uplaod(){
 	global $rtmedia;
-	if ( 0 !== intval( $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ) {
+	$comment_media = false;
+
+	if ( isset( $rtmedia->options['buddypress_enableOnComment'] ) ) {
+		if ( 0 !== intval( $rtmedia->options['buddypress_enableOnComment'] ) ) {
+			$comment_media = true;
+		}
+	}elseif ( function_exists( 'rtmedia_add_comments_extra_callback' ) && function_exists( 'rtmedia_bp_activity_entry_comments_callback' ) ) {
+		$comment_media = true;
+	}
+
+	if ( $comment_media ) {
 		/*
 		 * Add Comment Media in rtMedia Popup
 		*/
