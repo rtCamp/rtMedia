@@ -115,7 +115,7 @@ class RTMediaUploadEndpoint {
 
 						$this->upload['album_id'] = $album_id;
 						$this->upload['privacy'] = $privacy;
-						$this->upload['context'] = $context;
+						$this->upload['context'] = $context.'-reply';
 						$this->upload['context_id'] = $context_id;
 
 					}
