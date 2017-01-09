@@ -76,6 +76,11 @@ class RTMediaUploadEndpoint {
 
 					if( $current_media_id ){
 						$comment_media = true;
+						$album_id = 1;
+						$privacy = 0;
+						$context = 'profile';
+						$context_id = 1;
+
 						$media_obj    = new RTMediaMedia();
 						/* search from media id*/
 						$media        = $media_obj->model->get( array( 'id' => $current_media_id ) );
@@ -85,21 +90,34 @@ class RTMediaUploadEndpoint {
 							$media        = $media_obj->model->get( array( 'activity_id' => $current_media_id ) );
 						}
 
-						if( isset( $media[0]->album_id )  && ! empty( $media[0]->album_id ) ){
-							$this->upload['album_id'] = $media[0]->album_id;
+						if( $media[0]->album_id ){
+							$album_id = $media[0]->album_id;
+							$privacy = $media[0]->privacy;
+							$context = $media[0]->context;
+							$context_id = $media[0]->context_id;
+						}else{
+							/* search from the BuddyPress Table */
+							$media = bp_activity_get_specific(  array( 'activity_ids' => $current_media_id ) );
+
+							if( isset( $media['activities'][0]->component ) ){
+
+								$album = rtmedia_get_site_option( 'rtmedia-global-albums' );
+								$album_id = $album_id = $album[0];
+
+								$context = $media['activities'][0]->component;
+							}
+
+							if( isset( $media['activities'][0]->item_id ) ){
+								$context_id = $media['activities'][0]->item_id;
+							}
 						}
 
-						if( isset( $media[0]->privacy )  && ! empty( $media[0]->privacy ) ){
-							$this->upload['privacy'] = $media[0]->privacy;
-						}
 
-						if( isset( $media[0]->context )  && ! empty( $media[0]->context ) ){
-							$this->upload['context'] = $media[0]->context;
-						}
+						$this->upload['album_id'] = $album_id;
+						$this->upload['privacy'] = $privacy;
+						$this->upload['context'] = $context;
+						$this->upload['context_id'] = $context_id;
 
-						if( isset( $media[0]->context_id )  && ! empty( $media[0]->context_id ) ){
-							$this->upload['context_id'] = $media[0]->context_id;
-						}
 					}
 
 				}
