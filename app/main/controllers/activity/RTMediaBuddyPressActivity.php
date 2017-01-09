@@ -636,9 +636,16 @@ class RTMediaBuddyPressActivity {
 					$activity_content = $params['comment_content'];
 
 					/* if activity is add from comment media  */
-				    if( isset( $_REQUEST['comment_content'] ) ){
-				        /* comment content */
-				        $comment_content = $_REQUEST['comment_content'];
+				    if( isset( $_REQUEST['comment_content'] ) || isset( $_REQUEST['action'] ) ){
+				    	if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'new_activity_comment' ){
+
+				    		remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
+				    		/* comment content */
+					        $comment_content = $_REQUEST['content'];
+				    	}elseif ( isset( $_REQUEST['comment_content'] ) ) {
+					        /* comment content */
+					        $comment_content = $_REQUEST['comment_content'];
+				    	}
 
 				        /* is comment is empty then add content content space */
 			            if( strstr($comment_content, 'nbsp') ){
