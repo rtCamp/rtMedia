@@ -70,7 +70,11 @@ class RTMediaUploadEndpoint {
 				// if media is add in from the comment media section
 				if( isset( $this->upload['comment_media_activity_id'] ) && ! empty( $this->upload['comment_media_activity_id'] ) ){
 					// if group is public, then set media privacy as 0
+					global $rtmedia;
 					$this->upload['privacy'] = '0';
+					if( isset( $rtmedia->options['privacy_enabled'] ) && isset( $rtmedia->options['privacy_default'] ) ){
+						$this->upload['privacy'] = $rtmedia->options['privacy_default'];
+					}
 
 					$current_media_id = preg_replace( '/[^0-9]/', '', $this->upload['comment_media_activity_id'] );
 
