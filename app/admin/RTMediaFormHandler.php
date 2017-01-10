@@ -1007,12 +1007,12 @@ class RTMediaFormHandler {
 				'group'    => 10,
 			),
 			'rtmedia-enable-on-comment'      => array(
-				'title'		=> esc_html__( 'Allow upload from Comment', 'buddypress-media' ),
+				'title'		=> esc_html__( 'Allow upload to Comment', 'buddypress-media' ),
 				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'		=> array(
 					'key'	=> 'buddypress_enableOnComment',
 					'value'	=> $options['buddypress_enableOnComment'],
-					'desc'	=> esc_html__( 'Enable Media on Comment', 'buddypress-media' ),
+					'desc'	=> esc_html__( 'Enable Media in Comment', 'buddypress-media' ),
 					'id'	=> 'rtmedia-bp-enable-comment',
 				),
 				'group'    => 10,

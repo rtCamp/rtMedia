@@ -314,6 +314,13 @@ class RTMedia {
 		min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
 		}
 		<?php
+		global $rtmedia;
+		if ( isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 1 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) { ?>
+				#buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-comment-media-upload,#buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-container {
+				    display: none !important
+				}
+			<?php
+		}
 	}
 
 	function custom_style_for_gallery_image_size() {
@@ -538,6 +545,8 @@ class RTMedia {
 
 		$bp_media_options = rtmedia_get_site_option( 'bp_media_options' );
 
+
+
 		$defaults = array(
 			'general_enableAlbums'        => 1,
 			'general_enableComments'      => 0,
@@ -588,6 +597,9 @@ class RTMedia {
 				}
 			}
 		}
+
+		/* Dont allow upload in comment media */
+		$defaults['rtmedia_disable_media_in_commented_media']      = apply_filters( 'rtmedia_disable_media_in_commented_media', 1 );
 
 		/* Privacy */
 		$defaults['privacy_enabled']      = ( isset( $bp_media_options['privacy_enabled'] ) ) ? $bp_media_options['privacy_enabled'] : 0;
