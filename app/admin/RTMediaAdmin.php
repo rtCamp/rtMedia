@@ -182,6 +182,19 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				include $filename;
 				echo '</script>';
 			}
+
+			if( isset( $_GET['page'] ) && 'rtmedia-settings' == $_GET['page'] ){
+				global $rtmedia;
+				$display = apply_filters( 'rtmedia_disable_media_in_commented_media', true );
+				if ( isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] && $display ) { ?>
+					<style type="text/css">
+						.rtm-option-wrapper .form-table[data-depends="buddypress_enableOnComment"] {
+						    display: none !important;
+						}
+					</style>
+					<?php
+				}
+			}
 		}
 
 		function modify_medialibrary_permalink( $action, $post ) {

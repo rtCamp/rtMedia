@@ -1006,27 +1006,26 @@ class RTMediaFormHandler {
 				),
 				'group'    => 10,
 			),
-			'rtmedia-enable-on-comment'      => array(
+			'buddypress_enableOnComment'      => array(
 				'title'		=> esc_html__( 'Allow upload to Comment', 'buddypress-media' ),
 				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'		=> array(
 					'key'	=> 'buddypress_enableOnComment',
 					'value'	=> $options['buddypress_enableOnComment'],
 					'desc'	=> esc_html__( 'Enable Media in Comment', 'buddypress-media' ),
-					'id'	=> 'rtmedia-bp-enable-comment',
 				),
-				'group'    => 10,
+				'group'    => 660,
 			),
-			'rtmedia-disable-media-in-commented-media'      => array(
+			'rtmedia_disable_media_in_commented_media'      => array(
 				'title'		=> esc_html__( 'Disable upload to Comment Media', 'buddypress-media' ),
 				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'		=> array(
 					'key'	=> 'rtmedia_disable_media_in_commented_media',
 					'value'	=> $options['rtmedia_disable_media_in_commented_media'],
 					'desc'	=> esc_html__( 'Enable Media in Comment', 'buddypress-media' ),
-					'id'	=> 'rtmedia-bp-disable-media-in-commented-media',
 				),
-				'group'    => 10,
+				'group'    => 660,
+				'depends'       => 'buddypress_enableOnComment',
 			),
 			'rtmedia-activity-feed-limit'     => array(
 				'title'		=> esc_html__( 'Number of media items to show in activity stream', 'buddypress-media' ),
@@ -1103,6 +1102,7 @@ class RTMediaFormHandler {
 
 		$general_group		= array();
 		$general_group[10]	= 'Integration With BuddyPress Features';
+		$general_group[660]	= 'Comment Media';
 		$general_group[50]	= 'Album Settings';
 		$general_group		= apply_filters( 'rtmedia_buddypress_setting_group', $general_group );
 
