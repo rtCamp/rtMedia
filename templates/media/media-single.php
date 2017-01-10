@@ -111,15 +111,7 @@
 												</a>
 											</span>
 									<?php }
-									elseif ( isset( $rtmedia_media->activity_id )  && ! empty( $rtmedia_media->activity_id ) ) { ?>
-										<span>
-											<a href="<?php echo bp_activity_get_permalink( $rtmedia_media->activity_id ); ?>"
-											class="rtmedia-view-conversation" >
-												<?php _e( 'View Conversation', 'buddypress-media' ); ?>
-											</a>
-										</span>
-										<?php
-									} ?>
+									?>
 								</div>
 								<div class="rtm-like-comments-info">
 									<?php show_rtmedia_like_counts(); ?>
@@ -164,15 +156,7 @@
 									<span><a href='#'
 									         class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a></span>
 								<?php }
-								elseif ( isset( $rtmedia_media->activity_id )  && ! empty( $rtmedia_media->activity_id ) ) { ?>
-									<span>
-										<a href="<?php echo bp_activity_get_permalink( $rtmedia_media->activity_id ); ?>"
-										class="rtmedia-view-conversation" >
-											<?php _e( 'View Conversation', 'buddypress-media' ); ?>
-										</a>
-									</span>
-									<?php
-								} ?>
+								?>
 							</div>
 
 							<div class="rtm-like-comments-info">

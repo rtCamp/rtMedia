@@ -1752,13 +1752,16 @@ function rtmedia_activity_comment_js_add_media_id(){
 
 			options.beforeSend = function() {
 				if ( originalOptions.data.action == 'new_activity_comment' ) {
-					if( originalOptions.data.form_id != originalOptions.data.comment_id && temp > 0 ){
-						jQuery( '.'+comment_media_wrapper+widget_id ).append('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
-						jQuery( '.'+comment_media_wrapper+widget_id ).removeAttr( 'disabled' );
 
-						rtmedia_comment_media_input_button( widget_id, false );
+					if( typeof rtmedia_disable_media_in_commented_media != 'undefined' && rtmedia_disable_media_in_commented_media == 1 ){
+						if( originalOptions.data.form_id != originalOptions.data.comment_id && temp > 0 ){
+							jQuery( '.'+comment_media_wrapper+widget_id ).append('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_disable_media_in_commented_media_text + ' </p></div>')
+							jQuery( '.'+comment_media_wrapper+widget_id ).removeAttr( 'disabled' );
 
-						return false;
+							rtmedia_comment_media_input_button( widget_id, false );
+
+							return false;
+						}
 					}
 				}
 			};

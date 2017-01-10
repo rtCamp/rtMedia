@@ -3552,3 +3552,24 @@ function rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags ){
 function rtmedia_is_comment_media( $rtmedia_id ){
 	return get_rtmedia_meta( $rtmedia_id, 'rtmedia_comment_media' );
 }
+
+
+
+function rtmedia_actions_before_comments_convesation_callback(){
+	global $rtmedia_media;
+	if ( isset( $rtmedia_media->activity_id )  && ! empty( $rtmedia_media->activity_id ) && function_exists( 'rtmedia_view_conversation_of_media' )  ){
+		rtmedia_view_conversation_of_media( $rtmedia_media->activity_id );
+	}
+}
+add_action( 'rtmedia_actions_before_comments', 'rtmedia_actions_before_comments_convesation_callback', 1000 );
+
+
+function rtmedia_view_conversation_of_media( $activity_id ){ ?>
+	<span>
+		<a href="<?php echo bp_activity_get_permalink( $rtmedia_media->activity_id ); ?>"
+		class="rtmedia-view-conversation" >
+			<?php _e( 'View Conversation', 'buddypress-media' ); ?>
+		</a>
+	</span>
+	<?php
+}
