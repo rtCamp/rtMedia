@@ -144,7 +144,7 @@ class RTMediaBuddyPressActivity {
 			$activity_id = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_NUMBER_INT );
 			$act         = new BP_Activity_Activity( $activity_id );
 
-			if ( 'rtmedia_update' === $act->type ) {
+			if ( 'rtmedia_update' === $act->type && isset( $_REQUEST['rtmedia_disable_media_in_commented_media'] ) &&  ! empty( $_REQUEST['rtmedia_disable_media_in_commented_media'] ) ) {
 				$_POST['comment_id'] = $activity_id;
 			}
 		}

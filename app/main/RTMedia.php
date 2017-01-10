@@ -598,9 +598,6 @@ class RTMedia {
 			}
 		}
 
-		/* Dont allow upload in comment media */
-		$defaults['rtmedia_disable_media_in_commented_media']      = apply_filters( 'rtmedia_disable_media_in_commented_media', 1 );
-
 		/* Privacy */
 		$defaults['privacy_enabled']      = ( isset( $bp_media_options['privacy_enabled'] ) ) ? $bp_media_options['privacy_enabled'] : 0;
 		$defaults['privacy_default']      = ( isset( $bp_media_options['default_privacy_level'] ) ) ? $bp_media_options['default_privacy_level'] : 0;

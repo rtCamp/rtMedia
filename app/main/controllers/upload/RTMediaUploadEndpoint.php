@@ -71,19 +71,20 @@ class RTMediaUploadEndpoint {
 				if( isset( $this->upload['comment_media_activity_id'] ) && ! empty( $this->upload['comment_media_activity_id'] ) ){
 					// if group is public, then set media privacy as 0
 					global $rtmedia;
-					$this->upload['privacy'] = '0';
+					$privacy = '0';
 					if( isset( $rtmedia->options['privacy_enabled'] ) && isset( $rtmedia->options['privacy_default'] ) ){
-						$this->upload['privacy'] = $rtmedia->options['privacy_default'];
+						$privacy = $rtmedia->options['privacy_default'];
 					}
+
+					$album = rtmedia_get_site_option( 'rtmedia-global-albums' );
+					$album_id = $album_id = $album[0];
 
 					$current_media_id = preg_replace( '/[^0-9]/', '', $this->upload['comment_media_activity_id'] );
 
 					if( $current_media_id ){
 						$comment_media = true;
-						$album_id = 1;
-						$privacy = 0;
 						$context = 'profile';
-						$context_id = 1;
+						$context_id = get_current_user_id();
 
 						$media_obj    = new RTMediaMedia();
 						/* search from media id*/
@@ -104,11 +105,9 @@ class RTMediaUploadEndpoint {
 							$media = bp_activity_get_specific(  array( 'activity_ids' => $current_media_id ) );
 
 							if( isset( $media['activities'][0]->component ) ){
-
-								$album = rtmedia_get_site_option( 'rtmedia-global-albums' );
-								$album_id = $album_id = $album[0];
-
-								$context = $media['activities'][0]->component;
+								if( $media['activities'][0]->component != "activity" ){
+									$context = $media['activities'][0]->component;
+								}
 							}
 
 							if( isset( $media['activities'][0]->item_id ) ){
@@ -116,10 +115,13 @@ class RTMediaUploadEndpoint {
 							}
 						}
 
-
 						$this->upload['album_id'] = $album_id;
 						$this->upload['privacy'] = $privacy;
-						$this->upload['context'] = $context.'-reply';
+
+						if( 0 == strrpos( $context , '-reply' ) ){
+							$this->upload['context'] = $context.'-reply';
+						}
+
 						$this->upload['context_id'] = $context_id;
 
 					}

@@ -1735,6 +1735,11 @@ function rtmedia_activity_comment_js_add_media_id(){
 		if ( originalOptions.data.action == 'new_activity_comment' ) {
 			widget_id = 'activity-'+originalOptions.data.form_id
 
+			var rtmedia_disable_media = 1;
+			if( typeof rtmedia_disable_media_in_commented_media != 'undefined' ){
+				rtmedia_disable_media = rtmedia_disable_media_in_commented_media;
+			}
+
 			var temp = jQuery( '.'+comment_media_wrapper+widget_id ).find( 'input[name="rtMedia_attached_files[]"]' ).val();
 
 			if( typeof temp == 'undefined' ){
@@ -1745,6 +1750,7 @@ function rtmedia_activity_comment_js_add_media_id(){
 				temp = 0;
 			}
 			options.data += '&rtMedia_attached_files[]=' + temp;
+			options.data += '&rtmedia_disable_media_in_commented_media=' + rtmedia_disable_media;
 
 			activity_attachemnt_ids = temp;
 
@@ -1753,7 +1759,7 @@ function rtmedia_activity_comment_js_add_media_id(){
 			options.beforeSend = function() {
 				if ( originalOptions.data.action == 'new_activity_comment' ) {
 
-					if( typeof rtmedia_disable_media_in_commented_media != 'undefined' && rtmedia_disable_media_in_commented_media == 1 ){
+					if( rtmedia_disable_media == 1 ){
 						if( originalOptions.data.form_id != originalOptions.data.comment_id && temp > 0 ){
 							jQuery( '.'+comment_media_wrapper+widget_id ).append('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_disable_media_in_commented_media_text + ' </p></div>')
 							jQuery( '.'+comment_media_wrapper+widget_id ).removeAttr( 'disabled' );

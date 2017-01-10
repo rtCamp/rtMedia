@@ -94,6 +94,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$defaults['styles_custom']                   = '';
 			$defaults['styles_enabled']                  = 1;
 
+			/* default value for add media in comment media */
+			$defaults['rtmedia_disable_media_in_commented_media']      = 1;
+
 			if ( isset( $options['general_videothumbs'] ) && is_numeric( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) > 10 ) {
 				$defaults['general_videothumbs'] = 10;
 			}

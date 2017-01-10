@@ -3566,7 +3566,7 @@ add_action( 'rtmedia_actions_before_comments', 'rtmedia_actions_before_comments_
 
 function rtmedia_view_conversation_of_media( $activity_id ){ ?>
 	<span>
-		<a href="<?php echo bp_activity_get_permalink( $rtmedia_media->activity_id ); ?>"
+		<a href="<?php echo bp_activity_get_permalink( $activity_id ); ?>"
 		class="rtmedia-view-conversation" >
 			<?php _e( 'View Conversation', 'buddypress-media' ); ?>
 		</a>

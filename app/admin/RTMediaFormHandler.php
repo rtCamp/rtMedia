@@ -1017,6 +1017,17 @@ class RTMediaFormHandler {
 				),
 				'group'    => 10,
 			),
+			'rtmedia-disable-media-in-commented-media'      => array(
+				'title'		=> esc_html__( 'Disable upload to Comment Media', 'buddypress-media' ),
+				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'		=> array(
+					'key'	=> 'rtmedia_disable_media_in_commented_media',
+					'value'	=> $options['rtmedia_disable_media_in_commented_media'],
+					'desc'	=> esc_html__( 'Enable Media in Comment', 'buddypress-media' ),
+					'id'	=> 'rtmedia-bp-disable-media-in-commented-media',
+				),
+				'group'    => 10,
+			),
 			'rtmedia-activity-feed-limit'     => array(
 				'title'		=> esc_html__( 'Number of media items to show in activity stream', 'buddypress-media' ),
 				'callback'	=> array( 'RTMediaFormHandler', 'number' ),
