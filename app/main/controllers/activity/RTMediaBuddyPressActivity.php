@@ -554,6 +554,7 @@ class RTMediaBuddyPressActivity {
 							'type'         => 'rtmedia_like_activity',
 							'primary_link' => $primary_link,
 							'item_id'      => $media_id,
+							'secondary_item_id'      => $media_id, // Used for when deleting media when it's enter in group not used when media is add in the main activity
 					);
 
 					// set activity component

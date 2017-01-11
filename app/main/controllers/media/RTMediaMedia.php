@@ -370,7 +370,22 @@ class RTMediaMedia {
 
 					// Deleting like and comment activity for media
 					if ( function_exists( 'bp_activity_delete' ) ) {
-						bp_activity_delete( array( 'item_id' => $media[0]->id ) );
+						/* if the media type is group or profile( activity ) */
+						if( isset( $media[0]->context ) && ( 'group' == $media[0]->context || 'group-reply' == $media[0]->context ) ){
+
+							/* only delete the activity that is being like in the group */
+							bp_activity_delete(
+								array(
+									'type ' => 'rtmedia_like_activity' ,
+									'item_id' => $media[0]->context_id ,
+									'secondary_item_id' => $media[0]->id ,
+								)
+							);
+
+						}else{
+							/* any other context type */
+							bp_activity_delete( array( 'item_id' => $media[0]->id ) );
+						}
 					}
 				}
 			}
