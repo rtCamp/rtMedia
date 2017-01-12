@@ -188,7 +188,21 @@ class RTMediaGalleryShortcode {
 				if ( ! isset( $attr['attr']['context'] ) && isset( $post->post_type ) ) {
 					$attr['attr']['context'] = $post->post_type;
 				}
+			}// End if().
+
+			// Set template according to media type
+			if ( is_rtmedia_album_gallery() || 'album' === $attr['attr']['media_type'] ) {
+				$template_url = esc_url( add_query_arg( array(
+					'action'   => 'rtmedia_get_template',
+					'template' => 'album-gallery-item',
+				), admin_url( 'admin-ajax.php' ) ), null, '' );
+			} else {
+				$template_url = esc_url( add_query_arg( array(
+					'action'   => 'rtmedia_get_template',
+					'template' => apply_filters( 'rtmedia_backbone_template_filter', 'media-gallery-item' ),
+				), admin_url( 'admin-ajax.php' ) ), null, '' );
 			}
+			wp_localize_script( 'rtmedia-backbone', 'template_url', $template_url );
 
 			if ( $authorized_member ) {  // if current user has access to view the gallery (when context is 'group')
 				global $rtmedia_query;
@@ -201,14 +215,14 @@ class RTMediaGalleryShortcode {
 
 				$template         = new RTMediaTemplate();
 				$gallery_template = false;
-				if ( isset( $attr['attr']['global'] ) && true === $attr['attr']['global'] ) {
+				if ( isset( $attr['attr']['global'] ) && true === (bool) $attr['attr']['global'] ) {
 					add_filter( 'rtmedia-model-where-query', array(
 						'RTMediaGalleryShortcode',
 						'rtmedia_query_where_filter',
 					), 10, 3 );
 				}
 				$template->set_template( $gallery_template, $attr );
-				if ( isset( $attr['attr']['global'] ) && true === $attr['attr']['global'] ) {
+				if ( isset( $attr['attr']['global'] ) && true === (bool) $attr['attr']['global'] ) {
 					remove_filter( 'rtmedia-model-where-query', array(
 						'RTMediaGalleryShortcode',
 						'rtmedia_query_where_filter',
@@ -220,7 +234,7 @@ class RTMediaGalleryShortcode {
 			}
 
 			return ob_get_clean();
-		}
+		}// End if().
 	}
 
 	// for gallery shortcode having attribute global as true, include all media except ones having context as "group"
@@ -230,6 +244,3 @@ class RTMediaGalleryShortcode {
 		return $where;
 	}
 }
-
-
-//This issue has been fixed earlier. Closing this issue now.
