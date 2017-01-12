@@ -384,7 +384,7 @@ class RTMediaFormHandler {
 		$render_options		= apply_filters( 'rtmedia_display_content_add_itmes', $render_options, $options );
 		$general_group		= array();
 		$general_group[10]	= esc_html__( 'Single Media View', 'buddypress-media' );
-		$general_group[11]	= esc_html__( 'User\'s Like Page', 'buddypress-media' );
+		$general_group[11]	= esc_html__( 'Media Likes', 'buddypress-media' );
 		$general_group[15]	= esc_html__( 'List Media View', 'buddypress-media' );
 		$general_group[18]	= esc_html__( 'Masonry View', 'buddypress-media' );
 		$general_group[19]	= esc_html__( 'Direct Upload', 'buddypress-media' );
