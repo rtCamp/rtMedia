@@ -298,12 +298,12 @@ class RTMediaFormHandler {
 				'group'    => '10',
 			),
 			'general_enableLikes' => array(
-				'title'    => __( 'Enable likes for media', 'rtmedia' ),
+				'title'    => __( 'Enable likes for media', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args' => array(
 					'key' => 'general_enableLikes',
 					'value' => $options['general_enableLikes'],
-					'desc' => __( 'You may want to disable like feature if you had enabled rating feature.', 'rtmedia' ),
+					'desc' => __( 'You may want to disable like feature if you had enabled rating feature.', 'buddypress-media' ),
 				),
 				'group' => '11',
 			),
