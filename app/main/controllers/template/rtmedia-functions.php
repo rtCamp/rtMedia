@@ -46,6 +46,28 @@ function rtmedia() {
 }
 
 /**
+ * echo the number of media in particular album
+ *
+ * @global      array       $rtmedia_backbone
+ * @global      object      $rtmedia_media
+ *
+ * @return      number
+ */
+function rtmedia_album_mediacounter() {
+
+	global $rtmedia_backbone;
+
+	if ( $rtmedia_backbone['backbone'] ) {
+		echo '<%= media_count %>';
+	} else {
+		global $rtmedia_media;
+
+		return rtm_get_album_media_count( $rtmedia_media->id );
+	}
+
+}
+
+/**
  * echo the title of the media
  *
  * @global      array       $rtmedia_backbone
