@@ -297,6 +297,16 @@ class RTMediaFormHandler {
 				),
 				'group'    => '10',
 			),
+			'general_enableLikes' => array(
+				'title'    => __( 'Enable likes for media', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'general_enableLikes',
+					'value' => $options['general_enableLikes'],
+					'desc' => __( 'You may want to disable like feature if you had enabled rating feature.', 'rtmedia' ),
+				),
+				'group' => '11',
+			),
 			'general_enableLightbox' => array(
 				'title'    => esc_html__( 'Use lightbox to display media', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
@@ -374,6 +384,7 @@ class RTMediaFormHandler {
 		$render_options		= apply_filters( 'rtmedia_display_content_add_itmes', $render_options, $options );
 		$general_group		= array();
 		$general_group[10]	= esc_html__( 'Single Media View', 'buddypress-media' );
+		$general_group[11]	= esc_html__( 'User\'s Like Page', 'buddypress-media' );
 		$general_group[15]	= esc_html__( 'List Media View', 'buddypress-media' );
 		$general_group[18]	= esc_html__( 'Masonry View', 'buddypress-media' );
 		$general_group[19]	= esc_html__( 'Direct Upload', 'buddypress-media' );
