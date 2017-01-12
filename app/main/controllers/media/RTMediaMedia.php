@@ -376,11 +376,44 @@ class RTMediaMedia {
 							/* only delete the activity that is being like in the group */
 							bp_activity_delete(
 								array(
+									'component ' => 'groups' ,
 									'type ' => 'rtmedia_like_activity' ,
 									'item_id' => $media[0]->context_id ,
 									'secondary_item_id' => $media[0]->id ,
 								)
 							);
+
+
+							$args = array(
+								'post_id' => $media[0]->media_id,
+							);
+							$comments = get_comments( $args );
+
+							$delete_ca = false;
+							if( is_array( $comments ) && ! empty( $comments ) ){
+								foreach ($comments as $comment) {
+									$comment_id = $comment->comment_ID;
+									$user_id = $comment->user_id;
+									$meta_key = 'rtm-bp-media-comment-activity-' . $media[0]->id . '-' . $comment_id;
+
+									// Delete activity when user remove his comment.
+									//todo user_attribute
+									$activity_id = get_user_meta( $user_id, $meta_key, true );
+
+									/* only delete the activity that is being like in the group */
+									$delete_ca = bp_activity_delete(
+										array(
+											'component ' => 'groups' ,
+											'type ' => 'rtmedia_comment_activity' ,
+											'id' => $activity_id
+										)
+									);
+
+									if( $delete_ca ){
+										delete_user_meta( $user_id, $meta_key );
+									}
+								}
+							}
 
 						}else{
 							/* any other context type */
