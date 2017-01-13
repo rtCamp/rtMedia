@@ -3563,3 +3563,13 @@ function rtmedia_view_conversation_of_media( $activity_id ){ ?>
 	</span>
 	<?php
 }
+
+
+
+
+function rtmedia_get_comments_details_for_media_id( $media_id ){
+	$args = array(
+		'post_id' => $media_id,
+	);
+	return get_comments( $args );
+}

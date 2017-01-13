@@ -383,11 +383,8 @@ class RTMediaMedia {
 								)
 							);
 
-
-							$args = array(
-								'post_id' => $media[0]->media_id,
-							);
-							$comments = get_comments( $args );
+							/* rtMedia get the media comment details */
+							$comments = rtmedia_get_comments_details_for_media_id( $media[0]->media_id );
 
 							$delete_ca = false;
 							if( is_array( $comments ) && ! empty( $comments ) ){
