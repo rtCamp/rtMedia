@@ -1172,7 +1172,7 @@ function rtmedia_comments( $echo = true ) {
 	global $rtmedia_media;
 
 	/* check is comment media */
-	$comment_media = rtmedia_is_comment_media( rtmedia_id() );
+	$comment_media = rtmedia_is_comment_media_single_page( rtmedia_id() );
 
 	$html = "";
 
@@ -1846,7 +1846,7 @@ function get_video_without_thumbs() {
 function rtmedia_comment_form() {
 
 	/* check is comment media */
-	$comment_media = rtmedia_is_comment_media( rtmedia_id() );
+	$comment_media = rtmedia_is_comment_media_single_page( rtmedia_id() );
 
 	if ( is_user_logged_in() && empty( $comment_media ) ) {
 		?>
@@ -3551,6 +3551,19 @@ function rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags ){
 */
 function rtmedia_is_comment_media( $rtmedia_id ){
 	return get_rtmedia_meta( $rtmedia_id, 'rtmedia_comment_media' );
+}
+
+
+
+function rtmedia_is_comment_media_single_page( $rtmedia_id ){
+	$comment_media = false;
+	global $rtmedia;
+	
+	/* check if the reply in comment media is not allow */
+	if( $rtmedia_id && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 1 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+		$comment_media = rtmedia_is_comment_media( $rtmedia_id );
+	}
+	return $comment_media;
 }
 
 

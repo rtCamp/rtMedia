@@ -781,3 +781,25 @@ function rtmedia_actions_before_comments_convesation_callback(){
 	}
 }
 add_action( 'rtmedia_actions_before_comments', 'rtmedia_actions_before_comments_convesation_callback', 1000 );
+
+
+
+
+
+
+function rtmedia_actions_before_comments_links_callback(){ 
+	/* check is comment media */
+    $comment_media = false;
+    if( function_exists( 'rtmedia_is_comment_media_single_page' ) ){
+        $comment_media = rtmedia_is_comment_media_single_page( rtmedia_id() );
+    }	
+
+    /* if user is login and is not comment media */
+    if( is_user_logged_in() && empty( $comment_media ) ){ ?>
+		<span>
+			<a href='#' class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a>
+		</span>
+    <?php
+    }
+}
+add_action( 'rtmedia_actions_before_comments', 'rtmedia_actions_before_comments_links_callback', 11 );

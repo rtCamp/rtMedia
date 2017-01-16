@@ -7,10 +7,6 @@
 		if ( have_rtmedia() ) : rtmedia();
 
 			global $rtmedia_media;
-
-			/* check is comment media */
-			$comment_media = rtmedia_is_comment_media( rtmedia_id() );
-
 			$type = ! empty( $rtmedia_media->media_type ) ? $rtmedia_media->media_type : 'none';
 			?>
 			<div id="rtmedia-single-media-container"
@@ -101,17 +97,7 @@
 						<?php if ( rtmedia_comments_enabled() ) { ?>
 							<div class="rtmedia-item-comments">
 								<div class="rtmedia-actions-before-comments clearfix">
-
 									<?php do_action( 'rtmedia_actions_before_comments' ); ?>
-
-									<?php if ( is_user_logged_in() && empty( $comment_media )  ) { ?>
-											<span>
-												<a href='#' class='rtmedia-comment-link'>
-													<?php esc_html_e( 'Comment', 'buddypress-media' ); ?>
-												</a>
-											</span>
-									<?php }
-									?>
 								</div>
 								<div class="rtm-like-comments-info">
 									<?php show_rtmedia_like_counts(); ?>
@@ -152,11 +138,6 @@
 						<div class="rtmedia-item-comments">
 							<div class="rtmedia-actions-before-comments clearfix">
 								<?php do_action( 'rtmedia_actions_before_comments' ); ?>
-								<?php if ( is_user_logged_in() && empty( $comment_media ) ) { ?>
-									<span><a href='#'
-									         class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a></span>
-								<?php }
-								?>
 							</div>
 
 							<div class="rtm-like-comments-info">
@@ -175,7 +156,7 @@
 
 					<?php } ?>
 				<?php } ?>
-
+				
 				<?php do_action( 'rtmedia_actions_after_comments_form' ); ?>
 			</div>
 			</div>
