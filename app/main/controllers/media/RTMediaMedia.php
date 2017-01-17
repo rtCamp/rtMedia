@@ -248,11 +248,15 @@ class RTMediaMedia {
 		$media       = $media_model->get( array( 'id' => $id ) );
 
 		if ( ! empty( $media ) ) {
+			$media_ids_of_activity = array();
 			$rtmedia_activity_model = new RTMediaActivityModel();
 			$similar_media          = $media_model->get( array( 'activity_id' => $media[0]->activity_id ) );
 			$max_privacy            = 0;
 
 			foreach ( $similar_media as $s_media ) {
+				/* get all the media ids in the activity */
+				$media_ids_of_activity[] = $s_media->id;
+
 				if ( $s_media->privacy > $max_privacy ) {
 					$max_privacy = $s_media->privacy;
 				}
@@ -271,6 +275,9 @@ class RTMediaMedia {
 					'privacy'     => $max_privacy,
 				), array( 'activity_id' => $media[0]->activity_id ) );
 			}
+
+			/* is the activate has any media then move the like and comment of that media to for the privacy */
+			$rtmedia_activity_model->profile_activity_update( $media_ids_of_activity, $max_privacy );
 		}
 
 		/* action to perform any task after updating a media */

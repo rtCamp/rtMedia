@@ -43,13 +43,45 @@ class RTMediaActivityModel extends RTDBModel {
 			'activity_id' => $activity_id,
 			'blog_id'     => get_current_blog_id(),
 		);
-
 		$results = $this->get( $columns );
 
 		if ( $results ) {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	
+	/**
+	 * Update the Privacy setting of the Profile Media Activity Type of Media.
+	 *
+	 * Update all the Privacy Setting of the Media that has Comment and link on it of which an activity is being created 
+	 *
+	 * @since 4.3
+	 *
+	 * @param array $media_ids_of_activity List of all the Media Id that is being updated.
+	 * @param int $privacy Privacy to set.
+	 */
+	public function profile_activity_update( $media_ids_of_activity = array(), $privacy ){
+		foreach ($media_ids_of_activity as $media_id_of_activity) {
+			// Get all the activities from item_id.
+			$activity_parents = bp_activity_get( array( 'filter' => array( 'primary_id' =>$media_id_of_activity ) ) );
+
+			/* if has activity */
+			if ( !empty( $activity_parents['activities'] ) ) {
+				foreach( $activity_parents['activities'] as $parent ) {
+
+					bp_activity_update_meta( $parent->id, 'rtmedia_privacy', $privacy );
+
+					/* check is value exits or not */
+					if ( ! $this->check( $parent->id ) ) {
+						$this->insert( array( 'activity_id' => $parent->id, 'user_id' => $parent->user_id, 'privacy' => $privacy ) );
+					} else {
+						$this->update( array( 'activity_id' => $parent->id, 'user_id' => $parent->user_id, 'privacy' => $privacy ), array( 'activity_id' => $parent->id ) );
+					}
+				}
+			}
 		}
 	}
 }
