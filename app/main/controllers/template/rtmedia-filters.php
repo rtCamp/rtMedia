@@ -797,7 +797,7 @@ function rtmedia_actions_before_comments_links_callback(){
     /* if user is login and is not comment media */
     if( is_user_logged_in() && empty( $comment_media ) ){ ?>
 		<span>
-			<a href='#' class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a>
+			<a href='#' class='rtmedia-comment-link rtmedia-comments-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a>
 		</span>
     <?php
     }

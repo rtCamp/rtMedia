@@ -1626,6 +1626,14 @@ form.rt_media_comment_form .rtmedia-plupload-container {
   text-decoration: underline;
 }
 
+a.rtmedia-comment-link {
+  display: none;
+}
+
+a.rtmedia-comment-link.rtmedia-comments-link {
+  display: initial;
+}
+
 .rtmedia-album-edit .rtm-checkbox-wrap {
   background: rgba(255, 255, 255, 0.9);
   height: 30px;

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.2.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-01-17 06:12:17+00:00\n"
+"POT-Creation-Date: 2017-01-17 09:09:39+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -329,7 +329,7 @@ msgid "rtMedia Privacy"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1428
-#: app/main/controllers/privacy/RTMediaPrivacy.php:417
+#: app/main/controllers/privacy/RTMediaPrivacy.php:424
 msgid "Privacy"
 msgstr ""
 
@@ -2630,7 +2630,7 @@ msgid "Group Admin only"
 msgstr ""
 
 #: app/main/controllers/group/RTMediaGroupExtension.php:130
-#: app/main/controllers/privacy/RTMediaPrivacy.php:409
+#: app/main/controllers/privacy/RTMediaPrivacy.php:416
 #: templates/media/album-single-edit.php:55
 msgid "Save Changes"
 msgstr ""
@@ -2773,27 +2773,27 @@ msgstr ""
 msgid " to login."
 msgstr ""
 
-#: app/main/controllers/media/RTMediaMedia.php:590
+#: app/main/controllers/media/RTMediaMedia.php:597
 msgid "Error creating attachment for the media file, please try again"
 msgstr ""
 
-#: app/main/controllers/media/RTMediaMedia.php:705
+#: app/main/controllers/media/RTMediaMedia.php:712
 msgid "%1$s added a %2$s"
 msgstr ""
 
-#: app/main/controllers/media/RTMediaMedia.php:705
+#: app/main/controllers/media/RTMediaMedia.php:712
 msgid "%1$s added %4$d %3$s"
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:371
+#: app/main/controllers/privacy/RTMediaPrivacy.php:378
 msgid "No changes were made to your account."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:374
+#: app/main/controllers/privacy/RTMediaPrivacy.php:381
 msgid "Your default privacy settings saved successfully."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:398
+#: app/main/controllers/privacy/RTMediaPrivacy.php:405
 msgid "Default Privacy"
 msgstr ""
 
