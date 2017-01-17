@@ -2046,6 +2046,19 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 					upl.removeFile( upl.getFile( rfile ) );
 				}
 			} );
+
+			rtMediaHook.call( 'rtmedia_js_after_files_added', [ upl, rfiles ] );
+
+			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
+				
+				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+				if ( allow_upload == false ) {
+					return false;
+				}
+
+				/* when direct upload is enable */
+				jQuery( '.'+rtmedia_comment_media_submit+widget_id ).trigger( 'click' );
+			}
         });
 
 
