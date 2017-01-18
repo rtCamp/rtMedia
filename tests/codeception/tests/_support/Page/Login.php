@@ -4,22 +4,11 @@ namespace Page;
 class Login
 {
 
-    /**
-     * Declare UI map for this page here. CSS or XPath allowed.
-     * public static $usernameField = '#username';
-     * public static $formSubmitButton = "#mainForm input[type=submit]";
-     */
+     public static $wpUserNameField = 'input#user_login';
+     public static $wpPasswordField = 'input#user_pass';
+     public static $wpSubmitButton = 'input#wp-submit';
+     public static $loginLink = 'li#wp-admin-bar-bp-login';
 
-     public static $userNameField = 'input#bp-login-widget-user-login';
-     public static $passwordField = 'input#bp-login-widget-user-pass';
-     public static $loginButton = 'input#bp-login-widget-submit';
-     public static $titleTag = 'rtMedia Demo Site';
-
-    /**
-     * Basic route example for your current URL
-     * You can append any additional parameter to URL
-     * and use it in tests like: Page\Edit::route('/123-post');
-     */
     public static function route($param)
     {
         return static::$URL.$param;
@@ -44,6 +33,35 @@ class Login
 
         return $this;
 
+    }
+
+    public function loginAsAdmin($wpUserName,$wpPassword)
+    {
+        $I = $this->tester;
+        $I->amOnPage('/');
+        $I->wait(5);
+
+        $I->seeElementInDOM(self::$loginLink);
+        $I->click(self::$loginLink);
+        $I->wait(10);
+
+        $I->seeElementInDOM(self::$wpUserNameField);
+        $I->fillfield(self::$wpUserNameField,$wpUserName);
+
+        $I->seeElementInDOM(self::$wpPasswordField);
+        $I->fillfield(self::$wpPasswordField,$wpPassword);
+
+        $I->seeElementInDOM(self::$wpSubmitButton);
+        $I->click(self::$wpSubmitButton);
+        $I->wait(5);
+
+        $I->amOnPage('/wp-admin');
+        $I->wait(5);
+
+        $I->see('Dashboard');
+        $I->maximizeWindow();
+
+        return $this;
     }
 
 }
