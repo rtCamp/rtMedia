@@ -48,7 +48,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 	function rtmedia_check_enable_disable_like( $enable_like ) {
 		global $rtmedia;
 		$options = $rtmedia->options;
-		if ( isset( $options['general_enableLikes'] ) && ( '1' == $options['general_enableLikes'] ) ) {
+		if ( ( isset( $options['general_enableLikes'] ) && '1' == $options['general_enableLikes'] ) || ! isset( $options['general_enableLikes'] ) ) {
 			return true;
 		} else {
 			return false;
