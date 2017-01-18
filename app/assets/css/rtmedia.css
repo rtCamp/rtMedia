@@ -93,6 +93,13 @@
   width: 100%;
 }
 
+#buddypress #whats-new-form .rtmedia-uploader-div {
+  display: none;
+}
+#buddypress #whats-new-form #whats-new-options .rtmedia-uploader-div {
+  display: block;
+}
+
 #buddypress #whats-new-options {
   height: auto !important;
   overflow: hidden;
