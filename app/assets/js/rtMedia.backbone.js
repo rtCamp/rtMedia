@@ -1573,6 +1573,7 @@ jQuery(document).ready(function($) {
 	rtmedia_comment_media_single_page();
 	rtmedia_activity_comment_js_add_media_id();
 	rtmedia_activity_stream_comment_media();
+	rtmedia_buddypress_load_newest_button_click();
 });
 
 
@@ -1809,6 +1810,17 @@ function rtmedia_activity_comment_js_add_media_id(){
 			};
 		}
 	} );
+}
+
+
+function rtmedia_buddypress_load_newest_button_click(){
+	jQuery( 'body #buddypress' ).on('click', 'ul.activity-list li.load-newest a', function(e) {
+		e.preventDefault();
+		/* add the popup to the images */
+		rtmedia_apply_popup_to_media();
+		/* add the uplaod button to the new activity */
+		rtmedia_activity_stream_comment_media();
+	});
 }
 
 

@@ -272,6 +272,10 @@ jQuery( 'document' ).ready( function( $ ) {
 					defaultVideoHeight: 270
 				} );
 
+				setTimeout( function() {
+					rtmedia_activity_stream_comment_media();
+				}, 900 );
+
 				rtMediaHook.call( 'rtmedia_js_after_activity_added', [ ] );
 			};
 		}
