@@ -3560,7 +3560,7 @@ function rtmedia_is_comment_media_single_page( $rtmedia_id ){
 	global $rtmedia;
 	
 	/* check if the reply in comment media is not allow */
-	if( $rtmedia_id && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 1 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+	if( $rtmedia_id && ! rtmedia_check_comment_in_commented_media_allow() ){
 		$comment_media = rtmedia_is_comment_media( $rtmedia_id );
 	}
 	return $comment_media;
@@ -3585,4 +3585,34 @@ function rtmedia_get_comments_details_for_media_id( $media_id ){
 		'post_id' => $media_id,
 	);
 	return get_comments( $args );
+}
+
+
+/**
+  * Is comment allow in Commented Media 
+ **/
+function rtmedia_check_comment_in_commented_media_allow(){
+    $value = false;
+    global $rtmedia;
+    /* variable */
+    if( isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+        $value = true;
+    }
+    return $value;
+}
+
+
+
+
+/**
+  * Is comment allow in Commented Media 
+ **/
+function rtmedia_check_comment_media_allow(){
+    $value = false;
+    global $rtmedia;
+    /* variable */
+    if( ( isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ){
+        $value = true;
+    }
+    return $value;
 }

@@ -315,7 +315,7 @@ class RTMedia {
 		}
 		<?php
 		global $rtmedia;
-		if ( isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 1 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) { ?>
+		if ( rtmedia_check_comment_media_allow() && ! rtmedia_check_comment_in_commented_media_allow() ) { ?>
 				#buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-comment-media-upload,#buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-container {
 				    display: none !important
 				}
@@ -1201,10 +1201,15 @@ class RTMedia {
 			$rtmedia_extns[ $allowed_types_key ] = $allowed_types_value['extn'];
 		}
 
+		$rtmedia_disable_media = "1";
+		/* if the  rtmedia option does have value pick from there*/
 		if( isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) ){
-			wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media', $rtmedia->options['rtmedia_disable_media_in_commented_media'] );
+			$rtmedia_disable_media = $rtmedia->options['rtmedia_disable_media_in_commented_media'];
 		}
+		wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media', $rtmedia_disable_media );
+
 		wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media_text', esc_html__( 'Adding media in Comments is not allowed', 'buddypress-media' ) );
+		
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_exteansions', $rtmedia_extns );
 		wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_comment', $params );
 		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( '/images/loading.gif' ) );

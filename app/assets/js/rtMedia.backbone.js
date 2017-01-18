@@ -1684,6 +1684,20 @@ function rtmedia_uploaded_media_edit_disable( widget_id, $value ){
 	}
 }
 
+function rtmedia_disable_comment_textbox( widget_id, value ){
+	var form_class = '.'+comment_media_wrapper+widget_id;
+	if( jQuery( form_class ).length > 0 ){
+		comment_string = jQuery( form_class ).find( 'textarea' ).val();
+		if( comment_string.includes( '&nbsp;' ) ){
+			jQuery( form_class ).find('textarea.ac-input').val( '' );
+		}
+
+		jQuery( form_class ).find( 'textarea' ).prop('disabled', value );
+		jQuery( form_class ).find( 'textarea' ).css( 'color', '' );
+	}
+}
+
+
 function rtmedia_comment_media_textbox_val( widget_id, $value ){
 	var form_class = '.'+comment_media_wrapper+widget_id;
 	if( jQuery( form_class ).length > 0 ){
@@ -1766,6 +1780,8 @@ function rtmedia_activity_comment_js_add_media_id(){
 							jQuery( '.'+comment_media_wrapper+widget_id ).removeAttr( 'disabled' );
 
 							rtmedia_comment_media_input_button( widget_id, false );
+
+							rtmedia_disable_comment_textbox( widget_id, false );
 
 							return false;
 						}
