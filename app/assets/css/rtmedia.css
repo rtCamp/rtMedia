@@ -1481,6 +1481,9 @@ img.mfp-img {
   border-bottom: 0;
   padding-bottom: 0;
 }
+#buddypress #activity-stream .rtmedia_update .activity-content ul.rtmedia-list.has_masonry li {
+  padding: 5px;
+}
 
 .rtmedia-activity-container .rtmedia-item-actions {
   display: none;
