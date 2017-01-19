@@ -607,9 +607,9 @@ jQuery( 'document' ).ready( function( $ ) {
 		} );
 	}
 
-	//    Masonry code
-	if ( typeof buddypress_enableMasonryActivity != 'undefined' && buddypress_enableMasonryActivity == '1' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
-		rtm_masonry_container = jQuery( '.rtmedia-activity-container .rtmedia-list, .rtmedia-container .rtmedia-list' );
+//    Masonry code
+	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+		rtm_masonry_container = jQuery( '.rtmedia-container .rtmedia-list' );
 		rtm_masonry_container.masonry( {
 			itemSelector: '.rtmedia-list-item'
 		} );
@@ -961,5 +961,12 @@ function rtmedia_check_number_of_media_in_single_activity( html ){
 
 function rtmedia_add_masonry_to_single_activity( html ){
 	jQuery( html ).find( activity_ul ).addClass('has_masonry masonry');
-	rtm_masonry_reload( activity_ul );
+	rtmedia_add_masonry_effect( jQuery( html ).find( activity_ul ) );
+}
+
+
+function rtmedia_add_masonry_effect( html ){
+	jQuery( html ).masonry( {
+		itemSelector: '.rtmedia-list-item'
+	} );	
 }
