@@ -1,5 +1,4 @@
 <?php
-
 /*
   Plugin Name: rtMedia for WordPress, BuddyPress and bbPress
   Plugin URI: https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
