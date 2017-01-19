@@ -1,14 +1,14 @@
-# Copyright (C) 2016 rtCamp
+# Copyright (C) 2017 rtCamp
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.2.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-12-28 11:45:03+00:00\n"
+"POT-Creation-Date: 2017-01-19 09:50:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
 "Last-Translator: rtMedia <rtmedia@rtcamp.com>\n"
 "Language-Team: rtMedia <rtmedia@rtcamp.com>\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
@@ -139,7 +139,7 @@ msgstr ""
 
 #: app/admin/RTMediaAdmin.php:714 app/admin/RTMediaAdmin.php:770
 #: app/admin/RTMediaAdmin.php:773 app/admin/RTMediaAdmin.php:936
-#: app/admin/RTMediaAdmin.php:1299 app/helper/RTMediaSettings.php:241
+#: app/admin/RTMediaAdmin.php:1299 app/helper/RTMediaSettings.php:242
 #: app/helper/RTMediaSupport.php:67 app/helper/RTMediaSupport.php:68
 msgid "Support"
 msgstr ""
@@ -401,7 +401,7 @@ msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1563 app/admin/RTMediaAdmin.php:1581
 #: app/admin/RTMediaAdmin.php:1599 app/admin/RTMediaFormHandler.php:435
-#: app/admin/RTMediaFormHandler.php:446 app/helper/RTMediaSettings.php:317
+#: app/admin/RTMediaFormHandler.php:446 app/helper/RTMediaSettings.php:318
 #: app/helper/RTMediaSupport.php:416 app/helper/RTMediaSupport.php:694
 msgid "here"
 msgstr ""
@@ -653,7 +653,7 @@ msgstr ""
 msgid "Media Types Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:557 app/helper/RTMediaSettings.php:339
+#: app/admin/RTMediaFormHandler.php:557 app/helper/RTMediaSettings.php:340
 msgid "Media Type"
 msgstr ""
 
@@ -828,10 +828,18 @@ msgid "Enabling this setting will create BuddyPress activity for media comments.
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1055
+msgid "Enable Masonry in Activity & Group"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1060
+msgid "Enable Masonry grid on Activity & Group stream"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1066
 msgid "Organize media into albums"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1061
+#: app/admin/RTMediaFormHandler.php:1072
 msgid ""
 "This will add 'album' tab to BuddyPress profile and group depending on the "
 "^above^ settings."
@@ -1358,73 +1366,73 @@ msgstr ""
 msgid "other friends liked your"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:236
+#: app/helper/RTMediaSettings.php:237
 msgid "BuddyPress Media Addons for Photos"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:246
+#: app/helper/RTMediaSettings.php:247
 msgid "rtMedia Themes"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:316
+#: app/helper/RTMediaSettings.php:317
 msgid ""
 "Currently your network allows uploading of the following file types. You "
 "can change the settings %s"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:337 app/helper/RTMediaSettings.php:339
+#: app/helper/RTMediaSettings.php:338 app/helper/RTMediaSettings.php:340
 msgid "Atleast one Media Type Must be selected"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:348 app/helper/RTMediaSettings.php:350
+#: app/helper/RTMediaSettings.php:349 app/helper/RTMediaSettings.php:351
 msgid "\"Number of media\" count value should be numeric and greater than 0."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:350
+#: app/helper/RTMediaSettings.php:351
 msgid "Default Count"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:355
+#: app/helper/RTMediaSettings.php:356
 msgid "Settings saved."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:379
+#: app/helper/RTMediaSettings.php:380
 msgid "If you make changes to width, height or crop settings, you must use "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:380
+#: app/helper/RTMediaSettings.php:381
 msgid "Regenerate Thumbnail Plugin"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:381
+#: app/helper/RTMediaSettings.php:382
 msgid " to regenerate old images."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:404
+#: app/helper/RTMediaSettings.php:405
 msgid "BuddyPress Media 2.6 requires a database upgrade. "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:405
+#: app/helper/RTMediaSettings.php:406
 msgid "Update Database"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:419
+#: app/helper/RTMediaSettings.php:420
 msgid ""
 "If your site has some issues due to rtMedia and you want one on one support "
 "then you can create a support topic on the "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:420
+#: app/helper/RTMediaSettings.php:421
 msgid "rtMedia Support Forum"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:422
+#: app/helper/RTMediaSettings.php:423
 msgid ""
 "If you have any suggestions, enhancements or bug reports, then you can open "
 "a new issue on "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:423 app/helper/RTMediaSupport.php:467
+#: app/helper/RTMediaSettings.php:424 app/helper/RTMediaSupport.php:467
 msgid "GitHub"
 msgstr ""
 
@@ -2315,7 +2323,7 @@ msgstr ""
 msgid "file deleted successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1086
+#: app/main/RTMedia.php:1093
 msgid "There are some uploads in progress. Do you want to cancel them?"
 msgstr ""
 
@@ -2767,7 +2775,7 @@ msgstr ""
 msgid "Default Privacy"
 msgstr ""
 
-#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:216
+#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:217
 msgid "You do not have sufficient privileges to view this gallery"
 msgstr ""
 
@@ -2792,22 +2800,22 @@ msgid "Data mismatch, Please insert data properly."
 msgstr ""
 
 #: app/main/controllers/template/RTMediaTemplate.php:109
-#: app/main/controllers/template/RTMediaTemplate.php:160
+#: app/main/controllers/template/RTMediaTemplate.php:163
 msgid "Invalid attribute passed for rtmedia_gallery shortcode."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:352
-#: app/main/controllers/template/RTMediaTemplate.php:445
-#: app/main/controllers/template/RTMediaTemplate.php:543
-#: app/main/controllers/template/RTMediaTemplate.php:683
+#: app/main/controllers/template/RTMediaTemplate.php:355
+#: app/main/controllers/template/RTMediaTemplate.php:448
+#: app/main/controllers/template/RTMediaTemplate.php:546
+#: app/main/controllers/template/RTMediaTemplate.php:686
 msgid "Ooops !!! Invalid access. No nonce was found !!"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:359
+#: app/main/controllers/template/RTMediaTemplate.php:362
 msgid "Media updated Sucessfully"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:365
+#: app/main/controllers/template/RTMediaTemplate.php:368
 msgid "Error in updating Media"
 msgstr ""
 

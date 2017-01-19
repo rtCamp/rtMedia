@@ -681,6 +681,9 @@ jQuery( 'document' ).ready( function( $ ) {
 			} );
 		}
 	} );
+
+	rtmedia_add_masonry_in_stream();
+
 } );
 
 //Legacy media element for old activities
@@ -921,4 +924,12 @@ function rtmedia_gallery_action_alert_message( msg, action ) {
 	jQuery( '.rtmedia-gallery-message-box' ).click( function() {
 		jQuery( '.rtmedia-gallery-alert-container' ).remove();
 	} );
+}
+
+
+
+function rtmedia_add_masonry_in_stream(){
+	if( typeof buddypress_enableMasonryActivity != undefined && 1 == buddypress_enableMasonryActivity ){
+		
+	}	
 }

@@ -1083,6 +1083,13 @@ class RTMedia {
 			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', '0' );
 		}
 
+		/* Mansory in Activity is enable or not   */
+		$enableMasonryActivity = "0";
+		if( isset( $rtmedia->options[ 'buddypress_enableMasonryActivity' ] ) ){
+			$enableMasonryActivity = ( string ) $rtmedia->options[ 'buddypress_enableMasonryActivity' ];
+		}
+		wp_localize_script( 'rtmedia-backbone', 'buddypress_enableMasonryActivity', $enableMasonryActivity );
+
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_upload_progress_error_message', esc_html__( 'There are some uploads in progress. Do you want to cancel them?', 'buddypress-media' ) );
 
 		// localise media size config
