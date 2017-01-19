@@ -90,6 +90,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$defaults['buddypress_enableNotification']   = 0;
 			$defaults['buddypress_mediaLikeActivity']    = 0;
 			$defaults['buddypress_mediaCommentActivity'] = 0;
+			$defaults['buddypress_enableMasonryActivity'] = 0;
 			$defaults['styles_custom']                   = '';
 			$defaults['styles_enabled']                  = 1;
 
