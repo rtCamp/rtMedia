@@ -264,6 +264,8 @@ jQuery( 'document' ).ready( function( $ ) {
 				} );
 
 				rtMediaHook.call( 'rtmedia_js_after_activity_added', [ ] );
+
+				rtmedia_add_masonry_in_stream();
 			};
 		}
 	} );
@@ -933,11 +935,13 @@ var activity_ul = '.activity-content ul.rtmedia-list';
 var activity_li = activity_ul+' li';
 function rtmedia_add_masonry_in_stream(){
 	if( typeof buddypress_enableMasonryActivity != undefined && 1 == buddypress_enableMasonryActivity ){
-		jQuery( '#buddypress ul.activity-list li.rtmedia_update' ).each(function(index, el) {
-			if( rtmedia_check_is_masonry_not_add( this ) && rtmedia_check_number_of_media_in_single_activity( this ) ){
-				rtmedia_add_masonry_to_single_activity( this );
-			}
-		});			
+		setTimeout( function() {
+			jQuery( '#buddypress ul.activity-list li.rtmedia_update' ).each(function(index, el) {
+				if( rtmedia_check_is_masonry_not_add( this ) && rtmedia_check_number_of_media_in_single_activity( this ) ){
+					rtmedia_add_masonry_to_single_activity( this );
+				}
+			});
+		}, 1000 );
 	}
 }
 
