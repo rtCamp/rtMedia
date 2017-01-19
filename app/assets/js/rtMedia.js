@@ -608,8 +608,8 @@ jQuery( 'document' ).ready( function( $ ) {
 	}
 
 	//    Masonry code
-	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
-		rtm_masonry_container = jQuery( '.rtmedia-container .rtmedia-list' );
+	if ( typeof buddypress_enableMasonryActivity != 'undefined' && buddypress_enableMasonryActivity == '1' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+		rtm_masonry_container = jQuery( '.rtmedia-activity-container .rtmedia-list, .rtmedia-container .rtmedia-list' );
 		rtm_masonry_container.masonry( {
 			itemSelector: '.rtmedia-list-item'
 		} );
@@ -723,7 +723,9 @@ function rtm_is_element_exist( el ) {
 function rtm_masonry_reload( el ) {
 	setTimeout( function() {
 		// We make masonry recalculate the element based on their current state.
-		el.masonry( 'reload' );
+		if(typeof masonry == 'function'){
+ 			el.masonry( 'reload' );
+ 		}
 	}, 250 );
 }
 
@@ -927,9 +929,37 @@ function rtmedia_gallery_action_alert_message( msg, action ) {
 }
 
 
-
+var activity_ul = '.activity-content ul.rtmedia-list';
+var activity_li = activity_ul+' li';
 function rtmedia_add_masonry_in_stream(){
 	if( typeof buddypress_enableMasonryActivity != undefined && 1 == buddypress_enableMasonryActivity ){
-		
-	}	
+		jQuery( '#buddypress ul.activity-list li.rtmedia_update' ).each(function(index, el) {
+			if( rtmedia_check_is_masonry_not_add( this ) && rtmedia_check_number_of_media_in_single_activity( this ) ){
+				rtmedia_add_masonry_to_single_activity( this );
+			}
+		});			
+	}
+}
+
+
+function rtmedia_check_is_masonry_not_add( html ){
+	$return = true;
+	if( jQuery( html ).find( activity_ul ).length > 0 && jQuery( html ).find( activity_ul ).hasClass('has_masonry') ){
+		$return = false;
+	}
+	return $return;
+}
+
+function rtmedia_check_number_of_media_in_single_activity( html ){
+	$return = false;
+	if( jQuery( html ).find( activity_li ).length > 1 ){
+		$return = true;
+	}
+	return $return;
+}
+
+
+function rtmedia_add_masonry_to_single_activity( html ){
+	jQuery( html ).find( activity_ul ).addClass('has_masonry masonry');
+	rtm_masonry_reload( activity_ul );
 }
