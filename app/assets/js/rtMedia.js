@@ -971,6 +971,8 @@ function rtmedia_add_masonry_to_single_activity( html ){
 
 function rtmedia_add_masonry_effect( html ){
 	jQuery( html ).masonry( {
-		itemSelector: '.rtmedia-list-item'
-	} );	
+		itemSelector: '.rtmedia-list-item',
+		gutter: 5,
+		percentPosition: true
+	} );
 }

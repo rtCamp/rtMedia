@@ -332,6 +332,7 @@ class RTMedia {
 	}
 
 	function custom_style_for_gallery_image_size_masonry() {
+		global $rtmedia;
 		if ( intval( $this->options['defaultSizes_photo_thumbnail_height'] ) > 0 ) {
 			?>
 			.rtmedia-container .rtmedia-list  .rtmedia-list-item .rtmedia-item-thumbnail {
@@ -345,6 +346,13 @@ class RTMedia {
 			max-width: <?php echo intval( $this->options['defaultSizes_photo_thumbnail_width'] ); ?>px;
 			}
 			<?php
+		}
+		if ( isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && 1 === intval( $rtmedia->options['buddypress_enableMasonryActivity'] ) ) {
+			?>
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.rtmedia-list.has_masonry li.media-type-photo .rtmedia-item-title {
+			  display: none;
+			}
+			<?php			
 		}
 	}
 
