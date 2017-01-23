@@ -200,6 +200,7 @@ class RTMediaGalleryShortcode {
 				if ( ! $rtmedia_query ) {
 					$rtmedia_query = new RTMediaQuery( $attr['attr'] );
 				}
+				do_action( 'rtmedia_shortcode_action', $attr['attr'] );// do extra stuff with attributes
 				$rtmedia_query->is_gallery_shortcode = true;// to check if gallery shortcode is executed to display the gallery.
 
 				$template         = new RTMediaTemplate();
