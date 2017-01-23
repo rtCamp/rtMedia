@@ -965,6 +965,10 @@ function rtmedia_check_number_of_media_in_single_activity( html ){
 
 function rtmedia_add_masonry_to_single_activity( html ){
 	jQuery( html ).find( activity_ul ).addClass('has_masonry masonry');
+	jQuery( html ).find( 'li.media-type-photo' ).each(function(index, el) {
+		jQuery( this ).height( jQuery( this ).find( 'img' ).height() );
+		jQuery( this ).width( jQuery( this ).find( 'img' ).width() );
+	});
 	rtmedia_add_masonry_effect( jQuery( html ).find( activity_ul ) );
 }
 
@@ -972,7 +976,7 @@ function rtmedia_add_masonry_to_single_activity( html ){
 function rtmedia_add_masonry_effect( html ){
 	jQuery( html ).masonry( {
 		itemSelector: '.rtmedia-list-item',
-		gutter: 5,
-		percentPosition: true
+		percentPosition: true,
+		gutter: 1
 	} );
 }
