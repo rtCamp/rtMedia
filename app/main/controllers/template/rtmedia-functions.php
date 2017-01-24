@@ -3595,7 +3595,7 @@ function rtmedia_check_comment_in_commented_media_allow(){
     $value = false;
     global $rtmedia;
     /* variable */
-    if( isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+    if( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
         $value = true;
     }
     return $value;
@@ -3611,7 +3611,7 @@ function rtmedia_check_comment_media_allow(){
     $value = false;
     global $rtmedia;
     /* variable */
-    if( ( isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ){
+    if( ( isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ){
         $value = true;
     }
     return $value;

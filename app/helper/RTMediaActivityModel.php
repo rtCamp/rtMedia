@@ -69,7 +69,7 @@ class RTMediaActivityModel extends RTDBModel {
 			$activity_parents = bp_activity_get( array( 'filter' => array( 'primary_id' =>$media_id_of_activity ) ) );
 
 			/* if has activity */
-			if ( !empty( $activity_parents['activities'] ) ) {
+			if ( ! empty( $activity_parents['activities'] ) ) {
 				foreach( $activity_parents['activities'] as $parent ) {
 
 					bp_activity_update_meta( $parent->id, 'rtmedia_privacy', $privacy );
