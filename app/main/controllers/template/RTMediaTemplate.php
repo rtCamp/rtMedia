@@ -169,7 +169,9 @@ class RTMediaTemplate {
 	function add_hidden_fields_in_gallery() {
 		global $rtmedia_query;
 
+		$is_on_home = ( is_front_page() ) ? true : false;
 		$return_str = "<input name='rtmedia_shortcode' value='true' type='hidden' />";
+		$return_str .= "<input name='is_on_home' value='$is_on_home' type='hidden' />";
 
 		if ( $rtmedia_query->original_query && is_array( $rtmedia_query->original_query ) ) {
 			foreach ( $rtmedia_query->original_query as $key => $val ) {
@@ -211,6 +213,7 @@ class RTMediaTemplate {
 		if ( $rtmedia_query->media ) {
 			foreach ( $rtmedia_query->media as $key => $media ) {
 				$media_array[ $key ]               = $media;
+				$media_array[ $key ]->media_count  = rtm_get_album_media_count( $media->id );
 				$media_array[ $key ]->guid         = rtmedia_image( 'rt_media_thumbnail', $media->id, false );
 				$media_array[ $key ]->rt_permalink = get_rtmedia_permalink( $media->id );
 				$media_array[ $key ]->duration     = rtmedia_duration( $media->id );

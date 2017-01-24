@@ -683,7 +683,8 @@ function rtm_album_media_count() {
 
 	if ( isset( $rtmedia_album_count_status ) && $rtmedia_album_count_status['status'] ) {
 		?>
-		<div class="rtmedia-album-media-count" title="<?php echo rtm_get_album_media_count( rtmedia_id() ) . RTMEDIA_MEDIA_LABEL; ?>"><?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . rtm_get_album_media_count( rtmedia_id() ) . esc_html( $rtmedia_album_count_status['after_string'] ) ?></div>
+		<div class="rtmedia-album-media-count" title="<?php echo rtmedia_album_mediacounter() . RTMEDIA_MEDIA_LABEL; ?>">
+			<?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . rtmedia_album_mediacounter() . esc_html( $rtmedia_album_count_status['after_string'] ) ?></div>
 		<?php
 	}
 	?>
@@ -810,22 +811,22 @@ function rtmedia_addons_admin_notice() {
 
 	$screen = get_current_screen();
 
-	if ( $screen->id === 'rtmedia_page_rtmedia-license' ) {
+	if ( 'rtmedia_page_rtmedia-license' === $screen->id ) {
 
 		if ( isset( $_POST ) && count( $_POST ) > 0 ) { ?>
 
 			<div class="notice notice-success is-dismissible">
-				<p><?php _e('Settings has been saved successfully.', 'buddypress-media'); ?></p>
+				<p><?php _e( 'Settings has been saved successfully.', 'buddypress-media' ); ?></p>
 			</div>
 
 			<div class="notice notice-error is-dismissible">
-				<p><?php _e('Refresh the page in case if license data is not showing correct.', 'buddypress-media'); ?></p>
+				<p><?php _e( 'Refresh the page in case if license data is not showing correct.', 'buddypress-media' ); ?></p>
 			</div>
 	<?php
 		}
 	}
 }
-add_action('admin_notices', 'rtmedia_addons_admin_notice');
+add_action( 'admin_notices', 'rtmedia_addons_admin_notice' );
 
 /**
  * Function to add buddypress language conversion to Media activities.
@@ -844,3 +845,75 @@ function rtmedia_activity_register_activity_actions_callback() {
 	);
 }
 add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
+
+
+/**
+ *
+ * rtmedia_override_canonical Redirect homepage as per parameters passed to query string.
+ * This is added for a page set as a "Front page" in which gallery short-code is there,
+ * so pagination for gallery short-code can work properly.
+ *
+ */
+function rtmedia_override_canonical( $redirect_url, $requested_url ) {
+	if ( is_front_page() && get_query_var( 'pg' ) ) {
+		return $requested_url;
+	} else {
+		return $redirect_url;
+	}
+}
+add_filter( 'redirect_canonical', 'rtmedia_override_canonical', 10, 2 );
+
+/**
+ * rtmedia_gallery_shortcode_json_query_vars Set query vars for json response
+ *
+ * @param  object $wp_query WP query object
+ *
+ */
+function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
+
+	global $wp_query;
+
+	$pagename = '';
+	if ( isset( $wp_query->query_vars['pagename'] ) ) {
+		$pagename = explode( '/', $wp_query->query_vars['pagename'] );
+	}
+	if ( ! empty( $pagename ) && isset( $_REQUEST['json'] ) && 'true' === $_REQUEST['json'] && isset( $_REQUEST['rtmedia_shortcode'] ) && 'true' === $_REQUEST['rtmedia_shortcode'] ) {
+		$pagename = $pagename[0];
+		$wp_query->query_vars['pagename'] = '';
+		$wp_query->query['pagename'] = $pagename . '/pg';
+		$wp_query->query['media'] = '';
+		$wp_query->query_vars['media'] = '';
+	}
+
+	return $wp_query;
+
+}
+add_action( 'pre_get_posts', 'rtmedia_gallery_shortcode_json_query_vars', 99 );
+
+/**
+ *
+ * Rule for pagination for rtmedia gallery shortcode
+ *
+ */
+function rtmedia_gallery_shortcode_rewrite_rules() {
+
+	// Rule for pages
+	add_rewrite_rule( '([^/?]+)/pg/([0-9]*)/?', 'index.php?pg=$matches[2]&pagename=$matches[1]', 'top' );
+
+	// Rule for Day and name
+	add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/?]+)/pg/([0-9]*)/?', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&pg=$matches[5]', 'top' );
+
+	// Rule for Month and name
+	add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([^/?]+)/pg/([0-9]*)/?', 'index.php?year=$matches[1]&monthnum=$matches[2]&name=$matches[3]&pg=$matches[4]', 'top' );
+
+	// Rule for Numeric
+	add_rewrite_rule( 'archives/([0-9]+)/pg/([0-9]*)/?', 'index.php?p=$matches[1]&pg=$matches[2]', 'top' );
+
+	// Rule for posts
+	add_rewrite_rule( '(.?.+?)/pg/?([0-9]{1,})/?$', 'index.php?pg=$matches[2]&name=$matches[1]', 'bottom' );
+
+	// Rule for homepage
+	add_rewrite_rule( 'pg/([0-9]*)/?', 'index.php?page_id=' . get_option( 'page_on_front' ) . '&pg=$matches[1]', 'top' );
+
+}
+add_action( 'rtmedia_add_rewrite_rules', 'rtmedia_gallery_shortcode_rewrite_rules' );

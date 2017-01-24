@@ -46,6 +46,28 @@ function rtmedia() {
 }
 
 /**
+ * echo the number of media in particular album
+ *
+ * @global      array       $rtmedia_backbone
+ * @global      object      $rtmedia_media
+ *
+ * @return      number
+ */
+function rtmedia_album_mediacounter() {
+
+	global $rtmedia_backbone;
+
+	if ( $rtmedia_backbone['backbone'] ) {
+		echo '<%= media_count %>';
+	} else {
+		global $rtmedia_media;
+
+		return rtm_get_album_media_count( $rtmedia_media->id );
+	}
+
+}
+
+/**
  * echo the title of the media
  *
  * @global      array       $rtmedia_backbone
@@ -1425,24 +1447,48 @@ function rtmedia_pagination_next_link() {
  */
 function rtmedia_pagination_page_link( $page_no = '' ) {
 
-	global $rtmedia_interaction, $rtmedia_query;
+	global $rtmedia_interaction, $rtmedia_query, $post;
+
+	if ( isset( $_GET['context'] ) && 'page' === $_GET['context'] && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
+		$post = get_post( intval( $_GET['context_id'] ) );
+	}
 
 	$page_url    = 'pg/' . $page_no;
 	$site_url    = ( is_multisite() ) ? trailingslashit( get_site_url( get_current_blog_id() ) ) : trailingslashit( get_site_url() );
 	$author_name = get_query_var( 'author_name' );
 	$link        = '';
 
+	$is_shortcode_on_home = ( isset( $_GET['is_on_home'] ) && '1' === $_GET['is_on_home'] && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] && isset( $_GET['context_id'] ) && $_GET['context_id'] === get_option( 'page_on_front' ) ) ? true : false;
+
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'profile' === $rtmedia_interaction->context->type ) {
-		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->media_query['media_author'] ) ) {
-			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query['media_author'] ) );
+		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->media_query['context_id'] ) ) {
+			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query['context_id'] ) );
 		} else {
-			$link .= $site_url . 'author/' . $author_name . '/';
+			if ( $is_shortcode_on_home ) {
+				$link .= $site_url;
+			} else {
+				$link .= $site_url . 'author/' . $author_name . '/';
+			}
 		}
 	} else {
 		if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'group' === $rtmedia_interaction->context->type ) {
 			if ( function_exists( 'bp_get_current_group_slug' ) ) {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
+		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, array( 'page', 'post' ) ) ) {
+			// Make sure that only one slash is at the end of url
+			$link .= rtrim( get_permalink( $post ), '/' ) . '/';
+		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'rtmedia_album' === $rtmedia_interaction->context->type ) { // url for rtmedia album
+			global $rtmedia;
+			$options = $rtmedia->options;
+			// Get album slug
+			$album_slug = $options['rtmedia_wp_album_slug'];
+
+			if ( empty( $album_slug ) ) {
+				$album_slug = 'rtmedia-album';
+			}
+			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
+			$link .= $site_url . $album_slug . '/' . $post->post_name . '/';
 		} elseif ( isset( $rtmedia_query->media->media_id ) ) {
 			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
 
@@ -1450,7 +1496,10 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		}
 	}
 
-	$link .= RTMEDIA_MEDIA_SLUG . '/';
+	// Do not add media slug for gallery shortcode and sitewide gallery
+	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && ! in_array( $rtmedia_interaction->context->type, array( 'page', 'rtmedia_album', 'post' ) ) && ! $is_shortcode_on_home ) {
+			$link .= RTMEDIA_MEDIA_SLUG . '/';
+	}
 
 	if ( isset( $rtmedia_query->media_query['album_id'] ) && intval( $rtmedia_query->media_query['album_id'] ) > 0 ) {
 		$link .= $rtmedia_query->media_query['album_id'] . '/';
@@ -1577,7 +1626,7 @@ function rtmedia_get_pagination_values() {
 			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='next' href='" . esc_url( $page_url ) . "'><i class='dashicons dashicons-arrow-right-alt2'></i></a>";
 		}
 
-		$rtmedia_media_pages .= "</div></div>\n";
+		$rtmedia_media_pages .= "</div></div>";
 	}// End if().
 
 	return $rtmedia_media_pages;
