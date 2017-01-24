@@ -664,14 +664,14 @@ function rtmedia_bp_activity_entry_comments_callback(){
 
 	/* if activity id is not empty and the type is not as $allow_media_activity_type */
 	if( $activity_id && isset( $activities_template->activity->type ) && ! in_array( $activities_template->activity->type , $allow_media_activity_type ) ){
-		add_action( 'before_rtmedia_uploader_display', 'rtmedia_before_rtmedia_uploader_display_callback', 10 );
+		add_action( 'before_rtmedia_comment_uploader_display', 'rtmedia_before_rtmedia_comment_uploader_display_callback', 10 );
 			echo rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity', $activities_template->activity->component );
-		remove_action( 'before_rtmedia_uploader_display', 'rtmedia_before_rtmedia_uploader_display_callback', 10 );
+		remove_action( 'before_rtmedia_comment_uploader_display', 'rtmedia_before_rtmedia_comment_uploader_display_callback', 10 );
 	}
 }
 
 
-function rtmedia_before_rtmedia_uploader_display_callback( $flag ){
+function rtmedia_before_rtmedia_comment_uploader_display_callback( $flag ){
 	return true;
 }
 
