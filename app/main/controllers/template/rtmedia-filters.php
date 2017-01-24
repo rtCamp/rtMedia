@@ -628,6 +628,19 @@ function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_i
 }
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
 
+function rtmedia_search_media_filter( $filter ) {
+	$filter = array(
+		'title'			=> true,
+		'description'	=> true,
+		'attribute'		=> true,
+		'author'		=> true,
+	);
+
+	return $filter;
+}
+
+add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
+
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	global $wpdb;
 	$posts_table = $wpdb->posts;
@@ -644,7 +657,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 				if ( 'title' == $_REQUEST['search_by'] ) {
 					$where .= " $table_name.media_title = '" . $_REQUEST['search'] . "' ";
 				} else if ( 'description' == $_REQUEST['search_by'] ) {
-					$where .= " $posts_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
+					$where .= " post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
 
 				} else if ( 'author' == $_REQUEST['search_by'] ) {
 					if ( $author_id->data->ID ) {
@@ -692,6 +705,7 @@ add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 1
 
 
 function rtmedia_search_fillter_join_query( $join, $table_name ) {
+
 	global $wpdb;
 	$posts_table = $wpdb->posts;
 	$terms_table = $wpdb->terms;
@@ -701,9 +715,11 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 	if ( isset( $_REQUEST['search'] ) ) {
 		if ( false == strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {
 			$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
+			   // $join .= "INNER JOIN $posts_table ON $table_name.media_id = $posts_table.ID";
 		}
 
-		if ( isset( $_REQUEST['search_by'] ) && 'attribute' == $_REQUEST['search_by'] ) {
+		$request_url = explode( '/', $_SERVER['REQUEST_URI'] );
+		if ( isset( $_REQUEST['search_by'] ) && 'attribute' == $_REQUEST['search_by'] && ! in_array( 'attribute', $request_url )  ) {
 			$join .= " 	INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = 'attachment' )
 	                    INNER JOIN $terms_table ON ( $terms_table.slug IN ('" . $_REQUEST['search'] . "') )
 	                    INNER JOIN $term_taxonomy_table ON ( $term_taxonomy_table.term_id = $terms_table.term_id )
