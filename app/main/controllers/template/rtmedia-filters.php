@@ -803,3 +803,19 @@ function rtmedia_actions_before_comments_links_callback(){
     }
 }
 add_action( 'rtmedia_actions_before_comments', 'rtmedia_actions_before_comments_links_callback', 11 );
+
+
+
+function rtmedia_comment_max_links_callback( $values, $option ){
+	$new_values = $values;
+	if( apply_filters( 'rtmedia_comment_max_links', true ) && 'comment_max_links' == $option ){
+		$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		if ( is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files[0] ) ) {
+			if( $new_values < 5 ){
+				$new_values = 5;
+			}
+		}
+	}
+	return $new_values;
+}
+add_filter( 'option_comment_max_links', 'rtmedia_comment_max_links_callback', 10, 2 );

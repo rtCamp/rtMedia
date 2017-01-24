@@ -630,6 +630,10 @@ class RTMediaTemplate {
 			$comment_content = isset( $_REQUEST['comment_content'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['comment_content'] ) ) : '';
 
 			if ( wp_verify_nonce( $nonce, 'rtmedia_comment_nonce' ) ) {
+				$comment_activity_id = false;
+				
+				/* if comment has media then make it true */
+ 				$comment_with_media = false;
 
 				/* comment media id array */
 				$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
@@ -642,9 +646,6 @@ class RTMediaTemplate {
  				if( strstr($comment_content, 'nbsp') ){
  					$comment_content = "&nbsp;";
  				}
-
- 				/* if comment has media then make it true */
- 				$comment_with_media = false;
 
  				/* save the old content for activity */
  				$comment_content_old = $comment_content;
