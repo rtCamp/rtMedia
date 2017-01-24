@@ -725,9 +725,7 @@ function rtm_is_element_exist( el ) {
 function rtm_masonry_reload( el ) {
 	setTimeout( function() {
 		// We make masonry recalculate the element based on their current state.
-		if(typeof masonry == 'function'){
- 			el.masonry( 'reload' );
- 		}
+		el.masonry( 'reload' );
 	}, 250 );
 }
 
