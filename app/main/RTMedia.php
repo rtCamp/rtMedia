@@ -332,6 +332,7 @@ class RTMedia {
 	}
 
 	function custom_style_for_gallery_image_size_masonry() {
+		global $rtmedia;
 		if ( intval( $this->options['defaultSizes_photo_thumbnail_height'] ) > 0 ) {
 			?>
 			.rtmedia-container .rtmedia-list  .rtmedia-list-item .rtmedia-item-thumbnail {
@@ -344,6 +345,31 @@ class RTMedia {
 			.rtmedia-container .rtmedia-list  .rtmedia-list-item .rtmedia-item-thumbnail {
 			max-width: <?php echo intval( $this->options['defaultSizes_photo_thumbnail_width'] ); ?>px;
 			}
+			<?php
+		}
+		if ( isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && 1 === intval( $rtmedia->options['buddypress_enableMasonryActivity'] ) ) {
+			
+			$medium_height = intval( $this->options['defaultSizes_photo_medium_height'] );
+			$medium_width = intval( $this->options['defaultSizes_photo_medium_width'] );
+			$max_medium_height = $medium_height + ( $medium_height / 3 );
+
+			?>
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.rtmedia-list.has_masonry li.media-type-photo .rtmedia-item-title {
+			  display: none;
+			}
+
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo{
+				max-height: <?php echo $medium_height; ?>px;
+			}
+
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n),
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n) .rtmedia-item-thumbnail,
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n) img{
+                height: <?php echo $max_medium_height; ?>px;
+                max-height: <?php echo $max_medium_height; ?>px;
+                width: <?php echo $medium_width; ?>px;
+                max-width: <?php echo $medium_width; ?>px;
+            }
 			<?php
 		}
 	}
@@ -1082,6 +1108,13 @@ class RTMedia {
 		} else {
 			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', '0' );
 		}
+
+		/* Mansory in Activity is enable or not   */
+		$enableMasonryActivity = "0";
+		if( isset( $rtmedia->options[ 'buddypress_enableMasonryActivity' ] ) ){
+			$enableMasonryActivity = ( string ) $rtmedia->options[ 'buddypress_enableMasonryActivity' ];
+		}
+		wp_localize_script( 'rtmedia-backbone', 'buddypress_enableMasonryActivity', $enableMasonryActivity );
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_upload_progress_error_message', esc_html__( 'There are some uploads in progress. Do you want to cancel them?', 'buddypress-media' ) );
 

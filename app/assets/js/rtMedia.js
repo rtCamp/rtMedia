@@ -264,6 +264,8 @@ jQuery( 'document' ).ready( function( $ ) {
 				} );
 
 				rtMediaHook.call( 'rtmedia_js_after_activity_added', [ ] );
+
+				rtmedia_add_masonry_in_stream();
 			};
 		}
 	} );
@@ -607,7 +609,7 @@ jQuery( 'document' ).ready( function( $ ) {
 		} );
 	}
 
-	//    Masonry code
+//    Masonry code
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_container = jQuery( '.rtmedia-container .rtmedia-list' );
 		rtm_masonry_container.masonry( {
@@ -681,6 +683,9 @@ jQuery( 'document' ).ready( function( $ ) {
 			} );
 		}
 	} );
+
+	rtmedia_add_masonry_in_stream();
+
 } );
 
 //Legacy media element for old activities
@@ -920,5 +925,56 @@ function rtmedia_gallery_action_alert_message( msg, action ) {
 
 	jQuery( '.rtmedia-gallery-message-box' ).click( function() {
 		jQuery( '.rtmedia-gallery-alert-container' ).remove();
+	} );
+}
+
+
+var activity_ul = '.activity-content ul.rtmedia-list';
+var activity_li = activity_ul+' li';
+function rtmedia_add_masonry_in_stream(){
+	if( typeof buddypress_enableMasonryActivity != undefined && 1 == buddypress_enableMasonryActivity ){
+		setTimeout( function() {
+			jQuery( '#buddypress ul.activity-list li.rtmedia_update' ).each(function(index, el) {
+				if( rtmedia_check_is_masonry_not_add( this ) && rtmedia_check_number_of_media_in_single_activity( this ) ){
+					rtmedia_add_masonry_to_single_activity( this );
+				}
+			});
+		}, 1000 );
+	}
+}
+
+
+function rtmedia_check_is_masonry_not_add( html ){
+	$return = true;
+	if( jQuery( html ).find( activity_ul ).length > 0 && jQuery( html ).find( activity_ul ).hasClass('has_masonry') ){
+		$return = false;
+	}
+	return $return;
+}
+
+function rtmedia_check_number_of_media_in_single_activity( html ){
+	$return = false;
+	if( jQuery( html ).find( activity_li ).length > 1 ){
+		$return = true;
+	}
+	return $return;
+}
+
+
+function rtmedia_add_masonry_to_single_activity( html ){
+	jQuery( html ).find( activity_ul ).addClass('has_masonry masonry');
+	jQuery( html ).find( 'li.media-type-photo' ).each(function(index, el) {
+		jQuery( this ).height( jQuery( this ).find( 'img' ).height() );
+		jQuery( this ).width( jQuery( this ).find( 'img' ).width() );
+	});
+	rtmedia_add_masonry_effect( jQuery( html ).find( activity_ul ) );
+}
+
+
+function rtmedia_add_masonry_effect( html ){
+	jQuery( html ).masonry( {
+		itemSelector: '.rtmedia-list-item',
+		percentPosition: true,
+		gutter: 1
 	} );
 }

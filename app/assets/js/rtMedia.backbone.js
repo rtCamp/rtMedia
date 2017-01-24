@@ -1214,6 +1214,7 @@ jQuery( document ).ready( function( $ ) {
 					// Enabled TextBox color back to normal
 					$( '#whats-new' ).css( 'color', '' );
 
+					rtmedia_add_masonry_in_stream();
 				};
 			}
 		} );
