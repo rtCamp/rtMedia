@@ -200,7 +200,7 @@ class RTMediaGalleryShortcode {
 			$rtmedia_shortcode_attr = $attr['attr'];
 
 			// Set template according to media type
-			if ( is_rtmedia_album_gallery() || 'album' === $attr['attr']['media_type'] ) {
+			if ( is_rtmedia_album_gallery() || ( isset( $attr['attr']['media_type'] ) && 'album' === $attr['attr']['media_type'] ) ) {
 
 				$album_template_args = apply_filters( 'album_template_args', array(
 					'action'   => 'rtmedia_get_template',
