@@ -107,10 +107,7 @@ function apply_rtMagnificPopup( selector ) {
 					},
 					close: function( e ) {
 						//Console.log(e);
-
 						rtmedia_single_page_popup_close();
-
-						rtmedia_init_action_dropdown();
 					},
 					BeforeChange: function( e ) {
 						//Console.log(e);
@@ -463,8 +460,6 @@ jQuery( 'document' ).ready( function( $ ) {
 				jQuery( '.rtm-lightbox-container .mejs-video' ).css( { 'height': height * 0.8, 'over-flow': 'hidden' } );
 				jQuery( '.mfp-content .rtmedia-media' ).css( { 'max-height': height * 0.87, 'over-flow': 'hidden' } );
 				//Mejs-video
-				//init the options dropdown menu
-				rtmedia_init_action_dropdown();
 				//Get focus on comment textarea when comment-link is clicked
 				jQuery( '.rtmedia-comment-link' ).on( 'click', function( e ) {
 					e.preventDefault();
