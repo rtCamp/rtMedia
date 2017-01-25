@@ -569,6 +569,13 @@ class RTMediaBuddyPressActivity {
 					// add BP activity
 					$activity_id = bp_activity_add( $activity_args );
 
+					// add privacy for like activity
+					if( class_exists( 'RTMediaActivityModel' ) && is_rtmedia_privacy_enable() && isset( $media_obj->activity_id ) ){
+						$rtmedia_activity_model = new RTMediaActivityModel();
+						$rtmedia_activity_model->set_privacy_for_rtmedia_activity( $media_obj->activity_id, $activity_id , $user_id );
+					}
+
+
 					// Store activity id into user meta for reference
 					//todo user_attribute
 					update_user_meta( $user_id, 'rtm-bp-media-like-activity-' . $media_id, $activity_id );
@@ -694,6 +701,12 @@ class RTMediaBuddyPressActivity {
 
 					// create BuddyPress activity
 					$activity_id = bp_activity_add( $activity_args );
+
+					// add privacy for like activity
+					if( class_exists( 'RTMediaActivityModel' ) && is_rtmedia_privacy_enable() && isset( $media_obj->activity_id ) ){
+						$rtmedia_activity_model = new RTMediaActivityModel();
+						$rtmedia_activity_model->set_privacy_for_rtmedia_activity( $media_obj->activity_id, $activity_id , $user_id );
+					}
 
 					// Store activity id into user meta for reference
 					//todo user_attribute
