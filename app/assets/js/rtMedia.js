@@ -46,7 +46,7 @@ function apply_rtMagnificPopup( selector ) {
 						if ( ! li.is( 'li' ) ) {
 							li = li.parent();
 						}
-						if ( li.is( ':nth-last-child(2)' ) || li.is( ':last-child' ) ) { // If its last second media
+						if ( ( li.is( ':nth-last-child(2)' ) || li.is( ':last-child' ) ) && li.find( 'a' ).hasClass('rtmedia-list-item-a') ) { // If its last second media
 							var last_li = li.next();
 							if ( jQuery( '#rtMedia-galary-next' ).css( 'display' ) == 'block' ) { // If more medias are available
 								jQuery( '#rtMedia-galary-next' ).click(); // Load more
@@ -107,10 +107,7 @@ function apply_rtMagnificPopup( selector ) {
 					},
 					close: function( e ) {
 						//Console.log(e);
-
 						rtmedia_single_page_popup_close();
-
-						rtmedia_init_action_dropdown();
 					},
 					BeforeChange: function( e ) {
 						//Console.log(e);
@@ -154,12 +151,12 @@ var rtMediaHook = {
 };
 
 //Drop-down js
-function rtmedia_init_action_dropdown() {
+function rtmedia_init_action_dropdown( parent ) {
 	var all_ul;
 	var curr_ul;
-	jQuery( '.click-nav > span, .click-nav > div' ).toggleClass( 'no-js js' );
-	jQuery( '.click-nav .js ul' ).hide();
-	jQuery( '.click-nav .clicker' ).click( function( e ) {
+	jQuery( parent+' .click-nav > span,'+parent+' .click-nav > div' ).toggleClass( 'no-js js' );
+ 	jQuery( parent+' .click-nav .js ul' ).hide();
+ 	jQuery( parent+' .click-nav .clicker' ).click( function( e ) {
 		all_ul = jQuery( '#rtm-media-options .click-nav .clicker' ).next( 'ul' );
 		curr_ul = jQuery( this ).next( 'ul' );
 		jQuery.each( all_ul, function( index, value ) {
@@ -464,7 +461,7 @@ jQuery( 'document' ).ready( function( $ ) {
 				jQuery( '.mfp-content .rtmedia-media' ).css( { 'max-height': height * 0.87, 'over-flow': 'hidden' } );
 				//Mejs-video
 				//init the options dropdown menu
-				rtmedia_init_action_dropdown();
+  				rtmedia_init_action_dropdown( '.rtm-lightbox-container .rtmedia-actions' );
 				//Get focus on comment textarea when comment-link is clicked
 				jQuery( '.rtmedia-comment-link' ).on( 'click', function( e ) {
 					e.preventDefault();
@@ -591,7 +588,7 @@ jQuery( 'document' ).ready( function( $ ) {
 		}
 	} );
 
-	rtmedia_init_action_dropdown();
+	rtmedia_init_action_dropdown( '' );
 
 	$( document ).click( function() {
 		if ( $( '.click-nav ul' ).is( ':visible' ) ) {

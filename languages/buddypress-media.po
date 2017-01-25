@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.2.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-01-24 11:19:04+00:00\n"
+"POT-Creation-Date: 2017-01-25 14:15:10+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -329,7 +329,7 @@ msgid "rtMedia Privacy"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1428
-#: app/main/controllers/privacy/RTMediaPrivacy.php:424
+#: app/main/controllers/privacy/RTMediaPrivacy.php:426
 msgid "Privacy"
 msgstr ""
 
@@ -2376,15 +2376,15 @@ msgstr ""
 msgid "%1$s liked %2$s's %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:626
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:633
 msgid "%1$s commented on a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:629
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:636
 msgid "%1$s commented on their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:633
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:640
 msgid "%1$s commented on %2$s's %3$s"
 msgstr ""
 
@@ -2630,7 +2630,7 @@ msgid "Group Admin only"
 msgstr ""
 
 #: app/main/controllers/group/RTMediaGroupExtension.php:130
-#: app/main/controllers/privacy/RTMediaPrivacy.php:416
+#: app/main/controllers/privacy/RTMediaPrivacy.php:418
 #: templates/media/album-single-edit.php:55
 msgid "Save Changes"
 msgstr ""
@@ -2785,19 +2785,19 @@ msgstr ""
 msgid "%1$s added %4$d %3$s"
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:378
+#: app/main/controllers/privacy/RTMediaPrivacy.php:380
 msgid "No changes were made to your account."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:381
+#: app/main/controllers/privacy/RTMediaPrivacy.php:383
 msgid "Your default privacy settings saved successfully."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:405
+#: app/main/controllers/privacy/RTMediaPrivacy.php:407
 msgid "Default Privacy"
 msgstr ""
 
-#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:239
+#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:247
 msgid "You do not have sufficient privileges to view this gallery"
 msgstr ""
 
@@ -2825,7 +2825,7 @@ msgstr ""
 #: app/main/controllers/template/RTMediaTemplate.php:355
 #: app/main/controllers/template/RTMediaTemplate.php:448
 #: app/main/controllers/template/RTMediaTemplate.php:546
-#: app/main/controllers/template/RTMediaTemplate.php:746
+#: app/main/controllers/template/RTMediaTemplate.php:747
 msgid "Ooops !!! Invalid access. No nonce was found !!"
 msgstr ""
 
@@ -3042,7 +3042,7 @@ msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3623
+#: app/main/controllers/template/rtmedia-functions.php:3625
 #. translators: date format, see http:php.net/date
 msgid "View Conversation"
 msgstr ""

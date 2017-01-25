@@ -69,19 +69,38 @@ class RTMediaActivityModel extends RTDBModel {
 			$activity_parents = bp_activity_get( array( 'filter' => array( 'primary_id' =>$media_id_of_activity ) ) );
 
 			/* if has activity */
-			if ( !empty( $activity_parents['activities'] ) ) {
+			if ( ! empty( $activity_parents['activities'] ) ) {
 				foreach( $activity_parents['activities'] as $parent ) {
-
-					bp_activity_update_meta( $parent->id, 'rtmedia_privacy', $privacy );
-
-					/* check is value exits or not */
-					if ( ! $this->check( $parent->id ) ) {
-						$this->insert( array( 'activity_id' => $parent->id, 'user_id' => $parent->user_id, 'privacy' => $privacy ) );
-					} else {
-						$this->update( array( 'activity_id' => $parent->id, 'user_id' => $parent->user_id, 'privacy' => $privacy ), array( 'activity_id' => $parent->id ) );
-					}
+					$this->set_privacy( $parent->id, $parent->user_id, $privacy );
 				}
 			}
 		}
+	}
+
+	public function set_privacy( $activity_id, $user_id , $privacy ){
+		if( function_exists( 'bp_activity_update_meta' ) ){
+			bp_activity_update_meta( $activity_id, 'rtmedia_privacy', $privacy );
+		}
+
+		/* check is value exits or not */
+		if ( ! $this->check( $activity_id ) ) {
+			$this->insert( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ) );
+		} else {
+			$this->update( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ), array( 'activity_id' => $activity_id ) );
+		}
+	}
+
+	public function set_privacy_for_rtmedia_activity( $parent_activity_id, $activity_id , $user_id ){
+		/*  get default privacy*/
+		$privacy = get_rtmedia_default_privacy();
+
+		/* get parent privacy  */
+		$activity_privacy = $this->get( array( 'activity_id' => $parent_activity_id ) );
+		if( isset( $activity_privacy[0] ) && isset( $activity_privacy[0]->privacy ) ){
+			$privacy = $activity_privacy[0]->privacy;
+		}
+
+		/* add the privacy */
+		$this->set_privacy( $activity_id, $user_id, $privacy );
 	}
 }

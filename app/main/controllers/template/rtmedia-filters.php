@@ -663,7 +663,7 @@ function rtmedia_bp_activity_entry_comments_callback(){
 	$activity_id = bp_get_activity_id();
 
 	/* if activity id is not empty and the type is not as $allow_media_activity_type */
-	if( $activity_id && isset( $activities_template->activity->type ) && ! in_array( $activities_template->activity->type , $allow_media_activity_type ) ){
+	if( $activity_id && isset( $activities_template->activity ) && isset( $activities_template->activity->type ) && ! in_array( $activities_template->activity->type , $allow_media_activity_type ) ){
 		add_action( 'before_rtmedia_comment_uploader_display', 'rtmedia_before_rtmedia_comment_uploader_display_callback', 10 );
 			echo rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity', $activities_template->activity->component );
 		remove_action( 'before_rtmedia_comment_uploader_display', 'rtmedia_before_rtmedia_comment_uploader_display_callback', 10 );
@@ -803,3 +803,19 @@ function rtmedia_actions_before_comments_links_callback(){
     }
 }
 add_action( 'rtmedia_actions_before_comments', 'rtmedia_actions_before_comments_links_callback', 11 );
+
+
+
+function rtmedia_comment_max_links_callback( $values, $option ){
+	$new_values = $values;
+	if( apply_filters( 'rtmedia_comment_max_links', true ) && 'comment_max_links' == $option ){
+		$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		if ( is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files[0] ) ) {
+			if( $new_values < 5 ){
+				$new_values = 5;
+			}
+		}
+	}
+	return $new_values;
+}
+add_filter( 'option_comment_max_links', 'rtmedia_comment_max_links_callback', 10, 2 );

@@ -3616,14 +3616,17 @@ function rtmedia_is_comment_media_single_page( $rtmedia_id ){
 }
 
 
-function rtmedia_view_conversation_of_media( $activity_id ){ ?>
-	<span>
-		<a href="<?php echo bp_activity_get_permalink( $activity_id ); ?>"
-		class="rtmedia-view-conversation" >
-			<?php _e( 'View Conversation', 'buddypress-media' ); ?>
-		</a>
-	</span>
-	<?php
+function rtmedia_view_conversation_of_media( $activity_id ){ 
+	if( function_exists( 'bp_activity_get_permalink' ) ){
+		?>
+		<span>
+			<a href="<?php echo bp_activity_get_permalink( $activity_id ); ?>"
+			class="rtmedia-view-conversation" >
+				<?php _e( 'View Conversation', 'buddypress-media' ); ?>
+			</a>
+		</span>
+		<?php
+	}
 }
 
 
@@ -3644,7 +3647,7 @@ function rtmedia_check_comment_in_commented_media_allow(){
     $value = false;
     global $rtmedia;
     /* variable */
-    if( isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+    if( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
         $value = true;
     }
     return $value;
@@ -3660,7 +3663,7 @@ function rtmedia_check_comment_media_allow(){
     $value = false;
     global $rtmedia;
     /* variable */
-    if( ( isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ){
+    if( ( isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ){
         $value = true;
     }
     return $value;
