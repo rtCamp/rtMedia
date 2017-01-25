@@ -52,11 +52,13 @@ class RTMediaPrivacy {
 	 * Show privacy dropdown inside activity loop along with activity meta buttons.
 	 */
 	function update_activity_privacy_option() {
+		global $activities_template;
+		$rtmedia_activity_types = array( 'rtmedia_comment_activity', 'rtmedia_like_activity' );
 		if ( function_exists( 'bp_activity_user_can_delete' ) && bp_activity_user_can_delete()
 			&& ( ! bp_is_groups_component() ) && is_rtmedia_privacy_user_overide()
 			&& apply_filters( 'rtm_load_bp_activity_privacy_update_ui', true )
+			&& isset( $activities_template->activity ) && isset( $activities_template->activity->type ) &&! in_array( $activities_template->activity->type , $rtmedia_activity_types )
 		) {
-			global $activities_template;
 
 			$selected = 0;
 			if ( isset( $activities_template->activity->privacy ) ) {
