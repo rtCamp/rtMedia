@@ -862,6 +862,9 @@ function add_search_filter() {
 			if ( function_exists( 'is_plugin_active' ) && ! is_plugin_active( 'rtmedia-custom-attributes/index.php' ) ) {
 				unset( $search_by['attribute'] );
 			}
+			if ( strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {
+				unset( $search_by['attribute'] );
+			}
 			foreach ( $search_by as $key => $value ) {
 				$selected = ( isset( $_REQUEST['search_by'] ) && $_REQUEST['search_by'] == $key ? 'selected' : '' );
 				if ( $search_by[ $key ] ) {
