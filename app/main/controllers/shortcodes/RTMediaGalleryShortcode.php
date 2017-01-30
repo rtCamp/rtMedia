@@ -187,8 +187,7 @@ class RTMediaGalleryShortcode {
 
 				if ( isset( $attr['attr']['search_filter'] )  ) {
 					if ( 'true' === $attr['attr']['search_filter'] ) {
-
-						add_search_filter();
+						add_search_filter( $attr['attr'] );
 					}
 			    	unset( $attr['attr']['search_filter'] );
 				}

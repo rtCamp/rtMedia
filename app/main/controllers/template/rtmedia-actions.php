@@ -844,7 +844,8 @@ function rtmedia_activity_register_activity_actions_callback() {
 }
 add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
 
-function add_search_filter() {
+function add_search_filter( $attr = null ) {
+
 	global $rtmedia;
 	if ( isset( $rtmedia->options['general_enableGallerysearch'] ) && $rtmedia->options['general_enableGallerysearch'] ) {
 		$html = "<div class='media_search'>";
@@ -864,6 +865,12 @@ function add_search_filter() {
 			}
 			if ( strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {
 				unset( $search_by['attribute'] );
+			}
+			if ( isset( $attr['media_type'] ) && $attr['media_type'] ) {
+				unset( $search_by['media_type'] );
+			}
+			if ( isset( $attr['media_author'] ) && $attr['media_author'] ) {
+				unset( $search_by['author'] );
 			}
 			foreach ( $search_by as $key => $value ) {
 				$selected = ( isset( $_REQUEST['search_by'] ) && $_REQUEST['search_by'] == $key ? 'selected' : '' );

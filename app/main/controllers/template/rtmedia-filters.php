@@ -634,12 +634,13 @@ function rtmedia_search_media_filter( $filter ) {
 		'description'	=> true,
 		'attribute'		=> true,
 		'author'		=> true,
+		'media_type'	=> true,
 	);
 
 	return $filter;
 }
 
-add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
+// add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
 
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	global $wpdb;
@@ -690,6 +691,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 				}
 			}
 			$where .= " OR post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
+			$where .= " OR $table_name.media_type = '" . $_REQUEST['search'] . "' ";
 			if ( isset( $x )  && $x ) {
 				$where .= " OR $table_name.id IN ( $x )";
 			}
@@ -730,3 +732,22 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 }
 
 add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11, 2 );
+
+
+function rtmedia_model_query_columns( $columns ) {
+
+	if ( isset( $_REQUEST['search'] ) && $_REQUEST['search'] ) {
+
+		if ( isset( $_REQUEST['search_by'] ) ) {
+			if ( 'media_type' == $_REQUEST['search_by'] ) {
+				if ( isset( $columns['media_type']['value'] ) && is_array( $columns['media_type']['value'] ) ) {
+					$columns['media_type']['value'] = [ $_REQUEST['search'] ];
+				}
+			}
+		}
+	}
+
+	return $columns;
+}
+
+add_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns', 10, 1 );
