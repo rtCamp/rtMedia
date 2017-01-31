@@ -272,6 +272,13 @@ class RTMediaTemplate {
 			//for medias except album and playlist, if album_is is found, then update album_id for the media also
 			if ( ! empty( $_album_id ) ) {
 				$data_array[] = 'album_id';
+
+				/* check it has an media id */
+				if( isset( $rtmedia_query->media[0]->media_id ) && ! empty( $rtmedia_query->media[0]->media_id ) ){
+					$comment     = new RTMediaComment();
+					/* update the comment media album */
+					$comment->update_comment_media_album( $rtmedia_query->media[0]->media_id );
+				}
 			}
 
 			$data       = rtmedia_sanitize_object( $_POST, $data_array );

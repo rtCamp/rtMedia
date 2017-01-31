@@ -163,6 +163,44 @@ class RTMediaComment {
 
 
 	/*
+	 * update the Comment Media album when Parent Media Album is change
+	 * @param int $media_id ( media id )
+	*/
+	function update_comment_media_album( $post_id = false ){
+		/* get album id */
+		$album_id   = filter_input( INPUT_POST, 'album_id', FILTER_SANITIZE_NUMBER_INT );
+		/* RTMediaModel class exites and post_id is not NULL and album id is not NULL */
+		if( class_exists( 'RTMediaModel' ) && ! empty( $post_id ) && isset( $album_id ) && ! empty( $album_id ) ){
+			/* get the comments from the post id */
+			$comments = $this->rtmedia_comment_model->get( array( 'post_id' => $post_id ) );
+			/* check if comment exites or not */
+			if( isset( $comments ) && is_array( $comments ) && ! empty( $comments ) ){
+				$media_model      = new RTMediaModel();
+				/* comment loop */
+				foreach ( $comments as $comment ) {
+					/* check for comment id */
+					if( isset( $comment->comment_ID ) ){
+						/* get the media id from the comment  */
+						$comment_media_id = get_comment_meta( $comment->comment_ID, 'rtmedia_comment_media_id', true );
+						/* check if comment has media or not */
+						if( isset( $comment_media_id ) && ! empty( $comment_media_id ) ){
+							/* media id  */
+							$where   = array( 'id' => $comment_media_id );
+
+							/* album id */
+							$columns = array( 'album_id' => $album_id );
+
+							// update media privacy
+							$media_model->update( $columns, $where );
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	/*
 	 * add media upload in add comment section
 	 * @param int $id ( media id or activity id )
 	 * @param string $type ( media or activity )
