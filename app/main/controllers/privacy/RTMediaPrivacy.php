@@ -119,7 +119,7 @@ class RTMediaPrivacy {
 			}
 
 			/* is the activate has any media then move the like and comment of that media to for the privacy */
-			$rtm_activity_model->profile_activity_update( $media_ids_of_activity, $privacy );
+			$rtm_activity_model->profile_activity_update( $media_ids_of_activity, $privacy, $activity_id );
 
 			if ( false === $status ) {
 				$status = 'false';

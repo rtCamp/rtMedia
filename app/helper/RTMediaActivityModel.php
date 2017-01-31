@@ -63,16 +63,33 @@ class RTMediaActivityModel extends RTDBModel {
 	 * @param array $media_ids_of_activity List of all the Media Id that is being updated.
 	 * @param int $privacy Privacy to set.
 	 */
-	public function profile_activity_update( $media_ids_of_activity = array(), $privacy ){
+	public function profile_activity_update( $media_ids_of_activity = array(), $privacy, $parent_activity_id = false ){
 		foreach ($media_ids_of_activity as $media_id_of_activity) {
 			// Get all the activities from item_id.
-			$activity_parents = bp_activity_get( array( 'filter' => array( 'primary_id' =>$media_id_of_activity ) ) );
+			$activity_parents = bp_activity_get( array( 'filter' => array( 'primary_id' => $media_id_of_activity ) ) );
 
 			/* if has activity */
 			if ( ! empty( $activity_parents['activities'] ) ) {
 				foreach( $activity_parents['activities'] as $parent ) {
 					$this->set_privacy( $parent->id, $parent->user_id, $privacy );
 				}
+			}
+		}
+
+
+		// Get all the activities from item_id.
+		$parent_activity_id = intval( $parent_activity_id );
+		$activity_parents = bp_activity_get( 
+			array( 
+				'filter' => array( 'primary_id' => $parent_activity_id ),
+				'display_comments' => true,
+			)
+		);
+
+		/* if has activity */
+		if ( ! empty( $activity_parents['activities'] ) ) {
+			foreach( $activity_parents['activities'] as $parent ) {
+				$this->set_privacy( $parent->id, $parent->user_id, $privacy );
 			}
 		}
 	}
@@ -87,6 +104,22 @@ class RTMediaActivityModel extends RTDBModel {
 			$this->insert( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ) );
 		} else {
 			$this->update( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ), array( 'activity_id' => $activity_id ) );
+		}
+
+		// update privacy of corresponding media
+		$media_model    = new RTMediaModel();
+		$activity_media = $media_model->get( array( 'activity_id' => $activity_id ) );
+		if ( ! empty( $activity_media ) && is_array( $activity_media ) ) {
+			foreach ( $activity_media as $single_media ) {
+				/* get all the media ids in the activity */
+				$media_ids_of_activity[] = $single_media->id;
+
+				$where   = array( 'id' => $single_media->id );
+				$columns = array( 'privacy' => $privacy );
+
+				// update media privacy
+				$media_model->update( $columns, $where );
+			}
 		}
 	}
 

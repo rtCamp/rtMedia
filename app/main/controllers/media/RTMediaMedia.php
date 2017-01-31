@@ -277,7 +277,7 @@ class RTMediaMedia {
 			}
 
 			/* is the activate has any media then move the like and comment of that media to for the privacy */
-			$rtmedia_activity_model->profile_activity_update( $media_ids_of_activity, $max_privacy );
+			$rtmedia_activity_model->profile_activity_update( $media_ids_of_activity, $max_privacy, $media[0]->activity_id );
 		}
 
 		/* action to perform any task after updating a media */
