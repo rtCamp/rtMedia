@@ -628,20 +628,13 @@ function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_i
 }
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
 
-function rtmedia_search_media_filter( $filter ) {
-	$filter = array(
-		'title'			=> true,
-		'description'	=> true,
-		'attribute'		=> true,
-		'author'		=> true,
-		'media_type'	=> true,
-	);
-
-	return $filter;
-}
-
-add_filter( 'rtmedia_media_search_by', 'rtmedia_search_media_filter', 10, 1 );
-
+/**
+ * Update where query for media search
+ * @param  string $where
+ * @param  string $table_name
+ * @param  string $join
+ * @return string
+ */
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	global $wpdb;
 	$posts_table = $wpdb->posts;
@@ -675,6 +668,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 					INNER JOIN $terms_table ON ( $terms_table.slug IN ( '" . $_REQUEST['search'] . "' ) )
 					INNER JOIN $term_taxonomy_table ON ( $term_taxonomy_table.term_id = $terms_table.term_id )
 					INNER JOIN $term_relationships_table ON ( $term_relationships_table.term_taxonomy_id = $term_taxonomy_table.term_taxonomy_id AND $term_relationships_table.object_id = $posts_table.ID )";
+
 			$att_id = $wpdb->get_results( $sql, ARRAY_N );
 			foreach ( $att_id as $key => $value ) {
 				$x .= $value[0] . ',';
@@ -705,7 +699,12 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 
 add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 10, 3 );
 
-
+/**
+ * Update join query for media search
+ * @param  string $join
+ * @param  string $table_name
+ * @return string
+ */
 function rtmedia_search_fillter_join_query( $join, $table_name ) {
 
 	global $wpdb;
@@ -717,7 +716,6 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 	if ( isset( $_REQUEST['search'] ) ) {
 		// if ( false == strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {
 			$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
-			   // $join .= "INNER JOIN $posts_table ON $table_name.media_id = $posts_table.ID";
 		// }
 
 		$request_url = explode( '/', $_SERVER['REQUEST_URI'] );
@@ -733,7 +731,11 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 
 add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11, 2 );
 
-
+/**
+ * Update media type for media search
+ * @param  array $columns
+ * @return array
+ */
 function rtmedia_model_query_columns( $columns ) {
 
 	if ( isset( $_REQUEST['search'] ) && $_REQUEST['search'] ) {
@@ -741,7 +743,7 @@ function rtmedia_model_query_columns( $columns ) {
 		if ( isset( $_REQUEST['search_by'] ) ) {
 			if ( 'media_type' == $_REQUEST['search_by'] ) {
 				if ( isset( $columns['media_type']['value'] ) && is_array( $columns['media_type']['value'] ) ) {
-					$columns['media_type']['value'] = [ $_REQUEST['search'] ];
+					$columns['media_type']['value'] = array( $_REQUEST['search'] );
 				}
 			}
 		}

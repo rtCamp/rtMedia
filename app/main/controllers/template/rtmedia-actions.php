@@ -302,7 +302,6 @@ function add_upload_button() {
 		/**
 		 * Add filter to transfer "Upload" string,
 		 * issue: http://git.rtcamp.com/rtmedia/rtMedia/issues/133
-		 * By: Yahil
 		 */
 		$upload_string = apply_filters( 'rtmedia_upload_button_string', __( 'Upload', 'buddypress-media' ) );
 
@@ -844,6 +843,12 @@ function rtmedia_activity_register_activity_actions_callback() {
 }
 add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
 
+
+
+/**
+ * display search mockup for media
+ * @param       array       $attr
+ */
 function add_search_filter( $attr = null ) {
 
 	global $rtmedia;
@@ -855,7 +860,11 @@ function add_search_filter( $attr = null ) {
 		$search_by = '';
 		$search_by = apply_filters( 'rtmedia_media_search_by', $search_by );
 
-		if ( $search_by ) {
+		/**
+		 * search media with specific type
+		 * @param       array       $search_by
+		 */
+		if (  isset( $search_by ) && $search_by ) {
 			$html .= "<select id='search_by' class='search_by'>";
 			if ( strpos( $_SERVER['REQUEST_URI'], 'members' ) ) {
 				unset( $search_by['author'] );
