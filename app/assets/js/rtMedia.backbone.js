@@ -292,7 +292,6 @@ jQuery( function( $ ) {
 
 	/**
 	 * onClick Show all comment
-	 * By: Yahil
 	 */
 	$( document ).on( 'click', '#rtmedia_show_all_comment', function() {
 		var show_comment = $( '#rtmedia_show_all_comment' ).parent().next();
@@ -304,27 +303,27 @@ jQuery( function( $ ) {
 		$( this ).parent().remove();
 	} );
 
-		$( document ).on( 'keypress', '#rtmedia_go_to_num', function( e ) {
-			if ( e.keyCode == 13 ) {
-				e.preventDefault();
+	$( document ).on( 'keypress', '#rtmedia_go_to_num', function( e ) {
+		if ( e.keyCode == 13 ) {
+			e.preventDefault();
 
-				if ( jQuery( '.rtm-media-loading' ).length == 0 ) {
-					$( '.rtm-pagination' ).before( '<div class=\'rtm-media-loading\'><img src=\'' + rMedia_loading_media + '\' /></div>' );
-				} else {
-					jQuery( '.rtm-media-loading' ).show();
-				}
-
-				if ( parseInt( $( '#rtmedia_go_to_num' ).val() ) > parseInt( $( '#rtmedia_last_page' ).val() ) ) {
-					nextpage = parseInt( $( '#rtmedia_last_page' ).val() );
-				} else {
-					nextpage = parseInt( $( '#rtmedia_go_to_num' ).val() );
-				}
-
-				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
-
-				return false;
+			if ( jQuery( '.rtm-media-loading' ).length == 0 ) {
+				$( '.rtm-pagination' ).before( '<div class=\'rtm-media-loading\'><img src=\'' + rMedia_loading_media + '\' /></div>' );
+			} else {
+				jQuery( '.rtm-media-loading' ).show();
 			}
-		} );
+
+			if ( parseInt( $( '#rtmedia_go_to_num' ).val() ) > parseInt( $( '#rtmedia_last_page' ).val() ) ) {
+				nextpage = parseInt( $( '#rtmedia_last_page' ).val() );
+			} else {
+				nextpage = parseInt( $( '#rtmedia_go_to_num' ).val() );
+			}
+
+			galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
+
+			return false;
+		}
+	} );
 
 	$( document ).on( 'click', '.rtmedia-page-link', function( e ) {
 		/* Get current clicked href value */
