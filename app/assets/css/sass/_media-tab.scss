@@ -187,6 +187,26 @@ body {
 		float: left;
 	}
 
+	#media_fatch_loader.load {
+		float: left;
+		width: 20px;
+		height: 30px;
+		position: relative;
+
+		&:before {
+			content: '';
+			border-radius: 50%;
+			border: 1px solid #aaa;
+			border-top-color: rgba(255, 255, 255, 0.9);
+			animation: spinner .8s linear infinite;
+			-webkit-animation: spinner .8s linear infinite;
+			position: absolute;
+			width: 15px;
+			height: 15px;
+			top: 24%;
+		}
+	}
+
 	.search_option {
 		padding: 0;
 		background: transparent;
@@ -201,6 +221,18 @@ body {
 		background: transparent;
 		margin-top: 3px;
 		float: left;
+	}
+}
+
+@keyframes spinner {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@-webkit-keyframes spinner {
+	to {
+		-webkit-transform: rotate(360deg);
 	}
 }
 

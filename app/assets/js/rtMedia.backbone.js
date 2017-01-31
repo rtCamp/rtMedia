@@ -201,6 +201,7 @@ jQuery( function( $ ) {
 					}
 				} );
 			}
+
 		},
 		reloadView: function( parent_el ) {
 			upload_sync = true;
@@ -265,6 +266,7 @@ jQuery( function( $ ) {
 			if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 				rtm_masonry_reload( rtm_masonry_container );
 			}
+			$( '#media_fatch_loader' ).removeClass('load');
 		},
 		appendTo: function( media ) {
 			//Console.log("append");
@@ -380,6 +382,7 @@ jQuery( function( $ ) {
 		if( $( '#media_search_input' ).val() == '' ) {
 			return;
 		}
+		$( '#media_fatch_loader' ).addClass('load');
 		nextpage = 1;
 
 		var href = window.location.href;
@@ -405,6 +408,7 @@ jQuery( function( $ ) {
 
 	// media search remove
 	$( document ).on( 'click', '#media_search_remove', function( e ) {
+		$( '#media_fatch_loader' ).addClass('load');
 		jQuery( '#media_search_input' ).val('');
 		nextpage = 1;
 		var href = window.location.pathname;

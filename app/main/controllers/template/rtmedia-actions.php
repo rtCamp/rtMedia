@@ -851,7 +851,7 @@ function add_search_filter( $attr = null ) {
 		$html = "<div class='media_search'>";
 		$search_value = ( isset( $_GET['search'] ) ? $_GET['search'] : '' );
 		$html .= "<input type='text' id='media_search_input' value='" . $search_value . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
-
+		$html .= "<span id='media_fatch_loader'></span>";
 		$search_by = '';
 		$search_by = apply_filters( 'rtmedia_media_search_by', $search_by );
 
