@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.2.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-01-05 07:34:17+00:00\n"
+"POT-Creation-Date: 2017-01-31 11:24:34+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2779,7 +2779,7 @@ msgstr ""
 msgid "Default Privacy"
 msgstr ""
 
-#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:221
+#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:224
 msgid "You do not have sufficient privileges to view this gallery"
 msgstr ""
 
@@ -2804,22 +2804,22 @@ msgid "Data mismatch, Please insert data properly."
 msgstr ""
 
 #: app/main/controllers/template/RTMediaTemplate.php:109
-#: app/main/controllers/template/RTMediaTemplate.php:160
+#: app/main/controllers/template/RTMediaTemplate.php:163
 msgid "Invalid attribute passed for rtmedia_gallery shortcode."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:352
-#: app/main/controllers/template/RTMediaTemplate.php:445
-#: app/main/controllers/template/RTMediaTemplate.php:543
-#: app/main/controllers/template/RTMediaTemplate.php:683
+#: app/main/controllers/template/RTMediaTemplate.php:355
+#: app/main/controllers/template/RTMediaTemplate.php:448
+#: app/main/controllers/template/RTMediaTemplate.php:546
+#: app/main/controllers/template/RTMediaTemplate.php:686
 msgid "Ooops !!! Invalid access. No nonce was found !!"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:359
+#: app/main/controllers/template/RTMediaTemplate.php:362
 msgid "Media updated Sucessfully"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:365
+#: app/main/controllers/template/RTMediaTemplate.php:368
 msgid "Error in updating Media"
 msgstr ""
 
