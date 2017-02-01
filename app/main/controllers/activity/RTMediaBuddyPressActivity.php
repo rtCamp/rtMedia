@@ -711,6 +711,13 @@ class RTMediaBuddyPressActivity {
 					// Store activity id into user meta for reference
 					//todo user_attribute
 					update_user_meta( $user_id, 'rtm-bp-media-comment-activity-' . $media_id . '-' . $wp_comment_id, $activity_id );
+
+					if( function_exists( 'rtmedia_get_original_comment_media_content' ) ){
+						/* get the original content of media */
+						$original_content = rtmedia_get_original_comment_media_content();
+						/* save the original content in the meta fields */
+						bp_activity_update_meta( $activity_id, 'bp_old_activity_content', $original_content );
+					}
 				}
 			}
 		}

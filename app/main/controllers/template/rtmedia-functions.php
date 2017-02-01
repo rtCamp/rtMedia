@@ -3668,3 +3668,30 @@ function rtmedia_check_comment_media_allow(){
     }
     return $value;
 }
+
+
+/**
+ * Get the Original Content from the $_REQUEST 
+ *
+ * @return string
+ */
+function rtmedia_get_original_comment_media_content(){
+	$old_content = "&nbsp;";
+
+	/* get the original contant from the $REQUEST */
+	if( isset( $_REQUEST['content'] ) ){
+		$old_content = $_REQUEST['content'];
+	}
+
+	if( isset( $_REQUEST['comment_content'] ) ){
+		$old_content = $_REQUEST['comment_content'];
+	}
+
+
+	/* is comment is empty then add content content space */
+	if( strstr($old_content, 'nbsp') ){
+		$old_content = "&nbsp;";
+	}
+
+	return $old_content;
+}

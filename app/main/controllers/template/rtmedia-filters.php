@@ -704,6 +704,14 @@ function rtmedia_bp_activity_after_save_callback( $activity_data ){
 	        $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 	        /*  check is class exits or not */
 			if( is_array( $rtMedia_attached_files )  && ! empty( $rtMedia_attached_files[0] )  && class_exists( 'RTMediaModel' ) ){
+
+				if( function_exists( 'rtmedia_get_original_comment_media_content' ) ){
+					/* get the original content of media */
+					$original_content = rtmedia_get_original_comment_media_content();
+					/* save the original content in the meta fields */
+					bp_activity_update_meta( $activity_data->id, 'bp_old_activity_content', $original_content );
+				}
+
 				$rtmedia_model = new RTMediaModel();
 				$rtmedia_model->update(
 					array(
