@@ -181,7 +181,6 @@ jQuery( function( $ ) {
 						var galleryViewObj = new rtMedia.GalleryView( {
 							collection: new rtMedia.Gallery( response.data ),
 							el: list_el,
-							xyz: 34
 						} );
 
 						//Element.show();
