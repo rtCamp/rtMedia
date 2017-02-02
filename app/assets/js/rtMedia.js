@@ -86,7 +86,15 @@ function apply_rtMagnificPopup( selector ) {
 									}
 			                    }, false);
 								// Call the play method
-								mediaElement.play();
+								if( $( window ).width() < 760 ){
+									window.addEventListener('touchstart', function videoStart() {
+									  mediaElement.play();
+									  // remove from the window and call the function we are removing
+									  this.removeEventListener('touchstart', videoStart);
+									});
+								} else {
+									mediaElement.play();
+								}
 							}
 						} );
 						$( '.mfp-content .mejs-audio .mejs-controls' ).css( 'position', 'relative' );
