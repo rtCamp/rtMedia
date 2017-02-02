@@ -74,6 +74,17 @@ class RTMediaComment {
 		$rtmedia_points_media_id = rtmedia_id( $params['comment_post_ID'] );
 		$params['comment_id'] = $id;
 
+		/* add comment id in the rtmedia meta feilds */
+        if ( isset( $_REQUEST['rtMedia_attached_files'] ) ) {
+            $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+            /* check media should be in array format and is not empty to */
+            if( is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files ) ){
+            	add_rtmedia_meta( $rtMedia_attached_files[0], 'rtmedia_comment_media_comment_id', $id );
+            }
+        }
+
+
 		do_action( 'rtmedia_after_add_comment', $params );
 
 	   	return $id;

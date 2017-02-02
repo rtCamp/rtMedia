@@ -709,7 +709,8 @@ function rtmedia_bp_activity_after_save_callback( $activity_data ){
 					/* get the original content of media */
 					$original_content = rtmedia_get_original_comment_media_content();
 					/* save the original content in the meta fields */
-					bp_activity_update_meta( $activity_data->id, 'bp_old_activity_content', $original_content );
+					bp_activity_update_meta( $activity_data->id, 'bp_activity_text', $original_content );
+					// bp_activity_update_meta( $activity_data->id, 'bp_old_activity_content', $original_content );
 				}
 
 				$rtmedia_model = new RTMediaModel();
