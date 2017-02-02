@@ -1836,7 +1836,6 @@ function update_activity_after_thumb_set( $id ) {
 		$obj_activity->activity_text = $activity_text;
 
 		$wpdb->update( $bp->activity->table_name, array(
-			'type'    => 'rtmedia_update',
 			'content' => $obj_activity->create_activity_html(),
 			), array(
 			'id' => $activity_id,

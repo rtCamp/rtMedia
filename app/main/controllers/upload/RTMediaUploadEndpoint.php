@@ -76,8 +76,12 @@ class RTMediaUploadEndpoint {
 						$privacy = $rtmedia->options['privacy_default'];
 					}
 
-					$album = rtmedia_get_site_option( 'rtmedia-global-albums' );
-					$album_id = $album_id = $album[0];
+					if( class_exists( 'RTMediaAlbum' ) ){
+						$album_id = RTMediaAlbum::get_default();
+					}else{
+						$album = rtmedia_get_site_option( 'rtmedia-global-albums' );
+						$album_id = $album_id = $album[0];
+					}
 
 					$current_media_id = preg_replace( '/[^0-9]/', '', $this->upload['comment_media_activity_id'] );
 
