@@ -642,6 +642,8 @@ class RTMediaBuddyPressActivity {
 					}
 
 					$activity_content = $params['comment_content'];
+					$comment_media = false;
+					$comment_media_id = false;
 
 					/* if activity is add from comment media  */
 				    if( isset( $_REQUEST['comment_content'] ) || isset( $_REQUEST['action'] ) ){
@@ -665,8 +667,10 @@ class RTMediaBuddyPressActivity {
 				        if ( isset( $_REQUEST['rtMedia_attached_files'] ) ) {
 				            $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
-				            /*if media media is not array and is not empty to*/
+				            /* check media should be in array format and is not empty to */
 				            if( class_exists( 'RTMediaActivity' )  && is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files ) ){
+				            	$comment_media = true;
+				            	$comment_media_id = $rtMedia_attached_files[0];
 			                    $obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content );
 			                	$comment_content = $obj_comment->create_activity_html();
 				            }
@@ -701,6 +705,11 @@ class RTMediaBuddyPressActivity {
 
 					// create BuddyPress activity
 					$activity_id = bp_activity_add( $activity_args );
+
+					/* save the profile activity id in the media meta */
+					if( ! empty( $comment_media ) && ! empty( $comment_media_id ) && ! empty( $activity_id ) ){
+						add_rtmedia_meta( $comment_media_id, 'rtmedia_comment_media_profile_id', $activity_id );
+					}
 
 					// add privacy for like activity
 					if( class_exists( 'RTMediaActivityModel' ) && is_rtmedia_privacy_enable() && isset( $media_obj->activity_id ) ){
