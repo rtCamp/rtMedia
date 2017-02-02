@@ -1295,7 +1295,19 @@ function get_rtmedia_permalink( $id ) {
 	// Removing filter so that doesn't affect other calls to this function
 	remove_filter( 'bp_get_root_domain', 'rtmedia_get_current_blog_url' );
 
-	return trailingslashit( $parent_link . RTMEDIA_MEDIA_SLUG . '/' . $id );
+	$permalink = trailingslashit( $parent_link . RTMEDIA_MEDIA_SLUG . '/' . $id );
+
+	/**
+	 * Filters the rtmedia permalink for a media list.
+	 *
+	 * @since 4.2.2
+	 *
+	 * @param string  $permalink The rtmedia's permalink.
+	 * @param object  $media     The media in question.
+	 * @param int     $id 		 ID of the media.
+	 */
+
+	return apply_filters( 'get_rtmedia_permalink', $permalink, $media, $id );
 }
 
 function get_rtmedia_user_link( $id ) {
