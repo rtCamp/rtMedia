@@ -1851,7 +1851,14 @@ function update_activity_after_thumb_set( $id ) {
 
 
 
-
+/**
+ * Updating profile and comment activity after thumbnail set
+ *
+ * @global      wpdb            $wpdb
+ *
+ * @param       int             $media_id
+ * @param       string             $activity_content
+ */
 function rtmedia_update_content_of_comment_media( $media_id, $activity_content ){
 	/* update activity profile and comment content of the media */
 	if( isset( $media_id ) && ! empty( $media_id ) && function_exists( 'rtmedia_is_comment_media' ) ){
