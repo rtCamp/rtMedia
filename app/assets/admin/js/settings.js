@@ -766,7 +766,6 @@ jQuery( document ).ready( function ( $ ) {
 		var name = jQuery( '#name' ).val();
 		var email = jQuery( '#email' ).val();
 		var website = jQuery( '#website' ).val();
-		var phone = jQuery( '#phone' ).val();
 		var subject = jQuery( '#subject' ).val();
 		var details = jQuery( '#details' ).val();
 		var request_type = jQuery( 'input[name="request_type"]' ).val();
@@ -780,7 +779,6 @@ jQuery( document ).ready( function ( $ ) {
 			name: name,
 			email: email,
 			website: website,
-			phone: phone,
 			subject: subject,
 			details: details,
 			request_id: request_id,
@@ -821,7 +819,6 @@ jQuery( document ).ready( function ( $ ) {
 				name: name,
 				email: email,
 				website: website,
-				phone: phone,
 				subject: subject,
 				details: details,
 				request_id: request_id,
@@ -838,8 +835,11 @@ jQuery( document ).ready( function ( $ ) {
 			};
 		}
 		for ( formdata in form_data ) {
-			if ( form_data[ formdata ] == "" && formdata != 'phone' ) {
+			if ( form_data[ formdata ] == "" && formdata != 'debuglog_temp_path' ) {
 				alert( "Please enter " + formdata.replace( "_", " " ) + " field." );
+				return false;
+			} else if ( form_data[ formdata ] == "" && formdata == 'debuglog_temp_path' ) {
+				alert( "Please upload attachment." );
 				return false;
 			}
 		}

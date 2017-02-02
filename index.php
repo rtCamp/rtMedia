@@ -17,6 +17,15 @@
  * @package    BuddyPressMedia
  * @subpackage Main
  */
+
+if ( ! defined( 'RTMEDIA_VERSION' ) ) {
+	/**
+	 * The version of the plugin
+	 *
+	 */
+	define( 'RTMEDIA_VERSION', '4.2.1' );
+}
+
 if ( ! defined( 'RTMEDIA_PATH' ) ) {
 
 	/**
