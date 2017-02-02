@@ -1834,15 +1834,54 @@ function update_activity_after_thumb_set( $id ) {
 
 		$activity_text               = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
 		$obj_activity->activity_text = $activity_text;
+		$activity_content = $obj_activity->create_activity_html();
 
 		$wpdb->update( $bp->activity->table_name, array(
-			'content' => $obj_activity->create_activity_html(),
+			'content' => $activity_content,
 			), array(
 			'id' => $activity_id,
 		) );
+
+		if( function_exists( 'rtmedia_update_content_of_comment_media' ) ){
+			rtmedia_update_content_of_comment_media( $id, $activity_content );
+		}
 	}// End if().
 
 }
+
+
+
+
+function rtmedia_update_content_of_comment_media( $media_id, $activity_content ){
+	/* update activity profile and comment content of the media */
+	if( isset( $media_id ) && ! empty( $media_id ) && function_exists( 'rtmedia_is_comment_media' ) ){
+		global $wpdb;
+		/* check if it's an comment media */
+		if( rtmedia_is_comment_media( $media_id ) ){
+
+			// update profile content
+			/* get the profile activity id from the rtmedia meta table  */
+			$activity_id = get_rtmedia_meta( $media_id, 'rtmedia_comment_media_profile_id' );
+			/* check is activity id is empty or not */
+			if( isset( $activity_id ) && ! empty( $activity_id ) ){
+				$update = $wpdb->update( $wpdb->base_prefix . 'bp_activity', array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
+			}
+
+			// update comment content
+			// get the comment id from the rtmedia meta table
+			$comment_id = get_rtmedia_meta( $media_id, 'rtmedia_comment_media_comment_id' );
+			if( isset( $comment_id ) && ! empty( $comment_id ) ){
+				$activity_content = str_replace( 'rtmedia-activity-container', 'rtmedia-comment-media-container', $activity_content );
+				$activity_content = str_replace( 'rtmedia-activity-text', 'rtmedia-comment-media-text', $activity_content );
+				$activity_content = str_replace( 'rtmedia-list-item', 'rtmedia-comment-media-list-item', $activity_content );
+				$activity_content = str_replace( 'rtmedia-list', 'rtmedia-comment-media-list', $activity_content );
+				$activity_content = str_replace( 'rtmedia-comment-media-list-item', 'rtmedia-list-item', $activity_content );
+				$update = $wpdb->update( $wpdb->base_prefix . 'comments', array( 'comment_content' => $activity_content ), array( 'comment_ID' => $comment_id ) );
+			}
+		}
+	}	
+}
+
 
 /**
  * Updating video poster
