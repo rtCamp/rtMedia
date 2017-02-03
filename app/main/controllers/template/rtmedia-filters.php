@@ -828,3 +828,34 @@ function rtmedia_comment_max_links_callback( $values, $option ){
 	return $new_values;
 }
 add_filter( 'option_comment_max_links', 'rtmedia_comment_max_links_callback', 10, 2 );
+
+
+/**
+ * Update profile and comment activity content of comment media
+ *
+ * @global      object    $wpdb
+ *
+ * @param       int           $attachment_id
+ */
+if( ! function_exists( 'rtmedia_transcoded_media_added_callback' ) ){
+	function rtmedia_transcoded_media_added_callback( $attachment_id ){
+		if( isset( $attachment_id ) && ! empty( $attachment_id ) ){
+			$job_for = get_post_meta( $attachment_id, '_rt_media_source', true );
+			if( 'rtmedia' == $job_for && class_exists( 'RTMediaModel' ) ){
+				$model 	= new RTMediaModel();
+				$media 	= $model->get_media( array( 'media_id' => $attachment_id ), 0, 1 );
+				$activity_id = $media[0]->activity_id;
+				$media_id = $media[0]->id;
+				if( $activity_id && isset( $media_id ) && ! empty( $media_id ) && function_exists( 'rtmedia_is_comment_media' ) && rtmedia_is_comment_media( $media_id ) ){
+					global $wpdb;
+					$activity_content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$wpdb->base_prefix}bp_activity WHERE id = %d", $activity_id ) );
+					if( function_exists( 'rtmedia_update_content_of_comment_media' ) ){
+						rtmedia_update_content_of_comment_media( $media[0]->id, $activity_content );
+					}
+				}
+			}
+			
+		}
+	}
+}
+add_action( 'transcoded_media_added', 'rtmedia_transcoded_media_added_callback', 10, 1 );
