@@ -102,7 +102,11 @@ class RTMediaTemplate {
 					$this->add_hidden_fields_in_gallery();
 
 					$gallery_template = apply_filters( 'rtmedia-before-template', $template, $shortcode_attr );
-					include $this->locate_template( $gallery_template );
+
+					// check if file exists
+					if ( file_exists(  $this->locate_template( $gallery_template ) ) ) {
+						include $this->locate_template( $gallery_template );
+					}
 
 					echo '</div>';
 				} else {
@@ -150,6 +154,7 @@ class RTMediaTemplate {
 
 						$gallery_template = apply_filters( 'rtmedia-before-template', $template, $shortcode_attr );
 
+						// check if file exists
 						if ( file_exists(  $this->locate_template( $gallery_template ) ) ) {
 							include $this->locate_template( $gallery_template );
 						}
