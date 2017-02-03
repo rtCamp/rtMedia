@@ -86,7 +86,15 @@ function apply_rtMagnificPopup( selector ) {
 									}
 			                    }, false);
 								// Call the play method
-								mediaElement.play();
+								if( $( window ).width() < 760 ){
+									window.addEventListener('touchstart', function videoStart() {
+									  mediaElement.play();
+									  // remove from the window and call the function we are removing
+									  this.removeEventListener('touchstart', videoStart);
+									});
+								} else {
+									mediaElement.play();
+								}
 							}
 						} );
 						$( '.mfp-content .mejs-audio .mejs-controls' ).css( 'position', 'relative' );
@@ -651,9 +659,9 @@ jQuery( 'document' ).ready( function( $ ) {
 				jQuery( this ).addClass( 'active' );
 
 				if ( class_name != 'rtm-upload-tab' ) {
-					jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).hide();
+					jQuery( 'div.moxie-shim' ).hide();
 				} else {
-					jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).show();
+					jQuery( 'div.moxie-shim' ).show();
 				}
 			}
 		});
