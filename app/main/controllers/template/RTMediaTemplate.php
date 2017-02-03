@@ -149,7 +149,10 @@ class RTMediaTemplate {
 						$this->add_hidden_fields_in_gallery();
 
 						$gallery_template = apply_filters( 'rtmedia-before-template', $template, $shortcode_attr );
-						include $this->locate_template( $gallery_template );
+
+						if ( file_exists(  $this->locate_template( $gallery_template ) ) ) {
+							include $this->locate_template( $gallery_template );
+						}
 
 						echo '</div>';
 
