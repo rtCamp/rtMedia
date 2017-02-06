@@ -662,20 +662,6 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 				}
 			}
 		} else {
-			$x = '';
-			$sql = "SELECT $table_name.id FROM $table_name
-					INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = 'attachment' )
-					INNER JOIN $terms_table ON ( $terms_table.slug IN ( '" . $_REQUEST['search'] . "' ) )
-					INNER JOIN $term_taxonomy_table ON ( $term_taxonomy_table.term_id = $terms_table.term_id )
-					INNER JOIN $term_relationships_table ON ( $term_relationships_table.term_taxonomy_id = $term_taxonomy_table.term_taxonomy_id AND $term_relationships_table.object_id = $posts_table.ID )";
-
-			$att_id = $wpdb->get_results( $sql, ARRAY_N );
-			foreach ( $att_id as $key => $value ) {
-				$x .= $value[0] . ',';
-			}
-			if ( isset( $x )  && $x ) {
-				$x = rtrim( $x, ',' );
-			}
 
 			$where .= ' ( ';
 			$where .= " $table_name.media_title = '" . $_REQUEST['search'] . "' ";
@@ -686,11 +672,8 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 			}
 			$where .= " OR post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
 			$where .= " OR $table_name.media_type = '" . $_REQUEST['search'] . "' ";
-			if ( isset( $x )  && $x ) {
-				$where .= " OR $table_name.id IN ( $x )";
-			}
-			$where .= ' ) ';
 
+			$where .= ' ) ';
 		}
 	}
 
