@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.2.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-01-31 11:24:34+00:00\n"
+"POT-Creation-Date: 2017-02-06 12:53:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2136,9 +2136,9 @@ msgid "Albums"
 msgstr ""
 
 #: app/main/RTMedia.php:662 app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rtmedia-actions.php:307
-#: app/main/controllers/template/rtmedia-actions.php:310
-#: app/main/controllers/template/rtmedia-actions.php:314
+#: app/main/controllers/template/rtmedia-actions.php:306
+#: app/main/controllers/template/rtmedia-actions.php:309
+#: app/main/controllers/template/rtmedia-actions.php:313
 msgid "Upload"
 msgstr ""
 
@@ -2730,8 +2730,8 @@ msgid "Unlike"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rtmedia-actions.php:310
-#: app/main/controllers/template/rtmedia-actions.php:314
+#: app/main/controllers/template/rtmedia-actions.php:309
+#: app/main/controllers/template/rtmedia-actions.php:313
 msgid "Upload Media"
 msgstr ""
 
@@ -2779,7 +2779,7 @@ msgstr ""
 msgid "Default Privacy"
 msgstr ""
 
-#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:224
+#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:227
 msgid "You do not have sufficient privileges to view this gallery"
 msgstr ""
 
@@ -2858,62 +2858,62 @@ msgstr ""
 msgid "Merge"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:360
+#: app/main/controllers/template/rtmedia-actions.php:359
 msgid "Empowering your community with "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:361
+#: app/main/controllers/template/rtmedia-actions.php:360
 msgid "The only complete media solution for WordPress, BuddyPress and bbPress"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:380
+#: app/main/controllers/template/rtmedia-actions.php:379
 msgid "Close (Esc)"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:525
+#: app/main/controllers/template/rtmedia-actions.php:524
 msgid "You can consider rtMedia Team for following :"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:527
+#: app/main/controllers/template/rtmedia-actions.php:526
 msgid "rtMedia Customization ( in Upgrade Safe manner )"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:528
+#: app/main/controllers/template/rtmedia-actions.php:527
 msgid "WordPress/BuddyPress Theme Design and Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:529
+#: app/main/controllers/template/rtmedia-actions.php:528
 msgid "WordPress/BuddyPress Plugin Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:532
+#: app/main/controllers/template/rtmedia-actions.php:531
 msgid "Contact Us"
 msgstr ""
 
+#: app/main/controllers/template/rtmedia-actions.php:618
 #: app/main/controllers/template/rtmedia-actions.php:619
-#: app/main/controllers/template/rtmedia-actions.php:620
 msgid "Previous"
 msgstr ""
 
+#: app/main/controllers/template/rtmedia-actions.php:620
 #: app/main/controllers/template/rtmedia-actions.php:621
-#: app/main/controllers/template/rtmedia-actions.php:622
 #: templates/media/album-single-edit.php:121
 msgid "Next"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:817
+#: app/main/controllers/template/rtmedia-actions.php:816
 msgid "Settings has been saved successfully."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:821
+#: app/main/controllers/template/rtmedia-actions.php:820
 msgid "Refresh the page in case if license data is not showing correct."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:839
+#: app/main/controllers/template/rtmedia-actions.php:838
 msgid "Posted a status update"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:841
+#: app/main/controllers/template/rtmedia-actions.php:840
 msgid "rtMedia Updates"
 msgstr ""
 
