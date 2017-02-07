@@ -2723,12 +2723,12 @@ function show_rtmedia_like_counts() {
  *
  * @return      string  HTML
  */
-if( ! function_exists( 'rtmedia_who_like_html' ) ){
-	function rtmedia_who_like_html( $like_count, $user_like_it ){
+if ( ! function_exists( 'rtmedia_who_like_html' ) ) {
+	function rtmedia_who_like_html( $like_count, $user_like_it ) {
 		$like_count = ( $like_count ) ? $like_count : false;
 		$user_like_it = ( $user_like_it ) ? true : false;
 		$like_count_new = $like_count;
-		$html = "";
+		$html = '';
 		if ( $like_count == 1 && $user_like_it ) {
 			/**
 			 * rtmedia you like text
@@ -2737,7 +2737,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 			 * @param int $user_like_it User Like it or Not
 			 * @return html TEXT to  display
 			*/
-			$html =  apply_filters( 'rtmedia_like_html_you_only_like', esc_html__( 'You like this', 'buddypress-media' ), $like_count, $user_like_it );
+			$html = apply_filters( 'rtmedia_like_html_you_only_like', esc_html__( 'You like this', 'buddypress-media' ), $like_count, $user_like_it );
 		} elseif ( $like_count ) {
 			if ( $like_count > 1 && $user_like_it ) {
 				/**
@@ -2747,7 +2747,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 				 * @param int $user_like_it User Like it or Not
 				 * @return html TEXT to  display
 				*/
-				$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html__( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
+				$html .= apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html__( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
 				$like_count_new--;
 			}
 
@@ -2757,7 +2757,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 			 * @param int $user_like_it User Like it or Not
 			 * @return INT Count to  display
 			*/
-			$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', $like_count, $user_like_it );
+			$html .= apply_filters( 'rtmedia_like_html_you_and_more_like', $like_count, $user_like_it );
 
 			/**
 			 * rtmedia person or people likes it
@@ -2766,7 +2766,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 			 * @param int $user_like_it User Like it or Not
 			 * @return html TEXT to  display
 			*/
-			$html .=  apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count_new, 'buddypress-media' ) ,$like_count, $user_like_it );
+			$html .= apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count_new, 'buddypress-media' ) ,$like_count, $user_like_it );
 		}
 
 		/**
@@ -2776,7 +2776,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 		 * @param int $user_like_it User Like it or Not
 		 * @return html TEXT to  display
 		*/
-		$html =  apply_filters( 'rtmedia_who_like_html', $html ,$like_count, $user_like_it );
+		$html = apply_filters( 'rtmedia_who_like_html', $html ,$like_count, $user_like_it );
 		return $html;
 	}
 }
@@ -3506,7 +3506,6 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 		return false;
 	}
 
-
 	$license 	= $addon['args']['license_key'];
 
 	$addon_name = $addon['name'];
@@ -3532,7 +3531,7 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 		'url'        => home_url(),
 	);
 
-    // Call the custom API.
+	// Call the custom API.
 	$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $store_url ) ), array( 'timeout' => 15, 'sslverify' => false ) );
 
 	// make sure the response came back okay
