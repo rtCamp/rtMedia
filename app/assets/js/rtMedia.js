@@ -448,9 +448,10 @@ jQuery( 'document' ).ready( function( $ ) {
 				rtmedia_media_view_counts();
 				rtmedia_init_media_deleting();
 				mfp = jQuery.magnificPopup.instance;
-			if ( jQuery( mfp.items ).size() > 1 ) {
-				rtmedia_init_popup_navigation();
-			}
+
+				if ( jQuery( mfp.items ).size() > 1 ) {
+					rtmedia_init_popup_navigation();
+				}
 
 				rtmedia_disable_popup_navigation_comment_focus();
 
