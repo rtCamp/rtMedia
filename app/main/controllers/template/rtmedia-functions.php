@@ -2385,9 +2385,10 @@ function rtmedia_edit_media_privacy_ui() {
 
 	$privacymodel = new RTMediaPrivacy( false );
 	$privacy      = $privacymodel->select_privacy_ui( $echo = false );
-
-	if ( $privacy ) {
-		return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . esc_html__( 'Privacy : ', 'buddypress-media' ) . '</label>' . $privacy . '</div>';
+	if ( isset( $rtmedia_query->media['0']->privacy ) && $rtmedia_query->media['0']->privacy != '80' ) {
+		if ( $privacy ) {
+			return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . esc_html__( 'Privacy : ', 'buddypress-media' ) . '</label>' . $privacy . '</div>';
+		}
 	}
 
 }

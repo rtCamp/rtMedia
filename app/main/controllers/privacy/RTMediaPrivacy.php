@@ -64,7 +64,9 @@ class RTMediaPrivacy {
 			}
 
 			//todo strict standard error
-			self::select_privacy_ui( true, 'rtm-ac-privacy-' . $activities_template->activity->id, array( 'rtm-activity-privacy-opt' ), $selected );
+			if ( isset( $activities_template->activity->privacy ) && $activities_template->activity->privacy != '80' ) {
+				self::select_privacy_ui( true, 'rtm-ac-privacy-' . $activities_template->activity->id, array( 'rtm-activity-privacy-opt' ), $selected );
+			}
 		}
 	}
 
