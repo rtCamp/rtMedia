@@ -1,5 +1,6 @@
 var rtMagnificPopup;
 var rtm_masonry_container;
+var comment_media = false;
 function apply_rtMagnificPopup( selector ) {
 	jQuery( 'document' ).ready( function( $ ) {
 		var rt_load_more = '';
@@ -449,8 +450,10 @@ jQuery( 'document' ).ready( function( $ ) {
 				rtmedia_init_media_deleting();
 				mfp = jQuery.magnificPopup.instance;
 
-				if ( jQuery( mfp.items ).size() > 1 ) {
+				if ( jQuery( mfp.items ).size() > 1 && comment_media == false ) {
 					rtmedia_init_popup_navigation();
+				}else{
+					rtmedia_disable_popup_navigation_all();
 				}
 
 				rtmedia_disable_popup_navigation_comment_focus();
@@ -513,6 +516,16 @@ jQuery( 'document' ).ready( function( $ ) {
 			},
 			threshold: 0
 		} );
+	}
+
+
+	function rtmedia_disable_popup_navigation_all(){
+		// hide the left and right key
+		jQuery( '.mfp-arrow-right' ).hide();
+		jQuery( '.mfp-arrow-left' ).hide();
+
+		// disable the left and right keyboard button
+		jQuery( document ).unbind( 'keydown' );
 	}
 
 	function rtmedia_disable_popup_navigation_comment_focus() {

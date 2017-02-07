@@ -11,9 +11,9 @@ function rtmedia_author_actions() {
 
 	if ( ! empty( $options ) ) {
 		$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
-                <div class="no-js">
-                <button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . esc_html__( 'Options', 'buddypress-media' ) . '</button>
-                <ul class="rtm-options">';
+				<div class="no-js">
+				<button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . esc_html__( 'Options', 'buddypress-media' ) . '</button>
+				<ul class="rtm-options">';
 
 		foreach ( $options as $action ) {
 			if ( ! empty( $action ) ) {
@@ -145,9 +145,9 @@ function rtmedia_gallery_options() {
 
 	if ( ! empty( $options ) ) {
 		$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
-                <div class="no-js">
-                <div class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . apply_filters( 'rtm_gallery_option_label', __( 'Options', 'buddypress-media' ) ) . '</div>
-                <ul class="rtm-options">';
+				<div class="no-js">
+				<div class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . apply_filters( 'rtm_gallery_option_label', __( 'Options', 'buddypress-media' ) ) . '</div>
+				<ul class="rtm-options">';
 
 		foreach ( $options as $action ) {
 			if ( ! empty( $action ) ) {
@@ -917,3 +917,30 @@ function rtmedia_gallery_shortcode_rewrite_rules() {
 
 }
 add_action( 'rtmedia_add_rewrite_rules', 'rtmedia_gallery_shortcode_rewrite_rules' );
+
+
+/**
+ * update the javascript variable media  view in popup or in single page
+ */
+function rtmedia_after_media_callback() {
+	// comment media
+	$rtmedia_id = rtmedia_id();
+	$comment_media = false;
+	if ( ! empty( $rtmedia_id ) ) {
+		$comment_media = rtmedia_is_comment_media( $rtmedia_id );
+		if ( ! empty( $comment_media ) ) {
+			?>
+			<script type="text/javascript">
+				comment_media = true;
+			</script>
+			<?php
+		} else {
+			?>
+			<script type="text/javascript">
+				comment_media = false;
+			</script>
+			<?php
+		}
+	}
+}
+add_action( 'rtmedia_after_media', 'rtmedia_after_media_callback', 10 );
