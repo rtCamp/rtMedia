@@ -3716,33 +3716,33 @@ function rtmedia_check_comment_media_allow(){
 
 
 /**
- * Get the Original Content from the $_REQUEST 
+ * Get the Original Content from the $_REQUEST
  *
  * @return string
  */
-function rtmedia_get_original_comment_media_content(){
+function rtmedia_get_original_comment_media_content() {
 	$old_content = "&nbsp;";
 
 	/* get the original contant from the $REQUEST */
-	if( isset( $_REQUEST['content'] ) ){
+	if ( isset( $_REQUEST['content'] ) ) {
 		$old_content = $_REQUEST['content'];
 	}
 
-	if( isset( $_REQUEST['comment_content'] ) ){
+	if ( isset( $_REQUEST['comment_content'] ) ) {
 		$old_content = $_REQUEST['comment_content'];
 	}
 
 
 	/* is comment is empty then add content content space */
-	if( strstr($old_content, 'nbsp') ){
+	if ( strstr( $old_content, 'nbsp' ) ) {
 		$old_content = "&nbsp;";
 	}
 
-	return $old_content;
+	return sanitize_text_field( $old_content );
 }
 
 
 function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
-	$where .= ' AND (' . $table_name . '.context NOT LIKE "profile-reply" AND '.$table_name.'.context NOT LIKE "groups-reply"  AND '.$table_name.'.context NOT LIKE "group-reply" ) ';
+	$where .= ' AND (' . $table_name . '.context NOT LIKE "profile-reply" AND '.$table_name.'.context NOT LIKE "groups-reply"  AND '.$table_name.'.context NOT LIKE "group-reply" AND '.$table_name.'.context NOT LIKE "post-reply" ) ';
 	return $where;
 }
