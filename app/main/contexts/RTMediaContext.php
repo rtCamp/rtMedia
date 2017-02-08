@@ -60,7 +60,8 @@ class RTMediaContext {
 			$this->type = $post->post_type;
 			$this->id   = $post->ID;
 		} else {
-			if ( isset( $_REQUEST['context'] ) && 'page' === $_REQUEST['context'] ) {
+			$wp_default_context = array( 'page', 'post' );
+			if ( isset( $_REQUEST['context'] ) &&  in_array( $_REQUEST['context'], $wp_default_context ) ) {
 				$this->type = $_REQUEST['context'];
 				$this->id   = $_REQUEST['context_id'];
 			} else {
