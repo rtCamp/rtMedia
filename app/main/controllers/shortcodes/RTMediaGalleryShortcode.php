@@ -228,10 +228,12 @@ class RTMediaGalleryShortcode {
 						'rtmedia_query_where_filter',
 					), 10, 3 );
 				}
-				add_filter( 'rtmedia-model-where-query', array(
-					'RTMediaGalleryShortcode',
-					'rtmedia_query_where_filter_remove_comment_media',
-				), 11, 3 );
+
+
+				if ( apply_filters( 'rtmedia_query_where_filter_remove_comment_media', true, 'galleryshortcode' ) ) {
+					add_filter( 'rtmedia-model-where-query', array( 'RTMediaGalleryShortcode', 'rtmedia_query_where_filter_remove_comment_media' ), 11, 3 );
+				}
+
 				$template->set_template( $gallery_template, $attr );
 				if ( isset( $attr['attr']['global'] ) && true === (bool) $attr['attr']['global'] ) {
 					remove_filter( 'rtmedia-model-where-query', array(
@@ -239,15 +241,13 @@ class RTMediaGalleryShortcode {
 						'rtmedia_query_where_filter',
 					), 10, 3 );
 				}
-				remove_filter( 'rtmedia-model-where-query', array(
-					'RTMediaGalleryShortcode',
-					'rtmedia_query_where_filter_remove_comment_media',
-				), 11 );
+
+				remove_filter( 'rtmedia-model-where-query', array( 'RTMediaGalleryShortcode', 'rtmedia_query_where_filter_remove_comment_media' ), 11 );
+
 			} else { //if user cannot view the media gallery (when context is 'group'), show message
 				esc_html_e( 'You do not have sufficient privileges to view this gallery', 'buddypress-media' );
 				return false;
-			}
-
+			}// End if().
 			return ob_get_clean();
 		}// End if().
 	}
@@ -260,7 +260,7 @@ class RTMediaGalleryShortcode {
 	}
 
 	// for gallery shortcode remove all comment media reply
-	static function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
+	function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
 		$where .= ' AND (' . $table_name . '.context NOT LIKE "profile-reply" AND '.$table_name.'.context NOT LIKE "groups-reply"  AND '.$table_name.'.context NOT LIKE "group-reply" ) ';
 		return $where;
 	}
