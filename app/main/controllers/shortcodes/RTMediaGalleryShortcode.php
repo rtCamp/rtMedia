@@ -261,7 +261,7 @@ class RTMediaGalleryShortcode {
 	}
 
 	// for gallery shortcode remove all comment media reply
-	function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
+	static function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
 		if ( function_exists( 'rtmedia_query_where_filter_remove_comment_media' ) ) {
 			$where = rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join );
 		}
