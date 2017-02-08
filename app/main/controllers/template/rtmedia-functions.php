@@ -3754,6 +3754,6 @@ function rtmedia_get_original_comment_media_content() {
  * return string of rtMedia query where conditions
 */
 function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
-	$where .= ' AND (' . $table_name . '.context NOT LIKE "profile-reply" AND '.$table_name.'.context NOT LIKE "groups-reply"  AND '.$table_name.'.context NOT LIKE "group-reply" AND '.$table_name.'.context NOT LIKE "post-reply" ) ';
+	$where .= ' AND (' . $table_name . '.context NOT LIKE "profile-reply" AND '.$table_name.'.context NOT LIKE "groups-reply"  AND '.$table_name.'.context NOT LIKE "group-reply" AND '.$table_name.'.context NOT LIKE "post-reply" AND '.$table_name.'.context NOT LIKE "reply-reply" AND '.$table_name.'.context NOT LIKE "comment-reply" ) ';
 	return $where;
 }
