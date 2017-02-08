@@ -1449,7 +1449,9 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 
 	global $rtmedia_interaction, $rtmedia_query, $post;
 
-	if ( isset( $_GET['context'] ) && 'page' === $_GET['context'] && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
+	$wp_default_context = array( 'page', 'post' );
+
+	if ( isset( $_GET['context'] ) && in_array( $_GET['context'], $wp_default_context ) && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
 		$post = get_post( intval( $_GET['context_id'] ) );
 	}
 
@@ -1475,7 +1477,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			if ( function_exists( 'bp_get_current_group_slug' ) ) {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
-		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, array( 'page', 'post' ) ) ) {
+		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, $wp_default_context ) ) {
 			// Make sure that only one slash is at the end of url
 			$link .= rtrim( get_permalink( $post ), '/' ) . '/';
 		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'rtmedia_album' === $rtmedia_interaction->context->type ) { // url for rtmedia album
