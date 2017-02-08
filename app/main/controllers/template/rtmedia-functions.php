@@ -615,9 +615,9 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 	if ( isset( $media_object->media_type ) ) {
 		if ( 'album' === $media_object->media_type || 'photo' !== $media_object->media_type || 'video' === $media_object->media_type ) {
 			$thumbnail_id = ( isset( $media_object->cover_art )
-			                  && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) )   // Cover art might be an absolute URL
-				                  || ( 0 !== intval( $media_object->cover_art ) )    // Cover art might be a media ID
-			                  ) ) ? $media_object->cover_art : false;
+							  && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) )   // Cover art might be an absolute URL
+								  || ( 0 !== intval( $media_object->cover_art ) )    // Cover art might be a media ID
+							  ) ) ? $media_object->cover_art : false;
 			$thumbnail_id = apply_filters( 'show_custom_album_cover', $thumbnail_id, $media_object->media_type, $media_object->id ); // for rtMedia pro users
 		} elseif ( 'photo' === $media_object->media_type ) {
 			$thumbnail_id = $media_object->media_id;
@@ -3610,7 +3610,7 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 		'url'        => home_url(),
 	);
 
-    // Call the custom API.
+	// Call the custom API.
 	$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $store_url ) ), array( 'timeout' => 15, 'sslverify' => false ) );
 
 	// make sure the response came back okay
@@ -3661,8 +3661,8 @@ function rtmedia_is_comment_media_single_page( $rtmedia_id ){
 }
 
 
-function rtmedia_view_conversation_of_media( $activity_id ){ 
-	if( function_exists( 'bp_activity_get_permalink' ) ){
+function rtmedia_view_conversation_of_media( $activity_id ) {
+	if ( function_exists( 'bp_activity_get_permalink' ) ) {
 		?>
 		<span>
 			<a href="<?php echo bp_activity_get_permalink( $activity_id ); ?>"
@@ -3686,32 +3686,32 @@ function rtmedia_get_comments_details_for_media_id( $media_id ){
 
 
 /**
-  * Is comment allow in Commented Media 
+  * Is comment allow in Commented Media.
  **/
-function rtmedia_check_comment_in_commented_media_allow(){
-    $value = false;
-    global $rtmedia;
-    /* variable */
-    if( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
-        $value = true;
-    }
-    return $value;
+function rtmedia_check_comment_in_commented_media_allow() {
+	$value = false;
+	global $rtmedia;
+	/* variable */
+	if( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+		$value = true;
+	}
+	return $value;
 }
 
 
 
 
 /**
-  * Is comment allow in Commented Media 
+	* Is comment allow in Commented Media.
  **/
-function rtmedia_check_comment_media_allow(){
-    $value = false;
-    global $rtmedia;
-    /* variable */
-    if( ( isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ){
-        $value = true;
-    }
-    return $value;
+function rtmedia_check_comment_media_allow() {
+	$value = false;
+	global $rtmedia;
+	/* variable */
+	if ( ( isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ) {
+		$value = true;
+	}
+	return $value;
 }
 
 
@@ -3721,7 +3721,7 @@ function rtmedia_check_comment_media_allow(){
  * @return string
  */
 function rtmedia_get_original_comment_media_content() {
-	$old_content = "&nbsp;";
+	$old_content = '&nbsp;';
 
 	/* get the original contant from the $REQUEST */
 	if ( isset( $_REQUEST['content'] ) ) {
@@ -3735,7 +3735,7 @@ function rtmedia_get_original_comment_media_content() {
 
 	/* is comment is empty then add content content space */
 	if ( strstr( $old_content, 'nbsp' ) ) {
-		$old_content = "&nbsp;";
+		$old_content = '&nbsp;';
 	}
 
 	return sanitize_text_field( $old_content );
