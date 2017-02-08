@@ -3742,6 +3742,15 @@ function rtmedia_get_original_comment_media_content() {
 }
 
 
+/**
+ * Will alter the rtMedia query and remove the comment media from it
+ *
+ * parameter $where string rtMedia query where conditions
+ * parameter $table_name string rtMedia query table name
+ * parameter $join string
+ *
+ * return string of rtMedia query where conditions
+*/
 function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
 	$where .= ' AND (' . $table_name . '.context NOT LIKE "profile-reply" AND '.$table_name.'.context NOT LIKE "groups-reply"  AND '.$table_name.'.context NOT LIKE "group-reply" AND '.$table_name.'.context NOT LIKE "post-reply" ) ';
 	return $where;
