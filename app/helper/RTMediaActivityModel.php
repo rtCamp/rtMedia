@@ -43,7 +43,6 @@ class RTMediaActivityModel extends RTDBModel {
 			'activity_id' => $activity_id,
 			'blog_id'     => get_current_blog_id(),
 		);
-
 		$results = $this->get( $columns );
 
 		if ( $results ) {
@@ -51,5 +50,57 @@ class RTMediaActivityModel extends RTDBModel {
 		} else {
 			return false;
 		}
+	}
+
+	
+	/**
+	 * Update the Privacy setting of the Profile Media Activity Type of Media.
+	 *
+	 * Update all the Privacy Setting of the Media that has Comment and link on it of which an activity is being created 
+	 *
+	 * @since 4.3
+	 *
+	 * @param array $media_ids_of_activity List of all the Media Id that is being updated.
+	 * @param int $privacy Privacy to set.
+	 */
+	public function profile_activity_update( $media_ids_of_activity = array(), $privacy ){
+		foreach ($media_ids_of_activity as $media_id_of_activity) {
+			// Get all the activities from item_id.
+			$activity_parents = bp_activity_get( array( 'filter' => array( 'primary_id' =>$media_id_of_activity ) ) );
+
+			/* if has activity */
+			if ( ! empty( $activity_parents['activities'] ) ) {
+				foreach( $activity_parents['activities'] as $parent ) {
+					$this->set_privacy( $parent->id, $parent->user_id, $privacy );
+				}
+			}
+		}
+	}
+
+	public function set_privacy( $activity_id, $user_id , $privacy ){
+		if( function_exists( 'bp_activity_update_meta' ) ){
+			bp_activity_update_meta( $activity_id, 'rtmedia_privacy', $privacy );
+		}
+
+		/* check is value exits or not */
+		if ( ! $this->check( $activity_id ) ) {
+			$this->insert( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ) );
+		} else {
+			$this->update( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ), array( 'activity_id' => $activity_id ) );
+		}
+	}
+
+	public function set_privacy_for_rtmedia_activity( $parent_activity_id, $activity_id , $user_id ){
+		/*  get default privacy*/
+		$privacy = get_rtmedia_default_privacy();
+
+		/* get parent privacy  */
+		$activity_privacy = $this->get( array( 'activity_id' => $parent_activity_id ) );
+		if( isset( $activity_privacy[0] ) && isset( $activity_privacy[0]->privacy ) ){
+			$privacy = $activity_privacy[0]->privacy;
+		}
+
+		/* add the privacy */
+		$this->set_privacy( $activity_id, $user_id, $privacy );
 	}
 }

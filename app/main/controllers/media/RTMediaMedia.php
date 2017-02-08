@@ -248,11 +248,15 @@ class RTMediaMedia {
 		$media       = $media_model->get( array( 'id' => $id ) );
 
 		if ( ! empty( $media ) ) {
+			$media_ids_of_activity = array();
 			$rtmedia_activity_model = new RTMediaActivityModel();
 			$similar_media          = $media_model->get( array( 'activity_id' => $media[0]->activity_id ) );
 			$max_privacy            = 0;
 
 			foreach ( $similar_media as $s_media ) {
+				/* get all the media ids in the activity */
+				$media_ids_of_activity[] = $s_media->id;
+
 				if ( $s_media->privacy > $max_privacy ) {
 					$max_privacy = $s_media->privacy;
 				}
@@ -271,6 +275,9 @@ class RTMediaMedia {
 					'privacy'     => $max_privacy,
 				), array( 'activity_id' => $media[0]->activity_id ) );
 			}
+
+			/* is the activate has any media then move the like and comment of that media to for the privacy */
+			$rtmedia_activity_model->profile_activity_update( $media_ids_of_activity, $max_privacy );
 		}
 
 		/* action to perform any task after updating a media */
@@ -334,6 +341,16 @@ class RTMediaMedia {
 		$status = 0;
 
 		if ( $media ) {
+
+			/* delete comment if media is in the comment */
+			if( class_exists( 'RTMediaTemplate' ) && isset( $media[0]->id )  && ! isset( $_POST['comment_id'] ) ){
+				$rtmedia_media_used = get_rtmedia_meta( $media[0]->id, 'rtmedia_media_used' );
+				if( isset( $rtmedia_media_used[ 'comment' ] ) && ! empty( $rtmedia_media_used[ 'comment' ] ) ){
+					$template = new RTMediaTemplate();
+					$template->rtmedia_delete_comment_and_activity( $rtmedia_media_used[ 'comment' ] );
+				}
+			}
+
 			/* delete meta */
 			if ( $delete_activity ) {
 				if ( $media[0]->activity_id && function_exists( 'bp_activity_delete_by_activity_id' ) ) {
@@ -360,7 +377,52 @@ class RTMediaMedia {
 
 					// Deleting like and comment activity for media
 					if ( function_exists( 'bp_activity_delete' ) ) {
-						bp_activity_delete( array( 'item_id' => $media[0]->id ) );
+						/* if the media type is group or profile( activity ) */
+						if( isset( $media[0]->context ) && ( 'group' == $media[0]->context || 'group-reply' == $media[0]->context ) ){
+
+							/* only delete the activity that is being like in the group */
+							bp_activity_delete(
+								array(
+									'component ' => 'groups' ,
+									'type ' => 'rtmedia_like_activity' ,
+									'item_id' => $media[0]->context_id ,
+									'secondary_item_id' => $media[0]->id ,
+								)
+							);
+
+							/* rtMedia get the media comment details */
+							$comments = rtmedia_get_comments_details_for_media_id( $media[0]->media_id );
+
+							$delete_ca = false;
+							if( is_array( $comments ) && ! empty( $comments ) ){
+								foreach ($comments as $comment) {
+									$comment_id = $comment->comment_ID;
+									$user_id = $comment->user_id;
+									$meta_key = 'rtm-bp-media-comment-activity-' . $media[0]->id . '-' . $comment_id;
+
+									// Delete activity when user remove his comment.
+									//todo user_attribute
+									$activity_id = get_user_meta( $user_id, $meta_key, true );
+
+									/* only delete the activity that is being like in the group */
+									$delete_ca = bp_activity_delete(
+										array(
+											'component ' => 'groups' ,
+											'type ' => 'rtmedia_comment_activity' ,
+											'id' => $activity_id
+										)
+									);
+
+									if( $delete_ca ){
+										delete_user_meta( $user_id, $meta_key );
+									}
+								}
+							}
+
+						}else{
+							/* any other context type */
+							bp_activity_delete( array( 'item_id' => $media[0]->id ) );
+						}
 					}
 				}
 			}

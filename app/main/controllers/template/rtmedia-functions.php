@@ -46,6 +46,28 @@ function rtmedia() {
 }
 
 /**
+ * echo the number of media in particular album
+ *
+ * @global      array       $rtmedia_backbone
+ * @global      object      $rtmedia_media
+ *
+ * @return      number
+ */
+function rtmedia_album_mediacounter() {
+
+	global $rtmedia_backbone;
+
+	if ( $rtmedia_backbone['backbone'] ) {
+		echo '<%= media_count %>';
+	} else {
+		global $rtmedia_media;
+
+		return rtm_get_album_media_count( $rtmedia_media->id );
+	}
+
+}
+
+/**
  * echo the title of the media
  *
  * @global      array       $rtmedia_backbone
@@ -1171,27 +1193,35 @@ function rtmedia_comments( $echo = true ) {
 
 	global $rtmedia_media;
 
-	$html         = '<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="' . esc_url( get_rtmedia_permalink( rtmedia_id() ) ) . 'delete-comment/">';
-	$comments     = get_comments( array(
-		'post_id' => $rtmedia_media->media_id,
-		'order'   => 'ASC',
-	) );
-	$comment_list = '';
-	$count = count( $comments );
-	$i = 0;
+	/* check is comment media */
+	$comment_media = rtmedia_is_comment_media_single_page( rtmedia_id() );
 
-	foreach ( $comments as $comment ) {
-		$comment_list .= rmedia_single_comment( (array) $comment, $count, $i );
-		$i++;
+	$html = "";
+
+	if( empty( $comment_media ) ){
+		$html         = '<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="' . esc_url( get_rtmedia_permalink( rtmedia_id() ) ) . 'delete-comment/">';
+		$comments     = get_comments( array(
+			'post_id' => $rtmedia_media->media_id,
+			'order'   => 'ASC',
+		) );
+		$comment_list = '';
+		$count = count( $comments );
+		$i = 0;
+
+		foreach ( $comments as $comment ) {
+			$comment_list .= rmedia_single_comment( (array) $comment, $count, $i );
+			$i++;
+		}
+
+		if ( ! empty( $comment_list ) ) {
+			$html .= $comment_list;
+		} else {
+			$html .= "<li id='rtmedia-no-comments' class='rtmedia-no-comments'>" . apply_filters( 'rtmedia_single_media_no_comment_messege', esc_html__( 'There are no comments on this media yet.', 'buddypress-media' ) ) . '</li>';
+		}
+
+		$html .= '</ul>';
 	}
 
-	if ( ! empty( $comment_list ) ) {
-		$html .= $comment_list;
-	} else {
-		$html .= "<li id='rtmedia-no-comments' class='rtmedia-no-comments'>" . apply_filters( 'rtmedia_single_media_no_comment_messege', esc_html__( 'There are no comments on this media yet.', 'buddypress-media' ) ) . '</li>';
-	}
-
-	$html .= '</ul>';
 
 	if ( $html ) {
 		echo $html; // @codingStandardsIgnoreLine
@@ -1244,21 +1274,8 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 	$html .= '<span class ="rtmedia-comment-date"> ' . apply_filters( 'rtmedia_comment_date_format', rtmedia_convert_date( $comment['comment_date_gmt'] ), $comment ) . '</span>';
 
 	$comment_content = $comment['comment_content'];
-	$activity_comment_content = get_comment_meta( $comment['comment_ID'], 'activity_comment_content', true );
-	if ( empty( $activity_comment_content ) ) {
-		$activity_id = (int) get_comment_meta( $comment['comment_ID'], 'activity_id', true );
-		if ( $activity_id ) {
-			$rtmedia_activity_comment = rtmedia_activity_comment( $activity_id );
-			if ( $rtmedia_activity_comment['content'] ) {
-				$comment_content = $rtmedia_activity_comment['content'];
-				update_comment_meta( $comment['comment_ID'], 'activity_comment_content', $rtmedia_activity_comment['content'] );
-			}
-		}
-	} else {
-		$comment_content = $activity_comment_content;
-	}
 
-	$comment_string = wp_kses( $comment_content, $allowedtags );
+	$comment_string = rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags );
 
 	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( apply_filters( 'bp_get_activity_content', $comment_string ) ) ) . '</div>';
 	$html .= '<div class="rtmedia-comment-extra">' . apply_filters( 'rtmedia_comment_extra', '', $comment ) . '</div>';
@@ -1430,24 +1447,48 @@ function rtmedia_pagination_next_link() {
  */
 function rtmedia_pagination_page_link( $page_no = '' ) {
 
-	global $rtmedia_interaction, $rtmedia_query;
+	global $rtmedia_interaction, $rtmedia_query, $post;
+
+	if ( isset( $_GET['context'] ) && 'page' === $_GET['context'] && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
+		$post = get_post( intval( $_GET['context_id'] ) );
+	}
 
 	$page_url    = 'pg/' . $page_no;
 	$site_url    = ( is_multisite() ) ? trailingslashit( get_site_url( get_current_blog_id() ) ) : trailingslashit( get_site_url() );
 	$author_name = get_query_var( 'author_name' );
 	$link        = '';
 
+	$is_shortcode_on_home = ( isset( $_GET['is_on_home'] ) && '1' === $_GET['is_on_home'] && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] && isset( $_GET['context_id'] ) && $_GET['context_id'] === get_option( 'page_on_front' ) ) ? true : false;
+
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'profile' === $rtmedia_interaction->context->type ) {
-		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->media_query['media_author'] ) ) {
-			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query['media_author'] ) );
+		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->media_query['context_id'] ) ) {
+			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query['context_id'] ) );
 		} else {
-			$link .= $site_url . 'author/' . $author_name . '/';
+			if ( $is_shortcode_on_home ) {
+				$link .= $site_url;
+			} else {
+				$link .= $site_url . 'author/' . $author_name . '/';
+			}
 		}
 	} else {
 		if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'group' === $rtmedia_interaction->context->type ) {
 			if ( function_exists( 'bp_get_current_group_slug' ) ) {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
+		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, array( 'page', 'post' ) ) ) {
+			// Make sure that only one slash is at the end of url
+			$link .= rtrim( get_permalink( $post ), '/' ) . '/';
+		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'rtmedia_album' === $rtmedia_interaction->context->type ) { // url for rtmedia album
+			global $rtmedia;
+			$options = $rtmedia->options;
+			// Get album slug
+			$album_slug = $options['rtmedia_wp_album_slug'];
+
+			if ( empty( $album_slug ) ) {
+				$album_slug = 'rtmedia-album';
+			}
+			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
+			$link .= $site_url . $album_slug . '/' . $post->post_name . '/';
 		} elseif ( isset( $rtmedia_query->media->media_id ) ) {
 			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
 
@@ -1455,7 +1496,10 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		}
 	}
 
-	$link .= RTMEDIA_MEDIA_SLUG . '/';
+	// Do not add media slug for gallery shortcode and sitewide gallery
+	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && ! in_array( $rtmedia_interaction->context->type, array( 'page', 'rtmedia_album', 'post' ) ) && ! $is_shortcode_on_home ) {
+			$link .= RTMEDIA_MEDIA_SLUG . '/';
+	}
 
 	if ( isset( $rtmedia_query->media_query['album_id'] ) && intval( $rtmedia_query->media_query['album_id'] ) > 0 ) {
 		$link .= $rtmedia_query->media_query['album_id'] . '/';
@@ -1582,7 +1626,7 @@ function rtmedia_get_pagination_values() {
 			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='next' href='" . esc_url( $page_url ) . "'><i class='dashicons dashicons-arrow-right-alt2'></i></a>";
 		}
 
-		$rtmedia_media_pages .= "</div></div>\n";
+		$rtmedia_media_pages .= "</div></div>";
 	}// End if().
 
 	return $rtmedia_media_pages;
@@ -1850,11 +1894,18 @@ function get_video_without_thumbs() {
  */
 function rtmedia_comment_form() {
 
-	if ( is_user_logged_in() ) {
+	/* check is comment media */
+	$comment_media = rtmedia_is_comment_media_single_page( rtmedia_id() );
+
+	if ( is_user_logged_in() && empty( $comment_media ) ) {
 		?>
 		<form method="post" id="rt_media_comment_form" class="rt_media_comment_form" action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
 			<textarea style="width:100%" placeholder="<?php esc_attr_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"  class="bp-suggestions ac-input"></textarea>
+
 			<input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit" value="<?php esc_attr_e( 'Comment', 'buddypress-media' ); ?>">
+
+			<?php do_action( 'rtmedia_add_comments_extra' ); ?>
+
 			<?php RTMediaComment::comment_nonce_generator(); ?>
 		</form>
 		<?php
@@ -2378,6 +2429,9 @@ function rtmedia_edit_media_privacy_ui() {
 
 	global $rtmedia_query;
 
+	/* check is comment media */
+	$comment_media = rtmedia_is_comment_media( rtmedia_id() );
+
 	if ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
 		//if context is group i.e editing a group media, dont show the privacy dropdown
 		return false;
@@ -2386,7 +2440,7 @@ function rtmedia_edit_media_privacy_ui() {
 	$privacymodel = new RTMediaPrivacy( false );
 	$privacy      = $privacymodel->select_privacy_ui( $echo = false );
 
-	if ( $privacy ) {
+	if ( $privacy  && empty( $comment_media ) ) {
 		return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . esc_html__( 'Privacy : ', 'buddypress-media' ) . '</label>' . $privacy . '</div>';
 	}
 
@@ -3460,27 +3514,6 @@ function rtt_is_video_exists( $medias, $media_type = 'mp4' ) {
 }
 
 
-
-
-/**
- * Return the buddpress activity  table content
- *
- * @param       int       $activity_id
- *
- * @return      array     buddpres_activity
- */
-function rtmedia_activity_comment( $activity_id ) {
-	$activity_id = ( $activity_id ) ? (int) $activity_id : false;
-	$activity_comment_content = false;
-	if ( $activity_id ) {
-		global $wpdb;
-		global $bp;
-		$table_name = $bp->activity->table_name;
-		$activity_comment_content = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $activity_id ), ARRAY_A );
-	}
-	return $activity_comment_content;
-}
-
 /**
  * Send the request to the rtmedia server for addon license validation
  * and activation
@@ -3545,4 +3578,93 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 
 	return $license_data;
 
+}
+
+
+
+
+function rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags ){
+	if( function_exists( 'bp_activity_filter_kses' ) ){
+		$comment_string = bp_activity_filter_kses( $comment_content, $allowedtags );
+	}else{
+		$comment_string = wp_kses( $comment_content, $allowedtags );
+	}
+	return $comment_string;
+}
+
+
+/*
+ * is media is uploaded in the comment
+ * parameter media_id int
+ * return true/false value
+*/
+function rtmedia_is_comment_media( $rtmedia_id ){
+	return get_rtmedia_meta( $rtmedia_id, 'rtmedia_comment_media' );
+}
+
+
+
+function rtmedia_is_comment_media_single_page( $rtmedia_id ){
+	$comment_media = false;
+	global $rtmedia;
+	
+	/* check if the reply in comment media is not allow */
+	if( $rtmedia_id && ! rtmedia_check_comment_in_commented_media_allow() ){
+		$comment_media = rtmedia_is_comment_media( $rtmedia_id );
+	}
+	return $comment_media;
+}
+
+
+function rtmedia_view_conversation_of_media( $activity_id ){ 
+	if( function_exists( 'bp_activity_get_permalink' ) ){
+		?>
+		<span>
+			<a href="<?php echo bp_activity_get_permalink( $activity_id ); ?>"
+			class="rtmedia-view-conversation" >
+				<?php _e( 'View Conversation', 'buddypress-media' ); ?>
+			</a>
+		</span>
+		<?php
+	}
+}
+
+
+
+
+function rtmedia_get_comments_details_for_media_id( $media_id ){
+	$args = array(
+		'post_id' => $media_id,
+	);
+	return get_comments( $args );
+}
+
+
+/**
+  * Is comment allow in Commented Media 
+ **/
+function rtmedia_check_comment_in_commented_media_allow(){
+    $value = false;
+    global $rtmedia;
+    /* variable */
+    if( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+        $value = true;
+    }
+    return $value;
+}
+
+
+
+
+/**
+  * Is comment allow in Commented Media 
+ **/
+function rtmedia_check_comment_media_allow(){
+    $value = false;
+    global $rtmedia;
+    /* variable */
+    if( ( isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ){
+        $value = true;
+    }
+    return $value;
 }

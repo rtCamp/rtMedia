@@ -25,6 +25,7 @@ class RTMediaGalleryShortcode {
 		add_action( 'wp_ajax_nopriv_rtmedia_get_template', array( &$this, 'ajax_rtmedia_get_template' ) );
 	}
 
+	// get template for json response
 	function ajax_rtmedia_get_template() {
 		$template = '';
 		if ( isset( $_REQUEST['template'] ) ) {
@@ -47,15 +48,21 @@ class RTMediaGalleryShortcode {
 		), RTMEDIA_VERSION, true );
 
 		if ( is_rtmedia_album_gallery() ) {
-			$template_url = esc_url( add_query_arg( array(
+
+			$album_template_args = apply_filters( 'album_template_args', array(
 				'action'   => 'rtmedia_get_template',
 				'template' => 'album-gallery-item',
-			), admin_url( 'admin-ajax.php' ) ), null, '' );
+			) );
+
+			$template_url = esc_url( add_query_arg( $album_template_args, admin_url( 'admin-ajax.php' ) ), null, '' );
 		} else {
-			$template_url = esc_url( add_query_arg( array(
+
+			$media_template_args = apply_filters( 'media_template_args', array(
 				'action'   => 'rtmedia_get_template',
 				'template' => apply_filters( 'rtmedia_backbone_template_filter', 'media-gallery-item' ),
-			), admin_url( 'admin-ajax.php' ) ), null, '' );
+			) );
+
+			$template_url = esc_url( add_query_arg( $media_template_args, admin_url( 'admin-ajax.php' ) ), null, '' );
 		}
 		wp_localize_script( 'rtmedia-backbone', 'template_url', $template_url );
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
@@ -107,16 +114,7 @@ class RTMediaGalleryShortcode {
 
 		$params = apply_filters( 'rtmedia_modify_upload_params', $params );
 
-		global $rtmedia;
-		$rtmedia_extns = array();
-
-		foreach ( $rtmedia->allowed_types as $allowed_types_key => $allowed_types_value ) {
-			$rtmedia_extns[ $allowed_types_key ] = $allowed_types_value['extn'];
-		}
-
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_exteansions', $rtmedia_extns );
 		wp_localize_script( 'rtmedia-backbone', 'rtMedia_plupload_config', $params );
-		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( '/images/loading.gif' ) );
 	}
 
 	/**
@@ -151,7 +149,7 @@ class RTMediaGalleryShortcode {
 			}
 
 			$attr = array( 'name' => 'gallery', 'attr' => $attr );
-			global $post;
+			global $post, $rtmedia_shortcode_attr;
 			if ( isset( $attr ) && isset( $attr['attr'] ) ) {
 				if ( ! is_array( $attr['attr'] ) ) {
 					$attr['attr'] = array();
@@ -188,7 +186,29 @@ class RTMediaGalleryShortcode {
 				if ( ! isset( $attr['attr']['context'] ) && isset( $post->post_type ) ) {
 					$attr['attr']['context'] = $post->post_type;
 				}
+			}// End if().
+
+			$rtmedia_shortcode_attr = $attr['attr'];
+
+			// Set template according to media type
+			if ( is_rtmedia_album_gallery() || ( isset( $attr['attr']['media_type'] ) && 'album' === $attr['attr']['media_type'] ) ) {
+
+				$album_template_args = apply_filters( 'album_template_args', array(
+					'action'   => 'rtmedia_get_template',
+					'template' => 'album-gallery-item',
+				) );
+
+				$template_url = esc_url( add_query_arg( $album_template_args, admin_url( 'admin-ajax.php' ) ), null, '' );
+			} else {
+
+				$media_template_args = apply_filters( 'media_template_args', array(
+					'action'   => 'rtmedia_get_template',
+					'template' => apply_filters( 'rtmedia_backbone_template_filter', 'media-gallery-item' ),
+				) );
+
+				$template_url = esc_url( add_query_arg( $media_template_args, admin_url( 'admin-ajax.php' ) ), null, '' );
 			}
+			wp_localize_script( 'rtmedia-backbone', 'template_url', $template_url );
 
 			if ( $authorized_member ) {  // if current user has access to view the gallery (when context is 'group')
 				global $rtmedia_query;
@@ -196,36 +216,52 @@ class RTMediaGalleryShortcode {
 					$rtmedia_query = new RTMediaQuery( $attr['attr'] );
 				}
 				do_action( 'rtmedia_shortcode_action', $attr['attr'] );// do extra stuff with attributes
+				$page_number = ( get_query_var( 'pg' ) ) ? get_query_var( 'pg' ) : 1; // get page number
+				$rtmedia_query->action_query->page = intval( $page_number );
 				$rtmedia_query->is_gallery_shortcode = true;// to check if gallery shortcode is executed to display the gallery.
 
 				$template         = new RTMediaTemplate();
 				$gallery_template = false;
-				if ( isset( $attr['attr']['global'] ) && true === $attr['attr']['global'] ) {
+				if ( isset( $attr['attr']['global'] ) && true === (bool) $attr['attr']['global'] ) {
 					add_filter( 'rtmedia-model-where-query', array(
 						'RTMediaGalleryShortcode',
 						'rtmedia_query_where_filter',
 					), 10, 3 );
 				}
+				add_filter( 'rtmedia-model-where-query', array(
+					'RTMediaGalleryShortcode',
+					'rtmedia_query_where_filter_remove_comment_media',
+				), 11, 3 );
 				$template->set_template( $gallery_template, $attr );
-				if ( isset( $attr['attr']['global'] ) && true === $attr['attr']['global'] ) {
+				if ( isset( $attr['attr']['global'] ) && true === (bool) $attr['attr']['global'] ) {
 					remove_filter( 'rtmedia-model-where-query', array(
 						'RTMediaGalleryShortcode',
 						'rtmedia_query_where_filter',
 					), 10, 3 );
 				}
+				remove_filter( 'rtmedia-model-where-query', array(
+					'RTMediaGalleryShortcode',
+					'rtmedia_query_where_filter_remove_comment_media',
+				), 11 );
 			} else { //if user cannot view the media gallery (when context is 'group'), show message
 				esc_html_e( 'You do not have sufficient privileges to view this gallery', 'buddypress-media' );
 				return false;
 			}
 
 			return ob_get_clean();
-		}
+		}// End if().
 	}
 
 	// for gallery shortcode having attribute global as true, include all media except ones having context as "group"
 	static function rtmedia_query_where_filter( $where, $table_name, $join ) {
 		$where .= ' AND (' . $table_name . '.privacy = "0" OR ' . $table_name . '.privacy is NULL ) ';
 
+		return $where;
+	}
+
+	// for gallery shortcode remove all comment media reply
+	static function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
+		$where .= ' AND (' . $table_name . '.context NOT LIKE "profile-reply" AND '.$table_name.'.context NOT LIKE "groups-reply"  AND '.$table_name.'.context NOT LIKE "group-reply" ) ';
 		return $where;
 	}
 }
