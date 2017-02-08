@@ -262,7 +262,9 @@ class RTMediaGalleryShortcode {
 
 	// for gallery shortcode remove all comment media reply
 	function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
-		$where .= ' AND (' . $table_name . '.context NOT LIKE "profile-reply" AND '.$table_name.'.context NOT LIKE "groups-reply"  AND '.$table_name.'.context NOT LIKE "group-reply" ) ';
+		if ( function_exists( 'rtmedia_query_where_filter_remove_comment_media' ) ) {
+			$where = rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join );
+		}
 		return $where;
 	}
 }

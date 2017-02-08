@@ -3740,3 +3740,9 @@ function rtmedia_get_original_comment_media_content(){
 
 	return $old_content;
 }
+
+
+function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
+	$where .= ' AND (' . $table_name . '.context NOT LIKE "profile-reply" AND '.$table_name.'.context NOT LIKE "groups-reply"  AND '.$table_name.'.context NOT LIKE "group-reply" ) ';
+	return $where;
+}
