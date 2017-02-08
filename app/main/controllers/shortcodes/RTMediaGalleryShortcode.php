@@ -229,8 +229,8 @@ class RTMediaGalleryShortcode {
 					), 10, 3 );
 				}
 
-
-				if ( apply_filters( 'rtmedia_query_where_filter_remove_comment_media', true, 'galleryshortcode' ) ) {
+				$remove_comment_media = apply_filters( 'rtmedia_query_where_filter_remove_comment_media', true, 'galleryshortcode' );
+				if ( isset( $remove_comment_media ) && ! empty( $remove_comment_media ) ) {
 					add_filter( 'rtmedia-model-where-query', array( 'RTMediaGalleryShortcode', 'rtmedia_query_where_filter_remove_comment_media' ), 11, 3 );
 				}
 
@@ -242,8 +242,9 @@ class RTMediaGalleryShortcode {
 					), 10, 3 );
 				}
 
-				remove_filter( 'rtmedia-model-where-query', array( 'RTMediaGalleryShortcode', 'rtmedia_query_where_filter_remove_comment_media' ), 11 );
-
+				if ( isset( $remove_comment_media ) && ! empty( $remove_comment_media ) ) {
+					remove_filter( 'rtmedia-model-where-query', array( 'RTMediaGalleryShortcode', 'rtmedia_query_where_filter_remove_comment_media' ), 11 );
+				}
 			} else { //if user cannot view the media gallery (when context is 'group'), show message
 				esc_html_e( 'You do not have sufficient privileges to view this gallery', 'buddypress-media' );
 				return false;
