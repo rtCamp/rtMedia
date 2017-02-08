@@ -100,8 +100,22 @@ class RTMediaComment {
 			$comment = get_comment( $id );
 		}
 
+
 		if ( isset( $comment->comment_post_ID ) && isset( $comment->user_id ) ) {
+
 			$model = new RTMediaModel();
+
+			/* get the media id from the comment  */
+			$comment_media_id = get_comment_meta( $id, 'rtmedia_comment_media_id', true );
+
+			/* if the comment has media init */
+			if ( ! empty( $comment_media_id ) ) {
+				$rtmedia_media = new RTMediaMedia();
+
+				//delete comment media
+				$rtmedia_media->delete( $comment_media_id, false, false );
+			}
+
 			//get the current media from the comment_post_ID
 			$media  = $model->get( array( 'media_id' => $comment->comment_post_ID ) );
 			// if user is comment creator, or media uploader or admin, allow to delete
