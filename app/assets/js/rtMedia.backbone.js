@@ -269,7 +269,13 @@ jQuery( function( $ ) {
 		}
 		$( this ).hide();
 		e.preventDefault();
-		galleryObj.getNext( nextpage, $( this ).parent().parent().parent(), $( this ) );
+
+		//commented beacuse it was creating a problem when gallery shortcode was used with bulk edit
+		//galleryObj.getNext( nextpage, $( this ).parent().parent().parent(), $( this ) );
+
+		//Added beacuse it was creating a problem when gallery shortcode was used with bulk edit
+		var parent_object = $( this ).closest( '.rtmedia-container' ).parent();
+		galleryObj.getNext( nextpage, parent_object, $( this ) );
 	} );
 
 	/**
