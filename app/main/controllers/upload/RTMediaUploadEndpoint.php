@@ -76,16 +76,16 @@ class RTMediaUploadEndpoint {
 						$privacy = $rtmedia->options['privacy_default'];
 					}
 
-					if( class_exists( 'RTMediaAlbum' ) ){
+					if ( class_exists( 'RTMediaAlbum' ) ) {
 						$album_id = RTMediaAlbum::get_default();
-					}else{
+					} else {
 						$album = rtmedia_get_site_option( 'rtmedia-global-albums' );
 						$album_id = $album_id = $album[0];
 					}
 
 					$current_media_id = preg_replace( '/[^0-9]/', '', $this->upload['comment_media_activity_id'] );
 
-					if( $current_media_id ){
+					if ( $current_media_id ) {
 						$comment_media = true;
 						$context = 'profile';
 						$context_id = get_current_user_id();
@@ -94,27 +94,27 @@ class RTMediaUploadEndpoint {
 						/* search from media id*/
 						$media        = $media_obj->model->get( array( 'id' => $current_media_id ) );
 
-						if( $media[0]  == false ){
+						if ( $media[0]  == false ) {
 							/* search from activity id*/
 							$media        = $media_obj->model->get( array( 'activity_id' => $current_media_id ) );
 						}
 
-						if( $media[0]->album_id ){
+						if ( $media[0]->album_id ) {
 							$album_id = $media[0]->album_id;
 							$privacy = $media[0]->privacy;
 							$context = $media[0]->context;
 							$context_id = $media[0]->context_id;
-						}else{
+						} else {
 							/* search from the BuddyPress Table */
 							$media = bp_activity_get_specific(  array( 'activity_ids' => $current_media_id ) );
 
-							if( isset( $media['activities'][0]->component ) ){
-								if( $media['activities'][0]->component != "activity" ){
+							if ( isset( $media['activities'][0]->component ) ) {
+								if ( $media['activities'][0]->component != 'activity' ) {
 									$context = $media['activities'][0]->component;
 								}
 							}
 
-							if( isset( $media['activities'][0]->item_id ) ){
+							if ( isset( $media['activities'][0]->item_id ) ) {
 								$context_id = $media['activities'][0]->item_id;
 							}
 						}
@@ -122,23 +122,23 @@ class RTMediaUploadEndpoint {
 						$this->upload['album_id'] = $album_id;
 						$this->upload['privacy'] = $privacy;
 
-						if( 0 == strrpos( $context , '-reply' ) ){
-							$this->upload['context'] = $context.'-reply';
+						if ( 0 == strrpos( $context , 'comment-media' ) ) {
+							$this->upload['context'] = 'comment-media';
 						}
 
 						$this->upload['context_id'] = $context_id;
 
-					}
+					}// End if().
 
-				}
+				}// End if().
 
 				$this->upload = apply_filters( 'rtmedia_media_param_before_upload', $this->upload );
 				$rtupload     = new RTMediaUpload( $this->upload );
 
 
-				if( $comment_media ){
+				if ( $comment_media ) {
 					add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media', true );
-					if( ! empty( $current_media_id ) ){
+					if ( ! empty( $current_media_id ) ) {
 						add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media_id', $current_media_id );
 					}
 				}
