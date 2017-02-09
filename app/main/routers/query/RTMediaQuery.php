@@ -513,6 +513,12 @@ class RTMediaQuery {
 					'RTMediaGalleryShortcode',
 					'rtmedia_query_where_filter',
 				), 10, 3 );
+
+				$remove_comment_media = apply_filters( 'rtmedia_query_where_filter_remove_comment_media', true, 'galleryshortcode' );
+				if ( isset( $remove_comment_media ) && ! empty( $remove_comment_media ) ) {
+					add_filter( 'rtmedia-model-where-query', array( 'RTMediaGalleryShortcode', 'rtmedia_query_where_filter_remove_comment_media' ), 11, 3 );
+				}
+
 				if ( isset( $this->query['context_id'] ) ) {
 					unset( $this->query['context_id'] );
 				}
