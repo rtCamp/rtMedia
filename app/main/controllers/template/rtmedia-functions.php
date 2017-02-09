@@ -3654,7 +3654,6 @@ function rtmedia_is_comment_media( $rtmedia_id ){
 function rtmedia_is_comment_media_single_page( $rtmedia_id ){
 	$comment_media = false;
 	global $rtmedia;
-	
 	/* check if the reply in comment media is not allow */
 	if( $rtmedia_id && ! rtmedia_check_comment_in_commented_media_allow() ){
 		$comment_media = rtmedia_is_comment_media( $rtmedia_id );

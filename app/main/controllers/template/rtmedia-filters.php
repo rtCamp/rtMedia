@@ -618,6 +618,25 @@ function rtmedia_edit_media_on_database( $data, $post_ID ) {
 add_filter( 'wp_update_attachment_metadata', 'rtmedia_edit_media_on_database', 10, 2 );
 
 
+/**
+ * Disallow media edit for comment media
+ */
+if ( ! function_exists( 'rtmedia_media_edit_priv_callback' ) ) {
+	function rtmedia_media_edit_priv_callback( $value ) {
+		// comment media
+		$rtmedia_id = rtmedia_id();
+		$comment_media = false;
+		if ( ! empty( $rtmedia_id ) && function_exists( 'rtmedia_is_comment_media' ) && ! empty( $value ) ) {
+			$comment_media = rtmedia_is_comment_media( $rtmedia_id );
+			if ( ! empty( $comment_media ) ) {
+				$value = false;
+			}
+		}
+		return $value;
+	}
+}
+add_filter( 'rtmedia_media_edit_priv', 'rtmedia_media_edit_priv_callback', 10, 1 );
+
 
 function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_it ) {
 	if ( $like_count > 1 && $user_like_it ) {
