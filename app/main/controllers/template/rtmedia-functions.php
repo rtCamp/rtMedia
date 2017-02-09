@@ -3757,3 +3757,75 @@ function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $
 	$where .= ' AND ' . $table_name . '.context NOT LIKE ( "comment-media" ) ';
 	return $where;
 }
+
+
+
+
+
+function rtmedia_bp_activity_entry_comments_callback(){
+	global $activities_template;
+
+	/* comment media activity is created so media is not allow */
+	$allow_media_activity_type = array( 'rtmedia_comment_activity', 'rtmedia_like_activity' );
+	$allow_media_activity_type = apply_filters( 'rtmedia_not_allow_comment_media_in_activity_type' , $allow_media_activity_type );
+
+	/* parent activity id */
+	$activity_id = bp_get_activity_id();
+
+	/* if activity id is not empty and the type is not as $allow_media_activity_type */
+	if( $activity_id && isset( $activities_template->activity ) && isset( $activities_template->activity->type ) && ! in_array( $activities_template->activity->type , $allow_media_activity_type ) ){
+		add_action( 'before_rtmedia_comment_uploader_display', 'rtmedia_before_rtmedia_comment_uploader_display_callback', 10 );
+			echo rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity', $activities_template->activity->component );
+		remove_action( 'before_rtmedia_comment_uploader_display', 'rtmedia_before_rtmedia_comment_uploader_display_callback', 10 );
+	}
+}
+
+
+function rtmedia_before_rtmedia_comment_uploader_display_callback( $flag ){
+	return true;
+}
+
+function rtmedia_enable_comment_media_uplaod() {
+	global $rtmedia;
+	$comment_media = false;
+
+	if ( isset( $rtmedia->options['buddypress_enableOnComment'] ) ) {
+		if ( 0 !== intval( $rtmedia->options['buddypress_enableOnComment'] ) ) {
+			$comment_media = true;
+		}
+	} elseif ( function_exists( 'rtmedia_add_comments_extra_callback' ) && function_exists( 'rtmedia_bp_activity_entry_comments_callback' ) ) {
+		$comment_media = true;
+	}
+
+	if ( $comment_media ) {
+		/*
+		 * Add Comment Media in rtMedia Popup
+		*/
+		add_action( 'rtmedia_add_comments_extra', 'rtmedia_add_comments_extra_callback', 10 );
+
+		/*
+		 * Add Media Upload in Activity
+		*/
+		add_action( 'bp_activity_entry_comments', 'rtmedia_bp_activity_entry_comments_callback', 10 );
+	}
+}
+
+function rtmedia_bp_activity_entry_comments_id_callback( $id, $type, $context = "activity" ) {
+	if( class_exists( 'RTMediaComment' ) ){
+		/*add media in comment*/
+		return RTMediaComment::add_uplaod_media_button( $id, $type, $context );
+	}
+}
+
+function rtmedia_add_comments_extra_callback() {
+	global $rtmedia_media;
+	$context = 'activity';
+
+	if ( is_array( $rtmedia_media->context ) ) {
+		$context = $rtmedia_media->context;
+	}
+	$rtmedia_id = rtmedia_id();
+	if ( $rtmedia_id ) {
+		echo rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia', $context );
+	}
+}
