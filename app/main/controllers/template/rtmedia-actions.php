@@ -5,32 +5,36 @@
  */
 function rtmedia_author_actions() {
 
-	$options_start = $options_end = $option_buttons = $output = '';
-	$options       = array();
-	$options       = apply_filters( 'rtmedia_author_media_options', $options );
+	$author_actions = apply_filters( 'rtmedia_author_actions', true );
+	if ( isset( $author_actions ) && ! empty( $author_actions ) ) {
+		$options_start = $options_end = $option_buttons = $output = '';
+		$options       = array();
+		$options       = apply_filters( 'rtmedia_author_media_options', $options );
 
-	if ( ! empty( $options ) ) {
-		$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
-				<div class="no-js">
-				<button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . esc_html__( 'Options', 'buddypress-media' ) . '</button>
-				<ul class="rtm-options">';
+		if ( ! empty( $options ) ) {
+			$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
+					<div class="no-js">
+					<button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . esc_html__( 'Options', 'buddypress-media' ) . '</button>
+					<ul class="rtm-options">';
 
-		foreach ( $options as $action ) {
-			if ( ! empty( $action ) ) {
-				$option_buttons .= '<li>' . $action . '</li>';
+			foreach ( $options as $action ) {
+				if ( ! empty( $action ) ) {
+					$option_buttons .= '<li>' . $action . '</li>';
+				}
+			}
+
+			$options_end = '</ul></div></div>';
+
+			if ( ! empty( $option_buttons ) ) {
+				$output = $options_start . $option_buttons . $options_end;
+			}
+
+			if ( ! empty( $output ) ) {
+				echo $output; // @codingStandardsIgnoreLine
 			}
 		}
-
-		$options_end = '</ul></div></div>';
-
-		if ( ! empty( $option_buttons ) ) {
-			$output = $options_start . $option_buttons . $options_end;
-		}
-
-		if ( ! empty( $output ) ) {
-			echo $output; // @codingStandardsIgnoreLine
-		}
 	}
+
 }
 
 add_action( 'after_rtmedia_action_buttons', 'rtmedia_author_actions' );

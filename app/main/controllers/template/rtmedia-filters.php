@@ -638,6 +638,26 @@ if ( ! function_exists( 'rtmedia_media_edit_priv_callback' ) ) {
 add_filter( 'rtmedia_media_edit_priv', 'rtmedia_media_edit_priv_callback', 10, 1 );
 
 
+/**
+ * Disallow media author action
+ */
+if ( ! function_exists( 'rtmedia_author_actions_callback' ) ) {
+	function rtmedia_author_actions_callback( $value ) {
+		// comment media
+		$rtmedia_id = rtmedia_id();
+		$comment_media = false;
+		if ( ! empty( $rtmedia_id ) && function_exists( 'rtmedia_is_comment_media' ) && ! empty( $value ) ) {
+			$comment_media = rtmedia_is_comment_media( $rtmedia_id );
+			if ( ! empty( $comment_media ) ) {
+				$value = false;
+			}
+		}
+		return $value;
+	}
+}
+add_filter( 'rtmedia_author_actions', 'rtmedia_author_actions_callback', 10, 1 );
+
+
 function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_it ) {
 	if ( $like_count > 1 && $user_like_it ) {
 		/* if login user has like the comment then less from the total count */
