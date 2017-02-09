@@ -26,8 +26,9 @@
 				}
 				?>
 			</h2>
-			<div id="rtm-media-options"
-			     class="rtm-media-options"><?php do_action( 'rtmedia_media_gallery_actions' ); ?></div>
+			<div id="rtm-media-options" class="rtm-media-options">
+				<?php do_action( 'rtmedia_media_gallery_actions' ); ?>
+			</div>
 		</div>
 
 		<?php do_action( 'rtmedia_gallery_after_title' ); ?>

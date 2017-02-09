@@ -430,6 +430,23 @@ jQuery( 'document' ).ready( function( $ ) {
 		} );
 	} );
 
+	jQuery( "#media_search" ).click(function() {
+		var search_key = jQuery( '#media_search_input' ).val();
+
+		var data = {
+			action		: 'search_gallery_media',
+			search_key	: search_key,
+			template	: 'media-gallery-item',
+		}
+		jQuery.post( ajaxurl, data, function( response ) {
+			var abcd = jQuery.parseJSON(response);
+			console.log( abcd );
+
+		} );
+
+
+	} );
+
 	function rtmedia_media_view_counts() {
 		//Var view_count_action = jQuery('#rtmedia-media-view-form').attr("action");
 		if ( jQuery( '#rtmedia-media-view-form' ).length > 0 ) {
@@ -881,6 +898,15 @@ window.onload = function() {
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_reload( rtm_masonry_container );
 	}
+	jQuery( ' .rtmedia-uploader-div' ).css({
+		'opacity': '1',
+	    'display': 'block',
+	    'visibility': 'visible'
+	});
+
+	jQuery( ' #whats-new-options ' ).css({
+	    'opacity': '1',
+	});
 };
 
 // Get query string parameters from url

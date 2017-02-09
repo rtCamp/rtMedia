@@ -27,3 +27,30 @@ function rtmedia_delete_uploaded_media() {
 }
 
 add_action( 'wp_ajax_delete_uploaded_media', 'rtmedia_delete_uploaded_media' );
+
+
+function rtmedia_search_gallery_media() {
+
+	$fatch_user = get_user_by( 'slug', $_POST['search_key'] );
+	$user_id = $fatch_user->data->ID;
+
+	$args = array(
+		'id' => 1,
+	);
+
+	$a = abcd( $args );
+	echo json_encode( $a );
+	wp_die();
+
+}
+
+add_action( 'wp_ajax_search_gallery_media', 'rtmedia_search_gallery_media' );
+
+
+
+
+function abcd( $args ) {
+	$media  = new RTMediaModel();
+	$media = $media->get( $args, false, false, 'media_id DESC' );
+	return $media;
+}
