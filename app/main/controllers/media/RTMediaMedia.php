@@ -538,7 +538,7 @@ class RTMediaMedia {
 			$album_id = 0;
 		}
 
-		if ( ! in_array( $uploaded['context'], array( 'profile', 'group', 'profile-reply', 'groups-reply', 'group-reply' ), true ) ) {
+		if ( ! in_array( $uploaded['context'], array( 'profile', 'group', 'comment-media' ), true ) ) {
 			$album_id = $uploaded['context_id'];
 		}
 
