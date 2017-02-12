@@ -140,7 +140,19 @@ class RTMediaUploadEndpoint {
 					add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media', true );
 
 					if ( isset( $media[0]->id ) ) {
+						// add in comment media the parent media id
 						add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media_id', $media[0]->id );
+
+						// add in parent media the comment media id
+						$get_rtmedia_meta = array();
+						$get_rtmedia_meta_old = get_rtmedia_meta( $media[0]->id, 'has_comment_media' );
+						if ( is_array( $get_rtmedia_meta_old ) ) {
+							foreach ( $get_rtmedia_meta_old as $value ) {
+	                    		$get_rtmedia_meta[] = $value;
+							}
+						}
+                    	$get_rtmedia_meta[] = $rtupload->media_ids[0];
+                        update_rtmedia_meta( $media[0]->id, 'has_comment_media', $get_rtmedia_meta );
 					}
 
 					if ( ! empty( $current_media_id ) ) {
