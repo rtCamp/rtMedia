@@ -136,7 +136,7 @@ class RTMediaUploadEndpoint {
 				$this->upload = apply_filters( 'rtmedia_media_param_before_upload', $this->upload );
 				$rtupload     = new RTMediaUpload( $this->upload );
 
-				if ( $comment_media && isset( $media[0]->id ) ) {
+				if ( $comment_media ) {
 					add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media', true );
 
 					if ( isset( $media[0]->id ) ) {
