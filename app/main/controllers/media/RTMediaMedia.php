@@ -342,6 +342,19 @@ class RTMediaMedia {
 
 		if ( $media ) {
 
+			// delete the child media of the media where the media context type is ( post, comment, reply )
+			$contex_type = array( 'post', 'comment', 'reply' );
+			if ( isset( $media[0]->context ) && in_array( $media[0]->context, $contex_type ) ) {
+				// get the child media of the current media
+				$has_comment_media = get_rtmedia_meta( $media[0]->id, 'has_comment_media' );
+				if ( is_array( $has_comment_media ) ) {
+					foreach ( $has_comment_media as $value ) {
+						// first delete the child media
+						$delete = $this->delete( $value );
+					}
+				}
+			}
+
 			/* delete comment if media is in the comment */
 			if( class_exists( 'RTMediaTemplate' ) && isset( $media[0]->id )  && ! isset( $_POST['comment_id'] ) ){
 				$rtmedia_media_used = get_rtmedia_meta( $media[0]->id, 'rtmedia_media_used' );

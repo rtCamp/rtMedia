@@ -14,23 +14,6 @@ function rtmedia_delete_uploaded_media() {
 
 			$rtmedia_media  = new RTMediaMedia();
 
-			// delete the child media of the media where the media context type is ( post, comment, reply )
-			$media_model    = new RTMediaModel();
-			$media = $media_model->get( array( 'id' => $media_id ) );
-			if ( isset( $media[0] ) && false != $media[0] ) {
-				$contex_type = array( 'post', 'comment', 'reply' );
-				if ( isset( $media[0]->context ) && in_array( $media[0]->context, $contex_type ) ) {
-					// get the child media of the current media
-					$get_rtmedia_meta_old = get_rtmedia_meta( $media[0]->id, 'has_comment_media' );
-					if ( is_array( $get_rtmedia_meta_old ) ) {
-						foreach ( $get_rtmedia_meta_old as $value ) {
-							// first delete the child media
-							$delete = $rtmedia_media->delete( $value );
-						}
-					}
-				}
-			}
-
 			$delete = $rtmedia_media->delete( $media_id );
 
 			echo '1';
