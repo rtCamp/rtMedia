@@ -91,12 +91,12 @@ class RTMediaUploadEndpoint {
 						$context_id = get_current_user_id();
 
 						$media_obj    = new RTMediaMedia();
-						/* search from media id*/
-						$media        = $media_obj->model->get( array( 'id' => $current_media_id ) );
+						/* search from activity id*/
+						$media = $media_obj->model->get( array( 'activity_id' => $current_media_id ) );
 
-						if ( $media[0]  == false ) {
-							/* search from activity id*/
-							$media        = $media_obj->model->get( array( 'activity_id' => $current_media_id ) );
+						if ( false == $media[0] ) {
+							/* search from media id*/
+							$media = $media_obj->model->get( array( 'id' => $current_media_id ) );
 						}
 
 						if ( $media[0]->album_id ) {
@@ -106,7 +106,7 @@ class RTMediaUploadEndpoint {
 							$context_id = $media[0]->context_id;
 						} else {
 							/* search from the BuddyPress Table */
-							$media = bp_activity_get_specific(  array( 'activity_ids' => $current_media_id ) );
+							$media = bp_activity_get_specific( array( 'activity_ids' => $current_media_id ) );
 
 							if ( isset( $media['activities'][0]->component ) ) {
 								if ( $media['activities'][0]->component != 'activity' ) {
