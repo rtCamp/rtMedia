@@ -148,18 +148,18 @@ class RTMediaUploadEndpoint {
 						$get_rtmedia_meta_old = get_rtmedia_meta( $media[0]->id, 'has_comment_media' );
 						if ( is_array( $get_rtmedia_meta_old ) ) {
 							foreach ( $get_rtmedia_meta_old as $value ) {
-	                    		$get_rtmedia_meta[] = $value;
+								$get_rtmedia_meta[] = $value;
 							}
 						}
-                    	$get_rtmedia_meta[] = $rtupload->media_ids[0];
-                        update_rtmedia_meta( $media[0]->id, 'has_comment_media', $get_rtmedia_meta );
+						$get_rtmedia_meta[] = $rtupload->media_ids[0];
+						update_rtmedia_meta( $media[0]->id, 'has_comment_media', $get_rtmedia_meta );
 					}
 
 					if ( ! empty( $current_media_id ) ) {
 						add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media_parent', $current_media_id );
 					}
 
-					if ( isset ( $current_media_type ) ) {
+					if ( isset( $current_media_type ) ) {
 						add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media_type', $current_media_type );
 					}
 				}
