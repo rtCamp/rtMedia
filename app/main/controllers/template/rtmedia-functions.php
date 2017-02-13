@@ -615,9 +615,9 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 	if ( isset( $media_object->media_type ) ) {
 		if ( 'album' === $media_object->media_type || 'photo' !== $media_object->media_type || 'video' === $media_object->media_type ) {
 			$thumbnail_id = ( isset( $media_object->cover_art )
-			                  && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) )   // Cover art might be an absolute URL
-				                  || ( 0 !== intval( $media_object->cover_art ) )    // Cover art might be a media ID
-			                  ) ) ? $media_object->cover_art : false;
+							  && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) )   // Cover art might be an absolute URL
+								  || ( 0 !== intval( $media_object->cover_art ) )    // Cover art might be a media ID
+							  ) ) ? $media_object->cover_art : false;
 			$thumbnail_id = apply_filters( 'show_custom_album_cover', $thumbnail_id, $media_object->media_type, $media_object->id ); // for rtMedia pro users
 		} elseif ( 'photo' === $media_object->media_type ) {
 			$thumbnail_id = $media_object->media_id;
@@ -1449,7 +1449,9 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 
 	global $rtmedia_interaction, $rtmedia_query, $post;
 
-	if ( isset( $_GET['context'] ) && 'page' === $_GET['context'] && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
+	$wp_default_context = array( 'page', 'post' );
+
+	if ( isset( $_GET['context'] ) && in_array( $_GET['context'], $wp_default_context ) && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
 		$post = get_post( intval( $_GET['context_id'] ) );
 	}
 
@@ -1475,7 +1477,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			if ( function_exists( 'bp_get_current_group_slug' ) ) {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
-		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, array( 'page', 'post' ) ) ) {
+		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, $wp_default_context ) ) {
 			// Make sure that only one slash is at the end of url
 			$link .= rtrim( get_permalink( $post ), '/' ) . '/';
 		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'rtmedia_album' === $rtmedia_interaction->context->type ) { // url for rtmedia album
@@ -1834,16 +1836,61 @@ function update_activity_after_thumb_set( $id ) {
 
 		$activity_text               = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
 		$obj_activity->activity_text = $activity_text;
+		$activity_content = $obj_activity->create_activity_html();
 
 		$wpdb->update( $bp->activity->table_name, array(
-			'type'    => 'rtmedia_update',
-			'content' => $obj_activity->create_activity_html(),
+			'content' => $activity_content,
 			), array(
 			'id' => $activity_id,
 		) );
+
+		if( function_exists( 'rtmedia_update_content_of_comment_media' ) ){
+			rtmedia_update_content_of_comment_media( $id, $activity_content );
+		}
 	}// End if().
 
 }
+
+
+
+/**
+ * Updating profile and comment activity after thumbnail set
+ *
+ * @global      wpdb            $wpdb
+ *
+ * @param       int             $media_id
+ * @param       string             $activity_content
+ */
+function rtmedia_update_content_of_comment_media( $media_id, $activity_content ){
+	/* update activity profile and comment content of the media */
+	if( isset( $media_id ) && ! empty( $media_id ) && function_exists( 'rtmedia_is_comment_media' ) ){
+		global $wpdb;
+		/* check if it's an comment media */
+		if( rtmedia_is_comment_media( $media_id ) ){
+
+			// update profile content
+			/* get the profile activity id from the rtmedia meta table  */
+			$activity_id = get_rtmedia_meta( $media_id, 'rtmedia_comment_media_profile_id' );
+			/* check is activity id is empty or not */
+			if( isset( $activity_id ) && ! empty( $activity_id ) ){
+				$update = $wpdb->update( $wpdb->base_prefix . 'bp_activity', array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
+			}
+
+			// update comment content
+			// get the comment id from the rtmedia meta table
+			$comment_id = get_rtmedia_meta( $media_id, 'rtmedia_comment_media_comment_id' );
+			if( isset( $comment_id ) && ! empty( $comment_id ) ){
+				$activity_content = str_replace( 'rtmedia-activity-container', 'rtmedia-comment-media-container', $activity_content );
+				$activity_content = str_replace( 'rtmedia-activity-text', 'rtmedia-comment-media-text', $activity_content );
+				$activity_content = str_replace( 'rtmedia-list-item', 'rtmedia-comment-media-list-item', $activity_content );
+				$activity_content = str_replace( 'rtmedia-list', 'rtmedia-comment-media-list', $activity_content );
+				$activity_content = str_replace( 'rtmedia-comment-media-list-item', 'rtmedia-list-item', $activity_content );
+				$update = $wpdb->update( $wpdb->base_prefix . 'comments', array( 'comment_content' => $activity_content ), array( 'comment_ID' => $comment_id ) );
+			}
+		}
+	}
+}
+
 
 /**
  * Updating video poster
@@ -3565,7 +3612,7 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 		'url'        => home_url(),
 	);
 
-    // Call the custom API.
+	// Call the custom API.
 	$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $store_url ) ), array( 'timeout' => 15, 'sslverify' => false ) );
 
 	// make sure the response came back okay
@@ -3607,7 +3654,6 @@ function rtmedia_is_comment_media( $rtmedia_id ){
 function rtmedia_is_comment_media_single_page( $rtmedia_id ){
 	$comment_media = false;
 	global $rtmedia;
-	
 	/* check if the reply in comment media is not allow */
 	if( $rtmedia_id && ! rtmedia_check_comment_in_commented_media_allow() ){
 		$comment_media = rtmedia_is_comment_media( $rtmedia_id );
@@ -3616,8 +3662,8 @@ function rtmedia_is_comment_media_single_page( $rtmedia_id ){
 }
 
 
-function rtmedia_view_conversation_of_media( $activity_id ){ 
-	if( function_exists( 'bp_activity_get_permalink' ) ){
+function rtmedia_view_conversation_of_media( $activity_id ) {
+	if ( function_exists( 'bp_activity_get_permalink' ) ) {
 		?>
 		<span>
 			<a href="<?php echo bp_activity_get_permalink( $activity_id ); ?>"
@@ -3641,30 +3687,145 @@ function rtmedia_get_comments_details_for_media_id( $media_id ){
 
 
 /**
-  * Is comment allow in Commented Media 
+  * Is comment allow in Commented Media.
  **/
-function rtmedia_check_comment_in_commented_media_allow(){
-    $value = false;
-    global $rtmedia;
-    /* variable */
-    if( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
-        $value = true;
-    }
-    return $value;
+function rtmedia_check_comment_in_commented_media_allow() {
+	$value = false;
+	global $rtmedia;
+	/* variable */
+	if( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+		$value = true;
+	}
+	return $value;
 }
 
 
 
 
 /**
-  * Is comment allow in Commented Media 
+	* Is comment allow in Commented Media.
  **/
-function rtmedia_check_comment_media_allow(){
-    $value = false;
-    global $rtmedia;
-    /* variable */
-    if( ( isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ){
-        $value = true;
-    }
-    return $value;
+function rtmedia_check_comment_media_allow() {
+	$value = false;
+	global $rtmedia;
+	/* variable */
+	if ( ( isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] ) || ! isset( $rtmedia->options['buddypress_enableOnComment'] ) ) {
+		$value = true;
+	}
+	return $value;
+}
+
+
+/**
+ * Get the Original Content from the $_REQUEST
+ *
+ * @return string
+ */
+function rtmedia_get_original_comment_media_content() {
+	$old_content = '&nbsp;';
+
+	/* get the original contant from the $REQUEST */
+	if ( isset( $_REQUEST['content'] ) ) {
+		$old_content = $_REQUEST['content'];
+	}
+
+	if ( isset( $_REQUEST['comment_content'] ) ) {
+		$old_content = $_REQUEST['comment_content'];
+	}
+
+
+	/* is comment is empty then add content content space */
+	if ( strstr( $old_content, 'nbsp' ) ) {
+		$old_content = '&nbsp;';
+	}
+
+	return sanitize_text_field( $old_content );
+}
+
+
+
+/**
+ * Will alter the rtMedia query and remove the comment media from it
+ *
+ * parameter $where string rtMedia query where conditions
+ * parameter $table_name string rtMedia query table name
+ * parameter $join string
+ *
+ * return string of rtMedia query where conditions
+*/
+function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
+	$where .= ' AND ' . $table_name . '.context NOT LIKE ( "comment-media" ) ';
+	return $where;
+}
+
+
+
+
+
+function rtmedia_bp_activity_entry_comments_callback(){
+	global $activities_template;
+
+	/* comment media activity is created so media is not allow */
+	$allow_media_activity_type = array( 'rtmedia_comment_activity', 'rtmedia_like_activity' );
+	$allow_media_activity_type = apply_filters( 'rtmedia_not_allow_comment_media_in_activity_type' , $allow_media_activity_type );
+
+	/* parent activity id */
+	$activity_id = bp_get_activity_id();
+
+	/* if activity id is not empty and the type is not as $allow_media_activity_type */
+	if( $activity_id && isset( $activities_template->activity ) && isset( $activities_template->activity->type ) && ! in_array( $activities_template->activity->type , $allow_media_activity_type ) ){
+		add_action( 'before_rtmedia_comment_uploader_display', 'rtmedia_before_rtmedia_comment_uploader_display_callback', 10 );
+			echo rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity', $activities_template->activity->component );
+		remove_action( 'before_rtmedia_comment_uploader_display', 'rtmedia_before_rtmedia_comment_uploader_display_callback', 10 );
+	}
+}
+
+
+function rtmedia_before_rtmedia_comment_uploader_display_callback( $flag ){
+	return true;
+}
+
+function rtmedia_enable_comment_media_uplaod() {
+	global $rtmedia;
+	$comment_media = false;
+
+	if ( isset( $rtmedia->options['buddypress_enableOnComment'] ) ) {
+		if ( 0 !== intval( $rtmedia->options['buddypress_enableOnComment'] ) ) {
+			$comment_media = true;
+		}
+	} elseif ( function_exists( 'rtmedia_add_comments_extra_callback' ) && function_exists( 'rtmedia_bp_activity_entry_comments_callback' ) ) {
+		$comment_media = true;
+	}
+
+	if ( $comment_media ) {
+		/*
+		 * Add Comment Media in rtMedia Popup
+		*/
+		add_action( 'rtmedia_add_comments_extra', 'rtmedia_add_comments_extra_callback', 10 );
+
+		/*
+		 * Add Media Upload in Activity
+		*/
+		add_action( 'bp_activity_entry_comments', 'rtmedia_bp_activity_entry_comments_callback', 10 );
+	}
+}
+
+function rtmedia_bp_activity_entry_comments_id_callback( $id, $type, $context = "activity" ) {
+	if( class_exists( 'RTMediaComment' ) ){
+		/*add media in comment*/
+		return RTMediaComment::add_uplaod_media_button( $id, $type, $context );
+	}
+}
+
+function rtmedia_add_comments_extra_callback() {
+	global $rtmedia_media;
+	$context = 'activity';
+
+	if ( is_array( $rtmedia_media->context ) ) {
+		$context = $rtmedia_media->context;
+	}
+	$rtmedia_id = rtmedia_id();
+	if ( $rtmedia_id ) {
+		echo rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia', $context );
+	}
 }

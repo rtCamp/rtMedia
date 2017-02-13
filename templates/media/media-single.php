@@ -28,8 +28,7 @@
 						?>
 				<?php } else { ?>
 
-					<span class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button"
-					      title="Previous Media"></span>
+					<span class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button" title="Previous Media"></span>
 					<span class="mfp-arrow mfp-arrow-right mfp-prevent-close" type="button" title="Next Media"></span>
 
 					<div class="rtmedia-media"
@@ -156,7 +155,7 @@
 
 					<?php } ?>
 				<?php } ?>
-				
+
 				<?php do_action( 'rtmedia_actions_after_comments_form' ); ?>
 			</div>
 			</div>

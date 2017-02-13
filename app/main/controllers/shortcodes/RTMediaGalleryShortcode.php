@@ -228,40 +228,47 @@ class RTMediaGalleryShortcode {
 						'rtmedia_query_where_filter',
 					), 10, 3 );
 				}
-				add_filter( 'rtmedia-model-where-query', array(
-					'RTMediaGalleryShortcode',
-					'rtmedia_query_where_filter_remove_comment_media',
-				), 11, 3 );
+
+				$attr['attr']['hide_comment_media'] = false;
+				$remove_comment_media = apply_filters( 'rtmedia_query_where_filter_remove_comment_media', true, 'galleryshortcode' );
+				if ( isset( $remove_comment_media ) && ! empty( $remove_comment_media ) ) {
+					add_filter( 'rtmedia-model-where-query', array( 'RTMediaGalleryShortcode', 'rtmedia_query_where_filter_remove_comment_media' ), 11, 3 );
+					$attr['attr']['hide_comment_media'] = true;
+				}
+
 				$template->set_template( $gallery_template, $attr );
+
+				if ( isset( $remove_comment_media ) && ! empty( $remove_comment_media ) ) {
+					remove_filter( 'rtmedia-model-where-query', array( 'RTMediaGalleryShortcode', 'rtmedia_query_where_filter_remove_comment_media' ), 11 );
+				}
+
 				if ( isset( $attr['attr']['global'] ) && true === (bool) $attr['attr']['global'] ) {
 					remove_filter( 'rtmedia-model-where-query', array(
 						'RTMediaGalleryShortcode',
 						'rtmedia_query_where_filter',
 					), 10, 3 );
-				}
-				remove_filter( 'rtmedia-model-where-query', array(
-					'RTMediaGalleryShortcode',
-					'rtmedia_query_where_filter_remove_comment_media',
-				), 11 );
+				}// End if().
+
 			} else { //if user cannot view the media gallery (when context is 'group'), show message
 				esc_html_e( 'You do not have sufficient privileges to view this gallery', 'buddypress-media' );
 				return false;
-			}
-
+			}// End if().
 			return ob_get_clean();
 		}// End if().
+	}
+
+	// for gallery shortcode remove all comment media reply
+	static function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
+		if( function_exists( 'rtmedia_query_where_filter_remove_comment_media' ) ){
+			$where = rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join );
+		}
+		return $where;
 	}
 
 	// for gallery shortcode having attribute global as true, include all media except ones having context as "group"
 	static function rtmedia_query_where_filter( $where, $table_name, $join ) {
 		$where .= ' AND (' . $table_name . '.privacy = "0" OR ' . $table_name . '.privacy is NULL ) ';
 
-		return $where;
-	}
-
-	// for gallery shortcode remove all comment media reply
-	static function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
-		$where .= ' AND (' . $table_name . '.context NOT LIKE "profile-reply" AND '.$table_name.'.context NOT LIKE "groups-reply"  AND '.$table_name.'.context NOT LIKE "group-reply" ) ';
 		return $where;
 	}
 }

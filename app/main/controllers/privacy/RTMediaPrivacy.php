@@ -53,7 +53,7 @@ class RTMediaPrivacy {
 	 */
 	function update_activity_privacy_option() {
 		global $activities_template;
-		$rtmedia_activity_types = array( 'rtmedia_comment_activity', 'rtmedia_like_activity' );
+		$rtmedia_activity_types = array( 'rtmedia_comment_activity', 'rtmedia_like_activity', 'activity_comment' );
 		if ( function_exists( 'bp_activity_user_can_delete' ) && bp_activity_user_can_delete()
 			&& ( ! bp_is_groups_component() ) && is_rtmedia_privacy_user_overide()
 			&& apply_filters( 'rtm_load_bp_activity_privacy_update_ui', true )
@@ -119,7 +119,7 @@ class RTMediaPrivacy {
 			}
 
 			/* is the activate has any media then move the like and comment of that media to for the privacy */
-			$rtm_activity_model->profile_activity_update( $media_ids_of_activity, $privacy );
+			$rtm_activity_model->profile_activity_update( $media_ids_of_activity, $privacy, $activity_id );
 
 			if ( false === $status ) {
 				$status = 'false';

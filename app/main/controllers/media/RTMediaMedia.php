@@ -277,7 +277,7 @@ class RTMediaMedia {
 			}
 
 			/* is the activate has any media then move the like and comment of that media to for the privacy */
-			$rtmedia_activity_model->profile_activity_update( $media_ids_of_activity, $max_privacy );
+			$rtmedia_activity_model->profile_activity_update( $media_ids_of_activity, $max_privacy, $media[0]->activity_id );
 		}
 
 		/* action to perform any task after updating a media */
@@ -341,6 +341,19 @@ class RTMediaMedia {
 		$status = 0;
 
 		if ( $media ) {
+
+			// delete the child media of the media where the media context type is ( post, comment, reply )
+			$contex_type = array( 'post', 'comment', 'reply' );
+			if ( isset( $media[0]->context ) && in_array( $media[0]->context, $contex_type ) ) {
+				// get the child media of the current media
+				$has_comment_media = get_rtmedia_meta( $media[0]->id, 'has_comment_media' );
+				if ( is_array( $has_comment_media ) ) {
+					foreach ( $has_comment_media as $value ) {
+						// first delete the child media
+						$delete = $this->delete( $value );
+					}
+				}
+			}
 
 			/* delete comment if media is in the comment */
 			if( class_exists( 'RTMediaTemplate' ) && isset( $media[0]->id )  && ! isset( $_POST['comment_id'] ) ){
@@ -538,7 +551,7 @@ class RTMediaMedia {
 			$album_id = 0;
 		}
 
-		if ( ! in_array( $uploaded['context'], array( 'profile', 'group' ), true ) ) {
+		if ( ! in_array( $uploaded['context'], array( 'profile', 'group', 'comment-media' ), true ) ) {
 			$album_id = $uploaded['context_id'];
 		}
 

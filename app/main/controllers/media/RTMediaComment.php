@@ -61,7 +61,7 @@ class RTMediaComment {
 
 	function add( $attr ) {
 		global $allowedtags;
-       	do_action( 'rtmedia_before_add_comment', $attr );
+		do_action( 'rtmedia_before_add_comment', $attr );
 		$defaults = array(
 				'user_id'           => $this->get_current_id(),
 				'comment_author'    => $this->get_current_author(),
@@ -74,9 +74,21 @@ class RTMediaComment {
 		$rtmedia_points_media_id = rtmedia_id( $params['comment_post_ID'] );
 		$params['comment_id'] = $id;
 
+		/* add comment id in the rtmedia meta feilds */
+		if ( isset( $_REQUEST['rtMedia_attached_files'] ) ) {
+
+			$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+			// check media should be in array format and is not empty to.
+			if ( is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files ) ) {
+				add_rtmedia_meta( $rtMedia_attached_files[0], 'rtmedia_comment_media_comment_id', $id );
+			}
+		}
+
+
 		do_action( 'rtmedia_after_add_comment', $params );
 
-	   	return $id;
+		return $id;
 	}
 
 	function remove( $id ) {
@@ -88,8 +100,11 @@ class RTMediaComment {
 			$comment = get_comment( $id );
 		}
 
+
 		if ( isset( $comment->comment_post_ID ) && isset( $comment->user_id ) ) {
+
 			$model = new RTMediaModel();
+
 			//get the current media from the comment_post_ID
 			$media  = $model->get( array( 'media_id' => $comment->comment_post_ID ) );
 			// if user is comment creator, or media uploader or admin, allow to delete
@@ -146,7 +161,7 @@ class RTMediaComment {
 					return;
 				}
 				$template = 'uploader';
-				if( isset( $attr['upload_parent_id_type'] )  && isset( $attr['upload_parent_id'] ) ){
+				if ( isset( $attr['upload_parent_id_type'] )  && isset( $attr['upload_parent_id'] ) ) {
 					$template = 'comment-media';
 				}
 				$view = new RTMediaUploadView( $attr );
@@ -163,19 +178,57 @@ class RTMediaComment {
 
 
 	/*
+	 * update the Comment Media album when Parent Media Album is change
+	 * @param int $media_id ( media id )
+	*/
+	function update_comment_media_album( $post_id = false ) {
+		/* get album id */
+		$album_id   = filter_input( INPUT_POST, 'album_id', FILTER_SANITIZE_NUMBER_INT );
+		/* RTMediaModel class exites and post_id is not NULL and album id is not NULL */
+		if ( class_exists( 'RTMediaModel' ) && ! empty( $post_id ) && isset( $album_id ) && ! empty( $album_id ) ) {
+			/* get the comments from the post id */
+			$comments = $this->rtmedia_comment_model->get( array( 'post_id' => $post_id ) );
+			/* check if comment exites or not */
+			if ( isset( $comments ) && is_array( $comments ) && ! empty( $comments ) ) {
+				$media_model      = new RTMediaModel();
+				/* comment loop */
+				foreach ( $comments as $comment ) {
+					/* check for comment id */
+					if ( isset( $comment->comment_ID ) ) {
+						/* get the media id from the comment  */
+						$comment_media_id = get_comment_meta( $comment->comment_ID, 'rtmedia_comment_media_id', true );
+						/* check if comment has media or not */
+						if ( isset( $comment_media_id ) && ! empty( $comment_media_id ) ) {
+							/* media id  */
+							$where   = array( 'id' => $comment_media_id );
+
+							/* album id */
+							$columns = array( 'album_id' => $album_id );
+
+							// update media privacy
+							$media_model->update( $columns, $where );
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	/*
 	 * add media upload in add comment section
 	 * @param int $id ( media id or activity id )
 	 * @param string $type ( media or activity )
 	 *
 	 * @return HTML
 	*/
-	static function add_uplaod_media_button( $id, $type, $context ){
+	static function add_uplaod_media_button( $id, $type, $context ) {
 		$attr = array(
 			'comment' => true,
 			'privacy' => 0,
 			'upload_parent_id' => $id,
 			'upload_parent_id_type' => $type,
-			'upload_parent_id_context' => $context
+			'upload_parent_id_context' => $context,
 		 );
 		return RTMediaComment::pre_comment_render( $attr );
 	}

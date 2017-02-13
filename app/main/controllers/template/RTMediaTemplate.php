@@ -102,7 +102,11 @@ class RTMediaTemplate {
 					$this->add_hidden_fields_in_gallery();
 
 					$gallery_template = apply_filters( 'rtmedia-before-template', $template, $shortcode_attr );
-					include $this->locate_template( $gallery_template );
+
+					// check if file exists
+					if ( file_exists(  $this->locate_template( $gallery_template ) ) ) {
+						include $this->locate_template( $gallery_template );
+					}
 
 					echo '</div>';
 				} else {
@@ -149,7 +153,11 @@ class RTMediaTemplate {
 						$this->add_hidden_fields_in_gallery();
 
 						$gallery_template = apply_filters( 'rtmedia-before-template', $template, $shortcode_attr );
-						include $this->locate_template( $gallery_template );
+
+						// check if file exists
+						if ( file_exists(  $this->locate_template( $gallery_template ) ) ) {
+							include $this->locate_template( $gallery_template );
+						}
 
 						echo '</div>';
 
@@ -272,6 +280,13 @@ class RTMediaTemplate {
 			//for medias except album and playlist, if album_is is found, then update album_id for the media also
 			if ( ! empty( $_album_id ) ) {
 				$data_array[] = 'album_id';
+
+				/* check it has an media id */
+				if( isset( $rtmedia_query->media[0]->media_id ) && ! empty( $rtmedia_query->media[0]->media_id ) ){
+					$comment     = new RTMediaComment();
+					/* update the comment media album */
+					$comment->update_comment_media_album( $rtmedia_query->media[0]->media_id );
+				}
 			}
 
 			$data       = rtmedia_sanitize_object( $_POST, $data_array );
