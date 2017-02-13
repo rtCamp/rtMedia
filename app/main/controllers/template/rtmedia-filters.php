@@ -681,3 +681,14 @@ function rtmedia_comment_max_links_callback( $values, $option ) {
 }
 add_filter( 'option_comment_max_links', 'rtmedia_comment_max_links_callback', 10, 2 );
 
+/**
+ * add link for @mentions of the username in the comment or the activity section after the media delete or media is trancoder
+ */
+function rtmedia_bp_activity_get_meta_callback( $retval, $activity_id, $meta_key, $single ) {
+	$new_retval = $retval;
+	if ( 'bp_activity_text' == $meta_key && true == $single && function_exists( 'bp_activity_at_name_filter' ) ) {
+		$new_retval = bp_activity_at_name_filter( $new_retval );
+	}
+	return $new_retval;
+}
+add_filter( 'bp_activity_get_meta', 'rtmedia_bp_activity_get_meta_callback', 10, 4 );
