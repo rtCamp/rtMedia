@@ -77,6 +77,10 @@
 	float: right;
 }
 
+form.rt_media_comment_form .rtmedia-plupload-container {
+	overflow: hidden;
+}
+
 .rtmedia-plupload-container {
 	position: relative;
 	float: left;
@@ -93,6 +97,7 @@
 
 // Video/Music title make center align
 .rtmedia-list-item {
+	&.media-type-photo,
 	&.media-type-document,
 	&.media-type-music,
 	&.media-type-video {
@@ -134,4 +139,15 @@
 	&:hover {
 		text-decoration: underline;
 	}
+}
+
+
+
+a.rtmedia-comment-link{
+	display: none;
+}
+
+
+a.rtmedia-comment-link.rtmedia-comments-link{
+	display: initial;
 }

@@ -102,7 +102,11 @@ class RTMediaTemplate {
 					$this->add_hidden_fields_in_gallery();
 
 					$gallery_template = apply_filters( 'rtmedia-before-template', $template, $shortcode_attr );
-					include $this->locate_template( $gallery_template );
+
+					// check if file exists
+					if ( file_exists(  $this->locate_template( $gallery_template ) ) ) {
+						include $this->locate_template( $gallery_template );
+					}
 
 					echo '</div>';
 				} else {
@@ -150,6 +154,7 @@ class RTMediaTemplate {
 
 						$gallery_template = apply_filters( 'rtmedia-before-template', $template, $shortcode_attr );
 
+						// check if file exists
 						if ( file_exists(  $this->locate_template( $gallery_template ) ) ) {
 							include $this->locate_template( $gallery_template );
 						}
@@ -172,7 +177,9 @@ class RTMediaTemplate {
 	function add_hidden_fields_in_gallery() {
 		global $rtmedia_query;
 
+		$is_on_home = ( is_front_page() ) ? true : false;
 		$return_str = "<input name='rtmedia_shortcode' value='true' type='hidden' />";
+		$return_str .= "<input name='is_on_home' value='$is_on_home' type='hidden' />";
 
 		if ( $rtmedia_query->original_query && is_array( $rtmedia_query->original_query ) ) {
 			foreach ( $rtmedia_query->original_query as $key => $val ) {
@@ -214,6 +221,7 @@ class RTMediaTemplate {
 		if ( $rtmedia_query->media ) {
 			foreach ( $rtmedia_query->media as $key => $media ) {
 				$media_array[ $key ]               = $media;
+				$media_array[ $key ]->media_count  = rtm_get_album_media_count( $media->id );
 				$media_array[ $key ]->guid         = rtmedia_image( 'rt_media_thumbnail', $media->id, false );
 				$media_array[ $key ]->rt_permalink = get_rtmedia_permalink( $media->id );
 				$media_array[ $key ]->duration     = rtmedia_duration( $media->id );
@@ -272,6 +280,13 @@ class RTMediaTemplate {
 			//for medias except album and playlist, if album_is is found, then update album_id for the media also
 			if ( ! empty( $_album_id ) ) {
 				$data_array[] = 'album_id';
+
+				/* check it has an media id */
+				if( isset( $rtmedia_query->media[0]->media_id ) && ! empty( $rtmedia_query->media[0]->media_id ) ){
+					$comment     = new RTMediaComment();
+					/* update the comment media album */
+					$comment->update_comment_media_album( $rtmedia_query->media[0]->media_id );
+				}
 			}
 
 			$data       = rtmedia_sanitize_object( $_POST, $data_array );
@@ -633,20 +648,60 @@ class RTMediaTemplate {
 			$comment_content = isset( $_REQUEST['comment_content'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['comment_content'] ) ) : '';
 
 			if ( wp_verify_nonce( $nonce, 'rtmedia_comment_nonce' ) ) {
-				if ( empty( $comment_content ) ) {
-					return false;
+				$comment_activity_id = false;
+				
+				/* if comment has media then make it true */
+ 				$comment_with_media = false;
+
+				/* comment media id array */
+				$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+				if ( empty( $comment_content ) &&  is_array( $rtMedia_attached_files ) && empty( $rtMedia_attached_files ) ) {
+ 					return false;
+ 				}
+
+ 				/* is comment is empty then add content content space */
+ 				if( strstr($comment_content, 'nbsp') ){
+ 					$comment_content = "&nbsp;";
+ 				}
+
+ 				/* save the old content for activity */
+ 				$comment_content_old = $comment_content;
+
+ 				/* for mention of username in the comment content  */
+                if( function_exists( 'bp_activity_at_name_filter' ) ){
+                    $comment_content = bp_activity_at_name_filter( $comment_content );
+                }
+
+
+ 				if( ! empty( $rtMedia_attached_files ) ){
+ 					/*has media*/
+ 					$comment_with_media = true;
+
+ 					/* create new html for comment content */
+ 					$obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content );
+					$comment_content = $obj_comment->create_activity_html( 'comment-media' );
 				}
 
 				$comment     = new RTMediaComment();
+
 				$attr        = $_POST;
+
 				$media_model = new RTMediaModel();
 				$result      = $media_model->get( array( 'id' => $rtmedia_query->action_query->id ) );
+
+				$attr[ 'comment_content' ] = $comment_content;
 
 				if ( ! isset( $attr['comment_post_ID'] ) ) {
 					$attr['comment_post_ID'] = $result[0]->media_id;
 				}
 
 				$id = $comment->add( $attr );
+
+				if( $comment_with_media  && $id ){
+					update_comment_meta( $id, 'rtmedia_comment_media_id', $rtMedia_attached_files[0] );
+					add_rtmedia_meta( $rtMedia_attached_files[0], 'rtmedia_media_used', array( 'comment' => $id ) );
+				}
 
 				if ( ! is_null( $result[0]->activity_id ) ) {
 					global $rtmedia_buddypress_activity;
@@ -657,8 +712,17 @@ class RTMediaTemplate {
 					), 10, 2 );
 
 					if ( function_exists( 'bp_activity_new_comment' ) ) {
+						/* comment content add to new */
+					  	$activity_content = $comment_content_old;
+
+					  	/* if activity has media in it create an html for it */
+                        if( class_exists( 'RTMediaActivity' )  && $comment_with_media ){
+                            $obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content_old );
+                            $activity_content = $obj_comment->create_activity_html();
+                        }
+
 						$comment_activity_id = bp_activity_new_comment( array(
-							'content'     => $comment_content,
+							'content'     => $activity_content,
 							'activity_id' => $result[0]->activity_id,
 						) );
 
@@ -667,11 +731,23 @@ class RTMediaTemplate {
 				}
 
 				if ( ! empty( $comment_activity_id ) ) {
-					$rtmedia_activity_comment = rtmedia_activity_comment( $comment_activity_id );
-					if ( $rtmedia_activity_comment['content'] ) {
-						update_comment_meta( $id, 'activity_comment_content', $rtmedia_activity_comment['content'] );
-					}
+
+					/* add activity id in comment meta fields */
 					update_comment_meta( $id, 'activity_id', $comment_activity_id );
+
+					/* change comment media activity id to current activity id*/
+					if( $comment_with_media  && is_array( $rtMedia_attached_files )  && ! empty( $rtMedia_attached_files[0] )  && class_exists( 'RTMediaModel' ) ){
+						$rtmedia_model = new RTMediaModel();
+						$rtmedia_model->update(
+							array(
+								'activity_id' => $comment_activity_id
+							),
+							array(
+								'id' => $rtMedia_attached_files[0]
+							)
+						);
+					}
+
 				}
 				$_rt_ajax = filter_input( INPUT_POST, 'rtajax', FILTER_SANITIZE_STRING );
 
@@ -705,25 +781,31 @@ class RTMediaTemplate {
 				return false;
 			}
 
-			$comment     = new RTMediaComment();
-			$id          = $_comment_id;
-			$activity_id = get_comment_meta( $id, 'activity_id', true );
+			echo $this->rtmedia_delete_comment_and_activity( $_comment_id );
 
-			if ( ! empty( $activity_id ) ) {
-				if ( function_exists( 'bp_activity_delete_comment' ) ) { //if buddypress is active
-					$activity_deleted = bp_activity_delete_comment( $activity_id, $id );
-					$delete           = bp_activity_delete( array(
-						'id'   => $activity_id,
-						'type' => 'activity_comment',
-					) );
-				}
-			}
-
-			$comment_deleted = $comment->remove( $id );
-
-			echo $comment_deleted; // @codingStandardsIgnoreLine
 			exit;
 		}
+	}
+
+
+	function rtmedia_delete_comment_and_activity( $_comment_id ){
+		$comment     = new RTMediaComment();
+		$id          = $_comment_id;
+		$activity_id = get_comment_meta( $id, 'activity_id', true );
+
+		if ( ! empty( $activity_id ) ) {
+			if ( function_exists( 'bp_activity_delete_comment' ) ) { //if buddypress is active
+				$activity_deleted = bp_activity_delete_comment( $activity_id, $id );
+				$delete           = bp_activity_delete( array(
+					'id'   => $activity_id,
+					'type' => 'activity_comment',
+				) );
+			}
+		}
+
+		$comment_deleted = $comment->remove( $id );
+
+		return $comment_deleted; // @codingStandardsIgnoreLine
 	}
 
 	/**
