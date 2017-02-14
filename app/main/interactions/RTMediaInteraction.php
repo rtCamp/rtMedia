@@ -301,7 +301,7 @@ class RTMediaInteraction {
 
 		global $rtmedia_query;
 
-		if ( isset( $rtmedia_query->media ) && count( $rtmedia_query->media ) > 0 ) {
+		if ( isset( $rtmedia_query->media ) && is_array( $rtmedia_query->media ) && count( $rtmedia_query->media ) > 0 ) {
 			$new_desc = get_post_field( 'post_content', $rtmedia_query->media[0]->media_id );
 
 			if ( '' === $new_desc ) {
