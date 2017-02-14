@@ -1023,7 +1023,7 @@ class RTMediaFormHandler {
 				'args'		=> array(
 					'key'	=> 'buddypress_enableOnComment',
 					'value'	=> $options['buddypress_enableOnComment'],
-					'desc'	=> esc_html__( 'Enable Media in Comment', 'buddypress-media' ),
+					'desc'	=> esc_html__( 'This will allow users to upload media in comment section for originally uploaded media up to 1 level.', 'buddypress-media' ),
 				),
 				'group'    => 660,
 			),
