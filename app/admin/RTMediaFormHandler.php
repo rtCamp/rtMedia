@@ -1018,7 +1018,7 @@ class RTMediaFormHandler {
 				'group'    => 10,
 			),
 			'buddypress_enableOnComment'      => array(
-				'title'		=> esc_html__( 'Allow upload to Comment', 'buddypress-media' ),
+				'title'		=> esc_html__( 'Enable media in comment', 'buddypress-media' ),
 				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'		=> array(
 					'key'	=> 'buddypress_enableOnComment',
@@ -1028,12 +1028,12 @@ class RTMediaFormHandler {
 				'group'    => 660,
 			),
 			'rtmedia_disable_media_in_commented_media'      => array(
-				'title'		=> esc_html__( 'Disable upload to Comment Media', 'buddypress-media' ),
+				'title'		=> esc_html__( 'Disable upload in comment media', 'buddypress-media' ),
 				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'		=> array(
 					'key'	=> 'rtmedia_disable_media_in_commented_media',
 					'value'	=> $options['rtmedia_disable_media_in_commented_media'],
-					'desc'	=> esc_html__( 'Enable Media in Comment', 'buddypress-media' ),
+					'desc'	=> esc_html__( 'Disable upload in Comment Media', 'buddypress-media' ),
 				),
 				'group'    => 660,
 				'depends'       => 'buddypress_enableOnComment',
