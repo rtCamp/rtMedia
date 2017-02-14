@@ -303,7 +303,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_enableLikes',
 					'value' => $options['general_enableLikes'],
-					'desc' => __( 'You may want to disable like feature if you had enabled rating feature.', 'buddypress-media' ),
+					'desc' => __( 'Enabling this setting will add like feature for media.', 'buddypress-media' ),
 				),
 				'group' => '11',
 			),
