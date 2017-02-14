@@ -1320,7 +1320,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.3 =
-User can upload media in comment and fixed several other bugs. Please update/re-save the permalink structure after the plugin update.
+Now upload media in comment & fixed rtMedia shortcode pagination along with several other bugs. Please update/re-save the permalinks after the plugin update.
 
 == Sponsors ==
 
