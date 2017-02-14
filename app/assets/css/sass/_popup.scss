@@ -23,6 +23,13 @@
 				margin: 5px 0; */
 			}
 		}
+
+		.rtmedia-comment-media-list {
+			.mejs-container.mejs-video {
+				min-height: 200px;
+				min-width: 200px;
+			}
+		}
 	}
 
 	.rtm-single-meta {
@@ -323,6 +330,7 @@
 	}
 
 	.rtmedia-comment-link,
+	.rtmedia-view-conversation,
 	#buddypress & .rtmedia-like {
 		border: 0;
 		font-size: 13px;
@@ -455,7 +463,6 @@
 }
 
 .rtm-media-single-comments {
-	background-color: #edeff4;
 	bottom: 20px;
 	padding: 10px;
 
@@ -463,6 +470,7 @@
 	width: 100%;
 
 	textarea {
+		background-color: #edeff4;
 		font-size: 12px;
 		line-height: 14px;
 		max-height: 40px;

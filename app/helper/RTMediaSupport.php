@@ -617,9 +617,6 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							<td>Website</td><td>' . strip_tags( $form_data['website'] ) . '</td>
 						</tr>
 						<tr>
-							<td>Phone</td><td>' . strip_tags( $form_data['phone'] ) . '</td>
-						</tr>
-						<tr>
 							<td>Subject</td><td>' . strip_tags( $form_data['subject'] ) . '</td>
 						</tr>
 						<tr>

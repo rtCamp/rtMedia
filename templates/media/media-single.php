@@ -28,8 +28,7 @@
 						?>
 				<?php } else { ?>
 
-					<span class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button"
-					      title="Previous Media"></span>
+					<span class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button" title="Previous Media"></span>
 					<span class="mfp-arrow mfp-arrow-right mfp-prevent-close" type="button" title="Next Media"></span>
 
 					<div class="rtmedia-media"
@@ -98,10 +97,6 @@
 							<div class="rtmedia-item-comments">
 								<div class="rtmedia-actions-before-comments clearfix">
 									<?php do_action( 'rtmedia_actions_before_comments' ); ?>
-									<?php if ( is_user_logged_in() ) { ?>
-										<span><a href='#'
-										         class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a></span>
-									<?php } ?>
 								</div>
 								<div class="rtm-like-comments-info">
 									<?php show_rtmedia_like_counts(); ?>
@@ -142,10 +137,6 @@
 						<div class="rtmedia-item-comments">
 							<div class="rtmedia-actions-before-comments clearfix">
 								<?php do_action( 'rtmedia_actions_before_comments' ); ?>
-								<?php if ( is_user_logged_in() ) { ?>
-									<span><a href='#'
-									         class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a></span>
-								<?php } ?>
 							</div>
 
 							<div class="rtm-like-comments-info">
@@ -164,7 +155,7 @@
 
 					<?php } ?>
 				<?php } ?>
-				
+
 				<?php do_action( 'rtmedia_actions_after_comments_form' ); ?>
 			</div>
 			</div>

@@ -5,32 +5,36 @@
  */
 function rtmedia_author_actions() {
 
-	$options_start = $options_end = $option_buttons = $output = '';
-	$options       = array();
-	$options       = apply_filters( 'rtmedia_author_media_options', $options );
+	$author_actions = apply_filters( 'rtmedia_author_actions', true );
+	if ( isset( $author_actions ) && ! empty( $author_actions ) ) {
+		$options_start = $options_end = $option_buttons = $output = '';
+		$options       = array();
+		$options       = apply_filters( 'rtmedia_author_media_options', $options );
 
-	if ( ! empty( $options ) ) {
-		$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
-                <div class="no-js">
-                <button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . esc_html__( 'Options', 'buddypress-media' ) . '</button>
-                <ul class="rtm-options">';
+		if ( ! empty( $options ) ) {
+			$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
+					<div class="no-js">
+					<button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . esc_html__( 'Options', 'buddypress-media' ) . '</button>
+					<ul class="rtm-options">';
 
-		foreach ( $options as $action ) {
-			if ( ! empty( $action ) ) {
-				$option_buttons .= '<li>' . $action . '</li>';
+			foreach ( $options as $action ) {
+				if ( ! empty( $action ) ) {
+					$option_buttons .= '<li>' . $action . '</li>';
+				}
+			}
+
+			$options_end = '</ul></div></div>';
+
+			if ( ! empty( $option_buttons ) ) {
+				$output = $options_start . $option_buttons . $options_end;
+			}
+
+			if ( ! empty( $output ) ) {
+				echo $output; // @codingStandardsIgnoreLine
 			}
 		}
-
-		$options_end = '</ul></div></div>';
-
-		if ( ! empty( $option_buttons ) ) {
-			$output = $options_start . $option_buttons . $options_end;
-		}
-
-		if ( ! empty( $output ) ) {
-			echo $output; // @codingStandardsIgnoreLine
-		}
 	}
+
 }
 
 add_action( 'after_rtmedia_action_buttons', 'rtmedia_author_actions' );
@@ -103,8 +107,10 @@ add_action( 'rtmedia_add_edit_tab_content', 'rtmedia_image_editor_content', 12, 
  * @param       string          $media_type
  */
 function rtmedia_add_album_selection_field( $media_type ) {
+	/* if comment media then album option is depend  on the top activity */
+	$comment_media = rtmedia_is_comment_media( rtmedia_id() );
 
-	if ( is_rtmedia_album_enable() && isset( $media_type ) && 'album' != $media_type && apply_filters( 'rtmedia_edit_media_album_select', true ) ) {
+	if ( empty( $comment_media ) && is_rtmedia_album_enable() && isset( $media_type ) && 'album' != $media_type && apply_filters( 'rtmedia_edit_media_album_select', true ) ) {
 		global $rtmedia_query;
 
 		$curr_album_id = '';
@@ -143,9 +149,9 @@ function rtmedia_gallery_options() {
 
 	if ( ! empty( $options ) ) {
 		$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
-                <div class="no-js">
-                <div class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . apply_filters( 'rtm_gallery_option_label', __( 'Options', 'buddypress-media' ) ) . '</div>
-                <ul class="rtm-options">';
+				<div class="no-js">
+				<div class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . apply_filters( 'rtm_gallery_option_label', __( 'Options', 'buddypress-media' ) ) . '</div>
+				<ul class="rtm-options">';
 
 		foreach ( $options as $action ) {
 			if ( ! empty( $action ) ) {
@@ -681,7 +687,8 @@ function rtm_album_media_count() {
 
 	if ( isset( $rtmedia_album_count_status ) && $rtmedia_album_count_status['status'] ) {
 		?>
-		<div class="rtmedia-album-media-count" title="<?php echo rtm_get_album_media_count( rtmedia_id() ) . RTMEDIA_MEDIA_LABEL; ?>"><?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . rtm_get_album_media_count( rtmedia_id() ) . esc_html( $rtmedia_album_count_status['after_string'] ) ?></div>
+		<div class="rtmedia-album-media-count" title="<?php echo rtmedia_album_mediacounter() . RTMEDIA_MEDIA_LABEL; ?>">
+			<?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . rtmedia_album_mediacounter() . esc_html( $rtmedia_album_count_status['after_string'] ) ?></div>
 		<?php
 	}
 	?>
@@ -808,22 +815,22 @@ function rtmedia_addons_admin_notice() {
 
 	$screen = get_current_screen();
 
-	if ( $screen->id === 'rtmedia_page_rtmedia-license' ) {
+	if ( 'rtmedia_page_rtmedia-license' === $screen->id ) {
 
 		if ( isset( $_POST ) && count( $_POST ) > 0 ) { ?>
 
 			<div class="notice notice-success is-dismissible">
-				<p><?php _e('Settings has been saved successfully.', 'buddypress-media'); ?></p>
+				<p><?php _e( 'Settings has been saved successfully.', 'buddypress-media' ); ?></p>
 			</div>
 
 			<div class="notice notice-error is-dismissible">
-				<p><?php _e('Refresh the page in case if license data is not showing correct.', 'buddypress-media'); ?></p>
+				<p><?php _e( 'Refresh the page in case if license data is not showing correct.', 'buddypress-media' ); ?></p>
 			</div>
 	<?php
 		}
 	}
 }
-add_action('admin_notices', 'rtmedia_addons_admin_notice');
+add_action( 'admin_notices', 'rtmedia_addons_admin_notice' );
 
 /**
  * Function to add buddypress language conversion to Media activities.
@@ -842,3 +849,102 @@ function rtmedia_activity_register_activity_actions_callback() {
 	);
 }
 add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
+
+
+/**
+ *
+ * rtmedia_override_canonical Redirect homepage as per parameters passed to query string.
+ * This is added for a page set as a "Front page" in which gallery short-code is there,
+ * so pagination for gallery short-code can work properly.
+ *
+ */
+function rtmedia_override_canonical( $redirect_url, $requested_url ) {
+	if ( is_front_page() && get_query_var( 'pg' ) ) {
+		return $requested_url;
+	} else {
+		return $redirect_url;
+	}
+}
+add_filter( 'redirect_canonical', 'rtmedia_override_canonical', 10, 2 );
+
+/**
+ * rtmedia_gallery_shortcode_json_query_vars Set query vars for json response
+ *
+ * @param  object $wp_query WP query object
+ *
+ */
+function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
+
+	global $wp_query;
+
+	$pagename = '';
+	if ( isset( $wp_query->query_vars['pagename'] ) ) {
+		$pagename = explode( '/', $wp_query->query_vars['pagename'] );
+	}
+	if ( ! empty( $pagename ) && isset( $_REQUEST['json'] ) && 'true' === $_REQUEST['json'] && isset( $_REQUEST['rtmedia_shortcode'] ) && 'true' === $_REQUEST['rtmedia_shortcode'] ) {
+		$pagename = $pagename[0];
+		$wp_query->query_vars['pagename'] = '';
+		$wp_query->query['pagename'] = $pagename . '/pg';
+		$wp_query->query['media'] = '';
+		$wp_query->query_vars['media'] = '';
+	}
+
+	return $wp_query;
+
+}
+add_action( 'pre_get_posts', 'rtmedia_gallery_shortcode_json_query_vars', 99 );
+
+/**
+ *
+ * Rule for pagination for rtmedia gallery shortcode
+ *
+ */
+function rtmedia_gallery_shortcode_rewrite_rules() {
+
+	// Rule for pages
+	add_rewrite_rule( '([^/?]+)/pg/([0-9]*)/?', 'index.php?pg=$matches[2]&pagename=$matches[1]', 'top' );
+
+	// Rule for Day and name
+	add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/?]+)/pg/([0-9]*)/?', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&pg=$matches[5]', 'top' );
+
+	// Rule for Month and name
+	add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([^/?]+)/pg/([0-9]*)/?', 'index.php?year=$matches[1]&monthnum=$matches[2]&name=$matches[3]&pg=$matches[4]', 'top' );
+
+	// Rule for Numeric
+	add_rewrite_rule( 'archives/([0-9]+)/pg/([0-9]*)/?', 'index.php?p=$matches[1]&pg=$matches[2]', 'top' );
+
+	// Rule for posts
+	add_rewrite_rule( '(.?.+?)/pg/?([0-9]{1,})/?$', 'index.php?pg=$matches[2]&name=$matches[1]', 'bottom' );
+
+	// Rule for homepage
+	add_rewrite_rule( 'pg/([0-9]*)/?', 'index.php?page_id=' . get_option( 'page_on_front' ) . '&pg=$matches[1]', 'top' );
+
+}
+add_action( 'rtmedia_add_rewrite_rules', 'rtmedia_gallery_shortcode_rewrite_rules' );
+
+
+/**
+ * update the javascript variable media  view in popup or in single page
+ */
+function rtmedia_after_media_callback() {
+	// comment media
+	$rtmedia_id = rtmedia_id();
+	$comment_media = false;
+	if ( ! empty( $rtmedia_id ) ) {
+		$comment_media = rtmedia_is_comment_media( $rtmedia_id );
+		if ( ! empty( $comment_media ) ) {
+			?>
+			<script type="text/javascript">
+				comment_media = true;
+			</script>
+			<?php
+		} else {
+			?>
+			<script type="text/javascript">
+				comment_media = false;
+			</script>
+			<?php
+		}
+	}
+}
+add_action( 'rtmedia_after_media', 'rtmedia_after_media_callback', 10 );
