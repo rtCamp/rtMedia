@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.2.1\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.3\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-02-14 05:21:30+00:00\n"
+"POT-Creation-Date: 2017-02-14 08:13:37+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2125,7 +2125,7 @@ msgstr ""
 msgid "Public - Visible to the world"
 msgstr ""
 
-#: app/main/RTMedia.php:647 app/main/controllers/template/RTMediaNav.php:213
+#: app/main/RTMedia.php:647 app/main/controllers/template/RTMediaNav.php:222
 #: app/main/controllers/template/rtmedia-functions.php:136
 msgid "All"
 msgstr ""
@@ -3230,7 +3230,7 @@ msgctxt "Status General Name"
 msgid "hidden"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaNav.php:32
+#: app/main/controllers/template/RTMediaNav.php:41
 msgctxt "My Account Privacy sub nav"
 msgid "Privacy"
 msgstr ""
