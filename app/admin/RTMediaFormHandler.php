@@ -1033,7 +1033,7 @@ class RTMediaFormHandler {
 				'args'		=> array(
 					'key'	=> 'rtmedia_disable_media_in_commented_media',
 					'value'	=> $options['rtmedia_disable_media_in_commented_media'],
-					'desc'	=> esc_html__( 'Disable upload in Comment Media', 'buddypress-media' ),
+					'desc'	=> esc_html__( 'Disable upload in comment media', 'buddypress-media' ),
 				),
 				'group'    => 660,
 				'depends'       => 'buddypress_enableOnComment',
