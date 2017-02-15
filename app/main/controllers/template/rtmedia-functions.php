@@ -1360,7 +1360,7 @@ function rtmedia_pagination_prev_link() {
 	$link .= RTMEDIA_MEDIA_SLUG . '/';
 
 	if ( isset( $rtmedia_query->action_query->media_type ) ) {
-		$media_type_array = apply_filters( 'rtmedia_default_type', array( 'photo', 'music', 'video', 'album', 'playlist', 'document', 'other' ) );
+		$media_type_array = apply_filters( 'rtmedia_media_type_support', array( 'photo', 'music', 'video', 'album' ) );
 
 		if ( in_array( $rtmedia_query->action_query->media_type, $media_type_array, true ) ) {
 			$link .= $rtmedia_query->action_query->media_type . '/';
@@ -1424,7 +1424,7 @@ function rtmedia_pagination_next_link() {
 	}
 
 	if ( isset( $rtmedia_query->action_query->media_type ) ) {
-		$media_type_array = apply_filters( 'rtmedia_default_type', array( 'photo', 'music', 'video', 'album', 'playlist', 'document', 'other' ) );
+		$media_type_array = apply_filters( 'rtmedia_media_type_support', array( 'photo', 'music', 'video', 'album' ) );
 
 		if ( in_array( $rtmedia_query->action_query->media_type, $media_type_array, true ) ) {
 			$link .= $rtmedia_query->action_query->media_type . '/';
@@ -1508,7 +1508,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	}
 
 	if ( isset( $rtmedia_query->action_query->media_type ) ) {
-		$media_type_array = apply_filters( 'rtmedia_default_type', array( 'photo', 'music', 'video', 'album', 'playlist', 'document', 'other' ) );
+		$media_type_array = apply_filters( 'rtmedia_media_type_support', array( 'photo', 'music', 'video', 'album' ) );
 		if ( in_array( $rtmedia_query->action_query->media_type, $media_type_array, true ) ) {
 			$link .= $rtmedia_query->action_query->media_type . '/';
 		}
