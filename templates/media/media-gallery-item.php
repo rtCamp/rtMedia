@@ -34,7 +34,7 @@ if ( isset( $is_edit_allowed[0] ) ) {
 			<img src="<?php rtmedia_image( 'rt_media_thumbnail' ); ?>" alt="<?php rtmedia_image_alt(); ?>">
 		</div>
 
-		<?php if ( apply_filters( 'rtmedia_media_gallery_show_media_title', true ) ) { ?>
+		<?php if ( apply_filters( 'rtmedia_media_gallery_show_media_title', false ) ) { ?>
 			<div class="rtmedia-item-title">
 				<h4 title="<?php echo esc_attr( rtmedia_title() ); ?>">
 					<?php echo esc_html( rtmedia_title() ); ?>
