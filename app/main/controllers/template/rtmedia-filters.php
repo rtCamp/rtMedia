@@ -667,11 +667,11 @@ function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_i
 }
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
 
-function rtmedia_comment_max_links_callback( $values, $option ) {
+function rtmedia_comment_max_links_callback( $values, $option = '' ) {
 	$new_values = $values;
 	if ( apply_filters( 'rtmedia_comment_max_links', true ) && 'comment_max_links' == $option ) {
-		$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files[0] ) ) {
+		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) ) {
 			if ( $new_values < 5 ) {
 				$new_values = 5;
 			}
