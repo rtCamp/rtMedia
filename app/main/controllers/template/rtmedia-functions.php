@@ -1449,14 +1449,6 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 
 	global $rtmedia_interaction, $rtmedia_query, $post, $rtmedia;
 
-	$allowed_types = array();
-
-	// get all allowed media type
-	foreach ( $rtmedia->allowed_types as $type ) {
-		$name = strtoupper( $type['name'] );
-		$allowed_types[] = constant( 'RTMEDIA_' . $name . '_SLUG' );
-	}
-
 	$wp_default_context = array( 'page', 'post' );
 
 	if ( isset( $_GET['context'] ) && in_array( $_GET['context'], $wp_default_context ) && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
@@ -1515,10 +1507,20 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		$link .= $rtmedia_query->media_query['album_id'] . '/';
 	}
 
-	if ( isset( $rtmedia_query->action_query->media_type ) ) {
+	$allowed_types = array();
+
+	// get all allowed media type
+	foreach ( $rtmedia->allowed_types as $type ) {
+		$name = strtoupper( $type['name'] );
+		$allowed_types[] = constant( 'RTMEDIA_' . $name . '_SLUG' );
+	}
+
+	$media_type = apply_filters( 'rtmedia_media_type', $rtmedia_query->action_query->media_type );
+
+	if ( isset( $media_type ) ) {
 		$media_type_array = apply_filters( 'rtmedia_media_type_support', $allowed_types );
-		if ( in_array( $rtmedia_query->action_query->media_type, $media_type_array, true ) ) {
-			$link .= $rtmedia_query->action_query->media_type . '/';
+		if ( in_array( $media_type, $media_type_array, true ) ) {
+			$link .= $media_type . '/';
 		}
 	}
 
