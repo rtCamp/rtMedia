@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.3\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-02-14 10:45:53+00:00\n"
+"POT-Creation-Date: 2017-02-17 06:59:26+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -329,7 +329,7 @@ msgid "rtMedia Privacy"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1428
-#: app/main/controllers/privacy/RTMediaPrivacy.php:426
+#: app/main/controllers/privacy/RTMediaPrivacy.php:428
 msgid "Privacy"
 msgstr ""
 
@@ -495,7 +495,7 @@ msgid "Enable likes for media"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:306
-msgid "You may want to disable like feature if you had enabled rating feature."
+msgid "Enabling this setting will add like feature for media."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:311
@@ -806,15 +806,13 @@ msgid "Enable media in comment"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1026
-msgid "Enable Media in Comment"
+msgid ""
+"This will allow users to upload media in comment section for originally "
+"uploaded media up to 1 level."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1031
+#: app/admin/RTMediaFormHandler.php:1031 app/admin/RTMediaFormHandler.php:1036
 msgid "Disable upload in comment media"
-msgstr ""
-
-#: app/admin/RTMediaFormHandler.php:1036
-msgid "Disable upload in Comment Media"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1042
@@ -2265,8 +2263,8 @@ msgstr ""
 #: app/main/RTMedia.php:1032
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:67
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
-#: app/main/controllers/template/rtmedia-functions.php:2013
-#: app/main/controllers/template/rtmedia-functions.php:2022
+#: app/main/controllers/template/rtmedia-functions.php:2012
+#: app/main/controllers/template/rtmedia-functions.php:2021
 #: templates/media/album-single-edit.php:78
 msgid "Delete"
 msgstr ""
@@ -2354,7 +2352,7 @@ msgstr ""
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:336
 #: app/main/controllers/media/RTMediaComment.php:172
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:100
-#: app/main/controllers/template/rtmedia-functions.php:2052
+#: app/main/controllers/template/rtmedia-functions.php:2051
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
@@ -2634,7 +2632,7 @@ msgid "Group Admin only"
 msgstr ""
 
 #: app/main/controllers/group/RTMediaGroupExtension.php:130
-#: app/main/controllers/privacy/RTMediaPrivacy.php:418
+#: app/main/controllers/privacy/RTMediaPrivacy.php:420
 #: templates/media/album-single-edit.php:55
 msgid "Save Changes"
 msgstr ""
@@ -2789,15 +2787,15 @@ msgstr ""
 msgid "%1$s added %4$d %3$s"
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:380
+#: app/main/controllers/privacy/RTMediaPrivacy.php:382
 msgid "No changes were made to your account."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:383
+#: app/main/controllers/privacy/RTMediaPrivacy.php:385
 msgid "Your default privacy settings saved successfully."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:407
+#: app/main/controllers/privacy/RTMediaPrivacy.php:409
 msgid "Default Privacy"
 msgstr ""
 
@@ -2936,7 +2934,7 @@ msgid "rtMedia Updates"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-ajax-actions.php:88
-#: app/main/controllers/template/rtmedia-functions.php:1952
+#: app/main/controllers/template/rtmedia-functions.php:1951
 msgid "Comment"
 msgstr ""
 
@@ -2960,29 +2958,29 @@ msgstr ""
 msgid "Delete Comment"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1584
+#: app/main/controllers/template/rtmedia-functions.php:1583
 msgid "Go to page no : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1589
+#: app/main/controllers/template/rtmedia-functions.php:1588
 msgid "Go"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1950
+#: app/main/controllers/template/rtmedia-functions.php:1949
 msgid "Type Comment..."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2013
-#: app/main/controllers/template/rtmedia-functions.php:2022
+#: app/main/controllers/template/rtmedia-functions.php:2012
+#: app/main/controllers/template/rtmedia-functions.php:2021
 msgid "Delete Media"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2268
+#: app/main/controllers/template/rtmedia-functions.php:2267
 msgid "Profile Albums"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2272
-#: app/main/controllers/template/rtmedia-functions.php:2317
+#: app/main/controllers/template/rtmedia-functions.php:2271
+#: app/main/controllers/template/rtmedia-functions.php:2316
 msgid "Group Albums"
 msgstr ""
 
@@ -2990,57 +2988,57 @@ msgstr ""
 msgid "Privacy : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2841
+#: app/main/controllers/template/rtmedia-functions.php:2842
 msgid "You like this"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2851
+#: app/main/controllers/template/rtmedia-functions.php:2852
 msgid "You and "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2870
+#: app/main/controllers/template/rtmedia-functions.php:2871
 msgid " person likes this"
 msgid_plural " people like this"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2975
+#: app/main/controllers/template/rtmedia-functions.php:2976
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2980
+#: app/main/controllers/template/rtmedia-functions.php:2981
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2985
+#: app/main/controllers/template/rtmedia-functions.php:2986
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2990
+#: app/main/controllers/template/rtmedia-functions.php:2991
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2995
+#: app/main/controllers/template/rtmedia-functions.php:2996
 msgid "Blocked temporarily"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3048
+#: app/main/controllers/template/rtmedia-functions.php:3049
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3062
+#: app/main/controllers/template/rtmedia-functions.php:3063
 msgid "1 second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3066
+#: app/main/controllers/template/rtmedia-functions.php:3067
 msgid "1 minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3070
+#: app/main/controllers/template/rtmedia-functions.php:3071
 msgid "1 hour"
 msgid_plural "%s hours"
 msgstr[0] ""
@@ -3052,7 +3050,7 @@ msgid "View Conversation"
 msgstr ""
 
 #: app/main/controllers/upload/RTMediaUploadView.php:78
-msgid "Privacy: "
+msgid "Privacy:"
 msgstr ""
 
 #: app/main/controllers/upload/RTMediaUploadView.php:85
@@ -3135,6 +3133,12 @@ msgstr ""
 msgid "Album List"
 msgstr ""
 
+#: templates/media/album-gallery.php:75
+#: templates/media/media-single-edit.php:63
+#: templates/media/media-single.php:165
+msgid "Sorry !! There's no media found for the request !!"
+msgstr ""
+
 #: templates/media/album-single-edit.php:14
 msgid "Edit Album : "
 msgstr ""
@@ -3192,6 +3196,10 @@ msgstr ""
 
 #: templates/media/media-gallery.php:16 templates/media/media-gallery.php:32
 msgid "Media Gallery"
+msgstr ""
+
+#: templates/media/media-gallery.php:83
+msgid "Oops !! There's no media found for the request !!"
 msgstr ""
 
 #: templates/media/media-single-edit.php:48

@@ -2496,7 +2496,7 @@ function rtmedia_edit_media_privacy_ui() {
 
 	if ( isset( $rtmedia_query->media['0']->privacy ) && '80' != $rtmedia_query->media['0']->privacy ) {
 		if ( $privacy && empty( $comment_media ) ) {
-			return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . esc_html__( 'Privacy : ', 'buddypress-media' ) . '</label>' . $privacy . '</div>';
+			return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . esc_html__( 'Privacy: ', 'buddypress-media' ) . '</label>' . $privacy . '</div>';
 		}
 	}
 
