@@ -2245,8 +2245,10 @@ function rtmedia_user_album_list( $get_all = false, $selected_album_id = false )
 	$model          = new RTMediaModel();
 	$global_option  = rtmedia_global_album_list( $selected_album_id );
 	$global_albums  = rtmedia_global_albums();
+
+	$user_id = apply_filters( 'rtmedia_album_by_user', get_current_user_id() );
 	$album_objects  = $model->get_media( array(
-		'media_author' => get_current_user_id(),
+		'media_author' => $user_id,
 		'media_type'   => 'album',
 	), false, 'context' );
 	$option_group   = '';
