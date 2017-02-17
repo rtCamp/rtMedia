@@ -1248,7 +1248,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 		if ( $i < $hide ) {
 			$class = 'hide';
 			if ( 0 == $i ) {
-				echo '<div class="rtmedia-like-info"><span id="rtmedia_show_all_comment"> ' . esc_html( 'Show all ' . $count . ' comments', 'rtmedia' ) . ' </span></div>';
+				echo '<div class="rtmedia-like-info"><span id="rtmedia_show_all_comment"> ' . sprintf( esc_html__( 'Show all %s comments', 'buddypress-media' ), esc_html( $count ) ) . ' </span></div>';
 			}
 		}
 	}
