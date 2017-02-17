@@ -1447,7 +1447,15 @@ function rtmedia_pagination_next_link() {
  */
 function rtmedia_pagination_page_link( $page_no = '' ) {
 
-	global $rtmedia_interaction, $rtmedia_query, $post;
+	global $rtmedia_interaction, $rtmedia_query, $post, $rtmedia;
+
+	$allowed_types = array();
+
+	// get all allowed media type
+	foreach ( $rtmedia->allowed_types as $type ) {
+		$name = strtoupper( $type['name'] );
+		$allowed_types[] = constant( 'RTMEDIA_' . $name . '_SLUG' );
+	}
 
 	$wp_default_context = array( 'page', 'post' );
 
@@ -1463,8 +1471,8 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	$is_shortcode_on_home = ( isset( $_GET['is_on_home'] ) && '1' === $_GET['is_on_home'] && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] && isset( $_GET['context_id'] ) && $_GET['context_id'] === get_option( 'page_on_front' ) ) ? true : false;
 
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'profile' === $rtmedia_interaction->context->type ) {
-		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->media_query['context_id'] ) ) {
-			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query['context_id'] ) );
+		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->query['context_id'] ) ) {
+			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->query['context_id'] ) );
 		} else {
 			if ( $is_shortcode_on_home ) {
 				$link .= $site_url;
@@ -1508,7 +1516,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	}
 
 	if ( isset( $rtmedia_query->action_query->media_type ) ) {
-		$media_type_array = apply_filters( 'rtmedia_media_type_support', array( 'photo', 'music', 'video', 'album' ) );
+		$media_type_array = apply_filters( 'rtmedia_media_type_support', $allowed_types );
 		if ( in_array( $rtmedia_query->action_query->media_type, $media_type_array, true ) ) {
 			$link .= $rtmedia_query->action_query->media_type . '/';
 		}
