@@ -307,11 +307,20 @@ class RTMedia {
 		max-height: <?php echo esc_attr( $this->options['defaultSizes_photo_medium_height'] ); ?>px;
 		overflow: hidden;
 		}
+
+		.rtmedia-comment-media-container .mejs-container.mejs-video,
 		.rtmedia-activity-container .mejs-container.mejs-video{
 		min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
 		min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
 		}
 		<?php
+		global $rtmedia;
+		if ( rtmedia_check_comment_media_allow() && ! rtmedia_check_comment_in_commented_media_allow() ) { ?>
+				#buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-comment-media-upload,#buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-container {
+				    display: none !important
+				}
+			<?php
+		}
 	}
 
 	function custom_style_for_gallery_image_size() {
@@ -535,6 +544,8 @@ class RTMedia {
 	public function init_site_options() {
 
 		$bp_media_options = rtmedia_get_site_option( 'bp_media_options' );
+
+
 
 		$defaults = array(
 			'general_enableAlbums'        => 1,
@@ -830,6 +841,10 @@ class RTMedia {
 		//API Classes
 		global $rtmediajsonapi;
 		$rtmediajsonapi = new RTMediaJsonApi();
+
+		if( function_exists( 'rtmedia_enable_comment_media_uplaod' ) ){
+			rtmedia_enable_comment_media_uplaod();
+		}
 
 		do_action( 'bp_media_init' ); // legacy For plugin using this actions
 		do_action( 'rtmedia_init' );
@@ -1131,6 +1146,74 @@ class RTMedia {
 			),
 		);
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_size_config', $media_size_config );
+
+
+		/* rtMedia fot comment media script localize*/
+		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
+		$url          = trailingslashit( $request_uri );
+		$rtmedia_slug = '/' . RTMEDIA_MEDIA_SLUG;
+		// check position of media slug from end of the URL
+		if ( strrpos( $url, $rtmedia_slug ) !== false ) {
+			// split the url upto the last occurance of media slug
+			$url_upload = substr( $url, 0, strrpos( $url, $rtmedia_slug ) );
+			$url        = trailingslashit( $url_upload ) . 'upload/';
+		} else {
+			$url = trailingslashit( $url ) . 'upload/';
+		}
+
+		$params = array(
+			'url'                 => $url,
+			'runtimes'            => 'html5,flash,html4',
+			'browse_button'       => 'rtmedia-comment-media-upload',
+			'container'           => 'rtmedia-comment-media-upload-container',
+			'filters'             => apply_filters( 'rtmedia_plupload_files_filter', array(
+				array(
+					'title'      => 'Media Files',
+					'extensions' => get_rtmedia_allowed_upload_type(),
+				),
+			) ),
+			'max_file_size'       => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
+			'multipart'           => true,
+			'urlstream_upload'    => true,
+			'flash_swf_url'       => includes_url( 'js/plupload/plupload.flash.swf' ),
+			'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
+			'file_data_name'      => 'rtmedia_file', // key passed to $_FILE.
+			'multi_selection'     => false,
+			'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
+				'redirect'             => 'no',
+				'action'               => 'wp_handle_upload',
+				'_wp_http_referer'     => $request_uri,
+				'mode'                 => 'file_upload',
+				'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ),
+			) ),
+			'max_file_size_msg'   => apply_filters( 'rtmedia_plupload_file_size_msg', min( array(
+				ini_get( 'upload_max_filesize' ),
+				ini_get( 'post_max_size' ),
+			) ) ),
+		);
+
+		$params = apply_filters( 'rtmedia_modify_upload_params', $params );
+
+
+		global $rtmedia;
+		$rtmedia_extns = array();
+		foreach ( $rtmedia->allowed_types as $allowed_types_key => $allowed_types_value ) {
+			$rtmedia_extns[ $allowed_types_key ] = $allowed_types_value['extn'];
+		}
+
+		$rtmedia_disable_media = "1";
+		/* if the  rtmedia option does have value pick from there*/
+		if( isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) ){
+			$rtmedia_disable_media = $rtmedia->options['rtmedia_disable_media_in_commented_media'];
+		}
+		wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media', $rtmedia_disable_media );
+
+		wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media_text', esc_html__( 'Adding media in Comments is not allowed', 'buddypress-media' ) );
+		
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_exteansions', $rtmedia_extns );
+		wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_comment', $params );
+		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( '/images/loading.gif' ) );
+
 
 	}
 

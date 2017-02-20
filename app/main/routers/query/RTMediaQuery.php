@@ -232,6 +232,17 @@ class RTMediaQuery {
 		$modifier_value = false;
 		$format         = '';
 		$pageno         = 1;
+
+		// Get page number for json response
+		if ( ! empty( $_REQUEST['json'] ) ) {
+			$pageno = ( isset( $_REQUEST['rtmedia_page'] ) && ! empty( $_REQUEST['rtmedia_page'] ) ) ? intval( $_REQUEST['rtmedia_page'] ) : 1;
+		}
+
+		// Get page number for none json response
+		if ( ! isset( $_REQUEST['json'] ) && empty( $_REQUEST['json'] ) ) {
+			$pageno = ( get_query_var( 'pg' ) ) ? get_query_var( 'pg' ) : 1;
+		}
+
 		$attributes     = '';
 
 		// The first part of the query /media/{*}/
@@ -502,6 +513,12 @@ class RTMediaQuery {
 					'RTMediaGalleryShortcode',
 					'rtmedia_query_where_filter',
 				), 10, 3 );
+
+				$remove_comment_media = apply_filters( 'rtmedia_query_where_filter_remove_comment_media', true, 'galleryshortcode' );
+				if ( isset( $remove_comment_media ) && ! empty( $remove_comment_media ) ) {
+					add_filter( 'rtmedia-model-where-query', array( 'RTMediaGalleryShortcode', 'rtmedia_query_where_filter_remove_comment_media' ), 11, 3 );
+				}
+
 				if ( isset( $this->query['context_id'] ) ) {
 					unset( $this->query['context_id'] );
 				}
