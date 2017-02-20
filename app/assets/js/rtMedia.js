@@ -66,15 +66,23 @@ function apply_rtMagnificPopup( selector ) {
 							settings.pluginPath = _wpmejsSettings.pluginPath;
 						}
 						var $single_meta_h = jQuery( ".rtmedia-container .rtmedia-single-meta" ).height();
+						var small_screen = false;
+						if( $( window ).width() < 760 ){
+							small_screen = true;
+						}
 						/* adding auto play button in the popup */
 						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).attr( 'autoplay', true );
+						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).attr( 'preload', 'auto' );
 
 						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).mediaelementplayer( {
 							// If the <video width> is not specified, this is the default
 							defaultVideoWidth: 480,
 							// If the <video height> is not specified, this is the default
 							defaultVideoHeight: 270,
+							// show control for small screen
+							alwaysShowControls: small_screen,
 							enableAutosize: true,
+							clickToPlayPause: true,preload="auto"
 							 // if set, overrides <video height>
     						videoHeight: -1,
 							success: function( mediaElement, domObject ) {
@@ -89,7 +97,7 @@ function apply_rtMagnificPopup( selector ) {
 									}
 			                    }, false);
 								// Call the play method
-								if( $( window ).width() < 760 ){
+								if( small_screen ){
 									window.addEventListener('touchstart', function videoStart() {
 									  mediaElement.play();
 									  // remove from the window and call the function we are removing
@@ -98,6 +106,9 @@ function apply_rtMagnificPopup( selector ) {
 								} else {
 									mediaElement.play();
 								}
+
+								console.log( mediaElement );
+								console.log( this );
 							}
 						} );
 						$( '.mfp-content .mejs-audio .mejs-controls' ).css( 'position', 'relative' );
