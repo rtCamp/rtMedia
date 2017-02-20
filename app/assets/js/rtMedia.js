@@ -79,6 +79,7 @@ function apply_rtMagnificPopup( selector ) {
 
 						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).mediaelementplayer( {
 							// If the <video width> is not specified, this is the default
+							hideVolumeOnTouchDevices: false,
 							defaultVideoWidth: 480,
 							features: ['playpause','progress','current','volume','fullscreen'],
 							// If the <video height> is not specified, this is the default
@@ -102,8 +103,15 @@ function apply_rtMagnificPopup( selector ) {
 			                    }, false);
 								// Call the play method
 								if( small_screen ){
-									jQuery( 'body' ).on('touchstart', mediaElement , function(e) {
+									jQuery( 'body' ).on('touchstart', '.mejs-overlay-button' , function(e) {
 										mediaElement.paused ? mediaElement.play() : mediaElement.pause();
+									});
+
+									jQuery( 'body' ).on('touchstart', mediaElement , function(e) {
+										var target = jQuery( e.target );
+										if ( e.target.nodeName == 'VIDEO' ) {
+											mediaElement.paused ? mediaElement.play() : mediaElement.pause();
+										}
 									});
 								} else {
 									mediaElement.play();
