@@ -77,7 +77,7 @@ function apply_rtMagnificPopup( selector ) {
 
 						// if it's mobile then add mute button to it
 						if( probablymobile ){
-							$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).attr( 'muted', false );
+							$( '.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).attr( 'muted', false );
 						}
 
 						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).mediaelementplayer( {
@@ -107,16 +107,9 @@ function apply_rtMagnificPopup( selector ) {
 			                    }, false);
 								// Call the play method
 								// check if it's mobile
-								if( probablymobile ){
+								if( probablymobile && mediaElement.hasClass( "wp-video-shortcode" ) ){
 									jQuery( 'body' ).on('touchstart', '.mejs-overlay-button' , function(e) {
 										mediaElement.paused ? mediaElement.play() : mediaElement.pause();
-									});
-
-									jQuery( 'body' ).on('touchstart', mediaElement , function(e) {
-										var target = jQuery( e.target );
-										if ( e.target.nodeName == 'VIDEO' ) {
-											mediaElement.paused ? mediaElement.play() : mediaElement.pause();
-										}
 									});
 								} else {
 									mediaElement.play();
