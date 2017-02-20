@@ -72,17 +72,21 @@ function apply_rtMagnificPopup( selector ) {
 						}
 						/* adding auto play button in the popup */
 						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).attr( 'autoplay', true );
-						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).attr( 'preload', 'auto' );
+
+						if( small_screen ){
+							$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).attr( 'muted', false );
+						}
 
 						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).mediaelementplayer( {
 							// If the <video width> is not specified, this is the default
 							defaultVideoWidth: 480,
+							features: ['playpause','progress','current','volume','fullscreen'],
 							// If the <video height> is not specified, this is the default
 							defaultVideoHeight: 270,
 							// show control for small screen
 							alwaysShowControls: small_screen,
 							enableAutosize: true,
-							clickToPlayPause: true,preload="auto"
+							clickToPlayPause: true,
 							 // if set, overrides <video height>
     						videoHeight: -1,
 							success: function( mediaElement, domObject ) {
@@ -98,17 +102,12 @@ function apply_rtMagnificPopup( selector ) {
 			                    }, false);
 								// Call the play method
 								if( small_screen ){
-									window.addEventListener('touchstart', function videoStart() {
-									  mediaElement.play();
-									  // remove from the window and call the function we are removing
-									  this.removeEventListener('touchstart', videoStart);
+									jQuery( 'body' ).on('touchstart', mediaElement , function(e) {
+										mediaElement.paused ? mediaElement.play() : mediaElement.pause();
 									});
 								} else {
 									mediaElement.play();
 								}
-
-								console.log( mediaElement );
-								console.log( this );
 							}
 						} );
 						$( '.mfp-content .mejs-audio .mejs-controls' ).css( 'position', 'relative' );
