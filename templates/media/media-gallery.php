@@ -33,8 +33,9 @@ $rand_id = rand( 0, 1000 );
 				}
 				?>
 			</h2>
-			<div id="rtm-media-options"
-			     class="rtm-media-options"><?php do_action( 'rtmedia_media_gallery_actions' ); ?></div>
+			<div id="rtm-media-options" class="rtm-media-options">
+				<?php do_action( 'rtmedia_media_gallery_actions' ); ?>
+			</div>
 		</div>
 
 		<?php do_action( 'rtmedia_gallery_after_title' ); ?>
@@ -83,7 +84,8 @@ $rand_id = rand( 0, 1000 );
 			apply_filters( 'rtmedia_no_media_found_message_filter', esc_html_e( 'Oops !! There\'s no media found for the request !!','buddypress-media' ) );
 			?>
 		</p>
-	<?php } ?>
+	<?php } // End if().
+	?>
 
 	<?php do_action( 'rtmedia_after_media_gallery' ); ?>
 
