@@ -1413,7 +1413,11 @@ function rtmedia_pagination_next_link() {
 			$post_id = ( isset( $rtmedia_query->media->media_id ) ? $rtmedia_query->media->media_id : $rtmedia_query->media[0]->media_id );
 			$post    = get_post( get_post_field( 'post_parent', $post_id ) );
 
-			$link .= $site_url . $post->post_name . '/';
+			if ( isset( $post->post_name ) ) {
+				$link .= $site_url . $post->post_name . '/';
+			} else {
+				$link .= $site_url;
+			}
 		}
 	}
 
