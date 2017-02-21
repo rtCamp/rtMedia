@@ -1507,7 +1507,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		$link .= $rtmedia_query->media_query['album_id'] . '/';
 	}
 
-	$allowed_types = array();
+	$allowed_types = array( 'album' );
 
 	// get all allowed media type
 	foreach ( $rtmedia->allowed_types as $type ) {
