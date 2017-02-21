@@ -692,3 +692,16 @@ function rtmedia_bp_activity_get_meta_callback( $retval, $activity_id, $meta_key
 	return $new_retval;
 }
 add_filter( 'bp_activity_get_meta', 'rtmedia_bp_activity_get_meta_callback', 10, 4 );
+
+
+// remove unwanted attr of sorting when rtmedia-sorting addon is not there
+if ( ! function_exists( 'rtmedia_gallery_shortcode_parameter_pre_filter_callback' ) ) {
+	function rtmedia_gallery_shortcode_parameter_pre_filter_callback( $attr ) {
+		$new_attr = $attr;
+		if ( ! class_exists( 'RTMediaSorting' ) && isset( $attr['attr'] ) && isset( $attr['attr']['sort_parameters'] ) ) {
+			unset( $new_attr['attr']['sort_parameters'] );
+		}
+		return $new_attr;
+	}
+}
+add_filter( 'rtmedia_gallery_shortcode_parameter_pre_filter', 'rtmedia_gallery_shortcode_parameter_pre_filter_callback', 10, 1 );
