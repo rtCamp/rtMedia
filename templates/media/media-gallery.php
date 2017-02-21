@@ -13,13 +13,18 @@ $rand_id = rand( 0, 1000 );
 	if ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) { // if gallery is displayed using gallery shortcode
 		?>
 		<div id="rtm-gallery-title-container" class="clearfix">
-			<h2 class="rtm-gallery-title"><?php esc_html_e( 'Media Gallery', 'buddypress-media' ); ?></h2>
+			<h2 class="rtm-gallery-title">
+				<?php esc_html_e( 'Media Gallery', 'buddypress-media' ); ?>
+			</h2>
+
+			<?php do_action( 'rtmedia_gallery_after_title' ); ?>
+
 			<div id="rtm-media-options" class="rtm-media-options">
 				<?php do_action( 'rtmedia_media_gallery_shortcode_actions' ); ?>
 			</div>
 		</div>
 
-		<?php do_action( 'rtmedia_gallery_after_title' ); ?>
+		<?php do_action( 'rtmedia_gallery_after_title_container' ); ?>
 
 	<?php } else {
 		?>
@@ -33,12 +38,15 @@ $rand_id = rand( 0, 1000 );
 				}
 				?>
 			</h2>
+
+			<?php do_action( 'rtmedia_gallery_after_title' ); ?>
+
 			<div id="rtm-media-options" class="rtm-media-options">
 				<?php do_action( 'rtmedia_media_gallery_actions' ); ?>
 			</div>
 		</div>
 
-		<?php do_action( 'rtmedia_gallery_after_title' ); ?>
+		<?php do_action( 'rtmedia_gallery_after_title_container' ); ?>
 
 		<div id="rtm-media-gallery-uploader" class="rtm-media-gallery-uploader">
 			<?php rtmedia_uploader( array( 'is_up_shortcode' => false ) ); ?>
