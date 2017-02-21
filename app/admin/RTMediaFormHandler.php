@@ -1094,6 +1094,17 @@ class RTMediaFormHandler {
 				),
 				'group'	=> 50,
 			),
+			'general_enableAlbums_description'            => array(
+				'title'		=> esc_html__( 'Show album description', 'buddypress-media' ),
+				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'		=> array(
+					'id'	=> 'rtmedia-album-description-enable',
+					'key'	=> 'general_enableAlbums_description',
+					'value'	=> $options['general_enableAlbums_description'],
+					'desc'	=> esc_html__( 'This will show \'album\' description on album gallery page.', 'buddypress-media' ),
+				),
+				'group'	=> 50,
+			),
 		);
 
 		return $render;

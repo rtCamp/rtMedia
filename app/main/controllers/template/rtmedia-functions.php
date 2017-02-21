@@ -3841,3 +3841,18 @@ function rtmedia_add_comments_extra_callback() {
 		echo rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia', $context );
 	}
 }
+
+/**
+ * check if the show desc in album gallery setting is set or not
+ * @return boolean if the general is enable then return true or else false
+ */
+if ( ! function_exists( 'rtmedia_get_album_description_setting' ) ) {
+	function rtmedia_get_album_description_setting() {
+		$return = false;
+		global $rtmedia;
+		if ( isset( $rtmedia->options ) && isset( $rtmedia->options['general_enableAlbums_description'] ) && 1 == intval( $rtmedia->options['general_enableAlbums_description'] ) ) {
+			$return = true;
+		}
+		return $return;
+	}
+}
