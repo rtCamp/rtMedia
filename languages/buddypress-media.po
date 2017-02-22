@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.3\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-02-22 06:27:55+00:00\n"
+"POT-Creation-Date: 2017-02-22 11:10:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -868,7 +868,7 @@ msgid "Show album description"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1104
-msgid "This will show 'album' description on album gallery page."
+msgid "This will show description of an album under album gallery page."
 msgstr ""
 
 #: app/admin/templates/tmpl-rtm-album-favourites-importer.php:4
