@@ -1209,11 +1209,10 @@ class RTMedia {
 		wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media', $rtmedia_disable_media );
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media_text', esc_html__( 'Adding media in Comments is not allowed', 'buddypress-media' ) );
-		
+
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_exteansions', $rtmedia_extns );
 		wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_comment', $params );
 		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( '/images/loading.gif' ) );
-
 
 	}
 
