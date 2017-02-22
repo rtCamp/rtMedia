@@ -1104,6 +1104,7 @@ class RTMediaFormHandler {
 					'desc'	=> esc_html__( 'This will show \'album\' description on album gallery page.', 'buddypress-media' ),
 				),
 				'group'	=> 50,
+				'depends' => 'general_enableAlbums',
 			),
 		);
 
