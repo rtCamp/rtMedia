@@ -3881,7 +3881,7 @@ if ( ! function_exists( 'rtmedia_get_album_description_setting' ) ) {
 if ( ! function_exists( 'rtmedia_show_title_media_gallery' ) ) {
 	function rtmedia_show_title_media_gallery() {
 		$media_type_allow = apply_filters( 'rtmedia_show_title_media_gallery', array( 'video', 'music', 'document', 'other' ) );
-		if( ! is_array( $media_type_allow ) ) {
+		if ( ! is_array( $media_type_allow ) ) {
 			$media_type_allow = array();
 		}
 		return $media_type_allow;

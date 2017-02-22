@@ -1217,7 +1217,6 @@ class RTMedia {
 		$media_type_allow = rtmedia_show_title_media_gallery();
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_show_title', $media_type_allow );
 
-
 	}
 
 	function set_bp_bar() {
