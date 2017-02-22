@@ -1507,8 +1507,14 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			$link .= RTMEDIA_MEDIA_SLUG . '/';
 	}
 
+	// For albums tab
 	if ( isset( $rtmedia_query->media_query['album_id'] ) && intval( $rtmedia_query->media_query['album_id'] ) > 0 ) {
 		$link .= $rtmedia_query->media_query['album_id'] . '/';
+	}
+
+	// For those pages of which es id is set into action query
+	if ( isset( $rtmedia_query->action_query->id ) && intval( $rtmedia_query->action_query->id ) > 0 ) {
+		$link .= $rtmedia_query->action_query->id . '/';
 	}
 
 	$allowed_types = array( 'album' );
@@ -1525,7 +1531,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		 * Filters media types.
 		 *
 		 * @param array Array of all media types.
-		*/
+		 */
 		$media_type = apply_filters( 'rtmedia_media_type', $rtmedia_query->action_query->media_type );
 
 		if ( isset( $media_type ) ) {
@@ -1534,7 +1540,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			 * Filters allowed media types.
 			 *
 			 * @param array Array of all allowed media types.
-			*/
+			 */
 			$media_type_array = apply_filters( 'rtmedia_media_type_support', $allowed_types );
 			if ( in_array( $media_type, $media_type_array, true ) ) {
 				$link .= $media_type . '/';
