@@ -1214,9 +1214,6 @@ class RTMedia {
 		wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_comment', $params );
 		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( '/images/loading.gif' ) );
 
-		$media_type_allow = rtmedia_show_title_media_gallery();
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_show_title', $media_type_allow );
-
 	}
 
 	function set_bp_bar() {

@@ -3878,12 +3878,45 @@ if ( ! function_exists( 'rtmedia_get_album_description_setting' ) ) {
 }
 
 
-if ( ! function_exists( 'rtmedia_show_title_media_gallery' ) ) {
-	function rtmedia_show_title_media_gallery() {
-		$media_type_allow = apply_filters( 'rtmedia_show_title_media_gallery', array( 'video', 'music', 'document', 'other' ) );
+if ( ! function_exists( 'rtmedia_hide_title_media_gallery' ) ) {
+	function rtmedia_hide_title_media_gallery( $media_type = false ) {
+		$return = 'hide';
+		$media_type_allow = array();
+		$media_type_allow = apply_filters( 'rtmedia_show_title_media_gallery', $media_type_allow );
 		if ( ! is_array( $media_type_allow ) ) {
 			$media_type_allow = array();
 		}
-		return $media_type_allow;
+
+		if ( is_array( $media_type_allow ) && ! empty( $media_type ) && in_array( $media_type, $media_type_allow ) ) {
+			$return = 'show';
+		}
+		return $return;
 	}
 }
+
+
+/**
+ * echo the title of the media
+ *
+ * @global      array       $rtmedia_backbone
+ *
+ * @return      string
+ */
+if ( ! function_exists( 'rtmedia_show_title' ) ) {
+	function rtmedia_show_title() {
+
+		global $rtmedia_backbone;
+
+		if ( $rtmedia_backbone['backbone'] ) {
+			echo '<%= media_class %>';
+		} else {
+			global $rtmedia_media;
+			$media_class = 'hide';
+			if ( isset( $rtmedia_media->media_type ) && function_exists( 'rtmedia_hide_title_media_gallery' ) ) {
+				$media_class = rtmedia_hide_title_media_gallery( $rtmedia_media->media_type );
+			}
+			return $media_class;
+		}
+	}
+}
+

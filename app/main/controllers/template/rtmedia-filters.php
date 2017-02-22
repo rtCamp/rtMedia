@@ -706,17 +706,3 @@ if ( ! function_exists( 'rtmedia_gallery_shortcode_parameter_pre_filter_callback
 }
 add_filter( 'rtmedia_gallery_shortcode_parameter_pre_filter', 'rtmedia_gallery_shortcode_parameter_pre_filter_callback', 10, 1 );
 
-
-if ( ! function_exists( 'rtmedia_media_gallery_show_media_title_callback' ) ) {
-	function rtmedia_media_gallery_show_media_title_callback( $show ) {
-		$return = $show;
-		global $rtmedia_media;
-		$media_type_allow = rtmedia_show_title_media_gallery();
-		if ( isset( $rtmedia_media->media_type ) && in_array( $rtmedia_media->media_type , $media_type_allow ) ) {
-			$return = false;
-		}
-		return $return;
-	}
-}
-remove_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_media_gallery_show_media_title_callback', 11 );
-add_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_media_gallery_show_media_title_callback', 11, 1 );
