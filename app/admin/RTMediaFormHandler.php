@@ -1101,7 +1101,7 @@ class RTMediaFormHandler {
 					'id'	=> 'rtmedia-album-description-enable',
 					'key'	=> 'general_enableAlbums_description',
 					'value'	=> $options['general_enableAlbums_description'],
-					'desc'	=> esc_html__( 'This will show \'album\' description on album gallery page.', 'buddypress-media' ),
+					'desc'	=> esc_html__( 'This will show description of an album under album gallery page.', 'buddypress-media' ),
 				),
 				'group'	=> 50,
 				'depends' => 'general_enableAlbums',

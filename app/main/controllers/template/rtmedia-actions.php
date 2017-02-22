@@ -964,7 +964,7 @@ if ( ! function_exists( 'rtmedia_gallery_after_title_callback' ) ) {
 		) {
 			$description = rtmedia_get_media_description( $rtmedia_query->media_query['album_id'] );
 			if ( ! empty( $description ) ) {
-				echo '<p class="gallery-description">' . $description . '</p>';
+				echo '<div class="gallery-description gallery-album-description">' . $description . '</div>';
 			}
 		}
 	}
