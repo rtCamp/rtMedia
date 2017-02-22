@@ -66,15 +66,32 @@ function apply_rtMagnificPopup( selector ) {
 							settings.pluginPath = _wpmejsSettings.pluginPath;
 						}
 						var $single_meta_h = jQuery( ".rtmedia-container .rtmedia-single-meta" ).height();
+
+						var probablymobile = false;
+						// check if it's is an mobile or not
+						if( typeof mfp != 'undefined' && typeof mfp.probablyMobile != 'undefined' && mfp.probablyMobile == true ){
+							probablymobile = true;
+						}
 						/* adding auto play button in the popup */
 						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).attr( 'autoplay', true );
+
+						// if it's mobile then add mute button to it
+						if( probablymobile ){
+							$( '.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).attr( 'muted', false );
+						}
 
 						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).mediaelementplayer( {
 							// If the <video width> is not specified, this is the default
 							defaultVideoWidth: 480,
+							// always show the volume button
+							hideVolumeOnTouchDevices: false,
+							features: ['playpause','progress','current','volume','fullscreen'],
 							// If the <video height> is not specified, this is the default
 							defaultVideoHeight: 270,
+							// always show control for mobile
+							alwaysShowControls: probablymobile,
 							enableAutosize: true,
+							clickToPlayPause: true,
 							 // if set, overrides <video height>
     						videoHeight: -1,
 							success: function( mediaElement, domObject ) {
@@ -89,11 +106,10 @@ function apply_rtMagnificPopup( selector ) {
 									}
 			                    }, false);
 								// Call the play method
-								if( $( window ).width() < 760 ){
-									window.addEventListener('touchstart', function videoStart() {
-									  mediaElement.play();
-									  // remove from the window and call the function we are removing
-									  this.removeEventListener('touchstart', videoStart);
+								// check if it's mobile
+								if( probablymobile && mediaElement.hasClass( "wp-video-shortcode" ) ){
+									jQuery( 'body' ).on('touchstart', '.mejs-overlay-button' , function(e) {
+										mediaElement.paused ? mediaElement.play() : mediaElement.pause();
 									});
 								} else {
 									mediaElement.play();

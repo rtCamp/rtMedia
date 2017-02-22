@@ -60,10 +60,10 @@
 		?>
 		<p class="rtmedia-no-media-found">
 			<?php
-			esc_html_e( apply_filters( 'rtmedia_no_media_found_message_filter', 'Sorry !! There\'s no media found for the request !!' ), 'buddypress-media' );
+			apply_filters( 'rtmedia_no_media_found_message_filter', esc_html_e( 'Sorry !! There\'s no media found for the request !!','buddypress-media'  ) );
 			?>
 		</p>
 		<?php
-	endif;
+	endif; // End if().
 	?>
 </div>

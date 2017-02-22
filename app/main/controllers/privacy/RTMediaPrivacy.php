@@ -66,7 +66,9 @@ class RTMediaPrivacy {
 			}
 
 			//todo strict standard error
-			self::select_privacy_ui( true, 'rtm-ac-privacy-' . $activities_template->activity->id, array( 'rtm-activity-privacy-opt' ), $selected );
+			if ( isset( $activities_template->activity->privacy ) && $activities_template->activity->privacy != '80' ) {
+				self::select_privacy_ui( true, 'rtm-ac-privacy-' . $activities_template->activity->id, array( 'rtm-activity-privacy-opt' ), $selected );
+			}
 		}
 	}
 
@@ -370,7 +372,7 @@ class RTMediaPrivacy {
 		$default_privacy = filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING );
 		$nonce           = filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING );
 
-		if ( NULL !== $default_privacy ) {
+		if ( null !== $default_privacy ) {
 			$status = false;
 			if ( wp_verify_nonce( $nonce, 'rtmedia_member_settings_privacy' ) ) {
 				//todo user attribute

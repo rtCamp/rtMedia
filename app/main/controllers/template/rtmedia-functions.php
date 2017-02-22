@@ -1248,7 +1248,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 		if ( $i < $hide ) {
 			$class = 'hide';
 			if ( 0 == $i ) {
-				echo '<div class="rtmedia-like-info"><span id="rtmedia_show_all_comment"> ' . esc_html( 'Show all ' . $count . ' comments', 'rtmedia' ) . ' </span></div>';
+				echo '<div class="rtmedia-like-info"><span id="rtmedia_show_all_comment"> ' . sprintf( esc_html__( 'Show all %s comments', 'buddypress-media' ), esc_html( $count ) ) . ' </span></div>';
 			}
 		}
 	}
@@ -1360,7 +1360,7 @@ function rtmedia_pagination_prev_link() {
 	$link .= RTMEDIA_MEDIA_SLUG . '/';
 
 	if ( isset( $rtmedia_query->action_query->media_type ) ) {
-		$media_type_array = array( 'photo', 'music', 'video', 'album', 'playlist' );
+		$media_type_array = apply_filters( 'rtmedia_media_type_support', array( 'photo', 'music', 'video', 'album' ) );
 
 		if ( in_array( $rtmedia_query->action_query->media_type, $media_type_array, true ) ) {
 			$link .= $rtmedia_query->action_query->media_type . '/';
@@ -1413,7 +1413,11 @@ function rtmedia_pagination_next_link() {
 			$post_id = ( isset( $rtmedia_query->media->media_id ) ? $rtmedia_query->media->media_id : $rtmedia_query->media[0]->media_id );
 			$post    = get_post( get_post_field( 'post_parent', $post_id ) );
 
-			$link .= $site_url . $post->post_name . '/';
+			if ( isset( $post->post_name ) ) {
+				$link .= $site_url . $post->post_name . '/';
+			} else {
+				$link .= $site_url;
+			}
 		}
 	}
 
@@ -1424,7 +1428,7 @@ function rtmedia_pagination_next_link() {
 	}
 
 	if ( isset( $rtmedia_query->action_query->media_type ) ) {
-		$media_type_array = array( 'photo', 'music', 'video', 'album', 'playlist' );
+		$media_type_array = apply_filters( 'rtmedia_media_type_support', array( 'photo', 'music', 'video', 'album' ) );
 
 		if ( in_array( $rtmedia_query->action_query->media_type, $media_type_array, true ) ) {
 			$link .= $rtmedia_query->action_query->media_type . '/';
@@ -1447,7 +1451,7 @@ function rtmedia_pagination_next_link() {
  */
 function rtmedia_pagination_page_link( $page_no = '' ) {
 
-	global $rtmedia_interaction, $rtmedia_query, $post;
+	global $rtmedia_interaction, $rtmedia_query, $post, $rtmedia;
 
 	$wp_default_context = array( 'page', 'post' );
 
@@ -1463,8 +1467,8 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	$is_shortcode_on_home = ( isset( $_GET['is_on_home'] ) && '1' === $_GET['is_on_home'] && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] && isset( $_GET['context_id'] ) && $_GET['context_id'] === get_option( 'page_on_front' ) ) ? true : false;
 
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'profile' === $rtmedia_interaction->context->type ) {
-		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->media_query['context_id'] ) ) {
-			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query['context_id'] ) );
+		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->query['context_id'] ) ) {
+			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->query['context_id'] ) );
 		} else {
 			if ( $is_shortcode_on_home ) {
 				$link .= $site_url;
@@ -1503,16 +1507,46 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 			$link .= RTMEDIA_MEDIA_SLUG . '/';
 	}
 
+	// For albums tab
 	if ( isset( $rtmedia_query->media_query['album_id'] ) && intval( $rtmedia_query->media_query['album_id'] ) > 0 ) {
 		$link .= $rtmedia_query->media_query['album_id'] . '/';
 	}
 
-	if ( isset( $rtmedia_query->action_query->media_type ) ) {
-		$media_type_array = array( 'photo', 'music', 'video', 'album', 'playlist' );
+	// For those pages of which es id is set into action query
+	if ( isset( $rtmedia_query->action_query->id ) && intval( $rtmedia_query->action_query->id ) > 0 ) {
+		$link .= $rtmedia_query->action_query->id . '/';
+	}
 
-		if ( in_array( $rtmedia_query->action_query->media_type, $media_type_array, true ) ) {
-			$link .= $rtmedia_query->action_query->media_type . '/';
+	$allowed_types = array( 'album' );
+
+	// get all allowed media type
+	foreach ( $rtmedia->allowed_types as $type ) {
+		$name = strtoupper( $type['name'] );
+		$allowed_types[] = constant( 'RTMEDIA_' . $name . '_SLUG' );
+	}
+
+	if ( isset( $rtmedia_query->action_query->media_type ) ) {
+
+		/**
+		 * Filters media types.
+		 *
+		 * @param array Array of all media types.
+		 */
+		$media_type = apply_filters( 'rtmedia_media_type', $rtmedia_query->action_query->media_type );
+
+		if ( isset( $media_type ) ) {
+
+			/**
+			 * Filters allowed media types.
+			 *
+			 * @param array Array of all allowed media types.
+			 */
+			$media_type_array = apply_filters( 'rtmedia_media_type_support', $allowed_types );
+			if ( in_array( $media_type, $media_type_array, true ) ) {
+				$link .= $media_type . '/';
+			}
 		}
+
 	}
 
 	return apply_filters( 'rtmedia_pagination_page_link', $link . $page_url, $link, $page_url );
@@ -2245,8 +2279,10 @@ function rtmedia_user_album_list( $get_all = false, $selected_album_id = false )
 	$model          = new RTMediaModel();
 	$global_option  = rtmedia_global_album_list( $selected_album_id );
 	$global_albums  = rtmedia_global_albums();
+
+	$user_id = apply_filters( 'rtmedia_album_by_user', get_current_user_id() );
 	$album_objects  = $model->get_media( array(
-		'media_author' => get_current_user_id(),
+		'media_author' => $user_id,
 		'media_type'   => 'album',
 	), false, 'context' );
 	$option_group   = '';
@@ -2487,10 +2523,13 @@ function rtmedia_edit_media_privacy_ui() {
 	$privacymodel = new RTMediaPrivacy( false );
 	$privacy      = $privacymodel->select_privacy_ui( $echo = false );
 
-	if ( $privacy  && empty( $comment_media ) ) {
-		return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . esc_html__( 'Privacy : ', 'buddypress-media' ) . '</label>' . $privacy . '</div>';
+	if ( isset( $rtmedia_query->media ) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media['0'] ) ) {
+		if ( isset( $rtmedia_query->media['0']->privacy ) && $rtmedia_query->media['0']->privacy != '80' ) {
+			if ( $privacy  && empty( $comment_media ) ) {
+				return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . esc_html__( 'Privacy : ', 'buddypress-media' ) . '</label>' . $privacy . '</div>';
+			}
+		}
 	}
-
 }
 
 /**
@@ -2824,12 +2863,12 @@ function show_rtmedia_like_counts() {
  *
  * @return      string  HTML
  */
-if( ! function_exists( 'rtmedia_who_like_html' ) ){
-	function rtmedia_who_like_html( $like_count, $user_like_it ){
+if ( ! function_exists( 'rtmedia_who_like_html' ) ) {
+	function rtmedia_who_like_html( $like_count, $user_like_it ) {
 		$like_count = ( $like_count ) ? $like_count : false;
 		$user_like_it = ( $user_like_it ) ? true : false;
 		$like_count_new = $like_count;
-		$html = "";
+		$html = '';
 		if ( $like_count == 1 && $user_like_it ) {
 			/**
 			 * rtmedia you like text
@@ -2838,7 +2877,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 			 * @param int $user_like_it User Like it or Not
 			 * @return html TEXT to  display
 			*/
-			$html =  apply_filters( 'rtmedia_like_html_you_only_like', esc_html__( 'You like this', 'buddypress-media' ), $like_count, $user_like_it );
+			$html = apply_filters( 'rtmedia_like_html_you_only_like', esc_html__( 'You like this', 'buddypress-media' ), $like_count, $user_like_it );
 		} elseif ( $like_count ) {
 			if ( $like_count > 1 && $user_like_it ) {
 				/**
@@ -2848,7 +2887,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 				 * @param int $user_like_it User Like it or Not
 				 * @return html TEXT to  display
 				*/
-				$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html__( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
+				$html .= apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html__( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
 				$like_count_new--;
 			}
 
@@ -2858,7 +2897,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 			 * @param int $user_like_it User Like it or Not
 			 * @return INT Count to  display
 			*/
-			$html .=  apply_filters( 'rtmedia_like_html_you_and_more_like', $like_count, $user_like_it );
+			$html .= apply_filters( 'rtmedia_like_html_you_and_more_like', $like_count, $user_like_it );
 
 			/**
 			 * rtmedia person or people likes it
@@ -2867,7 +2906,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 			 * @param int $user_like_it User Like it or Not
 			 * @return html TEXT to  display
 			*/
-			$html .=  apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count_new, 'buddypress-media' ) ,$like_count, $user_like_it );
+			$html .= apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count_new, 'buddypress-media' ) ,$like_count, $user_like_it );
 		}
 
 		/**
@@ -2877,7 +2916,7 @@ if( ! function_exists( 'rtmedia_who_like_html' ) ){
 		 * @param int $user_like_it User Like it or Not
 		 * @return html TEXT to  display
 		*/
-		$html =  apply_filters( 'rtmedia_who_like_html', $html ,$like_count, $user_like_it );
+		$html = apply_filters( 'rtmedia_who_like_html', $html ,$like_count, $user_like_it );
 		return $html;
 	}
 }
@@ -3586,7 +3625,6 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 		return false;
 	}
 
-
 	$license 	= $addon['args']['license_key'];
 
 	$addon_name = $addon['name'];
@@ -3829,3 +3867,62 @@ function rtmedia_add_comments_extra_callback() {
 		echo rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia', $context );
 	}
 }
+
+/**
+ * check if the show desc in album gallery setting is set or not
+ * @return boolean if the general is enable then return true or else false
+ */
+if ( ! function_exists( 'rtmedia_get_album_description_setting' ) ) {
+	function rtmedia_get_album_description_setting() {
+		$return = false;
+		global $rtmedia;
+		if ( isset( $rtmedia->options ) && isset( $rtmedia->options['general_enableAlbums_description'] ) && 1 == intval( $rtmedia->options['general_enableAlbums_description'] ) ) {
+			$return = true;
+		}
+		return $return;
+	}
+}
+
+
+if ( ! function_exists( 'rtmedia_hide_title_media_gallery' ) ) {
+	function rtmedia_hide_title_media_gallery( $media_type = false ) {
+		$return = 'hide';
+		$media_type_allow = array();
+		$media_type_allow = apply_filters( 'rtmedia_show_title_media_gallery', $media_type_allow );
+		if ( ! is_array( $media_type_allow ) ) {
+			$media_type_allow = array();
+		}
+
+		if ( is_array( $media_type_allow ) && ! empty( $media_type ) && in_array( $media_type, $media_type_allow ) ) {
+			$return = 'show';
+		}
+		return $return;
+	}
+}
+
+
+/**
+ * echo the title of the media
+ *
+ * @global      array       $rtmedia_backbone
+ *
+ * @return      string
+ */
+if ( ! function_exists( 'rtmedia_show_title' ) ) {
+	function rtmedia_show_title() {
+
+		global $rtmedia_backbone;
+
+		if ( $rtmedia_backbone['backbone'] ) {
+			echo '<%= media_class %>';
+		} else {
+			global $rtmedia_media;
+			$media_class = 'hide';
+			if ( isset( $rtmedia_media->media_type ) && function_exists( 'rtmedia_hide_title_media_gallery' ) ) {
+				$media_class = rtmedia_hide_title_media_gallery( $rtmedia_media->media_type );
+			}
+			return $media_class;
+		}
+	}
+}
+

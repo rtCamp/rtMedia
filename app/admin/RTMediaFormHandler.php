@@ -303,7 +303,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_enableLikes',
 					'value' => $options['general_enableLikes'],
-					'desc' => __( 'You may want to disable like feature if you had enabled rating feature.', 'buddypress-media' ),
+					'desc' => __( 'Enabling this setting will add like feature for media.', 'buddypress-media' ),
 				),
 				'group' => '11',
 			),
@@ -1018,22 +1018,22 @@ class RTMediaFormHandler {
 				'group'    => 10,
 			),
 			'buddypress_enableOnComment'      => array(
-				'title'		=> esc_html__( 'Allow upload to Comment', 'buddypress-media' ),
+				'title'		=> esc_html__( 'Enable media in comment', 'buddypress-media' ),
 				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'		=> array(
 					'key'	=> 'buddypress_enableOnComment',
 					'value'	=> $options['buddypress_enableOnComment'],
-					'desc'	=> esc_html__( 'Enable Media in Comment', 'buddypress-media' ),
+					'desc'	=> esc_html__( 'This will allow users to upload media in comment section for originally uploaded media up to 1 level.', 'buddypress-media' ),
 				),
 				'group'    => 660,
 			),
 			'rtmedia_disable_media_in_commented_media'      => array(
-				'title'		=> esc_html__( 'Disable upload to Comment Media', 'buddypress-media' ),
+				'title'		=> esc_html__( 'Disable upload in comment media', 'buddypress-media' ),
 				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'		=> array(
 					'key'	=> 'rtmedia_disable_media_in_commented_media',
 					'value'	=> $options['rtmedia_disable_media_in_commented_media'],
-					'desc'	=> esc_html__( 'Enable Media in Comment', 'buddypress-media' ),
+					'desc'	=> esc_html__( 'Disable upload in comment media', 'buddypress-media' ),
 				),
 				'group'    => 660,
 				'depends'       => 'buddypress_enableOnComment',
@@ -1093,6 +1093,18 @@ class RTMediaFormHandler {
 					'desc'	=> esc_html__( 'This will add \'album\' tab to BuddyPress profile and group depending on the ^above^ settings.', 'buddypress-media' ),
 				),
 				'group'	=> 50,
+			),
+			'general_enableAlbums_description'            => array(
+				'title'		=> esc_html__( 'Show album description', 'buddypress-media' ),
+				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'		=> array(
+					'id'	=> 'rtmedia-album-description-enable',
+					'key'	=> 'general_enableAlbums_description',
+					'value'	=> $options['general_enableAlbums_description'],
+					'desc'	=> esc_html__( 'This will show description of an album under album gallery page.', 'buddypress-media' ),
+				),
+				'group'	=> 50,
+				'depends' => 'general_enableAlbums',
 			),
 		);
 
