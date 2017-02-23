@@ -948,3 +948,25 @@ function rtmedia_after_media_callback() {
 	}
 }
 add_action( 'rtmedia_after_media', 'rtmedia_after_media_callback', 10 );
+
+
+if ( ! function_exists( 'rtmedia_gallery_after_title_callback' ) ) {
+	function rtmedia_gallery_after_title_callback() {
+		// show description in album gallery page
+		global $rtmedia_query;
+		// check if it's an album gallery page and album id is not empty
+		if (
+			isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['media_type'] ) && 'album' == $rtmedia_query->query['media_type']
+			&&
+			isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query['album_id'] ) && ! empty( $rtmedia_query->media_query['album_id'] )
+			&&
+			function_exists( 'rtmedia_get_album_description_setting' ) && rtmedia_get_album_description_setting()
+		) {
+			$description = rtmedia_get_media_description( $rtmedia_query->media_query['album_id'] );
+			if ( ! empty( $description ) ) {
+				echo '<div class="gallery-description gallery-album-description">' . $description . '</div>';
+			}
+		}
+	}
+}
+add_action( 'rtmedia_gallery_after_title', 'rtmedia_gallery_after_title_callback', 11, 1 );

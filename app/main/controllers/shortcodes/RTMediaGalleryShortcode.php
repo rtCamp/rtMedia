@@ -149,6 +149,9 @@ class RTMediaGalleryShortcode {
 			}
 
 			$attr = array( 'name' => 'gallery', 'attr' => $attr );
+
+			$attr = apply_filters( 'rtmedia_gallery_shortcode_parameter_pre_filter', $attr );
+
 			global $post, $rtmedia_shortcode_attr;
 			if ( isset( $attr ) && isset( $attr['attr'] ) ) {
 				if ( ! is_array( $attr['attr'] ) ) {
