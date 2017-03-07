@@ -106,6 +106,7 @@ function apply_rtMagnificPopup( selector ) {
 									}
 			                    }, false);
 								// Call the play method
+
 								// check if it's mobile
 								if( probablymobile && mediaElement.hasClass( "wp-video-shortcode" ) ){
 									jQuery( 'body' ).on('touchstart', '.mejs-overlay-button' , function(e) {
