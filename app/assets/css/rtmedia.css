@@ -2492,8 +2492,6 @@ body div.bp_members.bp_member .entry-content {
 .rtm-media-options {
   line-height: 1.4;
   margin-bottom: 10px;
-  overflow: hidden;
-  height: auto;
 }
 .rtm-media-options > div {
   display: inline-block;
