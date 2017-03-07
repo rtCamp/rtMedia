@@ -21,7 +21,7 @@ if ( isset( $is_edit_allowed[0] ) ) {
 	$rtmedia_backbone['is_edit_allowed'] = $is_edit_allowed[0];
 }
 ?>
-<li class="rtmedia-list-item">
+<li class="rtmedia-list-item" id="<?php echo rtmedia_id(); ?>">
 	<a href="<?php rtmedia_permalink(); ?>" title="<?php echo esc_attr( rtmedia_title() ); ?>">
 		<div class="rtmedia-item-thumbnail">
 			<img src="<?php rtmedia_image( 'rt_media_thumbnail' ); ?>" alt="<?php echo esc_attr( rtmedia_title() ); ?>">

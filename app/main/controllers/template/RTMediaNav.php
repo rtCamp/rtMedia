@@ -6,7 +6,16 @@ class RTMediaNav {
 		if ( false === $action ) {
 			return;
 		}
-		add_action( 'admin_bar_menu', array( $this, 'admin_nav' ), 99 );
+
+		/**
+		 * Allow users/plugins to reorder/change the position of the 'Media' menu
+		 * in admin action bar
+		 *
+		 * @param int 99
+		 */
+		$order = apply_filters( 'rtmedia_media_admin_bar_menu', 99 );
+
+		add_action( 'admin_bar_menu', array( $this, 'admin_nav' ), $order );
 
 		if ( class_exists( 'BuddyPress' ) ) {
 			add_action( 'bp_init', array( $this, 'custom_media_nav_tab' ), 10, 1 );

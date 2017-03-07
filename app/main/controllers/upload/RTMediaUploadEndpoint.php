@@ -64,8 +64,106 @@ class RTMediaUploadEndpoint {
 						$this->upload['privacy'] = '0';
 					}
 				}
+
+				$comment_media = false;
+				// if media is add in from the comment media section
+				if ( isset( $this->upload['comment_media_activity_id'] ) && ! empty( $this->upload['comment_media_activity_id'] ) ) {
+					// if group is public, then set media privacy as 0
+					global $rtmedia;
+					$privacy = '0';
+					if ( isset( $rtmedia->options['privacy_enabled'] ) && isset( $rtmedia->options['privacy_default'] ) ) {
+						$privacy = $rtmedia->options['privacy_default'];
+					}
+
+					if ( class_exists( 'RTMediaAlbum' ) ) {
+						$album_id = RTMediaAlbum::get_default();
+					} else {
+						$album = rtmedia_get_site_option( 'rtmedia-global-albums' );
+						$album_id = $album_id = $album[0];
+					}
+
+					$current_media_id = preg_replace( '/[^0-9]/', '', $this->upload['comment_media_activity_id'] );
+					$current_media_type = preg_replace( '/[^a-z]/', '', $this->upload['comment_media_activity_id'] );
+
+					if ( $current_media_id ) {
+						$comment_media = true;
+						$context = 'profile';
+						$context_id = get_current_user_id();
+
+						$media_obj    = new RTMediaMedia();
+
+						if ( 'rtmedia' == $current_media_type ) {
+							/* search from media id*/
+							$media = $media_obj->model->get( array( 'id' => $current_media_id ) );
+						} else {
+							/* search from activity id*/
+							$media = $media_obj->model->get( array( 'activity_id' => $current_media_id ) );
+						}
+
+						if ( $media[0]->album_id ) {
+							$album_id = $media[0]->album_id;
+							$privacy = $media[0]->privacy;
+							$context = $media[0]->context;
+							$context_id = $media[0]->context_id;
+						} else {
+							/* search from the BuddyPress Table */
+							$media = bp_activity_get_specific( array( 'activity_ids' => $current_media_id ) );
+
+							if ( isset( $media['activities'][0]->component ) ) {
+								if ( $media['activities'][0]->component != 'activity' ) {
+									$context = $media['activities'][0]->component;
+								}
+							}
+
+							if ( isset( $media['activities'][0]->item_id ) ) {
+								$context_id = $media['activities'][0]->item_id;
+							}
+						}
+
+						$this->upload['album_id'] = $album_id;
+						$this->upload['privacy'] = $privacy;
+
+						if ( 0 == strrpos( $context , 'comment-media' ) ) {
+							$this->upload['context'] = 'comment-media';
+						}
+
+						$this->upload['context_id'] = $context_id;
+
+					}// End if().
+
+				}// End if().
+
 				$this->upload = apply_filters( 'rtmedia_media_param_before_upload', $this->upload );
 				$rtupload     = new RTMediaUpload( $this->upload );
+
+				if ( $comment_media ) {
+					add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media', true );
+
+					if ( isset( $media[0]->id ) ) {
+						// add in comment media the parent media id
+						add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media_id', $media[0]->id );
+
+						// add in parent media the comment media id
+						$get_rtmedia_meta = array();
+						$get_rtmedia_meta_old = get_rtmedia_meta( $media[0]->id, 'has_comment_media' );
+						if ( is_array( $get_rtmedia_meta_old ) ) {
+							foreach ( $get_rtmedia_meta_old as $value ) {
+								$get_rtmedia_meta[] = $value;
+							}
+						}
+						$get_rtmedia_meta[] = $rtupload->media_ids[0];
+						update_rtmedia_meta( $media[0]->id, 'has_comment_media', $get_rtmedia_meta );
+					}
+
+					if ( ! empty( $current_media_id ) ) {
+						add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media_parent', $current_media_id );
+					}
+
+					if ( isset( $current_media_type ) ) {
+						add_rtmedia_meta( $rtupload->media_ids[0], 'rtmedia_comment_media_type', $current_media_type );
+					}
+				}
+
 				$media_obj    = new RTMediaMedia();
 				$media        = $media_obj->model->get( array( 'id' => $rtupload->media_ids[0] ) );
 				$rtmedia_nav  = new RTMediaNav();

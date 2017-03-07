@@ -618,6 +618,45 @@ function rtmedia_edit_media_on_database( $data, $post_ID ) {
 add_filter( 'wp_update_attachment_metadata', 'rtmedia_edit_media_on_database', 10, 2 );
 
 
+/**
+ * Disallow media edit for comment media
+ */
+if ( ! function_exists( 'rtmedia_media_edit_priv_callback' ) ) {
+	function rtmedia_media_edit_priv_callback( $value ) {
+		// comment media
+		$rtmedia_id = rtmedia_id();
+		$comment_media = false;
+		if ( ! empty( $rtmedia_id ) && function_exists( 'rtmedia_is_comment_media' ) && ! empty( $value ) ) {
+			$comment_media = rtmedia_is_comment_media( $rtmedia_id );
+			if ( ! empty( $comment_media ) ) {
+				$value = false;
+			}
+		}
+		return $value;
+	}
+}
+add_filter( 'rtmedia_media_edit_priv', 'rtmedia_media_edit_priv_callback', 10, 1 );
+
+
+/**
+ * Disallow media author action
+ */
+if ( ! function_exists( 'rtmedia_author_actions_callback' ) ) {
+	function rtmedia_author_actions_callback( $value ) {
+		// comment media
+		$rtmedia_id = rtmedia_id();
+		$comment_media = false;
+		if ( ! empty( $rtmedia_id ) && function_exists( 'rtmedia_is_comment_media' ) && ! empty( $value ) ) {
+			$comment_media = rtmedia_is_comment_media( $rtmedia_id );
+			if ( ! empty( $comment_media ) ) {
+				$value = false;
+			}
+		}
+		return $value;
+	}
+}
+add_filter( 'rtmedia_author_actions', 'rtmedia_author_actions_callback', 10, 1 );
+
 
 function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_it ) {
 	if ( $like_count > 1 && $user_like_it ) {
@@ -627,6 +666,7 @@ function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_i
 	return sprintf( '<span class="rtmedia-like-counter">%s</span>', $like_count );
 }
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
+
 
 /**
  * Update where query for media search
@@ -736,3 +776,43 @@ function rtmedia_model_query_columns( $columns ) {
 }
 
 add_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns', 10, 1 );
+
+function rtmedia_comment_max_links_callback( $values, $option = '' ) {
+	$new_values = $values;
+	if ( apply_filters( 'rtmedia_comment_max_links', true ) && 'comment_max_links' == $option ) {
+		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) ) {
+			if ( $new_values < 5 ) {
+				$new_values = 5;
+			}
+		}
+	}
+	return $new_values;
+}
+add_filter( 'option_comment_max_links', 'rtmedia_comment_max_links_callback', 10, 2 );
+
+/**
+ * add link for @mentions of the username in the comment or the activity section after the media delete or media is trancoder
+ */
+function rtmedia_bp_activity_get_meta_callback( $retval, $activity_id, $meta_key, $single ) {
+	$new_retval = $retval;
+	if ( 'bp_activity_text' == $meta_key && true == $single && function_exists( 'bp_activity_at_name_filter' ) ) {
+		$new_retval = bp_activity_at_name_filter( $new_retval );
+	}
+	return $new_retval;
+}
+add_filter( 'bp_activity_get_meta', 'rtmedia_bp_activity_get_meta_callback', 10, 4 );
+
+
+// remove unwanted attr of sorting when rtmedia-sorting addon is not there
+if ( ! function_exists( 'rtmedia_gallery_shortcode_parameter_pre_filter_callback' ) ) {
+	function rtmedia_gallery_shortcode_parameter_pre_filter_callback( $attr ) {
+		$new_attr = $attr;
+		if ( ! class_exists( 'RTMediaSorting' ) && isset( $attr['attr'] ) && isset( $attr['attr']['sort_parameters'] ) ) {
+			unset( $new_attr['attr']['sort_parameters'] );
+		}
+		return $new_attr;
+	}
+}
+add_filter( 'rtmedia_gallery_shortcode_parameter_pre_filter', 'rtmedia_gallery_shortcode_parameter_pre_filter_callback', 10, 1 );
+

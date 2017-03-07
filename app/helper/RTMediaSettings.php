@@ -43,25 +43,29 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$options = $rtmedia->options;
 
 			$defaults = array(
-				'general_enableAlbums'			=> 1,
-				'general_enableComments'		=> 0,
+
+				'general_enableAlbums'        => 1,
 				'general_enableGallerysearch'	=> 1,
-				'general_downloadButton'		=> 0,
-				'general_enableLightbox'		=> 1,
-				'general_perPageMedia'			=> 10,
-				'general_display_media'			=> 'load_more',
-				'general_enableMediaEndPoint'	=> 0,
-				'general_showAdminMenu'			=> 0,
-				'general_videothumbs'			=> 2,
-				'general_jpeg_image_quality'	=> 90,
-				'general_uniqueviewcount'		=> 0,
-				'general_viewcount'				=> 0,
-				'general_AllowUserData'			=> 1,
-				'rtmedia_add_linkback'			=> 0,
-				'rtmedia_affiliate_id'			=> '',
-				'rtmedia_enable_api'			=> 0,
-				'general_masonry_layout'		=> 0,
-				'general_direct_upload'			=> 0,
+				'general_enableAlbums_description'        => 0,
+				'general_enableComments'      => 0,
+				'general_enableLikes'      	  => 1,
+				'general_downloadButton'      => 0,
+				'general_enableLightbox'      => 1,
+				'general_perPageMedia'        => 10,
+				'general_display_media'       => 'load_more',
+				'general_enableMediaEndPoint' => 0,
+				'general_showAdminMenu'       => 0,
+				'general_videothumbs'         => 2,
+				'general_jpeg_image_quality'  => 90,
+				'general_uniqueviewcount'     => 0,
+				'general_viewcount'           => 0,
+				'general_AllowUserData'       => 1,
+				'rtmedia_add_linkback'        => 0,
+				'rtmedia_affiliate_id'        => '',
+				'rtmedia_enable_api'          => 0,
+				'general_masonry_layout'      => 0,
+				'general_direct_upload'       => 0,
+
 			);
 
 			foreach ( $rtmedia->allowed_types as $type ) {
@@ -86,6 +90,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 			$defaults['buddypress_enableOnGroup']        = 1;
 			$defaults['buddypress_enableOnActivity']     = 1;
+			$defaults['buddypress_enableOnComment']      = 1;
 			$defaults['buddypress_enableOnProfile']      = 1;
 			$defaults['buddypress_limitOnActivity']      = 0;
 			$defaults['buddypress_enableNotification']   = 0;
@@ -93,6 +98,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$defaults['buddypress_mediaCommentActivity'] = 0;
 			$defaults['styles_custom']                   = '';
 			$defaults['styles_enabled']                  = 1;
+
+			/* default value for add media in comment media */
+			$defaults['rtmedia_disable_media_in_commented_media']      = 1;
 
 			if ( isset( $options['general_videothumbs'] ) && is_numeric( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) > 10 ) {
 				$defaults['general_videothumbs'] = 10;

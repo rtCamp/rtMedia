@@ -34,14 +34,14 @@ class RTMediaActivity {
 		$this->privacy       = $privacy;
 	}
 
-	function create_activity_html() {
+	function create_activity_html( $type = 'activity' ) {
 
 		$html = '';
 
-		$html .= '<div class="rtmedia-activity-container">';
+		$html .= '<div class="rtmedia-'.$type.'-container">';
 
 		if ( ! empty( $this->activity_text ) ) {
-			$html .= '<div class="rtmedia-activity-text"><span>';
+			$html .= '<div class="rtmedia-'.$type.'-text"><span>';
 			$html .= $this->activity_text;
 			$html .= '</span></div>';
 		}
@@ -59,7 +59,7 @@ class RTMediaActivity {
 		if ( intval( $limit_activity_feed ) > 0 ) {
 			$media_details = array_slice( $media_details, 0, $limit_activity_feed, true );
 		}
-		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_activity_ul_class', 'rtm-activity-media-list' );
+		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_'.$type.'_ul_class', 'rtm-activity-media-list' );
 		$li_content                = '';
 		$count                     = 0;
 		foreach ( $media_details as $media ) {
@@ -92,7 +92,13 @@ class RTMediaActivity {
 			$li_content .= '</li>';
 			$count ++;
 		}
-		$html .= '<ul class="rtmedia-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
+
+		if( 'activity' == $type ){
+			$html .= '<ul class="rtmedia-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
+		}else{
+			$html .= '<ul class="rtmedia-'.$type.'-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
+		}
+
 		$html .= $li_content;
 		$html .= '</ul>';
 		$html .= '</div>';
@@ -107,8 +113,11 @@ class RTMediaActivity {
 
 	}
 
-	function media( $media ) {
+	function media( $media, $type = 'activity' ) {
 		$html = false;
+
+		$video_class = 'wp-video-shortcode';
+
 		if ( isset( $media->media_type ) ) {
 			global $rtmedia;
 			if ( 'photo' === $media->media_type ) {
@@ -124,7 +133,7 @@ class RTMediaActivity {
 				} else {
 					$poster = '';
 				}
-				$html = '<video ' . $poster . ' src="' . esc_url( wp_get_attachment_url( $media->media_id ) ) . '" width="' . esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_width'] ) . '" height="' . esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_height'] ) . '" type="video/mp4" class="wp-video-shortcode" id="rt_media_video_' . esc_attr( $media->id ) . '" controls="controls" preload="none"></video>';
+				$html = '<video ' . $poster . ' src="' . esc_url( wp_get_attachment_url( $media->media_id ) ) . '" width="' . esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_width'] ) . '" height="' . esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_height'] ) . '" type="video/mp4" class="'.$video_class.'" id="rt_media_video_' . esc_attr( $media->id ) . '" controls="controls" preload="none"></video>';
 			} elseif ( 'music' === $media->media_type ) {
 				$html = '<audio src="' . esc_url( wp_get_attachment_url( $media->media_id ) ) . '" width="' . esc_attr( $rtmedia->options['defaultSizes_music_activityPlayer_width'] ) . '" height="0" type="audio/mp3" class="wp-audio-shortcode" id="rt_media_audio_' . esc_attr( $media->id ) . '" controls="controls" preload="none"></audio>';
 			}

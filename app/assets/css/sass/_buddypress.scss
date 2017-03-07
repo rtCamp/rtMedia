@@ -9,6 +9,17 @@
 	width: 100%;
 }
 
+#buddypress #whats-new-form {
+	.rtmedia-uploader-div {
+		display: none;
+	}
+
+	#whats-new-options .rtmedia-uploader-div {
+		display: block;	
+	}
+}
+
+
 #buddypress #whats-new-options {
 	height: auto !important;
 	overflow: hidden;
@@ -50,9 +61,19 @@ body.media.buddypress {
 }
 
 #buddypress input[type=submit]:focus {
-    background: #ededed;
-    border: 1px solid #bbb;
-    color: #555;
-    outline: 0;
-    text-decoration: none;
+	background: #ededed;
+	border: 1px solid #bbb;
+	color: #555;
+	outline: 0;
+	text-decoration: none;
+}
+
+#buddypress ul.activity-list li.activity-item {
+	.activity-comments {
+		.rtmedia-uploader-div {
+			color: #767676;
+			margin-left: 50px;
+			padding-left: 15px;
+		}
+	}
 }

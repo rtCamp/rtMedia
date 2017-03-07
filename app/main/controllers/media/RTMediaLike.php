@@ -34,6 +34,25 @@ class RTMediaLike extends RTMediaUserInteraction {
 		if ( ! rtmedia_comments_enabled() ) {
 			add_action( 'rtmedia_actions_without_lightbox', array( $this, 'like_button_without_lightbox_filter' ) );
 		}
+
+		add_filter( 'rtmedia_check_enable_disable_like', array( $this, 'rtmedia_check_enable_disable_like' ), 10, 1 );
+	}
+
+
+	/**
+	 * check Likes for media is enabled or not
+	 * @global type $rtmedia
+	 * @param type $enable_like
+	 * @return boolean True if Likes for media is enabled else returns false
+	 */
+	function rtmedia_check_enable_disable_like( $enable_like ) {
+		global $rtmedia;
+		$options = $rtmedia->options;
+		if ( ( isset( $options['general_enableLikes'] ) && '1' == $options['general_enableLikes'] ) || ! isset( $options['general_enableLikes'] ) ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	function like_button_filter() {
@@ -240,11 +259,17 @@ class RTMediaLike extends RTMediaUserInteraction {
 	}
 
 	function before_render() {
+		/* is comment media */
+		// $comment_media = rtmedia_is_comment_media( rtmedia_id() );
 		$enable_like = true;
 		$enable_like = apply_filters( 'rtmedia_check_enable_disable_like', $enable_like );
+
+		/* if is comment media then return false */
+		// if ( ! $enable_like || ! empty( $comment_media ) ) {
 		if ( ! $enable_like ) {
 			return false;
 		}
+
 		if ( $this->is_liked() ) {
 			$this->label = $this->undo_label;
 		}

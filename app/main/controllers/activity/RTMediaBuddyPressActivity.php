@@ -116,6 +116,16 @@ class RTMediaBuddyPressActivity {
 		$media      = $mediamodel->get( array( 'activity_id' => $param['activity_id'] ) );
 		// if there is only single media in activity
 		if ( 1 === count( $media ) && isset( $media[0]->media_id ) ) {
+
+			/* has media in comment */
+			$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+			/* if the media is not empty */
+			if ( is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files[0] ) && class_exists( 'RTMediaActivity' ) ) {
+				/* create new html for comment content */
+				$obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $param['content'] );
+				$param['content'] = $obj_comment->create_activity_html( 'comment-media' );
+			}
+
 			$media_id = $media[0]->media_id;
 			$comment  = new RTMediaComment();
 			$id       = $comment->add( array(
@@ -134,7 +144,7 @@ class RTMediaBuddyPressActivity {
 			$activity_id = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_NUMBER_INT );
 			$act         = new BP_Activity_Activity( $activity_id );
 
-			if ( 'rtmedia_update' === $act->type ) {
+			if ( 'rtmedia_update' === $act->type && isset( $_REQUEST['rtmedia_disable_media_in_commented_media'] ) &&  ! empty( $_REQUEST['rtmedia_disable_media_in_commented_media'] ) ) {
 				$_POST['comment_id'] = $activity_id;
 			}
 		}
@@ -544,6 +554,7 @@ class RTMediaBuddyPressActivity {
 							'type'         => 'rtmedia_like_activity',
 							'primary_link' => $primary_link,
 							'item_id'      => $media_id,
+							'secondary_item_id'      => $media_id, // Used for when deleting media when it's enter in group not used when media is add in the main activity
 					);
 
 					// set activity component
@@ -557,6 +568,13 @@ class RTMediaBuddyPressActivity {
 
 					// add BP activity
 					$activity_id = bp_activity_add( $activity_args );
+
+					// add privacy for like activity
+					if( class_exists( 'RTMediaActivityModel' ) && is_rtmedia_privacy_enable() && isset( $media_obj->activity_id ) ){
+						$rtmedia_activity_model = new RTMediaActivityModel();
+						$rtmedia_activity_model->set_privacy_for_rtmedia_activity( $media_obj->activity_id, $activity_id , $user_id );
+					}
+
 
 					// Store activity id into user meta for reference
 					//todo user_attribute
@@ -623,14 +641,53 @@ class RTMediaBuddyPressActivity {
 						}
 					}
 
-					$comment_content = $params['comment_content'];
+					$activity_content = $params['comment_content'];
+					$comment_media = false;
+					$comment_media_id = false;
+
+					/* if activity is add from comment media  */
+				    if( isset( $_REQUEST['comment_content'] ) || isset( $_REQUEST['action'] ) ){
+				    	if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'new_activity_comment' ){
+
+				    		remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
+				    		/* comment content */
+					        $comment_content = $_REQUEST['content'];
+				    	}elseif ( isset( $_REQUEST['comment_content'] ) ) {
+					        /* comment content */
+					        $comment_content = $_REQUEST['comment_content'];
+				    	}
+
+				        /* is comment is empty then add content content space */
+			            if( strstr($comment_content, 'nbsp') ){
+			                $comment_content = "&nbsp;";
+			            }
+
+
+				        /* if comment has comment media then create new html for it */
+				        if ( isset( $_REQUEST['rtMedia_attached_files'] ) ) {
+				            $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+				            /* check media should be in array format and is not empty to */
+				            if( class_exists( 'RTMediaActivity' )  && is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files ) ){
+				            	$comment_media = true;
+				            	$comment_media_id = $rtMedia_attached_files[0];
+			                    $obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content );
+			                	$comment_content = $obj_comment->create_activity_html();
+				            }
+				        }
+
+				        /* add the new content to the activity */
+				        $activity_content = $comment_content;
+				    }
+
+
 					$wp_comment_id   = $params['comment_id'];
 
 					// prepare activity arguments
 					$activity_args = array(
 							'user_id'           => $user_id,
 							'action'            => $action,
-							'content'           => $comment_content,
+							'content'           => $activity_content,
 							'type'              => 'rtmedia_comment_activity',
 							'primary_link'      => $primary_link,
 							'item_id'           => $media_id,
@@ -649,9 +706,28 @@ class RTMediaBuddyPressActivity {
 					// create BuddyPress activity
 					$activity_id = bp_activity_add( $activity_args );
 
+					/* save the profile activity id in the media meta */
+					if( ! empty( $comment_media ) && ! empty( $comment_media_id ) && ! empty( $activity_id ) ){
+						add_rtmedia_meta( $comment_media_id, 'rtmedia_comment_media_profile_id', $activity_id );
+					}
+
+					// add privacy for like activity
+					if( class_exists( 'RTMediaActivityModel' ) && is_rtmedia_privacy_enable() && isset( $media_obj->activity_id ) ){
+						$rtmedia_activity_model = new RTMediaActivityModel();
+						$rtmedia_activity_model->set_privacy_for_rtmedia_activity( $media_obj->activity_id, $activity_id , $user_id );
+					}
+
 					// Store activity id into user meta for reference
 					//todo user_attribute
 					update_user_meta( $user_id, 'rtm-bp-media-comment-activity-' . $media_id . '-' . $wp_comment_id, $activity_id );
+
+					if( function_exists( 'rtmedia_get_original_comment_media_content' ) ){
+						/* get the original content of media */
+						$original_content = rtmedia_get_original_comment_media_content();
+						/* save the original content in the meta fields */
+						bp_activity_update_meta( $activity_id, 'bp_activity_text', $original_content );
+						// bp_activity_update_meta( $activity_id, 'bp_old_activity_content', $original_content );
+					}
 				}
 			}
 		}
