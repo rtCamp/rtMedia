@@ -852,17 +852,23 @@ add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_
 
 
 /**
- * display search mockup for media
+ * Search Media mockup
  * @param       array       $attr
+ *
+ * @since  4.4
  */
 function add_search_filter( $attr = null ) {
 
-	global $rtmedia;
+	global $rtmedia, $rtmedia_query;
+
 	if ( isset( $rtmedia->options['general_enableGallerysearch'] ) && $rtmedia->options['general_enableGallerysearch'] ) {
-		$html = "<div class='media_search'>";
+
 		$search_value = ( isset( $_GET['search'] ) ? $_GET['search'] : '' );
+
+		$html  = "<form method='post' id='media_search_form' class='media_search'>";
 		$html .= "<input type='text' id='media_search_input' value='" . $search_value . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
 		$html .= "<span id='media_fatch_loader'></span>";
+
 		$search_by = '';
 		$search_by = apply_filters( 'rtmedia_media_search_by', $search_by );
 
@@ -872,37 +878,45 @@ function add_search_filter( $attr = null ) {
 		 */
 		if (  isset( $search_by ) && $search_by ) {
 			$html .= "<select id='search_by' class='search_by'>";
+
 			if ( strpos( $_SERVER['REQUEST_URI'], 'members' ) ) {
 				unset( $search_by['author'] );
 			}
+
 			if ( function_exists( 'is_plugin_active' ) && ! is_plugin_active( 'rtmedia-custom-attributes/index.php' ) ) {
 				unset( $search_by['attribute'] );
 			}
+
 			if ( strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {
 				unset( $search_by['attribute'] );
 			}
-			if ( isset( $attr['media_type'] ) && $attr['media_type'] ) {
+
+			if ( isset( $rtmedia_query->media_query['media_type'] ) && ! is_array( $rtmedia_query->media_query['media_type'] ) ) {
 				unset( $search_by['media_type'] );
 			}
+
 			if ( isset( $attr['media_author'] ) && $attr['media_author'] ) {
 				unset( $search_by['author'] );
 			}
+
 			foreach ( $search_by as $key => $value ) {
 				$selected = ( isset( $_REQUEST['search_by'] ) && $_REQUEST['search_by'] == $key ? 'selected' : '' );
 				if ( $search_by[ $key ] ) {
 					$html .= "<option value='$key' $selected >$key</option>";
 				}
 			}
+
 			$html .= '</select>';
 		}
 
-		$html .= "<button id='media_search_remove' class='media_search_remove search_option'><i class='dashicons dashicons-no rtmicon'></i></button>";
-		$html .= "<button id='media_search' class='search_option'><i class='dashicons dashicons-search rtmicon'></i></button>";
-		$html .= '</div>';
+		$html .= "<span id='media_search_remove' class='media_search_remove search_option'><i class='dashicons dashicons-no rtmicon'></i></span>";
+		$html .= "<button type='submit' id='media_search' class='search_option'><i class='dashicons dashicons-search rtmicon'></i></button>";
+		$html .= '</form>';
 
 		echo apply_filters( 'rtmedia_gallery_search', $html );
 	}
 }
+
 add_action( 'rtmedia_media_gallery_actions', 'add_search_filter', 99 );
 
 

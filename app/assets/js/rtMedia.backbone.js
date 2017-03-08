@@ -411,9 +411,12 @@ jQuery( function( $ ) {
 
 		} );
 
-		$( document ).on( 'click', '#media_search', function( e ) {
-			if( $( '#media_search_input' ).val() == '' ) {
-				return;
+		// $( document ).on( 'click', '#media_search', function( e ) {
+		$( document ).on( 'submit', 'form#media_search_form', function( e ) {
+			e.preventDefault();
+
+			if ( '' === $( '#media_search_input' ).val() ) {
+				return false;
 			}
 
 			$( '#media_fatch_loader' ).addClass('load');
@@ -428,7 +431,7 @@ jQuery( function( $ ) {
 
 			}
 
-			href = window.location.pathname.replace(remove_url,'') + '?';
+			href = window.location.pathname.replace( remove_url,'' ) + '?';
 			href += 'search=' + $( '#media_search_input' ).val();
 			if ( $( '#search_by' ).length > 0 ) {
 				href += '&search_by=' + $( '#search_by' ).val();
