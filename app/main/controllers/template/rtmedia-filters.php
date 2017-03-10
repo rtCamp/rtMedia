@@ -689,7 +689,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 		if ( isset( $_REQUEST['search_by'] ) ) {
 			if ( $_REQUEST['search_by'] ) {
 				if ( 'title' == $_REQUEST['search_by'] ) {
-					$where .= " $table_name.media_title = '" . $_REQUEST['search'] . "' ";
+					$where .= " $table_name.media_title LIKE '%" . $_REQUEST['search'] . "%' ";
 				} else if ( 'description' == $_REQUEST['search_by'] ) {
 					$where .= " post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
 
@@ -704,7 +704,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 		} else {
 
 			$where .= ' ( ';
-			$where .= " $table_name.media_title = '" . $_REQUEST['search'] . "' ";
+			$where .= " $table_name.media_title LIKE '%" . $_REQUEST['search'] . "%' ";
 			if ( $author_id ) {
 				if ( $author_id->data->ID ) {
 					$where .= " OR $table_name.media_author = '" . $author_id->data->ID . "' ";
