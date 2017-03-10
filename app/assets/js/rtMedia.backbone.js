@@ -125,6 +125,7 @@ jQuery( function( $ ) {
 							var search_by = check_url( 'search_by' );
 							query.search_by = search_by;
 						}
+						query.rtmedia_page = nextpage;
 					} else {
 						query.rtmedia_page = 1;
 					}
@@ -255,9 +256,13 @@ jQuery( function( $ ) {
 				$( that.el ).html( '' );
 			}
 
-			$.each( this.collection.toJSON(), function( key, media ) {
-				$( that.el ).append( that.template( media ) );
-			} );
+			if ( this.collection.length == 0 ) {
+				$( that.el ).append( rtmedia_no_media_found );
+			} else {
+				$.each( this.collection.toJSON(), function( key, media ) {
+					$( that.el ).append( that.template( media ) );
+				} );
+			}
 
 			if ( upload_sync ) {
 				upload_sync = false;
