@@ -3926,3 +3926,26 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 	}
 }
 
+/**
+ * Fetch user as per keyword.
+ *
+ * @param  [string] $user
+ * @return [string] $user_id
+ */
+function rtm_select_user( $user ) {
+	$user_ids = array();
+
+	if ( null != $user ) {
+		$user_query = new WP_User_Query( array( 'search' => '*' . esc_attr( $user ) . '*' ) );
+
+		if ( ! empty( $user_query->results ) ) {
+			foreach ( $user_query->results as $user_id ) {
+				array_push( $user_ids, $user_id->ID );
+			}
+		}
+	}
+
+
+	$user_id = implode( ',', $user_ids );
+	return $user_id;
+}

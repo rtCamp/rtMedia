@@ -683,7 +683,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	$term_taxonomy_table = $wpdb->term_taxonomy;
 
 	if ( isset( $_REQUEST['search'] ) && $_REQUEST['search'] ) {
-		$author_id = get_user_by( 'slug', $_REQUEST['search'] );
+		$author_id = rtm_select_user( $_REQUEST['search'] );
 
 		$where .= ' AND ';
 		if ( isset( $_REQUEST['search_by'] ) ) {
@@ -694,8 +694,8 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 					$where .= " post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
 
 				} else if ( 'author' == $_REQUEST['search_by'] ) {
-					if ( $author_id->data->ID ) {
-						$where .= " $table_name.media_author = '" . $author_id->data->ID . "' ";
+					if ( NULL != $author_id ) {
+						$where .= " $table_name.media_author IN  (" . $author_id . ") ";
 					}
 				} else {
 					$where .= '2=2';
@@ -705,10 +705,8 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 
 			$where .= ' ( ';
 			$where .= " $table_name.media_title LIKE '%" . $_REQUEST['search'] . "%' ";
-			if ( $author_id ) {
-				if ( $author_id->data->ID ) {
-					$where .= " OR $table_name.media_author = '" . $author_id->data->ID . "' ";
-				}
+			if ( NULL != $author_id ) {
+				$where .= " $table_name.media_author IN  (" . $author_id . ") ";
 			}
 			$where .= " OR post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
 			$where .= " OR $table_name.media_type = '" . $_REQUEST['search'] . "' ";
