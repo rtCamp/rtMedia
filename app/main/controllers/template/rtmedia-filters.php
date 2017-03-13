@@ -706,7 +706,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 			$where .= ' ( ';
 			$where .= " $table_name.media_title LIKE '%" . $_REQUEST['search'] . "%' ";
 			if ( NULL != $author_id ) {
-				$where .= " $table_name.media_author IN  (" . $author_id . ") ";
+				$where .= " OR $table_name.media_author IN  (" . $author_id . ") ";
 			}
 			$where .= " OR post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
 			$where .= " OR $table_name.media_type = '" . $_REQUEST['search'] . "' ";
