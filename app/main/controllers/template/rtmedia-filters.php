@@ -684,6 +684,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 
 	if ( isset( $_REQUEST['search'] ) && $_REQUEST['search'] ) {
 		$author_id = rtm_select_user( $_REQUEST['search'] );
+		$member_type = rtm_fetch_user_by_member_type( $_REQUEST['search'] );
 
 		$where .= ' AND ';
 		if ( isset( $_REQUEST['search_by'] ) ) {
@@ -697,6 +698,10 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 					if ( NULL != $author_id ) {
 						$where .= " $table_name.media_author IN  (" . $author_id . ") ";
 					}
+				} else if ( 'member_type' == $_REQUEST['search_by'] ) {
+					if ( NULL != $member_type ) {
+						$where .= " $table_name.media_author IN  (" . $member_type . ") ";
+					}
 				} else {
 					$where .= '2=2';
 				}
@@ -707,6 +712,9 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 			$where .= " $table_name.media_title LIKE '%" . $_REQUEST['search'] . "%' ";
 			if ( NULL != $author_id ) {
 				$where .= " OR $table_name.media_author IN  (" . $author_id . ") ";
+			}
+			if ( NULL != $member_type ) {
+				$where .= " OR $table_name.media_author IN  (" . $member_type . ") ";
 			}
 			$where .= " OR post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
 			$where .= " OR $table_name.media_type = '" . $_REQUEST['search'] . "' ";
