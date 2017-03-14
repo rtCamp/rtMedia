@@ -879,6 +879,10 @@ function add_search_filter( $attr = null ) {
 		if (  isset( $search_by ) && $search_by ) {
 			$html .= "<select id='search_by' class='search_by'>";
 
+			if ( ! rtm_check_member_type() || strpos( $_SERVER['REQUEST_URI'], 'members' ) || ( isset( $attr['media_author'] ) && $attr['media_author'] ) ) {
+				unset( $search_by['member_type'] );
+			}
+
 			if ( strpos( $_SERVER['REQUEST_URI'], 'members' ) ) {
 				unset( $search_by['author'] );
 			}
