@@ -3949,3 +3949,58 @@ function rtm_select_user( $user ) {
 	$user_id = implode( ',', $user_ids );
 	return $user_id;
 }
+
+/**
+ * Fetch user id by member type.
+ *
+ * @author Yahil
+ *
+ * @since  4.4
+ * @param  string $type user member type string
+ * @return string $member_id
+ */
+function rtm_fetch_user_by_member_type( $type ) {
+	$member_id = array();
+
+	if ( null != $type ) {
+		$member_args = array(
+		    'member_type' => array( $type ),
+		);
+
+		if ( bp_has_members( $member_args ) ) {
+			while ( bp_members() ) {
+				bp_the_member();
+
+				array_push( $member_id, bp_get_member_user_id() );
+			}
+		}
+		$member_id = implode( ',', $member_id );
+	}
+
+	return $member_id;
+
+}
+
+/**
+  * Check member type set or not.
+  *
+  * @author Yahil
+  *
+  * @since  4.4
+  * @return bool
+  */
+function rtm_check_member_type() {
+	$status = false;
+
+	if ( function_exists( 'buddypress' ) ) {
+		$bp = buddypress();
+
+		if ( isset( $bp->members->types ) ) {
+			if ( is_array( $bp->members->types ) && ! empty( $bp->members->types ) ) {
+				$status = true;
+			}
+		}
+	}
+
+	return $status;
+}
