@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.3.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-03-07 09:50:30+00:00\n"
+"POT-Creation-Date: 2017-03-15 13:47:24+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2159,7 +2159,7 @@ msgstr ""
 msgid "Album"
 msgstr ""
 
-#: app/main/RTMedia.php:663 app/main/RTMedia.php:1066
+#: app/main/RTMedia.php:663 app/main/RTMedia.php:1067
 #: app/main/controllers/media/RTMediaAlbum.php:53
 #: app/main/controllers/media/RTMediaAlbum.php:65
 msgid "Albums"
@@ -2341,27 +2341,31 @@ msgstr ""
 msgid "Description:"
 msgstr ""
 
-#: app/main/RTMedia.php:1059
+#: app/main/RTMedia.php:1056 templates/media/media-gallery.php:92
+msgid "Oops !! There's no media found for the request !!"
+msgstr ""
+
+#: app/main/RTMedia.php:1060
 msgid "Edit File Name"
 msgstr ""
 
-#: app/main/RTMedia.php:1067
+#: app/main/RTMedia.php:1068
 msgid "Privacy updated successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1068
+#: app/main/RTMedia.php:1069
 msgid "Couldn't change privacy, please try again."
 msgstr ""
 
-#: app/main/RTMedia.php:1069
+#: app/main/RTMedia.php:1070
 msgid "file deleted successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1101
+#: app/main/RTMedia.php:1102
 msgid "There are some uploads in progress. Do you want to cancel them?"
 msgstr ""
 
-#: app/main/RTMedia.php:1211
+#: app/main/RTMedia.php:1212
 msgid "Adding media in Comments is not allowed"
 msgstr ""
 
@@ -3220,10 +3224,6 @@ msgstr ""
 
 #: templates/media/media-gallery.php:17 templates/media/media-gallery.php:37
 msgid "Media Gallery"
-msgstr ""
-
-#: templates/media/media-gallery.php:92
-msgid "Oops !! There's no media found for the request !!"
 msgstr ""
 
 #: templates/media/media-single-edit.php:48

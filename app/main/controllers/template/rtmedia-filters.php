@@ -667,7 +667,6 @@ function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_i
 }
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
 
-
 /**
  * Update where query for media search
  * @param  string $where

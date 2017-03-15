@@ -318,54 +318,45 @@ jQuery( function( $ ) {
 		$( this ).parent().remove();
 	} );
 
-	$( document ).on( 'keypress', '#rtmedia_go_to_num', function( e ) {
-		if ( e.keyCode == 13 ) {
-			e.preventDefault();
+		$( document ).on( 'keypress', '#rtmedia_go_to_num', function( e ) {
+			if ( e.keyCode == 13 ) {
+				e.preventDefault();
 
-			var current_gallery = $(this).parents( '.rtmedia-container' );
-			var current_gallery_id = current_gallery.attr( 'id' );
+				var current_gallery = $(this).parents( '.rtmedia-container' );
+				var current_gallery_id = current_gallery.attr( 'id' );
 
 
-			if ( $( '#' + current_gallery_id + ' .rtm-media-loading' ).length == 0 ) {
-				$( '#' + current_gallery_id + ' .rtm-pagination' ).before( '<div class=\'rtm-media-loading\'><img src=\'' + rMedia_loading_media + '\' /></div>' );
-			} else {
-				$( '#' + current_gallery_id + ' .rtm-media-loading' ).show();
+				if ( $( '#' + current_gallery_id + ' .rtm-media-loading' ).length == 0 ) {
+					$( '#' + current_gallery_id + ' .rtm-pagination' ).before( '<div class=\'rtm-media-loading\'><img src=\'' + rMedia_loading_media + '\' /></div>' );
+				} else {
+					$( '#' + current_gallery_id + ' .rtm-media-loading' ).show();
+				}
+
+				if ( parseInt( $( '#' + current_gallery_id + ' #rtmedia_go_to_num' ).val() ) > parseInt( $( '#' + current_gallery_id + ' #rtmedia_last_page' ).val() ) ) {
+					nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_last_page' ).val() );
+				} else {
+					nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_go_to_num' ).val() );
+				}
+
+				var page_base_url = $( '#' + current_gallery_id + ' .rtmedia-page-no .rtmedia-page-link' ).data( 'page-base-url' );
+				var href = page_base_url + nextpage;
+				change_rtBrowserAddressUrl( href, '' );
+
+				galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
+				return false;
 			}
-
-			if ( parseInt( $( '#' + current_gallery_id + ' #rtmedia_go_to_num' ).val() ) > parseInt( $( '#' + current_gallery_id + ' #rtmedia_last_page' ).val() ) ) {
-				nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_last_page' ).val() );
-			} else {
-				nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_go_to_num' ).val() );
-			}
-
-			var page_base_url = $( '#' + current_gallery_id + ' .rtmedia-page-no .rtmedia-page-link' ).data( 'page-base-url' );
-			var href = page_base_url + nextpage;
-			change_rtBrowserAddressUrl( href, '' );
-
-			galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
-			return false;
-		}
-	} );
+		} );
 
 		$( document ).on( 'click', '.rtmedia-page-link', function( e ) {
 
 			/* Get current clicked href value */
 			href = $( this ).attr( 'href' );
 
-// <<<<<<< HEAD
-// 			e.preventDefault();
-// 			if ( $( this ).data( 'page-type' ) == 'page' ) {
-// 				nextpage = $( this ).data( 'page' );
-// 			} else if ( $( this ).data( 'page-type' ) == 'prev' ) {
-// 				if ( nextpage == -1 ) {
-// 					nextpage = parseInt( $( '#rtmedia_last_page' ).val() ) - 1;
-// =======
 			var current_gallery = $(this).parents( '.rtmedia-container' );
 			var current_gallery_id = current_gallery.attr( 'id' );
 
 			if ( $( '#' + current_gallery_id + ' .rtm-media-loading' ).length == 0 ) {
 					$( '#' + current_gallery_id + ' .rtm-pagination' ).before( '<div class=\'rtm-media-loading\'><img src=\'' + rMedia_loading_media + '\' /></div>' );
-// >>>>>>> develop
 				} else {
 					$( '#' + current_gallery_id + ' .rtm-media-loading' ).show();
 				}
@@ -384,6 +375,7 @@ jQuery( function( $ ) {
 						nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_last_page' ).val() );
 					} else {
 						nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_go_to_num' ).val() );
+// <<<<<<< HEAD
 				}
 
 				/* Set page url for input type num pagination */
@@ -2220,7 +2212,6 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 			rtMediaHook.call( 'rtmedia_js_after_files_added', [ upl, rfiles ] );
 
 			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-
 				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
 				if ( allow_upload == false ) {
 					return false;
