@@ -902,11 +902,12 @@ function add_search_filter( $attr = null ) {
 			if ( isset( $attr['media_author'] ) && $attr['media_author'] ) {
 				unset( $search_by['author'] );
 			}
-
 			foreach ( $search_by as $key => $value ) {
 				$selected = ( isset( $_REQUEST['search_by'] ) && $_REQUEST['search_by'] == $key ? 'selected' : '' );
 				if ( $search_by[ $key ] ) {
-					$html .= "<option value='$key' $selected >$key</option>";
+					$search_keyword = str_replace( '_', ' ', $key );
+
+					$html .= "<option value='$key' $selected > " . esc_html__( $search_keyword, 'buddypress-media' ) . "</option>";
 				}
 			}
 
