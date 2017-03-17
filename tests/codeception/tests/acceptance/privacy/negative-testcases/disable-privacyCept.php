@@ -10,14 +10,14 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if the user is allowed to disable privacy for rtmedia');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To check if the user is allowed to disable privacy for rtmedia' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName,ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$privacyTab,ConstantsPage::$privacyTabUrl);
-    $settings->verifyDisableStatus($I,ConstantsPage::$privacyLabel,ConstantsPage::$privacyCheckbox);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
+    $settings->verifyDisableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
 
 ?>

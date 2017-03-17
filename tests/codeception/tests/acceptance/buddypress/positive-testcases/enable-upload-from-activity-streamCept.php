@@ -10,23 +10,28 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'Check if the user is allowed to upload media from activity stream.' );
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('Check if the user is allowed to upload media from activity stream.');
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName,ConstantsPage::$password);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+    $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->verifyEnableStatus($I,ConstantsPage::$strMediaUploadFromActivityLabel,ConstantsPage::$mediaUploadFromActivityCheckbox);
+    $I->scrollTo( ConstantsPage::$topSaveButton );
 
-    $buddypress = new BuddypressSettingsPage($I);
-    $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $I->wait( 5 );
+    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox );
 
-    $I->seeElementInDOM(ConstantsPage::$uploadButtonOnAtivityPage);
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaFromActivity($I,ConstantsPage::$imageName);    //Assuming Direct upload is disabled
+    $I->seeElementInDOM( ConstantsPage::$uploadButtonOnAtivityPage );
+
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
 
 ?>

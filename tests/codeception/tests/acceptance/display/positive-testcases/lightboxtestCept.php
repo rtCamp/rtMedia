@@ -10,46 +10,49 @@
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if the lightbox is enabled');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To check if the lightbox is enabled' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-     $settings = new DashboardSettingsPage($I);
-    // $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
-    // $settings->verifyEnableStatus($I,ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+    $settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab ); //Last arg refers scroll postion
 
     $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoPhotoPage( ConstantsPage::$userName );
+    $buddypress->gotoMedia( ConstantsPage::$userName );
 
     $uploadmedia = new UploadMediaPage($I);
     $temp = $uploadmedia->countMedia(ConstantsPage::$mediaPerPageOnMediaSelector); // $temp will receive the available no. of media
 
-    if($temp >= ConstantsPage::$minvalue){
+    if( $temp >= ConstantsPage::$minValue ){
 
-        $uploadmedia->fisrtThumbnailMedia($I);
+        $I->scrollTo( '.rtm-gallery-title' );
 
-        $I->seeElement(ConstantsPage::$closeButton);   //The close button will only be visible if the media is opened in Lightbox
-        $I->click(ConstantsPage::$closeButton);
+        $uploadmedia->fisrtThumbnailMedia();
+
+        $I->seeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
+        $I->click( ConstantsPage::$closeButton );
 
     }else{
 
         $I->amOnPage('/wp-admin');
-        $I->wait(10);
+        $I->wait( 10 );
 
-        $settings->gotoTab( $I, ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
-        $settings->verifyDisableStatus( $I, ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox); //This will check if the direct upload is disabled
+        $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+        $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
-        $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);(ConstantsPage::$userName); //Assuming direct uplaod is disabled
+        $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
 
         $I->reloadPage();
-        $I->wait(7);
+        $I->wait( 7 );
 
-        $uploadmedia->fisrtThumbnailMedia($I);
+        $uploadmedia->fisrtThumbnailMedia();
 
-        $I->seeElement(ConstantsPage::$closeButton);   //The close button will only be visible if the media is opened in Lightbox
-        $I->click(ConstantsPage::$closeButton);
+        $I->seeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
+        $I->click( ConstantsPage::$closeButton );
+
     }
 
 ?>

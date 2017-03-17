@@ -8,14 +8,16 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To set JPEG/JPG Image quality.');
+    $scrollPos = ConstantsPage::$customCssTab;
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set JPEG/JPG Image quality.' );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl);
-    $settings->setValue($I,ConstantsPage::$imgQualityLabel,ConstantsPage::$imgQualityTextbox,ConstantsPage::$imgQualityValue);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl );
+    $settings->setValue( ConstantsPage::$imgQualityLabel, ConstantsPage::$imgQualityTextbox, ConstantsPage::$imgQualityValue, $scrollPos );
 
 ?>

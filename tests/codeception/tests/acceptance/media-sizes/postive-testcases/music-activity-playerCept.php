@@ -11,21 +11,27 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To set height and width of video player for activity page');
+    $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
+    $scrollPos = ConstantsPage::$customCssTab;
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set height and width of video player for activity page' );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl);
-    $settings->setMediaSize($I,ConstantsPage::$activityPlayerLabel,ConstantsPage::$activityMusicWidthTextbox,ConstantsPage::$activityMusicPlayerWidth);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $buddypress = new BuddypressSettingsPage($I);
-    $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
+    $settings->setMediaSize( ConstantsPage::$activityPlayerLabel, ConstantsPage::$activityMusicWidthTextbox, ConstantsPage::$activityMusicPlayerWidth, $scrollPos );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaFromActivity($I,ConstantsPage::$audioName);
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload );
 
-    echo $I->grabAttributeFrom(ConstantsPage::$audioSelectorActivity,'style');
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivityPage( ConstantsPage::$userName );
+
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName );
+
+    echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorActivity, 'style' );
 ?>

@@ -10,28 +10,32 @@
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To set photo medium height and width when Crop is enabled.');
+    $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set photo medium height and width when Crop is enabled.' );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl);
-    $settings->setMediaSize($I,ConstantsPage::$photoMediumLabel,ConstantsPage::$mediumWidthTextbox,ConstantsPage::$mediumWidth,ConstantsPage::$mediumHeightTextbox,ConstantsPage::$mediummHeight);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $I->scrollTo(ConstantsPage::$topSaveButton);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
+    $settings->setMediaSize( ConstantsPage::$photoMediumLabel, ConstantsPage::$mediumWidthTextbox, ConstantsPage::$mediumWidth, ConstantsPage::$mediumHeightTextbox, ConstantsPage::$mediummHeight );
 
-    $settings->verifyEnableStatus($I,ConstantsPage::$photoThumbnailLabel,ConstantsPage::$mediumCropCheckbox);
+    $I->scrollTo( ConstantsPage::$topSaveButton );
 
-    $buddypress = new BuddypressSettingsPage($I);
-    $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
+    $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$mediumCropCheckbox );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaFromActivity($I,ConstantsPage::$imageName);
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload );
 
-    echo $I->grabAttributeFrom(ConstantsPage::$thumbnailSelector,'width');
-    echo $I->grabAttributeFrom(ConstantsPage::$thumbnailSelector,'height');
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
+
+    echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
+    echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
 
 ?>

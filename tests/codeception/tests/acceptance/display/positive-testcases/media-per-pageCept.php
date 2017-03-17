@@ -7,39 +7,57 @@
     use Page\Login as LoginPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
     use Page\UploadMedia as UploadMediaPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To set the number media per page');
+    $scrollPos = ConstantsPage::$customCssTab;
+    $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set the number media per page' );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
-    $settings->setValue($I,ConstantsPage::$numOfMediaLabel,ConstantsPage::$numOfMediaTextbox,ConstantsPage::$numOfMediaPerPage);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $url = '/members'.ConstantsPage::$userName.'/media';
-    $I->amOnPage($url);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
 
-    $tempArray = $I->grabMultiple('ul.rtm-gallery-list li');
-    codecept_debug($tempArray);
-    echo count($tempArray);
+    if( $I->grabValueFrom( ConstantsPage::$numOfMediaTextbox ) != ConstantsPage::$numOfMediaPerPage  ){
 
-    if(count($tempArray) >= ConstantsPage::$numOfMediaPerPage){
-        $I->seeNumberOfElements(ConstantsPage::$mediaPerPageOnMediaSelector,ConstantsPage::$numOfMediaPerPage);
+        $settings->setValue( ConstantsPage::$numOfMediaLabel, ConstantsPage::$numOfMediaTextbox, ConstantsPage::$numOfMediaPerPage, $scrollPos );
+    }
+
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoMedia( ConstantsPage::$userName );
+    $temp = $buddypress->countMedia(ConstantsPage::$mediaPerPageOnMediaSelector); // $temp will receive the available no. of media
+
+    $uploadmedia = new UploadMediaPage($I);
+
+    if( $temp == ConstantsPage::$numOfMediaPerPage ){
+
+        $I->seeNumberOfElements( ConstantsPage::$mediaPerPageOnMediaSelector, ConstantsPage::$numOfMediaPerPage );
+
     }else{
-        $temp = ConstantsPage::$numOfMediaPerPage - count($tempArray);
 
-        $uploadMedia = new UploadMediaPage($I);
+        $I->amOnPage('/wp-admin');
+        $I->wait( 10 );
 
-        for($i = 0; $i < $temp; $i++ ){
+        $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+        $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload); //This will check if the direct upload is disabled
 
-            $uploadMedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);
+        $mediaTobeUploaded = ConstantsPage::$numOfMediaPerPage - $temp;
+
+        for( $i = 0; $i < $mediaTobeUploaded; $i++ ){
+
+            $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
 
         }
 
+        $I->reloadPage();
+        $I->wait( 10 );
+
         $I->seeNumberOfElements(ConstantsPage::$mediaPerPageOnMediaSelector,ConstantsPage::$numOfMediaPerPage);
+
     }
 
 ?>

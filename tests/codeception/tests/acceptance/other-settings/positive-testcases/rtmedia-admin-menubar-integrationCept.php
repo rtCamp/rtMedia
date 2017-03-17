@@ -8,16 +8,19 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if Admin bar menu integration is enabled.');
+    $scrollToTab = ConstantsPage::$mediaSizesTab;
+    $scrollPos = ConstantsPage::$displayTab;
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To check if Admin bar menu integration is enabled.' );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$otherSeetingsTab,ConstantsPage::$otherSeetingsTabUrl);
-    $settings->verifyEnableStatus($I,ConstantsPage::$adminbarMenuLabel,ConstantsPage::$adminbarMenuCheckbox);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $I->seeElement(ConstantsPage::$rtMediaAdminbar);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl, $scrollToTab );
+    $settings->verifyEnableStatus( ConstantsPage::$adminbarMenuLabel, ConstantsPage::$adminbarMenuCheckbox, $scrollPos );
+
+    $I->seeElement( ConstantsPage::$rtMediaAdminbar );
 
 ?>

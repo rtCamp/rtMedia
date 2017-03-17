@@ -8,19 +8,21 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if rtMedia footer link is disabled.');
+    $scrollToTab = ConstantsPage::$mediaSizesTab;
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To check if rtMedia footer link is disabled.' );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I, ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl);
-    $settings->verifyDisableStatus($I,ConstantsPage::$footerLinkLabel, ConstantsPage::$footerLinkCheckbox);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $I->wait(5);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl, $scrollToTab );
+    $settings->verifyDisableStatus( ConstantsPage::$footerLinkLabel, ConstantsPage::$footerLinkCheckbox );
 
-    $I->amOnPage('/');
-    $I->dontSeeElement(ConstantsPage::$footerLink);
+    $I->wait( 5 );
+
+    $I->amOnPage( '/' );
+    $I->dontSeeElement( ConstantsPage::$footerLink );
 
 ?>

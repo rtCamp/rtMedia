@@ -8,14 +8,14 @@
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('Check if the user is allowed to disable activity for media comments.');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'Disable activity for media comments.' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName,ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->verifyDisableStatus($I,ConstantsPage::$strActivityMediaCommentLabel,ConstantsPage::$activityMediaCommentCheckbox);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+    $settings->verifyDisableStatus( ConstantsPage::$strActivityMediaCommentLabel, ConstantsPage::$activityMediaCommentCheckbox );
 
 ?>

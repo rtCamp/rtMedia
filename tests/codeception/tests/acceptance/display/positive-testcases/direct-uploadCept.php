@@ -9,17 +9,17 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if the user is allowed to upload the media directly');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To check if the user is allowed to upload the media directly' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
-    $settings->verifyEnableStatus($I,ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+    $settings->verifyEnableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaDirectly($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->uploadMediaDirectly( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
 
 ?>

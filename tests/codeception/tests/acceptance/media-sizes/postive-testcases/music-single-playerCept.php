@@ -9,20 +9,26 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo(' To set width of single music player.');
+    $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
+    $scrollPos = ConstantsPage::$customCssTab;
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set width of single music player.' );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl);
-    $settings->setMediaSize($I,ConstantsPage::$singlePlayerLabel,ConstantsPage::$singleMusicWidthTextbox,ConstantsPage::$singleMusicPlayerWidth);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$audioName,ConstantsPage::$musicLink);
-    $uploadmedia->fisrtThumbnailMedia($I);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
+    $settings->setMediaSize( ConstantsPage::$singlePlayerLabel, ConstantsPage::$singleMusicWidthTextbox, ConstantsPage::$singleMusicPlayerWidth, $scrollPos );
 
-    echo $I->grabAttributeFrom(ConstantsPage::$audioSelectorSingle,'style');
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload );
+
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$audioName, ConstantsPage::$musicLink );
+    $uploadmedia->fisrtThumbnailMedia( $I );
+
+    echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorSingle ,'style' );
 
 ?>

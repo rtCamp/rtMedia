@@ -9,20 +9,25 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To set height and width of single video player.');
+    $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set height and width of single video player.' );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl);
-    $settings->setMediaSize($I,ConstantsPage::$singlePlayerLabel,ConstantsPage::$singleVideoWidthTextbox,ConstantsPage::$singleVideoWidth,ConstantsPage::$singleVideoHeightTextbox,ConstantsPage::$singleVideoHeight);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$videoName,ConstantsPage::$videoLink);
-    $uploadmedia->fisrtThumbnailMedia($I);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
+    $settings->setMediaSize( ConstantsPage::$singlePlayerLabel, ConstantsPage::$singleVideoWidthTextbox, ConstantsPage::$singleVideoWidth, ConstantsPage::$singleVideoHeightTextbox, ConstantsPage::$singleVideoHeight );
 
-    echo $I->grabAttributeFrom(ConstantsPage::$videoSelectorSingle,'style');
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload );
+
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$videoName, ConstantsPage::$videoLink );
+    $uploadmedia->fisrtThumbnailMedia();
+
+    echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
 
 ?>

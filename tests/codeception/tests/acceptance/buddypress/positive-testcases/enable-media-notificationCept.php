@@ -8,14 +8,14 @@
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('Check if the user is allowed to enable media notification.');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'Check if the user is allowed to enable media notification.' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName,ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->verifyEnableStatus($I,ConstantsPage::$strMediaNotificationLabel,ConstantsPage::$mediaNotificationCheckbox);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+    $settings->verifyEnableStatus( ConstantsPage::$strMediaNotificationLabel, ConstantsPage::$mediaNotificationCheckbox );
 
 ?>

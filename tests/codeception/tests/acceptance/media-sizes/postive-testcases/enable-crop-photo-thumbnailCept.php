@@ -9,24 +9,29 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\Constants as ConstantsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To set photo thumbnail height and width when Crop is enabled.');
+    $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set photo thumbnail height and width when Crop is enabled.' );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl);
-    $settings->setMediaSize($I,ConstantsPage::$photoThumbnailLabel,ConstantsPage::$thumbnailWidthTextbox,ConstantsPage::$thumbnailWidth,ConstantsPage::$thumbnailHeightTextbox,ConstantsPage::$thumbnailHeight);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $I->scrollTo(ConstantsPage::$topSaveButton);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
+    $settings->setMediaSize( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailWidthTextbox, ConstantsPage::$thumbnailWidth, ConstantsPage::$thumbnailHeightTextbox, ConstantsPage::$thumbnailHeight );
 
-    $settings->verifyEnableStatus($I,ConstantsPage::$photoThumbnailLabel,ConstantsPage::$thumbnailCropCheckbox);
+    $I->scrollTo( ConstantsPage::$topSaveButton );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);(ConstantsPage::$userName);
+    $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailCropCheckbox );
 
-    echo $I->grabAttributeFrom(ConstantsPage::$thumbnailSelector,'width');
-    echo $I->grabAttributeFrom(ConstantsPage::$thumbnailSelector,'height');
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload );
+
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
+
+    echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
+    echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
 
 ?>

@@ -9,29 +9,33 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\Constants as ConstantsPage;
 
+    $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
+
     $I = new AcceptanceTester($scenario);
-    $I->wantTo('To set photo large height and width when Crop is enabled.');
+    $I->wantTo( 'To set photo large height and width when Crop is enabled.' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl);
-    $settings->setMediaSize($I,ConstantsPage::$photoLargeLabel,ConstantsPage::$largeWidthTextbox,ConstantsPage::$LargeWidth,ConstantsPage::$largeHeightTextbox,ConstantsPage::$LargeHeight);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
+    $settings->setMediaSize( ConstantsPage::$photoLargeLabel, ConstantsPage::$largeWidthTextbox, ConstantsPage::$LargeWidth, ConstantsPage::$largeHeightTextbox, ConstantsPage::$LargeHeight );
 
-    $I->scrollTo(ConstantsPage::$topSaveButton);
+    $I->scrollTo( ConstantsPage::$topSaveButton );
 
-    $settings->verifyEnableStatus($I,ConstantsPage::$photoLargeLabel,ConstantsPage::$largeCropChrckbox);
+    $settings->verifyEnableStatus( ConstantsPage::$photoLargeLabel, ConstantsPage::$largeCropChrckbox );
 
-    $I->scrollTo(ConstantsPage::$topSaveButton);
-    $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
-    $settings->verifyDisableStatus($I,ConstantsPage::$strLightboxCheckboxLabel,ConstantsPage::$lightboxCheckbox);
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaUsingStartUploadButton($I,ConstantsPage::$userName,ConstantsPage::$imageName,ConstantsPage::$photoLink);(ConstantsPage::$userName);
-    $uploadmedia->fisrtThumbnailMedia($I);
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel,ConstantsPage::$lightboxCheckbox);
 
-    echo $I->grabAttributeFrom(ConstantsPage::$thumbnailSelector,'width');
-    echo $I->grabAttributeFrom(ConstantsPage::$thumbnailSelector,'height');
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
+    $uploadmedia->fisrtThumbnailMedia();
+
+    echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
+    echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
 
 ?>

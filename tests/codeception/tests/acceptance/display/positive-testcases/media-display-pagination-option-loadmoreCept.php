@@ -2,27 +2,29 @@
 
 /**
 * Scenario : To check if Load More - Media display pagination option is enabled
+*Pre condition : The available no of Media should be  > ConstantsPage::$numOfMediaPerPage
 */
 
     use Page\Login as LoginPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if Load More - Media display pagination option is enabled');
+    $scrollPosition = ConstantsPage::$numOfMediaTextbox;
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To check if Load More - Media display pagination option is enabled' );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl);
-    $settings->verifySelectOption($I,ConstantsPage::$strMediaDisplayPaginationLabel,ConstantsPage::$loadmoreRadioButton);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $url = 'members/'.ConstantsPage::$userName.'/media/photo/';
-    $I->amOnPage($url);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+    $settings->verifySelectOption( ConstantsPage::$strMediaDisplayPaginationLabel, ConstantsPage::$loadmoreRadioButton, $scrollPosition );
 
-    $I->wait(3);
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoMedia( ConstantsPage::$userName );
 
-    $I->seeElementInDOM(ConstantsPage::$loadMore);
+    $I->seeElementInDOM( ConstantsPage::$loadMore );
 
 ?>

@@ -10,33 +10,35 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To set the number media on Activity page while bulk upload.');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set the number media on Activity page while bulk upload.' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->verifyEnableStatus($I,ConstantsPage::$strMediaUploadFromActivityLabel,ConstantsPage::$mediaUploadFromActivityCheckbox);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+    $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
 
-    $I->scrollTo(ConstantsPage::$topSaveButton);
+    $settings->setValue( ConstantsPage::$numOfMediaLabelActivity, ConstantsPage::$numOfMediaTextboxActivity, ConstantsPage::$numOfMediaPerPageOnActivity );
 
-    $settings->setValue($I,ConstantsPage::$numOfMediaLabelActivity,ConstantsPage::$numOfMediaTextboxActivity,ConstantsPage::$numOfMediaPerPageOnActivity);
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $I->wait( 5 );
+    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox );
 
-    $buddypress = new BuddypressSettingsPage($I);
-    $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
-    $I->seeElementInDOM(ConstantsPage::$uploadButtonOnAtivityPage);
+    $I->seeElementInDOM( ConstantsPage::$uploadButtonOnAtivityPage );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->bulkUploadMediaFromActivity($I,ConstantsPage::$imageName,ConstantsPage::$numOfMediaPerPageOnActivity);    //Assuming Direct upload is disabled
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->bulkUploadMediaFromActivity( ConstantsPage::$imageName, ConstantsPage::$numOfMediaPerPageOnActivity );
 
-    if(ConstantsPage::$numOfMediaPerPageOnActivity > 0){
-            $I->seeNumberOfElements(ConstantsPage::$mediaPerPageActivitySelector,ConstantsPage::$numOfMediaPerPageOnActivity);
+    if( ConstantsPage::$numOfMediaPerPageOnActivity > 0 ){
+            $I->seeNumberOfElements( ConstantsPage::$mediaPerPageActivitySelector, ConstantsPage::$numOfMediaPerPageOnActivity );
     }else{
         $temp = 5;
-        $I->seeNumberOfElements(ConstantsPage::$mediaPerPageActivitySelector,$temp);
+        $I->seeNumberOfElements( ConstantsPage::$mediaPerPageActivitySelector, $temp );
     }
 
 ?>

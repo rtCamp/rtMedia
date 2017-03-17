@@ -10,28 +10,27 @@
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To set photo medium height and width when Crop is disabled.');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set photo medium height and width when Crop is disabled.' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$mediaSizesTab,ConstantsPage::$mediaSizesTabUrl);
-    $settings->setMediaSize($I,ConstantsPage::$photoMediumLabel,ConstantsPage::$mediumWidthTextbox,ConstantsPage::$mediumWidth,ConstantsPage::$mediumHeightTextbox,ConstantsPage::$mediummHeight);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
+    $settings->setMediaSize( ConstantsPage::$photoMediumLabel, ConstantsPage::$mediumWidthTextbox, ConstantsPage::$mediumWidth, ConstantsPage::$mediumHeightTextbox, ConstantsPage::$mediummHeight );
 
-    $I->scrollTo(ConstantsPage::$topSaveButton);
+    $I->scrollTo( ConstantsPage::$topSaveButton );
 
-    $settings->verifyDisableStatus($I,ConstantsPage::$photoThumbnailLabel,ConstantsPage::$mediumCropCheckbox);
+    $settings->verifyDisableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$mediumCropCheckbox );
 
-    $buddypress = new BuddypressSettingsPage($I);
-    $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaFromActivity($I,ConstantsPage::$imageName);
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
 
-    echo $I->grabAttributeFrom(ConstantsPage::$thumbnailSelector,'width');
-    echo $I->grabAttributeFrom(ConstantsPage::$thumbnailSelector,'height');
-
+    echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
+    echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
 
 ?>

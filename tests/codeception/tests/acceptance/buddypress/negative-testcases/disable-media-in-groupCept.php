@@ -9,18 +9,18 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if media tab is disabled for group.');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'Disabled media for group.' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName,ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$buddypressTab,ConstantsPage::$buddypressTabUrl);
-    $settings->verifyDisableStatus($I,ConstantsPage::$strEnableMediaInGrpLabel,ConstantsPage::$enableMediaInGrpCheckbox);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+    $settings->verifyDisableStatus( ConstantsPage::$strEnableMediaInGrpLabel, ConstantsPage::$enableMediaInGrpCheckbox );
 
-    $buddypress = new BuddypressSettingsPage($I);
-    $buddypress->gotoGroup($I);
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoGroup();
 
-    $I->dontSeeElement(ConstantsPage::$mediaLinkOnGroup);
+    $I->dontSeeElement( ConstantsPage::$mediaLinkOnGroup );
 ?>

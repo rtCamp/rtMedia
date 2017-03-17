@@ -9,23 +9,23 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('Disable upload for music media types');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'Disable upload for music media types' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName,ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$typesTab,ConstantsPage::$typesTabUrl);
-    $settings->verifyDisableStatus($I,ConstantsPage::$musicLabel,ConstantsPage::$musicCheckbox);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$typesTab, ConstantsPage::$typesTabUrl );
+    $settings->verifyDisableStatus( ConstantsPage::$musicLabel, ConstantsPage::$musicCheckbox );
 
-    $buddypress = new BuddypressSettingsPage($I);
-    $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->uploadMediaFromActivity($I,ConstantsPage::$audioName);
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName );
 
-    $I->dontSeeInSource('<li class="rtmedia-list-item media-type-music"></li>');
-    echo nl2br("Audio is not uploaded.. \n");
+    $I->dontSeeInSource( '<li class="rtmedia-list-item media-type-music"></li>' );
+    echo nl2br( "Audio is not uploaded.. \n" );
 
 ?>

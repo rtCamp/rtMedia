@@ -15,7 +15,7 @@ class Constants
     public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
     public static $customCssEmptyValue = '';
 
-    public static $numOfMediaPerPage = '3';
+    public static $numOfMediaPerPage = '4';
     public static $numOfMediaPerPageOnActivity = '3';
     public static $minValue = '1';
 
@@ -35,6 +35,10 @@ class Constants
     public static $singleMusicPlayerWidth = '640';
 
     public static $imgQualityValue = '80';
+
+    public static $rtMediaSettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings';
+    public static $saveSettingsButtonBottom = '.rtm-button-container.bottom .rtmedia-settings-submit';
+    public static $rtMediaSeetings = '#toplevel_page_rtmedia-settings';
 
     public static $topSaveButton = '.rtm-button-container.top input.rtmedia-settings-submit';
 
@@ -149,6 +153,7 @@ class Constants
 
     public static $defaultStyleCheckbox = 'input[name="rtmedia-options[styles_enabled]"]';
     public static $cssTextaear= '.rtm-form-textarea';
+    public static $cssTextarea= 'span.rtm-field-wrap #rtmedia-custom-css';
 
     public static $enableJsonDataCheckbox = 'input[name="rtmedia-options[rtmedia_enable_api]"]';
     public static $enableUsageDataTrackingCheckbox = 'input[name="rtmedia-options[general_AllowUserData]"]';
@@ -187,6 +192,10 @@ class Constants
     public static $groupNameTextbox = 'input#group-name';
     public static $groupDescTextarea = 'textarea#group-desc';
     public static $createGroupButton = 'input#group-creation-create';
-    
+
+    public static $mediaPageScrollPos = '#user-activity';
+    public static $profilePicture = 'div#item-header-avatar';
+    public static $commentLink = 'span > a.rtmedia-comment-link';
+
 
 }

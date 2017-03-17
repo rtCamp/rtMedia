@@ -10,29 +10,30 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if the user is allowed to set default privacy with public option');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set default privacy with public' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName,ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I,ConstantsPage::$privacyTab,ConstantsPage::$privacyTabUrl);
-    $settings->verifyEnableStatus($I,ConstantsPage::$privacyUserOverrideLabel,ConstantsPage::$privacyUserOverrideCheckbox);
-    $settings->verifySelectOption($I,ConstantsPage::$defaultPrivacyLabel,ConstantsPage::$privateRadioButton);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
+    $settings->verifyEnableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
+    $settings->verifyEnableStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
+    $settings->verifySelectOption( ConstantsPage::$defaultPrivacyLabel, ConstantsPage::$privateRadioButton );
 
-    $buddypress = new BuddypressSettingsPage($I);
-    $buddypress->gotoActivityPage($I,ConstantsPage::$userName);
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
-    $uploadmedia = new UploadMediaPage($I);
-    $uploadmedia->addStatus($I);
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->addStatus();
 
-    $I->seeElement(ConstantsPage::$privacyDropdown);
+    $I->seeElement( ConstantsPage::$privacyDropdown );
 
-    if($I->grabValueFrom(ConstantsPage::$privacyDropdown) == '60'){
-        echo nl2br("Default Privacy --> Private \n");
+    if($I->grabValueFrom( ConstantsPage::$privacyDropdown) == '60' ){
+        echo nl2br( "Default Privacy --> Private \n" );
     }else{
-        echo nl2br("Test Failed \n");
+        echo nl2br( "Test Failed \n" );
     }
 
 ?>

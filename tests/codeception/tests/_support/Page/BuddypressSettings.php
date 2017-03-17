@@ -20,11 +20,13 @@ class BuddypressSettings
     /**
     * gotoProfilePage() -> Will take the user to his/her profile page
     */
-    public function gotoProfile($I,$userName){
+    public function gotoProfile( $userName ){
+
+        $I = $this->tester;
 
         $url = 'members/'.$userName.'/profile';
-        $I->amOnPage($url);
-        $I->wait(5);
+        $I->amOnPage( $url );
+        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
     }
 
@@ -62,7 +64,7 @@ class BuddypressSettings
         $I = $this->tester;
 
         $I->amonPage('/groups');
-        $I->wait(5);
+        $I->waitForElement( ConstantsPage::$createGroupLink, 5 );
 
     }
 
@@ -70,6 +72,7 @@ class BuddypressSettings
     * createGroup() -> Will create a new group
     */
     public function createGroup(){
+
         echo "this is from create grp function.";
 
         $I = $this->tester;
@@ -77,10 +80,7 @@ class BuddypressSettings
         $I->seeElementInDOM( ConstantsPage::$createGroupLink );
         $I->click( ConstantsPage::$createGroupLink );
 
-        $I->wait( 10 );
-
-        $I->seeElementInDOM( ConstantsPage::$createGroupTabs );
-
+        $I->waitForElement( ConstantsPage::$createGroupTabs, 5 );
         $I->scrollTo( ConstantsPage::$createGroupTabs );
 
         $I->seeElementInDOM( ConstantsPage::$groupNameTextbox );
@@ -100,22 +100,54 @@ class BuddypressSettings
     /**
     * gotoActivityPage() -> Will take the user to activity page
     */
-    public function gotoActivityPage($I,$userName){
+    public function gotoActivityPage( $userName ){
+
+        $I = $this->tester;
 
         $url = 'members/'.$userName;
         $I->amOnPage($url);
-        $I->wait(5);
+        $I->waitForElement('#whats-new-textarea', 10 );
 
     }
 
+    /**
+    * gotoMedia() -> Will take the user to media page
+    */
+    public function gotoMedia( $userName ){
+
+        $I = $this->tester;
+
+        $url = 'members/'.$userName.'/media';
+        $I->amOnPage($url);
+
+        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+
+    }
+
+    /**
+    * gotoPhotoPage() -> Will take the user to photo page
+    */
     public function gotoPhotoPage( $userName ){
 
         $I = $this->tester;
 
         $url = 'members/'.$userName.'/media/photo';
         $I->amOnPage($url);
+        $I->waitForElement('div.rtmedia-container', 10);
 
-        $I->wait(10);
+    }
+
+    /**
+    * countMedia() -> Will count media
+    */
+    public function countMedia( $selector ){
+
+        $I = $this->tester;
+
+        $mediaArray = $I->grabMultiple( $selector ); // This will grab the no. of media available on media page
+        echo nl2br( 'No of media on page = '. count( $mediaArray ) );
+
+        return count( $mediaArray );
 
     }
 }

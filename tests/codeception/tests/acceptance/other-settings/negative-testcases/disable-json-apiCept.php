@@ -1,22 +1,24 @@
 <?php
 
 /**
-* Scenario : Allow the user to disable Json API.
+* Scenario : Disable Json API.
 */
 
     use Page\Login as LoginPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
 
+    $scrollToTab = ConstantsPage::$mediaSizesTab;
+    $scrollPos = ConstantsPage::$otherSeetingsTab;
 
-    $I = new AcceptanceTester($scenario);
-    $I->wantTo('To check if the user is allowed to disable Json API.');
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'Disable Json API.' );
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin(ConstantsPage::$userName, ConstantsPage::$password);
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage($I);
-    $settings->gotoTab($I, ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl);
-    $settings->verifyDisableStatus($I,ConstantsPage::$strEnableJsonDataLabel, ConstantsPage::$enableJsonDataCheckbox);
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl, $scrollToTab );
+    $settings->verifyDisableStatus( ConstantsPage::$strEnableJsonDataLabel, ConstantsPage::$enableJsonDataCheckbox, $scrollPos );
 
 ?>
