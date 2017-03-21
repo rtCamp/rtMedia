@@ -2550,6 +2550,9 @@ body div.bp_members.bp_member .entry-content {
 .media_search.media_search .media_search_remove.search_option {
   display: none;
 }
+.media_search.media_search .media_search_remove.search_option i {
+  margin-top: 4px;
+}
 .media_search.media_search .search_by {
   background: transparent;
   margin-top: 3px;
