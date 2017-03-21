@@ -44,7 +44,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 			$defaults = array(
 				'general_enableAlbums'				=> 1,
-				'general_enableGallerysearch'		=> 1,
+				'general_enableGallerysearch'		=> 0,
 				'general_enableAlbums_description'	=> 0,
 				'general_enableComments'			=> 0,
 				'general_enableLikes'				=> 1,
