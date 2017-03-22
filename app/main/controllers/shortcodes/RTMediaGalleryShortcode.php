@@ -186,15 +186,15 @@ class RTMediaGalleryShortcode {
 					}
 				}
 
-				/**
-				 * Show media search if search_filter="true"
-				 */
-				if ( isset( $attr['attr']['search_filter'] )  ) {
-					if ( 'true' === $attr['attr']['search_filter'] ) {
-						add_search_filter( $attr['attr'] );
-					}
-			    	unset( $attr['attr']['search_filter'] );
-				}
+				// /**
+				//  * Show media search if search_filter="true"
+				//  */
+				// if ( isset( $attr['attr']['search_filter'] )  ) {
+				// 	if ( 'true' === $attr['attr']['search_filter'] ) {
+				// 		add_search_filter( $attr['attr'] );
+				// 	}
+			 //    	unset( $attr['attr']['search_filter'] );
+				// }
 
 				if ( ! isset( $attr['attr']['context'] ) && isset( $post->post_type ) ) {
 					$attr['attr']['context'] = $post->post_type;
