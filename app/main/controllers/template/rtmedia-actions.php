@@ -861,7 +861,7 @@ function add_search_filter( $attr = null ) {
 
 	global $rtmedia, $rtmedia_query;
 
-	if ( isset( $rtmedia->options['general_enableGallerysearch'] ) && $rtmedia->options['general_enableGallerysearch'] ) {
+	if ( function_exists('rtmedia_media_search_enabled') && rtmedia_media_search_enabled() ) {
 
 		$search_value = ( isset( $_GET['search'] ) ? $_GET['search'] : '' );
 

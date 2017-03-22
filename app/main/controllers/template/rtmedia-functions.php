@@ -4004,3 +4004,20 @@ function rtm_check_member_type() {
 
 	return $status;
 }
+/**
+ * Checking if media search option are enabled
+ *
+ * @global      RTMedia         $rtmedia
+ *
+ * @return      bool
+ */
+function rtmedia_media_search_enabled() {
+
+	global $rtmedia;
+
+	if ( isset( $rtmedia->options['general_enableGallerysearch'] ) ) {
+		return $rtmedia->options['general_enableGallerysearch'];
+	}
+
+	return 0;
+}
