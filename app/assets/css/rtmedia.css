@@ -2493,7 +2493,7 @@ body div.bp_members.bp_member .entry-content {
   line-height: 1.4;
   margin-bottom: 10px;
   clear: both;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 .rtm-media-options > div {
   display: inline-block;
