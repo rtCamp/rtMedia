@@ -2489,6 +2489,10 @@ body div.bp_members.bp_member .entry-content {
   padding: 10px 0;
 }
 
+.rtm-media-options.rtm-media-search-enable > *:nth-last-child(2) {
+  border-right: none;
+}
+
 .rtm-media-options {
   line-height: 1.4;
   margin-bottom: 10px;
