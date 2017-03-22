@@ -413,9 +413,11 @@ jQuery( function( $ ) {
 			e.preventDefault();
 
 			if ( '' === $( '#media_search_input' ).val() ) {
-				return false;
+				$( '#media_search' ).css( 'cursor', 'not-allowed');
+				return false;	
 			}
 
+			$( '#media_search' ).css( 'cursor', 'pointer');
 			$( '#media_fatch_loader' ).addClass('load');
 			nextpage = 1;
 
@@ -442,6 +444,7 @@ jQuery( function( $ ) {
 
 		// media search remove
 		$( document ).on( 'click', '#media_search_remove', function( e ) {
+			$( '#media_search' ).css( 'cursor', 'not-allowed');
 			$( '#media_fatch_loader' ).addClass('load');
 			jQuery( '#media_search_input' ).val('');
 			nextpage = 1;

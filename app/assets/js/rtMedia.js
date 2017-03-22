@@ -925,6 +925,11 @@ window.onload = function() {
 	if ( check_condition( 'search' ) ) {
 		jQuery( '#media_search_remove' ).show();
 	}
+	if ( '' === jQuery( '#media_search_input' ).val() ) {
+		jQuery( '#media_search' ).css( 'cursor', 'not-allowed');
+	} else {
+		jQuery( '#media_search' ).css( 'cursor', 'pointer');
+	}
 };
 
 // Get query string parameters from url
