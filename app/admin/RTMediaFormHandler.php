@@ -297,6 +297,16 @@ class RTMediaFormHandler {
 				),
 				'group'    => '10',
 			),
+			'general_enableGallerysearch' => array(
+				'title' => esc_html__( 'Enable gallery media search', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'general_enableGallerysearch',
+					'value' => $options['general_enableGallerysearch'],
+					'desc' => esc_html__( 'This will display the search box in gallery page.', 'buddypress-media' ),
+				),
+				'group' => '14',
+			),
 			'general_enableLikes' => array(
 				'title'    => __( 'Enable likes for media', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
@@ -388,6 +398,7 @@ class RTMediaFormHandler {
 		$general_group[15]	= esc_html__( 'List Media View', 'buddypress-media' );
 		$general_group[18]	= esc_html__( 'Masonry View', 'buddypress-media' );
 		$general_group[19]	= esc_html__( 'Direct Upload', 'buddypress-media' );
+		$general_group[14]	= esc_html__( 'Gallery Media Search', 'buddypress-media' );
 		$general_group		= apply_filters( 'rtmedia_display_content_groups', $general_group );
 		ksort( $general_group );
 		self::render_tab_content( $render_options, $general_group, 20 );
@@ -799,11 +810,11 @@ class RTMediaFormHandler {
 							$args = array(
 								'key' => 'defaultSizes_' . $parent_key . '_' . $entity['title'],
 							);
-						foreach ( $entity as $child_key => $value ) {
-							if ( 'title' !== $child_key ) {
-								$args[ $child_key ] = $value;
+							foreach ( $entity as $child_key => $value ) {
+								if ( 'title' !== $child_key ) {
+									$args[ $child_key ] = $value;
+								}
 							}
-						}
 							self::dimensions( $args );
 							?>
 						</tr>

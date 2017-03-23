@@ -308,7 +308,6 @@ function add_upload_button() {
 		/**
 		 * Add filter to transfer "Upload" string,
 		 * issue: http://git.rtcamp.com/rtmedia/rtMedia/issues/133
-		 * By: Yahil
 		 */
 		$upload_string = apply_filters( 'rtmedia_upload_button_string', __( 'Upload', 'buddypress-media' ) );
 
@@ -326,6 +325,8 @@ function add_upload_button() {
 
 add_action( 'rtmedia_media_gallery_actions', 'add_upload_button', 99 );
 add_action( 'rtmedia_album_gallery_actions', 'add_upload_button', 99 );
+
+
 
 /**
  * Add music cover art
@@ -709,7 +710,7 @@ function rt_check_addon_status() {
 
 	foreach ( $addons as $addon ) {
 
-		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ){
+		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ) {
 
 			$addon_id = $addon['args']['addon_id'];
 			// If license key is not present, then remove the status from config
@@ -731,7 +732,6 @@ function rt_check_addon_status() {
 					}
 				}
 			}
-
 		}
 
 		if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
@@ -849,6 +849,81 @@ function rtmedia_activity_register_activity_actions_callback() {
 	);
 }
 add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
+
+
+/**
+ * Search Media mockup
+ * @param       array       $attr
+ *
+ * @since  4.4
+ */
+function add_search_filter( $attr = null ) {
+
+	global $rtmedia, $rtmedia_query;
+
+	if ( function_exists('rtmedia_media_search_enabled') && rtmedia_media_search_enabled() ) {
+
+		$search_value = ( isset( $_GET['search'] ) ? $_GET['search'] : '' );
+
+		$html  = "<form method='post' id='media_search_form' class='media_search'>";
+		$html .= "<input type='text' id='media_search_input' value='" . $search_value . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
+		$html .= "<span id='media_fatch_loader'></span>";
+
+		$search_by = '';
+		$search_by = apply_filters( 'rtmedia_media_search_by', $search_by );
+
+		/**
+		 * search media with specific type
+		 * @param       array       $search_by
+		 */
+		if (  isset( $search_by ) && $search_by ) {
+			$html .= "<select id='search_by' class='search_by'>";
+
+			if ( ! rtm_check_member_type() || strpos( $_SERVER['REQUEST_URI'], 'members' ) || ( isset( $attr['media_author'] ) && $attr['media_author'] ) ) {
+				unset( $search_by['member_type'] );
+			}
+
+			if ( strpos( $_SERVER['REQUEST_URI'], 'members' ) ) {
+				unset( $search_by['author'] );
+			}
+
+			if ( function_exists( 'is_plugin_active' ) && ! is_plugin_active( 'rtmedia-custom-attributes/index.php' ) ) {
+				unset( $search_by['attribute'] );
+			}
+
+			if ( strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {
+				unset( $search_by['attribute'] );
+			}
+
+			if ( isset( $rtmedia_query->media_query['media_type'] ) && ! is_array( $rtmedia_query->media_query['media_type'] ) ) {
+				unset( $search_by['media_type'] );
+			}
+
+			if ( isset( $attr['media_author'] ) && $attr['media_author'] ) {
+				unset( $search_by['author'] );
+			}
+			foreach ( $search_by as $key => $value ) {
+				$selected = ( isset( $_REQUEST['search_by'] ) && $_REQUEST['search_by'] == $key ? 'selected' : '' );
+				if ( $search_by[ $key ] ) {
+					$search_keyword = str_replace( '_', ' ', $key );
+
+					$html .= "<option value='$key' $selected > " . esc_html__( $search_keyword, 'buddypress-media' ) . "</option>";
+				}
+			}
+
+			$html .= '</select>';
+		}
+
+		$html .= "<span id='media_search_remove' class='media_search_remove search_option'><i class='dashicons dashicons-no rtmicon'></i></span>";
+		$html .= "<button type='submit' id='media_search' class='search_option'><i class='dashicons dashicons-search rtmicon'></i></button>";
+		$html .= '</form>';
+
+		echo apply_filters( 'rtmedia_gallery_search', $html );
+	}
+}
+
+add_action( 'rtmedia_media_gallery_actions', 'add_search_filter', 99 );
+
 
 
 /**

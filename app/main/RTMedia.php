@@ -1053,6 +1053,7 @@ class RTMedia {
 			'title'       => esc_html__( 'Title:', 'buddypress-media' ),
 			'description' => esc_html__( 'Description:', 'buddypress-media' ),
 		) );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_no_media_found', esc_html__( 'Oops !! There\'s no media found for the request !!', 'buddypress-media' ) );
 
 		// Localizing strings for rtMedia.backbone.js
 		$rtmedia_backbone_strings = array(

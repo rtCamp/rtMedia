@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.3.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-02-23 06:18:32+00:00\n"
+"POT-Creation-Date: 2017-03-15 13:47:24+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -139,7 +139,7 @@ msgstr ""
 
 #: app/admin/RTMediaAdmin.php:727 app/admin/RTMediaAdmin.php:783
 #: app/admin/RTMediaAdmin.php:786 app/admin/RTMediaAdmin.php:949
-#: app/admin/RTMediaAdmin.php:1312 app/helper/RTMediaSettings.php:247
+#: app/admin/RTMediaAdmin.php:1312 app/helper/RTMediaSettings.php:250
 #: app/helper/RTMediaSupport.php:67 app/helper/RTMediaSupport.php:68
 msgid "Support"
 msgstr ""
@@ -400,8 +400,8 @@ msgid ""
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1576 app/admin/RTMediaAdmin.php:1594
-#: app/admin/RTMediaAdmin.php:1612 app/admin/RTMediaFormHandler.php:446
-#: app/admin/RTMediaFormHandler.php:457 app/helper/RTMediaSettings.php:323
+#: app/admin/RTMediaAdmin.php:1612 app/admin/RTMediaFormHandler.php:457
+#: app/admin/RTMediaFormHandler.php:468 app/helper/RTMediaSettings.php:326
 #: app/helper/RTMediaSupport.php:416 app/helper/RTMediaSupport.php:694
 msgid "here"
 msgstr ""
@@ -491,335 +491,347 @@ msgid ""
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:301
-msgid "Enable likes for media"
+msgid "Enable gallery media search"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:306
-msgid "Enabling this setting will add like feature for media."
+msgid "This will display the search box in gallery page."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:311
-msgid "Use lightbox to display media"
+msgid "Enable likes for media"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:316
-msgid "View single media in facebook style lightbox."
+msgid "Enabling this setting will add like feature for media."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:321
+msgid "Use lightbox to display media"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:326
+msgid "View single media in facebook style lightbox."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:331
 msgid "Number of media per page"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:327
+#: app/admin/RTMediaFormHandler.php:337
 msgid "Number of media items you want to show per page on front end."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:333
+#: app/admin/RTMediaFormHandler.php:343
 msgid "Media display pagination option"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:339
+#: app/admin/RTMediaFormHandler.php:349
 msgid "Choose whether you want the load more button or pagination buttons."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:345
+#: app/admin/RTMediaFormHandler.php:355
 msgid "Enable"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:345
+#: app/admin/RTMediaFormHandler.php:355
 msgid "Cascading grid layout"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:350
+#: app/admin/RTMediaFormHandler.php:360
 msgid "If you enable masonry view, it is advisable to"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:350
+#: app/admin/RTMediaFormHandler.php:360
 msgid "for masonry view."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:354
+#: app/admin/RTMediaFormHandler.php:364
 msgid "You might need to"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:354
+#: app/admin/RTMediaFormHandler.php:364
 msgid "change thumbnail size"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:354
+#: app/admin/RTMediaFormHandler.php:364
 msgid "and uncheck the crop box for thumbnails."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:354
+#: app/admin/RTMediaFormHandler.php:364
 msgid ""
 "To set gallery for fixed width, set image height to 0 and width as per your "
 "requirement and vice-versa."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:357
+#: app/admin/RTMediaFormHandler.php:367
 msgid "Enable Direct Upload"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:362
+#: app/admin/RTMediaFormHandler.php:372
 msgid "Uploading media directly as soon as it gets selected."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:386
+#: app/admin/RTMediaFormHandler.php:396
 msgid "Single Media View"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:387 app/helper/RTMediaAddon.php:348
+#: app/admin/RTMediaFormHandler.php:397 app/helper/RTMediaAddon.php:348
 msgid "Media Likes"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:388
+#: app/admin/RTMediaFormHandler.php:398
 msgid "List Media View"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:389
+#: app/admin/RTMediaFormHandler.php:399
 msgid "Masonry View"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:390
+#: app/admin/RTMediaFormHandler.php:400
 msgid "Direct Upload"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:408
+#: app/admin/RTMediaFormHandler.php:401
+msgid "Gallery Media Search"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:419
 msgid "Allow usage data tracking"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:413
+#: app/admin/RTMediaFormHandler.php:424
 msgid ""
 "To make rtMedia better compatible with your sites, you can help the rtMedia "
 "team learn what themes and plugins you are using. No private information "
 "about your setup will be sent during tracking."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:417
+#: app/admin/RTMediaFormHandler.php:428
 msgid "Admin bar menu integration"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:422
+#: app/admin/RTMediaFormHandler.php:433
 msgid ""
 "Add rtMedia menu to WordPress admin bar for easy access to settings and "
 "moderation page (if enabled)."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:427
+#: app/admin/RTMediaFormHandler.php:438
 msgid "Add a link to rtMedia in footer"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:432
+#: app/admin/RTMediaFormHandler.php:443
 msgid "Help us promote rtMedia."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:437
+#: app/admin/RTMediaFormHandler.php:448
 msgid "Also add my affiliate-id to rtMedia footer link"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:442
+#: app/admin/RTMediaFormHandler.php:453
 msgid ""
 "Add your affiliate-id along with footer link and get rewarded by our "
 "affiliation program."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:446
+#: app/admin/RTMediaFormHandler.php:457
 msgid "Signup for"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:446
+#: app/admin/RTMediaFormHandler.php:457
 msgid "affiliate program"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:449
+#: app/admin/RTMediaFormHandler.php:460
 msgid "Enable JSON API"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:454
+#: app/admin/RTMediaFormHandler.php:465
 msgid ""
 "This will allow handling API requests for rtMedia sent through any mobile "
 "app."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:457
+#: app/admin/RTMediaFormHandler.php:468
 msgid "You can refer to the API document from"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:477
+#: app/admin/RTMediaFormHandler.php:488
 msgid "Admin Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:478
+#: app/admin/RTMediaFormHandler.php:489
 msgid "API Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:479
+#: app/admin/RTMediaFormHandler.php:490
 msgid "Miscellaneous"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:480
+#: app/admin/RTMediaFormHandler.php:491
 msgid "Footer Link"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:560
+#: app/admin/RTMediaFormHandler.php:571
 msgid "Media Types Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:568 app/helper/RTMediaSettings.php:345
+#: app/admin/RTMediaFormHandler.php:579 app/helper/RTMediaSettings.php:348
 msgid "Media Type"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:573
+#: app/admin/RTMediaFormHandler.php:584
 msgid "Allow Upload"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:575
+#: app/admin/RTMediaFormHandler.php:586
 msgid "Allows you to upload a particular media type on your post."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:583
+#: app/admin/RTMediaFormHandler.php:594
 msgid "Set Featured"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:585
+#: app/admin/RTMediaFormHandler.php:596
 msgid "Place a specific media as a featured content on the post."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:633
+#: app/admin/RTMediaFormHandler.php:644
 msgid "File Extensions"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:764
+#: app/admin/RTMediaFormHandler.php:775
 msgid "Media Size Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:769
+#: app/admin/RTMediaFormHandler.php:780
 msgid "Category"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:770
+#: app/admin/RTMediaFormHandler.php:781
 msgid "Entity"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:771
+#: app/admin/RTMediaFormHandler.php:782
 msgid "Width"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:772
+#: app/admin/RTMediaFormHandler.php:783
 msgid "Height"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:773
+#: app/admin/RTMediaFormHandler.php:784
 msgid "Crop"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:823
+#: app/admin/RTMediaFormHandler.php:834
 msgid "JPEG/JPG image quality (1-100)"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:829
+#: app/admin/RTMediaFormHandler.php:840
 msgid "Enter JPEG/JPG Image Quality. Minimum value is 1. 100 is original quality."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:837
+#: app/admin/RTMediaFormHandler.php:848
 msgid "Image Quality"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:859
+#: app/admin/RTMediaFormHandler.php:870
 msgid "Custom CSS settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:876
+#: app/admin/RTMediaFormHandler.php:887
 msgid "rtMedia default styles"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:882
+#: app/admin/RTMediaFormHandler.php:893
 msgid ""
 "Load default rtMedia styles. You need to write your own style for rtMedia "
 "if you disable it."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:887
+#: app/admin/RTMediaFormHandler.php:898
 msgid "Paste your CSS code"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:893
+#: app/admin/RTMediaFormHandler.php:904
 msgid "Custom rtMedia CSS container"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:916
+#: app/admin/RTMediaFormHandler.php:927
 msgid "Enable privacy"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:922
+#: app/admin/RTMediaFormHandler.php:933
 msgid "Enable privacy in rtMedia"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:927
+#: app/admin/RTMediaFormHandler.php:938
 msgid "Default privacy"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:933
+#: app/admin/RTMediaFormHandler.php:944
 msgid "Set default privacy for media"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:939
+#: app/admin/RTMediaFormHandler.php:950
 msgid "Allow users to set privacy for their content"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:944
+#: app/admin/RTMediaFormHandler.php:955
 msgid ""
 "If you choose this, users will be able to change privacy of their own "
 "uploads."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:948
+#: app/admin/RTMediaFormHandler.php:959
 msgid "For group uploads, BuddyPress groups privacy is used."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:990
+#: app/admin/RTMediaFormHandler.php:1001
 msgid "Enable media in profile"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:995
+#: app/admin/RTMediaFormHandler.php:1006
 msgid "Enable Media on BuddyPress Profile"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1000
+#: app/admin/RTMediaFormHandler.php:1011
 msgid "Enable media in group"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1005
+#: app/admin/RTMediaFormHandler.php:1016
 msgid "Enable Media on BuddyPress Groups"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1010
+#: app/admin/RTMediaFormHandler.php:1021
 msgid "Allow upload from activity stream"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1015
+#: app/admin/RTMediaFormHandler.php:1026
 msgid "Allow upload using status update box present on activity stream page"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1021
+#: app/admin/RTMediaFormHandler.php:1032
 msgid "Enable media in comment"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1026
+#: app/admin/RTMediaFormHandler.php:1037
 msgid ""
 "This will allow users to upload media in comment section for originally "
 "uploaded media up to 1 level."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1031 app/admin/RTMediaFormHandler.php:1036
+#: app/admin/RTMediaFormHandler.php:1042 app/admin/RTMediaFormHandler.php:1047
 msgid "Disable upload in comment media"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1042
+#: app/admin/RTMediaFormHandler.php:1053
 msgid "Number of media items to show in activity stream"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1047
+#: app/admin/RTMediaFormHandler.php:1058
 msgid ""
 "With bulk uploads activity, the stream may get flooded. You can control the "
 "maximum number of media items or files per activity. This limit will not "
@@ -827,47 +839,47 @@ msgid ""
 "unlimited."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1054
+#: app/admin/RTMediaFormHandler.php:1065
 msgid "Enable media notification"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1059
+#: app/admin/RTMediaFormHandler.php:1070
 msgid ""
 "This will enable notifications to media authors for media likes and "
 "comments."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1065
+#: app/admin/RTMediaFormHandler.php:1076
 msgid "Create activity for media likes"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1070
+#: app/admin/RTMediaFormHandler.php:1081
 msgid "Enabling this setting will create BuddyPress activity for media likes."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1076
+#: app/admin/RTMediaFormHandler.php:1087
 msgid "Create activity for media comments"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1081
+#: app/admin/RTMediaFormHandler.php:1092
 msgid "Enabling this setting will create BuddyPress activity for media comments."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1087
+#: app/admin/RTMediaFormHandler.php:1098
 msgid "Organize media into albums"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1093
+#: app/admin/RTMediaFormHandler.php:1104
 msgid ""
 "This will add 'album' tab to BuddyPress profile and group depending on the "
 "^above^ settings."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1098
+#: app/admin/RTMediaFormHandler.php:1109
 msgid "Show album description"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1104
+#: app/admin/RTMediaFormHandler.php:1115
 msgid "This will show description of an album under album gallery page."
 msgstr ""
 
@@ -1388,73 +1400,73 @@ msgstr ""
 msgid "other friends liked your"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:242
+#: app/helper/RTMediaSettings.php:245
 msgid "BuddyPress Media Addons for Photos"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:252
+#: app/helper/RTMediaSettings.php:255
 msgid "rtMedia Themes"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:322
+#: app/helper/RTMediaSettings.php:325
 msgid ""
 "Currently your network allows uploading of the following file types. You "
 "can change the settings %s"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:343 app/helper/RTMediaSettings.php:345
+#: app/helper/RTMediaSettings.php:346 app/helper/RTMediaSettings.php:348
 msgid "Atleast one Media Type Must be selected"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:354 app/helper/RTMediaSettings.php:356
+#: app/helper/RTMediaSettings.php:357 app/helper/RTMediaSettings.php:359
 msgid "\"Number of media\" count value should be numeric and greater than 0."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:356
+#: app/helper/RTMediaSettings.php:359
 msgid "Default Count"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:361
+#: app/helper/RTMediaSettings.php:364
 msgid "Settings saved."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:385
+#: app/helper/RTMediaSettings.php:388
 msgid "If you make changes to width, height or crop settings, you must use "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:386
+#: app/helper/RTMediaSettings.php:389
 msgid "Regenerate Thumbnail Plugin"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:387
+#: app/helper/RTMediaSettings.php:390
 msgid " to regenerate old images."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:410
+#: app/helper/RTMediaSettings.php:413
 msgid "BuddyPress Media 2.6 requires a database upgrade. "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:411
+#: app/helper/RTMediaSettings.php:414
 msgid "Update Database"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:425
+#: app/helper/RTMediaSettings.php:428
 msgid ""
 "If your site has some issues due to rtMedia and you want one on one support "
 "then you can create a support topic on the "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:426
+#: app/helper/RTMediaSettings.php:429
 msgid "rtMedia Support Forum"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:428
+#: app/helper/RTMediaSettings.php:431
 msgid ""
 "If you have any suggestions, enhancements or bug reports, then you can open "
 "a new issue on "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:429 app/helper/RTMediaSupport.php:467
+#: app/helper/RTMediaSettings.php:432 app/helper/RTMediaSupport.php:467
 msgid "GitHub"
 msgstr ""
 
@@ -2147,16 +2159,16 @@ msgstr ""
 msgid "Album"
 msgstr ""
 
-#: app/main/RTMedia.php:663 app/main/RTMedia.php:1066
+#: app/main/RTMedia.php:663 app/main/RTMedia.php:1067
 #: app/main/controllers/media/RTMediaAlbum.php:53
 #: app/main/controllers/media/RTMediaAlbum.php:65
 msgid "Albums"
 msgstr ""
 
 #: app/main/RTMedia.php:673 app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rtmedia-actions.php:313
-#: app/main/controllers/template/rtmedia-actions.php:316
-#: app/main/controllers/template/rtmedia-actions.php:320
+#: app/main/controllers/template/rtmedia-actions.php:312
+#: app/main/controllers/template/rtmedia-actions.php:315
+#: app/main/controllers/template/rtmedia-actions.php:319
 msgid "Upload"
 msgstr ""
 
@@ -2329,27 +2341,31 @@ msgstr ""
 msgid "Description:"
 msgstr ""
 
-#: app/main/RTMedia.php:1059
+#: app/main/RTMedia.php:1056 templates/media/media-gallery.php:92
+msgid "Oops !! There's no media found for the request !!"
+msgstr ""
+
+#: app/main/RTMedia.php:1060
 msgid "Edit File Name"
 msgstr ""
 
-#: app/main/RTMedia.php:1067
+#: app/main/RTMedia.php:1068
 msgid "Privacy updated successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1068
+#: app/main/RTMedia.php:1069
 msgid "Couldn't change privacy, please try again."
 msgstr ""
 
-#: app/main/RTMedia.php:1069
+#: app/main/RTMedia.php:1070
 msgid "file deleted successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1101
+#: app/main/RTMedia.php:1102
 msgid "There are some uploads in progress. Do you want to cancel them?"
 msgstr ""
 
-#: app/main/RTMedia.php:1211
+#: app/main/RTMedia.php:1212
 msgid "Adding media in Comments is not allowed"
 msgstr ""
 
@@ -2758,8 +2774,8 @@ msgid "Unlike"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rtmedia-actions.php:316
-#: app/main/controllers/template/rtmedia-actions.php:320
+#: app/main/controllers/template/rtmedia-actions.php:315
+#: app/main/controllers/template/rtmedia-actions.php:319
 msgid "Upload Media"
 msgstr ""
 
@@ -2807,7 +2823,7 @@ msgstr ""
 msgid "Default Privacy"
 msgstr ""
 
-#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:256
+#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:266
 msgid "You do not have sufficient privileges to view this gallery"
 msgstr ""
 
@@ -2882,45 +2898,45 @@ msgstr ""
 msgid "Merge"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:364
+#: app/main/controllers/template/rtmedia-actions.php:365
 msgid "Empowering your community with "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:365
+#: app/main/controllers/template/rtmedia-actions.php:366
 msgid "The only complete media solution for WordPress, BuddyPress and bbPress"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:384
+#: app/main/controllers/template/rtmedia-actions.php:385
 msgid "Close (Esc)"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:529
+#: app/main/controllers/template/rtmedia-actions.php:530
 msgid "You can consider rtMedia Team for following :"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:531
+#: app/main/controllers/template/rtmedia-actions.php:532
 msgid "rtMedia Customization ( in Upgrade Safe manner )"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:532
+#: app/main/controllers/template/rtmedia-actions.php:533
 msgid "WordPress/BuddyPress Theme Design and Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:533
+#: app/main/controllers/template/rtmedia-actions.php:534
 msgid "WordPress/BuddyPress Plugin Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:536
+#: app/main/controllers/template/rtmedia-actions.php:537
 msgid "Contact Us"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:623
 #: app/main/controllers/template/rtmedia-actions.php:624
+#: app/main/controllers/template/rtmedia-actions.php:625
 msgid "Previous"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:625
 #: app/main/controllers/template/rtmedia-actions.php:626
+#: app/main/controllers/template/rtmedia-actions.php:627
 #: templates/media/album-single-edit.php:121
 msgid "Next"
 msgstr ""
@@ -3208,10 +3224,6 @@ msgstr ""
 
 #: templates/media/media-gallery.php:17 templates/media/media-gallery.php:37
 msgid "Media Gallery"
-msgstr ""
-
-#: templates/media/media-gallery.php:92
-msgid "Oops !! There's no media found for the request !!"
 msgstr ""
 
 #: templates/media/media-single-edit.php:48

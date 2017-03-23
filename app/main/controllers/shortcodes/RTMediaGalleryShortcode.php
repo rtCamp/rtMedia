@@ -212,6 +212,18 @@ class RTMediaGalleryShortcode {
 				$template_url = esc_url( add_query_arg( $media_template_args, admin_url( 'admin-ajax.php' ) ), null, '' );
 			}
 			wp_localize_script( 'rtmedia-backbone', 'template_url', $template_url );
+			
+			/**
+			 * Remove search_filter paramater from attr,
+			 * Reason: Showing error on Database Errors [ SQL Query ]
+			 * Solution: Unset search_filter parameter store value on another variable.
+			 */
+			if ( isset( $attr['attr']['search_filter'] )  ) {
+				if ( 'true' === $attr['attr']['search_filter'] ) {
+					$search_filter_status = $attr['attr']['search_filter'];
+					unset( $attr['attr']['search_filter'] );
+				}
+		    }
 
 			if ( $authorized_member ) {  // if current user has access to view the gallery (when context is 'group')
 				global $rtmedia_query;
@@ -237,6 +249,13 @@ class RTMediaGalleryShortcode {
 				if ( isset( $remove_comment_media ) && ! empty( $remove_comment_media ) ) {
 					add_filter( 'rtmedia-model-where-query', array( 'RTMediaGalleryShortcode', 'rtmedia_query_where_filter_remove_comment_media' ), 11, 3 );
 					$attr['attr']['hide_comment_media'] = true;
+				}
+
+				/**
+				 * Set search_filter into attr array, if set search_filter parameter in shortcode.
+				 */
+				if ( isset( $search_filter_status ) ) {
+					$attr['attr']['search_filter'] = $search_filter_status;
 				}
 
 				$template->set_template( $gallery_template, $attr );

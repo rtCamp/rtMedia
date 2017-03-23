@@ -92,7 +92,8 @@ jQuery( function( $ ) {
 			}
 			return url;
 		},
-		getNext: function( page, el, element ) {
+		getNext: function( page, el, element) {
+
 			if ( jQuery( '.rtmedia-no-media-found' ).length > 0 ) {
 				jQuery( '.rtmedia-no-media-found' ).replaceWith( '<ul class=\'rtmedia-list rtmedia-list-media\'></ul>' );
 			}
@@ -106,15 +107,32 @@ jQuery( function( $ ) {
 				}
 				$( '#rtmedia-gallery-item-template' ).load( template_url, { backbone: true, is_album: o_is_album, is_edit_allowed: o_is_edit_allowed }, function() {
 					rtmedia_load_template_flag = false;
-					that.getNext( page, el, element );
+					that.getNext( page, el, element);
 				} );
 			}
 
 			if ( ! rtmedia_load_template_flag ) {
 				var query = {
 					json: true,
-					rtmedia_page: nextpage
 				};
+
+				//media search
+				if( check_condition( 'search' ) ) {
+					if ( '' != $( '#media_search_input' ).val() ) {
+						var search = check_url( 'search' );
+						query.search = search;
+						if ( check_condition( 'search_by' ) ) {
+							var search_by = check_url( 'search_by' );
+							query.search_by = search_by;
+						}
+						query.rtmedia_page = nextpage;
+					} else {
+						query.rtmedia_page = 1;
+					}
+				} else {
+					query.rtmedia_page = nextpage;
+				}
+
 				if ( el == undefined ) {
 					el = jQuery( '.rtmedia-list' ).parent().parent();
 				}
@@ -134,10 +152,10 @@ jQuery( function( $ ) {
 						}
 					} );
 				}
-
 				this.fetch( {
 					data: query,
 					success: function( model, response ) {
+
 						jQuery( '.rtm-media-loading' ).hide();
 						var list_el = '';
 
@@ -150,7 +168,6 @@ jQuery( function( $ ) {
 						} else {
 							list_el = element.parent().siblings( '.rtmedia-list' );
 						}
-
 						nextpage = response.next;
 
 						if ( nextpage < 1 ) {
@@ -160,10 +177,13 @@ jQuery( function( $ ) {
 							//$("#rtMedia-galary-next").show();
 						}
 
+						rtMedia.gallery = {};
+						rtMedia.gallery.page = page;
 						var galleryViewObj = new rtMedia.GalleryView( {
 							collection: new rtMedia.Gallery( response.data ),
-							el: list_el
+							el: list_el,
 						} );
+
 						//Element.show();
 
 						// get current gallery container object
@@ -185,6 +205,7 @@ jQuery( function( $ ) {
 					}
 				} );
 			}
+
 		},
 		reloadView: function( parent_el ) {
 			upload_sync = true;
@@ -219,6 +240,7 @@ jQuery( function( $ ) {
 		tagName: 'ul',
 		className: 'rtmedia-list',
 		initialize: function() {
+
 			this.template = _.template( $( '#rtmedia-gallery-item-template' ).html() );
 			this.render();
 		},
@@ -230,13 +252,17 @@ jQuery( function( $ ) {
 				$( that.el ).html( '' );
 			}
 
-			if ( typeof ( rtmedia_load_more_or_pagination ) != 'undefined' && rtmedia_load_more_or_pagination == 'pagination' ) {
+			if ( typeof ( rtmedia_load_more_or_pagination ) != 'undefined' && rtmedia_load_more_or_pagination == 'pagination' || ( 1 == rtMedia.gallery.page ) ) {
 				$( that.el ).html( '' );
 			}
 
-			$.each( this.collection.toJSON(), function( key, media ) {
-				$( that.el ).append( that.template( media ) );
-			} );
+			if ( 0 == this.collection.length ) {
+				$( that.el ).append( rtmedia_no_media_found );
+			} else {
+				$.each( this.collection.toJSON(), function( key, media ) {
+					$( that.el ).append( that.template( media ) );
+				} );
+			}
 
 			if ( upload_sync ) {
 				upload_sync = false;
@@ -245,9 +271,10 @@ jQuery( function( $ ) {
 				$( that.el ).siblings( '.rtmedia_next_prev' ).children( '#rtMedia-galary-next' ).show();
 				//$("#rtMedia-galary-next").show();
 			}
-			if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+			if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && 0 == jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length ) {
 				rtm_masonry_reload( rtm_masonry_container );
 			}
+			$( '#media_fatch_loader' ).removeClass('load');
 		},
 		appendTo: function( media ) {
 			var mediaView = new rtMedia.MediaView( {
@@ -280,7 +307,6 @@ jQuery( function( $ ) {
 
 	/**
 	 * onClick Show all comment
-	 * By: Yahil
 	 */
 	$( document ).on( 'click', '#rtmedia_show_all_comment', function() {
 		var show_comment = $( '#rtmedia_show_all_comment' ).parent().next();
@@ -361,8 +387,71 @@ jQuery( function( $ ) {
 					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
 			}
 
-			change_rtBrowserAddressUrl( href, '' );
+			if( check_condition( 'search' ) ) {
+				var search_val = check_url( 'search' );
+				href += '?search=' + search_val;
 
+				if( check_condition( 'search_by' ) ) {
+					var search_by = check_url( 'search_by' );
+					href += '&search_by=' + search_by ;
+				}
+			}
+
+			change_rtBrowserAddressUrl( href, '' );
+			if ( $( this ).data( 'page-type' ) == 'num' ) {
+				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
+			} else {
+				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
+			}
+		} );
+
+		$( document ).on( 'submit', 'form#media_search_form', function( e ) {
+			e.preventDefault();
+
+			if ( '' === $( '#media_search_input' ).val() ) {
+				return false;	
+			}
+
+			$( '#media_search' ).css( 'cursor', 'pointer');
+			$( '#media_fatch_loader' ).addClass('load');
+			nextpage = 1;
+
+			var href = window.location.href;
+			var remove_url = '';
+			path = window.location;
+			if ( check_condition( '/media' ) ) {
+				remove_url = path.pathname.substr(path.pathname.indexOf('media')+6);
+			} else {
+
+			}
+
+			href = window.location.pathname.replace( remove_url,'' ) + '?';
+			href += 'search=' + $( '#media_search_input' ).val();
+			if ( $( '#search_by' ).length > 0 ) {
+				href += '&search_by=' + $( '#search_by' ).val();
+			}
+
+			change_rtBrowserAddressUrl( href, '' );
+			galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
+
+			$( '#media_search_remove' ).show();
+		} );
+
+		// media search remove
+		$( document ).on( 'click', '#media_search_remove', function( e ) {
+			$( '#media_search' ).css( 'cursor', 'not-allowed');
+			$( '#media_fatch_loader' ).addClass('load');
+			jQuery( '#media_search_input' ).val('');
+			nextpage = 1;
+			var href = window.location.pathname;
+			if ( check_condition( '/pg' ) ) {
+				remove_index = href.indexOf('pg');
+				remove_href =  href.substring( remove_index );
+				href = href.replace( remove_href, '' );
+			}
+			change_rtBrowserAddressUrl( href, '' );
+			galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
+			$( '#media_search_remove' ).hide();
 		} );
 
 		if ( window.location.pathname.indexOf( rtmedia_media_slug ) != -1 ) {
@@ -1567,6 +1656,44 @@ function change_rtBrowserAddressUrl( url, page ) {
 }
 
 
+/**
+ * Get query string value
+ * ref: http://stackoverflow.com/questions/9870512/how-to-obtaining-the-querystring-from-the-current-url-with-javascript 
+ * return string
+ */
+function getQueryStringValue (key) {
+  return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+}
+
+/**
+ * Check paramater are available or not in url
+ * return bool
+ */
+function check_condition( key ) {
+	if( window.location.href.indexOf(key) > 0 ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Check paramater are available or not in URL parameters
+ * Ref: https://www.kevinleary.net/jquery-parse-url
+ * return bool
+ */
+function check_url( query ) {
+	query = query.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var expr = "[\\?&]"+query+"=([^&#]*)";
+    var regex = new RegExp( expr );
+    var results = regex.exec( window.location.href );
+    if( null !== results ) {
+        return results[1];
+        return decodeURIComponent(results[1].replace(/\+/g, " "));
+    } else {
+        return false;
+    }
+}
 
 /*
  * To change this template, choose Tools | Templates
@@ -2097,10 +2224,9 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 
 			rtMediaHook.call( 'rtmedia_js_after_files_added', [ upl, rfiles ] );
 
-			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-				
+			if ( 'undefined' != typeof rtmedia_direct_upload_enabled && '1' == rtmedia_direct_upload_enabled ) {
 				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
-				if ( allow_upload == false ) {
+				if ( false == allow_upload ) {
 					return false;
 				}
 
