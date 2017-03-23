@@ -221,7 +221,7 @@ class RTMediaGalleryShortcode {
 			if ( isset( $attr['attr']['search_filter'] )  ) {
 				if ( 'true' === $attr['attr']['search_filter'] ) {
 					$search_filter_status = $attr['attr']['search_filter'];
-					// unset( $attr['attr']['search_filter'] );
+					unset( $attr['attr']['search_filter'] );
 				}
 		    }
 
