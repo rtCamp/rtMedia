@@ -409,7 +409,6 @@ jQuery( function( $ ) {
 			e.preventDefault();
 
 			if ( '' === $( '#media_search_input' ).val() ) {
-				$( '#media_search' ).css( 'cursor', 'not-allowed');
 				return false;	
 			}
 

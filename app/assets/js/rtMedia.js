@@ -458,6 +458,10 @@ jQuery( 'document' ).ready( function( $ ) {
 		} );
 	} );
 
+	jQuery( '.media_search_input' ).on( 'keyup', function() {
+		rtm_search_media_text_validation();
+	} );
+
 	function rtmedia_media_view_counts() {
 		//Var view_count_action = jQuery('#rtmedia-media-view-form').attr("action");
 		if ( jQuery( '#rtmedia-media-view-form' ).length > 0 ) {
@@ -913,6 +917,7 @@ window.onload = function() {
 	if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && 0 == jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length ) {
 		rtm_masonry_reload( rtm_masonry_container );
 	}
+	rtm_search_media_text_validation();
 	jQuery( '.rtmedia-uploader-div' ).css({
 		'opacity': '1',
 	    'display': 'block',
@@ -925,12 +930,19 @@ window.onload = function() {
 	if ( check_condition( 'search' ) ) {
 		jQuery( '#media_search_remove' ).show();
 	}
+};
+
+/**
+ * Update style as per search testbox value
+ * issue: https://github.com/rtMediaWP/rtMedia/issues/834
+ */
+function rtm_search_media_text_validation() {
 	if ( '' === jQuery( '#media_search_input' ).val() ) {
 		jQuery( '#media_search' ).css( 'cursor', 'not-allowed');
 	} else {
 		jQuery( '#media_search' ).css( 'cursor', 'pointer');
 	}
-};
+}
 
 // Get query string parameters from url
 function rtmediaGetParameterByName( name ) {
