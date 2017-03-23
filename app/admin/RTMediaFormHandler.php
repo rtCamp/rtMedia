@@ -298,14 +298,14 @@ class RTMediaFormHandler {
 				'group'    => '10',
 			),
 			'general_enableGallerysearch' => array(
-				'title'    => esc_html__( 'Enable gallery media search', 'buddypress-media' ),
+				'title' => esc_html__( 'Enable gallery media search', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'     => array(
-					'key'   => 'general_enableGallerysearch',
+				'args' => array(
+					'key' => 'general_enableGallerysearch',
 					'value' => $options['general_enableGallerysearch'],
-					'desc'  => esc_html__( 'This will display the search box in gallery page.', 'buddypress-media' ),
+					'desc' => esc_html__( 'This will display the search box in gallery page.', 'buddypress-media' ),
 				),
-				'group'    => '14',
+				'group' => '14',
 			),
 			'general_enableLikes' => array(
 				'title'    => __( 'Enable likes for media', 'buddypress-media' ),

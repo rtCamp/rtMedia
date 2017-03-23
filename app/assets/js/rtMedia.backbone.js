@@ -118,7 +118,7 @@ jQuery( function( $ ) {
 
 				//media search
 				if( check_condition( 'search' ) ) {
-					if ( $( '#media_search_input' ).val() != '' ) {
+					if ( '' != $( '#media_search_input' ).val() ) {
 						var search = check_url( 'search' );
 						query.search = search;
 						if ( check_condition( 'search_by' ) ) {
@@ -256,7 +256,7 @@ jQuery( function( $ ) {
 				$( that.el ).html( '' );
 			}
 
-			if ( this.collection.length == 0 ) {
+			if ( 0 == this.collection.length ) {
 				$( that.el ).append( rtmedia_no_media_found );
 			} else {
 				$.each( this.collection.toJSON(), function( key, media ) {
@@ -271,7 +271,7 @@ jQuery( function( $ ) {
 				$( that.el ).siblings( '.rtmedia_next_prev' ).children( '#rtMedia-galary-next' ).show();
 				//$("#rtMedia-galary-next").show();
 			}
-			if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+			if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && 0 == jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length ) {
 				rtm_masonry_reload( rtm_masonry_container );
 			}
 			$( '#media_fatch_loader' ).removeClass('load');
@@ -375,7 +375,6 @@ jQuery( function( $ ) {
 						nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_last_page' ).val() );
 					} else {
 						nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_go_to_num' ).val() );
-// <<<<<<< HEAD
 				}
 
 				/* Set page url for input type num pagination */
@@ -388,27 +387,24 @@ jQuery( function( $ ) {
 					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
 			}
 
-
 			if( check_condition( 'search' ) ) {
-
 				var search_val = check_url( 'search' );
 				href += '?search=' + search_val;
+
 				if( check_condition( 'search_by' ) ) {
 					var search_by = check_url( 'search_by' );
 					href += '&search_by=' + search_by ;
 				}
 			}
+
 			change_rtBrowserAddressUrl( href, '' );
 			if ( $( this ).data( 'page-type' ) == 'num' ) {
 				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
 			} else {
 				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
 			}
-
-
 		} );
 
-		// $( document ).on( 'click', '#media_search', function( e ) {
 		$( document ).on( 'submit', 'form#media_search_form', function( e ) {
 			e.preventDefault();
 
@@ -1660,10 +1656,20 @@ function change_rtBrowserAddressUrl( url, page ) {
 	}
 }
 
+
+/**
+ * Get query string value
+ * ref: http://stackoverflow.com/questions/9870512/how-to-obtaining-the-querystring-from-the-current-url-with-javascript 
+ * return string
+ */
 function getQueryStringValue (key) {
   return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
 }
 
+/**
+ * Check paramater are available or not in url
+ * return bool
+ */
 function check_condition( key ) {
 	if( window.location.href.indexOf(key) > 0 ) {
 		return true;
@@ -1672,12 +1678,17 @@ function check_condition( key ) {
 	}
 }
 
+/**
+ * Check paramater are available or not in URL parameters
+ * Ref: https://www.kevinleary.net/jquery-parse-url
+ * return bool
+ */
 function check_url( query ) {
 	query = query.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
     var expr = "[\\?&]"+query+"=([^&#]*)";
     var regex = new RegExp( expr );
     var results = regex.exec( window.location.href );
-    if( results !== null ) {
+    if( null !== results ) {
         return results[1];
         return decodeURIComponent(results[1].replace(/\+/g, " "));
     } else {
@@ -2214,9 +2225,9 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 
 			rtMediaHook.call( 'rtmedia_js_after_files_added', [ upl, rfiles ] );
 
-			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
+			if ( 'undefined' != typeof rtmedia_direct_upload_enabled && '1' == rtmedia_direct_upload_enabled ) {
 				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
-				if ( allow_upload == false ) {
+				if ( false == allow_upload ) {
 					return false;
 				}
 

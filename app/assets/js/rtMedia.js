@@ -910,10 +910,10 @@ function rtm_masonry_reload( el ) {
 })( jQuery );
 
 window.onload = function() {
-	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+	if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && 0 == jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length ) {
 		rtm_masonry_reload( rtm_masonry_container );
 	}
-	jQuery( ' .rtmedia-uploader-div' ).css({
+	jQuery( '.rtmedia-uploader-div' ).css({
 		'opacity': '1',
 	    'display': 'block',
 	    'visibility': 'visible'
