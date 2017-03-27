@@ -752,12 +752,20 @@ jQuery( document ).ready( function ( $ ) {
 	if ( rtmedia_off_label !== undefined )
 		offData = 'data-off-label="' + rtmedia_off_label + '"';
 
+	var files;
+	/* upload file immediately after selecting it */
+	jQuery( 'input[type=file]' ).on( 'change', rtmedia_prepare_upload );
+
+	function rtmedia_prepare_upload( event ) {
+		files = event.target.files;
+		rtmedia_upload_files( event );
+	}
+
 	jQuery( '#rtmedia-submit-request' ).click( function () {
 		var flag = true;
 		var name = jQuery( '#name' ).val();
 		var email = jQuery( '#email' ).val();
 		var website = jQuery( '#website' ).val();
-		var phone = jQuery( '#phone' ).val();
 		var subject = jQuery( '#subject' ).val();
 		var details = jQuery( '#details' ).val();
 		var request_type = jQuery( 'input[name="request_type"]' ).val();
@@ -766,11 +774,11 @@ jQuery( document ).ready( function ( $ ) {
 		var ip_address = jQuery( 'input[name="ip_address"]' ).val();
 		var server_type = jQuery( 'input[name="server_type"]' ).val();
 		var user_agent = jQuery( 'input[name="user_agent"]' ).val();
+		var debuglog_temp_path = jQuery( 'input[name="debuglog_temp_path"]' ).val();
 		var form_data = {
 			name: name,
 			email: email,
 			website: website,
-			phone: phone,
 			subject: subject,
 			details: details,
 			request_id: request_id,
@@ -778,7 +786,8 @@ jQuery( document ).ready( function ( $ ) {
 			server_address: server_address,
 			ip_address: ip_address,
 			server_type: server_type,
-			user_agent: user_agent
+			user_agent: user_agent,
+			debuglog_temp_path: debuglog_temp_path
 		};
 		if ( request_type == "bug_report" ) {
 			var wp_admin_username = jQuery( '#wp_admin_username' ).val();
@@ -810,7 +819,6 @@ jQuery( document ).ready( function ( $ ) {
 				name: name,
 				email: email,
 				website: website,
-				phone: phone,
 				subject: subject,
 				details: details,
 				request_id: request_id,
@@ -827,8 +835,11 @@ jQuery( document ).ready( function ( $ ) {
 			};
 		}
 		for ( formdata in form_data ) {
-			if ( form_data[ formdata ] == "" && formdata != 'phone' ) {
+			if ( form_data[ formdata ] == "" && formdata != 'debuglog_temp_path' ) {
 				alert( "Please enter " + formdata.replace( "_", " " ) + " field." );
+				return false;
+			} else if ( form_data[ formdata ] == "" && formdata == 'debuglog_temp_path' ) {
+				alert( "Please upload attachment." );
 				return false;
 			}
 		}
@@ -848,6 +859,44 @@ jQuery( document ).ready( function ( $ ) {
 		} );
 		return false;
 	} );
+
+	/* Upload file to temporary folder  */
+	function rtmedia_upload_files( event ) {
+		event.stopPropagation(); // Stop stuff happening
+		event.preventDefault(); // Totally stop stuff happening
+
+		/* Create a formdata object and add the files */
+		var data = new FormData();
+		jQuery.each( files, function( key, value ) {
+			data.append( key, value );
+		});
+
+		jQuery.ajax ({
+			url: rtmedia_fileupload_url,
+			type: 'POST',
+			data: data,
+			cache: false,
+			dataType: 'json',
+			processData: false,
+			contentType: false,
+			success: function( data ) {
+
+				if( typeof data.error === 'undefined' ) {
+					if ( data.exceed_size_msg ) {
+						jQuery( '#debuglog' ).val( '' );
+						alert( data.exceed_size_msg );
+						return false;
+					}
+					/* if file uploaded successfully, then set that path into a hidden field. */
+					jQuery('#debuglog_temp_path').val( data.debug_attachmanet );
+				} else {
+					jQuery( '#debuglog' ).val( '' );
+					/* Show error in alert box. */
+					alert( 'ERRORS: ' + data.error );
+				}
+			}
+		});
+	}
 
 	jQuery( '#cancel-request' ).click( function () {
 		return false;

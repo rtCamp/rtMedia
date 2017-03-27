@@ -6,7 +6,16 @@ class RTMediaNav {
 		if ( false === $action ) {
 			return;
 		}
-		add_action( 'admin_bar_menu', array( $this, 'admin_nav' ), 99 );
+
+		/**
+		 * Allow users/plugins to reorder/change the position of the 'Media' menu
+		 * in admin action bar
+		 *
+		 * @param int 99
+		 */
+		$order = apply_filters( 'rtmedia_media_admin_bar_menu', 99 );
+
+		add_action( 'admin_bar_menu', array( $this, 'admin_nav' ), $order );
 
 		if ( class_exists( 'BuddyPress' ) ) {
 			add_action( 'bp_init', array( $this, 'custom_media_nav_tab' ), 10, 1 );
@@ -72,14 +81,21 @@ class RTMediaNav {
 			$media_enabled = apply_filters( 'rtmedia_media_enabled_for_current_group', $media_enabled );
 
 			// check if current user can view this group
-			$current_group              = groups_get_current_group();
-			$is_visible_to_current_user = $current_group->is_visible;
+			$current_group = groups_get_current_group();
+			/**
+			 * remove `$current_group->is_visible` and add `bp_group_is_visible( $current_group )`
+			 * reason   : In Buddypress 2.7 `is_visible` return false so we can't display `media` tab on group
+			 * issue id	: http://git.rtcamp.com/rtmedia/rtMedia/issues/119
+			 */
+
+			// $is_visible_to_current_user = $current_group->is_visible;
+			$is_visible_to_current_user = bp_group_is_visible( $current_group );
 
 			if ( $media_enabled && $is_visible_to_current_user ) {
-				$group_counts                                               = $this->actual_counts( $bp->groups->current_group->id, 'group' );
-				$slug                                                       = apply_filters( 'rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG );
+				$group_counts	= $this->actual_counts( $bp->groups->current_group->id, 'group' );
+				$slug			= apply_filters( 'rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG );
 
-				if( isset( $bp->version ) && $bp->version > '2.5.3' ){
+				if ( isset( $bp->version ) && $bp->version > '2.5.3' ) {
 
 					/*
 					 * As from BuddyPress 2.6, you can't access $bp->bp_options_nav directly.
@@ -211,11 +227,11 @@ class RTMediaNav {
 		$albums = '';
 		//condition to keep "Album" tab active
 		if ( array_key_exists( 'media_type', $rtmedia_query->query ) && isset( $rtmedia_query->query['media_type'] ) && ( 'album' === $rtmedia_query->query['media_type'] ) ) {
-             $albums = 'current selected';
-        } elseif ( array_key_exists( 'media_type', $rtmedia_query->action_query )  && isset( $rtmedia_query->action_query->media_type ) && ( 'album' === $rtmedia_query->action_query->media_type ) ) {
-             $albums = 'current selected';
-	
-        }
+			 $albums = 'current selected';
+		} elseif ( array_key_exists( 'media_type', $rtmedia_query->action_query )  && isset( $rtmedia_query->action_query->media_type ) && ( 'album' === $rtmedia_query->action_query->media_type ) ) {
+			 $albums = 'current selected';
+
+		}
 
 		if ( is_rtmedia_album_enable() ) {
 

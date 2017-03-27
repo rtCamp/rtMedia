@@ -1,4 +1,11 @@
-<div class="rtmedia-container">
+<?php
+
+// Generate random number for gallery container
+// This will be useful when multiple gallery shortcodes are used in a single page
+$rand_id = rand( 0, 1000 );
+
+?>
+<div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo $rand_id;?>">
 	<?php
 	do_action( 'rtmedia_before_album_gallery' );
 
@@ -65,7 +72,7 @@
 	<?php } else { ?>
 		<p class="rtmedia-no-media-found">
 			<?php
-			esc_html_e( apply_filters( 'rtmedia_no_media_found_message_filter', 'Sorry !! There\'s no media found for the request !!' ), 'buddypress-media' );
+			apply_filters( 'rtmedia_no_media_found_message_filter', esc_html_e( 'Sorry !! There\'s no media found for the request !!', 'buddypress-media' ) );
 			?>
 		</p>
 	<?php } ?>

@@ -5,30 +5,33 @@
  */
 function rtmedia_author_actions() {
 
-	$options_start = $options_end = $option_buttons = $output = '';
-	$options       = array();
-	$options       = apply_filters( 'rtmedia_author_media_options', $options );
+	$author_actions = apply_filters( 'rtmedia_author_actions', true );
+	if ( isset( $author_actions ) && ! empty( $author_actions ) ) {
+		$options_start = $options_end = $option_buttons = $output = '';
+		$options       = array();
+		$options       = apply_filters( 'rtmedia_author_media_options', $options );
 
-	if ( ! empty( $options ) ) {
-		$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
-                <div class="no-js">
-                <button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . esc_html__( 'Options', 'buddypress-media' ) . '</button>
-                <ul class="rtm-options">';
+		if ( ! empty( $options ) ) {
+			$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
+					<div class="no-js">
+					<button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . esc_html__( 'Options', 'buddypress-media' ) . '</button>
+					<ul class="rtm-options">';
 
-		foreach ( $options as $action ) {
-			if ( ! empty( $action ) ) {
-				$option_buttons .= '<li>' . $action . '</li>';
+			foreach ( $options as $action ) {
+				if ( ! empty( $action ) ) {
+					$option_buttons .= '<li>' . $action . '</li>';
+				}
 			}
-		}
 
-		$options_end = '</ul></div></div>';
+			$options_end = '</ul></div></div>';
 
-		if ( ! empty( $option_buttons ) ) {
-			$output = $options_start . $option_buttons . $options_end;
-		}
+			if ( ! empty( $option_buttons ) ) {
+				$output = $options_start . $option_buttons . $options_end;
+			}
 
-		if ( ! empty( $output ) ) {
-			echo $output; // @codingStandardsIgnoreLine
+			if ( ! empty( $output ) ) {
+				echo $output; // @codingStandardsIgnoreLine
+			}
 		}
 	}
 
@@ -73,7 +76,6 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 
 		if ( current_user_can( 'edit_posts' ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/image-edit.php' );
-
 			$nonce         = wp_create_nonce( "image_editor-$media_id" );
 			$modify_button = '<p><input type="button" class="button rtmedia-image-edit" id="imgedit-open-btn-' . esc_attr( $media_id ) . '" onclick="imageEdit.open( \'' . esc_attr( $media_id ) . '\', \'' . esc_attr( $nonce ) . '\' )" value="' . esc_attr__( 'Modify Image', 'buddypress-media' ) . '"> <span class="spinner"></span></p>';
 		}
@@ -105,8 +107,10 @@ add_action( 'rtmedia_add_edit_tab_content', 'rtmedia_image_editor_content', 12, 
  * @param       string          $media_type
  */
 function rtmedia_add_album_selection_field( $media_type ) {
+	/* if comment media then album option is depend  on the top activity */
+	$comment_media = rtmedia_is_comment_media( rtmedia_id() );
 
-	if ( is_rtmedia_album_enable() && isset( $media_type ) && 'album' != $media_type && apply_filters( 'rtmedia_edit_media_album_select', true ) ) {
+	if ( empty( $comment_media ) && is_rtmedia_album_enable() && isset( $media_type ) && 'album' != $media_type && apply_filters( 'rtmedia_edit_media_album_select', true ) ) {
 		global $rtmedia_query;
 
 		$curr_album_id = '';
@@ -145,9 +149,9 @@ function rtmedia_gallery_options() {
 
 	if ( ! empty( $options ) ) {
 		$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
-                <div class="no-js">
-                <div class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . esc_html__( 'Options', 'buddypress-media' ) . '</div>
-                <ul class="rtm-options">';
+				<div class="no-js">
+				<div class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . apply_filters( 'rtm_gallery_option_label', __( 'Options', 'buddypress-media' ) ) . '</div>
+				<ul class="rtm-options">';
 
 		foreach ( $options as $action ) {
 			if ( ! empty( $action ) ) {
@@ -275,7 +279,6 @@ function rtmedia_item_select() {
 			}
 		}
 	}
-
 }
 
 add_action( 'rtmedia_before_item', 'rtmedia_item_select' );
@@ -301,19 +304,24 @@ add_action( 'rtmedia_query_actions', 'rtmedia_album_merge_action' );
  * Add upload button
  */
 function add_upload_button() {
-
 	if ( function_exists( 'bp_is_blog_page' ) && ! bp_is_blog_page() ) {
+		/**
+		 * Add filter to transfer "Upload" string,
+		 * issue: http://git.rtcamp.com/rtmedia/rtMedia/issues/133
+		 * By: Yahil
+		 */
+		$upload_string = apply_filters( 'rtmedia_upload_button_string', __( 'Upload', 'buddypress-media' ) );
+
 		if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() === get_current_user_id() ) {
-			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</span>';
+			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' . apply_filters( 'rtm_gallery_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) . '</span>';
 		} else {
 			if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 				if ( can_user_upload_in_group() ) {
-					echo '<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</span>';
+					echo '<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="' . apply_filters( 'rtm_gallery_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) . '</span>';
 				}
 			}
 		}
 	}
-
 }
 
 add_action( 'rtmedia_media_gallery_actions', 'add_upload_button', 99 );
@@ -329,7 +337,7 @@ function add_music_cover_art( $file_object, $upload_obj ) {
 
 	$media_obj = new RTMediaMedia();
 	$media     = $media_obj->model->get( array(
-		'id' => $upload_obj->media_ids[0]
+		'id' => $upload_obj->media_ids[0],
 	) );
 
 }
@@ -358,7 +366,6 @@ function rtmedia_link_in_footer() {
 		</div>
 		<?php
 	}
-
 }
 
 add_action( 'wp_footer', 'rtmedia_link_in_footer' );
@@ -394,7 +401,7 @@ function rtmedia_custom_css() {
 	$options = $rtmedia->options;
 
 	if ( ! empty( $options['styles_custom'] ) ) {
-		echo "<style type='text/css'> " . stripslashes( $options['styles_custom'] ) . ' </style>'; // @codingStandardsIgnoreLine
+		echo "<style type='text/css'> " . stripslashes( wp_filter_nohtml_kses( $options['styles_custom'] ) ) . ' </style>'; // @codingStandardsIgnoreLine
 	}
 
 }
@@ -413,7 +420,7 @@ function update_group_media_privacy( $group_id ) {
 	if ( ! empty( $group_id ) && function_exists( 'groups_get_group' ) ) {
 		//get the buddybress group
 		$group = groups_get_group( array(
-			'group_id' => $group_id
+			'group_id' => $group_id,
 		) );
 
 		if ( isset( $group->status ) ) {
@@ -564,13 +571,134 @@ function rtmedia_add_media_delete_nonce_shortcode() {
 	}
 
 }
-
 add_action( 'rtmedia_pre_template', 'rtmedia_add_media_delete_nonce_shortcode' );
 
 /**
- * Get the information ( status, expiry date ) of all the installed addons and store in site option
+ * add function to display pagination on single media page with add_filter
+ * By: Yahil
+ */
+
+if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
+	function rtmedia_single_media_pagination() {
+		$disable = apply_filters( 'rtmedia_single_media_pagination', false );
+		if ( true === $disable ) {
+			return;
+		}
+		if ( rtmedia_id() ) {
+			$model = new RTMediaModel();
+
+			$media = $model->get_media( array(
+				'id'	=> rtmedia_id(),
+			), 0, 1 );
+
+			if ( 'profile' == $media[0]->context ) {
+				$media = $model->get_media( array(
+					'media_author'	=> $media[0]->media_author,
+					'context'		=> $media[0]->context,
+				) );
+			} else if ( 'group' == $media[0]->context ) {
+				$media = $model->get_media( array(
+					'media_author'	=> $media[0]->media_author,
+					'context'		=> $media[0]->context,
+					'context_id'	=> $media[0]->context_id,
+				) );
+			}
+
+			for ( $i = 0; $i < count( $media ); $i++ ) {
+				if ( rtmedia_id() == $media[ $i ]->id ) {
+					if ( 0 != $i ) {
+						$previous = $media[ $i - 1 ]->id;
+					}
+					if ( count( $media ) != $i + 1 ) {
+						$next = $media[ $i + 1 ]->id;
+					}
+					break;
+				}
+			}
+		}
+
+		$html = '';
+
+		$pagination_label = array(
+			'previous_title'	=> __( 'Previous', 'buddypress-media' ),
+			'previous_label'	=> __( 'Previous', 'buddypress-media' ),
+			'next_title'		=> __( 'Next', 'buddypress-media' ),
+			'next_label'		=> __( 'Next', 'buddypress-media' ),
+		);
+
+		$pagination_label = apply_filters( 'rtmedia_media_pagination_label', $pagination_label );
+
+		if ( isset( $previous ) && $previous ) {
+			$html .= '<div class="previous-pagination"><a href="' . esc_url( get_rtmedia_permalink( $previous ) ) . '" title="' . esc_html( $pagination_label['previous_title'] ) . '">' . esc_html( $pagination_label['previous_label'] ) . '</a></div>';
+		}
+		if ( isset( $next ) && $next ) {
+			$html .= '<div class="next-pagination"><a href="' . esc_url( get_rtmedia_permalink( $next ) ) . '" title="' . esc_html( $pagination_label['next_title'] ) . '">' . esc_html( $pagination_label['next_label'] ) . '</a></div>';
+		}
+		echo $html; // @codingStandardsIgnoreLine
+	}
+}
+
+/**
+ * @param $album_id
  *
- * @since 4.1.7
+ * @return array
+ */
+function rtm_get_album_media_count( $album_id ) {
+	global $rtmedia_query;
+
+	$args = array();
+	if ( isset( $album_id ) && $album_id ) {
+		$args['album_id'] = $album_id;
+	}
+	if ( isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] ) {
+		$args['context'] = $rtmedia_query->query['context'];
+	}
+	if ( isset( $rtmedia_query->query['context_id'] ) && $rtmedia_query->query['context_id'] ) {
+		$args['context_id'] = $rtmedia_query->query['context_id'];
+	}
+
+	$rtmedia_model = new RTMediaModel();
+	if ( $args ) {
+		$count = $rtmedia_model->get( $args, false, false, 'media_id desc', true );
+	}
+	return $count;
+}
+
+/**
+ * HTML markup for displaying Media Count of album in album list gallery
+ */
+function rtm_album_media_count() {
+
+	$rtmedia_album_count_status = array(
+		'status'		=> true,
+		'before_string'	=> '',
+		'after_string'	=> '',
+	);
+
+	/**
+	 * rtmedia_string_album_count Filter to update album count status, add string before/after count.
+	 *
+	 * @since 4.8
+	 *
+	 * @param array $rtmedia_album_count_status status, before_string, after_string
+	 *
+	 */
+	$rtmedia_album_count_status = apply_filters( 'rtmedia_string_album_count', $rtmedia_album_count_status );
+
+	if ( isset( $rtmedia_album_count_status ) && $rtmedia_album_count_status['status'] ) {
+		?>
+		<div class="rtmedia-album-media-count" title="<?php echo rtmedia_album_mediacounter() . RTMEDIA_MEDIA_LABEL; ?>">
+			<?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . rtmedia_album_mediacounter() . esc_html( $rtmedia_album_count_status['after_string'] ) ?></div>
+		<?php
+	}
+	?>
+	<?php
+}
+
+add_action( 'rtmedia_after_album_gallery_item', 'rtm_album_media_count' );
+
+/**
+ * Get the information ( status, expiry date ) of all the installed addons and store in site option
  */
 function rt_check_addon_status() {
 	$addons = apply_filters( 'rtmedia_license_tabs', array() );
@@ -580,57 +708,265 @@ function rt_check_addon_status() {
 	}
 
 	foreach ( $addons as $addon ) {
+
+		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ){
+
+			$addon_id = $addon['args']['addon_id'];
+			// If license key is not present, then remove the status from config
+			// This forces the `Deactivate License` to `Activate License`
+			if ( empty( $addon['args']['license_key'] ) ) {
+				delete_option( 'edd_' . $addon_id . '_license_status' );
+			}
+
+			$addon_data = get_option( 'edd_' . $addon_id . '_active' );
+
+			// Remove the license from the addon if black license/input is provided
+			// This allows user to remove the license from the addon
+			if ( ! empty( $addon_data ) && is_object( $addon_data ) && empty( $addon['args']['license_key'] ) ) {
+				if ( isset( $addon_data->success ) && isset( $addon_data->license ) ) {
+					if ( ( isset( $_POST[ 'edd_' . $addon_id . '_license_key' ] ) && '' == $_POST[ 'edd_' . $addon_id . '_license_key' ] ) || '' == $addon_data->success || 'invalid' == $addon_data->license ) {
+						delete_option( 'edd_' . $addon_id . '_license_status' );
+						delete_option( 'edd_' . $addon_id . '_active' );
+
+					}
+				}
+			}
+
+		}
+
 		if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
 
 			$license = $addon['args']['license_key'];
 
 			$addon_name = $addon['name'];
 
-			$addon_id = $addon['args']['addon_id'];
-
 			$addon_active = get_option( 'edd_' . $addon_id . '_active' );
 
-			// listen for activate button to be clicked
-
 			/**
-			 * Check if information about the addon in already fetched from the store
-			 * If it's already fetched, then don't send the request again for the information
+			 * Perform action before addon activation or license update
+			 *
+			 * @since 4.2
+			 *
+			 * @param array 			$addon 			Array containing the license_key, addon_id
+			 *                      	 	 			and addon name
+			 * @param object|boolean 	$addon_active 	Detailed license data of the addon, or boolean
+			 *                                    	  	false if data is not present
 			 */
+			do_action( 'rtmedia_before_addon_activate', $addon, $addon_active );
+
+			if ( isset( $addon_active->expires ) && 'lifetime' != $addon_active->expires ) {
+				$now        = current_time( 'timestamp' );
+				$expiration = strtotime( $addon_active->expires, current_time( 'timestamp' ) );
+
+				// For regularly check for license key is expired from store or not
+				// Check if last verification attempt is expired or not
+				// Will return false if it is expired
+				// It will check for every 6 hours
+				if ( is_multisite() ) {
+					$dont_check_verification = get_site_transient( 'check_rtmedia_license_verifiction_' . $addon_id );
+				} else {
+					$dont_check_verification = get_transient( 'check_rtmedia_license_verifiction_' . $addon_id );
+				}
+
+				if ( $now > $expiration || ( false === $dont_check_verification ) ) {
+
+					// Get license key  information from the store
+					$license_data = rtmedia_activate_addon_license( $addon );
+					if ( $license_data ) {
+						// Store the data in database
+						update_option( 'edd_' . $addon_id . '_active', $license_data );
+					}
+
+					// Once license status is checked from the store, then set the transient to check again
+					if ( is_multisite() ) {
+						set_site_transient( 'check_rtmedia_license_verifiction_' . $addon_id, $license_data, 6 * HOUR_IN_SECONDS );
+					} else {
+						set_transient( 'check_rtmedia_license_verifiction_' . $addon_id, $license_data, 6 * HOUR_IN_SECONDS );
+					}
+				}
+			}
+
+			// Listen for activate button to be clicked
+
+			// Also check if information about the addon in already fetched from the store
+			// If it's already fetched, then don't send the request again for the information
+
 			if ( ! empty( $addon_active ) && ! isset( $_POST[ 'edd_' . $addon_id . '_license_activate' ] ) ) {
 				continue;
 			}
 
-			// Get the store URL from the constant defined in the addon
-			$store_url = constant( 'EDD_' . strtoupper( $addon_id ) . '_STORE_URL' );
+			// Get license key  information from the store
+			$license_data = rtmedia_activate_addon_license( $addon );
 
-			// If store URL not found in the addon, use the default store URL
-			if ( empty( $store_url ) ) {
-				$store_url = 'https://rtmedia.io/';
+			if ( $license_data ) {
+				// Store the data in database
+				update_option( 'edd_' . $addon_id . '_active', $license_data );
 			}
-
-			// data to send in our API request
-			$api_params = array(
-				'edd_action' => 'activate_license',
-				'license'    => $license,
-				'item_name'  => urlencode( $addon_name ), // the name of our product in EDD
-				'url'        => home_url(),
-			);
-
-	        // Call the custom API.
-			$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $store_url ) ), array( 'timeout' => 15, 'sslverify' => false ) );
-
-			// make sure the response came back okay
-			if ( is_wp_error( $response ) ) {
-				return false;
-			}
-
-			// decode the license data
-			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-			// Store the data in database
-			update_option( 'edd_' . $addon_id . '_active', $license_data );
 		}// End if().
 	}// End foreach().
 }
 
 add_action( 'admin_init', 'rt_check_addon_status' );
+
+/**
+ * Display admin notices when license is saved
+ */
+function rtmedia_addons_admin_notice() {
+
+	$screen = get_current_screen();
+
+	if ( 'rtmedia_page_rtmedia-license' === $screen->id ) {
+
+		if ( isset( $_POST ) && count( $_POST ) > 0 ) { ?>
+
+			<div class="notice notice-success is-dismissible">
+				<p><?php _e( 'Settings has been saved successfully.', 'buddypress-media' ); ?></p>
+			</div>
+
+			<div class="notice notice-error is-dismissible">
+				<p><?php _e( 'Refresh the page in case if license data is not showing correct.', 'buddypress-media' ); ?></p>
+			</div>
+	<?php
+		}
+	}
+}
+add_action( 'admin_notices', 'rtmedia_addons_admin_notice' );
+
+/**
+ * Function to add buddypress language conversion to Media activities.
+ * It allow language conversion for all activity
+ * type rtmedia_update".
+ */
+function rtmedia_activity_register_activity_actions_callback() {
+	$bp = buddypress();
+	bp_activity_set_action(
+		$bp->activity->id,
+		'rtmedia_update',
+		__( 'Posted a status update', 'buddypress-media' ),
+		'bp_activity_format_activity_action_activity_update',
+		__( 'rtMedia Updates', 'buddypress-media' ),
+		array( 'activity', 'group', 'member', 'member_groups' )
+	);
+}
+add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
+
+
+/**
+ *
+ * rtmedia_override_canonical Redirect homepage as per parameters passed to query string.
+ * This is added for a page set as a "Front page" in which gallery short-code is there,
+ * so pagination for gallery short-code can work properly.
+ *
+ */
+function rtmedia_override_canonical( $redirect_url, $requested_url ) {
+	if ( is_front_page() && get_query_var( 'pg' ) ) {
+		return $requested_url;
+	} else {
+		return $redirect_url;
+	}
+}
+add_filter( 'redirect_canonical', 'rtmedia_override_canonical', 10, 2 );
+
+/**
+ * rtmedia_gallery_shortcode_json_query_vars Set query vars for json response
+ *
+ * @param  object $wp_query WP query object
+ *
+ */
+function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
+
+	global $wp_query;
+
+	$pagename = '';
+	if ( isset( $wp_query->query_vars['pagename'] ) ) {
+		$pagename = explode( '/', $wp_query->query_vars['pagename'] );
+	}
+	if ( ! empty( $pagename ) && isset( $_REQUEST['json'] ) && 'true' === $_REQUEST['json'] && isset( $_REQUEST['rtmedia_shortcode'] ) && 'true' === $_REQUEST['rtmedia_shortcode'] ) {
+		$pagename = $pagename[0];
+		$wp_query->query_vars['pagename'] = '';
+		$wp_query->query['pagename'] = $pagename . '/pg';
+		$wp_query->query['media'] = '';
+		$wp_query->query_vars['media'] = '';
+	}
+
+	return $wp_query;
+
+}
+add_action( 'pre_get_posts', 'rtmedia_gallery_shortcode_json_query_vars', 99 );
+
+/**
+ *
+ * Rule for pagination for rtmedia gallery shortcode
+ *
+ */
+function rtmedia_gallery_shortcode_rewrite_rules() {
+
+	// Rule for pages
+	add_rewrite_rule( '([^/?]+)/pg/([0-9]*)/?', 'index.php?pg=$matches[2]&pagename=$matches[1]', 'top' );
+
+	// Rule for Day and name
+	add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/?]+)/pg/([0-9]*)/?', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&pg=$matches[5]', 'top' );
+
+	// Rule for Month and name
+	add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([^/?]+)/pg/([0-9]*)/?', 'index.php?year=$matches[1]&monthnum=$matches[2]&name=$matches[3]&pg=$matches[4]', 'top' );
+
+	// Rule for Numeric
+	add_rewrite_rule( 'archives/([0-9]+)/pg/([0-9]*)/?', 'index.php?p=$matches[1]&pg=$matches[2]', 'top' );
+
+	// Rule for posts
+	add_rewrite_rule( '(.?.+?)/pg/?([0-9]{1,})/?$', 'index.php?pg=$matches[2]&name=$matches[1]', 'bottom' );
+
+	// Rule for homepage
+	add_rewrite_rule( 'pg/([0-9]*)/?', 'index.php?page_id=' . get_option( 'page_on_front' ) . '&pg=$matches[1]', 'top' );
+
+}
+add_action( 'rtmedia_add_rewrite_rules', 'rtmedia_gallery_shortcode_rewrite_rules' );
+
+
+/**
+ * update the javascript variable media  view in popup or in single page
+ */
+function rtmedia_after_media_callback() {
+	// comment media
+	$rtmedia_id = rtmedia_id();
+	$comment_media = false;
+	if ( ! empty( $rtmedia_id ) ) {
+		$comment_media = rtmedia_is_comment_media( $rtmedia_id );
+		if ( ! empty( $comment_media ) ) {
+			?>
+			<script type="text/javascript">
+				comment_media = true;
+			</script>
+			<?php
+		} else {
+			?>
+			<script type="text/javascript">
+				comment_media = false;
+			</script>
+			<?php
+		}
+	}
+}
+add_action( 'rtmedia_after_media', 'rtmedia_after_media_callback', 10 );
+
+
+if ( ! function_exists( 'rtmedia_gallery_after_title_callback' ) ) {
+	function rtmedia_gallery_after_title_callback() {
+		// show description in album gallery page
+		global $rtmedia_query;
+		// check if it's an album gallery page and album id is not empty
+		if (
+			isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['media_type'] ) && 'album' == $rtmedia_query->query['media_type']
+			&&
+			isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query['album_id'] ) && ! empty( $rtmedia_query->media_query['album_id'] )
+			&&
+			function_exists( 'rtmedia_get_album_description_setting' ) && rtmedia_get_album_description_setting()
+		) {
+			$description = rtmedia_get_media_description( $rtmedia_query->media_query['album_id'] );
+			if ( ! empty( $description ) ) {
+				echo '<div class="gallery-description gallery-album-description">' . $description . '</div>';
+			}
+		}
+	}
+}
+add_action( 'rtmedia_gallery_after_title', 'rtmedia_gallery_after_title_callback', 11, 1 );

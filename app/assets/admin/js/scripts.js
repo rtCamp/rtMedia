@@ -180,4 +180,33 @@ jQuery( document ).ready( function( $ ) {
 
 	var listView = new ListView();
 
+	/* Prevent license key validation by Enter Key as it deactivates the first plugin's license. */
+	jQuery( '#rtm-licenses .regular-text' ).each( function() {
+		jQuery( this ).keypress(function (event) {
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			/* check if key pressed is "Enter key" or not */
+			if(keycode == '13'){
+				return false;
+			}
+		} );
+	} );
+
+	/* Check if @import is inserted into css or not */
+	jQuery( '#bp_media_settings_form' ).on( 'submit', function( event ) {
+		jQuery( '#rtcss-notice' ).remove();
+		// css input in textarea
+		var css = jQuery( '#rtmedia-custom-css' ).val();
+		// check if @import is used in css
+		var matches = css.match(/@import\s*(url)?\s*\(?([^;]+?)\)?;/);
+		if ( matches != null ) {
+			var removable_line = matches[0];
+
+			// if @import found in the css, then show error message
+			if ( removable_line != null ) {
+				jQuery( '#rtmedia-custom-css' ).after( '<div id="rtcss-notice" class="error"><p>' + rtmedia_admin_strings.wrong_css_input + '</p></div>' );
+				return false;
+			}
+		}
+	} );
+
 } );
