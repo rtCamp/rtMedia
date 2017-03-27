@@ -20,7 +20,7 @@ before_script:
   # - phpcs --config-set error_severity 1
   # - phpcs --config-set warning_severity 0
   # Install git and unzip (composer will need them)
-  # - apt-get update && apt-get install -qqy git unzip
+  - apt-get update && apt-get install -qqy git unzip
   # Install composer
   - sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
   # Install all project dependencies
@@ -38,7 +38,7 @@ script:
   # - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./ -name '*.php')
   # - if find . -name "*.php" ! -path "./node_modules/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
   # Run codeceptin test
-  - /vendor/bin/codecept run acceptance
+  - ./vendor/bin/codecept run acceptance
 # notifications:
 #   slack:
 #     secure: E9tbxOZ/n4Gcwi8SiCKQ5QVw+5AfwdTq4e/VG4epQF74IqXmJJvaJgQSVKLSVXJm4O1u8JHd+ffN1Xheh1FDaKkscuJYQcT4D+oOc40bHhb0tS71v1fAMzMX7NuyqgEu2a8dbYo7bqVKtdj/EBbOPWnwgfMuA6ylTItVf294spA=
