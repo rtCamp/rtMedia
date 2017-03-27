@@ -11,7 +11,7 @@ php:
 #   - vendor/
 
 before_script:
-  # PHP_CodeSniffer
+  ## PHP_CodeSniffer
   # - pear install pear/PHP_CodeSniffer
   # - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
   # - phpenv rehash
@@ -22,11 +22,9 @@ before_script:
   # Install git and unzip (composer will need them)
   # - apt-get update && apt-get install -qqy git unzip
   # Install composer
-  # - curl -s http://getcomposer.org/installer | php
-  # - php composer.phar install
   - sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
   # Install all project dependencies
-   - composer install
+  - composer install
 
 
 install:
@@ -35,7 +33,7 @@ install:
 
 
 script:
-  # PHP_CodeSniffer
+  ## PHP_CodeSniffer
   # - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./ -name '*.php')
   # - if find . -name "*.php" ! -path "./node_modules/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
   # Run codeceptin test
