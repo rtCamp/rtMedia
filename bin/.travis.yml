@@ -25,7 +25,8 @@ before_script:
   - sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
   # Install all project dependencies
   - composer install
-
+  - alias composer="php /usr/local/bin/composer.phar"
+  - export PATH="./vendor/bin:$PATH"
 
 install:
 #install codeception for wordpress
