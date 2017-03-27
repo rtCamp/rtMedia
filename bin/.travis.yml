@@ -6,8 +6,6 @@ before_install:
   - rm -rf ~/.gnupg
   - sudo apt-get install xvfb
 
- sudo: false
-
 # cache:
 #   paths:
 #   - vendor/
