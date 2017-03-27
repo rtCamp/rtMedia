@@ -2,9 +2,9 @@ language: php
 php:
   - 5.5
 
-before_install:
-  - rm -rf ~/.gnupg
-  - sudo apt-get install xvfb
+# before_install:
+#   - rm -rf ~/.gnupg
+#   - sudo apt-get install xvfb
 
 # cache:
 #   paths:
@@ -12,26 +12,31 @@ before_install:
 
 before_script:
   ## PHP_CodeSniffer
-  - pear install pear/PHP_CodeSniffer
-  - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
-  - phpenv rehash
-  - phpcs -i
-  - phpenv rehash
-  - phpcs --config-set error_severity 1
-  - phpcs --config-set warning_severity 0
-  ## Install composer
-  - composer install --no-interaction
-  - composer require lucatume/wp-browser --dev
-  # - apt-get update && apt-get install -qqy git unzip
-  # - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-  # - composer install
+  # - pear install pear/PHP_CodeSniffer
+  # - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
+  # - phpenv rehash
+  # - phpcs -i
+  # - phpenv rehash
+  # - phpcs --config-set error_severity 1
+  # - phpcs --config-set warning_severity 0
+  # Install git and unzip (composer will need them)
+  - apt-get update && apt-get install -qqy git unzip
+  # Install composer
+  - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  # Install all project dependencies
+  - composer install
+
+install:
+#install codeception for wordpress
+- composer require lucatume/wp-browser --dev
+
 
 script:
   ## PHP_CodeSniffer
-  - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./ -name '*.php')
-  - if find . -name "*.php" ! -path "./node_modules/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
+  # - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./ -name '*.php')
+  # - if find . -name "*.php" ! -path "./node_modules/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
   # Run codeceptin test
   - /vendor/bin/codecept run test/acceptance/core-rtMedia-settings/display/negative-testcases/ng-allow-user-commentonuploadedMediaCept.php
-notifications:
-  slack:
-    secure: E9tbxOZ/n4Gcwi8SiCKQ5QVw+5AfwdTq4e/VG4epQF74IqXmJJvaJgQSVKLSVXJm4O1u8JHd+ffN1Xheh1FDaKkscuJYQcT4D+oOc40bHhb0tS71v1fAMzMX7NuyqgEu2a8dbYo7bqVKtdj/EBbOPWnwgfMuA6ylTItVf294spA=
+# notifications:
+#   slack:
+#     secure: E9tbxOZ/n4Gcwi8SiCKQ5QVw+5AfwdTq4e/VG4epQF74IqXmJJvaJgQSVKLSVXJm4O1u8JHd+ffN1Xheh1FDaKkscuJYQcT4D+oOc40bHhb0tS71v1fAMzMX7NuyqgEu2a8dbYo7bqVKtdj/EBbOPWnwgfMuA6ylTItVf294spA=

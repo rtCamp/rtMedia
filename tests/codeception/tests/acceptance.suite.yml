@@ -16,12 +16,12 @@ modules:
             browser: 'firefox'
             url: 'http://krupa.rtcamp.info/'
             adminUsername: ''
-            adminPassword: ''
+            adm inPassword: ''
             adminPath: '/wp-admin'
             capabilities:
               'browserstack.user': 'rtcamp2'
               'browserstack.key': 'kSykn6cYBFQ5o9kgSXpd'
-              'browser_version': 50.0
+              'browser_version': 46.0
               'os': 'OS X'
               'os_version': 'El Capitan'
               'browserstack.debug': 'true'
