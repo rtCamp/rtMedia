@@ -6,9 +6,9 @@ php:
 #   - rm -rf ~/.gnupg
 #   - sudo apt-get install xvfb
 
-# cache:
-#   paths:
-#   - vendor/
+cache:
+  paths:
+  - vendor/
 
 before_script:
   ## PHP_CodeSniffer
