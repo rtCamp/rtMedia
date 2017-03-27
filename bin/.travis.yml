@@ -1,11 +1,12 @@
 language: php
 php:
-  - 5.4
   - 5.5
 
 before_install:
   - rm -rf ~/.gnupg
   - sudo apt-get install xvfb
+
+ sudo: false
 
 # cache:
 #   paths:
@@ -21,6 +22,8 @@ before_script:
   - phpcs --config-set error_severity 1
   - phpcs --config-set warning_severity 0
   ## Install composer
+  - composer install --no-interaction
+  - composer require lucatume/wp-browser --dev
   # - apt-get update && apt-get install -qqy git unzip
   # - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
   # - composer install
