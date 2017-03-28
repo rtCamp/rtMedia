@@ -29,7 +29,7 @@ before_script:
   - composer install
   # - alias composer="php /usr/local/bin/composer.phar"
   # - export PATH="./vendor/bin:$PATH"
-  - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception//vendor/bin"
+  - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
 
 
 # install:
