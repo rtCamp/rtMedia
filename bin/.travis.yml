@@ -23,6 +23,8 @@ before_script:
   # - apt-get update && apt-get install -qqy git unzip
   # Install composer
   - sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+  # Navigate to codeception directory
+  - cd tests/codeception/
   # Install all project dependencies
   - composer install
   # - alias composer="php /usr/local/bin/composer.phar"
