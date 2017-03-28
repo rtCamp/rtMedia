@@ -41,7 +41,7 @@ script:
   ## PHP_CodeSniffer
   # - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./ -name '*.php')
   # - if find . -name "*.php" ! -path "./node_modules/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
-  # Run codeceptin test
+  # Run codeception test
   - wpcept run acceptance
 # notifications:
 #   slack:
