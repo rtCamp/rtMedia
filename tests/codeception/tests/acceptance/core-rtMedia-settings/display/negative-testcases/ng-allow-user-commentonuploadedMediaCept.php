@@ -21,11 +21,12 @@
     $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
     $settings->verifyDisableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
 
+    $uploadmedia = new UploadMediaPage( $I );
+
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia( ConstantsPage::$userName );
 
-    $uploadmedia = new UploadMediaPage( $I );
-    $temp = $uploadmedia->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
+    $temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
 
     if( $temp >= ConstantsPage::$minValue ){
 
