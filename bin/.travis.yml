@@ -1,6 +1,6 @@
 language: php
 php:
-  - 5.5
+  - 5.6.4
 
 # before_install:
 #   - rm -rf ~/.gnupg
@@ -22,7 +22,7 @@ before_script:
   # Install git and unzip (composer will need them)
   # - apt-get update && apt-get install -qqy git unzip
   # Install composer
-  - sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+  # - sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
   # Navigate to codeception directory
   - cd tests/codeception/
   # Install all project dependencies
