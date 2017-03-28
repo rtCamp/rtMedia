@@ -19,8 +19,8 @@ modules:
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-              'browserstack.user': ''
-              'browserstack.key': ''
+              'browserstack.user': 'rtcamp2'
+              'browserstack.key': 'kSykn6cYBFQ5o9kgSXpd'
               'browser_version': 46.0
               'os': 'OS X'
               'os_version': 'El Capitan'
