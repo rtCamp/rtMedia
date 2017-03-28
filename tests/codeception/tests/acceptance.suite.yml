@@ -16,7 +16,7 @@ modules:
             browser: 'firefox'
             url: 'http://krupa.rtcamp.info/'
             adminUsername: ''
-            adm inPassword: ''
+            adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
               'browserstack.user': 'rtcamp2'

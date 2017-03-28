@@ -25,8 +25,10 @@
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia( ConstantsPage::$userName );
 
+    $buddypress = new BuddypressSettingsPage( $I );
+    $temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
+
     $uploadmedia = new UploadMediaPage( $I );
-    $temp = $uploadmedia->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
 
     if( $temp >= ConstantsPage::$minValue ){
 
