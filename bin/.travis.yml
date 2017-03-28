@@ -25,12 +25,14 @@ before_script:
   - sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
   # Install all project dependencies
   - composer install
-  - alias composer="php /usr/local/bin/composer.phar"
-  - export PATH="./vendor/bin:$PATH"
+  # - alias composer="php /usr/local/bin/composer.phar"
+  # - export PATH="./vendor/bin:$PATH"
+  - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/vendor/bin"
 
-install:
-#install codeception for wordpress
-- composer require lucatume/wp-browser --dev
+
+# install:
+# #install codeception for wordpress
+# - composer require lucatume/wp-browser --dev
 
 
 script:
@@ -38,7 +40,7 @@ script:
   # - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./ -name '*.php')
   # - if find . -name "*.php" ! -path "./node_modules/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
   # Run codeceptin test
-  - ./vendor/bin/codecept run acceptance
+  - wpcept run acceptance
 # notifications:
 #   slack:
 #     secure: E9tbxOZ/n4Gcwi8SiCKQ5QVw+5AfwdTq4e/VG4epQF74IqXmJJvaJgQSVKLSVXJm4O1u8JHd+ffN1Xheh1FDaKkscuJYQcT4D+oOc40bHhb0tS71v1fAMzMX7NuyqgEu2a8dbYo7bqVKtdj/EBbOPWnwgfMuA6ylTItVf294spA=
