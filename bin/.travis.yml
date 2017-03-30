@@ -35,6 +35,7 @@ before_script:
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo ee -v
   - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+  - tail -n 50 /var/log/ee/ee.log
   - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=juhi.saxena@rtcamp.com --pass=ADMINPASS
   - sudo chmod 777 -R /var/www
   - sudo cat /etc/mysql/conf.d/my.cnf
