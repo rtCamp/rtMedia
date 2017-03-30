@@ -30,13 +30,13 @@ before_script:
   - sudo apt-get -qq purge mysql* graphviz*
   - sudo apt-get -qq autoremove
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
+  - sudo tail -n 50 /var/log/ee/ee.log
   - sudo wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo rm -vf /var/lib/apt/lists/*
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
   - sudo ee -v
   - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
-  - sudo tail -n 50 /var/log/ee/ee.log
   - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=juhi.saxena@rtcamp.com --pass=ADMINPASS
   - sudo chmod 777 -R /var/www
   - sudo cat /etc/mysql/conf.d/my.cnf
