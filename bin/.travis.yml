@@ -31,8 +31,8 @@ before_script:
   - sudo apt-get -qq autoremove
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
   - sudo wget -qO ee rt.cx/ee && sudo bash ee
-  - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
   - source /etc/bash_completion.d/ee_auto.rc
+  - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
   - sudo ee -v
   - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
   - sudo tail -n 50 /var/log/ee/ee.log
