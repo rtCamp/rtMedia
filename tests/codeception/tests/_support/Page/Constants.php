@@ -3,14 +3,14 @@ namespace Page;
 
 class Constants
 {
-    public static $userName = 'rtcamp';
-    public static $password = 'Test@1230';
+    public static $userName = 'ADMINUSER';
+    public static $password = 'ADMINPASS';
 
     public static $plugin = 'li#menu-plugins';
 
-    public static $imageName = 'test.jpg';
-    public static $videoName = 'sampleVideo.mp4';
-    public static $audioName = 'audio.mp3';
+    public static $imageName = 'test-data/images/test.jpg';
+    public static $videoName = 'test-data/videos/testmpfour.mp4';
+    public static $audioName = 'test-data/music/mpthreetest.mp3';
 
     public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
     public static $customCssEmptyValue = '';
@@ -73,8 +73,6 @@ class Constants
     public static $strActivityMediaLikeLabel = 'Create activity for media likes';
     public static $strActivityMediaCommentLabel = 'Create activity for media comments';
     public static $strMediaUploadFromActivityLabel = 'Allow upload from activity stream';
-    public static $strMediaInCommnetLabel = 'Enable media in comment';
-    public static $strShowAlbumDescLabel = 'Show album description';
 
     public static $photoLabel = 'Photo';
     public static $videoLabel = 'Video';
@@ -117,8 +115,6 @@ class Constants
     public static $activityMediaCommentCheckbox = 'input[name="rtmedia-options[buddypress_mediaCommentActivity]"]';
     public static $mediaUploadFromActivityCheckbox = 'input[name="rtmedia-options[buddypress_enableOnActivity]"]';
     public static $numOfMediaTextboxActivity = 'input[name="rtmedia-options[buddypress_limitOnActivity]"]';
-    public static $mediaInCommentCheckbox = 'input[name="rtmedia-options[buddypress_enableOnComment]"]';
-    public static $albumDescCheckbox = 'input[name="rtmedia-options[general_enableAlbums_description]"]';
 
     public static $photoCheckbox = 'input[name="rtmedia-options[allowedTypes_photo_enabled]"]';
     public static $videoCheckbox = 'input[name="rtmedia-options[allowedTypes_video_enabled]"]';
@@ -197,24 +193,9 @@ class Constants
     public static $groupDescTextarea = 'textarea#group-desc';
     public static $createGroupButton = 'input#group-creation-create';
 
-    public static $mediaUplaodButtonOnComment = 'div button.rtmedia-comment-media-upload';
-    public static $mediaOptionButton = 'div.rtmedia-action-buttons';
-    public static $addAlbumButtonLink = 'ul.rtm-options li a.rtmedia-modal-link';
-    public static $createAlbumPopup = 'div.rtmedia-popup';
-    public static $albumNameTextbox = 'input.rtm-input-medium';
-    public static $createAlbumButton = 'button#rtmedia_create_new_album';
-    public static $closeAlbumButton = 'button.mfp-close';
-    public static $firstAlbum = 'ul.rtmedia-album-list li:nth-child(1)';
-    public static $albumEditLink = 'a.rtmedia-edit';
-    public static $albumDescTeaxtarea = 'textarea.rtmedia-desc-textarea';
-    public static $saveAlbumButton = 'input.rtmedia-save-album';
-    public static $albumDescSelector = '.gallery-description.gallery-album-description';
-
     public static $mediaPageScrollPos = '#user-activity';
     public static $profilePicture = 'div#item-header-avatar';
     public static $commentLink = 'span > a.rtmedia-comment-link';
-    public static $mediaButtonInComment = 'button.rtmedia-comment-media-upload';
-    public static $uploadFileInComment = 'div.moxie-shim.moxie-shim-html5 input[type=file]';
 
     public static $scrollPosToForPlugin = '.wp-list-table.plugins tr[data-slug="buddypress-media"]';
     public static $activateLink = 'tr[data-slug="buddypress-media"] .row-actions span.activate a';
