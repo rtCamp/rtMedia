@@ -41,7 +41,7 @@
 
     }else{
         $I->amOnPage( '/wp-admin' );
-        $I->waitForElement( ConstantsPage::$menuDashboard, 5 );
+        $I->waitForElement( LoginPage::$dashBoardMenu, 5 );
 
         $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload ); //This will check if the direct upload is disabled
@@ -49,7 +49,7 @@
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink);
 
         $I->reloadPage();
-        $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10);
+        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 

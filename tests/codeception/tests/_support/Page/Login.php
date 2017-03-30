@@ -60,6 +60,8 @@ class Login
 
         $I->see('Dashboard');
 
+        $I->maximizeWindow();
+
     }
 
 }

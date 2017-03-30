@@ -1,25 +1,30 @@
 <?php
 
 /**
-* Scenario : To Allow the user to comment on uploaded media.
+* Scenario : To disable upload media in comment.
 */
     use Page\Login as LoginPage;
-    use Page\UploadMedia as UploadMediaPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\UploadMedia as UploadMediaPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $commentStr = 'test comment';
-
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To check if the user is allowed to comment on uploaded media' );
+    $I->wantTo( "To disable upload media in comment." );
 
-    $loginPage = new LoginPage( $I);
+    $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
-    $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+
+    $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl ); // First we need to check if the user is allowed to cooment on upload media.
     $settings->verifyEnableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
+
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
+    $I->wait( 5 );
+
+    $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox ); //We need to check media is enabled for profile or not.
+    $settings->verifyDisableStatus( ConstantsPage::$strMediaInCommnetLabel, ConstantsPage::$mediaInCommentCheckbox );
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia( ConstantsPage::$userName );
@@ -33,15 +38,17 @@
 
         $uploadmedia->fisrtThumbnailMedia();
 
+        $I->seeElement( ConstantsPage::$commentLink );
         $I->scrollTo( ConstantsPage::$commentLink );
+        $I->wait( 3 );
 
         $I->seeElement( UploadMediaPage::$commentTextArea );
-        $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
-        $I->click( UploadMediaPage::$commentSubmitButton );
-        $I->waitForText( $commentStr, 5 );
+        $I->fillfield( UploadMediaPage::$commentTextArea, 'This is comment when upload media is disabled' );
 
-        $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+        $I->dontSeeElement( ConstantsPage::$mediaButtonInComment );
+        
+         $I->click( UploadMediaPage::$commentSubmitButton );
+         $I->wait( 5 );
 
     }else{
 
@@ -52,6 +59,7 @@
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
         $buddypress->gotoMedia( ConstantsPage::$userName );
+        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink);
 
@@ -62,15 +70,18 @@
 
         $uploadmedia->fisrtThumbnailMedia();
 
+        $I->seeElement( ConstantsPage::$commentLink );
         $I->scrollTo( ConstantsPage::$commentLink );
+        $I->wait( 3 );
 
         $I->seeElement( UploadMediaPage::$commentTextArea );
-        $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
-        $I->click( UploadMediaPage::$commentSubmitButton );
-        $I->waitForText( $commentStr, 5 );
+        $I->fillfield( UploadMediaPage::$commentTextArea, 'This is comment when upload media is disabled' );
 
-        $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+        $I->dontSeeElement( ConstantsPage::$mediaButtonInComment );
+
+         $I->click( UploadMediaPage::$commentSubmitButton );
+        $I->wait( 5 );
+
     }
 
 ?>

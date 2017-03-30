@@ -132,7 +132,7 @@ class BuddypressSettings
         $I = $this->tester;
 
         $url = 'members/'.$userName.'/media/photo';
-        $I->amOnPage($url);
+        $I->amOnPage( $url );
         $I->waitForElement('div.rtmedia-container', 10);
 
     }
@@ -149,5 +149,82 @@ class BuddypressSettings
 
         return count( $mediaArray );
 
+    }
+
+    /**
+    * gotoAlubmPage() -> Will take the user to album page
+    */
+    public function gotoAlubmPage(){
+
+        $I = $this->tester;
+
+        $url = 'members/'.ConstantsPage::$userName.'/media/album/';
+        $I->amOnPage( $url );
+        $I->waitForElement('div.rtmedia-container', 10);
+    }
+
+    /**
+    * createNewAlbum() -> Will create new album
+    */
+    public function createNewAlbum(){
+
+        $I = $this->tester;
+
+        self::gotoAlubmPage();
+
+        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+
+        $I->seeElement( ConstantsPage::$mediaOptionButton );
+        $I->click( ConstantsPage::$mediaOptionButton );
+        $I->wait( 2 );
+
+        $I->seeElement( ConstantsPage::$addAlbumButtonLink );
+        $I->click( ConstantsPage::$addAlbumButtonLink );
+
+        $I->seeElement( ConstantsPage::$createAlbumPopup );
+        $I->seeElement( ConstantsPage::$albumNameTextbox );
+        $I->fillField( ConstantsPage::$albumNameTextbox, 'My test album - 1');
+        $I->seeElement( ConstantsPage::$createAlbumButton );
+        $I->click( ConstantsPage::$createAlbumButton );
+
+        $I->seeElement( ConstantsPage::$closeAlbumButton );
+        $I->click( ConstantsPage::$closeAlbumButton );
+
+        $I->wait( 5 );
+
+        $I->reloadPage();
+
+        echo "Album created";
+
+    }
+
+    /**
+    * editAlbumDesc() -> Will edit the desc for created new album
+    */
+    public function editAlbumDesc(){
+
+        $I = $this->tester;
+
+        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+
+        $I->seeElement( ConstantsPage::$firstAlbum );
+        $I->click( ConstantsPage::$firstAlbum );
+
+        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+
+        $I->seeElement( ConstantsPage::$mediaOptionButton );
+        $I->click( ConstantsPage::$mediaOptionButton );
+        $I->wait( 2 );
+
+        $I->seeElement( ConstantsPage::$albumEditLink );
+        $I->click( ConstantsPage::$albumEditLink );
+
+        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+
+        $I->seeElement( ConstantsPage::$albumDescTeaxtarea );
+        $I->fillField( ConstantsPage::$albumDescTeaxtarea, 'My test album - desc - 1');
+        $I->seeElement( ConstantsPage::$saveAlbumButton );
+        $I->click( ConstantsPage::$saveAlbumButton );
+        $I->wait( 3 );
     }
 }

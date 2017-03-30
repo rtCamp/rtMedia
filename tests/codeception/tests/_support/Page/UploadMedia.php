@@ -18,9 +18,10 @@ class UploadMedia
     public static $scrollPosOnActivityPage = '#user-activity';
     public static $postUpdateButton = 'input#aw-whats-new-submit';
     public static $uploadFile = 'div.moxie-shim.moxie-shim-html5 input[type=file]';
-    public static $uploadFromActivity = 'div#rtmedia-whts-new-upload-container div input[type="file"]';
+    public static $uploadFromActivity = 'div#whats-new-options div input[type="file"]';
     public static $commentTextArea = '#comment_content';
     public static $uploadContainer = '#rtmedia-upload-container';
+    public static $mediaButtonOnActivity = 'button.rtmedia-add-media-button';
 
     protected $tester;
     public function __construct( \AcceptanceTester $I )
@@ -72,7 +73,7 @@ class UploadMedia
         $I = $this->tester;
 
         //self::gotoMediaPage( $userName, $link );
-        
+
         $I->seeElement( ConstantsPage::$mediaPageScrollPos );
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
         $I->seeElement( $link );
@@ -101,7 +102,7 @@ class UploadMedia
 
         self::uploadMedia( $userName, $mediaFile, $link );
 
-        self::uploadTermasCheckbox( $I );
+    //    self::uploadTermasCheckbox( $I );
 
         $I->seeElement( self::$uploadMediaButton );
         $I->click( self::$uploadMediaButton );
@@ -118,7 +119,7 @@ class UploadMedia
         $I = $this->tester;
 
         self::uploadMedia( $userName, $mediaFile, $link );
-        self::uploadTermasCheckbox();
+    //    self::uploadTermasCheckbox();
 
         $I->wait( 3 );
 
@@ -150,11 +151,11 @@ class UploadMedia
         self::addStatus();
 
         $I->fillfield( self::$whatIsNewTextarea, "test from activity stream" );
-
+        $I->seeElement( self::$mediaButtonOnActivity );
         $I->attachFile( self::$uploadFromActivity, $mediaFile );
         $I->wait( 5 );
 
-        self::uploadTermasCheckbox();
+    //    self::uploadTermasCheckbox();
 
         $I->click( self::$postUpdateButton );
 
@@ -186,7 +187,7 @@ class UploadMedia
             }
         }
 
-        self::uploadTermasCheckbox();
+    //    self::uploadTermasCheckbox();
 
         $I->click( self::$postUpdateButton );
         $I->wait( 5 );
@@ -203,19 +204,5 @@ class UploadMedia
         $I->click( self::$firstChild );
         $I->wait( 5 );
     }
-
-    // /**
-    // * countMedia() -> Will count media
-    // */
-    // public function countMedia( $selector ){
-    //
-    //     $I = $this->tester;
-    //
-    //     $mediaArray = $I->grabMultiple( $selector ); // This will grab the no. of media available on media page
-    //     echo nl2br( 'No of media on page = '. count( $mediaArray ) );
-    //
-    //     return count( $mediaArray );
-    //
-    // }
 
 }
