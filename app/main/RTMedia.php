@@ -1215,7 +1215,8 @@ class RTMedia {
 		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( '/images/loading.gif' ) );
 
 		// Check if BuddyPress plugin is not activated.
-		if ( empty( rtm_is_buddypress_activate() ) ) {
+		$is_buddypress_activate = rtm_is_buddypress_activate();
+		if ( empty( $is_buddypress_activate ) ) {
 			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
 		}
 
