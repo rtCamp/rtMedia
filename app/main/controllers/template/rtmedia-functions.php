@@ -3926,3 +3926,19 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 	}
 }
 
+
+/**
+ * Checks if BuddyPress is activated or not.
+ *
+ * Will Check that if the BuddyPress plugin is activated or not.
+ *
+ * @return bool True if BuddyPress is activated or else False.
+ */
+function rtm_is_buddypress_activate() {
+	// check if is_plugin_active exists or not.
+	if ( ! function_exists( 'is_plugin_active' ) ) {
+		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	}
+
+	return is_plugin_active( 'buddypress/bp-loader.php' );
+}

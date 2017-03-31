@@ -1214,6 +1214,11 @@ class RTMedia {
 		wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_comment', $params );
 		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( '/images/loading.gif' ) );
 
+		// Check if BuddyPress plugin is not activated.
+		if ( empty( rtm_is_buddypress_activate() ) ) {
+			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
+		}
+
 	}
 
 	function set_bp_bar() {
