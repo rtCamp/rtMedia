@@ -33,10 +33,11 @@ before_script:
   - sudo tail -n 50 /var/log/ee/ee.log
   - sudo wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
-  - sudo rm -vf /var/lib/apt/lists/*
+  - sudo rm -rf /var/lib/apt/lists/*
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
   - sudo ee -v
-  - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+  - sudo gpg --keyserver "hkp://pgp.mit.edu" --recv-keys '3050AC3CD2AE6F03'
+  - sudo gpg -a --export --armor '3050AC3CD2AE6F03' | sudo apt-key add -
   - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=juhi.saxena@rtcamp.com --pass=ADMINPASS
   - sudo chmod 777 -R /var/www
   - sudo cat /etc/mysql/conf.d/my.cnf
