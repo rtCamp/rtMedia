@@ -37,6 +37,7 @@ before_script:
   # - sudo ee -v
   # - sudo gpg --keyserver "hkp://pgp.mit.edu" --recv-keys '3050AC3CD2AE6F03'
   # - sudo gpg -a --export --armor '3050AC3CD2AE6F03' | sudo apt-key add -
+  - pwd
   - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=juhi.saxena@rtcamp.com --pass=ADMINPASS
   - sudo chmod 777 -R /var/www
   - sudo cat /etc/mysql/conf.d/my.cnf
