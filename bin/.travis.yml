@@ -1,57 +1,28 @@
+dist: trusty
+
 language:
     - php
 php:
   - 5.6.4
 
- # before_install:
- #   - rm -rf ~/.gnupg
-#   - sudo apt-get install xvfb
-
-# cache:
-#   paths:
-#   - vendor/
-# before_install:
-#   - rm -rf ~/.gnupg
+before_install:
+  - rm -rf ~/.gnupg
 
 before_script:
-  ## PHP_CodeSniffer
-  # - pear install pear/PHP_CodeSniffer
-  # - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
-  # - phpenv rehash
-  # - phpcs -i
-  # - phpenv rehash
-  # - phpcs --config-set error_severity 1
-  # - phpcs --config-set warning_severity 0
-  # Install git and unzip (composer will need them)
-  # - apt-get update && apt-get install -qqy git unzip
-  # Install composer
-  # - sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-
   - export PLUGIN_DIR=$(pwd)
-  - ls -l
   - sudo rm -rf /etc/mysql/
   - sudo apt-get -qq purge mysql* graphviz*
   - sudo apt-get -qq autoremove
-  - sudo apt-get update
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
-  - sudo wget -qO ee rt.cx/ee && sudo bash ee
+  - wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
-  - sudo ee -v
-  - sudo gpg --keyserver subkeys.pgp.net --recv CBCB082A1BB943DB
-  - ls -al ~/.gnupg
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
-
-  # - sudo rm -rf /var/lib/apt/lists/*
-  # - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
-  # - sudo ee -v
-
-  # - sudo gpg --keyserver "hkp://pgp.mit.edu" --recv-keys '3050AC3CD2AE6F03'
-  # - sudo gpg -a --export --armor '3050AC3CD2AE6F03' | sudo apt-key add -
-  # - pwd
-
-  - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
+  - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS || true
+  - sudo apt-get update || true
+  # Remove || true in above line after debugging
+  - sudo cat /var/log/ee/ee.log
   - sudo chmod 777 -R /var/www
-   - sudo cat /etc/mysql/conf.d/my.cnf
+  - sudo cat /etc/mysql/conf.d/my.cnf
   # - sudo cat ~/.my.cnf
   - sudo nginx -t
   - sudo service nginx reload
