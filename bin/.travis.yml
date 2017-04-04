@@ -37,8 +37,9 @@ before_script:
   - sudo wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo ee -v
-  - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys xxxxxx
-
+  # - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys xxxxxx
+  - sudo gpg --keyserver subkeys.pgp.net:80 --recv CBCB082A1BB943DB
+  - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
   # - sudo rm -rf /var/lib/apt/lists/*
   # - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
   # - sudo ee -v
