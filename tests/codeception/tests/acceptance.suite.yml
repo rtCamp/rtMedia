@@ -14,7 +14,7 @@ modules:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'firefox'
-            url: 'http://rtmedia.localtest.me'
+            url: 'http://wp.rtmedia.me'
             adminUsername: ''
             adminPassword: ''
             adminPath: '/wp-admin'

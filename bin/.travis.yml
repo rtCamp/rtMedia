@@ -17,7 +17,7 @@ before_script:
   - wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
-  - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS || true
+  - sudo ee site create wp.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS || true
   - sudo apt-get update || true
   # Remove || true in above line after debugging
   - sudo cat /var/log/ee/ee.log
@@ -26,11 +26,11 @@ before_script:
   # - sudo cat ~/.my.cnf
   - sudo nginx -t
   - sudo service nginx reload
-  - cd /var/www/rtmedia.localtest.me/htdocs/wp-content/plugins/ && ls
+  - cd /var/www/wp.rtmedia.me/htdocs/wp-content/plugins/ && ls
   - mkdir rtMedia
   - cd $PLUGIN_DIR
-  - cp -Rf * /var/www/rtmedia.localtest.me/htdocs/wp-content/plugins/rtMedia/
-  - cd /var/www/rtmedia.localtest.me/htdocs/
+  - cp -Rf * /var/www/wp.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
+  - cd /var/www/wp.rtmedia.me/htdocs/
   - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
   # - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress-media.4.3.1.zip
   - wp plugin activate --all
