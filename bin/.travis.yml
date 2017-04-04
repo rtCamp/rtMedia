@@ -37,6 +37,7 @@ before_script:
   - sudo wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo ee -v
+  - sudo cat /etc/easyengine/ee.conf
 
   # - sudo rm -rf /var/lib/apt/lists/*
   # - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
