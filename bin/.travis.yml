@@ -47,7 +47,9 @@ before_script:
   # - sudo gpg -a --export --armor '3050AC3CD2AE6F03' | sudo apt-key add -
   # - pwd
 
-  - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
+  - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS || true
+  # Remove || true in above line after debugging
+  - cat /var/log/ee/ee.log
   - sudo chmod 777 -R /var/www
    - sudo cat /etc/mysql/conf.d/my.cnf
   # - sudo cat ~/.my.cnf
