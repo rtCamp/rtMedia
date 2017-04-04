@@ -3,41 +3,17 @@ language:
 php:
   - 5.6.4
 
- # before_install:
- #   - rm -rf ~/.gnupg
-#   - sudo apt-get install xvfb
-
-# cache:
-#   paths:
-#   - vendor/
-# before_install:
-#   - rm -rf ~/.gnupg
+before_install:
+  - rm -rf ~/.gnupg
 
 before_script:
-  ## PHP_CodeSniffer
-  # - pear install pear/PHP_CodeSniffer
-  # - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
-  # - phpenv rehash
-  # - phpcs -i
-  # - phpenv rehash
-  # - phpcs --config-set error_severity 1
-  # - phpcs --config-set warning_severity 0
-  # Install git and unzip (composer will need them)
-  # - apt-get update && apt-get install -qqy git unzip
-  # Install composer
-  # - sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-
   - export PLUGIN_DIR=$(pwd)
   - sudo rm -rf /etc/mysql/
   - sudo apt-get -qq purge mysql* graphviz*
   - sudo apt-get -qq autoremove
-  - sudo apt-get update
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
-  - sudo wget -qO ee rt.cx/ee && sudo bash ee
+  - wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
-  - sudo ee -v
-  - gpg --keyserver p80.pool.sks-keyservers.net --recv 3050AC3CD2AE6F03
-  - gpg --keyserver p80.pool.sks-keyservers.net --recv CBCB082A1BB943DB
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
   - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS || true
   - sudo apt-get update || true
