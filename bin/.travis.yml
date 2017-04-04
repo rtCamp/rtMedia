@@ -20,7 +20,7 @@ before_script:
   # Remove || true in above line after debugging
   - sudo cat /var/log/ee/ee.log
   - sudo chmod 777 -R /var/www
-   - sudo cat /etc/mysql/conf.d/my.cnf
+  - sudo cat /etc/mysql/conf.d/my.cnf
   # - sudo cat ~/.my.cnf
   - sudo nginx -t
   - sudo service nginx reload
