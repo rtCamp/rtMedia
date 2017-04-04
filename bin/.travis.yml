@@ -28,7 +28,6 @@ before_script:
   # - sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
   - export PLUGIN_DIR=$(pwd)
-  - ls -l
   - sudo rm -rf /etc/mysql/
   - sudo apt-get -qq purge mysql* graphviz*
   - sudo apt-get -qq autoremove
@@ -37,9 +36,7 @@ before_script:
   - sudo wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo ee -v
-  - ls -al /home/travis/.gnupg
-  - whoami
-  - sudo gpg --keyserver subkeys.pgp.net --recv CBCB082A1BB943DB
+  - gpg --keyserver subkeys.pgp.net --recv CBCB082A1BB943DB
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
 
   # - sudo rm -rf /var/lib/apt/lists/*
