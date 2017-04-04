@@ -36,7 +36,7 @@ before_script:
   - sudo wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo ee -v
-  - gpg --keyserver subkeys.pgp.net --recv CBCB082A1BB943DB
+  - gpg --keyserver p80.pool.sks-keyservers.net --recv CBCB082A1BB943DB
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
 
   # - sudo rm -rf /var/lib/apt/lists/*
