@@ -55,7 +55,7 @@ before_script:
   # - sudo cat ~/.my.cnf
   - sudo nginx -t
   - sudo service nginx reload
-  - cd /var/www/wp.localtest.me/htdocs/wp-content/plugins/ && ls
+  - cd /var/www/rtmedia.localtest.me/htdocs/wp-content/plugins/ && ls
   - mkdir rtMedia
   - cd $PLUGIN_DIR
   - cp -Rf * /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtMedia/
