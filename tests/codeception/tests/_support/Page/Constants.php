@@ -64,6 +64,7 @@ class Constants
     public static $numOfMediaLabel = 'Number of media per page';
     public static $strMasonaryCheckboxLabel = 'Enable Masonry Cascading grid layout';
     public static $strMediaDisplayPaginationLabel = 'Media display pagination option';
+    public static $strMediaSearchLabel = 'Enable gallery media search';
 
     public static $strEnableMediaInProLabel = 'Enable media in profile';
     public static $strEnableMediaInGrpLabel = 'Enable media in group';
@@ -106,6 +107,7 @@ class Constants
     public static $loadmoreRadioButton = 'input[value="load_more"]';
     public static $paginationRadioButton = 'input[value="pagination"]';
     public static $numOfMediaTextbox = 'input[name="rtmedia-options[general_perPageMedia]"]';
+    public static $mediaSearchCheckbox = 'input[name="rtmedia-options[general_enableGallerysearch]"]';
 
     public static $enableMediaInProCheckbox = 'input[name="rtmedia-options[buddypress_enableOnProfile]"]';
     public static $enableMediaInGrpCheckbox = 'input[name="rtmedia-options[buddypress_enableOnGroup]"]';
@@ -193,9 +195,11 @@ class Constants
     public static $groupDescTextarea = 'textarea#group-desc';
     public static $createGroupButton = 'input#group-creation-create';
 
-    public static $mediaPageScrollPos = '#user-activity';
+    public static $mediaPageScrollPos = '#user-activity';   //Scroll position for activity and media pages
     public static $profilePicture = 'div#item-header-avatar';
     public static $commentLink = 'span > a.rtmedia-comment-link';
+
+    public static $mediaSeachSelector = '.media_search';
 
     public static $scrollPosToForPlugin = '.wp-list-table.plugins tr[data-slug="buddypress-media"]';
     public static $activateLink = 'tr[data-slug="buddypress-media"] .row-actions span.activate a';
