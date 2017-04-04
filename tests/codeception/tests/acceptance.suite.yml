@@ -24,3 +24,4 @@ modules:
               'os': 'OS X'
               'os_version': 'El Capitan'
               'browserstack.debug': 'true'
+              'browserstack.selenium_version': '2.53.1'
