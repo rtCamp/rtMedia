@@ -3,8 +3,8 @@ language:
 php:
   - 5.6.4
 
- before_install:
-   - rm -rf ~/.gnupg
+ # before_install:
+ #   - rm -rf ~/.gnupg
 #   - sudo apt-get install xvfb
 
 # cache:
