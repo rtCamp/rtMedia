@@ -36,7 +36,7 @@ before_script:
   - sudo wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo ee -v
-  - gpg --keyserver p80.pool.sks-keyservers.net --recv CBCB082A1BB943DB
+  - gpg --keyserver p80.pool.sks-keyservers.net --recv 3050AC3CD2AE6F03
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
   - sudo ee site create rtmedia.localtest.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS || true
   - sudo apt-get update || true
