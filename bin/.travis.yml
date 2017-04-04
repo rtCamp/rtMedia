@@ -38,7 +38,9 @@ before_script:
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo ee -v
   - sudo gpg --keyserver subkeys.pgp.net --recv CBCB082A1BB943DB
+  - ls -al ~/.gnupg
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
+
   # - sudo rm -rf /var/lib/apt/lists/*
   # - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
   # - sudo ee -v
