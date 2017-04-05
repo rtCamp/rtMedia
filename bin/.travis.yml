@@ -7,9 +7,9 @@ php:
 
 addons:
   browserstack:
-    username: "rtcamp2"
-    access_key: "kSykn6cYBFQ5o9kgSXpd"
-    forcelocal: true
+    # username: "rtcamp2"
+    # access_key: "kSykn6cYBFQ5o9kgSXpd"
+    # forcelocal: true
 
 before_install:
   - rm -rf ~/.gnupg
@@ -48,10 +48,8 @@ before_script:
   - cd $PLUGIN_DIR/tests/codeception/
 
   # Start it
-  # - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd --local-identifier Test123
-  - ./BrowserStackLocal -v -onlyAutomate -localIdentifier $TRAVIS_JOB_NUMBER kSykn6cYBFQ5o9kgSXpd localhost,8001,0 &
+  - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd --local-identifier Test123
   - sleep 10
-
 
   # Install all project dependencies
   - composer install
