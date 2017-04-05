@@ -7,9 +7,9 @@ php:
 
 addons:
   browserstack:
-    # username: "rtcamp2"
-    # access_key: "kSykn6cYBFQ5o9kgSXpd"
-    # forcelocal: true
+    username: "rtcamp2"
+    access_key: "kSykn6cYBFQ5o9kgSXpd"
+    forcelocal: true
 
 before_install:
   - rm -rf ~/.gnupg
