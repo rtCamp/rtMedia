@@ -3546,3 +3546,22 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 	return $license_data;
 
 }
+
+/**
+ * Checking if masonry on activity stream is enable.
+ *
+ * @since 4.4
+ *
+ * @global      RTMedia     $rtmedia
+ *
+ * @return      bool True if enable else False
+ */
+function is_rtmedia_masonry_in_activity_enable() {
+
+	global $rtmedia;
+
+	if ( isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && 0 !== intval( $rtmedia->options['buddypress_enableMasonryActivity'] ) ) {
+		return true;
+	}
+	return false;
+}

@@ -140,15 +140,15 @@ class RTMedia {
 				if ( isset( $row['media_id'] ) ) {
 					// @codingStandardsIgnoreStart
 					$sql = $wpdb->prepare( "update $wpdb->posts p
-                                left join
-                            $model->table_name r ON ( p.ID = r.media_id and blog_id = %d )
-                        set
-                            post_parent = %d
-                        where
-                            p.guid like %s
-                                and (p.post_parent = 0 or p.post_parent is NULL)
-                                and not r.id is NULL
-                                and r.media_type <> 'album'", get_current_blog_id(), $row['media_id'], '%/rtMedia/%' );
+								left join
+							$model->table_name r ON ( p.ID = r.media_id and blog_id = %d )
+						set
+							post_parent = %d
+						where
+							p.guid like %s
+								and (p.post_parent = 0 or p.post_parent is NULL)
+								and not r.id is NULL
+								and r.media_type <> 'album'", get_current_blog_id(), $row['media_id'], '%/rtMedia/%' );
 					$wpdb->query( $sql );
 					// @codingStandardsIgnoreEnd
 				}
@@ -347,8 +347,9 @@ class RTMedia {
 			}
 			<?php
 		}
-		if ( isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && 1 === intval( $rtmedia->options['buddypress_enableMasonryActivity'] ) ) {
-			
+
+		if ( is_rtmedia_masonry_in_activity_enable() ) {
+
 			$medium_height = intval( $this->options['defaultSizes_photo_medium_height'] );
 			$medium_width = intval( $this->options['defaultSizes_photo_medium_width'] );
 			$max_medium_height = $medium_height + ( $medium_height / 3 );
@@ -365,11 +366,11 @@ class RTMedia {
 			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n),
 			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n) .rtmedia-item-thumbnail,
 			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n) img{
-                height: <?php echo $max_medium_height; ?>px;
-                max-height: <?php echo $max_medium_height; ?>px;
-                width: <?php echo $medium_width; ?>px;
-                max-width: <?php echo $medium_width; ?>px;
-            }
+				height: <?php echo $max_medium_height; ?>px;
+				max-height: <?php echo $max_medium_height; ?>px;
+				width: <?php echo $medium_width; ?>px;
+				max-width: <?php echo $medium_width; ?>px;
+			}
 			<?php
 		}
 	}
