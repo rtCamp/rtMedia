@@ -24,4 +24,6 @@ modules:
               'os': 'OS X'
               'os_version': 'El Capitan'
               'browserstack.debug': 'true'
-              'browserstack.selenium_version': '2.53.1'
+            #   'browserstack.selenium_version': '2.53.1'
+              'build': 'V1'
+              'project': 'rtMedia_BS_Automated_Test'

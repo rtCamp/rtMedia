@@ -24,7 +24,6 @@ before_script:
   - sudo cat /var/log/ee/ee.log
   - sudo chmod 777 -R /var/www
   - sudo cat /etc/mysql/conf.d/my.cnf
-  # - sudo cat ~/.my.cnf
   - sudo nginx -t
   - sudo service nginx reload
   - cd /var/www/wp.rtmedia.me/htdocs/wp-content/plugins/ && ls
@@ -33,7 +32,6 @@ before_script:
   - cp -Rf * /var/www/wp.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
   - cd /var/www/wp.rtmedia.me/htdocs/
   - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
-  # - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress-media.4.3.1.zip
   - wp plugin activate --all
   - cd $PLUGIN_DIR
   - cd tests/codeception/tests/_data
@@ -45,12 +43,6 @@ before_script:
   # Install all project dependencies
   - composer install
   - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
-
-
-# install:
-# #install codeception for wordpress
-# - composer require lucatume/wp-browser --dev
-
 
 script:
   ## PHP_CodeSniffer
