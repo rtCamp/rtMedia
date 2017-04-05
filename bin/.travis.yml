@@ -50,6 +50,7 @@ before_script:
   # Start it
   # - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd --local-identifier Test123
   - ./BrowserStackLocal -v -onlyAutomate -localIdentifier $TRAVIS_JOB_NUMBER kSykn6cYBFQ5o9kgSXpd localhost,8001,0 &
+  - sleep 10
 
 
   # Install all project dependencies
