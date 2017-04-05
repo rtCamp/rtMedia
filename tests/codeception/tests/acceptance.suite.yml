@@ -27,3 +27,4 @@ modules:
             #   'browserstack.selenium_version': '2.53.1'
               'build': 'V2'
               'project': 'rtMedia_BS_Automated_Test'
+              'browserstack.local': 'true'
