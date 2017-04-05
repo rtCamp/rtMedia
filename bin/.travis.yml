@@ -47,6 +47,9 @@ before_script:
   # Navigate to codeception directory
   - cd $PLUGIN_DIR/tests/codeception/
 
+  # Start it
+  - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd --local-identifier Test123
+
   # Install all project dependencies
   - composer install
   - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
