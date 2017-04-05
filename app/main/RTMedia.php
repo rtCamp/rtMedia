@@ -348,6 +348,7 @@ class RTMedia {
 			<?php
 		}
 
+		// Check if masonry is active in activity.
 		if ( is_rtmedia_masonry_in_activity_enable() ) {
 
 			$medium_height = intval( $this->options['defaultSizes_photo_medium_height'] );
@@ -355,21 +356,23 @@ class RTMedia {
 			$max_medium_height = $medium_height + ( $medium_height / 3 );
 
 			?>
-			#buddypress #activity-stream .rtmedia_update .activity-content ul.rtmedia-list.has_masonry li.media-type-photo .rtmedia-item-title {
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.rtmedia-list.has_masonry li.media-type-photo .rtmedia-item-title ,
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.rtmedia-list.has_masonry li.media-type-video .rtmedia-item-title ,
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.rtmedia-list.has_masonry li.media-type-music .rtmedia-item-title {
 			  display: none;
 			}
 
 			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo{
-				max-height: <?php echo $medium_height; ?>px;
+				max-height: <?php echo intval( $medium_height ); ?>px;
 			}
 
 			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n),
 			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n) .rtmedia-item-thumbnail,
 			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n) img{
-				height: <?php echo $max_medium_height; ?>px;
-				max-height: <?php echo $max_medium_height; ?>px;
-				width: <?php echo $medium_width; ?>px;
-				max-width: <?php echo $medium_width; ?>px;
+				height: <?php echo intval( $max_medium_height ); ?>px;
+				max-height: <?php echo intval( $max_medium_height ); ?>px;
+				width: <?php echo intval( $medium_width ); ?>px;
+				max-width: <?php echo intval( $medium_width ); ?>px;
 			}
 			<?php
 		}
