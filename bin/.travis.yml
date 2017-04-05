@@ -48,7 +48,9 @@ before_script:
   - cd $PLUGIN_DIR/tests/codeception/
 
   # Start it
-  - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd --local-identifier Test123
+  # - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd --local-identifier Test123
+  - ./BrowserStackLocal -v -onlyAutomate -localIdentifier $TRAVIS_JOB_NUMBER kSykn6cYBFQ5o9kgSXpd localhost,8001,0 &
+
 
   # Install all project dependencies
   - composer install
