@@ -21,6 +21,7 @@ before_script:
   - sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS || true
   - sudo apt-get update || true
   # Remove || true in above line after debugging
+  - sudo cat /etc/hosts
   - sudo cat /var/log/ee/ee.log
   - sudo chmod 777 -R /var/www
   - sudo cat /etc/mysql/conf.d/my.cnf
