@@ -3725,13 +3725,17 @@ function rtmedia_get_comments_details_for_media_id( $media_id ){
 
 
 /**
-  * Is comment allow in Commented Media.
- **/
+ * Check if comment are allow in Media that are being add in the comment section.
+ *
+ * @since  4.3
+ *
+ * @return boolean $value True if enable else False.
+ */
 function rtmedia_check_comment_in_commented_media_allow() {
 	$value = false;
 	global $rtmedia;
 	/* variable */
-	if( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+	if ( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) {
 		$value = true;
 	}
 	return $value;
@@ -3741,8 +3745,12 @@ function rtmedia_check_comment_in_commented_media_allow() {
 
 
 /**
-	* Is comment allow in Commented Media.
- **/
+ * Check if comment in media is allow or not.
+ *
+ * @since  4.3
+ *
+ * @return boolean $value True if enable else False.
+ */
 function rtmedia_check_comment_media_allow() {
 	$value = false;
 	global $rtmedia;
