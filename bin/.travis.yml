@@ -59,8 +59,7 @@ script:
   # - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./ -name '*.php')
   # - if find . -name "*.php" ! -path "./node_modules/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
   # Run codeception test
-  # - wpcept run acceptance
-  - wpcept run tests/acceptance/core-rtMedia-settings/display/positive-testcases/allow-user-commentonuploadedMediaCept.php
+  - wpcept run acceptance
 
 # notifications:
 #   slack:
