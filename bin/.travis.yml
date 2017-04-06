@@ -26,6 +26,7 @@ before_script:
   - sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
   - echo "127.0.0.1 test.rtmedia.me" | sudo tee -a /etc/hosts
   - sudo cat /etc/hosts
+  - curl test.rtmedia.me
   - sudo cat /var/log/ee/ee.log
   - sudo chmod 777 -R /var/www
   - sudo nginx -t
@@ -56,8 +57,8 @@ script:
   # - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./ -name '*.php')
   # - if find . -name "*.php" ! -path "./node_modules/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
   # Run codeception test
-
-  - wpcept run acceptance
+  # - wpcept run acceptance
+  - wpcept run tests/acceptance/core-rtMedia-settings/display/positive-testcases/allow-user-commentonuploadedMediaCept.php
 
 # notifications:
 #   slack:
