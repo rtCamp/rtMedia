@@ -183,10 +183,16 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				echo '</script>';
 			}
 
-			if( isset( $_GET['page'] ) && 'rtmedia-settings' == sanitize_text_field( $_GET['page'] ) ){
-				global $rtmedia;
+			if ( isset( $_GET['page'] ) && 'rtmedia-settings' == sanitize_text_field( $_GET['page'] ) ) {
+				/**
+				 * Filter is use to enable comment option in side the media that are being uploaded in the comment section.
+				 *
+				 * @since 4.3
+				 *
+				 * @param True to hide the option and false to show the option.
+				 */
 				$display = apply_filters( 'rtmedia_disable_media_in_commented_media', true );
-				if ( isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] && $display ) { ?>
+				if ( $display ) { ?>
 					<style type="text/css">
 						.rtm-option-wrapper .form-table[data-depends="buddypress_enableOnComment"] {
 						    display: none !important;
