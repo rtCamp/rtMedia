@@ -23,13 +23,11 @@ before_script:
   - wget -qO ee rt.cx/ee && sudo bash ee
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
-  - sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS || true
-  - sudo apt-get update || true
-  # Remove || true in above line after debugging
+  - sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
+  - echo "127.0.0.1 test.rtmedia.me" | sudo tee -a /etc/hosts
   - sudo cat /etc/hosts
   - sudo cat /var/log/ee/ee.log
   - sudo chmod 777 -R /var/www
-  - sudo cat /etc/mysql/conf.d/my.cnf
   - sudo nginx -t
   - sudo service nginx reload
   - cd /var/www/test.rtmedia.me/htdocs/wp-content/plugins/ && ls
