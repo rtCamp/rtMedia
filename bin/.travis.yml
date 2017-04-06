@@ -5,12 +5,12 @@ language:
 php:
   - 5.6.4
 
-# addons:
-#   browserstack:
-#     username: "rtcamp2"
-#     access_key: "kSykn6cYBFQ5o9kgSXpd"
-#     proxyHost: "localhost"
-#     proxyPort: "80"
+addons:
+  browserstack:
+    username: "rtcamp2"
+    access_key: "kSykn6cYBFQ5o9kgSXpd"
+    proxyHost: "localhost"
+    proxyPort: "80"
 
 before_install:
   - rm -rf ~/.gnupg
@@ -45,8 +45,6 @@ before_script:
   - cd tests/codeception/tests/_data
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
   - cd /tmp
-  - wget http://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip"
-  - unzip BrowserStackLocal-linux-x64.zip
   - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd
   - sleep 10
   # Navigate to codeception directory
