@@ -43,13 +43,15 @@ before_script:
   - cd $PLUGIN_DIR
   - cd tests/codeception/tests/_data
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
-
+  - cd /tmp
+  - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd --local-identifier Test123
   # Navigate to codeception directory
   - cd $PLUGIN_DIR/tests/codeception/
 
   # Install all project dependencies
   - composer install
   - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
+
 
 script:
   ## PHP_CodeSniffer
