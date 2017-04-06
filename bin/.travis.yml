@@ -44,7 +44,7 @@ before_script:
   - cd /tmp
   - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
   - ls -al
-  - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd
+  - nohup ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd &
   - sleep 10
   # Navigate to codeception directory
   - cd $PLUGIN_DIR/tests/codeception/
