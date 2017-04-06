@@ -24,7 +24,7 @@ before_script:
   - source /etc/bash_completion.d/ee_auto.rc
   - sudo apt-get clean && sudo apt-get clean all && sudo apt-get update
   - sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
-  - echo "127.0.0.1 test.rtmedia.me" | sudo tee -a /etc/hosts
+  - sudo sed -i '/^127.0.0.1/ s/$/ test.rtmedia.me/' /etc/hosts
   - sudo cat /etc/hosts
   - curl test.rtmedia.me
   - sudo cat /var/log/ee/ee.log
