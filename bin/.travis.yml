@@ -43,7 +43,8 @@ before_script:
   - cd tests/codeception/tests/_data
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
   - cd /tmp
-  - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd --local-identifier Test123
+  - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd localhost,8001,0 > dev/null/ &
+  - sleep 10
   # Navigate to codeception directory
   - cd $PLUGIN_DIR/tests/codeception/
 
