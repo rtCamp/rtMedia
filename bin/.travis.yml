@@ -9,7 +9,7 @@ addons:
   browserstack:
     username: "rtcamp2"
     access_key: "kSykn6cYBFQ5o9kgSXpd"
-    
+
 before_install:
   - rm -rf ~/.gnupg
 
@@ -42,6 +42,7 @@ before_script:
   - cd tests/codeception/tests/_data
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
   - cd /tmp
+  - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
   - ls -al
   - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd
   - sleep 10
