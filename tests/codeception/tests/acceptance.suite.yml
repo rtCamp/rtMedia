@@ -11,7 +11,7 @@ modules:
         - WPWebDriver
     config:
           WPWebDriver:
-            host: 'rtcamp2:kSykn6cYBFQ5o9kgSXpd@hub-cloud.browserstack.com'
+            host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'firefox'
             url: 'http://test.rtmedia.me'

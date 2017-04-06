@@ -9,6 +9,8 @@ addons:
   browserstack:
     username: "rtcamp2"
     access_key: "kSykn6cYBFQ5o9kgSXpd"
+    proxyHost: "localhost"
+    proxyPort: "80"
 
 before_install:
   - rm -rf ~/.gnupg
@@ -43,7 +45,7 @@ before_script:
   - cd tests/codeception/tests/_data
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
   - cd /tmp
-  - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd localhost,8001,0 > dev/null/ &
+  - ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd
   - sleep 10
   # Navigate to codeception directory
   - cd $PLUGIN_DIR/tests/codeception/
