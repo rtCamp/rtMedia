@@ -3560,7 +3560,7 @@ function is_rtmedia_masonry_in_activity_enable() {
 
 	global $rtmedia;
 
-	if ( isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && 0 !== intval( $rtmedia->options['buddypress_enableMasonryActivity'] ) ) {
+	if ( isset( $rtmedia->options['general_masonry_layout'] ) && 0 !== intval( $rtmedia->options['general_masonry_layout'] ) && isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && 0 !== intval( $rtmedia->options['buddypress_enableMasonryActivity'] ) ) {
 		return true;
 	}
 	return false;
