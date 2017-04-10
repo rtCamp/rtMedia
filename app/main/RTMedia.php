@@ -1124,8 +1124,8 @@ class RTMedia {
 		 *
 		 * @return bool True if enable else False.
 		 */
-		if ( isset( $rtmedia->options['general_masonry_layout'] ) && 0 !== intval( $rtmedia->options['general_masonry_layout'] ) && isset( $rtmedia->options[ 'buddypress_enableMasonryActivity' ] ) && apply_filters( 'rtmedia_masonry_in_activity_enable', true ) ) {
-			$enablemasonryactivity = (string) $rtmedia->options[ 'buddypress_enableMasonryActivity' ];
+		if ( isset( $rtmedia->options['general_masonry_layout'] ) && 0 !== intval( $rtmedia->options['general_masonry_layout'] ) && isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && apply_filters( 'rtmedia_masonry_in_activity_enable', true ) ) {
+			$enablemasonryactivity = (string) $rtmedia->options['buddypress_enableMasonryActivity'];
 		}
 		wp_localize_script( 'rtmedia-backbone', 'buddypress_enableMasonryActivity', $enablemasonryactivity );
 
