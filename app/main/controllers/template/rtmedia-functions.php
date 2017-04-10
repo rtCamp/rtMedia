@@ -3561,17 +3561,17 @@ function rtmedia_masonry_in_activity_enable() {
 
 	global $rtmedia;
 
-	if ( isset( $rtmedia->options['general_masonry_layout'] ) && 0 !== intval( $rtmedia->options['general_masonry_layout'] ) && isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && 0 !== intval( $rtmedia->options['buddypress_enableMasonryActivity'] ) ) {
-		$return = true;
-	}
 	/**
-	 * Filter to modify is masory is enable or not True mean enable and False means disable.
+	 * Filter to disable masonry in activity if it's enable.
 	 *
 	 * @since 4.4
 	 *
-	 * @param bool $return True if enable else False.
+	 * @param bool True if enable else False.
 	 *
-	 * @return bool $return True if enable else False.
+	 * @return bool True if enable else False.
 	 */
-	return (bool) apply_filters( 'rtmedia_masonry_in_activity_enable', $return );
+	if ( isset( $rtmedia->options['general_masonry_layout'] ) && 0 !== intval( $rtmedia->options['general_masonry_layout'] ) && isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && 0 !== intval( $rtmedia->options['buddypress_enableMasonryActivity'] ) && apply_filters( 'rtmedia_masonry_in_activity_enable', true ) ) {
+		$return = true;
+	}
+	return (bool) $return;
 }

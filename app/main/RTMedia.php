@@ -1114,9 +1114,18 @@ class RTMedia {
 		}
 
 		/* Mansory in Activity is enable or not   */
-		$enablemasonryactivity = "0";
-		if ( isset( $rtmedia->options['general_masonry_layout'] ) && 0 !== intval( $rtmedia->options['general_masonry_layout'] ) && isset( $rtmedia->options[ 'buddypress_enableMasonryActivity' ] ) ) {
-			$enablemasonryactivity = ( string ) $rtmedia->options[ 'buddypress_enableMasonryActivity' ];
+		$enablemasonryactivity = '0';
+		/**
+		 * Filter to disable masonry in activity if it's enable.
+		 *
+		 * @since 4.4
+		 *
+		 * @param bool True if enable else False.
+		 *
+		 * @return bool True if enable else False.
+		 */
+		if ( isset( $rtmedia->options['general_masonry_layout'] ) && 0 !== intval( $rtmedia->options['general_masonry_layout'] ) && isset( $rtmedia->options[ 'buddypress_enableMasonryActivity' ] ) && apply_filters( 'rtmedia_masonry_in_activity_enable', true ) ) {
+			$enablemasonryactivity = (string) $rtmedia->options[ 'buddypress_enableMasonryActivity' ];
 		}
 		wp_localize_script( 'rtmedia-backbone', 'buddypress_enableMasonryActivity', $enablemasonryactivity );
 
