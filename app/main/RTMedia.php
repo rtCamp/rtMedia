@@ -349,7 +349,7 @@ class RTMedia {
 		}
 
 		// Check if masonry is active in activity.
-		if ( is_rtmedia_masonry_in_activity_enable() ) {
+		if ( rtmedia_masonry_in_activity_enable() ) {
 
 			$medium_height = intval( $this->options['defaultSizes_photo_medium_height'] );
 			$medium_width = intval( $this->options['defaultSizes_photo_medium_width'] );

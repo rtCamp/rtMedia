@@ -3556,7 +3556,7 @@ function rtmedia_activate_addon_license( $addon = array() ) {
  *
  * @return      bool True if enable else False
  */
-function is_rtmedia_masonry_in_activity_enable() {
+function rtmedia_masonry_in_activity_enable() {
 
 	global $rtmedia;
 
