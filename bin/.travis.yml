@@ -34,7 +34,7 @@ before_script:
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
   - cd /tmp
   - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
-  - nohup ./BrowserStackLocal --key kSykn6cYBFQ5o9kgSXpd &
+  - nohup ./BrowserStackLocal --key QSmlliOJwnUtjXQFrTJK0PlKKzK+xRNHTjcI2p3+6bafopV6acOzS6E9n8XIyKIxS/8YUNinQwI3SsCVKEJbBaC1pNLDhwXACqSQQzFcTn/yoCVVBRIXCEPapkdZh70l0PLVIJYaAVXG0OjQykAL90HE1wOs1G+DDfOMcJWUTUpGUKHcu8AYv/6/ynJnzHS1/wWdE5br7cqOqnVbdeRlc9i5KiLvI2LZ6rGOCBjCQ7aq15PlipoPZntQQMNEOapfBb+gIGTuvz+uLzm3SMLBhF6hNQzXDV8mw7AQCXcDGZobFXQlItMUwpeNG5Jf6mK7JI1fo3fNPi2D/uTUCGpwu60Ey3ROfwgW26KFxPxcXe7aTbO/RaK19dfybFKW5a/1HkcC6QhVSSF0QzFc4pbG34ilMciGP6EeoyjFEz5/uNKqllJh2WvB6xQ24vIwG+gvVXi+ju3tZa3mKcDRkkpGhaFwJFkhomIhxUqaCWJ5g+HSNu8zerbhpnCKwlgZga/rRg6PnQBgkzmlB5nz7nnmxWATsiuWxzOmzWPGxQwE+x74zMAmG3THw9E7vXI2pa4HNE8lY37x2xAQtiKs6xtbA8Nx/Cy6d5MlJzNVVUrFhfl6EggNPytwli+Ny8tzMqIdL8PNeP0l15EwOp5rv6IsTzrM5BmCCtIOCozjdAGeQJA= &
   - cd $PLUGIN_DIR/tests/codeception/
   - composer install
   - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
@@ -42,6 +42,6 @@ before_script:
 script:
   - wpcept run acceptance
 
-notifications:
-  slack:
-    secure: kwDatt2QkPShzntf0etxD/KOZSXS4VO2qGxj7crmJoAovvlvzjSZrfkqE4FuOo3annhx9ZO/APIoooaxEMvMmKekafOMTSPd3SzjF/tN8pZAn/l07GRvKqwqox2kjwNLj/HzHr4wP/kRFcYePYjZN0pU3LFTfSx0y592b6Wwc9I/qk02CjYVnUhnh32MUZ+5jALI6BR9jjVaWzlSPbqutQVkUNEFKWf8RVI0zCRRNW2aZAl426H6p8YnJWZ4Jr5HF4hIlx5pkPzR8sPnKU3o+xYho14iWzhsiGDUtmRG/SWu6Qf/P7sDVTm5/SsFbv6Xh1PiTNpBUB8YIGvLkXrZo4NFvJRlh0io1JpNHkPZ/NY1Sr3P7wm9BSCB+9I5eaa7fpAOXaSzec22I6mqRgMNJhnr+SgWCPrbjPm+NGP3KkIMbr4ulPMHmKIuGmk5h09p+/0RPSoQItNFnma1Uo+21XWvyBa8/498+aKqlNvNeTJ3nVIUn7FaoOzr2oiR+1Eu8hbE7efynBHoGgA0T1oXM2r6RtF7tKbUvMv4YRrcUy5sfyDVLY4OduD1PMKCKVy62xGTlcKwIVEqwobDksqe92pP54yAp+dYlhLNWqacHjjq1LD5qBASmZ2DwrYZvXKmmEmU6cmgED3h7r0/BtE2Y2BJsF3NiYiYqt0PAm6UFBE=
+# notifications:
+#   slack:
+#     secure: kwDatt2QkPShzntf0etxD/KOZSXS4VO2qGxj7crmJoAovvlvzjSZrfkqE4FuOo3annhx9ZO/APIoooaxEMvMmKekafOMTSPd3SzjF/tN8pZAn/l07GRvKqwqox2kjwNLj/HzHr4wP/kRFcYePYjZN0pU3LFTfSx0y592b6Wwc9I/qk02CjYVnUhnh32MUZ+5jALI6BR9jjVaWzlSPbqutQVkUNEFKWf8RVI0zCRRNW2aZAl426H6p8YnJWZ4Jr5HF4hIlx5pkPzR8sPnKU3o+xYho14iWzhsiGDUtmRG/SWu6Qf/P7sDVTm5/SsFbv6Xh1PiTNpBUB8YIGvLkXrZo4NFvJRlh0io1JpNHkPZ/NY1Sr3P7wm9BSCB+9I5eaa7fpAOXaSzec22I6mqRgMNJhnr+SgWCPrbjPm+NGP3KkIMbr4ulPMHmKIuGmk5h09p+/0RPSoQItNFnma1Uo+21XWvyBa8/498+aKqlNvNeTJ3nVIUn7FaoOzr2oiR+1Eu8hbE7efynBHoGgA0T1oXM2r6RtF7tKbUvMv4YRrcUy5sfyDVLY4OduD1PMKCKVy62xGTlcKwIVEqwobDksqe92pP54yAp+dYlhLNWqacHjjq1LD5qBASmZ2DwrYZvXKmmEmU6cmgED3h7r0/BtE2Y2BJsF3NiYiYqt0PAm6UFBE=
