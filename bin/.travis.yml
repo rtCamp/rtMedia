@@ -7,9 +7,9 @@ php:
 
 addons:
   browserstack:
-    username: rtcamp2
-    access_key:
-      secure: "QSmlliOJwnUtjXQFrTJK0PlKKzK+xRNHTjcI2p3+6bafopV6acOzS6E9n8XIyKIxS/8YUNinQwI3SsCVKEJbBaC1pNLDhwXACqSQQzFcTn/yoCVVBRIXCEPapkdZh70l0PLVIJYaAVXG0OjQykAL90HE1wOs1G+DDfOMcJWUTUpGUKHcu8AYv/6/ynJnzHS1/wWdE5br7cqOqnVbdeRlc9i5KiLvI2LZ6rGOCBjCQ7aq15PlipoPZntQQMNEOapfBb+gIGTuvz+uLzm3SMLBhF6hNQzXDV8mw7AQCXcDGZobFXQlItMUwpeNG5Jf6mK7JI1fo3fNPi2D/uTUCGpwu60Ey3ROfwgW26KFxPxcXe7aTbO/RaK19dfybFKW5a/1HkcC6QhVSSF0QzFc4pbG34ilMciGP6EeoyjFEz5/uNKqllJh2WvB6xQ24vIwG+gvVXi+ju3tZa3mKcDRkkpGhaFwJFkhomIhxUqaCWJ5g+HSNu8zerbhpnCKwlgZga/rRg6PnQBgkzmlB5nz7nnmxWATsiuWxzOmzWPGxQwE+x74zMAmG3THw9E7vXI2pa4HNE8lY37x2xAQtiKs6xtbA8Nx/Cy6d5MlJzNVVUrFhfl6EggNPytwli+Ny8tzMqIdL8PNeP0l15EwOp5rv6IsTzrM5BmCCtIOCozjdAGeQJA="
+    # username: rtcamp2
+    # access_key:
+    #   secure: "QSmlliOJwnUtjXQFrTJK0PlKKzK+xRNHTjcI2p3+6bafopV6acOzS6E9n8XIyKIxS/8YUNinQwI3SsCVKEJbBaC1pNLDhwXACqSQQzFcTn/yoCVVBRIXCEPapkdZh70l0PLVIJYaAVXG0OjQykAL90HE1wOs1G+DDfOMcJWUTUpGUKHcu8AYv/6/ynJnzHS1/wWdE5br7cqOqnVbdeRlc9i5KiLvI2LZ6rGOCBjCQ7aq15PlipoPZntQQMNEOapfBb+gIGTuvz+uLzm3SMLBhF6hNQzXDV8mw7AQCXcDGZobFXQlItMUwpeNG5Jf6mK7JI1fo3fNPi2D/uTUCGpwu60Ey3ROfwgW26KFxPxcXe7aTbO/RaK19dfybFKW5a/1HkcC6QhVSSF0QzFc4pbG34ilMciGP6EeoyjFEz5/uNKqllJh2WvB6xQ24vIwG+gvVXi+ju3tZa3mKcDRkkpGhaFwJFkhomIhxUqaCWJ5g+HSNu8zerbhpnCKwlgZga/rRg6PnQBgkzmlB5nz7nnmxWATsiuWxzOmzWPGxQwE+x74zMAmG3THw9E7vXI2pa4HNE8lY37x2xAQtiKs6xtbA8Nx/Cy6d5MlJzNVVUrFhfl6EggNPytwli+Ny8tzMqIdL8PNeP0l15EwOp5rv6IsTzrM5BmCCtIOCozjdAGeQJA="
 
 
 before_install:
@@ -35,7 +35,7 @@ before_script:
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
   - cd /tmp
   - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
-  - nohup ./BrowserStackLocal --key $KEY &
+  - nohup ./BrowserStackLocal --key $BS_KEY &
   - cd $PLUGIN_DIR/tests/codeception/
   - composer install
   - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"

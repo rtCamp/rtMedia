@@ -19,12 +19,12 @@ modules:
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-            #   'browserstack.user': %USER_NAME%
-            #   'browserstack.key': %KEY%
+              'browserstack.user': '%BS_USERNAME%'
+              'browserstack.key': '%BS_KEY%'
               'os': 'OS X'
               'os_version': 'El Capitan'
               'browserstack.debug': 'true'
               'browserstack.selenium_version': '2.53.1'
-              'build': 'V3'
-              'project': 'rtMedia_BS_Automated_Test_V3.1'
+              'build': '%TRAVIS_JOB_NUMBER%'
+            #   'project': 'rtMedia_BS_Automated_Test_V3.1'
               'browserstack.local': 'true'
