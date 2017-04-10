@@ -3557,11 +3557,21 @@ function rtmedia_activate_addon_license( $addon = array() ) {
  * @return      bool True if enable else False
  */
 function rtmedia_masonry_in_activity_enable() {
+	$return = false;
 
 	global $rtmedia;
 
 	if ( isset( $rtmedia->options['general_masonry_layout'] ) && 0 !== intval( $rtmedia->options['general_masonry_layout'] ) && isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && 0 !== intval( $rtmedia->options['buddypress_enableMasonryActivity'] ) ) {
-		return true;
+		$return = true;
 	}
-	return false;
+	/**
+	 * Filter to modify is masory is enable or not True mean enable and False means disable.
+	 *
+	 * @since 4.4
+	 *
+	 * @param bool $return True if enable else False.
+	 *
+	 * @return bool $return True if enable else False.
+	 */
+	return (bool) apply_filters( 'rtmedia_masonry_in_activity_enable', $return );
 }
