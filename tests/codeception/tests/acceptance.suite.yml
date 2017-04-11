@@ -19,12 +19,12 @@ modules:
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-              'browserstack.user': 'rtcamp2'
-              'browserstack.key': 'eEq8Q+wVC4IpOXTI6E7Aa/mtAlSUbKIIkc0hNNtkJVUGOsICL+VDR4vTj8If50WVvHHEErn8K7PxbIRo0vmZCGp1KDVQ9bq9lQJaYcSs3lZ722OtYOAiotgu2hk5YY4AAsYn7rSU6bivt0Cywf589Bo6W+05FmJdyIPqb2wuySDUIRRoFyJTKGGC6Y6otH3UGSxOEcn/LsnfbILj7oR5/iGq+C6pqrbWG/dQyZFwfVcT+TSgwhZdCtnBRZ+oiSa3ES0CKx+U6vN65aoAiVNVUNto+N25A2mlVLsIq+aJzVxWVQ/7TQedUG9rTaGvknrKTDdtLS3Yc06h/Pl+pNZEm6ANlGvwlGpdXLWeke1Ks4zFmy8zmyv33O3X8YIXyviahfaoGwHyBgSv4I4anJ+iLuf47hotoPn+rXSYCERkGlJ4MgaisRA/wDhtEEhBrkh7bnekcHwqiUSq5RvtMzPlA/zMISeNsFvAFF2aLY8J2tuc11gybXF028mK60jv+lJERg5F6oAQ2Hj4tiU/7qAV/SM56xd5w9aOPEFQVGsHDy/ph/Ss8WAeq/v+r7btHIEc5FF88kE3o3j+9ljVsvwlwSI68Cm2RIqLsAdFbg6N8JeGNCNFVqToWsd6HbxdxESQcnNRsIOa1haoM7ngj623xKp0iT8+qxtxKoHDop3txbs='
+              'browserstack.user': $BROWSER_STACK_USERNAME
+              'browserstack.key': $BROWSER_STACK_ACCESS_KEY
               'os': 'OS X'
               'os_version': 'El Capitan'
               'browserstack.debug': 'true'
               'browserstack.selenium_version': '2.53.1'
               'build': 'Build_01'
-               'project': 'rtMedia_Automated_1'
+              'project': 'rtMedia_Automated_1'
               'browserstack.local': 'true'

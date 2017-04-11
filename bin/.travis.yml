@@ -1,50 +1,40 @@
 dist: trusty
-
 language:
-    - php
+- php
 php:
-  - 5.6.4
-
+- 5.6.4
 addons:
   browserstack:
-    username: 'rtcamp2'
-    access_key:
-        - secure:  "eEq8Q+wVC4IpOXTI6E7Aa/mtAlSUbKIIkc0hNNtkJVUGOsICL+VDR4vTj8If50WVvHHEErn8K7PxbIRo0vmZCGp1KDVQ9bq9lQJaYcSs3lZ722OtYOAiotgu2hk5YY4AAsYn7rSU6bivt0Cywf589Bo6W+05FmJdyIPqb2wuySDUIRRoFyJTKGGC6Y6otH3UGSxOEcn/LsnfbILj7oR5/iGq+C6pqrbWG/dQyZFwfVcT+TSgwhZdCtnBRZ+oiSa3ES0CKx+U6vN65aoAiVNVUNto+N25A2mlVLsIq+aJzVxWVQ/7TQedUG9rTaGvknrKTDdtLS3Yc06h/Pl+pNZEm6ANlGvwlGpdXLWeke1Ks4zFmy8zmyv33O3X8YIXyviahfaoGwHyBgSv4I4anJ+iLuf47hotoPn+rXSYCERkGlJ4MgaisRA/wDhtEEhBrkh7bnekcHwqiUSq5RvtMzPlA/zMISeNsFvAFF2aLY8J2tuc11gybXF028mK60jv+lJERg5F6oAQ2Hj4tiU/7qAV/SM56xd5w9aOPEFQVGsHDy/ph/Ss8WAeq/v+r7btHIEc5FF88kE3o3j+9ljVsvwlwSI68Cm2RIqLsAdFbg6N8JeGNCNFVqToWsd6HbxdxESQcnNRsIOa1haoM7ngj623xKp0iT8+qxtxKoHDop3txbs="
-# env:
-#     global:
-#         - secure:  "DjM/C+4rhTHdvYma3k6D+4uSiNAaRxioBD4Jpp3c95nSFC5eLKVumtiTSuiQ022/sfO4XHtUPv+7b/tB6u/JpMsSlca3htpNIpU1PfGhc+eAV3iLJoPQwi8bG+YueOq0/ngiIlPe9IahIofXn7oK7nGg6ly9o1piIFIRB/G6f6hWYtI7226nZFgx+z3h7b0PL/Aeqi6m6y9zAsKL4nunLAgXN5mj8DBmUD+xYNeM3Tz60hmXZiRCBuquR2yohI217T+OO7Mwvh/6WB0uhJxN5K/Jp48KhxeOKntutpd3xq2oHB1VPnY719Mox3ZlTDyR7Asd7mOHLVkrneC/z0KUw/tH43mzdbf5ghaNOBCWTaaLa8VYdTACULIqu+9eWzfpoMn23HgT2NHxSROsaMksS5ddhO3B7F8iHmyvNKQ3vNWiA//jp2ouqq8cIEK4mAH3Q2BAriS5e6JZCzCoK5wZicD2NoTY/qQKFxNSZYgVFc+vZt7ZCdfJNFWLwq5h8ytH2hfI90/9mRFVq74LS0HIUcZWlK4DT7eiE7jkBmgVP9fc/OQrb1yJyRoADvQi+yatuWrdTqRelvoMCcV2ak3Gzl4tZeTKnIr5qXOcpeBDjmPWbx9l6HHBEjJv12ZpS9bBIJpUJcXAnGRkQ74fiZvSRilmvkujjRuCdPQ74mPQjig="
+    username: $BROWSER_STACK_USERNAME
+    access_key: $BROWSER_STACK_ACCESS_KEY
 
 before_install:
-  - rm -rf ~/.gnupg
-
+    - rm -rf ~/.gnupg
 before_script:
-  - export PLUGIN_DIR=$(pwd)
-  - sudo rm -rf /etc/mysql/
-  - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
-  - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
-  - wget -qO ee rt.cx/ee && sudo bash ee
-  - sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
-  - sudo sed -i '/^127.0.0.1/ s/$/ test.rtmedia.me/' /etc/hosts
-  - sudo chmod 777 -R /var/www
-  - cd /var/www/test.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
-  - cd $PLUGIN_DIR
-  - cp -Rf * /var/www/test.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
-  - cd /var/www/test.rtmedia.me/htdocs/
-  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
-  - wp plugin activate --all
-  - cd $PLUGIN_DIR
-  - cd tests/codeception/tests/_data
-  - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
-  - cd /tmp
-  - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
-  - nohup ./BrowserStackLocal --key eEq8Q+wVC4IpOXTI6E7Aa/mtAlSUbKIIkc0hNNtkJVUGOsICL+VDR4vTj8If50WVvHHEErn8K7PxbIRo0vmZCGp1KDVQ9bq9lQJaYcSs3lZ722OtYOAiotgu2hk5YY4AAsYn7rSU6bivt0Cywf589Bo6W+05FmJdyIPqb2wuySDUIRRoFyJTKGGC6Y6otH3UGSxOEcn/LsnfbILj7oR5/iGq+C6pqrbWG/dQyZFwfVcT+TSgwhZdCtnBRZ+oiSa3ES0CKx+U6vN65aoAiVNVUNto+N25A2mlVLsIq+aJzVxWVQ/7TQedUG9rTaGvknrKTDdtLS3Yc06h/Pl+pNZEm6ANlGvwlGpdXLWeke1Ks4zFmy8zmyv33O3X8YIXyviahfaoGwHyBgSv4I4anJ+iLuf47hotoPn+rXSYCERkGlJ4MgaisRA/wDhtEEhBrkh7bnekcHwqiUSq5RvtMzPlA/zMISeNsFvAFF2aLY8J2tuc11gybXF028mK60jv+lJERg5F6oAQ2Hj4tiU/7qAV/SM56xd5w9aOPEFQVGsHDy/ph/Ss8WAeq/v+r7btHIEc5FF88kE3o3j+9ljVsvwlwSI68Cm2RIqLsAdFbg6N8JeGNCNFVqToWsd6HbxdxESQcnNRsIOa1haoM7ngj623xKp0iT8+qxtxKoHDop3txbs= &
-  - cd $PLUGIN_DIR/tests/codeception/
-  - composer install
-  - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
+    - export PLUGIN_DIR=$(pwd)
+    - sudo rm -rf /etc/mysql/
+    - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
+    - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
+    - wget -qO ee rt.cx/ee && sudo bash ee
+    - sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com
+      --pass=ADMINPASS
+    - sudo sed -i '/^127.0.0.1/ s/$/ test.rtmedia.me/' /etc/hosts
+    - sudo chmod 777 -R /var/www
+    - cd /var/www/test.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
+    - cd $PLUGIN_DIR
+    - cp -Rf * /var/www/test.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
+    - cd /var/www/test.rtmedia.me/htdocs/
+    - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
+    - wp plugin activate --all
+    - cd $PLUGIN_DIR
+    - cd tests/codeception/tests/_data
+    - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
+    - cd /tmp
+    - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
+    - nohup ./BrowserStackLocal --key $BROWSER_STACK_ACCESS_KEY &
+    - cd $PLUGIN_DIR/tests/codeception/
+    - composer install
+    - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
 
 script:
-  - wpcept run acceptance
-
-# notifications:
-#   slack:
-#     secure: kwDatt2QkPShzntf0etxD/KOZSXS4VO2qGxj7crmJoAovvlvzjSZrfkqE4FuOo3annhx9ZO/APIoooaxEMvMmKekafOMTSPd3SzjF/tN8pZAn/l07GRvKqwqox2kjwNLj/HzHr4wP/kRFcYePYjZN0pU3LFTfSx0y592b6Wwc9I/qk02CjYVnUhnh32MUZ+5jALI6BR9jjVaWzlSPbqutQVkUNEFKWf8RVI0zCRRNW2aZAl426H6p8YnJWZ4Jr5HF4hIlx5pkPzR8sPnKU3o+xYho14iWzhsiGDUtmRG/SWu6Qf/P7sDVTm5/SsFbv6Xh1PiTNpBUB8YIGvLkXrZo4NFvJRlh0io1JpNHkPZ/NY1Sr3P7wm9BSCB+9I5eaa7fpAOXaSzec22I6mqRgMNJhnr+SgWCPrbjPm+NGP3KkIMbr4ulPMHmKIuGmk5h09p+/0RPSoQItNFnma1Uo+21XWvyBa8/498+aKqlNvNeTJ3nVIUn7FaoOzr2oiR+1Eu8hbE7efynBHoGgA0T1oXM2r6RtF7tKbUvMv4YRrcUy5sfyDVLY4OduD1PMKCKVy62xGTlcKwIVEqwobDksqe92pP54yAp+dYlhLNWqacHjjq1LD5qBASmZ2DwrYZvXKmmEmU6cmgED3h7r0/BtE2Y2BJsF3NiYiYqt0PAm6UFBE=
+    - wpcept run acceptance
