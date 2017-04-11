@@ -5,7 +5,7 @@ php:
 - 5.6.4
 addons:
   browserstack:
-    username: $BROWSER_STACK_USERNAME
+    username: 'rtcamp'
     access_key: $BROWSER_STACK_ACCESS_KEY
 
 before_install:
