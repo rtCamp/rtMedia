@@ -5,11 +5,13 @@ language:
 php:
   - 5.6.4
 
-addons:
-  browserstack:
-    username: '%BS_USERNAME'
-    access_key: '%BS_KEY'
-    #   secure: "QSmlliOJwnUtjXQFrTJK0PlKKzK+xRNHTjcI2p3+6bafopV6acOzS6E9n8XIyKIxS/8YUNinQwI3SsCVKEJbBaC1pNLDhwXACqSQQzFcTn/yoCVVBRIXCEPapkdZh70l0PLVIJYaAVXG0OjQykAL90HE1wOs1G+DDfOMcJWUTUpGUKHcu8AYv/6/ynJnzHS1/wWdE5br7cqOqnVbdeRlc9i5KiLvI2LZ6rGOCBjCQ7aq15PlipoPZntQQMNEOapfBb+gIGTuvz+uLzm3SMLBhF6hNQzXDV8mw7AQCXcDGZobFXQlItMUwpeNG5Jf6mK7JI1fo3fNPi2D/uTUCGpwu60Ey3ROfwgW26KFxPxcXe7aTbO/RaK19dfybFKW5a/1HkcC6QhVSSF0QzFc4pbG34ilMciGP6EeoyjFEz5/uNKqllJh2WvB6xQ24vIwG+gvVXi+ju3tZa3mKcDRkkpGhaFwJFkhomIhxUqaCWJ5g+HSNu8zerbhpnCKwlgZga/rRg6PnQBgkzmlB5nz7nnmxWATsiuWxzOmzWPGxQwE+x74zMAmG3THw9E7vXI2pa4HNE8lY37x2xAQtiKs6xtbA8Nx/Cy6d5MlJzNVVUrFhfl6EggNPytwli+Ny8tzMqIdL8PNeP0l15EwOp5rv6IsTzrM5BmCCtIOCozjdAGeQJA="
+# addons:
+#   browserstack:
+#     username: 'rtcamp2'
+#     access_key:
+env:
+    global:
+        - secure:  "DjM/C+4rhTHdvYma3k6D+4uSiNAaRxioBD4Jpp3c95nSFC5eLKVumtiTSuiQ022/sfO4XHtUPv+7b/tB6u/JpMsSlca3htpNIpU1PfGhc+eAV3iLJoPQwi8bG+YueOq0/ngiIlPe9IahIofXn7oK7nGg6ly9o1piIFIRB/G6f6hWYtI7226nZFgx+z3h7b0PL/Aeqi6m6y9zAsKL4nunLAgXN5mj8DBmUD+xYNeM3Tz60hmXZiRCBuquR2yohI217T+OO7Mwvh/6WB0uhJxN5K/Jp48KhxeOKntutpd3xq2oHB1VPnY719Mox3ZlTDyR7Asd7mOHLVkrneC/z0KUw/tH43mzdbf5ghaNOBCWTaaLa8VYdTACULIqu+9eWzfpoMn23HgT2NHxSROsaMksS5ddhO3B7F8iHmyvNKQ3vNWiA//jp2ouqq8cIEK4mAH3Q2BAriS5e6JZCzCoK5wZicD2NoTY/qQKFxNSZYgVFc+vZt7ZCdfJNFWLwq5h8ytH2hfI90/9mRFVq74LS0HIUcZWlK4DT7eiE7jkBmgVP9fc/OQrb1yJyRoADvQi+yatuWrdTqRelvoMCcV2ak3Gzl4tZeTKnIr5qXOcpeBDjmPWbx9l6HHBEjJv12ZpS9bBIJpUJcXAnGRkQ74fiZvSRilmvkujjRuCdPQ74mPQjig="
 
 
 
@@ -36,7 +38,7 @@ before_script:
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
   - cd /tmp
   - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
-  - nohup ./BrowserStackLocal --key $BS_KEY &
+  - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
   - cd $PLUGIN_DIR/tests/codeception/
   - composer install
   - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
