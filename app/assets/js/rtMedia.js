@@ -940,6 +940,19 @@ function rtmedia_add_masonry_in_stream(){
 				}
 			});
 		}, 1000 );
+
+		jQuery( '#buddypress .activity-list .activity-item .rtmedia-activity-container li' ).on('mouseenter', '.rtmedia-item-thumbnail', function(event) {
+			event.preventDefault();
+			// Get the media li instances.
+			var $li = jQuery( this ).closest( 'li' );
+
+			// Get the media title.
+			var $name = jQuery( $li ).find( '.rtmedia-item-title' ).text();
+
+			// Set media title.
+			jQuery( $li ).attr( 'title', $name );
+
+		});
 	}
 }
 
