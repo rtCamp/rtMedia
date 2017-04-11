@@ -6,7 +6,8 @@ php:
 addons:
   browserstack:
     username: '$BROWSER_STACK_USERNAME'
-    access_key: '$BROWSER_STACK_ACCESS_KEY'
+    access_key:
+        secure: '$BROWSER_STACK_ACCESS_KEY'
 
 before_install:
     - rm -rf ~/.gnupg
