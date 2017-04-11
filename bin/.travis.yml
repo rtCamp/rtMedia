@@ -9,10 +9,10 @@ addons:
   browserstack:
     username: 'rtcamp2'
     access_key:
-        - secure:  "DjM/C+4rhTHdvYma3k6D+4uSiNAaRxioBD4Jpp3c95nSFC5eLKVumtiTSuiQ022/sfO4XHtUPv+7b/tB6u/JpMsSlca3htpNIpU1PfGhc+eAV3iLJoPQwi8bG+YueOq0/ngiIlPe9IahIofXn7oK7nGg6ly9o1piIFIRB/G6f6hWYtI7226nZFgx+z3h7b0PL/Aeqi6m6y9zAsKL4nunLAgXN5mj8DBmUD+xYNeM3Tz60hmXZiRCBuquR2yohI217T+OO7Mwvh/6WB0uhJxN5K/Jp48KhxeOKntutpd3xq2oHB1VPnY719Mox3ZlTDyR7Asd7mOHLVkrneC/z0KUw/tH43mzdbf5ghaNOBCWTaaLa8VYdTACULIqu+9eWzfpoMn23HgT2NHxSROsaMksS5ddhO3B7F8iHmyvNKQ3vNWiA//jp2ouqq8cIEK4mAH3Q2BAriS5e6JZCzCoK5wZicD2NoTY/qQKFxNSZYgVFc+vZt7ZCdfJNFWLwq5h8ytH2hfI90/9mRFVq74LS0HIUcZWlK4DT7eiE7jkBmgVP9fc/OQrb1yJyRoADvQi+yatuWrdTqRelvoMCcV2ak3Gzl4tZeTKnIr5qXOcpeBDjmPWbx9l6HHBEjJv12ZpS9bBIJpUJcXAnGRkQ74fiZvSRilmvkujjRuCdPQ74mPQjig="
-env:
-    global:
-        - secure:  "DjM/C+4rhTHdvYma3k6D+4uSiNAaRxioBD4Jpp3c95nSFC5eLKVumtiTSuiQ022/sfO4XHtUPv+7b/tB6u/JpMsSlca3htpNIpU1PfGhc+eAV3iLJoPQwi8bG+YueOq0/ngiIlPe9IahIofXn7oK7nGg6ly9o1piIFIRB/G6f6hWYtI7226nZFgx+z3h7b0PL/Aeqi6m6y9zAsKL4nunLAgXN5mj8DBmUD+xYNeM3Tz60hmXZiRCBuquR2yohI217T+OO7Mwvh/6WB0uhJxN5K/Jp48KhxeOKntutpd3xq2oHB1VPnY719Mox3ZlTDyR7Asd7mOHLVkrneC/z0KUw/tH43mzdbf5ghaNOBCWTaaLa8VYdTACULIqu+9eWzfpoMn23HgT2NHxSROsaMksS5ddhO3B7F8iHmyvNKQ3vNWiA//jp2ouqq8cIEK4mAH3Q2BAriS5e6JZCzCoK5wZicD2NoTY/qQKFxNSZYgVFc+vZt7ZCdfJNFWLwq5h8ytH2hfI90/9mRFVq74LS0HIUcZWlK4DT7eiE7jkBmgVP9fc/OQrb1yJyRoADvQi+yatuWrdTqRelvoMCcV2ak3Gzl4tZeTKnIr5qXOcpeBDjmPWbx9l6HHBEjJv12ZpS9bBIJpUJcXAnGRkQ74fiZvSRilmvkujjRuCdPQ74mPQjig="
+        - secure:  "eEq8Q+wVC4IpOXTI6E7Aa/mtAlSUbKIIkc0hNNtkJVUGOsICL+VDR4vTj8If50WVvHHEErn8K7PxbIRo0vmZCGp1KDVQ9bq9lQJaYcSs3lZ722OtYOAiotgu2hk5YY4AAsYn7rSU6bivt0Cywf589Bo6W+05FmJdyIPqb2wuySDUIRRoFyJTKGGC6Y6otH3UGSxOEcn/LsnfbILj7oR5/iGq+C6pqrbWG/dQyZFwfVcT+TSgwhZdCtnBRZ+oiSa3ES0CKx+U6vN65aoAiVNVUNto+N25A2mlVLsIq+aJzVxWVQ/7TQedUG9rTaGvknrKTDdtLS3Yc06h/Pl+pNZEm6ANlGvwlGpdXLWeke1Ks4zFmy8zmyv33O3X8YIXyviahfaoGwHyBgSv4I4anJ+iLuf47hotoPn+rXSYCERkGlJ4MgaisRA/wDhtEEhBrkh7bnekcHwqiUSq5RvtMzPlA/zMISeNsFvAFF2aLY8J2tuc11gybXF028mK60jv+lJERg5F6oAQ2Hj4tiU/7qAV/SM56xd5w9aOPEFQVGsHDy/ph/Ss8WAeq/v+r7btHIEc5FF88kE3o3j+9ljVsvwlwSI68Cm2RIqLsAdFbg6N8JeGNCNFVqToWsd6HbxdxESQcnNRsIOa1haoM7ngj623xKp0iT8+qxtxKoHDop3txbs="
+# env:
+#     global:
+#         - secure:  "DjM/C+4rhTHdvYma3k6D+4uSiNAaRxioBD4Jpp3c95nSFC5eLKVumtiTSuiQ022/sfO4XHtUPv+7b/tB6u/JpMsSlca3htpNIpU1PfGhc+eAV3iLJoPQwi8bG+YueOq0/ngiIlPe9IahIofXn7oK7nGg6ly9o1piIFIRB/G6f6hWYtI7226nZFgx+z3h7b0PL/Aeqi6m6y9zAsKL4nunLAgXN5mj8DBmUD+xYNeM3Tz60hmXZiRCBuquR2yohI217T+OO7Mwvh/6WB0uhJxN5K/Jp48KhxeOKntutpd3xq2oHB1VPnY719Mox3ZlTDyR7Asd7mOHLVkrneC/z0KUw/tH43mzdbf5ghaNOBCWTaaLa8VYdTACULIqu+9eWzfpoMn23HgT2NHxSROsaMksS5ddhO3B7F8iHmyvNKQ3vNWiA//jp2ouqq8cIEK4mAH3Q2BAriS5e6JZCzCoK5wZicD2NoTY/qQKFxNSZYgVFc+vZt7ZCdfJNFWLwq5h8ytH2hfI90/9mRFVq74LS0HIUcZWlK4DT7eiE7jkBmgVP9fc/OQrb1yJyRoADvQi+yatuWrdTqRelvoMCcV2ak3Gzl4tZeTKnIr5qXOcpeBDjmPWbx9l6HHBEjJv12ZpS9bBIJpUJcXAnGRkQ74fiZvSRilmvkujjRuCdPQ74mPQjig="
 
 before_install:
   - rm -rf ~/.gnupg
@@ -37,7 +37,7 @@ before_script:
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
   - cd /tmp
   - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
-  - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
+  - nohup ./BrowserStackLocal --key $access_key &
   - cd $PLUGIN_DIR/tests/codeception/
   - composer install
   - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
