@@ -18,11 +18,11 @@ modules:
             adminUsername: ''
             adminPassword: ''
             adminPath: '/wp-admin'
-            # capabilities:
+            capabilities:
             #   'os': 'OS X'
             #   'os_version': 'sierra'
             #   'browserstack.debug': 'true'
-            # #   'browserstack.selenium_version': '2.53.1'
+            #   'browserstack.selenium_version': '2.53.1'
             #   'build': 'Build_01'
             #   'project': 'rtMedia_Automated_1'
-            #   'browserstack.local': 'true'
+              'browserstack.local': 'true'

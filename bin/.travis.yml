@@ -47,7 +47,7 @@ before_script:
 
 script:
 # - wpcept run acceptance
-- wpcept run tests/acceptance/core-rtMedia-settings/display/positive-testcases/allow-user-commentonuploadedMediaCept.php --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/display/positive-testcases/allow-user-commentonuploadedMediaCept.php
 
 env:
     BROWSER_STACK_USERNAME: rtcamp2
