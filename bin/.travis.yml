@@ -15,6 +15,10 @@ addons:
 before_install:
 - rm -rf ~/.gnupg
 
+cache:
+  paths:
+  - vendor/
+
 before_script:
 - export PLUGIN_DIR=$(pwd)
 - sudo rm -rf /etc/mysql/
