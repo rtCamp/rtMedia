@@ -1311,7 +1311,11 @@ jQuery( document ).ready( function( $ ) {
 
 			rtmedia_single_media_alert_message( rtmedia_empty_comment_msg, 'warning' );
 
-			rtmedia_comment_media_input_button( widget_id, false );
+			if ( widget_id ) {
+				rtmedia_comment_media_input_button( widget_id, false );
+			} else {
+				rtmedia_comment_submit_button_disable( false );
+			}
 
 			return false;
 		}
@@ -1333,11 +1337,13 @@ jQuery( document ).ready( function( $ ) {
 
 				comment_content_el.val( '' );
 
-				rtmedia_comment_media_remove_hidden_media_id( widget_id );
-
-				rtmedia_comment_media_textbox_val( widget_id, false );
-
-				rtmedia_comment_media_input_button( widget_id, false );
+				if ( widget_id ) {
+					rtmedia_comment_media_remove_hidden_media_id( widget_id );
+					rtmedia_comment_media_textbox_val( widget_id, false );
+					rtmedia_comment_media_input_button( widget_id, false );
+				} else {
+					rtmedia_comment_submit_button_disable( false );
+				}
 
 				rtmedia_apply_popup_to_media();
 
@@ -1346,11 +1352,12 @@ jQuery( document ).ready( function( $ ) {
 				rtMediaHook.call( 'rtmedia_js_after_comment_added', [ ] );
 			},
 			error: function( data ) {
-
-				/* Act on the event */
-				rtmedia_comment_media_input_button( widget_id, false );
-
-				rtmedia_comment_media_remove_hidden_media_id( widget_id );
+				if ( widget_id ) {
+					rtmedia_comment_media_input_button( widget_id, false );
+					rtmedia_comment_media_remove_hidden_media_id( widget_id );
+				} else {
+					rtmedia_comment_submit_button_disable( false );
+				}
 			}
 		} );
 
@@ -1682,6 +1689,17 @@ function rtmedia_add_comment_media_button_click( widget_id ){
 	});
 }
 
+/**
+ * Enable/Disable submit comment button.
+ *
+ * @since 4.3.2
+ * @param {boolean} value Disable or Enable button.
+ */
+function rtmedia_comment_submit_button_disable( value ) {
+	if ( 'boolean' === typeof value ) {
+		jQuery( '#rt_media_comment_form #rt_media_comment_submit' ).prop( 'disabled', value );
+	}
+}
 
 function rtmedia_comment_media_input_button( widget_id, $value ){
 
