@@ -11,18 +11,18 @@ modules:
         - WPWebDriver
     config:
           WPWebDriver:
-            host: 'hub-cloud.browserstack.com'
+            host: '%BROWSER_STACK_USERNAME%:%BROWSER_STACK_ACCESS_KEY%@hub-cloud.browserstack.com'
             port: 80
             browser: 'firefox'
             url: 'http://test.rtmedia.me'
             adminUsername: ''
             adminPassword: ''
             adminPath: '/wp-admin'
-            capabilities:
-              'os': 'OS X'
-              'os_version': 'sierra'
-              'browserstack.debug': 'true'
-            #   'browserstack.selenium_version': '2.53.1'
-              'build': 'Build_01'
-              'project': 'rtMedia_Automated_1'
-              'browserstack.local': 'true'
+            # capabilities:
+            #   'os': 'OS X'
+            #   'os_version': 'sierra'
+            #   'browserstack.debug': 'true'
+            # #   'browserstack.selenium_version': '2.53.1'
+            #   'build': 'Build_01'
+            #   'project': 'rtMedia_Automated_1'
+            #   'browserstack.local': 'true'
