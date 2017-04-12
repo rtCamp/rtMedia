@@ -46,8 +46,7 @@ before_script:
 - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
 
 script:
-# - wpcept run acceptance
-- wpcept run tests/acceptance/core-rtMedia-settings/display/positive-testcases/allow-user-commentonuploadedMediaCept.php
+- wpcept run acceptance
 
 env:
     BROWSER_STACK_USERNAME: rtcamp2
