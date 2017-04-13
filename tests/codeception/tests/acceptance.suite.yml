@@ -19,6 +19,8 @@ modules:
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
+              'browserstack.user': 'BROWSERSTACK_USER'
+              'browserstack.key': 'BROWSERSTACK_ACCESS_KEY'
               'os': 'OS X'
               'os_version': 'sierra'
               'browserstack.debug': 'true'
