@@ -41,7 +41,8 @@ before_script:
 - wget http://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
 - unzip BrowserStackLocal-linux-x64.zip
 # - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
-# - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
+- nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
+- echo "$BROWSERSTACK_ACCESS_KEY"
 - cd $PLUGIN_DIR/tests/codeception/
 - composer install
 - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
@@ -49,6 +50,6 @@ before_script:
 script:
 - wpcept run acceptance
 
-# env:
-#     BROWSERSTACK_USER: rtcamp2
-#     BROWSERSTACK_ACCESS_KEY: co0cs4Anst7BQJUS7NL0luIvlkD3h9Z0ErtrflhENnju7/NGMvgSPxwLXlkPBefTeeCsvkcnNoN04MUbMYfo4tQgsHWm3HSPk18UTCD6KOaIvhUE08dn1EfqHN2tdN3/P0n/SGwS5xXbz6yzdcQOwALtnM7Mh9Dt34ij2VdWohLhZQWQrttYbjC2xPju0UMXyfz88WH4b8V6aSWC7JTsNDZEElpa0l2GgnID/DIPJEu3KLtGI8vfFgoIumaiuTZZPdx49XQaHmLRdy5B8+DJq33049UBchoTbqVteao0XgTOe8jSJ3r3jfYhrxMQuz+5JaTwxXREjT8wgc3JUH0o0yrFY6sEiuRrU7bQeUg11Xw/E7H14yYEedh43R7yoeVeNmtISGQJGS4wREFiOxKHrErvLQNaSIuHYnl/D6/14++ZJ9qZ/OwXcAwkePxHJRggqgOXrMtmjFUigICMcoFRpWcozBG+iY2qb9SQLMaHQzqKahfFj+3MCchtlSkFrbh7H8tE49ytw1F1aidNzGnWinz6p6fRS+BnWPdRVEktvLLV30uv0Xb4kmnwqbvhdpphfhHeVMoZd81m/iKXNWuXkO0TPtBv/vTkEaEOUcqDKq3soeekhZo+JHxirjM+xwFJmvz4oqwED68Hhsh6nPj4QYXW25X7hR6KFyad6s1c9Mk=
+env:
+    BROWSERSTACK_USER: rtcamp2
+    BROWSERSTACK_ACCESS_KEY: co0cs4Anst7BQJUS7NL0luIvlkD3h9Z0ErtrflhENnju7/NGMvgSPxwLXlkPBefTeeCsvkcnNoN04MUbMYfo4tQgsHWm3HSPk18UTCD6KOaIvhUE08dn1EfqHN2tdN3/P0n/SGwS5xXbz6yzdcQOwALtnM7Mh9Dt34ij2VdWohLhZQWQrttYbjC2xPju0UMXyfz88WH4b8V6aSWC7JTsNDZEElpa0l2GgnID/DIPJEu3KLtGI8vfFgoIumaiuTZZPdx49XQaHmLRdy5B8+DJq33049UBchoTbqVteao0XgTOe8jSJ3r3jfYhrxMQuz+5JaTwxXREjT8wgc3JUH0o0yrFY6sEiuRrU7bQeUg11Xw/E7H14yYEedh43R7yoeVeNmtISGQJGS4wREFiOxKHrErvLQNaSIuHYnl/D6/14++ZJ9qZ/OwXcAwkePxHJRggqgOXrMtmjFUigICMcoFRpWcozBG+iY2qb9SQLMaHQzqKahfFj+3MCchtlSkFrbh7H8tE49ytw1F1aidNzGnWinz6p6fRS+BnWPdRVEktvLLV30uv0Xb4kmnwqbvhdpphfhHeVMoZd81m/iKXNWuXkO0TPtBv/vTkEaEOUcqDKq3soeekhZo+JHxirjM+xwFJmvz4oqwED68Hhsh6nPj4QYXW25X7hR6KFyad6s1c9Mk=
