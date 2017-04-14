@@ -38,7 +38,9 @@ before_script:
 - cd tests/codeception/tests/_data
 - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
 - cd /tmp
-- sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
+- wget http://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
+- unzip BrowserStackLocal-linux-x64.zip
+# - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
 - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
 - cd $PLUGIN_DIR/tests/codeception/
 - composer install
