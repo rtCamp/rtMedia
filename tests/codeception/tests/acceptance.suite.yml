@@ -7,7 +7,7 @@
 class_name: AcceptanceTester
 modules:
     enabled:
-        # - \Helper\Acceptance
+         - \Helper\Acceptance
         # - WPWebDriver
         - \BrowserStackWebDriver
     config:
