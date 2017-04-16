@@ -7,10 +7,12 @@
 class_name: AcceptanceTester
 modules:
     enabled:
-        - \Helper\Acceptance
-        - WPWebDriver
+        # - \Helper\Acceptance
+        # - WPWebDriver
+        - \BrowserStackWebDriver
     config:
-          WPWebDriver:
+        #   WPWebDriver:
+        \BrowserStackWebDriver:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'firefox'
@@ -19,8 +21,8 @@ modules:
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-              'browserstack.user': %BROWSERSTACK_USER%
-              'browserstack.key': %BROWSERSTACK_ACCESS_KEY%
+              'browserstack.user': 'BROWSERSTACK_USER'
+              'browserstack.key': 'BROWSERSTACK_ACCESS_KEY'
               'os': 'OS X'
               'os_version': 'sierra'
               'browserstack.debug': 'true'
