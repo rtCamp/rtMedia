@@ -8,11 +8,9 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - \Helper\Acceptance
-        # - WPWebDriver
-        - \BrowserStackWebDriver
+        - WPWebDriver
     config:
-        #   WPWebDriver:
-          \BrowserStackWebDriver:
+        WPWebDriver:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'firefox'
