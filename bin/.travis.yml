@@ -40,7 +40,7 @@ before_script:
 - wget http://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
 - unzip BrowserStackLocal-linux-x64.zip
 # - sudo apt-get install unzip && unzip BrowserStackLocal-linux-x64.zip
-# - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
+- nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
 - cd $PLUGIN_DIR/tests/codeception/
 - composer install
 - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
