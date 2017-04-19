@@ -19,7 +19,7 @@ modules:
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-              'browserstack.user': 'BROWSERSTACK_USER'
+              'browserstack.user': 'rtcamp2'
               'browserstack.key': 'BROWSERSTACK_ACCESS_KEY'
               'os': 'OS X'
               'os_version': 'sierra'
@@ -28,3 +28,4 @@ modules:
               'build': 'Build_01'
               'project': 'rtMedia_Automated_1'
               'browserstack.local': 'true'
+              'browserstack.localIdentifier': 'BROWSERSTACK_LOCAL_IDENTIFIER'
