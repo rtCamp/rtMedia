@@ -8,9 +8,9 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - \Helper\Acceptance
-        - \BrowserStackWebDriver
+        - WPWebDriver
     config:
-        \BrowserStackWebDriver:
+        WPWebDriver:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'firefox'
@@ -19,12 +19,12 @@ modules:
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-              'browserstack.user': 'BROWSERSTACK_USER'
-              'browserstack.key': 'BROWSERSTACK_ACCESS_KEY'
+              'browserstack.user': 'rtcamp2'
+              'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
               'os': 'OS X'
               'os_version': 'sierra'
               'browserstack.debug': 'true'
               'browserstack.selenium_version': '2.53.1'
-              'build': 'Build_02'
-              'project': 'rtMedia_Automated_2'
+              'build': 'Build_03'
+              'project': 'rtMedia_Automated_03'
               'browserstack.local': 'true'
