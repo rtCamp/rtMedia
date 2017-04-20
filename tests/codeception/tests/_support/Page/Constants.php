@@ -74,6 +74,7 @@ class Constants
     public static $strActivityMediaLikeLabel = 'Create activity for media likes';
     public static $strActivityMediaCommentLabel = 'Create activity for media comments';
     public static $strMediaUploadFromActivityLabel = 'Allow upload from activity stream';
+    public static $strMediaInCommnetLabel = 'Enable media in comment';
 
     public static $photoLabel = 'Photo';
     public static $videoLabel = 'Video';
