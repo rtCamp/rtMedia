@@ -37,7 +37,6 @@
         $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10);
 
         $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
     }else{
         $I->amOnPage( '/wp-admin' );
@@ -45,6 +44,8 @@
 
         $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload ); //This will check if the direct upload is disabled
+
+        $buddypress->gotoMedia( ConstantsPage::$userName );
 
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink);
 
@@ -58,7 +59,6 @@
         $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10);
 
         $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
     }
 
 ?>

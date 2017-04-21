@@ -41,7 +41,6 @@
         $I->waitForText( $commentStr, 5 );
 
         $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
     }else{
 
@@ -70,7 +69,7 @@
         $I->waitForText( $commentStr, 5 );
 
         $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+
     }
 
 ?>

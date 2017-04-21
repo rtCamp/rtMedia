@@ -45,6 +45,8 @@
         $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload); //This will check if the direct upload is disabled
 
+        $buddypress->gotoMedia( ConstantsPage::$userName );
+
         $mediaTobeUploaded = ConstantsPage::$numOfMediaPerPage - $temp;
 
         for( $i = 0; $i < $mediaTobeUploaded; $i++ ){
