@@ -365,13 +365,13 @@ class RTMediaFormHandler {
 			),
 		);
 
-		if( function_exists( 'bp_is_active' ) ){
-			$render[ 'rtmedia-enable-masonry-activity' ] = array(
+		if ( function_exists( 'bp_is_active' ) ) {
+			$render['rtmedia-enable-masonry-activity'] = array(
 				'title' => esc_html__( 'Enable Masonry in Activity & Group', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args' => array(
 					'key' => 'buddypress_enableMasonryActivity',
-					'value' => $options[ 'buddypress_enableMasonryActivity' ],
+					'value' => $options['buddypress_enableMasonryActivity'],
 					'desc' => esc_html__( 'Enable Masonry grid on Activity & Group stream', 'buddypress-media' ),
 					'id' => 'rtmedia-bp-enable-masonry-activity',
 				),
