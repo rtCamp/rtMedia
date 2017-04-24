@@ -10,7 +10,7 @@
     use Page\DashboardSettings as DashboardSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To check if media tab is disabled on profile' );
+    $I->wantTo( 'To check if media tab is enabled for group' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
@@ -19,7 +19,7 @@
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInGrpLabel, ConstantsPage::$enableMediaInGrpCheckbox );
 
-    $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
+    // $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoGroup();
