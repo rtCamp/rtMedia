@@ -25,6 +25,6 @@ modules:
               'os_version': 'sierra'
               'browserstack.debug': 'true'
               'build': '%TRAVIS_BUILD_NUMBER%'
-              'project': 'Buddypress'
+              'project': 'Buddypress Testcase'
               'browserstack.local': 'true'
               'browserstack.selenium_version': '2.53.1'
