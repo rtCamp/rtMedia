@@ -24,7 +24,6 @@ modules:
               'os': 'OS X'
               'os_version': 'sierra'
               'browserstack.debug': 'true'
-              'browserstack.selenium_version': '2.53.1'
               'build': '%TRAVIS_BUILD_NUMBER%'
-              'project': 'Display_testcases'
+              'project': 'Buddypress_testcases'
               'browserstack.local': 'true'

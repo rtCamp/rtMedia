@@ -46,7 +46,7 @@
         $I->fillfield( UploadMediaPage::$commentTextArea, 'This is comment when upload media is disabled' );
 
         $I->dontSeeElement( ConstantsPage::$mediaButtonInComment );
-        
+
          $I->click( UploadMediaPage::$commentSubmitButton );
          $I->wait( 5 );
 
@@ -79,7 +79,7 @@
 
         $I->dontSeeElement( ConstantsPage::$mediaButtonInComment );
 
-         $I->click( UploadMediaPage::$commentSubmitButton );
+        $I->click( UploadMediaPage::$commentSubmitButton );
         $I->wait( 5 );
 
     }

@@ -19,6 +19,8 @@
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
     $settings->verifyDisableStatus( ConstantsPage::$strEnableAlbumLabel, ConstantsPage::$enableAlbumCheckbox );
 
+    $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox ); //This must be enabled else it will not identify the element in front end.
+
     $gotoMediaPage = new BuddypressSettingsPage( $I );
     $gotoMediaPage->gotoMedia( ConstantsPage::$userName );
 

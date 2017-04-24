@@ -17,6 +17,8 @@
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+
+    $settings->verifyEnableStatus( ConstantsPage::$strEnableAlbumLabel, ConstantsPage::$enableAlbumCheckbox );
     $settings->verifyEnableStatus( ConstantsPage::$strShowAlbumDescLabel, ConstantsPage::$albumDescCheckbox );
 
     $buddypress = new BuddypressSettingsPage( $I );

@@ -75,6 +75,7 @@ class Constants
     public static $strActivityMediaCommentLabel = 'Create activity for media comments';
     public static $strMediaUploadFromActivityLabel = 'Allow upload from activity stream';
     public static $strMediaInCommnetLabel = 'Enable media in comment';
+    public static $strShowAlbumDescLabel = 'Show album description';
 
     public static $photoLabel = 'Photo';
     public static $videoLabel = 'Video';
@@ -118,6 +119,10 @@ class Constants
     public static $activityMediaCommentCheckbox = 'input[name="rtmedia-options[buddypress_mediaCommentActivity]"]';
     public static $mediaUploadFromActivityCheckbox = 'input[name="rtmedia-options[buddypress_enableOnActivity]"]';
     public static $numOfMediaTextboxActivity = 'input[name="rtmedia-options[buddypress_limitOnActivity]"]';
+    public static $mediaInCommentCheckbox = 'input[name="rtmedia-options[buddypress_enableOnComment]"]';
+    public static $mediaButtonInComment = 'button.rtmedia-comment-media-upload';
+    public static $uploadFileInComment = 'div.rtm-media-single-comments div.moxie-shim.moxie-shim-html5 input[type=file]';
+    public static $albumDescCheckbox = 'input[name="rtmedia-options[general_enableAlbums_description]"]';
 
     public static $photoCheckbox = 'input[name="rtmedia-options[allowedTypes_photo_enabled]"]';
     public static $videoCheckbox = 'input[name="rtmedia-options[allowedTypes_video_enabled]"]';
@@ -195,6 +200,19 @@ class Constants
     public static $groupNameTextbox = 'input#group-name';
     public static $groupDescTextarea = 'textarea#group-desc';
     public static $createGroupButton = 'input#group-creation-create';
+
+    public static $mediaUplaodButtonOnComment = 'div button.rtmedia-comment-media-upload';
+    public static $mediaOptionButton = 'div.rtmedia-action-buttons';
+    public static $addAlbumButtonLink = 'ul.rtm-options li a.rtmedia-modal-link';
+    public static $createAlbumPopup = 'div.rtmedia-popup';
+    public static $albumNameTextbox = 'input.rtm-input-medium';
+    public static $createAlbumButton = 'button#rtmedia_create_new_album';
+    public static $closeAlbumButton = 'button.mfp-close';
+    public static $firstAlbum = 'ul.rtmedia-album-list li:nth-child(1)';
+    public static $albumEditLink = 'a.rtmedia-edit';
+    public static $albumDescTeaxtarea = 'textarea.rtmedia-desc-textarea';
+    public static $saveAlbumButton = 'input.rtmedia-save-album';
+    public static $albumDescSelector = '.gallery-description.gallery-album-description';
 
     public static $mediaPageScrollPos = '#user-activity';   //Scroll position for activity and media pages
     public static $profilePicture = 'div#item-header-avatar';
