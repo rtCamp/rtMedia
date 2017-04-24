@@ -44,7 +44,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 			$defaults = array(
 				'general_enableAlbums'        => 1,
+				'general_enableAlbums_description'        => 0,
 				'general_enableComments'      => 0,
+				'general_enableLikes'      	  => 1,
 				'general_downloadButton'      => 0,
 				'general_enableLightbox'      => 1,
 				'general_perPageMedia'        => 10,
@@ -85,6 +87,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 			$defaults['buddypress_enableOnGroup']        = 1;
 			$defaults['buddypress_enableOnActivity']     = 1;
+			$defaults['buddypress_enableOnComment']      = 1;
 			$defaults['buddypress_enableOnProfile']      = 1;
 			$defaults['buddypress_limitOnActivity']      = 0;
 			$defaults['buddypress_enableNotification']   = 0;
@@ -93,6 +96,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$defaults['buddypress_enableMasonryActivity'] = 0;
 			$defaults['styles_custom']                   = '';
 			$defaults['styles_enabled']                  = 1;
+
+			/* default value for add media in comment media */
+			$defaults['rtmedia_disable_media_in_commented_media']      = 1;
 
 			if ( isset( $options['general_videothumbs'] ) && is_numeric( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) > 10 ) {
 				$defaults['general_videothumbs'] = 10;

@@ -297,6 +297,16 @@ class RTMediaFormHandler {
 				),
 				'group'    => '10',
 			),
+			'general_enableLikes' => array(
+				'title'    => __( 'Enable likes for media', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'general_enableLikes',
+					'value' => $options['general_enableLikes'],
+					'desc' => __( 'Enabling this setting will add like feature for media.', 'buddypress-media' ),
+				),
+				'group' => '11',
+			),
 			'general_enableLightbox' => array(
 				'title'    => esc_html__( 'Use lightbox to display media', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
@@ -389,6 +399,7 @@ class RTMediaFormHandler {
 		$render_options		= apply_filters( 'rtmedia_display_content_add_itmes', $render_options, $options );
 		$general_group		= array();
 		$general_group[10]	= esc_html__( 'Single Media View', 'buddypress-media' );
+		$general_group[11]	= esc_html__( 'Media Likes', 'buddypress-media' );
 		$general_group[15]	= esc_html__( 'List Media View', 'buddypress-media' );
 		$general_group[18]	= esc_html__( 'Masonry View', 'buddypress-media' );
 		$general_group[19]	= esc_html__( 'Direct Upload', 'buddypress-media' );
@@ -1021,6 +1032,27 @@ class RTMediaFormHandler {
 				),
 				'group'    => 10,
 			),
+			'buddypress_enableOnComment'      => array(
+				'title'		=> esc_html__( 'Enable media in comment', 'buddypress-media' ),
+				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'		=> array(
+					'key'	=> 'buddypress_enableOnComment',
+					'value'	=> $options['buddypress_enableOnComment'],
+					'desc'	=> esc_html__( 'This will allow users to upload media in comment section for originally uploaded media up to 1 level.', 'buddypress-media' ),
+				),
+				'group'    => 660,
+			),
+			'rtmedia_disable_media_in_commented_media'      => array(
+				'title'		=> esc_html__( 'Disable upload in comment media', 'buddypress-media' ),
+				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'		=> array(
+					'key'	=> 'rtmedia_disable_media_in_commented_media',
+					'value'	=> $options['rtmedia_disable_media_in_commented_media'],
+					'desc'	=> esc_html__( 'Disable upload in comment media', 'buddypress-media' ),
+				),
+				'group'    => 660,
+				'depends'       => 'buddypress_enableOnComment',
+			),
 			'rtmedia-activity-feed-limit'     => array(
 				'title'		=> esc_html__( 'Number of media items to show in activity stream', 'buddypress-media' ),
 				'callback'	=> array( 'RTMediaFormHandler', 'number' ),
@@ -1077,6 +1109,18 @@ class RTMediaFormHandler {
 				),
 				'group'	=> 50,
 			),
+			'general_enableAlbums_description'            => array(
+				'title'		=> esc_html__( 'Show album description', 'buddypress-media' ),
+				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'		=> array(
+					'id'	=> 'rtmedia-album-description-enable',
+					'key'	=> 'general_enableAlbums_description',
+					'value'	=> $options['general_enableAlbums_description'],
+					'desc'	=> esc_html__( 'This will show description of an album under album gallery page.', 'buddypress-media' ),
+				),
+				'group'	=> 50,
+				'depends' => 'general_enableAlbums',
+			),
 		);
 
 		return $render;
@@ -1096,6 +1140,7 @@ class RTMediaFormHandler {
 
 		$general_group		= array();
 		$general_group[10]	= 'Integration With BuddyPress Features';
+		$general_group[660]	= 'Comment Media';
 		$general_group[50]	= 'Album Settings';
 		$general_group		= apply_filters( 'rtmedia_buddypress_setting_group', $general_group );
 
