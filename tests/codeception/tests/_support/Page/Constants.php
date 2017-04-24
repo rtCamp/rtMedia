@@ -41,6 +41,10 @@ class Constants
 
     public static $topSaveButton = '.rtm-button-container.top input.rtmedia-settings-submit';
 
+    public static $grpTableRow = 'tbody#the-list tr#groups';
+    public static $enableUserGrpCheckbox = 'input[name="bp_components[groups]"]';
+    public static $saveBPSettings = 'input#bp-admin-component-submit';
+
     public static $displayTabUrl = '#rtmedia-display';
     public static $buddypressTabUrl = '#rtmedia-bp';
     public static $typesTabUrl = '#rtmedia-types';
