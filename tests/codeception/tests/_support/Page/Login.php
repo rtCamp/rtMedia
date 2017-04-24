@@ -40,7 +40,7 @@ class Login
     {
         $I = $this->tester;
         $I->amOnPage( '/' );
-        $I->wait( 5 );
+        $I->wait( 10 );
 
         $I->seeElementInDOM( self::$loginLink );
         $I->click( self::$loginLink );

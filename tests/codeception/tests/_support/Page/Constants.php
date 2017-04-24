@@ -221,26 +221,4 @@ class Constants
 
     public static $mediaSeachSelector = '.media_search';
 
-    public static $scrollPosToForPlugin = '.wp-list-table.plugins tr[data-slug="buddypress-media"]';
-    public static $activateLink = 'tr[data-slug="buddypress-media"] .row-actions span.activate a';
-    public static $deactivateLink = 'tr[data-slug="buddypress-media"] .row-actions span.deactivate a';
-
-    public static $addNewPluginButton = 'a.page-title-action';
-    public static $uploadPluginButton = 'a.upload-view-toggle';
-    public static $choosefileButton = 'input#pluginzip';
-    public static $installPluginButton = 'input#install-plugin-submit';
-    public static $searchPluginTextbox = 'input.wp-filter-search';
-    public static $installNowButton = '#the-list > div.plugin-card.plugin-card-buddypress-media > div.plugin-card-top > div.action-links > ul > li:nth-child(1) > a';
-    public static $activatePluginButton = '#the-list > div.plugin-card.plugin-card-buddypress-media > div.plugin-card-top > div.action-links > ul > li:nth-child(1) > a';
-    public static $pluginDataslug = '.wp-list-table.plugins tr[data-slug="buddypress-media"]';
-    public static $deletePluginLink = 'tr[data-slug="buddypress-media"] .row-actions span.delete a';
-    public static $allPluginsUrl = '/wp-admin/plugins.php?plugin_status=all';
-
-    public static $gotoPluginPage = '/wp-admin/plugins.php';
-    public static $gotoPluginInstallPage = '/wp-admin/plugin-install.php';
-    public static $gotoActivePluginPage = '/wp-admin/plugins.php?plugin_status=active';
-    public static $gotoInactivePluginPage = '/wp-admin/plugins.php?plugin_status=inactive';
-    public static $uploadPluginPage = '/wp-admin/update.php?action=upload-plugin';
-    public static $refLabel = '<strong>rtMedia for WordPress, BuddyPress and bbPress</strong>';
-
 }

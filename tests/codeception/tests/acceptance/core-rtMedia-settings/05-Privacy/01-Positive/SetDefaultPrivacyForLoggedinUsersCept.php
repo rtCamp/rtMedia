@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : To set default privacy with public.
+* Scenario : To set default privacy for logged in user.
 */
 
     use Page\Login as LoginPage;
@@ -11,7 +11,7 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To check if the user is allowed to set default privacy with public option' );
+    $I->wantTo( 'To set default privacy for logged in user.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
