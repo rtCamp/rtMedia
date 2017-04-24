@@ -992,7 +992,7 @@ function rtmedia_gallery_after_title_add_media_count() {
 			?>
 			<h2 class="rtm-gallery-count">
 				<?php
-				echo sprintf( esc_html__( '( %d )', 'buddypress-media' ), intval( $media_count ) );
+				echo sprintf( '( %d )', intval( $media_count ) );
 				?>
 			</h2>
 			<?php

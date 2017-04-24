@@ -192,7 +192,7 @@ class RTMediaGalleryShortcode {
 			}// End if().
 
 			$rtmedia_shortcode_attr = $attr['attr'];
-			if( isset( $attr['attr'] ) && isset( $attr['attr']['show_count'] ) ){
+			if ( isset( $attr['attr'] ) && isset( $attr['attr']['show_count'] ) ) {
 				unset( $attr['attr']['show_count'] );
 			}
 

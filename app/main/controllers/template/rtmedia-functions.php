@@ -3735,7 +3735,7 @@ function rtmedia_check_comment_in_commented_media_allow() {
 	$value = false;
 	global $rtmedia;
 	/* variable */
-	if ( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) {
+	if ( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 === $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) {
 		$value = true;
 	}
 	return $value;
@@ -3936,7 +3936,6 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 
 
 /**
- * Checks if BuddyPress is activated or not.
  *
  * Will Check that if the BuddyPress plugin is activated or not.
  *
