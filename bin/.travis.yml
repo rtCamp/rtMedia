@@ -47,4 +47,3 @@ before_script:
 script:
 # - wpcept run acceptance
 - wpcept run tests/acceptance/core-rtMedia-settings/01-Display/
-- wpcept run tests/acceptance/core-rtMedia-settings/02-Buddypress
