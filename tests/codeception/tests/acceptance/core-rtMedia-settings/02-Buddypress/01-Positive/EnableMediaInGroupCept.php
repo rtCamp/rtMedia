@@ -33,7 +33,6 @@
     $temp = $buddypress->countGroup( ConstantsPage::$groupListSelector );
     echo "Total no. of groups = ".$temp;
 
-
     if( $temp > 0 ){
 
         $buddypress->checkMediaInGroup();
