@@ -34,4 +34,6 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
 
+    $I->wait( 10 );
+
 ?>
