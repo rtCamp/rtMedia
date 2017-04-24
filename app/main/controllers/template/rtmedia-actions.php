@@ -982,7 +982,7 @@ function rtmedia_gallery_after_title_add_media_count() {
 	if ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) {
 		global $rtmedia_shortcode_attr;
 		// check in the gallery shortcode $show_count is set to true.
-		if ( isset( $rtmedia_shortcode_attr['show_count'] ) && 'true' == (string) $rtmedia_shortcode_attr['show_count'] ) {
+		if ( isset( $rtmedia_shortcode_attr['show_count'] ) && 'true' === (string) $rtmedia_shortcode_attr['show_count'] ) {
 			// Defalut value for media count.
 			$media_count = 0;
 			if ( isset( $rtmedia_query->is_gallery_shortcode ) ) {
