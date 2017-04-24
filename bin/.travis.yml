@@ -46,4 +46,5 @@ before_script:
 
 script:
 # - wpcept run acceptance
-- wpcept run tests/acceptance/core-rtMedia-settings/buddypress/negative-testcases/DisableMediaInCommentCept.php --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/buddypress/positive-testcases/ --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/buddypress/negative-testcases/ --steps
