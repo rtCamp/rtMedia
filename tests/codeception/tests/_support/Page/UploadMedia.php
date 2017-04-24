@@ -79,14 +79,14 @@ class UploadMedia
         $I->seeElement( $link );
         $I->click( $link );
 
-        $I->wait( 5 );
+        $I->wait( 10 );
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
         $I->wait( 5 );
 
         $I->seeElement( self::$uploadLink );
         $I->click( self::$uploadLink );
-        $I->waitForElement( self::$uploadContainer, 10 );
+        $I->waitForElement( self::$uploadContainer, 15 );
         $I->seeElement(self::$selectFileButton);
         $I->attachFile( self::$uploadFile, $mediaFile );
         $I->wait( 10 );

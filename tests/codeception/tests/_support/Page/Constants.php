@@ -9,6 +9,7 @@ class Constants
     public static $plugin = 'li#menu-plugins';
 
     public static $imageName = 'test-data/images/test.jpg';
+    //public static $imageName = 'test.jpg';
     public static $videoName = 'test-data/videos/testmpfour.mp4';
     public static $audioName = 'test-data/music/mpthreetest.mp3';
 

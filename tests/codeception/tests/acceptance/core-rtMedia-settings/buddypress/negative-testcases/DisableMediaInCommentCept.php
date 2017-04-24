@@ -59,7 +59,7 @@
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
         $buddypress->gotoMedia( ConstantsPage::$userName );
-        //$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink);
 
