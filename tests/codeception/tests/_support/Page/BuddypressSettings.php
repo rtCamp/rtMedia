@@ -194,6 +194,8 @@ class BuddypressSettings
 
         $I->reloadPage();
 
+        $I->wait( 5 );
+
         echo "Album created";
 
     }
