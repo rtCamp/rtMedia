@@ -7,7 +7,7 @@ class UploadMedia
 {
 
     public static $galleryLable = '.rtm-gallery-title';
-    public static $uploadLink = '.rtm-media-options .rtmedia-upload-media-link';
+    public static $uploadLink = '.rtmedia-upload-media-link';
     public static $selectFileButton = '.rtm-select-files #rtMedia-upload-button';
     public static $fileList = '#rtmedia_uploader_filelist';
     public static $uploadTermsCheckbox = '#rtmedia_upload_terms_conditions';
