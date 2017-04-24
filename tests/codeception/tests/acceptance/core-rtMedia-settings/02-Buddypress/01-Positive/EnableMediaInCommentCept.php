@@ -50,7 +50,6 @@
         $I->wait( 10 );
 
         $I->click( UploadMediaPage::$commentSubmitButton );
-        $I->wait( 5 );
 
     }else{
 
@@ -84,8 +83,9 @@
         $I->wait( 10 );
 
         $I->click( UploadMediaPage::$commentSubmitButton );
-        $I->wait( 5 );
 
     }
+
+    $I->wait( 5 );
 
 ?>
