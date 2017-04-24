@@ -27,4 +27,4 @@ modules:
               'build': '%TRAVIS_BUILD_NUMBER%'
               'project': 'Buddypress'
               'browserstack.local': 'true'
-            #   'browserstack.selenium_version': '2.53.1'
+              'browserstack.selenium_version': '2.53.1'
