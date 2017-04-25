@@ -213,7 +213,7 @@ class BuddypressSettings
         // $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
         $I->wait( 5 );
         echo "On newly created media page";
-        $I->seeElement( 'a#rtmedia-nav-item-albums' )
+        $I->seeElement( 'a#rtmedia-nav-item-albums' );
         $I->scrollTo( 'a#rtmedia-nav-item-albums' );
         echo "After Scroll to media tab";
 
