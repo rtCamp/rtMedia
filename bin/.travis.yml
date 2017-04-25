@@ -33,6 +33,7 @@ before_script:
 - cd /var/www/test.rtmedia.me/htdocs/
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
 - wp plugin activate --all
+- cd /var/www/test.rtmedia.me/htdocs/wp-content/themes/
 - wp theme activate twentysixteen
 - cd $PLUGIN_DIR
 - cd tests/codeception/tests/_data
