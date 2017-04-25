@@ -33,6 +33,7 @@ before_script:
 - cd /var/www/test.rtmedia.me/htdocs/
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
 - wp plugin activate --all
+- wp theme activate twentysixteen
 - cd $PLUGIN_DIR
 - cd tests/codeception/tests/_data
 - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
