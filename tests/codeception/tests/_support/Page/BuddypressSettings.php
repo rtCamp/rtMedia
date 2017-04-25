@@ -192,10 +192,6 @@ class BuddypressSettings
 
         $I->wait( 5 );
 
-        $I->reloadPage();
-
-        $I->wait( 5 );
-
         echo "Album created";
 
     }
@@ -211,6 +207,7 @@ class BuddypressSettings
 
         $I->seeElement( ConstantsPage::$firstAlbum );
         $I->click( ConstantsPage::$firstAlbum );
+        $I->waitForElementVisible( ConstantsPage::$mediaPageScrollPos, 5);
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
@@ -220,6 +217,7 @@ class BuddypressSettings
 
         $I->seeElement( ConstantsPage::$albumEditLink );
         $I->click( ConstantsPage::$albumEditLink );
+        $I->waitForElementVisible( ConstantsPage::$mediaPageScrollPos, 5);
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
@@ -227,6 +225,7 @@ class BuddypressSettings
         $I->fillField( ConstantsPage::$albumDescTeaxtarea, 'My test album - desc - 1');
         $I->seeElement( ConstantsPage::$saveAlbumButton );
         $I->click( ConstantsPage::$saveAlbumButton );
-        $I->wait( 3 );
+
+        $I->wait( 5 );
     }
 }
