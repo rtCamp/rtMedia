@@ -186,6 +186,7 @@ class BuddypressSettings
         $I->fillField( ConstantsPage::$albumNameTextbox, 'My test album - 1');
         $I->seeElement( ConstantsPage::$createAlbumButton );
         $I->click( ConstantsPage::$createAlbumButton );
+        $I->wait( 5 );
 
         $I->seeElement( ConstantsPage::$closeAlbumButton );
         $I->click( ConstantsPage::$closeAlbumButton );
@@ -203,7 +204,7 @@ class BuddypressSettings
 
         $I = $this->tester;
 
-        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+        // $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
         $I->seeElement( ConstantsPage::$firstAlbum );
         $I->click( ConstantsPage::$firstAlbum );

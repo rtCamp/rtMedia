@@ -25,9 +25,7 @@
     $buddypress = new BuddypressSettingsPage( $I );
 
     $buddypress->createNewAlbum();
-
     $buddypress->editAlbumDesc();
-
     $buddypress->gotoAlubmPage();
 
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
