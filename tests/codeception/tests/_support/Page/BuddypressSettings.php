@@ -208,9 +208,14 @@ class BuddypressSettings
 
         $I->seeElement( ConstantsPage::$firstAlbum );
         $I->click( ConstantsPage::$firstAlbum );
-        $I->waitForElementVisible( ConstantsPage::$mediaPageScrollPos, 5);
+        // $I->waitForElementVisible( ConstantsPage::$mediaPageScrollPos, 5);
 
-        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+        // $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+        $I->wait( 5 );
+        echo "On newly created media page";
+        $I->seeElement( 'a#rtmedia-nav-item-albums' )
+        $I->scrollTo( 'a#rtmedia-nav-item-albums' );
+        echo "After Scroll to media tab";
 
         $I->seeElement( ConstantsPage::$mediaOptionButton );
         $I->click( ConstantsPage::$mediaOptionButton );
@@ -218,9 +223,16 @@ class BuddypressSettings
 
         $I->seeElement( ConstantsPage::$albumEditLink );
         $I->click( ConstantsPage::$albumEditLink );
-        $I->waitForElementVisible( ConstantsPage::$mediaPageScrollPos, 5);
 
-        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+        $I->wait( 5 );
+        echo "On newly created media edit page";
+        $I->seeElement( 'a#rtmedia-nav-item-albums' )
+        $I->scrollTo( 'a#rtmedia-nav-item-albums' );
+        echo "After Scroll to media tab";
+
+        // $I->waitForElementVisible( ConstantsPage::$mediaPageScrollPos, 5);
+        //
+        // $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
         $I->seeElement( ConstantsPage::$albumDescTeaxtarea );
         $I->fillField( ConstantsPage::$albumDescTeaxtarea, 'My test album - desc - 1');
@@ -228,5 +240,6 @@ class BuddypressSettings
         $I->click( ConstantsPage::$saveAlbumButton );
 
         $I->wait( 5 );
+        echo "After album desc added!";
     }
 }
