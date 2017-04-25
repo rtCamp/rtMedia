@@ -28,14 +28,12 @@
     $buddypress->editAlbumDesc();
     $buddypress->gotoAlubmPage();
 
+    $I->waitForElement( ConstantsPage::$profilePicture, 5 );
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
     $I->seeElement( ConstantsPage::$firstAlbum );
-    $I->click( ConstantsPage::$firstAlbum );
-    $I->waitForElementVisible( ConstantsPage::$mediaPageScrollPos, 5);
-
+    $I->waitForElement( ConstantsPage::$profilePicture, 5 );
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-
     $I->seeElement( ConstantsPage::$albumDescSelector );
 
 ?>
