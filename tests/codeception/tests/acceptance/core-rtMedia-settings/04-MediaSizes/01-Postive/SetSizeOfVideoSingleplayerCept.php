@@ -39,5 +39,6 @@
     $uploadmedia->fisrtThumbnailMedia();
 
     echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
+    
 
 ?>
