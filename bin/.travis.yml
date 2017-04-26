@@ -49,5 +49,4 @@ before_script:
 
 script:
 # - wpcept run acceptance
-- wpcept run tests/acceptance/core-rtMedia-settings/03-Types/
-- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/
+- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/EnableCropPhotoLargeCept.php --steps
