@@ -50,5 +50,4 @@
 
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
-
 ?>
