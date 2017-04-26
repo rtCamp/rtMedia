@@ -230,10 +230,6 @@ class BuddypressSettings
         $I->scrollTo( 'a#rtmedia-nav-item-albums' );
         echo "After Scroll to media tab";
 
-        // $I->waitForElementVisible( ConstantsPage::$mediaPageScrollPos, 5);
-        //
-        // $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-
         $I->seeElement( ConstantsPage::$albumDescTeaxtarea );
         $I->fillField( ConstantsPage::$albumDescTeaxtarea, 'My test album - desc - 1');
         $I->seeElement( ConstantsPage::$saveAlbumButton );
