@@ -48,5 +48,4 @@ before_script:
 
 script:
 # - wpcept run acceptance
-- wpcept run tests/acceptance/core-rtMedia-settings/02-Buddypress/
-# - wpcept run tests/acceptance/core-rtMedia-settings/02-Buddypress/01-Positive/EnableShowAlbumDescCept.php --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/
