@@ -2,7 +2,6 @@
 
 /**
 * Scenario : To set width of Music player for activity page.
-*Prerequisite : Lightbox settings must be off.
 */
 
     use Page\Login as LoginPage;
@@ -25,7 +24,17 @@
     $settings->setMediaSize( ConstantsPage::$activityPlayerLabel, ConstantsPage::$activityMusicWidthTextbox, ConstantsPage::$activityMusicPlayerWidth, $scrollPos );
 
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $I->wait( 5 );
     $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload );
+    $settings->verifyDisableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab );
+
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
+    $I->wait( 5 );
+    $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-types' );
+    $I->wait( 5 );
+    $settings->verifyEnableStatus( ConstantsPage::$musicLabel, ConstantsPage::$musicCheckbox );
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
@@ -33,5 +42,6 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName );
 
+    $I->wait( 5 );
     echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorActivity, 'style' );
 ?>

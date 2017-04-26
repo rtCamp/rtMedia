@@ -25,5 +25,5 @@ modules:
               'os_version': 'sierra'
               'browserstack.debug': 'true'
               'build': '%TRAVIS_BUILD_NUMBER%'
-              'project': 'Types_testcases'
+              'project': 'MedizSizes_testcases'
               'browserstack.local': 'true'

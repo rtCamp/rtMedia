@@ -23,7 +23,16 @@
     $settings->setMediaSize( ConstantsPage::$activityPlayerLabel,ConstantsPage::$activityVideoWidthTextbox,ConstantsPage::$activityVideoPlayerWidth,ConstantsPage::$activityVideoHeightTextbox,ConstantsPage::$activityVideoPlayerHeight);
 
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $I->wait( 5 );
     $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload );
+
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
+    $I->wait( 5 );
+    $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-types' );
+    $I->wait( 5 );
+    $settings->verifyEnableStatus( ConstantsPage::$videoLabel, ConstantsPage::$videoCheckbox );
 
     $buddypress = new BuddypressSettingsPage($I);
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
@@ -31,6 +40,7 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName );
 
+    $I->wait( 5 );
     echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorActivity, 'style' );
 
 ?>

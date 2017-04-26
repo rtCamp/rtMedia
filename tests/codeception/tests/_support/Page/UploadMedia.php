@@ -72,8 +72,6 @@ class UploadMedia
 
         $I = $this->tester;
 
-        //self::gotoMediaPage( $userName, $link );
-
         $I->seeElement( ConstantsPage::$mediaPageScrollPos );
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
         $I->seeElement( $link );
@@ -102,8 +100,6 @@ class UploadMedia
 
         self::uploadMedia( $userName, $mediaFile, $link );
 
-    //    self::uploadTermasCheckbox( $I );
-
         $I->seeElement( self::$uploadMediaButton );
         $I->click( self::$uploadMediaButton );
 
@@ -119,7 +115,6 @@ class UploadMedia
         $I = $this->tester;
 
         self::uploadMedia( $userName, $mediaFile, $link );
-    //    self::uploadTermasCheckbox();
 
         $I->wait( 3 );
 
@@ -155,8 +150,6 @@ class UploadMedia
         $I->attachFile( self::$uploadFromActivity, $mediaFile );
         $I->wait( 5 );
 
-    //    self::uploadTermasCheckbox();
-
         $I->click( self::$postUpdateButton );
 
     }
@@ -186,8 +179,6 @@ class UploadMedia
                 $I->wait( 3 );
             }
         }
-
-    //    self::uploadTermasCheckbox();
 
         $I->click( self::$postUpdateButton );
         $I->wait( 5 );
