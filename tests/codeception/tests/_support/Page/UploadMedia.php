@@ -84,7 +84,9 @@ class UploadMedia
 
         $I->seeElement( self::$uploadLink );
         $I->click( self::$uploadLink );
-        $I->waitForElement( self::$uploadContainer, 15 );
+        $I->wait( 5 );
+        $I->seeElement( self::$uploadContainer);
+        $I->wait( 5 );
         $I->seeElement(self::$selectFileButton);
         $I->attachFile( self::$uploadFile, $mediaFile );
         $I->wait( 10 );
