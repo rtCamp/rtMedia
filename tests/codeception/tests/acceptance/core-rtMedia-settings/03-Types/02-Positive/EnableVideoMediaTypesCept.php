@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario :Disable upload for video media types.
+* Scenario :Allow upload for video media types.
 */
     use Page\Login as LoginPage;
     use Page\Constants as ConstantsPage;
@@ -10,14 +10,14 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'Disable upload for video media types' );
+    $I->wantTo( 'Allow upload for video media types' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$typesTab, ConstantsPage::$typesTabUrl );
-    $settings->verifyDisableStatus( ConstantsPage::$videoLabel, ConstantsPage::$videoCheckbox );
+    $settings->verifyEnableStatus( ConstantsPage::$videoLabel, ConstantsPage::$videoCheckbox );
 
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
     $I->wait( 5 );
@@ -29,7 +29,8 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName );
 
-    $I->dontSeeInSource( '<li class="rtmedia-list-item media-type-video"></li>' );
-    echo nl2br( "Video is not uploaded.. \n" );
+    $I->wait( 5 );
+    $I->seeElementInDOM( 'li.rtmedia-list-item.media-type-video' );
+    echo nl2br( "Video is uploaded.. \n" );
 
 ?>

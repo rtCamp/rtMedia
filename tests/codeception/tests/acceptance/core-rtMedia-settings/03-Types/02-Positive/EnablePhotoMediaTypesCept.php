@@ -29,7 +29,8 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
 
-    $I->seeInSource( '<li class="rtmedia-list-item media-type-photo">' );
+    $I->wait( 5 );
+    $I->seeElementInDOM( 'li.rtmedia-list-item.media-type-photo' );
     echo nl2br( "Photo is uploaded.. \n" );
 
 ?>

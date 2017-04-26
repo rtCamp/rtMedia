@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario :Allow upload for music media types.
+* Scenario :Disable upload for photo media types.
 */
     use Page\Login as LoginPage;
     use Page\Constants as ConstantsPage;
@@ -10,14 +10,14 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'Allow upload for music media types' );
+    $I->wantTo( 'Disable upload for photo media types' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$typesTab, ConstantsPage::$typesTabUrl );
-    $settings->verifyEnableStatus( ConstantsPage::$musicLabel, ConstantsPage::$musicCheckbox );
+    $settings->verifyDisableStatus( ConstantsPage::$photoLabel, ConstantsPage::$photoCheckbox );
 
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
     $I->wait( 5 );
@@ -27,9 +27,11 @@
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName );
+    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
 
-    $I->seeInSource( '<li class="rtmedia-list-item media-type-music">' );
-    echo nl2br( "Audio is uploaded.. \n" );
+    $I->wait( 5 );
+    $I->dontSeeElementInDOM( 'li.rtmedia-list-item.media-type-photo' );
+    echo nl2br( "Photo is not uploaded.. \n" );
+
 
 ?>

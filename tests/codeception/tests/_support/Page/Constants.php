@@ -7,9 +7,11 @@ class Constants
     public static $password = 'ADMINPASS';
 
     public static $imageName = 'test-data/images/test.jpg';
-    //public static $imageName = 'test.jpg';
-    public static $videoName = 'test-data/videos/testmpfour.mp4';
     public static $audioName = 'test-data/music/mpthreetest.mp3';
+    public static $videoName = 'test-data/videos/testmpfour.mp4';
+    // public static $imageName = 'test.jpg';
+    // public static $videoName = 'video.mp4';
+    // public static $audioName = 'audio.mp3';
 
     public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
     public static $customCssEmptyValue = '';
