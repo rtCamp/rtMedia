@@ -48,4 +48,4 @@ before_script:
 
 script:
 # - wpcept run acceptance
-- wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/
+- wpcept run tests/acceptance/core-rtMedia-settings/03-Types/
