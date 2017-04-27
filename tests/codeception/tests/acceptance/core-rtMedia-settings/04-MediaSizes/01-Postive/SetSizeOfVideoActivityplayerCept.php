@@ -40,7 +40,9 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName );
 
-    $I->wait( 5 );
+    $I->reloadPage();
+    $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+    
     echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorActivity, 'style' );
 
 ?>

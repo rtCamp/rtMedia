@@ -29,7 +29,9 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName );
 
-    $I->wait( 5 );
+    $I->reloadPage();
+    $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+    
     $I->dontSeeElementInDOM( 'li.rtmedia-list-item.media-type-video' );
     echo nl2br( "Video is not uploaded.. \n" );
 
