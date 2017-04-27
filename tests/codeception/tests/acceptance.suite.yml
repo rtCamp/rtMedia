@@ -25,5 +25,5 @@ modules:
               'os_version': 'sierra'
               'browserstack.debug': 'true'
               'build': '%TRAVIS_BUILD_NUMBER%'
-              'project': 'PrivacyTab_testcases'
+              'project': 'core-rtMedia-settings_testcases'
               'browserstack.local': 'true'

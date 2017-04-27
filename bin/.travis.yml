@@ -49,4 +49,4 @@ before_script:
 
 script:
 # - wpcept run acceptance
-- wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy
+- wpcept run tests/acceptance/core-rtMedia-settings/
