@@ -156,9 +156,9 @@ class Constants
     public static $imgQualityTextbox = 'input[name="rtmedia-options[general_jpeg_image_quality]"]';
 
     public static $privacyCheckbox = 'input[name="rtmedia-options[privacy_enabled]"]';
-    public static $privateRadioButton = 'input[value="60"]';
-    public static $loggedInUsersRadioButton = 'input[value="20"]';
-    public static $publicRadioButton = 'input#rtm-form-radio-4';
+    public static $privateRadioButton = '.rtm-form-radio input[value="60"]';
+    public static $loggedInUsersRadioButton = '.rtm-form-radio input[value="20"]';
+    public static $publicRadioButton = '.rtm-form-radio input[value="0"]';
     public static $privacyUserOverrideCheckbox = 'input[name="rtmedia-options[privacy_userOverride]"]';
 
     public static $defaultStyleCheckbox = 'input[name="rtmedia-options[styles_enabled]"]';
@@ -222,5 +222,7 @@ class Constants
     public static $commentLink = 'span > a.rtmedia-comment-link';
 
     public static $mediaSeachSelector = '.media_search';
+
+    public static $activityPrivacyStatus = '#activity-stream.activity-list.item-list > li.activity.activity_update.activity-item > div.activity-content > div.activity-inner p';
 
 }
