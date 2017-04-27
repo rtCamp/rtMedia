@@ -39,6 +39,8 @@
         $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
         $I->click( UploadMediaPage::$commentSubmitButton );
 
+        $I->waitForElementVisible( ConstantsPage::$commentDiv, 10 );
+
     }else{
 
         $I->amOnPage( '/wp-admin' );
@@ -63,6 +65,8 @@
         $I->seeElement( UploadMediaPage::$commentTextArea );
         $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
         $I->click( UploadMediaPage::$commentSubmitButton );
+
+        $I->waitForElementVisible( ConstantsPage::$commentDiv, 10 );
 
     }
 

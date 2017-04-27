@@ -21,6 +21,7 @@ modules:
             capabilities:
               'browserstack.user': 'rtcamp2'
               'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
+              'browser_version': '52.0'
               'os': 'OS X'
               'os_version': 'sierra'
               'browserstack.debug': 'true'

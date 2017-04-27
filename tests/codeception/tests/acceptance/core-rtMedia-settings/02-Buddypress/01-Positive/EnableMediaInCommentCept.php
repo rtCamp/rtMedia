@@ -55,6 +55,7 @@
         $I->wait( 10 );
 
         $I->click( UploadMediaPage::$commentSubmitButton );
+        $I->waitForElementVisible( ConstantsPage::$commentDiv, 10 );
 
     }else{
 
@@ -88,6 +89,7 @@
         $I->wait( 10 );
 
         $I->click( UploadMediaPage::$commentSubmitButton );
+        $I->waitForElementVisible( ConstantsPage::$commentDiv, 10 );
 
     }
 

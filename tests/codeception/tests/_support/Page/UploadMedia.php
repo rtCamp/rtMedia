@@ -86,7 +86,7 @@ class UploadMedia
         $I->click( self::$uploadLink );
         $I->wait( 5 );
         $I->seeElement( self::$uploadContainer);
-        $I->wait( 5 );
+        $I->wait( 15 );
         $I->seeElement(self::$selectFileButton);
         $I->attachFile( self::$uploadFile, $mediaFile );
         $I->wait( 10 );
@@ -150,9 +150,10 @@ class UploadMedia
         $I->fillfield( self::$whatIsNewTextarea, "test from activity stream" );
         $I->seeElement( self::$mediaButtonOnActivity );
         $I->attachFile( self::$uploadFromActivity, $mediaFile );
-        $I->wait( 5 );
+        $I->wait( 15 );
 
         $I->click( self::$postUpdateButton );
+        $I->wait( 10 );
 
     }
     /**
@@ -172,18 +173,18 @@ class UploadMedia
             for ( $i = 0; $i < $numOfMedia; $i++ ) {
 
                 $I->attachFile( self::$uploadFromActivity, $mediaFile );
-                $I->wait( 3 );
+                $I->wait( 5 );
             }
         }else{
             $tempMedia = 5;
             for ( $i = 0; $i < $tempMedia; $i++) {
                 $I->attachFile( self::$uploadFromActivity, $mediaFile );
-                $I->wait( 3 );
+                $I->wait( 5 );
             }
         }
 
         $I->click( self::$postUpdateButton );
-        $I->wait( 5 );
+        $I->wait( 10 );
 
     }
 
@@ -195,7 +196,7 @@ class UploadMedia
         $I = $this->tester;
 
         $I->click( self::$firstChild );
-        $I->wait( 5 );
+        $I->wait( 10 );
     }
 
 }
