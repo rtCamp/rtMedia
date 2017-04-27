@@ -34,7 +34,7 @@
     $I->seeElement( ConstantsPage::$firstAlbum );
     $I->click( ConstantsPage::$firstAlbum );
     $I->waitForElement( ConstantsPage::$profilePicture, 5 );
-    $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+    $I->scrollTo( ConstantsPage::$scrollSelector );
     $I->seeElement( ConstantsPage::$albumDescSelector );
 
 ?>

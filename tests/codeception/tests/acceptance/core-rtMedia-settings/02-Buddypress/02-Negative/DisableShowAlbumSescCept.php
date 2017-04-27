@@ -33,7 +33,7 @@
     $I->seeElement( ConstantsPage::$firstAlbum );
     $I->click( ConstantsPage::$firstAlbum );
 
-    $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+    $I->scrollTo( ConstantsPage::$scrollSelector );
 
     $I->dontSeeElement( ConstantsPage::$albumDescSelector );
 
