@@ -49,4 +49,4 @@ before_script:
 
 script:
 # - wpcept run acceptance
-- wpcept run tests/acceptance/core-rtMedia-settings/02-Buddypress/01-Positive/EnableMediaInCommentCept.php --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/02-Buddypress/01-Positive/ --steps
