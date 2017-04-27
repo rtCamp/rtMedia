@@ -29,6 +29,7 @@
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
     $I->wait( 5 );
     $settings->verifyEnableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
+    $settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab ); //Last arg refers scroll postion
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia( ConstantsPage::$userName );
@@ -44,7 +45,7 @@
 
         $I->seeElement( ConstantsPage::$commentLink );
         $I->scrollTo( ConstantsPage::$commentLink );
-        $I->wait( 3 );
+        $I->wait( 5 );
 
         $I->seeElement( UploadMediaPage::$commentTextArea );
         $I->fillfield( UploadMediaPage::$commentTextArea, 'This is the comment while uploading media.' );
