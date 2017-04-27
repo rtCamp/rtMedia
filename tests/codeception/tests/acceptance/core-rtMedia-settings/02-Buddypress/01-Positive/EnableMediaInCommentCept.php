@@ -26,6 +26,10 @@
     $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox ); //We need to check media is enabled for profile or not.
     $settings->verifyEnableStatus( ConstantsPage::$strMediaInCommnetLabel, ConstantsPage::$mediaInCommentCheckbox );
 
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $I->wait( 5 );
+    $settings->verifyEnableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
+
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia( ConstantsPage::$userName );
     $temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
