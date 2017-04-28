@@ -29,9 +29,8 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName );
 
-    $I->reloadPage();
-    $I->waitForElement( ConstantsPage::$profilePicture, 5 );
-    
+    $I->wait( 10 );
+
     $I->seeElementInDOM( 'li.rtmedia-list-item.media-type-music' );
     echo nl2br( "Audio is uploaded.. \n" );
 

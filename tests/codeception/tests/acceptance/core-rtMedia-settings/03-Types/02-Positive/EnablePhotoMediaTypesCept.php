@@ -29,9 +29,8 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
 
-    $I->reloadPage();
-    $I->waitForElement( ConstantsPage::$profilePicture, 5 );
-    
+    $I->wait( 10 );
+
     $I->seeElementInDOM( 'li.rtmedia-list-item.media-type-photo' );
     echo nl2br( "Photo is uploaded.. \n" );
 

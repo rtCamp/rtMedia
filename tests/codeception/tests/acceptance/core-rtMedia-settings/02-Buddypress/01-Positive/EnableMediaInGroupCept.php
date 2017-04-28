@@ -44,7 +44,6 @@
         echo "group is created!";
         $buddypress->checkMediaInGroup();
         $I->seeElement( ConstantsPage::$mediaLinkOnGroup );
-
     }
 
 ?>
