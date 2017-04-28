@@ -22,18 +22,12 @@
 
     $buddypress = new BuddypressSettingsPage( $I );
 
-    $buddypress->createNewAlbum();
-
-    $buddypress->editAlbumDesc();
-
     $buddypress->gotoAlubmPage();
-
-    $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-
+    
     $I->seeElement( ConstantsPage::$firstAlbum );
     $I->click( ConstantsPage::$firstAlbum );
 
-    $I->scrollTo( ConstantsPage::$scrollSelector );
+    $I->wait( 5 );
 
     $I->dontSeeElement( ConstantsPage::$albumDescSelector );
 

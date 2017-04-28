@@ -242,4 +242,5 @@ class BuddypressSettings
         $I->wait( 5 );
 
     }
+
 }
