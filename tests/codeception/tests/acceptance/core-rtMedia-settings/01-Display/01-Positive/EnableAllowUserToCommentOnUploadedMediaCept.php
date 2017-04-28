@@ -39,7 +39,7 @@
         $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
         $I->click( UploadMediaPage::$commentSubmitButton );
 
-        $I->waitForElementVisible( ConstantsPage::$commentDiv, 10 );
+        $I->waitForText( $commentStr, 10 );
 
     }else{
 
@@ -66,7 +66,7 @@
         $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
         $I->click( UploadMediaPage::$commentSubmitButton );
 
-        $I->waitForElementVisible( ConstantsPage::$commentDiv, 10 );
+        $I->waitForText( $commentStr, 10 );
 
     }
 

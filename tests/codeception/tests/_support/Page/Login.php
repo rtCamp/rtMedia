@@ -36,29 +36,30 @@ class Login
 
     }
 
-    public function loginAsAdmin($wpUserName,$wpPassword)
+    public function loginAsAdmin( $wpUserName, $wpPassword )
     {
         $I = $this->tester;
+
         $I->amOnPage( '/' );
         $I->wait( 10 );
 
         $I->seeElementInDOM( self::$loginLink );
         $I->click( self::$loginLink );
+        $I->wait( 10 );
 
-        $I->waitForElement( self::$wpUserNameField, 10 );
+        $I->seeElement( self::$wpUserNameField );
         $I->fillfield( self::$wpUserNameField,$wpUserName );
 
-        $I->waitForElement( self::$wpPasswordField, 10 );
+        $I->seeElement( self::$wpPasswordField );
         $I->fillfield( self::$wpPasswordField, $wpPassword );
 
-        $I->seeElementInDOM( self::$wpSubmitButton );
+        $I->seeElement( self::$wpSubmitButton );
         $I->click( self::$wpSubmitButton );
         $I->wait( 5 );
 
-        $I->amOnPage( '/wp-admin');
-        $I->waitForElement( self::$dashBoardMenu, 10 );
-
-        $I->see('Dashboard');
+        $I->amOnPage('/wp-admin');
+        $I->wait( 5 );
+        $I->seeElement( self::$dashBoardMenu );
 
         $I->maximizeWindow();
 
