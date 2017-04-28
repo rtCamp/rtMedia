@@ -49,9 +49,9 @@ before_script:
 
 script:
 # - wpcept run acceptance
-- wpcept run tests/acceptance/core-rtMedia-settings/01-Display/
-- wpcept run tests/acceptance/core-rtMedia-settings/02-Buddypress/
-- wpcept run tests/acceptance/core-rtMedia-settings/03-Types/
+- wpcept run tests/acceptance/core-rtMedia-settings/01-Types/
+- wpcept run tests/acceptance/core-rtMedia-settings/02-Display/
+- wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/
 - wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/
 - wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/
 - wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/
