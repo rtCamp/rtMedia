@@ -225,5 +225,6 @@ class Constants
 
     public static $activityPrivacyStatus = '#activity-stream.activity-list.item-list > li.activity.activity_update.activity-item > div.activity-content > div.activity-inner p';
     public static $commentDiv = 'div.rtmedia-comment-content p';
+    public static $goBackToAlbumPage = 'a.rtm-button-back';
 
 }

@@ -229,4 +229,17 @@ class BuddypressSettings
 
         $I->wait( 5 );
     }
+
+    public function backToAlbumPage(){
+
+        $I = $this->tester;
+
+        $I->seeElement( ConstantsPage::$scrollSelector );
+        $I->scrollTo( ConstantsPage::$scrollSelector );
+
+        $I->seeElement( ConstantsPage::$goBackToAlbumPage );
+        $I->click( ConstantsPage::$goBackToAlbumPage );
+        $I->wait( 5 );
+
+    }
 }
