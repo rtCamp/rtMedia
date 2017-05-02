@@ -41,7 +41,7 @@ class Login
         $I = $this->tester;
 
         $I->amOnPage( '/wp-admin' );
-        $I->wait( 5 );
+        $I->wait( 10 );
 
         $I->seeElement( self::$wpUserNameField );
         $I->fillfield( self::$wpUserNameField,$wpUserName );
@@ -51,7 +51,7 @@ class Login
 
         $I->seeElement( self::$wpSubmitButton );
         $I->click( self::$wpSubmitButton );
-        $I->wait( 5 );
+        $I->wait( 10 );
 
         $I->seeElement( self::$dashBoardMenu );
 
