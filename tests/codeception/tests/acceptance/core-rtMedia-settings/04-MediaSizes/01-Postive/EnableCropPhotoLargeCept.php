@@ -52,6 +52,8 @@
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
 
+    $I->reloadPage();
+
     $logout = new LogoutPage( $I );
     $logout->logout();
 ?>

@@ -48,6 +48,8 @@
 
     echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorSingle ,'style' );
 
+    $I->reloaPage();
+
     $logout = new LogoutPage( $I );
     $logout->logout();
 

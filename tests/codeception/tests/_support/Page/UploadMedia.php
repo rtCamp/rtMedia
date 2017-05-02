@@ -86,7 +86,7 @@ class UploadMedia
         $I->click( self::$uploadLink );
         $I->wait( 5 );
         $I->seeElement( self::$uploadContainer);
-        $I->wait( 15 );
+        $I->wait( 5 );
         $I->seeElement(self::$selectFileButton);
         $I->attachFile( self::$uploadFile, $mediaFile );
         $I->wait( 10 );
@@ -150,7 +150,7 @@ class UploadMedia
         $I->fillfield( self::$whatIsNewTextarea, "test from activity stream" );
         $I->seeElement( self::$mediaButtonOnActivity );
         $I->attachFile( self::$uploadFromActivity, $mediaFile );
-        $I->wait( 15 );
+        $I->wait( 10 );
 
         $I->click( self::$postUpdateButton );
         $I->wait( 10 );

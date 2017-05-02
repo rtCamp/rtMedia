@@ -57,8 +57,6 @@
         }
 
         $I->reloadPage();
-        $I->wait( 10 );
-
         $I->seeNumberOfElements(ConstantsPage::$mediaPerPageOnMediaSelector,ConstantsPage::$numOfMediaPerPage);
 
     }
