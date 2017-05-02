@@ -71,6 +71,8 @@
 
     }
 
+    $I->reloadPage();
+
     $logout = new LogoutPage( $I );
     $logout->logout();
 

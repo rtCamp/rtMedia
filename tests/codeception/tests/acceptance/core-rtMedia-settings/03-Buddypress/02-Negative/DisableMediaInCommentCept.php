@@ -84,6 +84,8 @@
         $I->click( UploadMediaPage::$commentSubmitButton );
     }
 
+    $I->reloadPage();
+
     $logout = new LogoutPage( $I );
     $logout->logout();
 

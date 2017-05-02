@@ -41,8 +41,6 @@
 
         $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10);
 
-        $I->reloadPage();
-
     }else{
         $I->amOnPage( '/wp-admin' );
         $I->waitForElement( LoginPage::$dashBoardMenu, 5 );
@@ -63,8 +61,9 @@
 
         $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10);
 
-        $I->reloadPage();
     }
+
+    $I->reloadPage();
 
     $logout = new LogoutPage( $I );
     $logout->logout();
