@@ -41,7 +41,7 @@
 
     echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
 
-    $I->reloaPage();
+    $I->reloadPage();
 
     $logout = new LogoutPage( $I );
     $logout->logout();
