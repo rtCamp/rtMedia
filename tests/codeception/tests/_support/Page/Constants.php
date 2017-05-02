@@ -226,5 +226,8 @@ class Constants
     public static $activityPrivacyStatus = '#activity-stream.activity-list.item-list > li.activity.activity_update.activity-item > div.activity-content > div.activity-inner p';
     public static $commentDiv = 'div.rtmedia-comment-content p';
     public static $goBackToAlbumPage = 'a.rtm-button-back';
+    public static $metaSection = '.widget_meta';
+    public static $logoutLink = '.widget_meta > ul > li:nth-child(2) a';
+    public static $logoutMsg = 'p.message';
 
 }

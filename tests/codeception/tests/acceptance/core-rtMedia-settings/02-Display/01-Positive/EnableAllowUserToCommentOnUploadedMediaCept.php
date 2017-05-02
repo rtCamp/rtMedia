@@ -4,6 +4,7 @@
 * Scenario : To Allow the user to comment on uploaded media.
 */
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
@@ -69,5 +70,8 @@
         $I->waitForText( $commentStr, 10 );
 
     }
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

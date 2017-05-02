@@ -4,6 +4,7 @@
 * Scenario : To disable upload media in comment.
 */
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\UploadMedia as UploadMediaPage;
@@ -83,6 +84,7 @@
         $I->click( UploadMediaPage::$commentSubmitButton );
     }
 
-    $I->wait( 10 );
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

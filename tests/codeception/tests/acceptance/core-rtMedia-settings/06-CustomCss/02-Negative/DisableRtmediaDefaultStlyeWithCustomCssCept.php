@@ -5,6 +5,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
@@ -24,5 +25,8 @@
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
     $I->seeInPageSource( ConstantsPage::$customCssValue );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

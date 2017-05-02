@@ -5,10 +5,11 @@
 */
 
     use Page\Login as LoginPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
-    use Page\BuddypressSettings as BuddypressSettingsPage;
     use Page\UploadMedia as UploadMediaPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $scrollPos = ConstantsPage::$customCssTab;
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
@@ -61,5 +62,8 @@
         $I->seeNumberOfElements(ConstantsPage::$mediaPerPageOnMediaSelector,ConstantsPage::$numOfMediaPerPage);
 
     }
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

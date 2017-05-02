@@ -5,6 +5,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
@@ -18,6 +19,10 @@
     $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
 
-    $I->wait( 3 );
+    $I->amOnPage( '/' );
+    $I->wait( 5 );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

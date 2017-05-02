@@ -5,6 +5,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
@@ -17,18 +18,22 @@
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+    $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
     $settings->verifyEnableStatus( ConstantsPage::$strEnableAlbumLabel, ConstantsPage::$enableAlbumCheckbox );
     $settings->verifyDisableStatus( ConstantsPage::$strShowAlbumDescLabel, ConstantsPage::$albumDescCheckbox );
 
     $buddypress = new BuddypressSettingsPage( $I );
 
     $buddypress->gotoAlubmPage();
-    
+
     $I->seeElement( ConstantsPage::$firstAlbum );
     $I->click( ConstantsPage::$firstAlbum );
 
     $I->wait( 5 );
 
     $I->dontSeeElement( ConstantsPage::$albumDescSelector );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

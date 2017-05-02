@@ -4,6 +4,7 @@
 * Scenario :Allow upload for music media types.
 */
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
@@ -29,9 +30,10 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName );
 
-    $I->wait( 10 );
-
     $I->seeElementInDOM( 'li.rtmedia-list-item.media-type-music' );
     echo nl2br( "Audio is uploaded.. \n" );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

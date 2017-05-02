@@ -39,7 +39,7 @@ class DashboardSettings
         $I = $this->tester;
 
         $I->click( ConstantsPage::$rtMediaSeetings );
-        $I->waitForElement( ConstantsPage::$topSaveButton , 5);
+        $I->wait( 5 );
         $I->seeInCurrentUrl( ConstantsPage::$rtMediaSettingsUrl );
     }
 

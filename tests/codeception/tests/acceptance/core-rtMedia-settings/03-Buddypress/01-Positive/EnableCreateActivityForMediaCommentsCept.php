@@ -5,6 +5,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
@@ -18,4 +19,9 @@
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$strActivityMediaCommentLabel, ConstantsPage::$activityMediaCommentCheckbox );
 
+    $I->amOnPage( '/' );
+    $I->wait( 5 );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 ?>

@@ -6,6 +6,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
@@ -30,7 +31,7 @@
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia( ConstantsPage::$userName );
-    
+
     $temp = $buddypress->countMedia(ConstantsPage::$mediaPerPageOnMediaSelector); // $temp will receive the available no. of media
 
     $uploadmedia = new UploadMediaPage( $I );
@@ -51,5 +52,8 @@
     }
 
     $I->seeElementInDOM( ConstantsPage::$paginationPattern );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

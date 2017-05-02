@@ -4,9 +4,10 @@
 * Scenario : Should not allow the user to comment on uploaded media.
 */
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
+    use Page\Constants as ConstantsPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
-    use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
@@ -20,6 +21,10 @@
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
     $settings->verifyDisableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
+
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
+    $I->wait( 5 );
+    $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
 
     $uploadmedia = new UploadMediaPage( $I );
 
@@ -60,5 +65,8 @@
 
         $I->reloadPage();
     }
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

@@ -5,10 +5,11 @@
 */
 
     use Page\Login as LoginPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
-    use Page\BuddypressSettings as BuddypressSettingsPage;
     use Page\UploadMedia as UploadMediaPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To check if mesonry layout is enabled.' );
@@ -46,5 +47,8 @@
         $I->dontSeeElementInDOM(ConstantsPage::$masonryLayout);
 
     }
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

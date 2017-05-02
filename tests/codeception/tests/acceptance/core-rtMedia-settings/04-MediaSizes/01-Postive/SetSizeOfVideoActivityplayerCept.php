@@ -5,6 +5,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
@@ -42,7 +43,10 @@
 
     $I->reloadPage();
     $I->waitForElement( ConstantsPage::$profilePicture, 5 );
-    
+
     echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorActivity, 'style' );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

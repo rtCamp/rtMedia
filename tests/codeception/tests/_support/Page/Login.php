@@ -40,12 +40,8 @@ class Login
     {
         $I = $this->tester;
 
-        $I->amOnPage( '/' );
-        $I->wait( 10 );
-
-        $I->seeElementInDOM( self::$loginLink );
-        $I->click( self::$loginLink );
-        $I->wait( 10 );
+        $I->amOnPage( '/wp-admin' );
+        $I->wait( 5 );
 
         $I->seeElement( self::$wpUserNameField );
         $I->fillfield( self::$wpUserNameField,$wpUserName );
@@ -57,8 +53,6 @@ class Login
         $I->click( self::$wpSubmitButton );
         $I->wait( 5 );
 
-        $I->amOnPage('/wp-admin');
-        $I->wait( 5 );
         $I->seeElement( self::$dashBoardMenu );
 
         $I->maximizeWindow();

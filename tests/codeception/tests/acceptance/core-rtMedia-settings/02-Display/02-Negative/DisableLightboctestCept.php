@@ -5,9 +5,10 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
+    use Page\Constants as ConstantsPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
-    use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
@@ -49,5 +50,7 @@
 
     }
 
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

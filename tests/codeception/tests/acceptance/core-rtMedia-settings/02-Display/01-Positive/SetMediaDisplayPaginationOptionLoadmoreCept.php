@@ -6,6 +6,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
@@ -26,5 +27,8 @@
     $buddypress->gotoMedia( ConstantsPage::$userName );
 
     $I->seeElementInDOM( ConstantsPage::$loadMore );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

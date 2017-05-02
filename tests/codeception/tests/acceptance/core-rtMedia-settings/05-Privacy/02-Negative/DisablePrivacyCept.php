@@ -5,6 +5,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
@@ -20,4 +21,9 @@
     $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
     $settings->verifyDisableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
 
+    $I->amOnPage( '/' );
+    $I->wait( 5 );
+    
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 ?>

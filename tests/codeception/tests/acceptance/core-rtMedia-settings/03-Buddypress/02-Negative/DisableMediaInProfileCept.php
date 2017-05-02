@@ -5,6 +5,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
@@ -24,4 +25,7 @@
     $buddypress->gotoProfile( ConstantsPage::$userName );
 
     $I->dontSeeElement( ConstantsPage::$mediaLinkOnProfile );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 ?>

@@ -5,6 +5,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\Constants as ConstantsPage;
@@ -44,8 +45,10 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
 
-    $I->wait( 5 );
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>
