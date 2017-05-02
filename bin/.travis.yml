@@ -48,7 +48,6 @@ before_script:
 - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
 
 script:
-# - wpcept run acceptance
 - wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/
 - wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/
 - wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/
