@@ -11,6 +11,8 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
+    $status = 'For loggedin uses only..';
+
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To set default privacy for logged in user.' );
 
@@ -23,26 +25,16 @@
     $settings->verifyEnableStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
     $settings->verifySelectOption( ConstantsPage::$defaultPrivacyLabel, ConstantsPage::$loggedInUsersRadioButton );
 
-    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-    $I->wait( 5 );
-    $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
-    $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
-
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->addStatus();
-
-    $I->seeElement( ConstantsPage::$privacyDropdown );
-
-    if( $I->grabValueFrom( ConstantsPage::$privacyDropdown ) == '20' ){
-        echo nl2br( "Default Privacy --> Loggedin Users \n" );
-    }else{
-        echo nl2br( "Test Failed \n" );
-    }
+    $uploadmedia->postStatus( $status );
 
     $logout = new LogoutPage( $I );
     $logout->logout();
+
+    $buddypress->gotoActivityPage( ConstantsPage::$userName );
+    $I->dontSee( $status );
 
 ?>

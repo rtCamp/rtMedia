@@ -11,6 +11,8 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
+    $status = 'Private Status';
+
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To set default privacy with private option' );
 
@@ -23,26 +25,18 @@
     $settings->verifyEnableStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
     $settings->verifySelectOption( ConstantsPage::$defaultPrivacyLabel, ConstantsPage::$privateRadioButton );
 
-    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-    $I->wait( 5 );
-    $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
-    $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
-
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
+    $I->seeElementInDOM( ConstantsPage::$privacyDropdown );
+
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->addStatus();
-
-    $I->seeElement( ConstantsPage::$privacyDropdown );
-
-    if($I->grabValueFrom( ConstantsPage::$privacyDropdown) == '60' ){
-        echo nl2br( "Default Privacy --> Private \n" );
-    }else{
-        echo nl2br( "Test Failed \n" );
-    }
+    $uploadmedia->postStatus( $status );
 
     $logout = new LogoutPage( $I );
     $logout->logout();
+
+    $buddypress->gotoActivityPage( ConstantsPage::$userName );
+    $I->dontSee( $status );
 
 ?>

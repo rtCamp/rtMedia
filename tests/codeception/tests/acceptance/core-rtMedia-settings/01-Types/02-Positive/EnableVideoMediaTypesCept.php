@@ -21,7 +21,7 @@
     $settings->verifyEnableStatus( ConstantsPage::$videoLabel, ConstantsPage::$videoCheckbox );
 
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-    $I->wait( 5 );
+    $I->waitForElement( ConstantsPage::$displayTab , 10);
     $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox ); //It will check if thr upload from activity is enabled from back end.
 
     $buddypress = new BuddypressSettingsPage( $I );
