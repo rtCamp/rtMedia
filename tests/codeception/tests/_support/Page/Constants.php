@@ -3,8 +3,8 @@ namespace Page;
 
 class Constants
 {
-    public static $userName = 'sumeet';
-    public static $password = '^^7%9RtsdpB60#AsgKu&Mw$7';
+    public static $userName = 'ADMINUSER';
+    public static $password = 'ADMINPASS';
 
     public static $imageName = 'test-data/images/test.jpg';
     public static $audioName = 'test-data/music/mpthreetest.mp3';

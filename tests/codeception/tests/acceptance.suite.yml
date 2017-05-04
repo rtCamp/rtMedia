@@ -14,8 +14,7 @@ modules:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'firefox'
-            url: 'http://sumeetwrites.com'
-#            url: 'http://sys:MZfm31@sumeet.rtcamp.info'
+            url: 'http://sumeet.rtmedia.me/'
             adminUsername: ''
             adminPassword: ''
             adminPath: '/wp-admin'
