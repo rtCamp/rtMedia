@@ -9,17 +9,23 @@ modules:
     enabled:
         - \Helper\Acceptance
         - WPWebDriver
-    config:   
-          WPWebDriver:
+    config:
+        WPWebDriver:
             host: 'hub-cloud.browserstack.com'
             port: 80
-            browser: 'chrome'
-            url: 'http://demo.rtmedia.io/'
+            browser: 'firefox'
+            url: 'http://sumeetwrites.com'
+#            url: 'http://sys:MZfm31@sumeet.rtcamp.info'
             adminUsername: ''
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-              'browserstack.user': ''
-              'browserstack.key': ''
-              'os': 'OS X'
-              'os_version' : 'El Capitan'    
+#              'browserstack.user': 'rtcamp2'
+                'browserstack.user': 'satinder5'
+                'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
+                'os': 'OS X'
+                'os_version': 'sierra'
+                'browserstack.debug': 'true'
+                'build': '%TRAVIS_BUILD_NUMBER%'
+                'project': 'rtMedia-core-settings'
+                'browserstack.local': 'true'
