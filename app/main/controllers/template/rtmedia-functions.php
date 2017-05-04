@@ -3935,7 +3935,7 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 function rtm_select_user( $user ) {
 	$user_ids = array();
 
-	if ( null != $user ) {
+	if ( ! empty( $user ) ) {
 		$user_query = new WP_User_Query( array( 'search' => '*' . esc_attr( $user ) . '*' ) );
 
 		if ( ! empty( $user_query->results ) ) {
@@ -3962,7 +3962,7 @@ function rtm_select_user( $user ) {
 function rtm_fetch_user_by_member_type( $type ) {
 	$member_id = array();
 
-	if ( null != $type ) {
+	if ( ! empty( $type ) ) {
 		$member_args = array(
 		    'member_type' => array( $type ),
 		);

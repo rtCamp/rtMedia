@@ -740,16 +740,16 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 	$terms_table = $wpdb->terms;
 	$term_relationships_table = $wpdb->term_relationships;
 	$term_taxonomy_table = $wpdb->term_taxonomy;
+	$search = sanitize_text_field( wp_unslash( $_REQUEST['search'] ) );
+	$search_by = sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) );
 
-	if ( isset( $_REQUEST['search'] ) ) {
-		// if ( false == strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {
+	if ( ! empty( $search ) ) {
 			$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
-		// }
 
 		$request_url = explode( '/', $_SERVER['REQUEST_URI'] );
-		if ( isset( $_REQUEST['search_by'] ) && 'attribute' == $_REQUEST['search_by'] && ! in_array( 'attribute', $request_url )  ) {
+		if ( ! empty( $search_by ) && 'attribute' === $search_by && ! in_array( 'attribute', $request_url )  ) {
 			$join .= " 	INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = 'attachment' )
-	                    INNER JOIN $terms_table ON ( $terms_table.slug IN ('" . $_REQUEST['search'] . "') )
+	                    INNER JOIN $terms_table ON ( $terms_table.slug IN ('" . $search . "') )
 	                    INNER JOIN $term_taxonomy_table ON ( $term_taxonomy_table.term_id = $terms_table.term_id )
 	                    INNER JOIN $term_relationships_table ON ( $term_relationships_table.term_taxonomy_id = $term_taxonomy_table.term_taxonomy_id AND $term_relationships_table.object_id = $posts_table.ID ) ";
 		}
@@ -765,14 +765,12 @@ add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11,
  * @return array
  */
 function rtmedia_model_query_columns( $columns ) {
-
-	if ( isset( $_REQUEST['search'] ) && $_REQUEST['search'] ) {
-
-		if ( isset( $_REQUEST['search_by'] ) ) {
-			if ( 'media_type' == $_REQUEST['search_by'] ) {
-				if ( isset( $columns['media_type']['value'] ) && is_array( $columns['media_type']['value'] ) ) {
-					$columns['media_type']['value'] = array( $_REQUEST['search'] );
-				}
+	$search = sanitize_text_field( wp_unslash( $_REQUEST['search'] ) );
+	$search_by = sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) );
+	if ( ! empty( $search ) ) {
+		if ( ! empty( $search_by ) && 'media_type' === $search_by ) {
+			if ( isset( $columns['media_type']['value'] ) && is_array( $columns['media_type']['value'] ) ) {
+				$columns['media_type']['value'] = array( $search );
 			}
 		}
 	}
