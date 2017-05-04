@@ -680,43 +680,43 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	$terms_table = $wpdb->terms;
 	$term_relationships_table = $wpdb->term_relationships;
 	$term_taxonomy_table = $wpdb->term_taxonomy;
+	$search = sanitize_text_field( $_REQUEST['search'] );
+	$search_by = sanitize_text_field( $_REQUEST['search_by'] );
 
-	if ( isset( $_REQUEST['search'] ) && $_REQUEST['search'] ) {
-		$author_id = rtm_select_user( $_REQUEST['search'] );
-		$member_type = rtm_fetch_user_by_member_type( $_REQUEST['search'] );
+	if ( ! empty( $search ) ) {
+		$author_id = rtm_select_user( $search );
+		$member_type = rtm_fetch_user_by_member_type( $search );
 
 		$where .= ' AND ';
-		if ( isset( $_REQUEST['search_by'] ) ) {
-			if ( $_REQUEST['search_by'] ) {
-				if ( 'title' == $_REQUEST['search_by'] ) {
-					$where .= " $table_name.media_title LIKE '%" . $_REQUEST['search'] . "%' ";
-				} else if ( 'description' == $_REQUEST['search_by'] ) {
-					$where .= " post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
+		if ( ! empty( $search_by ) ) {
+			if ( 'title' == $search_by ) {
+				$where .= " $table_name.media_title LIKE '%" . $search . "%' ";
+			} else if ( 'description' == $search_by ) {
+				$where .= " post_table.post_content LIKE '%" . $search . "%'";
 
-				} else if ( 'author' == $_REQUEST['search_by'] ) {
-					if ( NULL != $author_id ) {
-						$where .= " $table_name.media_author IN  (" . $author_id . ") ";
-					}
-				} else if ( 'member_type' == $_REQUEST['search_by'] ) {
-					if ( NULL != $member_type ) {
-						$where .= " $table_name.media_author IN  (" . $member_type . ") ";
-					}
-				} else {
-					$where .= '2=2';
+			} else if ( 'author' == $search_by ) {
+				if ( ! empty( $author_id ) ) {
+					$where .= " $table_name.media_author IN  (" . $author_id . ") ";
 				}
+			} else if ( 'member_type' == $search_by ) {
+				if ( ! empty( $member_type ) ) {
+					$where .= " $table_name.media_author IN  (" . $member_type . ") ";
+				}
+			} else {
+				$where .= '2=2';
 			}
 		} else {
 
 			$where .= ' ( ';
-			$where .= " $table_name.media_title LIKE '%" . $_REQUEST['search'] . "%' ";
-			if ( NULL != $author_id ) {
+			$where .= " $table_name.media_title LIKE '%" . $search . "%' ";
+			if ( ! empty( $author_id ) ) {
 				$where .= " OR $table_name.media_author IN  (" . $author_id . ") ";
 			}
-			if ( NULL != $member_type ) {
+			if ( ! empty( $member_type ) ) {
 				$where .= " OR $table_name.media_author IN  (" . $member_type . ") ";
 			}
-			$where .= " OR post_table.post_content LIKE '%" . $_REQUEST['search'] . "%'";
-			$where .= " OR $table_name.media_type = '" . $_REQUEST['search'] . "' ";
+			$where .= " OR post_table.post_content LIKE '%" . $search . "%'";
+			$where .= " OR $table_name.media_type = '" . $search . "' ";
 
 			$where .= ' ) ';
 		}
