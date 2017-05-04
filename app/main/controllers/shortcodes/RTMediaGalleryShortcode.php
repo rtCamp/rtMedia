@@ -148,7 +148,10 @@ class RTMediaGalleryShortcode {
 				$attr = true;
 			}
 
-			$attr = array( 'name' => 'gallery', 'attr' => $attr );
+			$attr = array(
+				'name' => 'gallery',
+				'attr' => $attr,
+			);
 
 			$attr = apply_filters( 'rtmedia_gallery_shortcode_parameter_pre_filter', $attr );
 
@@ -212,13 +215,13 @@ class RTMediaGalleryShortcode {
 				$template_url = esc_url( add_query_arg( $media_template_args, admin_url( 'admin-ajax.php' ) ), null, '' );
 			}
 			wp_localize_script( 'rtmedia-backbone', 'template_url', $template_url );
-			
+
 			/**
 			 * Remove search_filter paramater from attr,
 			 * Reason: Showing error on Database Errors [ SQL Query ]
 			 * Solution: Unset search_filter parameter store value on another variable.
 			 */
-			if ( isset( $attr['attr']['search_filter'] )  ) {
+			if ( isset( $attr['attr']['search_filter'] ) ) {
 				if ( 'true' === $attr['attr']['search_filter'] ) {
 					$search_filter_status = $attr['attr']['search_filter'];
 					unset( $attr['attr']['search_filter'] );
@@ -270,7 +273,6 @@ class RTMediaGalleryShortcode {
 						'rtmedia_query_where_filter',
 					), 10, 3 );
 				}// End if().
-
 			} else { //if user cannot view the media gallery (when context is 'group'), show message
 				esc_html_e( 'You do not have sufficient privileges to view this gallery', 'buddypress-media' );
 				return false;
@@ -281,7 +283,7 @@ class RTMediaGalleryShortcode {
 
 	// for gallery shortcode remove all comment media reply
 	static function rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join ) {
-		if( function_exists( 'rtmedia_query_where_filter_remove_comment_media' ) ){
+		if ( function_exists( 'rtmedia_query_where_filter_remove_comment_media' ) ) {
 			$where = rtmedia_query_where_filter_remove_comment_media( $where, $table_name, $join );
 		}
 		return $where;
