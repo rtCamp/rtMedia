@@ -680,8 +680,8 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	$terms_table = $wpdb->terms;
 	$term_relationships_table = $wpdb->term_relationships;
 	$term_taxonomy_table = $wpdb->term_taxonomy;
-	$search = sanitize_text_field( wp_unslash( $_REQUEST['search'] ) );
-	$search_by = sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) );
+	$search = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+	$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
 
 	if ( ! empty( $search ) ) {
 		$author_id = rtm_select_user( $search );
@@ -740,8 +740,8 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 	$terms_table = $wpdb->terms;
 	$term_relationships_table = $wpdb->term_relationships;
 	$term_taxonomy_table = $wpdb->term_taxonomy;
-	$search = sanitize_text_field( wp_unslash( $_REQUEST['search'] ) );
-	$search_by = sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) );
+	$search = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+	$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
 
 	if ( ! empty( $search ) ) {
 			$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
@@ -765,8 +765,8 @@ add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11,
  * @return array
  */
 function rtmedia_model_query_columns( $columns ) {
-	$search = sanitize_text_field( wp_unslash( $_REQUEST['search'] ) );
-	$search_by = sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) );
+	$search = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+	$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
 	if ( ! empty( $search ) ) {
 		if ( ! empty( $search_by ) && 'media_type' === $search_by ) {
 			if ( isset( $columns['media_type']['value'] ) && is_array( $columns['media_type']['value'] ) ) {
