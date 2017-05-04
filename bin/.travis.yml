@@ -21,7 +21,7 @@ addons:
 
 before_install:
 - rm -rf ~/.gnupg
-- sudo apt-get install xvfb
+
 
 cache:
   paths:
@@ -36,7 +36,7 @@ before_script:
 - sudo apt-get update
 - sudo tail /var/log/ee/ee.log
 - sudo ee site create sumeet.rtmedia.me --wp --user=ADMINUSER --email=sumeet.sarna@rtcamp.com --pass=ADMINPASS
-- sudo sed -i '/^127.0.0.1/ s/$/ test.rtmedia.me/' /etc/hosts
+- sudo sed -i '/^127.0.0.1/ s/$/ sumeet.rtmedia.me/' /etc/hosts
 - sudo chmod 777 -R /var/www
 - cd /var/www/sumeet.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
 - cd $PLUGIN_DIR
@@ -58,12 +58,12 @@ before_script:
 #- export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
 
 script:
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positve/
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/ --steps --html
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positve/
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/
 #- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/
 #- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/02-Negative/
 #- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/01-Positive/
