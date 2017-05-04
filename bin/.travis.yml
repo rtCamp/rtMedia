@@ -58,17 +58,17 @@ before_script:
 #- export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
 
 script:
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/ --steps --html
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positve/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/02-Negative/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/01-Positive/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/02-Negative/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/02-Negative/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/
-#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positve/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/  --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/02-Negative/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/01-Positive/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/02-Negative/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/02-Negative/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/ --steps
+- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/ --steps
