@@ -680,8 +680,8 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	$terms_table = $wpdb->terms;
 	$term_relationships_table = $wpdb->term_relationships;
 	$term_taxonomy_table = $wpdb->term_taxonomy;
-	$search = sanitize_text_field( $_REQUEST['search'] );
-	$search_by = sanitize_text_field( $_REQUEST['search_by'] );
+	$search = sanitize_text_field( wp_unslash( $_REQUEST['search'] ) );
+	$search_by = sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) );
 
 	if ( ! empty( $search ) ) {
 		$author_id = rtm_select_user( $search );

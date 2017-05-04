@@ -710,11 +710,11 @@ function rt_check_addon_status() {
 
 	foreach ( $addons as $addon ) {
 
-		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ) {
+		if ( ! empty( $addon['args']['addon_id'] ) ) {
 
 			$addon_id = $addon['args']['addon_id'];
 			// If license key is not present, then remove the status from config
-			// This forces the `Deactivate License` to `Activate License`
+			// This forces the `Deactivate License` to `Activate License`.
 			if ( empty( $addon['args']['license_key'] ) ) {
 				delete_option( 'edd_' . $addon_id . '_license_status' );
 			}
@@ -722,7 +722,7 @@ function rt_check_addon_status() {
 			$addon_data = get_option( 'edd_' . $addon_id . '_active' );
 
 			// Remove the license from the addon if black license/input is provided
-			// This allows user to remove the license from the addon
+			// This allows user to remove the license from the addon.
 			if ( ! empty( $addon_data ) && is_object( $addon_data ) && empty( $addon['args']['license_key'] ) ) {
 				if ( isset( $addon_data->success ) && isset( $addon_data->license ) ) {
 					if ( ( isset( $_POST[ 'edd_' . $addon_id . '_license_key' ] ) && '' == $_POST[ 'edd_' . $addon_id . '_license_key' ] ) || '' == $addon_data->success || 'invalid' == $addon_data->license ) {
@@ -863,17 +863,17 @@ function add_search_filter( $attr = null ) {
 
 	if ( function_exists('rtmedia_media_search_enabled') && rtmedia_media_search_enabled() ) {
 
-		$search_value = ( isset( $_GET['search'] ) ? $_GET['search'] : '' );
+		$search_value = ( isset( $_GET['search'] ) ? sanitize_text_field( $_GET['search'] ) : '' );
 
 		$html  = "<form method='post' id='media_search_form' class='media_search'>";
-		$html .= "<input type='text' id='media_search_input' value='" . $search_value . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
+		$html .= "<input type='text' id='media_search_input' value='" . esc_attr( $search_value ) . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
 		$html .= "<span id='media_fatch_loader'></span>";
 
 		$search_by = '';
 		$search_by = apply_filters( 'rtmedia_media_search_by', $search_by );
 
 		/**
-		 * search media with specific type
+		 * Search media with specific type.
 		 * @param       array       $search_by
 		 */
 		if (  isset( $search_by ) && $search_by ) {
