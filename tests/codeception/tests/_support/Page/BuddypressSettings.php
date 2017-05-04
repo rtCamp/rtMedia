@@ -106,8 +106,9 @@ class BuddypressSettings
 
         $url = 'members/'.$userName;
         $I->amOnPage($url);
-        $I->waitForElement('#whats-new-textarea', 10 );
-
+        $I->wait( 5 );
+        $I->seeElement( ConstantsPage::$mediaPageScrollPos );
+        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
     }
 
     /**

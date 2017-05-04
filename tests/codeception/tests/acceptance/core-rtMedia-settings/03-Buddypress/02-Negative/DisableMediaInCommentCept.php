@@ -20,7 +20,6 @@
 
     $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl ); // First we need to check if the user is allowed to cooment on upload media.
     $settings->verifyEnableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
-    $settings->verifyEnableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
     $settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab ); //Last arg refers scroll postion
 
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
@@ -46,18 +45,12 @@
         $I->wait( 3 );
 
         $I->seeElement( UploadMediaPage::$commentTextArea );
-        $I->fillfield( UploadMediaPage::$commentTextArea, 'This is comment when upload media is disabled' );
-
         $I->dontSeeElement( ConstantsPage::$mediaButtonInComment );
-
-        $I->click( UploadMediaPage::$commentSubmitButton );
 
     }else{
 
-        $I->amOnPage( '/wp-admin' );
-        $I->waitForElement( LoginPage::$dashBoardMenu, 5 );
-
-        $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+        $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+        $I->waitForElement( ConstantsPage::$displayTab , 10);
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
         $buddypress->gotoMedia( ConstantsPage::$userName );
@@ -77,11 +70,8 @@
         $I->wait( 3 );
 
         $I->seeElement( UploadMediaPage::$commentTextArea );
-        $I->fillfield( UploadMediaPage::$commentTextArea, 'This is comment when upload media is disabled' );
-
         $I->dontSeeElement( ConstantsPage::$mediaButtonInComment );
 
-        $I->click( UploadMediaPage::$commentSubmitButton );
     }
 
     $I->reloadPage();

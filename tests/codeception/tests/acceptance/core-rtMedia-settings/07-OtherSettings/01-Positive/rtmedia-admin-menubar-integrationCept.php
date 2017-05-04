@@ -22,6 +22,7 @@
     $settings->gotoTab( ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl, $scrollToTab );
     $settings->verifyEnableStatus( ConstantsPage::$adminbarMenuLabel, ConstantsPage::$adminbarMenuCheckbox, $scrollPos );
 
+    $I->amOnPage( '/' );
     $I->seeElement( ConstantsPage::$rtMediaAdminbar );
 
     $logout = new LogoutPage( $I );

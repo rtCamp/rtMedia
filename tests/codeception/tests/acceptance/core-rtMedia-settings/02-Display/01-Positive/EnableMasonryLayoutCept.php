@@ -32,10 +32,8 @@
 
     if($temp == 0){
 
-        $I->amOnPage( '/wp-admin' );
-        $I->wait( 10 );
-
-        $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+        $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+        $I->waitForElement( ConstantsPage::$displayTab , 10);
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload ); //This will check if the direct upload is disabled
 
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );

@@ -22,9 +22,9 @@
     $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
     $settings->verifyDisableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
 
-    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-    $I->wait( 5 );
-    $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
+    // $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
+    // $I->wait( 5 );
+    // $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
 
     $uploadmedia = new UploadMediaPage( $I );
 
@@ -42,10 +42,8 @@
         $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10);
 
     }else{
-        $I->amOnPage( '/wp-admin' );
-        $I->waitForElement( LoginPage::$dashBoardMenu, 5 );
-
-        $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+        $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+        $I->waitForElement( ConstantsPage::$displayTab , 10);
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload ); //This will check if the direct upload is disabled
 
         $buddypress->gotoMedia( ConstantsPage::$userName );

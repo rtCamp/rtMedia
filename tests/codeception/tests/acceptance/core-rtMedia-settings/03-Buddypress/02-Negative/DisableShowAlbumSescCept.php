@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : Enable Show Album description.
+* Scenario : Disable Show Album description.
 */
 
     use Page\Login as LoginPage;
@@ -11,7 +11,7 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'Enable Show Album description.' );
+    $I->wantTo( 'Disable Show Album description.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );

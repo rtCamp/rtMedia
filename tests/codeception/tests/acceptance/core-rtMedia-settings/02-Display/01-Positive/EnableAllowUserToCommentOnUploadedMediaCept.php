@@ -39,15 +39,13 @@
         $I->seeElement( UploadMediaPage::$commentTextArea );
         $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
         $I->click( UploadMediaPage::$commentSubmitButton );
-
-        $I->waitForText( $commentStr, 10 );
+        $I->wait( 5 );
+        $I->see( $commentStr );
 
     }else{
 
-        $I->amOnPage( '/wp-admin' );
-        $I->waitForElement( LoginPage::$dashBoardMenu, 5 );
-
-        $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+        $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+        $I->waitForElement( ConstantsPage::$displayTab , 10);
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
         $buddypress->gotoMedia( ConstantsPage::$userName );
@@ -55,7 +53,6 @@
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink);
 
         $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
@@ -66,8 +63,8 @@
         $I->seeElement( UploadMediaPage::$commentTextArea );
         $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
         $I->click( UploadMediaPage::$commentSubmitButton );
-
-        $I->waitForText( $commentStr, 10 );
+        $I->wait( 5 );
+        $I->see( $commentStr );
 
     }
 

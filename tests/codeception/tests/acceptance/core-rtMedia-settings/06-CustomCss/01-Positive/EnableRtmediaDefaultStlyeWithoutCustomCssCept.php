@@ -24,6 +24,11 @@
     echo "value of textarea is = \n".$value;
     $settings->setValue( ConstantsPage::$customCssLabel, ConstantsPage::$cssTextarea, ConstantsPage::$customCssEmptyValue );
 
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivityPage( ConstantsPage::$userName );
+
+    $I->dontSeeInSource( ConstantsPage::$customCssValue );
+
     $logout = new LogoutPage( $I );
     $logout->logout();
 

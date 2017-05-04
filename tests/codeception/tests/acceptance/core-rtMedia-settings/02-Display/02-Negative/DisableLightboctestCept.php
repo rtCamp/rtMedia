@@ -29,15 +29,15 @@
 
     if( $temp >= ConstantsPage::$minValue ){
 
+        $I->scrollTo( '.rtm-gallery-title' );
+
         $uploadmedia->fisrtThumbnailMedia();
         $I->dontSeeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
 
     }else{
 
-        $I->amOnPage('/wp-admin');
-        $I->wait( 10 );
-
-        $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+        $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+        $I->waitForElement( ConstantsPage::$displayTab , 10);
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );

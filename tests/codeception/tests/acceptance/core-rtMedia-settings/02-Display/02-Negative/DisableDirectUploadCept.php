@@ -25,7 +25,10 @@
     $buddypress->gotoMedia( ConstantsPage::$userName );
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink);
+    $uploadmedia->uploadMedia( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
+    $I->seeElement( UploadMediaPage::$uploadMediaButton );
+
+    $I->reloadPage();
 
     $logout = new LogoutPage( $I );
     $logout->logout();

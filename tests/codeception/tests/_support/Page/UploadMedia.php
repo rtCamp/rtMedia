@@ -138,6 +138,20 @@ class UploadMedia
         $I->wait( 3 );
     }
 
+    public function postStatus( $status ){
+
+        $I = $this->tester;
+
+        self::addStatus();
+
+        $I->fillfield( self::$whatIsNewTextarea, $status );
+        $I->seeElement( ConstantsPage::$privacyDropdown );
+
+        $I->click( self::$postUpdateButton );
+        $I->reloadPage();
+
+    }
+
     /**
     * uploadMediaFromActivity() -> Will upload the media from activity page when it is enabled from dashboard
     */
@@ -170,7 +184,7 @@ class UploadMedia
 
         //if $numOfMedia > 0 then it will execute if condition else for $numOfMedia = 0 it will execute else part
         if( $numOfMedia > 0 ){
-            for ( $i = 0; $i < $numOfMedia; $i++ ) {
+            for ( $i = 0; $i < $numOfMedia+1; $i++ ) {
 
                 $I->attachFile( self::$uploadFromActivity, $mediaFile );
                 $I->wait( 5 );

@@ -22,11 +22,11 @@
     $settings->gotoTab( ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl );
     $settings->verifySelectOption( ConstantsPage::$strMediaDisplayPaginationLabel, ConstantsPage::$paginationRadioButton, ConstantsPage::$numOfMediaTextbox );
 
-    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox); //This will check if the direct upload is disabled
+    // $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox); //This will check if the direct upload is disabled
 
     if( $I->grabValueFrom( ConstantsPage::$numOfMediaTextbox ) != ConstantsPage::$numOfMediaPerPage  ){
 
-        $settings->setValue( ConstantsPage::$numOfMediaLabel, ConstantsPage::$numOfMediaTextbox, ConstantsPage::$numOfMediaPerPage, ConstantsPage::$customCssTab ); // 3rd Arg refers the scrolling position
+        $settings->setValue( ConstantsPage::$numOfMediaLabel, ConstantsPage::$numOfMediaTextbox, ConstantsPage::$numOfMediaPerPage, ConstantsPage::$customCssTab ); // 4th Arg refers the scrolling position
     }
 
     $buddypress = new BuddypressSettingsPage( $I );
