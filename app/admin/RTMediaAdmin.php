@@ -183,7 +183,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				echo '</script>';
 			}
 
-			if ( isset( $_GET['page'] ) && 'rtmedia-settings' === sanitize_text_field( $_GET['page'] ) ) {
+			$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+			if ( ! empty( $page ) && 'rtmedia-settings' === $page ) {
 				/**
 				 * Filter is use to enable comment option in side the media that are being uploaded in the comment section.
 				 *
