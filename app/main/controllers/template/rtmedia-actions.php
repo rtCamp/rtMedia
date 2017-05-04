@@ -870,12 +870,13 @@ function add_search_filter( $attr = null ) {
 		$html .= "<span id='media_fatch_loader'></span>";
 
 		$search_by = '';
+		/**
+		 * Filters the search by parameter for searching media with specific type.
+		 *
+		 * @param string $search_by Default is blank.
+		 */
 		$search_by = apply_filters( 'rtmedia_media_search_by', $search_by );
 
-		/**
-		 * Search media with specific type.
-		 * @param       array       $search_by
-		 */
 		if (  isset( $search_by ) && $search_by ) {
 			$html .= "<select id='search_by' class='search_by'>";
 
@@ -919,6 +920,11 @@ function add_search_filter( $attr = null ) {
 		$html .= "<button type='submit' id='media_search' class='search_option'><i class='dashicons dashicons-search rtmicon'></i></button>";
 		$html .= '</form>';
 
+		/**
+		 * Filters the html of search form.
+		 *
+		 * @param string $html HTML content of form.
+		 */
 		echo apply_filters( 'rtmedia_gallery_search', $html );
 	}
 }
