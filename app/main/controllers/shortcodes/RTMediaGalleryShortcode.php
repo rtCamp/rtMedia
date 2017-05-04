@@ -226,7 +226,7 @@ class RTMediaGalleryShortcode {
 					$search_filter_status = $attr['attr']['search_filter'];
 					unset( $attr['attr']['search_filter'] );
 				}
-		    }
+			}
 
 			if ( $authorized_member ) {  // if current user has access to view the gallery (when context is 'group')
 				global $rtmedia_query;
