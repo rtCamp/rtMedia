@@ -48,7 +48,7 @@ before_script:
 - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
 - cd $PLUGIN_DIR/tests/codeception/
 - composer install
-#- export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
+- export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
 
 script:
 - wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/
