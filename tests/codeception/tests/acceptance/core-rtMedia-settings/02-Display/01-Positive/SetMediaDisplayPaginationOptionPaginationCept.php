@@ -21,8 +21,7 @@
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl );
     $settings->verifySelectOption( ConstantsPage::$strMediaDisplayPaginationLabel, ConstantsPage::$paginationRadioButton, ConstantsPage::$numOfMediaTextbox );
-
-    // $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox); //This will check if the direct upload is disabled
+    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox); //This will check if the direct upload is disabled
 
     if( $I->grabValueFrom( ConstantsPage::$numOfMediaTextbox ) != ConstantsPage::$numOfMediaPerPage  ){
 
