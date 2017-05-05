@@ -165,6 +165,7 @@ body.media.buddypress {
 }
 .rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-count {
   margin: 0;
+  float: right;
 }
 
 .rtmedia-list.rtmedia-list {

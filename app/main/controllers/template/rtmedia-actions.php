@@ -978,7 +978,7 @@ add_action( 'rtmedia_gallery_after_title', 'rtmedia_gallery_after_title_callback
  */
 function rtmedia_gallery_after_title_add_media_count() {
 	global $rtmedia_query;
-	// Check for gallery shortcode
+	// Check for gallery shortcode.
 	if ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) {
 		global $rtmedia_shortcode_attr;
 		// check in the gallery shortcode $show_count is set to true.
@@ -986,17 +986,25 @@ function rtmedia_gallery_after_title_add_media_count() {
 			// Defalut value for media count.
 			$media_count = 0;
 			if ( isset( $rtmedia_query->is_gallery_shortcode ) ) {
-				// get value from the pagination
+				// get value from the pagination.
 				$media_count = intval( $rtmedia_query->media_count );
 			}
 			?>
 			<h2 class="rtm-gallery-count">
 				<?php
-				echo sprintf( '( %d )', intval( $media_count ) );
+				$total_text = esc_html__( 'Total media:', 'buddypress-media' );
+				/**
+				 * Filters the counter text.
+				 *
+				 * @param string $total_text Text for "Total media".
+				 */
+				echo apply_filters( 'rtmedia_total_counter_text', $total_text );
+				echo sprintf( ' %d ', intval( $media_count ) );
 				?>
 			</h2>
 			<?php
 		}
 	}
 }
-add_action( 'rtmedia_gallery_after_title', 'rtmedia_gallery_after_title_add_media_count', 10 );
+add_action( 'rtmedia_album_gallery_actions', 'rtmedia_gallery_after_title_add_media_count', 10 );
+add_action( 'rtmedia_media_gallery_shortcode_actions', 'rtmedia_gallery_after_title_add_media_count', 99 );
