@@ -2547,8 +2547,8 @@ a.rtmedia-upload-media-link {
   color: inherit;
 }
 
-#buddypress #item-body {
-  padding: 0 0 20px 20px;
+#main #buddypress #item-body {
+  padding: 0 0 30px 20px;
 }
 #buddypress .mejs-controls button {
   padding: 4px 8px;
