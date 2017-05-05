@@ -18,10 +18,6 @@ addons:
     access_key:
      secure: "T505OAjz+XN2yjCFipX9Mq+2tVAli8THWxtl0iYNnFl6zfHxcngK2xoAxUCt+9Lx5ncMNl4O7VCQW1Df8Eb/NSL04QaOCJMOvRj8wQHGEeqxbp0QmKLxCxrhQcqQLcMJhSQqO2zUb+FbuMwdXO8jxyCY49GLdjd5R7zYhXOjfnursge1pkw+uyXWtZufsDKTZ9UPdo5v6jXNibEVVsn86mUYDv5uuUej1qo8ioyEGfdnSXKmMwTXRqxkb+xbj0TwY+jffeFQv6h3zaT0YOMDNVD9UHJvAd9bRLc1NTbnVvNUa6/9N9HyNFBXGeIp7xy8CQDwprnDiIpix1G0o6wjIS6NndROOzU9bN/pbILXJPenviYneGjoN1ZrPp3zbtb0P0BvpxJuiQ2tL5dAnrG/GEDKun9J9mDWKncoBONM6KyhfIGwO1K6anPQqTbZplKcRJ1pUnyUH3gYxHg4exlkORclNXPyuST8RCJt++DiKdZCpcgQHwvTBX/vQKSh6XXCG0pMYN1JGUQdVWuaTgA6vPLBOHlDE7wvuWrnb0AaUP4Pfof2ApBq+ao+Fy/JccWIpcqcK2UIoNZ/LoWG/4JbkLLVoGRpDSUdKz9k5nJztAwzaXxWf9wzwFyQMne6H5Yf4RyHHZ6yJ9VskwYukbtw6qfq5pyKgyjX7qkeLkXRi08="
 
-
-
-
-
 before_install:
 - rm -rf ~/.gnupg
 
@@ -58,7 +54,7 @@ before_script:
 - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
 - cd $PLUGIN_DIR/tests/codeception/
 - composer update
-#- export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
+- export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
 
 script:
 - vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/ --steps
