@@ -53,7 +53,7 @@ before_script:
 - unzip BrowserStackLocal-linux-x64.zip
 - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
 - cd $PLUGIN_DIR/tests/codeception/
-- composer install
+- composer update
 - export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
 
 script:
@@ -70,4 +70,4 @@ script:
 - wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/
 - wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/02-Negative/
 - wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/
-- wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/ 
+- wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/
