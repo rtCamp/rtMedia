@@ -39,7 +39,7 @@ Navigate to codeception directory and run
 
 `wpcept run acceptance exampleCept.php`
 
-##To test local sites using browserstack
+## To test local sites using browserstack
 
 Need to enable local Testing to test local development server.
 
