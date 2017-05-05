@@ -22,7 +22,7 @@ modules:
 #              'browserstack.user': 'rtcamp2'
                 'browserstack.user': 'rtcamp2'
 #                'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
-                'browserstack.key':'%browserstack_key%'
+                'browserstack.key':'T505OAjz+XN2yjCFipX9Mq+2tVAli8THWxtl0iYNnFl6zfHxcngK2xoAxUCt+9Lx5ncMNl4O7VCQW1Df8Eb/NSL04QaOCJMOvRj8wQHGEeqxbp0QmKLxCxrhQcqQLcMJhSQqO2zUb+FbuMwdXO8jxyCY49GLdjd5R7zYhXOjfnursge1pkw+uyXWtZufsDKTZ9UPdo5v6jXNibEVVsn86mUYDv5uuUej1qo8ioyEGfdnSXKmMwTXRqxkb+xbj0TwY+jffeFQv6h3zaT0YOMDNVD9UHJvAd9bRLc1NTbnVvNUa6/9N9HyNFBXGeIp7xy8CQDwprnDiIpix1G0o6wjIS6NndROOzU9bN/pbILXJPenviYneGjoN1ZrPp3zbtb0P0BvpxJuiQ2tL5dAnrG/GEDKun9J9mDWKncoBONM6KyhfIGwO1K6anPQqTbZplKcRJ1pUnyUH3gYxHg4exlkORclNXPyuST8RCJt++DiKdZCpcgQHwvTBX/vQKSh6XXCG0pMYN1JGUQdVWuaTgA6vPLBOHlDE7wvuWrnb0AaUP4Pfof2ApBq+ao+Fy/JccWIpcqcK2UIoNZ/LoWG/4JbkLLVoGRpDSUdKz9k5nJztAwzaXxWf9wzwFyQMne6H5Yf4RyHHZ6yJ9VskwYukbtw6qfq5pyKgyjX7qkeLkXRi08='
                 'os': 'OS X'
                 'os_version': 'sierra'
                 'browserstack.debug': 'true'
