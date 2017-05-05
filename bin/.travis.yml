@@ -12,7 +12,7 @@ php:
 
 addons:
   browserstack:
-    username: "potential3"
+    username: "rtcamp2"
     access_key:
        secure: "sz3FPbhCQHj3/VaLssdGPcgClyR6kpvOTcNogWAiT852VW852+jlRoKRFGHSSS6pnsEQ8FB+dYsfSLGA3yvaXAYkmElfXxJEc5A/I1rdklL24y2WbsyJRRg4VnCITNOLLxLwkp0KJd+2ZJ2bLQdT5ZsWqsIxIWTrYrMS2pJXsWxcZ8eylFj3IULbJ+vHynw6Z65DPSKYsr9CQvxdGYcErCISHco9q7UmNWRi/1k4l5cJmk9ri/v4/j2DlvPHUMO0WKOUU0CEO9eGAE0l4iLmXlGUmviriE1PcD2aFci0olFn4aAIHesZI7p8Teh0R7ByTbsqJrQJ1KikLqF2pFFPMTkh3y70+FvJ9LtR4+YubCY464+0/RlTaPCu62c1EmKns3DOLqeEezwIFiuS+YoXWZUkNx7vAZHPC5ksG4+0ph5rVqBYtBVY5cApzkQBJiky6ZvmOzdfsrT6llXkQEAyIdvE19nUkb0JKz1LA28bJXiU/b0QWWplwe32NROjnpnOOS8pd8zY0QUS8xBi8hzO966R9St8XDBcMdvv0wedw+QEI4vinpZ457rEfG4NyzipZctFvB3mlXHb5t0LFonVc0kmhfAQ0Y8kkk4zrEwf19OU2i70SwQIEzkSsw+BwEyY65I/xSFuB2zS0A3kd58wg4wUZ3pYK5hW9mcE32WPzEY="
 
