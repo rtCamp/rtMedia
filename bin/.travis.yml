@@ -13,8 +13,10 @@ php:
 addons:
   browserstack:
     username: "potential3"
-    access_key: "wVraAtpqtH3psqD9RaCF"
-#        secure: co0cs4Anst7BQJUS7NL0luIvlkD3h9Z0ErtrflhENnju7/NGMvgSPxwLXlkPBefTeeCsvkcnNoN04MUbMYfo4tQgsHWm3HSPk18UTCD6KOaIvhUE08dn1EfqHN2tdN3/P0n/SGwS5xXbz6yzdcQOwALtnM7Mh9Dt34ij2VdWohLhZQWQrttYbjC2xPju0UMXyfz88WH4b8V6aSWC7JTsNDZEElpa0l2GgnID/DIPJEu3KLtGI8vfFgoIumaiuTZZPdx49XQaHmLRdy5B8+DJq33049UBchoTbqVteao0XgTOe8jSJ3r3jfYhrxMQuz+5JaTwxXREjT8wgc3JUH0o0yrFY6sEiuRrU7bQeUg11Xw/E7H14yYEedh43R7yoeVeNmtISGQJGS4wREFiOxKHrErvLQNaSIuHYnl/D6/14++ZJ9qZ/OwXcAwkePxHJRggqgOXrMtmjFUigICMcoFRpWcozBG+iY2qb9SQLMaHQzqKahfFj+3MCchtlSkFrbh7H8tE49ytw1F1aidNzGnWinz6p6fRS+BnWPdRVEktvLLV30uv0Xb4kmnwqbvhdpphfhHeVMoZd81m/iKXNWuXkO0TPtBv/vTkEaEOUcqDKq3soeekhZo+JHxirjM+xwFJmvz4oqwED68Hhsh6nPj4QYXW25X7hR6KFyad6s1c9Mk=
+    access_key:
+     secure: "kzxBsdQ6YlCwSmNiRUySajSsy+WSgFFW25ZACPxIyZ+nhhqDFrJe6G8APU6ICcLbZC1FAJ6oMCqvl462a+j7L+/ku5WyA5EW9iTWr8Nw1gIB22EAvPaVVyUvAdW/WTNFvEttfSGud/9Pf16ACyjL3z7xaoa3C/rRFqHSBpnb+mycuGc0EJ1V778vAzkUCFUh6irtBoTZPrYMUaM3ayoeapkwmGnNEpb+ws4Mhcqv+LP12iWW6LkhcONR0WS5+DZI9Ig4r/aGdAq+wbEozRr63el6pK2wCS3WHbQtu/kHQAZ/2c9TYPGiuqFBZpSatYl5nj+VnRBGrLuGASM9Dp8QsoWfGqWYzsYkmGXanMXKyCOxlfC74zQdjtRpyhcFok14dCEMK0mt6MOHTo0VIgDLecJJTFQmXO273QdfCGePzQ+wCFIHIEtf6v/D2h4hYGCPZt0sszV+QQic72ts4/gW15r4SXZaRhI0jMKQ9sqiwNbRYJ1QRpljAKEWBZN+ObVcV6Ee/v2vnkh15oYgnDFoXa0rUaDINrYXTu/u5jVLY/WkqiOOiZQVI5AAaNgHsQMolQCR6YqX33cRDQT8rFi3e2o6ZWEZKlmYLqLo8+QUDWe0+wDjHZ1zit9OlYSEVZqDrDMi9roGY0eDk5/WlDgtZQP/kcYF6bgnuASg8sws5ck="
+
+
 
 
 before_install:
@@ -57,16 +59,16 @@ before_script:
 
 script:
 - vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/  --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/02-Negative/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/01-Positive/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/02-Negative/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/02-Negative/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/ --steps
-- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/  --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/02-Negative/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/01-Positive/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/02-Negative/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/02-Negative/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/ --steps
+#- vendor/bin/wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/ --steps
