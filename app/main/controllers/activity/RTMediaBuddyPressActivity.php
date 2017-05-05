@@ -446,7 +446,7 @@ class RTMediaBuddyPressActivity {
 				// Getting index of activity which is being updated
 				$index = $activity_index_array[ $a ];
 
-				// Generating user_link with display name
+				// Generating user_link with display name.
 				$user_link = '<a href="' . esc_url( $activities[ $index ]->primary_link ) . '">' . esc_html( $activities[ $index ]->display_name ) . '</a>';
 
 				if ( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) {
