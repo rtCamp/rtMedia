@@ -140,15 +140,15 @@ class RTMedia {
 				if ( isset( $row['media_id'] ) ) {
 					// @codingStandardsIgnoreStart
 					$sql = $wpdb->prepare( "update $wpdb->posts p
-                                left join
-                            $model->table_name r ON ( p.ID = r.media_id and blog_id = %d )
-                        set
-                            post_parent = %d
-                        where
-                            p.guid like %s
-                                and (p.post_parent = 0 or p.post_parent is NULL)
-                                and not r.id is NULL
-                                and r.media_type <> 'album'", get_current_blog_id(), $row['media_id'], '%/rtMedia/%' );
+								left join
+							$model->table_name r ON ( p.ID = r.media_id and blog_id = %d )
+						set
+							post_parent = %d
+						where
+							p.guid like %s
+								and (p.post_parent = 0 or p.post_parent is NULL)
+								and not r.id is NULL
+								and r.media_type <> 'album'", get_current_blog_id(), $row['media_id'], '%/rtMedia/%' );
 					$wpdb->query( $sql );
 					// @codingStandardsIgnoreEnd
 				}
@@ -341,6 +341,7 @@ class RTMedia {
 	}
 
 	function custom_style_for_gallery_image_size_masonry() {
+		global $rtmedia;
 		if ( intval( $this->options['defaultSizes_photo_thumbnail_height'] ) > 0 ) {
 			?>
 			.rtmedia-container .rtmedia-list  .rtmedia-list-item .rtmedia-item-thumbnail {
@@ -352,6 +353,35 @@ class RTMedia {
 			?>
 			.rtmedia-container .rtmedia-list  .rtmedia-list-item .rtmedia-item-thumbnail {
 			max-width: <?php echo intval( $this->options['defaultSizes_photo_thumbnail_width'] ); ?>px;
+			}
+			<?php
+		}
+
+		// Check if masonry is active in activity.
+		if ( rtmedia_masonry_in_activity_enable() ) {
+
+			$medium_height = intval( $this->options['defaultSizes_photo_medium_height'] );
+			$medium_width = intval( $this->options['defaultSizes_photo_medium_width'] );
+			$max_medium_height = $medium_height + ( $medium_height / 3 );
+
+			?>
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.rtmedia-list.has_masonry li.media-type-photo .rtmedia-item-title ,
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.rtmedia-list.has_masonry li.media-type-video .rtmedia-item-title ,
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.rtmedia-list.has_masonry li.media-type-music .rtmedia-item-title {
+			  display: none;
+			}
+
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo{
+				max-height: <?php echo intval( $medium_height ); ?>px;
+			}
+
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n),
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n) .rtmedia-item-thumbnail,
+			#buddypress #activity-stream .rtmedia_update .activity-content ul.has_masonry li.media-type-photo:nth-child(2n) img{
+				height: <?php echo intval( $max_medium_height ); ?>px;
+				max-height: <?php echo intval( $max_medium_height ); ?>px;
+				width: <?php echo intval( $medium_width ); ?>px;
+				max-width: <?php echo intval( $medium_width ); ?>px;
 			}
 			<?php
 		}
@@ -1097,6 +1127,22 @@ class RTMedia {
 		} else {
 			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', '0' );
 		}
+
+		/* Mansory in Activity is enable or not   */
+		$enablemasonryactivity = '0';
+		/**
+		 * Filter to disable masonry in activity if it's enable.
+		 *
+		 * @since 4.4
+		 *
+		 * @param bool True if enable else False.
+		 *
+		 * @return bool True if enable else False.
+		 */
+		if ( isset( $rtmedia->options['general_masonry_layout'] ) && 0 !== intval( $rtmedia->options['general_masonry_layout'] ) && isset( $rtmedia->options['buddypress_enableMasonryActivity'] ) && apply_filters( 'rtmedia_masonry_in_activity_enable', true ) ) {
+			$enablemasonryactivity = (string) $rtmedia->options['buddypress_enableMasonryActivity'];
+		}
+		wp_localize_script( 'rtmedia-backbone', 'buddypress_enableMasonryActivity', $enablemasonryactivity );
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_upload_progress_error_message', esc_html__( 'There are some uploads in progress. Do you want to cancel them?', 'buddypress-media' ) );
 

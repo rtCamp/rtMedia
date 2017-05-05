@@ -15,10 +15,25 @@
 }
 
 // remove border and padding
-#buddypress ul.rtmedia-list li {
-	border-bottom: 0;
-	padding-bottom: 0;
+#buddypress {
+	ul.rtmedia-list li {
+		border-bottom: 0;
+		padding-bottom: 0;
+	}
+
+	#activity-stream {
+		.rtmedia_update {
+			.activity-content{
+				ul.rtmedia-list.has_masonry{
+					li{
+						padding: 1px 0px 1px 0px;
+					}
+				}
+			}
+		}
+	} 
 }
+	
 
 // hide unnecessory div
 .rtmedia-activity-container {
