@@ -1409,6 +1409,13 @@ jQuery( document ).ready( function( $ ) {
 				} catch ( e ) {
 
 				}
+				var next_class_txt = 'media_action_'+data.next;
+				var prev_class_txt = 'media_action_'+data.prev;
+				var media_btn_next_class = next_class_txt.toLowerCase();
+				var media_btn_prev_class = prev_class_txt.toLowerCase();
+				$( that ).addClass( media_btn_next_class );
+				$( that ).removeClass( media_btn_prev_class );
+
 				$( '.rtmedia-like span' ).html( data.next );
 				$( '.rtmedia-like-counter-wrap' ).html( data.person_text );
 				$( '.rtm-like-loading' ).remove();
