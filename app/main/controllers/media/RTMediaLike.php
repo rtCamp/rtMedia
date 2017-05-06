@@ -124,12 +124,12 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$actions = intval( $actions[0]->{$actionwa} );
 		if ( true === $this->increase ) {
 			$actions ++;
-			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->undo_label );
+			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_undo_label_text', $this->undo_label );
 			$return['prev'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 		} else {
 			$actions --;
 			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
-			$return['prev'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->undo_label );
+			$return['prev'] = apply_filters( 'rtmedia_' . $this->action . '_undo_label_text', $this->undo_label );
 		}
 
 		$like_html = '<span class="rtmedia-like-counter"></span>';
