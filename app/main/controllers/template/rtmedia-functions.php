@@ -529,21 +529,23 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 	$size_flag = true;
 
 	global $rtmedia_media, $rtmedia;
-	$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 
 	if ( isset( $rtmedia_media->media_type ) ) {
 		if ( 'photo' === $rtmedia_media->media_type ) {
 			$src  = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
 			$html = "<img src='" . esc_url( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
 		} elseif ( 'video' === $rtmedia_media->media_type ) {
+			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 			$height = $rtmedia->options['defaultSizes_video_singlePlayer_height'];
 			$height = ( $height * 75 ) / 640;
 			$size   = ' width="' . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . '" height="' . esc_attr( $height ) . '%" ';
 			$html   = "<div id='rtm-mejs-video-container' style='width:" . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . 'px;height:' . esc_attr( $height ) . "%;  max-width:96%;max-height:80%;'>";
 			if ( empty( $youtube_url ) ) {
-				$html   .= '<video poster="" src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" ' . esc_attr( $size ) . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . esc_attr( $rtmedia_media->id ) . '" controls="controls" preload="true"></video>';
+				$html_video = '<video poster="" src="%s" %s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%s" controls="controls" preload="none"></video>';
+				$html .= sprintf( $html_video, esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ), esc_attr( $size ), esc_attr( $rtmedia_media->id ) );
 			} else {
-				$html .= '<video width="640" height="360" class="url-video" id="video-id-' . esc_attr( $rtmedia_media->id ) . '" preload="none"><source type="video/youtube" src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" /></video>';
+				$html_video = '<video width="640" height="360" class="url-video" id="video-id-%s" preload="none"><source type="video/youtube" src="%s" /></video>';
+				$html .= sprintf( $html_video, esc_attr( $rtmedia_media->id ), esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) );
 			}
 			$html   .= '</div>';
 		} elseif ( 'music' === $rtmedia_media->media_type ) {
@@ -555,7 +557,8 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 				$size = '';
 			}
 
-			$html = '<audio src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" ' . esc_attr( $size ) . ' type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . esc_attr( $rtmedia_media->id ) . '" controls="controls" preload="none"></audio>';
+			$html = '<audio src="%s" %s type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_%s" controls="controls" preload="none"></audio>';
+			$html .= sprintf( $html, esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ), esc_attr( $size ), esc_attr( $rtmedia_media->id ) );
 		} else {
 			$html = false;
 		}
