@@ -445,12 +445,9 @@ class RTMediaBuddyPressActivity {
 			for ( $a = 0; $a < count( $activity_ids ); $a ++ ) {
 				// Getting index of activity which is being updated
 				$index = $activity_index_array[ $a ];
-				// This pattern is for getting name. User might have change display name as first name or something instead on nicename.
-				$pattern = '/<a ?.*>(.*)<\/a>/';
-				preg_match( $pattern, $activities[ $index ]->action, $matches );
 
-				// Generating user_link with name
-				$user_link = '<a href="' . esc_url( $activities[ $index ]->primary_link ) . '">' . esc_html( $matches[1] ) . '</a>';
+				// Generating user_link with display name.
+				$user_link = '<a href="' . esc_url( $activities[ $index ]->primary_link ) . '">' . esc_html( $activities[ $index ]->display_name ) . '</a>';
 
 				if ( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) {
 					// Counting media linked with activity

@@ -1311,7 +1311,11 @@ jQuery( document ).ready( function( $ ) {
 
 			rtmedia_single_media_alert_message( rtmedia_empty_comment_msg, 'warning' );
 
-			rtmedia_comment_media_input_button( widget_id, false );
+			if ( widget_id ) {
+				rtmedia_comment_media_input_button( widget_id, false );
+			} else {
+				rtmedia_comment_submit_button_disable( false );
+			}
 
 			return false;
 		}
@@ -1333,11 +1337,13 @@ jQuery( document ).ready( function( $ ) {
 
 				comment_content_el.val( '' );
 
-				rtmedia_comment_media_remove_hidden_media_id( widget_id );
-
-				rtmedia_comment_media_textbox_val( widget_id, false );
-
-				rtmedia_comment_media_input_button( widget_id, false );
+				if ( widget_id ) {
+					rtmedia_comment_media_remove_hidden_media_id( widget_id );
+					rtmedia_comment_media_textbox_val( widget_id, false );
+					rtmedia_comment_media_input_button( widget_id, false );
+				} else {
+					rtmedia_comment_submit_button_disable( false );
+				}
 
 				rtmedia_apply_popup_to_media();
 
@@ -1346,11 +1352,12 @@ jQuery( document ).ready( function( $ ) {
 				rtMediaHook.call( 'rtmedia_js_after_comment_added', [ ] );
 			},
 			error: function( data ) {
-
-				/* Act on the event */
-				rtmedia_comment_media_input_button( widget_id, false );
-
-				rtmedia_comment_media_remove_hidden_media_id( widget_id );
+				if ( widget_id ) {
+					rtmedia_comment_media_input_button( widget_id, false );
+					rtmedia_comment_media_remove_hidden_media_id( widget_id );
+				} else {
+					rtmedia_comment_submit_button_disable( false );
+				}
 			}
 		} );
 
@@ -1682,6 +1689,17 @@ function rtmedia_add_comment_media_button_click( widget_id ){
 	});
 }
 
+/**
+ * Enable/Disable submit comment button.
+ *
+ * @since 4.3.2
+ * @param {boolean} value Disable or Enable button.
+ */
+function rtmedia_comment_submit_button_disable( value ) {
+	if ( 'boolean' === typeof value ) {
+		jQuery( '#rt_media_comment_form #rt_media_comment_submit' ).prop( 'disabled', value );
+	}
+}
 
 function rtmedia_comment_media_input_button( widget_id, $value ){
 
@@ -1921,7 +1939,32 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 
         commentObj[widget_id].initUploader(false);
 
+		/*
+		 * Fix for file selector does not open in Safari browser in IOS.
+		 * In Safari in IOS, Plupload don't click on it's input(type=file), so file selector dialog won't open.
+		 * In order to fix this, when rtMedia's attach media button is clicked,
+		 * we check if Plupload's input(type=file) is clicked or not, if it's not clicked, then we click it manually
+		 * to open file selector.
+		 */
 
+		// Initially, select file dialog is close.
+		var file_dialog_open = false;
+
+		// Plupload will click on this input when user click on rtMedia's attach media button.
+		var input_file_el = '#' + plupload_comment.container + ' input[type=file]:first';
+
+		// Bind callback on Plupload's input element.
+		jQuery( document.body ).on( 'click', input_file_el, function() {
+			file_dialog_open = true;
+		} );
+
+		// Bind callback on rtMedia's attach media button.
+		jQuery( document.body ).on( 'click', '#' + button, function() {
+			if ( false === file_dialog_open ) {
+				jQuery( input_file_el ).click();
+				file_dialog_open = false;
+			}
+		} );
 
 		var form_html = jQuery( "."+comment_media_wrapper+widget_id );
 		if( jQuery( form_html ).find('div.rtmedia-plupload-container').length ){
