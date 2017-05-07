@@ -327,6 +327,8 @@ function add_upload_button() {
 add_action( 'rtmedia_media_gallery_actions', 'add_upload_button', 99 );
 add_action( 'rtmedia_album_gallery_actions', 'add_upload_button', 99 );
 
+
+
 /**
  * Add music cover art
  *
@@ -709,7 +711,7 @@ function rt_check_addon_status() {
 
 	foreach ( $addons as $addon ) {
 
-		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ){
+		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ) {
 
 			$addon_id = $addon['args']['addon_id'];
 			// If license key is not present, then remove the status from config
@@ -731,7 +733,6 @@ function rt_check_addon_status() {
 					}
 				}
 			}
-
 		}
 
 		if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
@@ -849,7 +850,6 @@ function rtmedia_activity_register_activity_actions_callback() {
 	);
 }
 add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
-
 
 /**
  *
@@ -970,3 +970,12 @@ if ( ! function_exists( 'rtmedia_gallery_after_title_callback' ) ) {
 	}
 }
 add_action( 'rtmedia_gallery_after_title', 'rtmedia_gallery_after_title_callback', 11, 1 );
+
+function add_search_filter() {
+	$html = "<div class='media_search'>";
+	$html .= "<input type='text' id='media_search_input' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
+	$html .= "<button id='media_search'><i class='dashicons dashicons-admin-generic rtmicon'></i></button>";
+	$html .= '</div>';
+	echo apply_filters( 'rtmedia_gallery_search', $html );
+}
+add_action( 'rtmedia_media_gallery_actions', 'add_search_filter', 99 );
