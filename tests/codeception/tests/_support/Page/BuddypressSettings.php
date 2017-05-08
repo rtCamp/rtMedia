@@ -31,7 +31,7 @@ class BuddypressSettings
     }
 
     /**
-    * countGroup() -> Will count the no of groups available
+    * countGroup() -> Will count the number of groups available
     */
     public function countGroup( $selector ){
 
