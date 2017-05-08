@@ -11,7 +11,7 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $status = 'For loggedin uses only..';
+    $status = 'For loggedin users only..';
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To set default privacy for logged in user.' );
@@ -19,7 +19,11 @@
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
+    // Allow upload from Activity Stream must be enabled
     $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+    $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+    $I->scrollTo( ConstantsPage::$topSaveButton );
     $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
     $settings->verifyEnableStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
@@ -29,7 +33,6 @@
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
     $uploadmedia = new UploadMediaPage( $I );
-    //$uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
     $uploadmedia->postStatus( $status );
     $I->wait( 5 );
 
