@@ -4,7 +4,6 @@
 * Scenario : To Check if the user is allowed to upload media in comment.
 */
     use Page\Login as LoginPage;
-    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\UploadMedia as UploadMediaPage;
@@ -93,8 +92,4 @@
     }
 
     $I->reloadPage();
-
-    $logout = new LogoutPage( $I );
-    $logout->logout();
-
 ?>

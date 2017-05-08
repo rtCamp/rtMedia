@@ -4,7 +4,6 @@
 * Scenario : Should not allow the user to comment on uploaded media.
 */
     use Page\Login as LoginPage;
-    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
@@ -62,8 +61,5 @@
     }
 
     $I->reloadPage();
-
-    $logout = new LogoutPage( $I );
-    $logout->logout();
 
 ?>

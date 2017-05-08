@@ -43,6 +43,10 @@ class Login
         $I->amOnPage( '/wp-admin' );
         $I->wait( 10 );
 
+        if ($I->loadSessionSnapshot('login')) {
+           return;
+        }
+
         $I->seeElement( self::$wpUserNameField );
         $I->fillfield( self::$wpUserNameField,$wpUserName );
 
@@ -52,6 +56,8 @@ class Login
         $I->seeElement( self::$wpSubmitButton );
         $I->click( self::$wpSubmitButton );
         $I->wait( 10 );
+
+        $I->saveSessionSnapshot('login'); //Saving session
 
         $I->seeElement( self::$dashBoardMenu );
 
