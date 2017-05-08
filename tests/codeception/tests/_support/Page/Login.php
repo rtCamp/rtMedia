@@ -43,13 +43,13 @@ class Login
         $I->amOnPage( '/wp-admin' );
         $I->wait( 10 );
 
-        $I->seeElement( self::$wpUserNameField );
+        //$I->seeElement( self::$wpUserNameField );
         $I->fillfield( self::$wpUserNameField,$wpUserName );
 
-        $I->seeElement( self::$wpPasswordField );
+        //$I->seeElement( self::$wpPasswordField );
         $I->fillfield( self::$wpPasswordField, $wpPassword );
 
-        $I->seeElement( self::$wpSubmitButton );
+        //$I->seeElement( self::$wpSubmitButton );
         $I->click( self::$wpSubmitButton );
         $I->wait( 10 );
 
