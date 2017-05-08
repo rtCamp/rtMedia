@@ -23,7 +23,7 @@
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
-    $I->scrollTo( ConstantsPage::$topSaveButton );
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings' );
     $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
     $settings->verifyEnableStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
