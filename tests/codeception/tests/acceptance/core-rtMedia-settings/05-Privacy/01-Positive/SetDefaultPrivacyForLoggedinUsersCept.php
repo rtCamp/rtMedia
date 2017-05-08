@@ -11,7 +11,7 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $status = 'For loggedin users only..';
+    $status = 'For Logged in users only';
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To set default privacy for logged in user.' );
@@ -23,6 +23,7 @@
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+   // Go to Privacy tab
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings/#rtmedia-privacy' );
   //  $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
