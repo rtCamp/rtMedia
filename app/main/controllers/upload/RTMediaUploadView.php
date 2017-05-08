@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Description of RTMediaUploadView
  *
@@ -76,7 +75,7 @@ class RTMediaUploadView {
 				$up_privacy = new RTMediaPrivacy( false );
 				$up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy' );
 				if ( $up_privacy ) {
-					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility rtmicon'></i>" . esc_html__( 'Privacy: ', 'buddypress-media' ) . '</label>' . $up_privacy . '</span>';
+					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility rtmicon'></i>" . esc_html__( 'Privacy:', 'buddypress-media' ) . '</label>' . $up_privacy . '</span>';
 				}
 			}
 		}
@@ -114,6 +113,27 @@ class RTMediaUploadView {
 			$upload_tab_html = '';
 		}
 		global $rtmedia;
+
+		$rtmedia_comment_main = "rtmedia-comment-action-update";
+		$rtmedia_comment_container = "rtmedia-comment-media-upload-container";
+		$rtmedia_comment_button = "rtmedia-comment-media-upload";
+		$rtmedia_comment_filelist = "rtmedia_uploader_filelist";
+		$rtmedia_comment_context = "activity";
+		if(
+			( isset( $this->attributes['upload_parent_id'] )  && ! empty( $this->attributes['upload_parent_id'] )  )
+			&&
+			( isset( $this->attributes['upload_parent_id_type'] )  && ! empty( $this->attributes['upload_parent_id_type'] )  )
+		){
+			$main_id =  '-'.$this->attributes['upload_parent_id_type'].'-'.$this->attributes['upload_parent_id'];
+			$rtmedia_comment_main .= $main_id;
+			$rtmedia_comment_container .= $main_id;
+			$rtmedia_comment_button .= $main_id;
+			$rtmedia_comment_filelist .= $main_id;
+			$up_privacy = $privacy = "<input type='hidden' name='privacy' value='" . esc_attr( 0 ) . "' />";
+			if( isset( $this->attributes['upload_parent_id_context'] ) ){
+				$rtmedia_comment_context = $this->attributes['upload_parent_id_context'];
+			}
+		}
 
 		$upload_button = '<input type="button" class="start-media-upload" value="' . esc_attr__( 'Start upload', 'buddypress-media' ) . '"/>';
 		$tabs          = array(
@@ -156,6 +176,27 @@ class RTMediaUploadView {
 						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul>'
 						. '</div>',
 				),
+				'comment' => array(
+					'title'   => esc_html__( 'File Upload', 'buddypress-media' ),
+					'content' =>
+						'<div class="rtmedia-plupload-container rtmedia-comment-media-main rtmedia-container clearfix">'
+							. '<div id="'.$rtmedia_comment_main.'" class="clearfix">'
+								. '<div class="rtm-upload-button-wrapper">'
+									. '<div id="'.$rtmedia_comment_container.'">'
+									. '</div>'
+									. '<button type="button" class="rtmedia-comment-media-upload" data-media_context="'.$rtmedia_comment_context.'" id="' . $rtmedia_comment_button . '" title="' . apply_filters( 'rtmedia_comment_attach_media_button_title', esc_attr__( 'Attach Media', 'buddypress-media' ) ) . '">'
+										. '<span class="dashicons dashicons-admin-media"></span>'
+										. apply_filters( 'rtmedia_attach_file_message', '' )
+									. '</button>'
+								. '</div>'
+								. $up_privacy
+							. '</div>'
+						. '</div>'
+						. apply_filters( 'rtmedia_uploader_after_comment_upload_button', '' )
+						. '<div class="rtmedia-plupload-notice">'
+							. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="'. $rtmedia_comment_filelist .'"></ul>'
+						. '</div>',
+				),
 			),
 			'link_input'  => array(
 				'title'   => esc_html__( 'Insert from URL', 'buddypress-media' ),
@@ -171,8 +212,12 @@ class RTMediaUploadView {
 		}
 		if ( $attr && is_array( $attr ) ) {
 			foreach ( $attr as $key => $val ) {
+				$selector = "id";
+				if( ( $key == 'upload_parent_id'  && ! empty( $key ) ) || ( $key == 'upload_parent_id_type'  && ! empty( $key ) ) ){
+					$selector = "class";
+				}
 				?>
-				<input type='hidden' id="rt_upload_hf_<?php echo esc_attr( $key ); ?>"
+				<input type='hidden' <?php echo $selector; ?>="rt_upload_hf_<?php echo esc_attr( $key ); ?>"
 				       value='<?php echo esc_attr( $val ); ?>'
 				       name='<?php echo esc_attr( $key ); ?>'/>
 				<?php
@@ -181,6 +226,10 @@ class RTMediaUploadView {
 		$upload_type = 'default';
 		if ( isset( $attr['activity'] ) && $attr['activity'] ) {
 			$upload_type = 'activity';
+		}
+
+		if ( isset( $attr['comment'] ) && $attr['comment'] ) {
+			$upload_type = 'comment';
 		}
 
 		$upload_helper = new RTMediaUploadHelper();

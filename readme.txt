@@ -1,12 +1,12 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, supercoder, bhargavbhandari90, deepak1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, deepak1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 4.6.1
-Stable tag: 4.2
+Tested up to: 4.7.2
+Stable tag: 4.3.1
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -136,6 +136,61 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.3.1 [Feb 23, 2017] =
+
+* ENHANCEMENTS
+
+ * Remove media titles from media tab
+ * Change text in rtMedia setting for comment media
+ * Added: Filter to change user id while fetching user's album list
+
+* FIXED
+
+ * Pagination and navigation fix in media tab
+ * Warnings when uploading media in activity comment
+ * Privacy for reported media in moderation
+
+= 4.3 [Feb 14, 2017] =
+
+* NEW FEATURES
+
+ * Comment Media - User can upload media in comment box
+
+* ENHANCEMENTS
+
+ * rtMedia settings to unable or disable likes for Media
+ * Attachment upload in rtMedia support form
+ * Added: rtMedia Version Constant
+ * Added: Action to Change rtMedia query before shortcode run
+ * Added: Filter to Change Media menu position in admin bar
+
+* FIXED
+
+ * Bulk delete in Media library Dashboard
+ * Warnings when user click on pagination
+ * rtMedia gallery shortcode pagination
+ * Remove unwanted fields in rtMedia support form
+ * Sorting & Options issue in Media Tab
+ * Comment and Like Privacy issue
+ * Comment and Like for media delete issue in Group
+ * Load More issue on activity and group Tab
+
+= 4.2.1 [Dec 21, 2016] =
+
+* FIXED
+
+ * Security issues pointed out by James Golovich
+ * Direct access of a file
+ * Access rights to modify/update the rtMedia settings
+ * Added validation on custom CSS before saving
+ * Section fluctuation when user drags media into activity box
+ * Audio / Video autoplay in Safari browser
+ * JS error on media comments when activity stream is disabled from the backend
+ * Media upload error when activity stream is disabled from the backend
+ * Invalid license key notice appearing even when all keys are valid
+ * Addon validation checks will happen every six hours (only if addons installed)
+ * Changed plugin's review link to rate on WordPress.org
 
 = 4.2 [Nov 17, 2016] =
 
@@ -1278,8 +1333,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.2 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Album media count, @mention functionality on media comments, Next previous link on media page, filter to allow/disallow text in activity media upload, "posted an update" string translation, duplicate activity entry on multiple post update, Video pop-up issues.
+= 4.3.1 =
+Remove media title & fixed pagination in media tab along with several other bugs fixed. Please update/re-save the permalinks after the plugin update.
 
 == Sponsors ==
 

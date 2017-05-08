@@ -44,7 +44,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 			$defaults = array(
 				'general_enableAlbums'        => 1,
+				'general_enableAlbums_description'        => 0,
 				'general_enableComments'      => 0,
+				'general_enableLikes'      	  => 1,
 				'general_downloadButton'      => 0,
 				'general_enableLightbox'      => 1,
 				'general_perPageMedia'        => 10,
@@ -85,6 +87,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 			$defaults['buddypress_enableOnGroup']        = 1;
 			$defaults['buddypress_enableOnActivity']     = 1;
+			$defaults['buddypress_enableOnComment']      = 1;
 			$defaults['buddypress_enableOnProfile']      = 1;
 			$defaults['buddypress_limitOnActivity']      = 0;
 			$defaults['buddypress_enableNotification']   = 0;
@@ -92,6 +95,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$defaults['buddypress_mediaCommentActivity'] = 0;
 			$defaults['styles_custom']                   = '';
 			$defaults['styles_enabled']                  = 1;
+
+			/* default value for add media in comment media */
+			$defaults['rtmedia_disable_media_in_commented_media']      = 1;
 
 			if ( isset( $options['general_videothumbs'] ) && is_numeric( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) > 10 ) {
 				$defaults['general_videothumbs'] = 10;
@@ -145,6 +151,26 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			foreach ( $defaults as $key => $value ) {
 				if ( ! isset( $options[ $key ] ) ) {
 					$options[ $key ] = '0';
+				}
+			}
+
+			/* Check if @import is inserted into css or not. If yes then remove that line before save. */
+			if ( isset( $options['styles_custom'] ) && ! empty( $options['styles_custom'] ) ) {
+				$css = $options['styles_custom'];
+
+				/**
+				 * Filters css validation status whether apply it or not.
+				 * Return true if you want to validate css.
+				 *
+				 * @param bool false By default do not apply validation.
+				 */
+				$apply_css_validation = apply_filters( 'rtmedia_css_validation', false );
+
+				if ( true === $apply_css_validation && preg_match( '/@import\s*(url)?\s*\(?([^;]+?)\)?;/', $css, $matches ) ) {
+					$removable_line = $matches[0];
+					if ( ! empty( $removable_line ) ) {
+						$options['styles_custom'] = str_replace( $removable_line, '', $css );
+					}
 				}
 			}
 

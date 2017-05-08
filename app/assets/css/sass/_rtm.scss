@@ -59,7 +59,9 @@
 }
 
 // Uploader
-#rtmedia-uploader-form .rtm-plupload-list, #rtmedia_uploader_filelist {
+#rtmedia-uploader-form .rtm-plupload-list,
+form .rtmedia-container .rtm-plupload-list,
+#rtmedia_uploader_filelist {
 	list-style: none;
 	margin-left: -4px;
 	margin-right: -4px;
@@ -118,6 +120,16 @@
 .rtmedia-uploader-div,
 .rtmedia-uploader {
 	clear: both;
+}
+
+.rtm-upload-button-wrapper button.rtmedia-comment-media-upload,
+button.rtmedia-comment-media-upload {
+	padding: 3px 6px;
+
+	.dashicons {
+		font-size: 18px;
+		line-height: 20px;
+	}
 }
 
 button#rtmedia-add-media-button-post-update {

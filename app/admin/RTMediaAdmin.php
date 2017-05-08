@@ -182,6 +182,19 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				include $filename;
 				echo '</script>';
 			}
+
+			if( isset( $_GET['page'] ) && 'rtmedia-settings' == sanitize_text_field( $_GET['page'] ) ){
+				global $rtmedia;
+				$display = apply_filters( 'rtmedia_disable_media_in_commented_media', true );
+				if ( isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnComment'] ) && 1 == $rtmedia->options['buddypress_enableOnComment'] && $display ) { ?>
+					<style type="text/css">
+						.rtm-option-wrapper .form-table[data-depends="buddypress_enableOnComment"] {
+						    display: none !important;
+						}
+					</style>
+					<?php
+				}
+			}
 		}
 
 		function modify_medialibrary_permalink( $action, $post ) {
@@ -881,6 +894,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'per_page_media_negative_value'	=> esc_html__( 'Please enter positive integer value only. Setting number of media per page value to default value 10.', 'buddypress-media' ),
 					'per_page_media_positive_error'	=> esc_html__( 'Please enter positive integer value only. Setting number of media per page value to round value', 'buddypress-media' ),
 					'request_failed'				=> esc_html__( 'Request failed.', 'buddypress-media' ),
+					'wrong_css_input'				=> esc_html__( 'You can not use @import statement in custom css', 'buddypress-media' ),
 				);
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );

@@ -1,11 +1,12 @@
 <?php
 // Avoid direct access to the file.
-if ( ! defined( 'ABSPATH' ) ) {
-     exit;
-}
-
 $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require_once( $parse_uri[0] . 'wp-load.php' );
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $data = array();
 if ( ! empty( $_FILES ) ) {
 	$error = false;

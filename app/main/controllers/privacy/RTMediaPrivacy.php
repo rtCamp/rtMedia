@@ -52,11 +52,13 @@ class RTMediaPrivacy {
 	 * Show privacy dropdown inside activity loop along with activity meta buttons.
 	 */
 	function update_activity_privacy_option() {
+		global $activities_template;
+		$rtmedia_activity_types = array( 'rtmedia_comment_activity', 'rtmedia_like_activity', 'activity_comment' );
 		if ( function_exists( 'bp_activity_user_can_delete' ) && bp_activity_user_can_delete()
 			&& ( ! bp_is_groups_component() ) && is_rtmedia_privacy_user_overide()
 			&& apply_filters( 'rtm_load_bp_activity_privacy_update_ui', true )
+			&& isset( $activities_template->activity ) && isset( $activities_template->activity->type ) &&! in_array( $activities_template->activity->type , $rtmedia_activity_types )
 		) {
-			global $activities_template;
 
 			$selected = 0;
 			if ( isset( $activities_template->activity->privacy ) ) {
@@ -64,7 +66,9 @@ class RTMediaPrivacy {
 			}
 
 			//todo strict standard error
-			self::select_privacy_ui( true, 'rtm-ac-privacy-' . $activities_template->activity->id, array( 'rtm-activity-privacy-opt' ), $selected );
+			if ( isset( $activities_template->activity->privacy ) && $activities_template->activity->privacy != '80' ) {
+				self::select_privacy_ui( true, 'rtm-ac-privacy-' . $activities_template->activity->id, array( 'rtm-activity-privacy-opt' ), $selected );
+			}
 		}
 	}
 
@@ -81,6 +85,7 @@ class RTMediaPrivacy {
 		$activity_id = filter_input( INPUT_POST, 'activity_id', FILTER_SANITIZE_NUMBER_INT );
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_activity_privacy_nonce' ) ) {
+			$media_ids_of_activity = array();
 			$rtm_activity_model  = new RTMediaActivityModel();
 			$is_ac_privacy_exist = $rtm_activity_model->check( $activity_id );
 
@@ -104,6 +109,9 @@ class RTMediaPrivacy {
 			$activity_media = $media_model->get( array( 'activity_id' => $activity_id ) );
 			if ( ! empty( $activity_media ) && is_array( $activity_media ) ) {
 				foreach ( $activity_media as $single_media ) {
+					/* get all the media ids in the activity */
+					$media_ids_of_activity[] = $single_media->id;
+
 					$where   = array( 'id' => $single_media->id );
 					$columns = array( 'privacy' => $privacy );
 
@@ -111,6 +119,9 @@ class RTMediaPrivacy {
 					$media_model->update( $columns, $where );
 				}
 			}
+
+			/* is the activate has any media then move the like and comment of that media to for the privacy */
+			$rtm_activity_model->profile_activity_update( $media_ids_of_activity, $privacy, $activity_id );
 
 			if ( false === $status ) {
 				$status = 'false';
@@ -361,7 +372,7 @@ class RTMediaPrivacy {
 		$default_privacy = filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING );
 		$nonce           = filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING );
 
-		if ( NULL !== $default_privacy ) {
+		if ( null !== $default_privacy ) {
 			$status = false;
 			if ( wp_verify_nonce( $nonce, 'rtmedia_member_settings_privacy' ) ) {
 				//todo user attribute
