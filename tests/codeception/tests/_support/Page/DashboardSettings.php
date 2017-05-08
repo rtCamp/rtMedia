@@ -223,6 +223,7 @@ class DashboardSettings
         }else{
             echo nl2br( "Call to selectOption()... \n" );
             self::selectOption( $cssSelector );
+            self::saveSettings();
         }
     }
 }

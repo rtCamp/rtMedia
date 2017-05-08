@@ -24,7 +24,7 @@
     $settings->verifyEnableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
     $settings->verifyEnableStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
     $settings->verifySelectOption( ConstantsPage::$defaultPrivacyLabel, ConstantsPage::$loggedInUsersRadioButton );
-
+    $I->wait( 5 );
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
