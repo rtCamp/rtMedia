@@ -70,7 +70,7 @@ script:
 #- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/
 #- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/02-Negative/
 - wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/01-Positive/ --steps
-- wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/02-Negative/ --steps
+#- wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/02-Negative/ --steps
 #- wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/
 #- wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/02-Negative/
 #- wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/

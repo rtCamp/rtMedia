@@ -29,6 +29,7 @@
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
     $uploadmedia = new UploadMediaPage( $I );
+    //$uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
     $uploadmedia->postStatus( $status );
 
     $logout = new LogoutPage( $I );
