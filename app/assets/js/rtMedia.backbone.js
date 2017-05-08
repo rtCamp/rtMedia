@@ -1416,6 +1416,7 @@ jQuery( document ).ready( function( $ ) {
 				} catch ( e ) {
 
 				}
+
 				$( '.rtmedia-like span' ).html( data.next );
 				$( '.rtmedia-like-counter-wrap' ).html( data.person_text );
 				$( '.rtm-like-loading' ).remove();

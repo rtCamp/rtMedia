@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.3.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-05-05 14:29:25+00:00\n"
+"POT-Creation-Date: 2017-05-07 17:07:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2364,37 +2364,37 @@ msgstr ""
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:474
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:471
 msgid "%s added a %s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:481
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:483
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:478
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:480
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:220
 msgid "%s added %d %s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:536
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:533
 msgid "%1$s liked a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:539
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:536
 msgid "%1$s liked their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:543
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:540
 msgid "%1$s liked %2$s's %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:633
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:630
 msgid "%1$s commented on a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:636
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:633
 msgid "%1$s commented on their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:640
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:637
 msgid "%1$s commented on %2$s's %3$s"
 msgstr ""
 
