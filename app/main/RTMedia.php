@@ -209,7 +209,32 @@ class RTMedia {
 		}
 		$this->add_image_sizes();
 		$this->set_image_quality();
+		$this->comment_auto_complete();
 	}
+
+	/**
+	 * add filter that is being given in the buddypress plugin which add the JS and CSS for autocomplete
+	 *
+	 * More deatils on: http://hookr.io/functions/bp_activity_maybe_load_mentions_scripts/
+	 */
+	public function comment_auto_complete( $rtmedia_options = false, $bp_media_options = false ) {
+		add_filter( 'bp_activity_maybe_load_mentions_scripts', array( $this, 'rtmedia_bp_activity_maybe_load_mentions_scripts_callback' ), 10001, 2 );
+	}
+
+
+	/**
+	 * Always set to true when call on any of the Buddypress Pages
+	 *
+	 * @param       bool       $load_mentions
+	 * @param       bool       $$mentions_enabled
+	 *
+	 * @return      bool     true
+	 */
+	public function rtmedia_bp_activity_maybe_load_mentions_scripts_callback( $load_mentions, $mentions_enabled ) {
+		$load_mentions = true;
+		return $load_mentions;
+	}
+
 
 	public function set_image_quality() {
 		add_filter( 'jpeg_quality', array( $this, 'rtmedia_jpeg_quality' ) );
@@ -282,11 +307,20 @@ class RTMedia {
 		max-height: <?php echo esc_attr( $this->options['defaultSizes_photo_medium_height'] ); ?>px;
 		overflow: hidden;
 		}
+
+		.rtmedia-comment-media-container .mejs-container.mejs-video,
 		.rtmedia-activity-container .mejs-container.mejs-video{
 		min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
 		min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
 		}
 		<?php
+		global $rtmedia;
+		if ( rtmedia_check_comment_media_allow() && ! rtmedia_check_comment_in_commented_media_allow() ) { ?>
+				#buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-comment-media-upload,#buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-container {
+				    display: none !important
+				}
+			<?php
+		}
 	}
 
 	function custom_style_for_gallery_image_size() {
@@ -510,6 +544,8 @@ class RTMedia {
 	public function init_site_options() {
 
 		$bp_media_options = rtmedia_get_site_option( 'bp_media_options' );
+
+
 
 		$defaults = array(
 			'general_enableAlbums'        => 1,
@@ -806,6 +842,10 @@ class RTMedia {
 		global $rtmediajsonapi;
 		$rtmediajsonapi = new RTMediaJsonApi();
 
+		if( function_exists( 'rtmedia_enable_comment_media_uplaod' ) ){
+			rtmedia_enable_comment_media_uplaod();
+		}
+
 		do_action( 'bp_media_init' ); // legacy For plugin using this actions
 		do_action( 'rtmedia_init' );
 	}
@@ -911,7 +951,7 @@ class RTMedia {
 	function create_table_error_notice() {
 		global $rtmedia_error;
 		$rtmedia_error = true;
-		echo "<div class='error'><p><strong>" . esc_html__( 'rtMedia', 'buddypress-media' ) .  '</strong>' . esc_html__( ": Can't Create Database table. Please check create table permission.", 'buddypress-media' ) . '</p></div>';
+		echo "<div class='error'><p><strong>" . esc_html__( 'rtMedia', 'buddypress-media' ) . '</strong>' . esc_html__( ": Can't Create Database table. Please check create table permission.", 'buddypress-media' ) . '</p></div>';
 	}
 
 	function enqueue_scripts_styles() {
@@ -996,6 +1036,9 @@ class RTMedia {
 		wp_localize_script( 'rtmedia-main', 'rtmedia_file_extension_error_msg', esc_html__( 'File not supported', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_more', esc_html__( 'more', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_less', esc_html__( 'less', 'buddypress-media' ) );
+		wp_localize_script( 'rtmedia-main', 'rtmedia_read_more', esc_html__( 'Read more', 'buddypress-media' ) );
+		wp_localize_script( 'rtmedia-main', 'rtmedia__show_less', esc_html__( 'Show less', 'buddypress-media' ) );
+		wp_localize_script( 'rtmedia-main', 'rtmedia_activity_text_with_attachment', apply_filters( 'rtmedia_required_activity_text_with_attachment', 'disable' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_delete_uploaded_media', esc_html__( 'This media is uploaded. Are you sure you want to delete this media?', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtm_wp_version', get_bloginfo( 'version' ) );
 		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_media', RTMEDIA_URL . 'app/assets/admin/img/boxspinner.gif' );
@@ -1103,6 +1146,73 @@ class RTMedia {
 			),
 		);
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_size_config', $media_size_config );
+
+
+		/* rtMedia fot comment media script localize*/
+		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
+		$url          = trailingslashit( $request_uri );
+		$rtmedia_slug = '/' . RTMEDIA_MEDIA_SLUG;
+		// check position of media slug from end of the URL
+		if ( strrpos( $url, $rtmedia_slug ) !== false ) {
+			// split the url upto the last occurance of media slug
+			$url_upload = substr( $url, 0, strrpos( $url, $rtmedia_slug ) );
+			$url        = trailingslashit( $url_upload ) . 'upload/';
+		} else {
+			$url = trailingslashit( $url ) . 'upload/';
+		}
+
+		$params = array(
+			'url'                 => $url,
+			'runtimes'            => 'html5,flash,html4',
+			'browse_button'       => 'rtmedia-comment-media-upload',
+			'container'           => 'rtmedia-comment-media-upload-container',
+			'filters'             => apply_filters( 'rtmedia_plupload_files_filter', array(
+				array(
+					'title'      => 'Media Files',
+					'extensions' => get_rtmedia_allowed_upload_type(),
+				),
+			) ),
+			'max_file_size'       => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
+			'multipart'           => true,
+			'urlstream_upload'    => true,
+			'flash_swf_url'       => includes_url( 'js/plupload/plupload.flash.swf' ),
+			'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
+			'file_data_name'      => 'rtmedia_file', // key passed to $_FILE.
+			'multi_selection'     => false,
+			'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
+				'redirect'             => 'no',
+				'action'               => 'wp_handle_upload',
+				'_wp_http_referer'     => $request_uri,
+				'mode'                 => 'file_upload',
+				'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ),
+			) ),
+			'max_file_size_msg'   => apply_filters( 'rtmedia_plupload_file_size_msg', min( array(
+				ini_get( 'upload_max_filesize' ),
+				ini_get( 'post_max_size' ),
+			) ) ),
+		);
+
+		$params = apply_filters( 'rtmedia_modify_upload_params', $params );
+
+
+		global $rtmedia;
+		$rtmedia_extns = array();
+		foreach ( $rtmedia->allowed_types as $allowed_types_key => $allowed_types_value ) {
+			$rtmedia_extns[ $allowed_types_key ] = $allowed_types_value['extn'];
+		}
+
+		$rtmedia_disable_media = "1";
+		/* if the  rtmedia option does have value pick from there*/
+		if( isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) ){
+			$rtmedia_disable_media = $rtmedia->options['rtmedia_disable_media_in_commented_media'];
+		}
+		wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media', $rtmedia_disable_media );
+
+		wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media_text', esc_html__( 'Adding media in Comments is not allowed', 'buddypress-media' ) );
+
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_exteansions', $rtmedia_extns );
+		wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_comment', $params );
+		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( '/images/loading.gif' ) );
 
 	}
 
@@ -1267,7 +1377,19 @@ function get_rtmedia_permalink( $id ) {
 	// Removing filter so that doesn't affect other calls to this function
 	remove_filter( 'bp_get_root_domain', 'rtmedia_get_current_blog_url' );
 
-	return trailingslashit( $parent_link . RTMEDIA_MEDIA_SLUG . '/' . $id );
+	$permalink = trailingslashit( $parent_link . RTMEDIA_MEDIA_SLUG . '/' . $id );
+
+	/**
+	 * Filters the rtmedia permalink for a media list.
+	 *
+	 * @since 4.2.2
+	 *
+	 * @param string  $permalink The rtmedia's permalink.
+	 * @param object  $media     The media in question.
+	 * @param int     $id 		 ID of the media.
+	 */
+
+	return apply_filters( 'get_rtmedia_permalink', $permalink, $media, $id );
 }
 
 function get_rtmedia_user_link( $id ) {

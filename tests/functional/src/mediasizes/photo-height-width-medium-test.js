@@ -12,7 +12,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.MEDIASIZES.MEDIASIZES)
-          .pause(2000)
+          .pause(800)
           .clearValue(data.SELECTORS.MEDIASIZES.PHOTO_MEDIUM_WIDTH)
           .setValue(data.SELECTORS.MEDIASIZES.PHOTO_MEDIUM_WIDTH,'100') //set width size:100
           .clearValue(data.SELECTORS.MEDIASIZES.PHOTO_MEDIUM_HEIGHT)

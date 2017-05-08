@@ -14,7 +14,9 @@ class RTMediaLike extends RTMediaUserInteraction {
 
 	function __construct() {
 		$args = array(
-			'action'     => 'like',
+			'action'                => 'like',
+			'person_label'          => esc_html__( 'person likes this', 'buddypress-media' ),
+			'person_plural_label'   => esc_html__( 'people like this', 'buddypress-media' ),
 			'label'      => esc_html__( 'Like', 'buddypress-media' ),
 			'plural'     => esc_html__( 'Likes', 'buddypress-media' ),
 			'undo_label' => esc_html__( 'Unlike', 'buddypress-media' ),
@@ -31,6 +33,25 @@ class RTMediaLike extends RTMediaUserInteraction {
 		add_action( 'rtmedia_like_button_filter', array( $this, 'like_button_filter_nonce' ), 10, 1 );
 		if ( ! rtmedia_comments_enabled() ) {
 			add_action( 'rtmedia_actions_without_lightbox', array( $this, 'like_button_without_lightbox_filter' ) );
+		}
+
+		add_filter( 'rtmedia_check_enable_disable_like', array( $this, 'rtmedia_check_enable_disable_like' ), 10, 1 );
+	}
+
+
+	/**
+	 * check Likes for media is enabled or not
+	 * @global type $rtmedia
+	 * @param type $enable_like
+	 * @return boolean True if Likes for media is enabled else returns false
+	 */
+	function rtmedia_check_enable_disable_like( $enable_like ) {
+		global $rtmedia;
+		$options = $rtmedia->options;
+		if ( ( isset( $options['general_enableLikes'] ) && '1' == $options['general_enableLikes'] ) || ! isset( $options['general_enableLikes'] ) ) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -108,9 +129,24 @@ class RTMediaLike extends RTMediaUserInteraction {
 			$actions --;
 			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 		}
+
+		$like_html = '<span class="rtmedia-like-counter"></span>';
+		if( $actions > 0  && function_exists( 'rtmedia_who_like_html' ) ) {
+			$like_html = rtmedia_who_like_html( $actions, $this->increase );
+		}
+
+		/* label for "person/people like this" in media popup" */
+		if( 1 === $actions ){
+			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $like_html );
+		} else {
+			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $like_html );
+		}
+
 		if ( $actions < 0 ) {
 			$actions = 0;
 		}
+
+
 
 		$return['count'] = $actions;
 		$this->model->update( array( 'likes' => $actions ), array( 'id' => $this->action_query->id ) );
@@ -223,11 +259,17 @@ class RTMediaLike extends RTMediaUserInteraction {
 	}
 
 	function before_render() {
+		/* is comment media */
+		// $comment_media = rtmedia_is_comment_media( rtmedia_id() );
 		$enable_like = true;
 		$enable_like = apply_filters( 'rtmedia_check_enable_disable_like', $enable_like );
+
+		/* if is comment media then return false */
+		// if ( ! $enable_like || ! empty( $comment_media ) ) {
 		if ( ! $enable_like ) {
 			return false;
 		}
+
 		if ( $this->is_liked() ) {
 			$this->label = $this->undo_label;
 		}

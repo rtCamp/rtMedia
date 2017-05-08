@@ -1,3 +1,6 @@
+acceptance.suite.yml
+
+
 # Codeception Test Suite Configuration
 
 # Suite for WordPress acceptance tests.
@@ -27,3 +30,4 @@ modules:
                 'build': '%TRAVIS_BUILD_NUMBER%'
                 'project': 'rtMedia-core-test-sumeet'
                 'browserstack.local': 'true'
+

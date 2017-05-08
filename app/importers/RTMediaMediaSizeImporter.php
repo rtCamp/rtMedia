@@ -70,7 +70,7 @@ class RTMediaMediaSizeImporter {
 
 	function add_rtmedia_media_size_import_notice() {
 		if ( current_user_can( 'manage_options' ) ) {
-			$this->create_notice( '<p><strong>rtMedia</strong>' . esc_html__( ': Database table structure for rtMedia has been updated. Please ', 'buddypress-media' ) . "<a href='" . esc_url( admin_url( 'admin.php?page=rtmedia-migration-media-size-import&force=true' ) ) . "'>" . esc_html__( 'Click Here', 'buddypress-media' ) . '</a>' . esc_html__( 'to import media sizes. ', 'buddypress-media' ) . "<a href='#' onclick='rtmedia_hide_media_size_import_notice()' style='float:right'>" . esc_html__( 'Hide', 'buddypress-media' ) . '</a>  </p>' );
+			$this->create_notice( '<p><strong>rtMedia</strong>' . esc_html__( ': Database table structure for rtMedia has been updated. Please ', 'buddypress-media' ) . "<a href='" . esc_url( admin_url( 'admin.php?page=rtmedia-migration-media-size-import&force=true' ) ) . "'>" . esc_html__( 'Click Here', 'buddypress-media' ) . '</a>' . esc_html__( ' to import media sizes. ', 'buddypress-media' ) . "<a href='#' onclick='rtmedia_hide_media_size_import_notice()' style='float:right'>" . esc_html__( 'Hide', 'buddypress-media' ) . '</a>  </p>' );
 			?>
 			<script type="text/javascript">
 				function rtmedia_hide_media_size_import_notice() {
@@ -90,6 +90,7 @@ class RTMediaMediaSizeImporter {
 		echo '<div class="' . esc_attr( $type ) . ' rtmedia-media-size-import-error">'
 		     . wp_kses( $message, array(
 				'p' => array(),
+				'a' => array( 'href' => array(), 'onclick' => array(), 'style' => array() ),
 				'strong' => array()
 			   ) )
 		     . '</div>'; // @codingStandardsIgnoreLine

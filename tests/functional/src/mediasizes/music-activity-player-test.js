@@ -10,9 +10,9 @@ module.exports = {
           .maximizeWindow()
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
-          .pause(5000)
+          .pause(1005)
           .click(data.SELECTORS.MEDIASIZES.MEDIASIZES)
-          .pause(2000)
+          .pause(800)
           .clearValue(data.SELECTORS.MEDIASIZES.MUSIC_ACTIVITY_PLAYER_WIDTH)
           .setValue(data.SELECTORS.MEDIASIZES.MUSIC_ACTIVITY_PLAYER_WIDTH,'200') //set size:200
           .click(data.SELECTORS.SUBMIT)
@@ -21,7 +21,7 @@ module.exports = {
   var data = browser.globals;
         browser
             .goToActivity()
-            .pause(5000)
+            .pause(1005)
             .assert.elementPresent("#rtmedia-add-media-button-post-update")
             .setValue('#rtmedia-whts-new-upload-container input[type="file"]', require('path').resolve(data.PATH.TEST_MUSIC)) //enter only music file
             .setValue('#whats-new','testing for Music Player size in activity')

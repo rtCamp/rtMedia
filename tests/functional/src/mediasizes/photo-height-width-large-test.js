@@ -11,7 +11,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.MEDIASIZES.MEDIASIZES)
-          .pause(2000)
+          .pause(800)
           .clearValue(data.SELECTORS.MEDIASIZES.PHOTO_LARGE_WIDTH)
           .setValue(data.SELECTORS.MEDIASIZES.PHOTO_LARGE_WIDTH,'300') //set width size:300
           .clearValue(data.SELECTORS.MEDIASIZES.PHOTO_LARGE_HEIGHT)
@@ -43,7 +43,7 @@ module.exports = {
              .click('.rtm-select-files')
              .setValue('input[type=file]', require('path').resolve(data.PATH.TEST_IMAGE))
              .click('.start-media-upload')
-             .pause(8000)
+             .pause(1008)
              .refresh()
              .pause(1000)
              .click('.rtmedia-list-item .rtmedia-list-item-a .rtmedia-item-thumbnail img')

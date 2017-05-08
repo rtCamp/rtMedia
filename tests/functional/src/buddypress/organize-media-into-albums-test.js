@@ -11,7 +11,7 @@ module.exports = {
           .wplogin(data.URLS.LOGIN,data.TESTADMINUSERNAME,data.TESTADMINPASSWORD)
           .openrtMediaSettings()
           .click(data.SELECTORS.BUDDYPRESS.BUDDYPRESS)
-          .pause(2000)
+          .pause(800)
           //select checkbox switch
           .getAttribute(data.SELECTORS.BUDDYPRESS.ENABLE_MEDIA_ALBUM, "checked", function(result) {
               if(result.value){
