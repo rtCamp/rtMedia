@@ -57,8 +57,8 @@ before_script:
 - export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
 
 script:
-- wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/
 - wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/
+- wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/
 #- wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/
 #- wpcept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/
 #- wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/
