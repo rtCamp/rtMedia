@@ -23,8 +23,8 @@
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
-    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings' );
-    $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings/#rtmedia-privacy' );
+  //  $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
     $settings->verifyEnableStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
     $settings->verifySelectOption( ConstantsPage::$defaultPrivacyLabel, ConstantsPage::$loggedInUsersRadioButton );
