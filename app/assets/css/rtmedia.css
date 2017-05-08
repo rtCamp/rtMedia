@@ -165,7 +165,6 @@ body.media.buddypress {
 }
 .rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-count {
   margin: 0;
-  float: right;
 }
 
 .rtmedia-list.rtmedia-list {
@@ -1292,7 +1291,7 @@ img.mfp-img {
 }
 .rtm-item-actions > div, .rtm-item-actions > form {
   float: left;
-  margin: 0 2px;
+  margin: 0 4px 0 0;
   padding: 7px 0;
   position: relative;
 }
