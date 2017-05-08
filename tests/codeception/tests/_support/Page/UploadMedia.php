@@ -145,9 +145,11 @@ class UploadMedia
         self::addStatus();
 
         $I->fillfield( self::$whatIsNewTextarea, $status );
+        $I->click( self::$whatIsNewTextarea );
         $I->seeElement( ConstantsPage::$privacyDropdown );
-
+        $I->wait( 3 );
         $I->click( self::$postUpdateButton );
+        $I->wait( 3 );
         $I->reloadPage();
 
     }
