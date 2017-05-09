@@ -25,7 +25,8 @@
     $I->checkOption( ConstantsPage::$enableUserGrpCheckbox );
     $I->seeElement( ConstantsPage::$saveBPSettings );
     $I->click( ConstantsPage::$saveBPSettings );
-    $I->waitForElement( ConstantsPage::$grpTableRow, 10);
+    // $I->waitForElement( ConstantsPage::$grpTableRow, 10);
+    $I->wait( 5 );
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoGroup();
