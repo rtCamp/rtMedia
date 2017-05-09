@@ -3733,13 +3733,17 @@ function rtmedia_get_comments_details_for_media_id( $media_id ){
 
 
 /**
-  * Is comment allow in Commented Media.
- **/
+ * Check if comment are allow in Media that are being add in the comment section.
+ *
+ * @since  4.3
+ *
+ * @return boolean $value True if enable else False.
+ */
 function rtmedia_check_comment_in_commented_media_allow() {
 	$value = false;
 	global $rtmedia;
 	/* variable */
-	if( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+	if ( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 === $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) {
 		$value = true;
 	}
 	return $value;
@@ -3749,8 +3753,12 @@ function rtmedia_check_comment_in_commented_media_allow() {
 
 
 /**
-	* Is comment allow in Commented Media.
- **/
+ * Check if comment in media is allow or not.
+ *
+ * @since  4.3
+ *
+ * @return boolean $value True if enable else False.
+ */
 function rtmedia_check_comment_media_allow() {
 	$value = false;
 	global $rtmedia;
@@ -3934,3 +3942,18 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 	}
 }
 
+
+/**
+ *
+ * Will Check that if the BuddyPress plugin is activated or not.
+ *
+ * @return bool True if BuddyPress is activated or else False.
+ */
+function rtm_is_buddypress_activate() {
+	// check if is_plugin_active exists or not.
+	if ( ! function_exists( 'is_plugin_active' ) ) {
+		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	}
+
+	return is_plugin_active( 'buddypress/bp-loader.php' );
+}
