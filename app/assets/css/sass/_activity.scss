@@ -141,12 +141,20 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 	}
 }
 
+.rtmedia-uploader-div {
+	opacity: 0;
+	display: none;
+	visibility: hidden;
+}
 
+#whats-new-options {
+	opacity: 0;
+	display: none;
+}
 
 a.rtmedia-comment-link{
 	display: none;
 }
-
 
 a.rtmedia-comment-link.rtmedia-comments-link{
 	display: initial;

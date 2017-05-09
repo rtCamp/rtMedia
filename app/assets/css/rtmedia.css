@@ -159,6 +159,13 @@ body.media.buddypress {
 .rtmedia-container *, .rtmedia-container *:before, .rtmedia-container *:after {
   box-sizing: inherit;
 }
+.rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-title,
+.rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-count {
+  display: inline-block;
+}
+.rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-count {
+  margin: 0;
+}
 
 .rtmedia-list.rtmedia-list {
   list-style: none;
