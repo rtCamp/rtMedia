@@ -37,6 +37,7 @@
 
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->postStatus( $status );
+    $I->wait( 5 );
 
     $logout = new LogoutPage( $I );
     $logout->logout();

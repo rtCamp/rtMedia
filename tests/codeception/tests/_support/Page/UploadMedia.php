@@ -143,15 +143,16 @@ class UploadMedia
         $I = $this->tester;
 
         self::addStatus();
-
+        $I->wait( 5 );
         $I->fillfield( self::$whatIsNewTextarea, $status );
+        $I->wait( 5 );
         $I->click( self::$whatIsNewTextarea );
         $I->wait( 5 );
         $I->canSeeElement( ConstantsPage::$privacyDropdown );
         $I->wait( 5 );
         $I->click( self::$postUpdateButton );
-        $I->wait( 5 );
-        $I->reloadPage();
+        $I->wait( 7 );
+//        $I->reloadPage();
 
     }
 
