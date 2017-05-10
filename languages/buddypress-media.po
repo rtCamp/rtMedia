@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.3.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-05-08 05:21:12+00:00\n"
+"POT-Creation-Date: 2017-05-10 12:20:01+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2807,7 +2807,7 @@ msgstr ""
 msgid "Default Privacy"
 msgstr ""
 
-#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:259
+#: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:256
 msgid "You do not have sufficient privileges to view this gallery"
 msgstr ""
 
@@ -2939,10 +2939,6 @@ msgstr ""
 
 #: app/main/controllers/template/rtmedia-actions.php:847
 msgid "rtMedia Updates"
-msgstr ""
-
-#: app/main/controllers/template/rtmedia-actions.php:995
-msgid "Total media:"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-ajax-actions.php:88

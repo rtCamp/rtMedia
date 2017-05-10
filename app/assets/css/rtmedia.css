@@ -159,13 +159,6 @@ body.media.buddypress {
 .rtmedia-container *, .rtmedia-container *:before, .rtmedia-container *:after {
   box-sizing: inherit;
 }
-.rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-title,
-.rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-count {
-  display: inline-block;
-}
-.rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-count {
-  margin: 0;
-}
 
 .rtmedia-list.rtmedia-list {
   list-style: none;
@@ -1638,6 +1631,23 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 }
 #rtmedia_show_all_comment:hover {
   text-decoration: underline;
+}
+
+.rtmedia-uploader-div {
+  opacity: 0;
+  display: none;
+  visibility: hidden;
+}
+
+.rt_media_comment_form .rtmedia-uploader-div {
+  opacity: 1;
+  display: block;
+  visibility: visible;
+}
+
+#whats-new-options {
+  opacity: 0;
+  display: none;
 }
 
 a.rtmedia-comment-link {
