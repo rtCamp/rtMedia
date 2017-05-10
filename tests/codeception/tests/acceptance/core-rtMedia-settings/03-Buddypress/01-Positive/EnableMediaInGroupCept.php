@@ -5,7 +5,6 @@
 */
 
     use Page\Login as LoginPage;
-    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
@@ -26,7 +25,8 @@
     $I->checkOption( ConstantsPage::$enableUserGrpCheckbox );
     $I->seeElement( ConstantsPage::$saveBPSettings );
     $I->click( ConstantsPage::$saveBPSettings );
-    $I->waitForElement( ConstantsPage::$grpTableRow, 10);
+    // $I->waitForElement( ConstantsPage::$grpTableRow, 10);
+    $I->wait( 5 );
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoGroup();
@@ -46,8 +46,5 @@
         $buddypress->checkMediaInGroup();
         $I->seeElement( ConstantsPage::$mediaLinkOnGroup );
     }
-
-    $logout = new LogoutPage( $I );
-    $logout->logout();
 
 ?>

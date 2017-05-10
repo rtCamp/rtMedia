@@ -5,7 +5,6 @@
 */
 
     use Page\Login as LoginPage;
-    use Page\Logout as LogoutPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
@@ -48,8 +47,5 @@
         $I->seeElementInDOM( ConstantsPage::$masonryLayout );
 
     }
-
-    $logout = new LogoutPage( $I );
-    $logout->logout();
 
 ?>
