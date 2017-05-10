@@ -9,6 +9,7 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\Logout as LogoutPage;
 
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
 
@@ -34,5 +35,7 @@
 
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

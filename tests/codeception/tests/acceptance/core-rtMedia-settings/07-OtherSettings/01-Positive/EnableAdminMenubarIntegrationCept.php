@@ -7,6 +7,7 @@
     use Page\Login as LoginPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
+    use Page\Logout as LogoutPage;
 
     $scrollToTab = ConstantsPage::$mediaSizesTab;
     $scrollPos = ConstantsPage::$displayTab;
@@ -23,4 +24,6 @@
 
     $I->amOnPage( '/' );
     $I->seeElement( ConstantsPage::$rtMediaAdminbar );
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 ?>

@@ -8,6 +8,7 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\Logout as LogoutPage;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'Set custom css code when defulat rtMedia style is disabled.' );
@@ -24,4 +25,6 @@
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
     $I->seeInPageSource( ConstantsPage::$customCssValue );
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 ?>

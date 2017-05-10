@@ -9,6 +9,7 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\Logout as LogoutPage;
 
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
 
@@ -32,5 +33,7 @@
     $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
     echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorActivity, 'style' );
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

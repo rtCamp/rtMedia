@@ -7,6 +7,7 @@
     use Page\Login as LoginPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
+    use Page\Logout as LogoutPage;
 
     $scrollToTab = ConstantsPage::$mediaSizesTab;
 
@@ -24,5 +25,7 @@
 
     $I->amOnPage('/');
     $I->seeElement( ConstantsPage::$footerLink );
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

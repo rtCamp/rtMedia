@@ -8,6 +8,7 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\Logout as LogoutPage;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'set custom css style when default rtmedia style is enabled.' );
@@ -27,5 +28,7 @@
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
     $I->seeInSource( ConstantsPage::$customCssValue );
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 
 ?>

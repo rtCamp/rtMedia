@@ -7,6 +7,7 @@ use Page\DashboardSettings as DashboardSettingsPage;
 use Page\UploadMedia as UploadMediaPage;
 use Page\Constants as ConstantsPage;
 use Page\BuddypressSettings as BuddypressSettingsPage;
+use Page\Logout as LogoutPage;
 $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
 $I = new AcceptanceTester($scenario);
 $I->wantTo( 'To set photo large height and width when Crop is enabled.' );
@@ -28,4 +29,7 @@ $uploadmedia->fisrtThumbnailMedia();
 echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
 echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
 $I->reloadPage();
+$I->wait(5);
+$logout = new LogoutPage( $I );
+$logout->logout();
 ?>

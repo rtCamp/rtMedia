@@ -9,6 +9,7 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\Logout as LogoutPage;
 
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
     $scrollPos = ConstantsPage::$customCssTab;
@@ -30,5 +31,6 @@
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName );
 
     echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorActivity, 'style' );
-
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 ?>
