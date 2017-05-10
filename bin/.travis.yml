@@ -8,6 +8,10 @@ php:
 env:
 - TEST_SUITE=01-Types
 - TEST_SUITE=02-Display
+- TEST_SUITE=03-Buddypress
+- TEST_SUITE=04-MediaSizes
+- TEST_SUITE=06-CustomCss
+- TEST_SUITE=07-OtherSettings
 
 addons:
   browserstack:
@@ -55,26 +59,18 @@ script:
 
 - if [ "$TEST_SUITE" = "01-Types" ]; then wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/; fi
 - if [ "$TEST_SUITE" = "01-Types" ]; then wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/; fi
+
+- if [ "$TEST_SUITE" = "07-OtherSettings" ]; then wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/; fi
+- if [ "$TEST_SUITE" = "07-OtherSettings" ]; then wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/; fi
+
 - if [ "$TEST_SUITE" = "02-Display" ]; then wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/; fi
 - if [ "$TEST_SUITE" = "02-Display" ]; then wpcept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/; fi
 
-# - wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/
-# - wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/
-#
-# - wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/
-# - wpcept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/
-#
-# - wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/
-# - wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/
-#
-# - wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/
-# - wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/02-Negative/
-#
-# - wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/02-Negative/
-# - wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/
-#
-# - wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/
-# - wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/
+- if [ "$TEST_SUITE" = "03-Buddypress" ]; then wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/; fi
+- if [ "$TEST_SUITE" = "03-Buddypress" ]; then wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/; fi
 
-# - wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/01-Positive/
-# - wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/02-Negative/
+- if [ "$TEST_SUITE" = "04-MediaSizes" ]; then wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Positive/; fi
+- if [ "$TEST_SUITE" = "04-MediaSizes" ]; then wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/02-Negative/; fi
+
+- if [ "$TEST_SUITE" = "06-CustomCss" ]; then wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/02-Negative/; fi
+- if [ "$TEST_SUITE" = "06-CustomCss" ]; then wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/; fi
