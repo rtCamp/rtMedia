@@ -14,6 +14,17 @@
 			box-sizing: inherit;
 		}
 	}
+
+	.rtm-gallery-shortcode-title-container{
+		.rtm-gallery-title,
+		.rtm-gallery-count{
+			display: inline-block;
+		}
+
+		.rtm-gallery-count{
+			margin: 0;
+		}
+	}
 }
 
 .rtmedia-list {

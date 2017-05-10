@@ -711,7 +711,7 @@ class RTMediaMedia {
 		$activity         = new RTMediaActivity( $media->id, $media->privacy, $activity_text );
 		$activity_content = $activity->create_activity_html();
 		$user             = get_userdata( $media->media_author );
-		$username         = '<a href="' . esc_url( get_rtmedia_user_link( $media->media_author ) ) . '">' . esc_html( $user->user_nicename ) . '</a>';
+		$username         = '<a href="' . esc_url( get_rtmedia_user_link( $media->media_author ) ) . '">' . esc_html( $user->display_name ) . '</a>';
 		$count            = count( $id );
 		$media_const      = 'RTMEDIA_' . strtoupper( $media->media_type );
 		if ( $count > 1 ) {
@@ -723,7 +723,7 @@ class RTMediaMedia {
 		$media_str = constant( $media_const );
 
 		$action        = sprintf( ( 1 === $count ) ? esc_html__( '%1$s added a %2$s', 'buddypress-media' ) : esc_html__( '%1$s added %4$d %3$s', 'buddypress-media' ), $username, $media->media_type, $media_str, $count );
-		$action        = apply_filters( 'rtmedia_buddypress_action_text_fitler', $action, $username, $count, $user->user_nicename, $media->media_type );
+		$action        = apply_filters( 'rtmedia_buddypress_action_text_fitler', $action, $username, $count, $user->display_name, $media->media_type );
 		$activity_args = array(
 			'user_id'      => $user->ID,
 			'action'       => $action,

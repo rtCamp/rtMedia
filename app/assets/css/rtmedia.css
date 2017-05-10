@@ -159,6 +159,13 @@ body.media.buddypress {
 .rtmedia-container *, .rtmedia-container *:before, .rtmedia-container *:after {
   box-sizing: inherit;
 }
+.rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-title,
+.rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-count {
+  display: inline-block;
+}
+.rtmedia-container .rtm-gallery-shortcode-title-container .rtm-gallery-count {
+  margin: 0;
+}
 
 .rtmedia-list.rtmedia-list {
   list-style: none;
@@ -1284,7 +1291,7 @@ img.mfp-img {
 }
 .rtm-item-actions > div, .rtm-item-actions > form {
   float: left;
-  margin: 0 2px;
+  margin: 0 4px 0 0;
   padding: 7px 0;
   position: relative;
 }
@@ -2547,8 +2554,8 @@ a.rtmedia-upload-media-link {
   color: inherit;
 }
 
-#main #buddypress #item-body {
-  padding: 0 0 30px 20px;
+#buddypress #item-body {
+  padding: 0 0 20px 20px;
 }
 #buddypress .mejs-controls button {
   padding: 4px 8px;
