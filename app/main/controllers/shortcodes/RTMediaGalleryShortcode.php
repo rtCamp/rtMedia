@@ -192,9 +192,6 @@ class RTMediaGalleryShortcode {
 			}// End if().
 
 			$rtmedia_shortcode_attr = $attr['attr'];
-			if ( isset( $attr['attr'] ) && isset( $attr['attr']['show_count'] ) ) {
-				unset( $attr['attr']['show_count'] );
-			}
 
 			// Set template according to media type
 			if ( is_rtmedia_album_gallery() || ( isset( $attr['attr']['media_type'] ) && 'album' === $attr['attr']['media_type'] ) ) {
