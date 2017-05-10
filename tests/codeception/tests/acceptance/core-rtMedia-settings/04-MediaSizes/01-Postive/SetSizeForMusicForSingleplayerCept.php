@@ -36,6 +36,7 @@
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
     $uploadmedia->fisrtThumbnailMedia();
+    $I->wait( 5 );
 
     echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorSingle ,'style' );
 
