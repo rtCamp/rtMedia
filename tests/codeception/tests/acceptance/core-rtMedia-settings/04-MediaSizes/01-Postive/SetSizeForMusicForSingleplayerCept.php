@@ -12,12 +12,13 @@
 
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
     $scrollPos = ConstantsPage::$customCssTab;
+    $saveSession = true;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To set width of single music player.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );

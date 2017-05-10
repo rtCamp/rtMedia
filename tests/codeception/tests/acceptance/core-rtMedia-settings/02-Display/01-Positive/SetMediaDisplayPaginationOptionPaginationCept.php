@@ -11,11 +11,13 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
     use Page\UploadMedia as UploadMediaPage;
 
+    $saveSession = true;
+
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To check if Load More - Media display pagination option is enabled' );
 
     $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl );

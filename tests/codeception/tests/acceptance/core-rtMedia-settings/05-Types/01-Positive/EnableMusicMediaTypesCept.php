@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario :Disable upload for music media types.
+* Scenario :Allow upload for music media types.
 */
     use Page\Login as LoginPage;
     use Page\Constants as ConstantsPage;
@@ -9,15 +9,17 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
+    $saveSession = true;
+
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'Disable upload for music media types' );
+    $I->wantTo( 'Allow upload for music media types' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$typesTab, ConstantsPage::$typesTabUrl );
-    $settings->verifyDisableStatus( ConstantsPage::$musicLabel, ConstantsPage::$musicCheckbox );
+    $settings->verifyEnableStatus( ConstantsPage::$musicLabel, ConstantsPage::$musicCheckbox );
 
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
     $I->waitForElement( ConstantsPage::$displayTab , 10);
@@ -29,7 +31,7 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName );
 
-    $I->dontSeeElementInDOM( 'li.rtmedia-list-item.media-type-music' );
-    echo nl2br( "Audio is not uploaded.. \n" );
+    $I->seeElementInDOM( 'li.rtmedia-list-item.media-type-music' );
+    echo nl2br( "Audio is uploaded.. \n" );
 
 ?>

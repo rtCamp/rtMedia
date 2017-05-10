@@ -9,11 +9,13 @@
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
+    $saveSession = true;
+
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'set custom css style when default rtmedia style is enabled.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$customCssTab, ConstantsPage::$customCssTabUrl );

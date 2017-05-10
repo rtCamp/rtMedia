@@ -36,12 +36,12 @@ class Login
 
     }
 
-    public function loginAsAdmin( $wpUserName, $wpPassword )
+    public function loginAsAdmin( $wpUserName, $wpPassword, $saveSession )
     {
         $I = $this->tester;
 
         $I->amOnPage( '/wp-admin' );
-        $I->wait( 10 );
+        $I->wait( 5 );
 
         // Will load the session saved in saveSessionSnapshot().
         if ($I->loadSessionSnapshot('login')) {
@@ -56,9 +56,14 @@ class Login
 
         $I->seeElement( self::$wpSubmitButton );
         $I->click( self::$wpSubmitButton );
-        $I->wait( 10 );
+        $I->wait( 5 );
 
-        $I->saveSessionSnapshot('login'); //Saving session
+        if( $saveSession ){
+            $I->saveSessionSnapshot('login'); //Saving session
+            echo "Session saved!";
+        }else{
+            echo "Session not saved!";
+        }
 
         $I->seeElement( self::$dashBoardMenu );
 

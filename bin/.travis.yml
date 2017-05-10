@@ -7,10 +7,13 @@ php:
 
 env:
 
+- TEST_SUITE=01-Privacy
 - TEST_SUITE=02-Display
 - TEST_SUITE=03-Buddypress
 - TEST_SUITE=04-MediaSizes
+- TEST_SUITE=05-Types
 - TEST_SUITE=06-CustomCss
+- TEST_SUITE=07-OtherSettings
 
 addons:
   browserstack:
@@ -56,10 +59,16 @@ before_script:
 
 script:
 
+- if [ "$TEST_SUITE" = "01-Privacy" ]; then wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/; fi
+
 - if [ "$TEST_SUITE" = "02-Display" ]; then wpcept run tests/acceptance/core-rtMedia-settings/02-Display/; fi
 
 - if [ "$TEST_SUITE" = "03-Buddypress" ]; then wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/; fi
 
 - if [ "$TEST_SUITE" = "04-MediaSizes" ]; then wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/; fi
 
+- if [ "$TEST_SUITE" = "05-Types" ]; then wpcept run tests/acceptance/core-rtMedia-settings/05-Types/; fi
+
 - if [ "$TEST_SUITE" = "06-CustomCss" ]; then wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/; fi
+
+- if [ "$TEST_SUITE" = "07-OtherSettings" ]; then wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/; fi

@@ -12,12 +12,13 @@
 
     $scrollPos = ConstantsPage::$customCssTab;
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
+    $saveSession = true;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To set the number media per page' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );

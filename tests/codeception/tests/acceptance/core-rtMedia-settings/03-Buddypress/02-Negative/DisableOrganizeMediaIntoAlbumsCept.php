@@ -9,11 +9,13 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
+    $saveSession = true;
+
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'Disable organize media into albums.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
