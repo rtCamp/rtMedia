@@ -312,6 +312,8 @@ jQuery( 'document' ).ready( function( $ ) {
 		jQuery( '.rtmedia-list-item' ).addClass( 'bulk-selected' );
 	} );
 
+
+
 	jQuery( '.rtmedia-container' ).on( 'click', '.unselect-all', function( e ) {
 		jQuery( this ).toggleClass( 'select-all' ).toggleClass( 'unselect-all' );
 		jQuery( this ).attr( 'title', rtmedia_select_all_visible );

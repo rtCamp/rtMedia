@@ -1634,6 +1634,23 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 }
 
 a.rtmedia-comment-link {
+  opacity: 0;
+  display: none;
+  visibility: hidden;
+}
+
+.rt_media_comment_form .rtmedia-uploader-div {
+  opacity: 1;
+  display: block;
+  visibility: visible;
+}
+
+#whats-new-options {
+  opacity: 0;
+  display: none;
+}
+
+a.rtmedia-comment-link {
   display: none;
 }
 

@@ -124,3 +124,11 @@ function is_rtmedia_vip_plugin() {
 /*
  * Look Ma! Very few includes! Next File: /app/main/RTMedia.php
  */
+
+/**
+ * rtmedia_plugin_deactivate Do stuff on plugin deactivation
+ */
+function rtmedia_plugin_deactivate() {
+	update_option( 'is_permalink_reset', 'no' );
+}
+register_deactivation_hook( __FILE__, 'rtmedia_plugin_deactivate' );

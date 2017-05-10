@@ -852,6 +852,18 @@ function rtmedia_activity_register_activity_actions_callback() {
 add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_activity_actions_callback' );
 
 /**
+ * rtmedia_set_permalink Re-save premalink settings on plugin activation or plugin updates
+ */
+function rtmedia_set_permalink() {
+	$is_permalink_reset = get_option( 'is_permalink_reset' );
+	if ( '' === $is_permalink_reset || 'no' === $is_permalink_reset ) {
+		flush_rewrite_rules();
+		update_option( 'is_permalink_reset', 'yes' );
+	}
+}
+add_action( 'admin_init', 'rtmedia_set_permalink' );
+
+/**
  *
  * rtmedia_override_canonical Redirect homepage as per parameters passed to query string.
  * This is added for a page set as a "Front page" in which gallery short-code is there,
