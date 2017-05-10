@@ -4,6 +4,7 @@
 * Scenario : To check direct media upload.
 */
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\Constants as ConstantsPage;
@@ -24,5 +25,6 @@
 
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaDirectly( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
-
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 ?>

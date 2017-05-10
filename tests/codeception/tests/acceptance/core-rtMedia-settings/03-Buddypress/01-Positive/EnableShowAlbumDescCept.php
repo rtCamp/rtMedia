@@ -5,6 +5,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
@@ -29,4 +30,6 @@
     $buddypress->backToAlbumPage();
 
     $I->seeElement( ConstantsPage::$albumDescSelector );
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 ?>

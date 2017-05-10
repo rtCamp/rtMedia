@@ -4,6 +4,7 @@
 * Scenario :Disable upload for photo media types.
 */
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
@@ -31,5 +32,6 @@
 
     $I->dontSeeElementInDOM( 'li.rtmedia-list-item.media-type-photo' );
     echo nl2br( "Photo is not uploaded.. \n" );
-
+    $logout = new LogoutPage( $I );
+    $logout->logout();
 ?>

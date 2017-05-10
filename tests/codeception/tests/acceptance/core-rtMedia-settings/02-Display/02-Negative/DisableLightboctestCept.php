@@ -5,6 +5,7 @@
 */
 
     use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
     use Page\Constants as ConstantsPage;
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
@@ -49,7 +50,7 @@
 
     }
 
-    // $logout = new LogoutPage( $I );
-    // $logout->logout();
+     $logout = new LogoutPage( $I );
+     $logout->logout();
 
 ?>
