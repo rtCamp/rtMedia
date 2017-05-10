@@ -31,10 +31,10 @@ class Login
         $I = $this->tester;
         $I->amOnPage( '/wp-admin' );
         $I->wait( 10 );
-        // Will load the session saved in saveSessionSnapshot().
-        if ($I->loadSessionSnapshot('login')) {
-            return;
-        }
+//        // Will load the session saved in saveSessionSnapshot().
+//        if ($I->loadSessionSnapshot('login')) {
+//            return;
+//        }
         $I->seeElement( self::$wpUserNameField );
         $I->fillfield( self::$wpUserNameField,$wpUserName );
         $I->seeElement( self::$wpPasswordField );
@@ -42,7 +42,7 @@ class Login
         $I->seeElement( self::$wpSubmitButton );
         $I->click( self::$wpSubmitButton );
         $I->wait( 10 );
-        $I->saveSessionSnapshot('login'); //Saving session
+//        $I->saveSessionSnapshot('login'); //Saving session
         $I->seeElement( self::$dashBoardMenu );
         $I->maximizeWindow();
     }
