@@ -8,10 +8,10 @@ php:
 env:
 
 # - TEST_SUITE=01-Privacy
-# - TEST_SUITE=02-DBM
-- TEST_SUITE=03-Types
-- TEST_SUITE=04-CustomCss
-- TEST_SUITE=05-OtherSettings
+- TEST_SUITE=02-DBM
+# - TEST_SUITE=03-Types
+# - TEST_SUITE=04-CustomCss
+# - TEST_SUITE=05-OtherSettings
 
 addons:
   browserstack:
@@ -59,15 +59,15 @@ script:
 
 # - if [ "$TEST_SUITE" = "01-Privacy" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/; fi
 #
-# - if [ "$TEST_SUITE" = "02-DBM" ]; then
-# - travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/02-Display/;
-# - travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/;
-# - travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/;
-# - fi
+- if [ "$TEST_SUITE" = "02-DBM" ]; then
+- travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/02-Display/;
+- travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/;
+- travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/;
+- fi
 
-- if [ "$TEST_SUITE" = "05-Types" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/05-Types/; fi
-- if [ "$TEST_SUITE" = "06-CustomCss" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/; fi
-- if [ "$TEST_SUITE" = "07-OtherSettings" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/; fi
+# - if [ "$TEST_SUITE" = "05-Types" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/05-Types/; fi
+# - if [ "$TEST_SUITE" = "06-CustomCss" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/; fi
+# - if [ "$TEST_SUITE" = "07-OtherSettings" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/; fi
 
 # - wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/
 # - wpcept run tests/acceptance/core-rtMedia-settings/02-Display/
