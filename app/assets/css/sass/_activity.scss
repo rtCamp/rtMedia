@@ -147,7 +147,7 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 	visibility: hidden;
 }
 
-.rt_media_comment_form .rtmedia-uploader-div {
+.ac-form .rtmedia-uploader-div, .rt_media_comment_form .rtmedia-uploader-div {
   opacity: 1;
   display: block;
   visibility: visible;
