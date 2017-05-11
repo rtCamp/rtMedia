@@ -141,7 +141,8 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 	}
 }
 
-.rtmedia-uploader-div {
+
+a.rtmedia-comment-link{
 	opacity: 0;
 	display: none;
 	visibility: hidden;
@@ -164,4 +165,15 @@ a.rtmedia-comment-link{
 
 a.rtmedia-comment-link.rtmedia-comments-link{
 	display: initial;
+}
+
+.rtmedia-uploader-div {
+	opacity: 0;
+	display: none;
+	visibility: hidden;
+}
+
+#whats-new-options {
+	opacity: 0;
+	display: none;
 }

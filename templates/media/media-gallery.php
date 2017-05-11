@@ -38,9 +38,7 @@ $rand_id = rand( 0, 1000 );
 				}
 				?>
 			</h2>
-
 			<?php do_action( 'rtmedia_gallery_after_title' ); ?>
-
 			<div id="rtm-media-options" class="rtm-media-options">
 				<?php do_action( 'rtmedia_media_gallery_actions' ); ?>
 			</div>
