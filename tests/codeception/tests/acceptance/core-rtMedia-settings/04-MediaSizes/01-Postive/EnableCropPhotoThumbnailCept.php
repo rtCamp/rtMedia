@@ -22,9 +22,9 @@
     $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
     $settings->setMediaSize( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailWidthTextbox, ConstantsPage::$thumbnailWidth, ConstantsPage::$thumbnailHeightTextbox, ConstantsPage::$thumbnailHeight );
 
-    $I->scrollTo( ConstantsPage::$topSaveButton );
-
-    $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailCropCheckbox );
+    // $I->scrollTo( ConstantsPage::$topSaveButton );
+    //
+    // $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailCropCheckbox );
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia( ConstantsPage::$userName );

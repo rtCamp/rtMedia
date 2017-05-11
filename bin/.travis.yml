@@ -5,11 +5,6 @@ language:
 php:
     - 5.6.4
 
-env:
-
-# - TEST_SUITE=display
-# - TEST_SUITE=buddypress
-
 addons:
   browserstack:
     username: rtcamp2
@@ -54,19 +49,9 @@ before_script:
 
 script:
 
-# - if [ "$TEST_SUITE" = "privacy" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/; fi
-# - if [ "$TEST_SUITE" = "display" ]; then wpcept run tests/acceptance/core-rtMedia-settings/02-Display/; fi
-# - if [ "$TEST_SUITE" = "buddpyress" ]; then wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/; fi
-# - if [ "$TEST_SUITE" = "mediasize" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/; fi
-# - if [ "$TEST_SUITE" = "types" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/05-Types/; fi
-
-# - if [ "$TEST_SUITE" = "06-CustomCss" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/; fi
-# - if [ "$TEST_SUITE" = "07-OtherSettings" ]; then travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/; fi
-
-# - wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/
-- wpcept run tests/acceptance/core-rtMedia-settings/02-Display/
-- travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/
-- travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/
-- travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/05-Types/
-- travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/
-- travis_wait 20 wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/
+- wpcept run tests/acceptance/core-rtMedia-settings/02-Display/ --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/ --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/ --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/05-Types/ --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/ --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/ --steps

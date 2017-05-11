@@ -22,9 +22,9 @@
     $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
     $settings->setMediaSize( ConstantsPage::$photoMediumLabel, ConstantsPage::$mediumWidthTextbox, ConstantsPage::$mediumWidth, ConstantsPage::$mediumHeightTextbox, ConstantsPage::$mediummHeight );
 
-    $I->scrollTo( ConstantsPage::$topSaveButton );
-
-    $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$mediumCropCheckbox );
+    // $I->scrollTo( ConstantsPage::$topSaveButton );
+    //
+    // $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$mediumCropCheckbox );
 
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
     $I->wait( 5 );
