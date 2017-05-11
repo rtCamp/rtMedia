@@ -147,7 +147,7 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
  * Attach media button issue in comments for IOS devices
  * Inconsistent name display in the Activity stream
- * Media attachment button under rtMedia comment section issue
+ * Media attachment button issue under rtMedia comment section
  * Set as Album Cover button UI issue
  * rtMedia action button alignment issue on the single media page
  * Improvise comment media admin settings

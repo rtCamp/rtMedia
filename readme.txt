@@ -7,7 +7,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 4.7.2
-Stable tag: 4.3.1
+Stable tag: 4.3.2
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -148,7 +148,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
  * Attach media button issue in comments for IOS devices
  * Inconsistent name display in the Activity stream
- * Media attachment button under rtMedia comment section issue
+ * Media attachment button issue under rtMedia comment section
  * Set as Album Cover button UI issue
  * rtMedia action button alignment issue on the single media page
  * Improvise comment media admin settings
@@ -1352,7 +1352,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.3.2 =
-Now set icon for like/dislike text using a simple filter along with other bugs fixed. Please update/re-save the permalinks after the plugin update.
+Now set icon for like/dislike text using a simple filter. It also includes some bug fixes. Please update/re-save the permalinks after the plugin update.
 
 == Sponsors ==
 
