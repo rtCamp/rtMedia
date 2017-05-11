@@ -23,7 +23,7 @@ class Login
         $I->fillField( self::$userNameField, $name );
         $I->fillField( self::$passwordField, $password );
         $I->click( self::$loginButton );
-        $I->seeInTitle( self::$titleTag );
+        //$I->seeInTitle( self::$titleTag );
         return $this;
     }
     public function loginAsAdmin( $wpUserName, $wpPassword )
@@ -36,14 +36,14 @@ class Login
 //            return;
 //        }
         $I->seeElement( self::$wpUserNameField );
-        $I->fillfield( self::$wpUserNameField,$wpUserName );
+        $I->fillField( self::$wpUserNameField,$wpUserName );
         $I->seeElement( self::$wpPasswordField );
-        $I->fillfield( self::$wpPasswordField, $wpPassword );
+        $I->fillField( self::$wpPasswordField, $wpPassword );
         $I->seeElement( self::$wpSubmitButton );
         $I->click( self::$wpSubmitButton );
         $I->wait( 10 );
 //        $I->saveSessionSnapshot('login'); //Saving session
-        $I->seeElement( self::$dashBoardMenu );
+        $I->canSeeElement( self::$dashBoardMenu );
         $I->maximizeWindow();
     }
 }

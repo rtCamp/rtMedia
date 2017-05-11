@@ -15,6 +15,7 @@
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To set default privacy with private option' );
+    $I->amOnPage('/');
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );

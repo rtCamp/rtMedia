@@ -169,7 +169,7 @@ class UploadMedia
         $I->click( self::$whatIsNewTextarea );
         $I->wait(10);
         $I->canSeeElement( self::$mediaButtonOnActivity );
-        $I->wait(2);
+        $I->wait(10);
         $I->attachFile( self::$uploadFromActivity, $mediaFile );
         $I->wait( 10 );
 
