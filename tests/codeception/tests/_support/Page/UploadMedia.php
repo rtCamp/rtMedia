@@ -167,9 +167,9 @@ class UploadMedia
 
         $I->fillfield( self::$whatIsNewTextarea, "test from activity stream" );
         $I->click( self::$whatIsNewTextarea );
-        $I->wait(10);
+        $I->waitForElementVisible(self::$mediaButtonOnActivity, 30);
         $I->canSeeElement( self::$mediaButtonOnActivity );
-        $I->wait(10);
+
         $I->attachFile( self::$uploadFromActivity, $mediaFile );
         $I->wait( 10 );
 
@@ -215,7 +215,7 @@ class UploadMedia
     public function fisrtThumbnailMedia(){
 
         $I = $this->tester;
-
+        $I->waitForElementVisible(self::$firstChild, 30);
         $I->click( self::$firstChild );
         $I->wait( 10 );
     }
