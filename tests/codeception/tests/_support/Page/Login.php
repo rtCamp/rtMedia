@@ -45,7 +45,9 @@ class Login
 
         // Will load the session saved in saveSessionSnapshot().
         if ( $I->loadSessionSnapshot('login') ) {
-           return;
+            $I->reloadPage();
+            echo "skipping login steps";
+            return;
         }
 
         $I->seeElement( self::$wpUserNameField );
