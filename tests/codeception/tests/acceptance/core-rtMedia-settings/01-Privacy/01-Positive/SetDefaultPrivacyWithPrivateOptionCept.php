@@ -12,13 +12,12 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $status = 'Private Status';
-    $saveSession = false;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To set default privacy with private option' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, ConstantsPage::$saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );

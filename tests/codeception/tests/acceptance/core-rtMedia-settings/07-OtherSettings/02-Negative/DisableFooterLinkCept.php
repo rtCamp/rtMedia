@@ -9,13 +9,12 @@
     use Page\Constants as ConstantsPage;
 
     $scrollToTab = ConstantsPage::$mediaSizesTab;
-    $saveSession = true;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To check if rtMedia footer link is disabled.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl, $scrollToTab );

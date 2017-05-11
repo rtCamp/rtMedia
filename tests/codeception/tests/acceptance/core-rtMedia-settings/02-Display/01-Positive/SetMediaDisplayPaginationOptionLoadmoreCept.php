@@ -11,13 +11,12 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $scrollPosition = ConstantsPage::$numOfMediaTextbox;
-    $saveSession = true;
-
+    
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To check if Load More - Media display pagination option is enabled' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );

@@ -10,13 +10,12 @@
 
     $scrollToTab = ConstantsPage::$mediaSizesTab;
     $scrollPos = ConstantsPage::$displayTab;
-    $saveSession = true;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To check if Admin bar menu integration is disabled.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl, $scrollToTab );

@@ -11,13 +11,12 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
-    $saveSession = true;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To set height and width of single video player.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );

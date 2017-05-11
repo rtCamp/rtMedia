@@ -9,13 +9,11 @@
     use Page\Constants as ConstantsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $saveSession = true;
-
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'Set custom css code when defulat rtMedia style is disabled.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$customCssTab, ConstantsPage::$customCssTabUrl );

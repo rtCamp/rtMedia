@@ -10,13 +10,12 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $commentStr = 'test comment';
-    $saveSession = true;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To check if the user is allowed to comment on uploaded media' );
 
     $loginPage = new LoginPage( $I);
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );

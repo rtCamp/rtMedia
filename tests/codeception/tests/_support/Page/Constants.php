@@ -230,4 +230,6 @@ class Constants
     public static $logoutLink = '.widget_meta > ul > li:nth-child(2) a';
     public static $logoutMsg = 'p.message';
 
+    public static $saveSession = false;
+
 }

@@ -9,13 +9,11 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $saveSession = true;
-
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( "To disable upload media in comment." );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
 

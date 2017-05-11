@@ -10,13 +10,12 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $commentStr = 'This is the comment while uploading media.';
-    $saveSession = true;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( "Check if the user is allowed to upload media in comment" );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
 

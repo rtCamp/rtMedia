@@ -36,7 +36,7 @@ class Login
 
     }
 
-    public function loginAsAdmin( $wpUserName, $wpPassword, $saveSession )
+    public function loginAsAdmin( $wpUserName, $wpPassword, $saveSession = true )
     {
         $I = $this->tester;
 
@@ -44,7 +44,7 @@ class Login
         $I->wait( 5 );
 
         // Will load the session saved in saveSessionSnapshot().
-        if ($I->loadSessionSnapshot('login')) {
+        if ( $I->loadSessionSnapshot('login') ) {
            return;
         }
 
