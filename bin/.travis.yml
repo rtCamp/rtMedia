@@ -48,7 +48,7 @@ before_script:
 - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
 
 script:
-
+- wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/ --steps
 - wpcept run tests/acceptance/core-rtMedia-settings/02-Display/ --steps
 - wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/ --steps
 - wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/ --steps
