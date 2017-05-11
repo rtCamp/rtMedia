@@ -143,7 +143,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * ENHANCEMENTS
 
  * Added: Filter to replace the text "Like/dislike" with any icon [Documentation](https://rtmedia.io/docs/developers/hooks/rtmedia_like_label_text-rtmedia_like_undo_label_text/)
- * Introduce add media count in Media Gallery [Documentation](https://rtmedia.io/docs/developers/add-media-count-media-gallery/)
+ * Introduce to add media count in Media Gallery [Documentation](https://rtmedia.io/docs/developers/add-media-count-media-gallery/)
 
 * FIXED
 
