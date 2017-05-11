@@ -166,7 +166,10 @@ class UploadMedia
         self::addStatus();
 
         $I->fillfield( self::$whatIsNewTextarea, "test from activity stream" );
-        $I->seeElement( self::$mediaButtonOnActivity );
+        $I->click( self::$whatIsNewTextarea );
+        $I->wait(10);
+        $I->canSeeElement( self::$mediaButtonOnActivity );
+        $I->wait(2);
         $I->attachFile( self::$uploadFromActivity, $mediaFile );
         $I->wait( 10 );
 
