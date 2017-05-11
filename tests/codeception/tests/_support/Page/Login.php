@@ -56,7 +56,7 @@ class Login
 
         $I->seeElement( self::$wpSubmitButton );
         $I->click( self::$wpSubmitButton );
-        $I->wait( 5 );
+        $I->wait( 10 );
 
         if( $saveSession ){
             $I->saveSessionSnapshot('login'); //Saving session
@@ -64,7 +64,7 @@ class Login
         }else{
             echo "Session not saved!";
         }
-
+        $I->reloadPage();
         $I->seeElement( self::$dashBoardMenu );
 
         $I->maximizeWindow();
