@@ -30,8 +30,8 @@ class UploadMedia
     }
 
     /**
-    * gotoMediaPage() -> Will take the user to media page
-    */
+     * gotoMediaPage() -> Will take the user to media page
+     */
     public function gotoMediaPage( $userName, $link ){
 
         $I = $this->tester;
@@ -54,8 +54,8 @@ class UploadMedia
     }
 
     /**
-    * uploadTermasCheckbox() -> will check `terms of service checkbox`
-    */
+     * uploadTermasCheckbox() -> will check `terms of service checkbox`
+     */
     public function uploadTermasCheckbox(){
 
         $I = $this->tester;
@@ -66,8 +66,8 @@ class UploadMedia
     }
 
     /**
-    * uploadMedia() -> Will perform neccessary steps to uplpad media. In this case it will work for image media type.
-    */
+     * uploadMedia() -> Will perform neccessary steps to uplpad media. In this case it will work for image media type.
+     */
     public function uploadMedia( $userName, $mediaFile, $link ){
 
         $I = $this->tester;
@@ -94,8 +94,8 @@ class UploadMedia
     }
 
     /**
-    * uploadMediaUsingStartUplaodButton() -> Will the media when 'Direct Uplaod' is not enabled
-    */
+     * uploadMediaUsingStartUplaodButton() -> Will the media when 'Direct Uplaod' is not enabled
+     */
     public function uploadMediaUsingStartUploadButton( $userName, $mediaFile, $link ){
 
         $I = $this->tester;
@@ -110,8 +110,8 @@ class UploadMedia
     }
 
     /**
-    * uploadMediaDirectly() -> Will the media when 'Direct Uplaod' is enabled
-    */
+     * uploadMediaDirectly() -> Will the media when 'Direct Uplaod' is enabled
+     */
     public function uploadMediaDirectly( $userName, $mediaFile, $link ){
 
         $I = $this->tester;
@@ -123,8 +123,8 @@ class UploadMedia
     }
 
     /**
-    * addStatus() -> Will perform the neccessary steps to add status
-    */
+     * addStatus() -> Will perform the neccessary steps to add status
+     */
     public function addStatus(){
 
         $I = $this->tester;
@@ -157,8 +157,8 @@ class UploadMedia
     }
 
     /**
-    * uploadMediaFromActivity() -> Will upload the media from activity page when it is enabled from dashboard
-    */
+     * uploadMediaFromActivity() -> Will upload the media from activity page when it is enabled from dashboard
+     */
     public function uploadMediaFromActivity( $mediaFile ){
 
         $I = $this->tester;
@@ -175,8 +175,8 @@ class UploadMedia
 
     }
     /**
-    * bulkUploadMediaFromActivity() -> Will upload the media in bulk from activity page when it is enabled from dashboard
-    */
+     * bulkUploadMediaFromActivity() -> Will upload the media in bulk from activity page when it is enabled from dashboard
+     */
     public function bulkUploadMediaFromActivity( $mediaFile, $numOfMedia ){
 
         $I = $this->tester;
@@ -207,8 +207,8 @@ class UploadMedia
     }
 
     /**
-    * fisrtThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
-    */
+     * fisrtThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
+     */
     public function fisrtThumbnailMedia(){
 
         $I = $this->tester;
