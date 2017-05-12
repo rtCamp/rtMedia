@@ -241,7 +241,9 @@ class BuddypressSettings
         $I->waitForElementVisible( ConstantsPage::$profilePicture, 20);
 
         $I->amOnPage($tempUri);
-        $I->waitForElementVisible( ConstantsPage::$albumDescSelector, 20 );
+        $I->waitForElementVisible( ConstantsPage::$profilePicture, 20);
+
+        $I->seeElementInDOM( ConstantsPage::$albumDescSelector, 20 );
 
 
         // $I->seeElement( ConstantsPage::$logoutLink );
