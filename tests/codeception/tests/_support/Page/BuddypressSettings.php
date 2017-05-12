@@ -241,7 +241,10 @@ class BuddypressSettings
         $I->waitForElementVisible( ConstantsPage::$profilePicture, 20);
 
         $I->amOnPage($tempUri);
-        $I->waitForElement( ConstantsPage::$albumDescSelector, 30);
+        $I->wait(5);
+        $I->scrollTo( ConstantsPage::$scrollSelector );
+
+        echo "After scroll";
 
         $I->seeElementInDOM( ConstantsPage::$albumDescSelector );
 
