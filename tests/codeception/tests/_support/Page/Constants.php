@@ -240,6 +240,5 @@ class Constants
     public static $manageGrpLink = '#admin';
     public static $optionsPopup = '.rtm-options';
     public static $albumMsg = ' album created successfully.';
-    // public static $activitySelector = 'ul li.activity.activity_update.activity-item';
     public static $activitySelector = '#activity-stream';
 }

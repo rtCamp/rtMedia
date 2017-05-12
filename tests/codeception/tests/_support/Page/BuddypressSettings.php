@@ -250,41 +250,6 @@ class BuddypressSettings
 
         $I->seeElementInDOM( ConstantsPage::$albumDescSelector );
 
-
-        // $I->seeElement( ConstantsPage::$logoutLink );
-        // $I->scrollTo( ConstantsPage::$logoutLink );
-
-        // $I->seeElement( ConstantsPage::$mediaOptionButton );
-        // $I->click( ConstantsPage::$mediaOptionButton );
-        //
-        // $I->waitForElementVisible( ConstantsPage::$optionsPopup, 20 );
-        //
-        // $I->seeElement( ConstantsPage::$albumEditLink );
-        // $I->click( ConstantsPage::$albumEditLink );
-        //
-        // $I->waitForElementVisible( ConstantsPage::$scrollSelector, 20 );
-        // $I->scrollTo( ConstantsPage::$scrollSelector );
-        //
-        // $I->seeElement( ConstantsPage::$albumDescTeaxtarea );
-        // $I->fillField( ConstantsPage::$albumDescTeaxtarea, $albumDesc );
-        // $I->seeElement( ConstantsPage::$saveAlbumButton );
-        // $I->click( ConstantsPage::$saveAlbumButton );
-        //
-        // $I->waitForElementVisible( ConstantsPage::$profilePicture, 20);
     }
-
-    // public function backToAlbumPage(){
-    //
-    //     $I = $this->tester;
-    //
-    //     $I->seeElementInDOM( ConstantsPage::$scrollSelector );
-    //     $I->scrollTo( ConstantsPage::$scrollSelector );
-    //
-    //     $I->seeElement( ConstantsPage::$goBackToAlbumPage );
-    //     $I->click( ConstantsPage::$goBackToAlbumPage );
-    //     // $I->wait( 5 );
-    //     $I->waitForElement( ConstantsPage::$profilePicture, 20);
-    //
-    // }
 
 }
