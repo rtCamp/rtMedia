@@ -48,4 +48,5 @@ before_script:
 - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
 
 script:
-- wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/ --steps
+# - wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/ --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/01-Positive/SetDefaultPrivacyWithPublicOptionCept.php --steps

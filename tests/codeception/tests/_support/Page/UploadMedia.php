@@ -154,7 +154,8 @@ class UploadMedia
         $I->seeElement( ConstantsPage::$privacyDropdown );
 
         $I->click( self::$postUpdateButton );
-        $I->reloadPage();
+        $I->waitForText( $status, 20 );;
+        // $I->reloadPage();
 
     }
 
