@@ -221,10 +221,28 @@ class BuddypressSettings
         $I->seeElement( ConstantsPage::$firstAlbum );
         $I->click( ConstantsPage::$firstAlbum );
 
+        $I->wait(10);
+        $tempUri = $I->grabFromCurrentUrl();
+        echo $tempUri;
+
+        $t = $tempUri.'edit/';
+        echo $t;
+        $I->amOnPage($t);
         $I->waitForElement( ConstantsPage::$profilePicture, 10);
 
-        $I->seeElement( ConstantsPage::$logoutLink );
-        $I->scrollTo( ConstantsPage::$logoutLink );
+        $I->waitForElementVisible( ConstantsPage::$scrollSelector, 20 );
+        $I->scrollTo( ConstantsPage::$scrollSelector );
+
+        $I->seeElement( ConstantsPage::$albumDescTeaxtarea );
+        $I->fillField( ConstantsPage::$albumDescTeaxtarea, $albumDesc );
+        $I->seeElement( ConstantsPage::$saveAlbumButton );
+        $I->click( ConstantsPage::$saveAlbumButton );
+
+        $I->waitForElementVisible( ConstantsPage::$profilePicture, 20);
+
+
+        // $I->seeElement( ConstantsPage::$logoutLink );
+        // $I->scrollTo( ConstantsPage::$logoutLink );
 
         // $I->seeElement( ConstantsPage::$mediaOptionButton );
         // $I->click( ConstantsPage::$mediaOptionButton );
