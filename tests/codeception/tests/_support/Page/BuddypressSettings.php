@@ -223,8 +223,8 @@ class BuddypressSettings
         // $I->wait( 5 );
         // $I->waitForElement( ConstantsPage::$profilePicture, 10);
 
-        $I->waitForElementVisible( ConstantsPage::$scrollSelector, 20 );
-        $I->scrollTo( ConstantsPage::$scrollSelector );
+        $I->waitForElementVisible( ConstantsPage::$photoLink, 20 );
+        $I->scrollTo( ConstantsPage::$photoLink );
 
         $I->seeElement( ConstantsPage::$mediaOptionButton );
         $I->click( ConstantsPage::$mediaOptionButton );
