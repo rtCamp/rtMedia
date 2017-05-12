@@ -223,8 +223,10 @@ class BuddypressSettings
         // $I->wait( 5 );
         // $I->waitForElement( ConstantsPage::$profilePicture, 10);
 
-        $I->waitForElementVisible( ConstantsPage::$photoLink, 20 );
-        $I->scrollTo( ConstantsPage::$photoLink );
+        // $I->waitForElementVisible( ConstantsPage::$photoLink, 20 );
+        $I->waitForText( $albumDesc, 20 );
+        $I->seeElement( '.rtm-gallery-title' );
+        $I->scrollTo( '.rtm-gallery-title' );
 
         $I->seeElement( ConstantsPage::$mediaOptionButton );
         $I->click( ConstantsPage::$mediaOptionButton );
