@@ -90,7 +90,7 @@ function rtmedia_title() {
 }
 
 /**
- * echo the album name of the media
+ * Echo the album name of the media.
  *
  * @global      object          $rtmedia_media
  *
@@ -3942,7 +3942,6 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 	}
 }
 
-<<<<<<< HEAD
 /**
  * Fetch user as per keyword.
  *
@@ -4038,7 +4037,6 @@ function rtmedia_media_search_enabled() {
 
 	return 0;
 }
-=======
 
 /**
  *
@@ -4054,4 +4052,3 @@ function rtm_is_buddypress_activate() {
 
 	return is_plugin_active( 'buddypress/bp-loader.php' );
 }
->>>>>>> d9d060dc59fe0a153df57e2dd7e062ad5c6721e9
