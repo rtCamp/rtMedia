@@ -229,7 +229,7 @@ class BuddypressSettings
         $I->seeElement( ConstantsPage::$mediaOptionButton );
         $I->click( ConstantsPage::$mediaOptionButton );
         // $I->wait( 2 );
-        $I->waitForElementVisible( ConstantsPage::$optionsPopup, 10 );
+        $I->waitForElementVisible( ConstantsPage::$optionsPopup, 20 );
 
         $I->seeElement( ConstantsPage::$albumEditLink );
         $I->click( ConstantsPage::$albumEditLink );

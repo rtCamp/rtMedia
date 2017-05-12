@@ -49,10 +49,12 @@ before_script:
 
 script:
 
-- wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/ --steps
-- wpcept run tests/acceptance/core-rtMedia-settings/02-Display/ --steps
-- wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/ --steps
-- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/ --steps
-- wpcept run tests/acceptance/core-rtMedia-settings/05-Types/ --steps
-- wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/ --steps
-- wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/ --steps
+# - wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/ --steps
+# - wpcept run tests/acceptance/core-rtMedia-settings/02-Display/ --steps
+# - wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/ --steps
+# - wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/ --steps
+# - wpcept run tests/acceptance/core-rtMedia-settings/05-Types/ --steps
+# - wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/ --steps
+# - wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/ --steps
+
+- wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/EnableShowAlbumDescCept.php --steps
