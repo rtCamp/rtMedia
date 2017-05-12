@@ -42,6 +42,7 @@
 
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
     // $I->see( $status );
-    $I->seeElementInDOM( ConstantsPage::$activitySelector );
+    // $I->seeElementInDOM( ConstantsPage::$activitySelector );
+    $I->waitForElementVisible( ConstantsPage::$activitySelector, 20);
 
 ?>
