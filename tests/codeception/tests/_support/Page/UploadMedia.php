@@ -68,19 +68,20 @@ class UploadMedia
     /**
     * uploadMedia() -> Will perform neccessary steps to uplpad media. In this case it will work for image media type.
     */
-    public function uploadMedia( $userName, $mediaFile, $link ){
+    // public function uploadMedia( $userName, $mediaFile, $link ){
+    public function uploadMedia( $userName, $mediaFile){
 
         $I = $this->tester;
 
         $I->seeElement( ConstantsPage::$mediaPageScrollPos );
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-        $I->seeElement( $link );
-        $I->click( $link );
-
-        // $I->wait( 5 );
-        $I->waitForElement( $link, 10);
-        $I->seeElementInDOM( ConstantsPage::$mediaPageScrollPos );
-        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+        // $I->seeElement( $link );
+        // $I->click( $link );
+        //
+        // // $I->wait( 5 );
+        // $I->waitForElement( $link, 10);
+        // $I->seeElementInDOM( ConstantsPage::$mediaPageScrollPos );
+        // $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
         // $I->wait( 5 );
 
         $I->waitForElementVisible( self::$uploadLink, 20);
@@ -100,11 +101,13 @@ class UploadMedia
     /**
     * uploadMediaUsingStartUplaodButton() -> Will the media when 'Direct Uplaod' is not enabled
     */
-    public function uploadMediaUsingStartUploadButton( $userName, $mediaFile, $link ){
+    // public function uploadMediaUsingStartUploadButton( $userName, $mediaFile, $link ){
+    public function uploadMediaUsingStartUploadButton( $userName, $mediaFile ){
 
         $I = $this->tester;
 
-        self::uploadMedia( $userName, $mediaFile, $link );
+        // self::uploadMedia( $userName, $mediaFile, $link );
+        self::uploadMedia( $userName, $mediaFile );
 
         $I->seeElement( self::$uploadMediaButton );
         $I->click( self::$uploadMediaButton );
