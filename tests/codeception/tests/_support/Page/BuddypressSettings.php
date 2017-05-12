@@ -220,35 +220,29 @@ class BuddypressSettings
 
         $I->seeElement( ConstantsPage::$firstAlbum );
         $I->click( ConstantsPage::$firstAlbum );
-        // $I->wait( 5 );
+
         $I->waitForElement( ConstantsPage::$profilePicture, 10);
 
-        // $I->waitForElementVisible( ConstantsPage::$photoLink, 20 );
-        // $I->waitForText( $albumDesc, 20 );
-        $I->seeElement( '.rtm-gallery-title' );
-        $I->scrollTo( '.rtm-gallery-title' );
+        $I->seeElement( ConstantsPage::$logoutLink );
+        $I->scrollTo( ConstantsPage::$logoutLink );
 
-        $I->seeElement( ConstantsPage::$mediaOptionButton );
-        $I->click( ConstantsPage::$mediaOptionButton );
-        // $I->wait( 2 );
-        $I->waitForElementVisible( ConstantsPage::$optionsPopup, 20 );
-
-        $I->seeElement( ConstantsPage::$albumEditLink );
-        $I->click( ConstantsPage::$albumEditLink );
-        // $I->wait( 5 );
-        // $I->waitForElementVisible( ConstantsPage::$profilePicture, 20 );
-
-        // $I->seeElement( ConstantsPage::$scrollSelector );
+        // $I->seeElement( ConstantsPage::$mediaOptionButton );
+        // $I->click( ConstantsPage::$mediaOptionButton );
+        //
+        // $I->waitForElementVisible( ConstantsPage::$optionsPopup, 20 );
+        //
+        // $I->seeElement( ConstantsPage::$albumEditLink );
+        // $I->click( ConstantsPage::$albumEditLink );
+        //
+        // $I->waitForElementVisible( ConstantsPage::$scrollSelector, 20 );
         // $I->scrollTo( ConstantsPage::$scrollSelector );
-        $I->waitForElementVisible( ConstantsPage::$scrollSelector, 20 );
-        $I->scrollTo( ConstantsPage::$scrollSelector );
-
-        $I->seeElement( ConstantsPage::$albumDescTeaxtarea );
-        $I->fillField( ConstantsPage::$albumDescTeaxtarea, $albumDesc );
-        $I->seeElement( ConstantsPage::$saveAlbumButton );
-        $I->click( ConstantsPage::$saveAlbumButton );
-        // $I->wait( 5 );
-        $I->waitForElementVisible( ConstantsPage::$profilePicture, 20);
+        //
+        // $I->seeElement( ConstantsPage::$albumDescTeaxtarea );
+        // $I->fillField( ConstantsPage::$albumDescTeaxtarea, $albumDesc );
+        // $I->seeElement( ConstantsPage::$saveAlbumButton );
+        // $I->click( ConstantsPage::$saveAlbumButton );
+        //
+        // $I->waitForElementVisible( ConstantsPage::$profilePicture, 20);
     }
 
     // public function backToAlbumPage(){
