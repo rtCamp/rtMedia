@@ -1284,7 +1284,7 @@ img.mfp-img {
 }
 .rtm-item-actions > div, .rtm-item-actions > form {
   float: left;
-  margin: 0 2px;
+  margin: 0 4px 0 0;
   padding: 7px 0;
   position: relative;
 }
@@ -1641,6 +1641,17 @@ form.rt_media_comment_form .rtmedia-plupload-container {
   opacity: 0;
   display: none;
   visibility: hidden;
+}
+
+.ac-form .rtmedia-uploader-div, .rt_media_comment_form .rtmedia-uploader-div {
+  opacity: 1;
+  display: block;
+  visibility: visible;
+}
+
+#whats-new-options {
+  opacity: 0;
+  display: none;
 }
 
 a.rtmedia-comment-link {
@@ -2639,6 +2650,9 @@ a.rtmedia-upload-media-link {
   color: inherit;
 }
 
+#buddypress #item-body {
+  padding: 0 0 20px 20px;
+}
 #buddypress .mejs-controls button {
   padding: 4px 8px;
   border: none;

@@ -567,7 +567,8 @@ function rtmedia_edit_media_on_database( $data, $post_ID ) {
 
 	if ( $_REQUEST ) {
 
-		if ( isset( $_REQUEST['postid'] ) && 'image-editor' == $_REQUEST['action'] && 'edit-attachment' == $_REQUEST['context'] ) {
+		// @todo need to check why 'context' key is not set in $_REQUEST when user clicks on scale button on edit image.
+		if ( isset( $_REQUEST['postid'] ) && 'image-editor' == $_REQUEST['action'] && ! empty( $_REQUEST['context'] ) && 'edit-attachment' == $_REQUEST['context'] ) {
 
 			$media = new RTMediaModel();
 			$media_available = $media->get_media( array(

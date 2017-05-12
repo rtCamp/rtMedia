@@ -852,6 +852,7 @@ add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_
 
 
 /**
+<<<<<<< HEAD
  * Search Media mockup
  * @param       array       $attr
  *
@@ -932,6 +933,18 @@ function add_search_filter( $attr = null ) {
 add_action( 'rtmedia_media_gallery_actions', 'add_search_filter', 99 );
 
 
+=======
+ * rtmedia_set_permalink Re-save premalink settings on plugin activation or plugin updates
+ */
+function rtmedia_set_permalink() {
+	$is_permalink_reset = get_option( 'is_permalink_reset' );
+	if ( '' === $is_permalink_reset || 'no' === $is_permalink_reset ) {
+		flush_rewrite_rules();
+		update_option( 'is_permalink_reset', 'yes' );
+	}
+}
+add_action( 'admin_init', 'rtmedia_set_permalink' );
+>>>>>>> d9d060dc59fe0a153df57e2dd7e062ad5c6721e9
 
 /**
  *

@@ -5,14 +5,14 @@
 $rand_id = rand( 0, 1000 );
 
 ?>
-<div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo $rand_id;?>">
+<div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo intval( $rand_id );?>">
 	<?php do_action( 'rtmedia_before_media_gallery' ); ?>
 	<?php
 	$title = get_rtmedia_gallery_title();
 	global $rtmedia_query;
 	if ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) { // if gallery is displayed using gallery shortcode
 		?>
-		<div id="rtm-gallery-title-container" class="clearfix">
+		<div id="rtm-gallery-title-container" class="clearfix rtm-gallery-shortcode-title-container">
 			<h2 class="rtm-gallery-title">
 				<?php esc_html_e( 'Media Gallery', 'buddypress-media' ); ?>
 			</h2>
@@ -39,7 +39,7 @@ $rand_id = rand( 0, 1000 );
 
 	<?php } else {
 		?>
-		<div id="rtm-gallery-title-container" class="clearfix">
+		<div id="rtm-gallery-title-container" class="clearfix rtm-gallery-media-title-container">
 			<h2 class="rtm-gallery-title">
 				<?php
 				if ( $title ) {

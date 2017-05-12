@@ -313,6 +313,8 @@ jQuery( 'document' ).ready( function( $ ) {
 		jQuery( '.rtmedia-list-item' ).addClass( 'bulk-selected' );
 	} );
 
+
+
 	jQuery( '.rtmedia-container' ).on( 'click', '.unselect-all', function( e ) {
 		jQuery( this ).toggleClass( 'select-all' ).toggleClass( 'unselect-all' );
 		jQuery( this ).attr( 'title', rtmedia_select_all_visible );
@@ -917,6 +919,7 @@ window.onload = function() {
 	if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && 0 == jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length ) {
 		rtm_masonry_reload( rtm_masonry_container );
 	}
+
 	rtm_search_media_text_validation();
 	jQuery( '.rtmedia-uploader-div' ).css({
 		'opacity': '1',
@@ -927,6 +930,7 @@ window.onload = function() {
 	jQuery( ' #whats-new-options ' ).css({
 	    'opacity': '1',
 	});
+
 	if ( check_condition( 'search' ) ) {
 		jQuery( '#media_search_remove' ).show();
 	}
