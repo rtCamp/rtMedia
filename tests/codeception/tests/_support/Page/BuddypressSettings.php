@@ -238,7 +238,9 @@ class BuddypressSettings
         $I->seeElement( ConstantsPage::$saveAlbumButton );
         $I->click( ConstantsPage::$saveAlbumButton );
 
-        $I->waitForElementVisible( ConstantsPage::$profilePicture, 20);
+        $I->wait(5);
+        $I->reloadPage();
+        $I->scrollTo( ConstantsPage::$scrollSelector );
 
         $I->amOnPage($tempUri);
         $I->wait(5);
