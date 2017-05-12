@@ -214,7 +214,7 @@ class Constants
     public static $albumEditLink = 'a.rtmedia-edit';
     public static $albumDescTeaxtarea = 'textarea.rtmedia-desc-textarea';
     public static $saveAlbumButton = 'input.rtmedia-save-album';
-    public static $albumDescSelector = '.gallery-description.gallery-album-description';
+    public static $albumDescSelector = '.gallery-album-description';
     public static $scrollSelector = 'a#rtmedia-nav-item-albums';
 
     public static $mediaPageScrollPos = '#user-activity';   //Scroll position for activity and media pages
