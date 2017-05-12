@@ -8,7 +8,7 @@ class UploadMedia
 
     public static $galleryLable = '.rtm-gallery-title';
     public static $uploadLink = '.rtmedia-upload-media-link';
-    public static $selectFileButton = '.rtm-select-files #rtMedia-upload-button';
+    public static $selectFileButton = 'input#rtMedia-upload-button';
     public static $fileList = '#rtmedia_uploader_filelist';
     public static $uploadTermsCheckbox = '#rtmedia_upload_terms_conditions';
     public static $uploadMediaButton = '.start-media-upload';
@@ -91,7 +91,8 @@ class UploadMedia
         $I->waitForElement( self::$uploadContainer, 10 );
         // $I->seeElement( self::$uploadContainer);
         // $I->wait( 5 );
-        $I->seeElement(self::$selectFileButton);
+        $I->seeElementInDOM(self::$selectFileButton);
+
         $I->attachFile( self::$uploadFile, $mediaFile );
         // $I->wait( 10 );
         $I->waitForElement( ConstantsPage::$fileList, 20);
@@ -120,11 +121,11 @@ class UploadMedia
     /**
     * uploadMediaDirectly() -> Will the media when 'Direct Uplaod' is enabled
     */
-    public function uploadMediaDirectly( $userName, $mediaFile, $link ){
+    public function uploadMediaDirectly( $userName, $mediaFile ){
 
         $I = $this->tester;
 
-        self::uploadMedia( $userName, $mediaFile, $link );
+        self::uploadMedia( $userName, $mediaFile );
 
         // $I->wait( 3 );
         $I->waitForElementNotVisible( ConstantsPage::$fileList, 20);
