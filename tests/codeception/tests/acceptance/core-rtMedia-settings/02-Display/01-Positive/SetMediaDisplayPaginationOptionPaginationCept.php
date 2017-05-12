@@ -43,7 +43,7 @@
 
         for( $i = 0; $i < $numOfMediaTobeUpload ; $i++ ){
 
-            $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
+            $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
         }
 
