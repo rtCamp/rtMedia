@@ -26,11 +26,11 @@
 
     $buddypress->createNewAlbum();
     $buddypress->editAlbumDesc();
-    $buddypress->gotoAlubmPage();
-
-    $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-    $I->seeElement( ConstantsPage::$firstAlbum );
-    $I->click( ConstantsPage::$firstAlbum );
-    $I->waitForElementVisible( ConstantsPage::$albumDescSelector, 20 );
+    // $buddypress->gotoAlubmPage();
+    //
+    // $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+    // $I->seeElement( ConstantsPage::$firstAlbum );
+    // $I->click( ConstantsPage::$firstAlbum );
+    // $I->waitForElementVisible( ConstantsPage::$albumDescSelector, 20 );
 
 ?>
