@@ -27,7 +27,6 @@ class Login
         $I = $this->tester;
 
         $I->amOnPage( '/wp-admin' );
-        // $I->wait( 10 );
 
         // Will load the session saved in saveSessionSnapshot().
         if ( $I->loadSessionSnapshot('login') ) {
