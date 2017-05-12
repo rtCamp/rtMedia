@@ -14,7 +14,7 @@ class UploadMedia
     public static $uploadMediaButton = '.start-media-upload';
     public static $firstChild = 'ul.rtm-gallery-list li:first-child';
     public static $commentSubmitButton = '.rt_media_comment_submit';
-    public static $whatIsNewTextarea = '#whats-new';
+    public static $whatIsNewTextarea = 'textarea#whats-new';
     public static $scrollPosOnActivityPage = '#user-activity';
     public static $postUpdateButton = 'input#aw-whats-new-submit';
     public static $uploadFile = 'div.moxie-shim.moxie-shim-html5 input[type=file]';
