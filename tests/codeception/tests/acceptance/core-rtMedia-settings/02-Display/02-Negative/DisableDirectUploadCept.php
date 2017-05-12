@@ -24,7 +24,7 @@
     $buddypress->gotoMedia( ConstantsPage::$userName );
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->uploadMedia( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
+    $uploadmedia->uploadMedia( ConstantsPage::$userName, ConstantsPage::$imageName );
     $I->seeElement( UploadMediaPage::$uploadMediaButton );
 
     $I->reloadPage();
