@@ -41,6 +41,7 @@
     $logout->logout();
 
     $buddypress->gotoActivityPage( ConstantsPage::$userName );
-    $I->see( $status );
+    // $I->see( $status );
+    $I->seeElementInDOM( ConstantsPage::$activitySelector );
 
 ?>
