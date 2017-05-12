@@ -83,7 +83,8 @@ class UploadMedia
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
         // $I->wait( 5 );
 
-        $I->seeElement( self::$uploadLink );
+        $I->waitForElementVisible( self::$uploadLink, 20);
+        // $I->seeElement( self::$uploadLink );
         $I->click( self::$uploadLink );
         // $I->wait( 5 );
         $I->waitForElement( self::$uploadContainer, 10 );
