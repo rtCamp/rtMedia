@@ -27,7 +27,7 @@
     // $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$mediumCropCheckbox );
 
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-    $I->wait( 5 );
+    $I->waitForElement( ConstantsPage::$buddypressTab , 10);
     $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
 
     $buddypress = new BuddypressSettingsPage( $I );

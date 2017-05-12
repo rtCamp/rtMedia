@@ -33,7 +33,7 @@
     $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
 
     $I->reloadPage();
-    $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+    // $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 

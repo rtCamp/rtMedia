@@ -35,7 +35,7 @@
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
 
         $I->reloadPage();
-        $I->wait( 10 );
+        // $I->wait( 10 );
 
         $I->dontSeeElementInDOM(ConstantsPage::$masonryLayout);
 

@@ -27,8 +27,10 @@ class DashboardSettings
         $I->seeElementInDOM( ConstantsPage::$saveSettingsButtonBottom );
         $I->scrollTo( ConstantsPage::$saveSettingsButtonBottom );
         $I->click( ConstantsPage::$saveSettingsButtonBottom );
-        $I->wait( 5 );
-        $I->see('Settings saved successfully!');
+        // $I->wait( 5 );
+        // $I->waitForElement( ConstantsPage::$buddypressTab , 10);
+        $I->waitForText( 'Settings saved successfully!', 30);
+        // $I->see('Settings saved successfully!');
     }
 
     /**
@@ -39,8 +41,9 @@ class DashboardSettings
         $I = $this->tester;
 
         $I->click( ConstantsPage::$rtMediaSeetings );
-        $I->wait( 5 );
-        $I->seeInCurrentUrl( ConstantsPage::$rtMediaSettingsUrl );
+        // $I->wait( 5 );
+        $I->waitForElement( ConstantsPage::$buddypressTab , 10);
+        // $I->seeInCurrentUrl( ConstantsPage::$rtMediaSettingsUrl );
     }
 
     /**
@@ -62,7 +65,7 @@ class DashboardSettings
 
         $I->click( $tabSelector );
         $I->waitForElement( ConstantsPage::$topSaveButton , 5);
-        $I->seeInCurrentUrl( $urlStr );
+        // $I->seeInCurrentUrl( $urlStr );
     }
 
 

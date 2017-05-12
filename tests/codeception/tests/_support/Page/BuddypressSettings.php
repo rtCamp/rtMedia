@@ -52,7 +52,8 @@ class BuddypressSettings
 
       $I->seeElement( self::$groupNameLink );
       $I->click( self::$groupNameLink );
-      $I->wait( 3 );
+    //   $I->wait( 3 );
+        $I->waitForElement( ConstantsPage::$manageGrpLink, 10 );
 
     }
 
@@ -91,7 +92,8 @@ class BuddypressSettings
 
         $I->seeElement( ConstantsPage::$createGroupButton );
         $I->click( ConstantsPage::$createGroupButton );
-        $I->wait( 5 );
+        // $I->wait( 5 );
+        $I->waitForElement( ConstantsPage::$nextGrpButton, 20);
 
         self::gotoGroup();
 
@@ -106,8 +108,9 @@ class BuddypressSettings
 
         $url = 'members/'.$userName;
         $I->amOnPage($url);
-        $I->wait( 5 );
-        $I->seeElement( ConstantsPage::$mediaPageScrollPos );
+        // $I->wait( 5 );
+        $I->waitForElement( ConstantsPage::$mediaPageScrollPos, 10);
+        // $I->seeElement( ConstantsPage::$mediaPageScrollPos );
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
     }
 
@@ -169,6 +172,9 @@ class BuddypressSettings
     */
     public function createNewAlbum(){
 
+        $albumName = 'My test album';
+        $albumCreationMsg = $albumName.ConstantsPage::$albumMsg;
+
         $I = $this->tester;
 
         self::gotoAlubmPage();
@@ -177,24 +183,29 @@ class BuddypressSettings
 
         $I->seeElement( ConstantsPage::$mediaOptionButton );
         $I->click( ConstantsPage::$mediaOptionButton );
-        $I->wait( 2 );
+        // $I->wait( 2 );
+        $I->waitForElementVisible( ConstantsPage::$optionsPopup, 10 );
 
         $I->seeElement( ConstantsPage::$addAlbumButtonLink );
+        // $I->waitForElement('selector', 60);
         $I->click( ConstantsPage::$addAlbumButtonLink );
 
-        $I->seeElement( ConstantsPage::$createAlbumPopup );
+        $I->waitForElementVisible( ConstantsPage::$createAlbumPopup, 10 );
+        // $I->seeElement( ConstantsPage::$createAlbumPopup );
         $I->seeElement( ConstantsPage::$albumNameTextbox );
-        $I->fillField( ConstantsPage::$albumNameTextbox, 'My test album - 1');
+        $I->fillField( ConstantsPage::$albumNameTextbox, $albumName );
         $I->seeElement( ConstantsPage::$createAlbumButton );
         $I->click( ConstantsPage::$createAlbumButton );
-        $I->wait( 5 );
+        // $I->wait( 5 );
+        $I->waitForText( $albumCreationMsg, 20 );
 
         $I->seeElement( ConstantsPage::$closeAlbumButton );
         $I->click( ConstantsPage::$closeAlbumButton );
-
-        $I->wait( 5 );
-
         echo "Album created";
+
+        // $I->wait( 5 );
+        $I->reloadPage();
+        $I->waitForElement( ConstantsPage::$profilePicture, 10);
 
     }
 
@@ -203,45 +214,53 @@ class BuddypressSettings
     */
     public function editAlbumDesc(){
 
+        $albumDesc = 'My test album desc';
         $I = $this->tester;
+        echo "Inside edit album function";
 
         $I->seeElement( ConstantsPage::$firstAlbum );
         $I->click( ConstantsPage::$firstAlbum );
+        // $I->wait( 5 );
+        // $I->waitForElement( ConstantsPage::$profilePicture, 10);
 
-        $I->wait( 5 );
-        $I->seeElement( ConstantsPage::$scrollSelector );
+        $I->waitForElementVisible( ConstantsPage::$scrollSelector, 20 );
         $I->scrollTo( ConstantsPage::$scrollSelector );
 
         $I->seeElement( ConstantsPage::$mediaOptionButton );
         $I->click( ConstantsPage::$mediaOptionButton );
-        $I->wait( 2 );
+        // $I->wait( 2 );
+        $I->waitForElementVisible( ConstantsPage::$optionsPopup, 10 );
 
         $I->seeElement( ConstantsPage::$albumEditLink );
         $I->click( ConstantsPage::$albumEditLink );
+        // $I->wait( 5 );
+        // $I->waitForElementVisible( ConstantsPage::$profilePicture, 20 );
 
-        $I->wait( 5 );
-        $I->seeElement( ConstantsPage::$scrollSelector );
+        // $I->seeElement( ConstantsPage::$scrollSelector );
+        // $I->scrollTo( ConstantsPage::$scrollSelector );
+        $I->waitForElementVisible( ConstantsPage::$scrollSelector, 20 );
         $I->scrollTo( ConstantsPage::$scrollSelector );
 
         $I->seeElement( ConstantsPage::$albumDescTeaxtarea );
-        $I->fillField( ConstantsPage::$albumDescTeaxtarea, 'My test album - desc - 1');
+        $I->fillField( ConstantsPage::$albumDescTeaxtarea, $albumDesc );
         $I->seeElement( ConstantsPage::$saveAlbumButton );
         $I->click( ConstantsPage::$saveAlbumButton );
-
-        $I->wait( 5 );
+        // $I->wait( 5 );
+        $I->waitForElementVisible( ConstantsPage::$profilePicture, 20);
     }
 
-    public function backToAlbumPage(){
-
-        $I = $this->tester;
-
-        $I->seeElement( ConstantsPage::$scrollSelector );
-        $I->scrollTo( ConstantsPage::$scrollSelector );
-
-        $I->seeElement( ConstantsPage::$goBackToAlbumPage );
-        $I->click( ConstantsPage::$goBackToAlbumPage );
-        $I->wait( 5 );
-
-    }
+    // public function backToAlbumPage(){
+    //
+    //     $I = $this->tester;
+    //
+    //     $I->seeElementInDOM( ConstantsPage::$scrollSelector );
+    //     $I->scrollTo( ConstantsPage::$scrollSelector );
+    //
+    //     $I->seeElement( ConstantsPage::$goBackToAlbumPage );
+    //     $I->click( ConstantsPage::$goBackToAlbumPage );
+    //     // $I->wait( 5 );
+    //     $I->waitForElement( ConstantsPage::$profilePicture, 20);
+    //
+    // }
 
 }

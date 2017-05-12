@@ -32,6 +32,8 @@
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
 
+    $I->reloadPage();
+
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
 

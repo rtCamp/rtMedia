@@ -28,7 +28,8 @@
     $I->seeElement( ConstantsPage::$firstAlbum );
     $I->click( ConstantsPage::$firstAlbum );
 
-    $I->wait( 5 );
+    // $I->wait( 5 );
+    $I->waitForElement( ConstantsPage::$profilePicture, 10);
 
     $I->dontSeeElement( ConstantsPage::$albumDescSelector );
 

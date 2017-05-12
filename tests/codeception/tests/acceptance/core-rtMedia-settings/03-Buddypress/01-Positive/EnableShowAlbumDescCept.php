@@ -26,7 +26,14 @@
 
     $buddypress->createNewAlbum();
     $buddypress->editAlbumDesc();
-    $buddypress->backToAlbumPage();
+    // $buddypress->backToAlbumPage();
+    $buddypress->gotoAlubmPage();
 
-    $I->seeElement( ConstantsPage::$albumDescSelector );
+    $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+    $I->seeElement( ConstantsPage::$firstAlbum );
+    $I->click( ConstantsPage::$firstAlbum );
+    $I->waitForElementVisible( ConstantsPage::$albumDescSelector, 20 );
+    // $I->waitForElement( ConstantsPage::$profilePicture, 10);
+    //
+    // $I->seeElementInDOM( ConstantsPage::$albumDescSelector );
 ?>

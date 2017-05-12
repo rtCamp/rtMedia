@@ -32,5 +32,5 @@
 
     echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
 
-    $I->reloadPage();
+    // $I->reloadPage();
 ?>

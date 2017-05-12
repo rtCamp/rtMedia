@@ -12,7 +12,7 @@
 
     $scrollPosition = ConstantsPage::$numOfMediaTextbox;
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
-    
+
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To check if mesonry layout is enabled.' );
 
@@ -38,7 +38,7 @@
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
 
         $I->reloadPage();
-        $I->wait( 10 );
+        // $I->wait( 10 );
 
         $I->seeElementInDOM( ConstantsPage::$masonryLayout );
 

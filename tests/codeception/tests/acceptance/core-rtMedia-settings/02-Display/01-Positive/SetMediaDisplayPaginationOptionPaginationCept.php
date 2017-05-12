@@ -48,6 +48,6 @@
         }
 
     }
-
+    $I->reloadPage();
     $I->seeElementInDOM( ConstantsPage::$paginationPattern );
 ?>

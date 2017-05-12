@@ -24,7 +24,7 @@
     $settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab ); //Last arg refers scroll postion
 
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-    $I->wait( 5 );
+    $I->waitForElement( ConstantsPage::$buddypressTab , 10);
 
     $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox ); //We need to check media is enabled for profile or not.
     $settings->verifyEnableStatus( ConstantsPage::$strMediaInCommnetLabel, ConstantsPage::$mediaInCommentCheckbox );
@@ -43,18 +43,20 @@
 
         $I->seeElement( ConstantsPage::$commentLink );
         $I->scrollTo( ConstantsPage::$commentLink );
-        $I->wait( 5 );
+        // $I->wait( 5 );
 
         $I->seeElement( UploadMediaPage::$commentTextArea );
         $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
 
         $I->seeElement( ConstantsPage::$mediaButtonInComment );
         $I->attachFile( ConstantsPage::$uploadFileInComment, ConstantsPage::$imageName );
-        $I->wait( 10 );
+        // $I->wait( 10 );
+        $I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20);
 
         $I->click( UploadMediaPage::$commentSubmitButton );
-        $I->wait( 5 );
-        $I->see( $commentStr );
+        // $I->wait( 5 );
+        // $I->see( $commentStr );
+        $I->waitForText( $commentStr, 30 );
 
     }else{
 
@@ -68,7 +70,7 @@
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink);
 
         $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+        // $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
@@ -76,20 +78,22 @@
 
         $I->seeElement( ConstantsPage::$commentLink );
         $I->scrollTo( ConstantsPage::$commentLink );
-        $I->wait( 3 );
+        // $I->wait( 3 );
 
         $I->seeElement( UploadMediaPage::$commentTextArea );
         $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
 
         $I->seeElement( ConstantsPage::$mediaButtonInComment );
         $I->attachFile( ConstantsPage::$uploadFileInComment, ConstantsPage::$imageName );
-        $I->wait( 10 );
+        // $I->wait( 10 );
+        $I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20);
 
         $I->click( UploadMediaPage::$commentSubmitButton );
-        $I->wait( 5 );
-        $I->see( $commentStr );
+        // $I->wait( 5 );
+        // $I->see( $commentStr );
+        $I->waitForText( $commentStr, 30 );
 
     }
 
-    $I->reloadPage();
+    // $I->reloadPage();
 ?>

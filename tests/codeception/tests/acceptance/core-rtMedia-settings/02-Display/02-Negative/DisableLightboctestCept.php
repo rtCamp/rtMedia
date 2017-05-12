@@ -39,17 +39,15 @@
         $I->waitForElement( ConstantsPage::$displayTab , 10);
         $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
+        $buddypress->gotoMedia( ConstantsPage::$userName );
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
 
         $I->reloadPage();
-        $I->wait( 7 );
+        // $I->wait( 7 );
 
         $uploadmedia->fisrtThumbnailMedia();
         $I->dontSeeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
 
     }
-
-    // $logout = new LogoutPage( $I );
-    // $logout->logout();
 
 ?>

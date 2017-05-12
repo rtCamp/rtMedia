@@ -26,7 +26,8 @@
     $I->seeElement( ConstantsPage::$saveBPSettings );
     $I->click( ConstantsPage::$saveBPSettings );
     // $I->waitForElement( ConstantsPage::$grpTableRow, 10);
-    $I->wait( 5 );
+    // $I->wait( 5 );
+    $I->waitForElement( ConstantsPage::$saveMsgSelector, 20);
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoGroup();

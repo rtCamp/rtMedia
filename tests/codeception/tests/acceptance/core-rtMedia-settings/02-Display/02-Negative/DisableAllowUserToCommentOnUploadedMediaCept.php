@@ -10,7 +10,7 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
-    
+
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'User should not allowed to comment on uploaded media' );
 
@@ -50,13 +50,13 @@
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink);
 
         $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+        // $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
         $uploadmedia->fisrtThumbnailMedia();
 
-        $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10);
+        $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10 );
 
     }
 

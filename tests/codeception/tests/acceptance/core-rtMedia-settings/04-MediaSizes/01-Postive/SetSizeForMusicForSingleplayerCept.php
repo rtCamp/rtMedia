@@ -30,7 +30,7 @@
     $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$audioName, ConstantsPage::$musicLink );
 
     $I->reloadPage();
-    $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+    // $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
@@ -38,6 +38,6 @@
 
     echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorSingle ,'style' );
 
-    $I->reloadPage();
+    // $I->reloadPage();
 
 ?>

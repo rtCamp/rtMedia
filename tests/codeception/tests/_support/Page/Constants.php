@@ -231,5 +231,13 @@ class Constants
     public static $logoutMsg = 'p.message';
 
     public static $saveSession = false;
-
+    public static $fileList = '#rtmedia_uploader_filelist';
+    public static $siteEntryTitle = '.entry-title';
+    public static $mediaContainer = 'div.rtm-lightbox-container';
+    public static $fileListOnMediaComment = 'div.rtmedia-plupload-notice';
+    public static $saveMsgSelector = '#setting-error-settings_updated';
+    public static $nextGrpButton = '#group-creation-next';
+    public static $manageGrpLink = '#admin';
+    public static $optionsPopup = '.rtm-options';
+    public static $albumMsg = ' album created successfully.';
 }
