@@ -137,6 +137,37 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 4.3.2 [May 11, 2017] ####
+
+* ENHANCEMENTS
+
+ * Added: Filter which allows replacing the text "Like/dislike" with any icon [Documentation](https://rtmedia.io/docs/developers/hooks/rtmedia_like_label_text-rtmedia_like_undo_label_text/)
+
+* FIXED
+
+ * Attach media button issue in comments for IOS devices
+ * Inconsistent name display in the Activity stream
+ * Media attachment button issue under rtMedia comment section
+ * Set as Album Cover button UI issue
+ * rtMedia action button alignment issue on the single media page
+ * Improvise comment media admin settings
+ * JavaScript error while deleting media
+ * Edit media feature when BuddyPress activity stream component is disabled
+
+#### 4.3.1 [Feb 23, 2017] ####
+
+* ENHANCEMENTS
+
+ * Remove media titles from media tab
+ * Change text in rtMedia setting for comment media
+ * Added: Filter to change user id while fetching user's album list
+
+* FIXED
+
+ * Pagination and navigation fix in media tab
+ * Warnings when uploading media in activity comment
+ * Privacy for reported media in moderation
+
 #### 4.3 [Feb 14, 2017] ####
 
 * NEW FEATURES
