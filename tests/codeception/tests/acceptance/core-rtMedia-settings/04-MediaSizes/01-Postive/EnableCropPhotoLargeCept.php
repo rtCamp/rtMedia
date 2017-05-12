@@ -30,7 +30,7 @@
     $buddypress->gotoMedia( ConstantsPage::$userName );
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
+    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
     $I->reloadPage();
     // $I->waitForElement( ConstantsPage::$profilePicture, 5 );

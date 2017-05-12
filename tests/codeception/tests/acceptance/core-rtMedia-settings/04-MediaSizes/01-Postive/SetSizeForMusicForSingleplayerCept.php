@@ -27,7 +27,7 @@
     $buddypress->gotoMedia( ConstantsPage::$userName );
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$audioName, ConstantsPage::$musicLink );
+    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$audioName );
 
     $I->reloadPage();
     // $I->waitForElement( ConstantsPage::$profilePicture, 5 );
