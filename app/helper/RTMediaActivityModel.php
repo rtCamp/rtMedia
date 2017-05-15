@@ -62,6 +62,12 @@ class RTMediaActivityModel extends RTDBModel {
 	 * @param int $privacy Privacy to set.
 	 */
 	public function profile_activity_update( $media_ids_of_activity = array(), $privacy, $parent_activity_id = false ) {
+
+		// Check if activity stream is active or not.
+		if ( ! function_exists( 'bp_activity_get' ) ) {
+			return;
+		}
+
 		foreach ( $media_ids_of_activity as $media_id_of_activity ) {
 			// Get all the activities from item_id.
 			$activity_parents = bp_activity_get( array( 'filter' => array( 'primary_id' => $media_id_of_activity ) ) );
