@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : To set width of single music player.
+* Scenario : To set height and width of single video player.
 */
 
     use Page\Login as LoginPage;
@@ -11,33 +11,26 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
-    $scrollPos = ConstantsPage::$customCssTab;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To set width of single music player.' );
+    $I->wantTo( 'To set height and width of single video player.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
-    $settings->setMediaSize( ConstantsPage::$singlePlayerLabel, ConstantsPage::$singleMusicWidthTextbox, ConstantsPage::$singleMusicPlayerWidth, $scrollPos );
+    $settings->setMediaSize( ConstantsPage::$singlePlayerLabel, ConstantsPage::$singleVideoWidthTextbox, ConstantsPage::$singleVideoWidth, ConstantsPage::$singleVideoHeightTextbox, ConstantsPage::$singleVideoHeight );
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia( ConstantsPage::$userName );
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$audioName );
+    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$videoName );
 
-    $I->reloadPage();
-    // $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+    $uploadmedia->firstThumbnailMedia();
 
-    $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+    echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
 
-    $uploadmedia->fisrtThumbnailMedia();
-
-    echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorSingle ,'style' );
-
-    // $I->reloadPage();
 
 ?>

@@ -31,7 +31,7 @@ if( $temp >= ConstantsPage::$minValue ){
 
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-    $uploadmedia->fisrtThumbnailMedia();
+    $uploadmedia->firstThumbnailMedia();
 
     $I->scrollTo( ConstantsPage::$commentLink );
 
@@ -57,7 +57,7 @@ if( $temp >= ConstantsPage::$minValue ){
 
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-    $uploadmedia->fisrtThumbnailMedia();
+    $uploadmedia->firstThumbnailMedia();
 
     $I->scrollTo( ConstantsPage::$commentLink );
 

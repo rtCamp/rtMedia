@@ -223,9 +223,9 @@ class UploadMedia
     }
 
     /**
-     * fisrtThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
+     * firstThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
      */
-    public function fisrtThumbnailMedia(){
+    public function firstThumbnailMedia(){
 
         $I = $this->tester;
 

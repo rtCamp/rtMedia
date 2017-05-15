@@ -158,7 +158,7 @@ class BuddypressSettings
     /**
      * gotoAlubmPage() -> Will take the user to album page
      */
-    public function gotoAlubmPage(){
+    public function gotoAlbumPage(){
 
         $I = $this->tester;
 
@@ -177,7 +177,7 @@ class BuddypressSettings
 
         $I = $this->tester;
 
-        self::gotoAlubmPage();
+        self::gotoAlbumPage();
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 

@@ -3,7 +3,7 @@
 
 ## What is this repository for?
 
-This repository will contain automated test cases for rtmedia using codeception. Currently using http://codeception.com/for/wordpress wpcept package.
+This repository will contain automated test cases for rtMedia using codeception. Currently using http://codeception.com/for/wordpress wpcept package.
 
 ## Current Set up
 

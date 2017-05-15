@@ -17,11 +17,8 @@
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
-    $settings->gotoTab( ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl, $scrollToTab );
+    $settings->gotoTab( ConstantsPage::$otherSettingsTab, ConstantsPage::$otherSettingsTabUrl, $scrollToTab );
     $settings->verifyEnableStatus( ConstantsPage::$footerLinkLabel, ConstantsPage::$footerLinkCheckbox );
-
-    // $I->wait( 5 );
-
     $I->amOnPage('/');
     $I->seeElement( ConstantsPage::$footerLink );
 

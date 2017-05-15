@@ -10,7 +10,7 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( ' Use default rtmedia style when custom code is not provided.' );
+    $I->wantTo( ' Use default rtMedia style when custom code is not provided.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );

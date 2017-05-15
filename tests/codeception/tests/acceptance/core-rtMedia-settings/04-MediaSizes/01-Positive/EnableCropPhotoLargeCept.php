@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : To set photo thumbnail height and width when Crop is enabled.
+* Scenario : To set photo large height and width when Crop is enabled.
 */
 
     use Page\Login as LoginPage;
@@ -12,20 +12,15 @@
 
     $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
 
-    $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To set photo thumbnail height and width when Crop is enabled.' );
+    $I = new AcceptanceTester($scenario);
+    $I->wantTo( 'To set photo large height and width when Crop is enabled.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
-    $settings->setMediaSize( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailWidthTextbox, ConstantsPage::$thumbnailWidth, ConstantsPage::$thumbnailHeightTextbox, ConstantsPage::$thumbnailHeight );
-
-    // $I->scrollTo( ConstantsPage::$topSaveButton );
-    //
-    // $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailCropCheckbox );
-
+    $settings->setMediaSize( ConstantsPage::$photoLargeLabel, ConstantsPage::$largeWidthTextbox, ConstantsPage::$LargeWidth, ConstantsPage::$largeHeightTextbox, ConstantsPage::$LargeHeight );
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia( ConstantsPage::$userName );
 
@@ -33,8 +28,12 @@
     $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
     $I->reloadPage();
+    $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+
+    $uploadmedia->fisrtThumbnailMedia();
 
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
 
+    $I->reloadPage();
 ?>

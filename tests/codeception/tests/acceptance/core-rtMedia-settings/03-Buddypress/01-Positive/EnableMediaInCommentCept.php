@@ -50,12 +50,11 @@
 
         $I->seeElement( ConstantsPage::$mediaButtonInComment );
         $I->attachFile( ConstantsPage::$uploadFileInComment, ConstantsPage::$imageName );
-        // $I->wait( 10 );
+
         $I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20);
 
         $I->click( UploadMediaPage::$commentSubmitButton );
-        // $I->wait( 5 );
-        // $I->see( $commentStr );
+
         $I->waitForText( $commentStr, 30 );
 
     }else{
@@ -78,22 +77,20 @@
 
         $I->seeElement( ConstantsPage::$commentLink );
         $I->scrollTo( ConstantsPage::$commentLink );
-        // $I->wait( 3 );
+
 
         $I->seeElement( UploadMediaPage::$commentTextArea );
         $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
 
         $I->seeElement( ConstantsPage::$mediaButtonInComment );
         $I->attachFile( ConstantsPage::$uploadFileInComment, ConstantsPage::$imageName );
-        // $I->wait( 10 );
+
         $I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20);
 
         $I->click( UploadMediaPage::$commentSubmitButton );
-        // $I->wait( 5 );
-        // $I->see( $commentStr );
         $I->waitForText( $commentStr, 30 );
 
     }
 
-    // $I->reloadPage();
+
 ?>
