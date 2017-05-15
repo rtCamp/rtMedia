@@ -218,7 +218,7 @@ class RTMediaRouter {
 		// Switch defaults if post is set
 		global $rtmedia_query;
 		if ( isset( $wp_query->post ) ) {
-			if ( isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['media_type'] ) && 'album' === $rtmedia_query->query['media_type'] && isset( $rtmedia_query->media_query['album_id'] ) ) {
+			if ( isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['media_type'] ) && 'album' === $rtmedia_query->query['media_type'] && isset( $rtmedia_query->media_query['album_id'] ) && ! empty( $rtmedia_query->album ) ) {
 				foreach ( $rtmedia_query->album as $al ) {
 					if ( intval( $al->id ) === intval( $rtmedia_query->media_query['album_id'] ) ) {
 						$wp_query->post = get_post( $al->media_id );
