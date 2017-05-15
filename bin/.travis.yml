@@ -1,33 +1,18 @@
 dist: trusty
-
 language:
-    - php
+- php
 php:
-    - 5.6.4
-
-# env:
-#
-# - TEST_SUITE=01-Privacy
-# - TEST_SUITE=02-Display
-# - TEST_SUITE=03-Buddypress
-# - TEST_SUITE=04-MediaSizes
-# - TEST_SUITE=05-Types
-# - TEST_SUITE=06-CustomCss
-# - TEST_SUITE=07-OtherSettings
-
+- 5.6.4
 addons:
   browserstack:
     username: rtcamp2
     access_key:
-        secure: 0DiCxuMZTX065g13YCW4prCtTRgexsPLxEG++Cl7SWlJsiMCccoBKhZjoe3sIVUyIwP19qGF5+tmJivW3AkAgSs/hSFbn/5DhlrMNo08Ak49+R1iWC0Z7/ZQLGxPhDZjez2NTJB94G9MaUV0ud1nUOlZeAezZeJD507i5/LrwN+9ZFMl11wWzDl5t5MwIqe5unrsK9uwn9tpO41BGaDIVXWvTeJH0Onl0eBHAiZDbGlGT0ZAdhebI1Wg2oxs23vjehOEFoxz4e/qx9+MXH5yVP2BYVDU+sQed0E75e9H0otPYHl6Mt0kUiKgD6ARrvGUYHkDrd5SOce0Q8vdhvRB52RNV/wUsKfN+288RB8WWtgLO+KSwkN7m+IVHia6yC3xK1jwhKKD86OJv3McBdBaFQvOU3i3IbbLuaNUb3MRWhZekhc4FsIwvUFigKD0jENTrG7T9KJVYOiCK1QK/72IZmUviTbPA675U1H/utpYJdHq2aFy5N79Kn1Va1JIvFXgcHwBocdm4VZ5k5OzKnNr9QoGSdFSWbyWxiZJnICLJae7xb1GNE4BWG29BYrIEVnQcIKjWF/W8Ho7fdmWwlbHHAOQ/0CbyIFAT5z8CzhHGkWa7yeZPFXEEt/PsgaOWbRE2pL5TcY1cMgCbhYiORDhuYvE0wU88/dJ1nBuaaytubA=
-
+      secure: co0cs4Anst7BQJUS7NL0luIvlkD3h9Z0ErtrflhENnju7/NGMvgSPxwLXlkPBefTeeCsvkcnNoN04MUbMYfo4tQgsHWm3HSPk18UTCD6KOaIvhUE08dn1EfqHN2tdN3/P0n/SGwS5xXbz6yzdcQOwALtnM7Mh9Dt34ij2VdWohLhZQWQrttYbjC2xPju0UMXyfz88WH4b8V6aSWC7JTsNDZEElpa0l2GgnID/DIPJEu3KLtGI8vfFgoIumaiuTZZPdx49XQaHmLRdy5B8+DJq33049UBchoTbqVteao0XgTOe8jSJ3r3jfYhrxMQuz+5JaTwxXREjT8wgc3JUH0o0yrFY6sEiuRrU7bQeUg11Xw/E7H14yYEedh43R7yoeVeNmtISGQJGS4wREFiOxKHrErvLQNaSIuHYnl/D6/14++ZJ9qZ/OwXcAwkePxHJRggqgOXrMtmjFUigICMcoFRpWcozBG+iY2qb9SQLMaHQzqKahfFj+3MCchtlSkFrbh7H8tE49ytw1F1aidNzGnWinz6p6fRS+BnWPdRVEktvLLV30uv0Xb4kmnwqbvhdpphfhHeVMoZd81m/iKXNWuXkO0TPtBv/vTkEaEOUcqDKq3soeekhZo+JHxirjM+xwFJmvz4oqwED68Hhsh6nPj4QYXW25X7hR6KFyad6s1c9Mk=
 before_install:
 - rm -rf ~/.gnupg
-
 cache:
   paths:
   - vendor/
-
 before_script:
 - export PLUGIN_DIR=$(pwd)
 - sudo rm -rf /etc/mysql/
@@ -35,7 +20,7 @@ before_script:
 - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
 - wget -qO ee rt.cx/ee && sudo bash ee
 - sudo tail /var/log/ee/ee.log
-- sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=umesh.nevase@rtcamp.com --pass=ADMINPASS
+- sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
 - sudo sed -i '/^127.0.0.1/ s/$/ test.rtmedia.me/' /etc/hosts
 - sudo chmod 777 -R /var/www
 - cd /var/www/test.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
@@ -56,25 +41,12 @@ before_script:
 - cd $PLUGIN_DIR/tests/codeception/
 - composer install
 - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
-
 script:
-
-# - if [ "$TEST_SUITE" = "01-Privacy" ]; then wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/; fi
-#
-# - if [ "$TEST_SUITE" = "02-Display" ]; then wpcept run tests/acceptance/core-rtMedia-settings/02-Display/; fi
-#
-# - if [ "$TEST_SUITE" = "03-Buddypress" ]; then wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/; fi
-#
-# - if [ "$TEST_SUITE" = "04-MediaSizes" ]; then wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/; fi
-#
-# - if [ "$TEST_SUITE" = "05-Types" ]; then wpcept run tests/acceptance/core-rtMedia-settings/05-Types/; fi
-#
-# - if [ "$TEST_SUITE" = "06-CustomCss" ]; then wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/; fi
-#
-# - if [ "$TEST_SUITE" = "07-OtherSettings" ]; then wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/; fi
-
 - wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/
 - wpcept run tests/acceptance/core-rtMedia-settings/02-Display/
 - wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/
 - wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/
 - wpcept run tests/acceptance/core-rtMedia-settings/05-Types/
+env:
+  global:
+    secure: pOtRfNE1sLHD+bhEziRoBCrjVjekW+lRF9KnNQHG579QqBVDBK/vqVwF6v4cliAlktlLSaZQ7fcp8aqf2dV7QZwrfTAi+w/ehx1q+ejmQLZ0nYgaTZ/ldpy06YDW1e9Q53VpyVWfhselfigQ7DURFd/l6QGFxxA/fZYvzNN4ASaWWjFprRSZr1W7XR20qrqRHXO1cbRWmMZPQNj1M7DROrX3h+h1+Du/YHGApt0HR5/PDSVIPX2ew1eocRED4UZ19K7YrooHln+Zgd8fBCtWiJrf/nAE9910sEvRKQb+0GXeNwFqSuC8cnWD/XAFMI9tzQTVxnaTD34GWfVCTDxx1j95fEulRmEW8zHqHP15jaLGEfAhpuIE/aRNDctj2UhA57snqY07P8nleJX94BLJVg/jv/kL4ifaON1SXKAtrTDhZixpnSrzv9NOqZrF/9HnZzUYYuxTGOmdLw249jMsfZamRw59NqTAQgzfTn43lgOztUDK5dNHzLM/I98OQ7RFS+4/+gWjmKA+jl5rlYSO+dDR+X/zE5x1S7c7+38lh5utnvUkI4YO+yyuRpy2pkXNWntx9xkPRPZ9ELsic0NwI5g3AWniZBxpoqpXScDDIptpbMXw408RhXtb0GJISDL0IqpV/zAupNcWhf8RgzFOnn9C0jvctewtcc6/l268pyc=
