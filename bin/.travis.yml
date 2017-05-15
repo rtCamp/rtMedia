@@ -42,5 +42,5 @@ before_script:
 - cd $PLUGIN_DIR/tests/codeception/
 - composer install
 - export PATH="$PATH:/home/travis/build/umesh.nevase/rtMedia/tests/codeception/vendor/bin"
-script:
 - wpcept run tests/acceptance/core-rtMedia-settings/02-Display/
+
