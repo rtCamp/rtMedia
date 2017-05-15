@@ -124,19 +124,21 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$actions = intval( $actions[0]->{$actionwa} );
 		if ( true === $this->increase ) {
 			$actions ++;
-			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->undo_label );
+			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_undo_label_text', $this->undo_label );
+			$return['prev'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 		} else {
 			$actions --;
 			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
+			$return['prev'] = apply_filters( 'rtmedia_' . $this->action . '_undo_label_text', $this->undo_label );
 		}
 
 		$like_html = '<span class="rtmedia-like-counter"></span>';
-		if( $actions > 0  && function_exists( 'rtmedia_who_like_html' ) ) {
+		if ( $actions > 0  && function_exists( 'rtmedia_who_like_html' ) ) {
 			$like_html = rtmedia_who_like_html( $actions, $this->increase );
 		}
 
 		/* label for "person/people like this" in media popup" */
-		if( 1 === $actions ){
+		if ( 1 === $actions ) {
 			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $like_html );
 		} else {
 			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $like_html );
@@ -145,8 +147,6 @@ class RTMediaLike extends RTMediaUserInteraction {
 		if ( $actions < 0 ) {
 			$actions = 0;
 		}
-
-
 
 		$return['count'] = $actions;
 		$this->model->update( array( 'likes' => $actions ), array( 'id' => $this->action_query->id ) );
