@@ -49,7 +49,7 @@
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $uploadmedia->fisrtThumbnailMedia();
+        $uploadmedia->firstThumbnailMedia();
 
         $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10 );
 
