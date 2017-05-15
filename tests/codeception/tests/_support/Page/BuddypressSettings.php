@@ -18,8 +18,8 @@ class BuddypressSettings
     }
 
     /**
-    * gotoProfilePage() -> Will take the user to his/her profile page
-    */
+     * gotoProfilePage() -> Will take the user to his/her profile page
+     */
     public function gotoProfile( $userName ){
 
         $I = $this->tester;
@@ -31,8 +31,8 @@ class BuddypressSettings
     }
 
     /**
-    * countGroup() -> Will count the no of groups available
-    */
+     * countGroup() -> Will count the no of groups available
+     */
     public function countGroup( $selector ){
 
         $I = $this->tester;
@@ -44,22 +44,22 @@ class BuddypressSettings
     }
 
     /**
-    * checkMediaInGroup() -> Will check if the media is available in group
-    */
+     * checkMediaInGroup() -> Will check if the media is available in group
+     */
     public function checkMediaInGroup(){
 
-      $I = $this->tester;
+        $I = $this->tester;
 
-      $I->seeElement( self::$groupNameLink );
-      $I->click( self::$groupNameLink );
-    //   $I->wait( 3 );
+        $I->seeElement( self::$groupNameLink );
+        $I->click( self::$groupNameLink );
+        //   $I->wait( 3 );
         $I->waitForElement( ConstantsPage::$manageGrpLink, 10 );
 
     }
 
     /**
-    * gotoGroupPage() -> Will take the user to group page
-    */
+     * gotoGroupPage() -> Will take the user to group page
+     */
     public function gotoGroup(){
 
         $I = $this->tester;
@@ -70,8 +70,8 @@ class BuddypressSettings
     }
 
     /**
-    * createGroup() -> Will create a new group
-    */
+     * createGroup() -> Will create a new group
+     */
     public function createGroup(){
 
         echo "this is from create grp function.";
@@ -100,8 +100,8 @@ class BuddypressSettings
     }
 
     /**
-    * gotoActivityPage() -> Will take the user to activity page
-    */
+     * gotoActivityPage() -> Will take the user to activity page
+     */
     public function gotoActivityPage( $userName ){
 
         $I = $this->tester;
@@ -115,8 +115,8 @@ class BuddypressSettings
     }
 
     /**
-    * gotoMedia() -> Will take the user to media page
-    */
+     * gotoMedia() -> Will take the user to media page
+     */
     public function gotoMedia( $userName ){
 
         $I = $this->tester;
@@ -129,8 +129,8 @@ class BuddypressSettings
     }
 
     /**
-    * gotoPhotoPage() -> Will take the user to photo page
-    */
+     * gotoPhotoPage() -> Will take the user to photo page
+     */
     public function gotoPhotoPage( $userName ){
 
         $I = $this->tester;
@@ -142,8 +142,8 @@ class BuddypressSettings
     }
 
     /**
-    * countMedia() -> Will count media
-    */
+     * countMedia() -> Will count media
+     */
     public function countMedia( $selector ){
 
         $I = $this->tester;
@@ -156,8 +156,8 @@ class BuddypressSettings
     }
 
     /**
-    * gotoAlubmPage() -> Will take the user to album page
-    */
+     * gotoAlubmPage() -> Will take the user to album page
+     */
     public function gotoAlubmPage(){
 
         $I = $this->tester;
@@ -168,8 +168,8 @@ class BuddypressSettings
     }
 
     /**
-    * createNewAlbum() -> Will create new album
-    */
+     * createNewAlbum() -> Will create new album
+     */
     public function createNewAlbum(){
 
         $albumName = 'My test album';
@@ -210,8 +210,8 @@ class BuddypressSettings
     }
 
     /**
-    * editAlbumDesc() -> Will edit the desc for created new album
-    */
+     * editAlbumDesc() -> Will edit the desc for created new album
+     */
     public function editAlbumDesc(){
 
         $albumDesc = 'My test album desc';

@@ -2,17 +2,25 @@ dist: trusty
 
 language:
     - php
+
+branches:
+  only:
+    - codeception
 php:
     - 5.6.4
-
+#    - 7.0
+#env:
+#global:
+# - secure: fZcpoYDDuiP452eiP4N2vf4iZo52btYsH4waBb8Pd0+hCZuQkqbcFPsTBQEZhS5LwFrQd59GEbDjCXP/Nac8uk+EdBRtuQPmRcSza1ukS0JDs3m++SXE+75Qkh+jlsGU9jyBiiDrYJv6u6uJzO5oTv9XuKQWo9lH9RR3P1YkTcrxEeXAKAEIxgCkjuxBqxrryADy2LTDkf8zDJCxZlME6xUO+sKly4LmkqCcTXpjbL1d78T0WKmcG0gDkykcHSJeqQOg4ugIblvdoBZTJJOMvt8rKuhJbVYfRvZJBZg7eo3zUT5hxbbBVOtn03ffPp1XHLUNGQC1cDJ/MXGhrT6Q+dV0VXYtkpniXTN13OVIhwYGTbh5BVA3dI9iUdALpucPR5QMaVmfewq+nCZwPqL5dgJghcq1JdsLRNa6s+d9GJ9ftCBl2LfsgueoxbgVEG5oobj3TCtf60cuMVoefJGLQclJ8+pymnbqn4UHGx9kjbcirq1qSf1dkATKtZsbKcKn3bcgx9nilvA2/4x4HJ2sAQIH/+uJHKNj6MkUR+IC19ml68C2Fj6uh7l1yzhvk+fBHJFEiTtcWp9UqChpLOsEcxUMXRnqHWkPpBVePRSdj17pYreXP9uUHT0yBg96jP9hn+a1vn+cp6PCXq1cUcJaBWk06mZWFr3WSc4WbuCYCsc=
 addons:
   browserstack:
     username: rtcamp2
     access_key:
-        secure: co0cs4Anst7BQJUS7NL0luIvlkD3h9Z0ErtrflhENnju7/NGMvgSPxwLXlkPBefTeeCsvkcnNoN04MUbMYfo4tQgsHWm3HSPk18UTCD6KOaIvhUE08dn1EfqHN2tdN3/P0n/SGwS5xXbz6yzdcQOwALtnM7Mh9Dt34ij2VdWohLhZQWQrttYbjC2xPju0UMXyfz88WH4b8V6aSWC7JTsNDZEElpa0l2GgnID/DIPJEu3KLtGI8vfFgoIumaiuTZZPdx49XQaHmLRdy5B8+DJq33049UBchoTbqVteao0XgTOe8jSJ3r3jfYhrxMQuz+5JaTwxXREjT8wgc3JUH0o0yrFY6sEiuRrU7bQeUg11Xw/E7H14yYEedh43R7yoeVeNmtISGQJGS4wREFiOxKHrErvLQNaSIuHYnl/D6/14++ZJ9qZ/OwXcAwkePxHJRggqgOXrMtmjFUigICMcoFRpWcozBG+iY2qb9SQLMaHQzqKahfFj+3MCchtlSkFrbh7H8tE49ytw1F1aidNzGnWinz6p6fRS+BnWPdRVEktvLLV30uv0Xb4kmnwqbvhdpphfhHeVMoZd81m/iKXNWuXkO0TPtBv/vTkEaEOUcqDKq3soeekhZo+JHxirjM+xwFJmvz4oqwED68Hhsh6nPj4QYXW25X7hR6KFyad6s1c9Mk=
+     secure: T505OAjz+XN2yjCFipX9Mq+2tVAli8THWxtl0iYNnFl6zfHxcngK2xoAxUCt+9Lx5ncMNl4O7VCQW1Df8Eb/NSL04QaOCJMOvRj8wQHGEeqxbp0QmKLxCxrhQcqQLcMJhSQqO2zUb+FbuMwdXO8jxyCY49GLdjd5R7zYhXOjfnursge1pkw+uyXWtZufsDKTZ9UPdo5v6jXNibEVVsn86mUYDv5uuUej1qo8ioyEGfdnSXKmMwTXRqxkb+xbj0TwY+jffeFQv6h3zaT0YOMDNVD9UHJvAd9bRLc1NTbnVvNUa6/9N9HyNFBXGeIp7xy8CQDwprnDiIpix1G0o6wjIS6NndROOzU9bN/pbILXJPenviYneGjoN1ZrPp3zbtb0P0BvpxJuiQ2tL5dAnrG/GEDKun9J9mDWKncoBONM6KyhfIGwO1K6anPQqTbZplKcRJ1pUnyUH3gYxHg4exlkORclNXPyuST8RCJt++DiKdZCpcgQHwvTBX/vQKSh6XXCG0pMYN1JGUQdVWuaTgA6vPLBOHlDE7wvuWrnb0AaUP4Pfof2ApBq+ao+Fy/JccWIpcqcK2UIoNZ/LoWG/4JbkLLVoGRpDSUdKz9k5nJztAwzaXxWf9wzwFyQMne6H5Yf4RyHHZ6yJ9VskwYukbtw6qfq5pyKgyjX7qkeLkXRi08=
 
 before_install:
 - rm -rf ~/.gnupg
+
 
 cache:
   paths:
@@ -24,17 +32,18 @@ before_script:
 - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
 - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
 - wget -qO ee rt.cx/ee && sudo bash ee
+- sudo apt-get update
 - sudo tail /var/log/ee/ee.log
-- sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
-- sudo sed -i '/^127.0.0.1/ s/$/ test.rtmedia.me/' /etc/hosts
+- sudo ee site create sumeet2.rtmedia.me --wp --user=ADMINUSER --email=sumeet.sarna@rtcamp.com --pass=ADMINPASS
+- sudo sed -i '/^127.0.0.1/ s/$/ sumeet2.rtmedia.me/' /etc/hosts
 - sudo chmod 777 -R /var/www
-- cd /var/www/test.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
+- cd /var/www/sumeet2.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
 - cd $PLUGIN_DIR
-- cp -Rf * /var/www/test.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
-- cd /var/www/test.rtmedia.me/htdocs/
+- cp -Rf * /var/www/sumeet2.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
+- cd /var/www/sumeet2.rtmedia.me/htdocs/
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
 - wp plugin activate --all
-- cd /var/www/test.rtmedia.me/htdocs/wp-content/themes/
+- cd /var/www/sumeet2.rtmedia.me/htdocs/wp-content/themes/
 - wp theme activate twentysixteen
 - cd $PLUGIN_DIR
 - cd tests/codeception/tests/_data
@@ -44,9 +53,26 @@ before_script:
 - unzip BrowserStackLocal-linux-x64.zip
 - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
 - cd $PLUGIN_DIR/tests/codeception/
-- composer install
-- export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
+- composer update
+- export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
 
 script:
 
-- wpcept run acceptance --steps 
+- wpcept run tests/acceptance/core-rtMedia-settings/01-Types/01-Negative/
+- wpcept run tests/acceptance/core-rtMedia-settings/01-Types/02-Positive/
+- wpcept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/
+- wpcept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/
+- wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/
+- wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/
+- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/SetSizeForMusicForSingleplayerCept.php --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/SetSizeOfVideoActivityplayerCept.php --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Postive/SetSizeOfVideoSingleplayerCept.php --steps
+
+- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/02-Negative/ --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/01-Positive/ --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/05-Privacy/02-Negative/ --steps
+- wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/
+- wpcept run tests/acceptance/core-rtMedia-settings/06-CustomCss/02-Negative/
+- wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/
+- wpcept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/
+
