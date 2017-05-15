@@ -7,7 +7,7 @@ addons:
   browserstack:
     username: "rtcamp2"
     access_key:
-      secure: "fwxPQanBIFXUfvm1WfBC3w0cOw7Cx6f4Lz1NH5Hje7W3t8d6Vj7ckaWsJnymBiOv0nch2kvQtVvPhTobyPXH0B6rJXno0/0HhFZVV9UBdrg/IubJzBxHLlTKIHC+jdP0aklp5O4O3/syQZrMmQAhKjHBKzt+KQuqVohbiUpAnSDYN9zApL/TwRc7bVsEhz1rtlZbPs13cBkyVGlngHghs1BuX6dQ8+gfwQ5ueK1tcfI02iVSs7Lp1Zy9NH2fPERdHp9xuiOhKy7enqR4DzPQ/hj0nH+J1eB5zicVSG2vdhamUCu7IQIB5WGbgyfWyaASnwlc2XD/vFVtM7jo+hDBIWicZ+0111aF/AlzVfzy8S1uI2yoysJNCuYiG6L6Gsj8w3bWrtJ0vUYuUv5d9SkLqiSwQ/wTbUkdmezRhIhXdyhrG7N+tsPA1aiyNMWEnNrD+ZHCkEjdMNXXUOgs68TSR46HrVjhat9vsmskuoOVBs2VXiciyBxZgSWhDjrWbORHsAsqe37vdDq14QmeGWvOvJ9qZSa53DFdzbiSdoSWHRHDhRIV7BcomcDdkx9qScYc4Gf+ZC3nYvFAUm2KwbiQKxl5Ck0TDPmlph2ulsxVg/1DNQKo034Dh8E4KriSUjAboIz2JBva1Tla6DyOyl7H1q7JoAU4czOqR/TnpoO5MzY="
+      secure: "c9H+FGp+XbHoKJC+gRjLtWKPpy581cELM42CNwm4vNtoFLkWCDRzTS4zyGkKPOC5vfSuS2bCAArAgFSyA0rr8CcyoMS6Qw6d32pUYDxHq4eTboR4j213aD+uvC6EuPPpUeG09Y7yO9nxDTi2IbrPUtm5nQd4zdgGhxhjdW0xOE0="
 before_install:
 - rm -rf ~/.gnupg
 cache:
@@ -42,7 +42,7 @@ before_script:
 - cd $PLUGIN_DIR/tests/codeception/
 - composer instal
 - pwd
-- export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
+- export PATH="$PATH:/home/travis/build/umeshnevase/rtMedia/tests/codeception/vendor/bin"
 script:
 - wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/
 - wpcept run tests/acceptance/core-rtMedia-settings/02-Display/
