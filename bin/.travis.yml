@@ -40,7 +40,12 @@ before_script:
 - unzip BrowserStackLocal-linux-x64.zip
 - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
 - cd $PLUGIN_DIR/tests/codeception/
-- composer install
-- export PATH="$PATH:/home/travis/build/umesh.nevase/rtMedia/tests/codeception/vendor/bin"
+- composer instal
+- pwd
+- export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
+script:
+- wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/
 - wpcept run tests/acceptance/core-rtMedia-settings/02-Display/
-
+- wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/
+- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/
+- wpcept run tests/acceptance/core-rtMedia-settings/05-Types/
