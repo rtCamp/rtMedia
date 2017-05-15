@@ -3,20 +3,18 @@ namespace Page;
 
 class Constants
 {
-    public static $userName = 'rtcamp';
-    public static $password = 'Test@1230';
+    public static $userName = 'ADMINUSER';
+    public static $password = 'ADMINPASS';
 
-    public static $plugin = 'li#menu-plugins';
-
-    public static $imageName = 'test.jpg';
-    public static $videoName = 'sampleVideo.mp4';
-    public static $audioName = 'audio.mp3';
+    public static $imageName = 'test-data/images/test.jpg';
+    public static $audioName = 'test-data/music/mpthreetest.mp3';
+    public static $videoName = 'test-data/videos/testmpfour.mp4';
 
     public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
     public static $customCssEmptyValue = '';
 
-    public static $numOfMediaPerPage = '3';
-    public static $numOfMediaPerPageOnActivity = '3';
+    public static $numOfMediaPerPage = '2';
+    public static $numOfMediaPerPageOnActivity = '2';
     public static $minValue = '1';
 
     public static $thumbnailWidth = '150';
@@ -36,7 +34,15 @@ class Constants
 
     public static $imgQualityValue = '80';
 
+    public static $rtMediaSettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings';
+    public static $saveSettingsButtonBottom = '.rtm-button-container.bottom .rtmedia-settings-submit';
+    public static $rtMediaSeetings = '#toplevel_page_rtmedia-settings';
+
     public static $topSaveButton = '.rtm-button-container.top input.rtmedia-settings-submit';
+
+    public static $grpTableRow = 'tbody#the-list tr#groups';
+    public static $enableUserGrpCheckbox = 'input[name="bp_components[groups]"]';
+    public static $saveBPSettings = 'input#bp-admin-component-submit';
 
     public static $displayTabUrl = '#rtmedia-display';
     public static $buddypressTabUrl = '#rtmedia-bp';
@@ -60,6 +66,7 @@ class Constants
     public static $numOfMediaLabel = 'Number of media per page';
     public static $strMasonaryCheckboxLabel = 'Enable Masonry Cascading grid layout';
     public static $strMediaDisplayPaginationLabel = 'Media display pagination option';
+    public static $strMediaSearchLabel = 'Enable gallery media search';
 
     public static $strEnableMediaInProLabel = 'Enable media in profile';
     public static $strEnableMediaInGrpLabel = 'Enable media in group';
@@ -69,6 +76,8 @@ class Constants
     public static $strActivityMediaLikeLabel = 'Create activity for media likes';
     public static $strActivityMediaCommentLabel = 'Create activity for media comments';
     public static $strMediaUploadFromActivityLabel = 'Allow upload from activity stream';
+    public static $strMediaInCommnetLabel = 'Enable media in comment';
+    public static $strShowAlbumDescLabel = 'Show album description';
 
     public static $photoLabel = 'Photo';
     public static $videoLabel = 'Video';
@@ -102,6 +111,7 @@ class Constants
     public static $loadmoreRadioButton = 'input[value="load_more"]';
     public static $paginationRadioButton = 'input[value="pagination"]';
     public static $numOfMediaTextbox = 'input[name="rtmedia-options[general_perPageMedia]"]';
+    public static $mediaSearchCheckbox = 'input[name="rtmedia-options[general_enableGallerysearch]"]';
 
     public static $enableMediaInProCheckbox = 'input[name="rtmedia-options[buddypress_enableOnProfile]"]';
     public static $enableMediaInGrpCheckbox = 'input[name="rtmedia-options[buddypress_enableOnGroup]"]';
@@ -111,6 +121,10 @@ class Constants
     public static $activityMediaCommentCheckbox = 'input[name="rtmedia-options[buddypress_mediaCommentActivity]"]';
     public static $mediaUploadFromActivityCheckbox = 'input[name="rtmedia-options[buddypress_enableOnActivity]"]';
     public static $numOfMediaTextboxActivity = 'input[name="rtmedia-options[buddypress_limitOnActivity]"]';
+    public static $mediaInCommentCheckbox = 'input[name="rtmedia-options[buddypress_enableOnComment]"]';
+    public static $mediaButtonInComment = 'button.rtmedia-comment-media-upload';
+    public static $uploadFileInComment = 'div.rtm-media-single-comments div.moxie-shim.moxie-shim-html5 input[type=file]';
+    public static $albumDescCheckbox = 'input[name="rtmedia-options[general_enableAlbums_description]"]';
 
     public static $photoCheckbox = 'input[name="rtmedia-options[allowedTypes_photo_enabled]"]';
     public static $videoCheckbox = 'input[name="rtmedia-options[allowedTypes_video_enabled]"]';
@@ -142,13 +156,14 @@ class Constants
     public static $imgQualityTextbox = 'input[name="rtmedia-options[general_jpeg_image_quality]"]';
 
     public static $privacyCheckbox = 'input[name="rtmedia-options[privacy_enabled]"]';
-    public static $privateRadioButton = 'input[value="60"]';
-    public static $loggedInUsersRadioButton = 'input[value="20"]';
-    public static $publicRadioButton = 'input#rtm-form-radio-4';
+    public static $privateRadioButton = '.rtm-form-radio input[value="60"]';
+    public static $loggedInUsersRadioButton = '.rtm-form-radio input[value="20"]';
+    public static $publicRadioButton = '.rtm-form-radio input[value="0"]';
     public static $privacyUserOverrideCheckbox = 'input[name="rtmedia-options[privacy_userOverride]"]';
 
     public static $defaultStyleCheckbox = 'input[name="rtmedia-options[styles_enabled]"]';
     public static $cssTextaear= '.rtm-form-textarea';
+    public static $cssTextarea= 'span.rtm-field-wrap #rtmedia-custom-css';
 
     public static $enableJsonDataCheckbox = 'input[name="rtmedia-options[rtmedia_enable_api]"]';
     public static $enableUsageDataTrackingCheckbox = 'input[name="rtmedia-options[general_AllowUserData]"]';
@@ -187,6 +202,43 @@ class Constants
     public static $groupNameTextbox = 'input#group-name';
     public static $groupDescTextarea = 'textarea#group-desc';
     public static $createGroupButton = 'input#group-creation-create';
-    
 
+    public static $mediaUplaodButtonOnComment = 'div button.rtmedia-comment-media-upload';
+    public static $mediaOptionButton = 'div.rtmedia-action-buttons';
+    public static $addAlbumButtonLink = 'ul.rtm-options li a.rtmedia-modal-link';
+    public static $createAlbumPopup = 'div.rtmedia-popup';
+    public static $albumNameTextbox = 'input.rtm-input-medium';
+    public static $createAlbumButton = 'button#rtmedia_create_new_album';
+    public static $closeAlbumButton = 'button.mfp-close';
+    public static $firstAlbum = 'ul.rtmedia-album-list li:nth-child(1)';
+    public static $albumEditLink = 'a.rtmedia-edit';
+    public static $albumDescTeaxtarea = 'textarea.rtmedia-desc-textarea';
+    public static $saveAlbumButton = 'input.rtmedia-save-album';
+    public static $albumDescSelector = '.gallery-album-description';
+    public static $scrollSelector = 'a#rtmedia-nav-item-albums';
+
+    public static $mediaPageScrollPos = '#user-activity';   //Scroll position for activity and media pages
+    public static $profilePicture = 'div#item-header-avatar';
+    public static $commentLink = 'span > a.rtmedia-comment-link';
+
+    public static $mediaSeachSelector = '.media_search';
+
+    public static $activityPrivacyStatus = '#activity-stream.activity-list.item-list > li.activity.activity_update.activity-item > div.activity-content > div.activity-inner p';
+    public static $commentDiv = 'div.rtmedia-comment-content p';
+    public static $goBackToAlbumPage = 'a.rtm-button-back';
+    public static $metaSection = '.widget_meta';
+    public static $logoutLink = '.widget_meta > ul > li:nth-child(2) a';
+    public static $logoutMsg = 'p.message';
+
+    public static $saveSession = false;
+    public static $fileList = '#rtmedia_uploader_filelist';
+    public static $siteEntryTitle = '.entry-title';
+    public static $mediaContainer = 'div.rtm-lightbox-container';
+    public static $fileListOnMediaComment = 'div.rtmedia-plupload-notice';
+    public static $saveMsgSelector = '#setting-error-settings_updated';
+    public static $nextGrpButton = '#group-creation-next';
+    public static $manageGrpLink = '#admin';
+    public static $optionsPopup = '.rtm-options';
+    public static $albumMsg = ' album created successfully.';
+    public static $activitySelector = '#activity-stream';
 }

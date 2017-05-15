@@ -2,7 +2,7 @@
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
-* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [sanket.parmar] (http://profiles.wordpress.org/sanket.parmar), [pranalipatel] (http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani] (http://profiles.wordpress.org/jignesh.nakrani), [mangeshp] (http://profiles.wordpress.org/mangeshp), [manishsongirkar36] (http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode] (http://profiles.wordpress.org/kiranpotphode), [yahil] (http://profiles.wordpress.org/yahil), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [sagarjadhav] (http://profiles.wordpress.org/sagarjadhav), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [faishal] (http://profiles.wordpress.org/faishal), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [rahul286] (http://profiles.wordpress.org/rahul286), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay), [jarretc] (http://profiles.wordpress.org/jarretc), [tobiaskluge] (http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal] (http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla] (http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar] (http://profiles.wordpress.org/mehulkaklotar), [tannermirabel] (http://profiles.wordpress.org/tannermirabel), [kishores] (http://profiles.wordpress.org/kishores), [chandrapatel] (http://profiles.wordpress.org/chandrapatel),
+* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [mangeshp] (http://profiles.wordpress.org/mangeshp), [sanket.parmar] (http://profiles.wordpress.org/sanket.parmar), [pranalipatel] (http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani] (http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36] (http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode] (http://profiles.wordpress.org/kiranpotphode), [yahil] (http://profiles.wordpress.org/yahil), [1naveengiri] (http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90] (http://profiles.wordpress.org/bhargavbhandari90), [deepak1191] (http://profiles.wordpress.org/deepak1191), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [sagarjadhav] (http://profiles.wordpress.org/sagarjadhav), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [faishal] (http://profiles.wordpress.org/faishal), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [rahul286] (http://profiles.wordpress.org/rahul286), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay), [jarretc] (http://profiles.wordpress.org/jarretc), [tobiaskluge] (http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal] (http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla] (http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar] (http://profiles.wordpress.org/mehulkaklotar), [tannermirabel] (http://profiles.wordpress.org/tannermirabel), [kishores] (http://profiles.wordpress.org/kishores), [chandrapatel] (http://profiles.wordpress.org/chandrapatel),
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -87,6 +87,8 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
  34. **[Album-Privacy](https://rtmedia.io/products/rtmedia-album-privacy/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Album Privacy")** - Set album privacy when user create new albums or edit album.
  35. **[BuddyPress-Group-Media-Control](https://rtmedia.io/products/rtmedia-buddypress-group-media-control/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia BuddyPress Group Media Control")** - Allow group owner to provide media upload feature for their group.
  36. **[Set-Custom-Thumbnail-for-Audio/Video](https://rtmedia.io/products/rtmedia-set-custom-thumbnail-for-audiovideo/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Set Custom Thumbnail for Audio/Video")** - Allow media owner to change the thumbnail of uploaded audio/video files.
+ 37. **[rtMedia-SEO](https://rtmedia.io/products/rtmedia-seo/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia SEO")** - Generate XML sitemap of all the public media files uploaded via rtMedia plugin, also compatible with [Yoast-SEO](https://wordpress.org/plugins/wordpress-seo/ "Yoast SEO") plugin if you are already using on your site.
+
 
 #### Important Links ####
 
@@ -134,6 +136,79 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 
 ## Changelog ##
+
+#### 4.3 [Feb 14, 2017] ####
+
+* NEW FEATURES
+
+ * Comment Media - User can upload media in comment box
+
+* ENHANCEMENTS
+
+ * rtMedia settings to unable or disable likes for Media
+ * Attachment upload in rtMedia support form
+ * Added: rtMedia Version Constant
+ * Added: Action to Change rtMedia query before shortcode run
+ * Added: Filter to Change Media menu position in admin bar
+
+* FIXED
+
+ * Bulk delete in Media library Dashboard
+ * Warnings when user click on pagination
+ * rtMedia gallery shortcode pagination
+ * Remove unwanted fields in rtMedia support form
+ * Sorting & Options issue in Media Tab
+ * Comment and Like Privacy issue
+ * Comment and Like for media delete issue in Group
+ * Load More issue on activity and group Tab
+
+#### 4.2.1 [Dec 21, 2016] ####
+
+* FIXED
+
+ * Security issues pointed out by James Golovich
+ * Direct access of a file
+ * Access rights to modify/update the rtMedia settings
+ * Added validation on custom CSS before saving
+ * Section fluctuation when user drags media into activity box
+ * Audio / Video autoplay in Safari browser
+ * JS error on media comments when activity stream is disabled from the backend
+ * Media upload error when activity stream is disabled from the backend
+ * Invalid license key notice appearing even when all keys are valid
+ * Addon validation checks will happen every six hours (only if addons installed)
+ * Changed plugin's review link to rate on WordPress.org
+
+#### 4.2 [Nov 17, 2016] ####
+
+* NEW FEATURES
+
+ * Albums will now display media count by default
+ * "@mentions" in comments added to lightbox and single media page
+ * Added "Next" / "Previous" navigation links to single media page
+
+* ENHANCEMENTS
+
+ * rtMedia "Support" tab improvements- Directly attach a screenshot while submitting a support ticket Debug Info can now be easily downloaded as a .txt file
+ * Added: "Show more comments" link in media pop-up (lightbox) and single media page
+ * Added: Action to target area below media comments in lightbox or single media page
+ * Added: Filter to add extra component to comments
+ * Added: Filter to disallow blank text field while uploading media in Activity
+ * Added: Filter to modify "Options" & "Upload" labels in Media Gallery
+
+* FIXED
+
+ * After uploading media, the Upload panel will now collapse
+ * Incorrect pagination text display in Media tab
+ * "posted an update" string not getting translated in Activity feed for posts with attached media. Added translation support for all "rtmedia_update" Activity type
+ * Duplicate activity generation when "Post Update" is clicked multiple times
+ * Singular/plural form of "n people liked this" string
+ * BuddyPress Group Media tab not displaying in Beta version 2.7.2
+ * Media description not saving properly when uploading multiple media
+ * Link to comment in WordPress backend not leading back to comment
+ * Video popup UI for vertical videos
+ * CSS-related responsive video layout issue
+ * Fixed broken "Import media sizes" anchor link in admin notice
+ * Lightbox privacy symbol alignment issue
 
 #### 4.1.8 [Oct 05, 2016] ####
 * Fix fatal error for older PHP version
@@ -1241,8 +1316,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.1.8 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added filters to alter the image/video URLS in activity. Fix UI/media broken on activity page also fixed the fixed fatal error for older PHP version.
+#### 4.3 ####
+Now upload media in comment & fixed rtMedia shortcode pagination along with several other bugs. Please update/re-save the permalinks after the plugin update.
 
 ## Sponsors ##
 

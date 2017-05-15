@@ -1,25 +1,29 @@
 <?php
 namespace Page;
 
+use Page\Constants as ConstantsPage;
+
 class UploadMedia
 {
 
     public static $galleryLable = '.rtm-gallery-title';
-    public static $uploadLink = '.rtm-media-options .rtmedia-upload-media-link';
-    public static $selectFileButton = '.rtm-select-files #rtMedia-upload-button';
+    public static $uploadLink = '.rtmedia-upload-media-link';
+    public static $selectFileButton = 'input#rtMedia-upload-button';
     public static $fileList = '#rtmedia_uploader_filelist';
     public static $uploadTermsCheckbox = '#rtmedia_upload_terms_conditions';
     public static $uploadMediaButton = '.start-media-upload';
     public static $firstChild = 'ul.rtm-gallery-list li:first-child';
-    public static $commentTextArea = '#comment_content';
     public static $commentSubmitButton = '.rt_media_comment_submit';
     public static $whatIsNewTextarea = '#whats-new';
     public static $scrollPosOnActivityPage = '#user-activity';
     public static $postUpdateButton = 'input#aw-whats-new-submit';
-    public static $mediaPageScrollPos = '#user-activity';
+    public static $uploadFile = 'div.moxie-shim.moxie-shim-html5 input[type=file]';
+    public static $uploadFromActivity = 'div#whats-new-options div input[type="file"]';
+    public static $commentTextArea = '#comment_content';
+    public static $uploadContainer = '#rtmedia-upload-container';
+    public static $mediaButtonOnActivity = 'button.rtmedia-add-media-button';
 
     protected $tester;
-
     public function __construct( \AcceptanceTester $I )
     {
         $this->tester = $I;
@@ -28,169 +32,206 @@ class UploadMedia
     /**
     * gotoMediaPage() -> Will take the user to media page
     */
-    public function gotoMediaPage($I,$userName,$link){
+    public function gotoMediaPage( $userName, $link ){
+
+        $I = $this->tester;
 
         $url = 'members/'.$userName.'/media';
-        $I->amonPage($url);
 
-        $I->wait(10);
+        $I->amonPage( $url );
+        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
-        $I->seeElementInDOM($link);
-        $I->scrollTo(self::$mediaPageScrollPos);
-        $I->wait(2);
-        $I->click($link);
-        $I->wait(10);
+        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+        $I->seeElement( $link );
+        $I->click( $link );
 
-        $I->seeElement(self::$galleryLable);
-        $I->wait(3);
-        $I->scrollTo(self::$galleryLable);
+        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+
+        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+
+        $I->wait( 5 );
 
     }
 
     /**
     * uploadTermasCheckbox() -> will check `terms of service checkbox`
     */
-    public function uploadTermasCheckbox($I){
+    public function uploadTermasCheckbox(){
 
-        $I->dontSeeCheckboxIsChecked(self::$uploadTermsCheckbox);
-        $I->checkOption(self::$uploadTermsCheckbox); //Assuming that "rtMedia Uplaod terms" plugin is enabled
+        $I = $this->tester;
+
+        $I->dontSeeCheckboxIsChecked( self::$uploadTermsCheckbox );
+        $I->checkOption( self::$uploadTermsCheckbox ); //Assuming that "rtMedia Uplaod terms" plugin is enabled
 
     }
 
     /**
     * uploadMedia() -> Will perform neccessary steps to uplpad media. In this case it will work for image media type.
     */
-    public function uploadMedia($I,$userName,$mediaFile,$link){
+    // public function uploadMedia( $userName, $mediaFile, $link ){
+    public function uploadMedia( $userName, $mediaFile){
 
-        self::gotoMediaPage($I,$userName,$link);
+        $I = $this->tester;
 
-        $I->seeElement(self::$uploadLink);
-        $I->click(self::$uploadLink);
-        $I->wait(2);
+        $I->seeElement( ConstantsPage::$mediaPageScrollPos );
+        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+        // $I->seeElement( $link );
+        // $I->click( $link );
+        //
+        // // $I->wait( 5 );
+        // $I->waitForElement( $link, 10);
+        // $I->seeElementInDOM( ConstantsPage::$mediaPageScrollPos );
+        // $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+        // $I->wait( 5 );
 
-        $I->seeElement(self::$selectFileButton);
-        $I->attachFile('input[type="file"]',$mediaFile);
-        $I->wait(10);
+        $I->waitForElementVisible( self::$uploadLink, 20);
+        // $I->seeElement( self::$uploadLink );
+        $I->click( self::$uploadLink );
+        // $I->wait( 5 );
+        $I->waitForElement( self::$uploadContainer, 10 );
+        // $I->seeElement( self::$uploadContainer);
+        // $I->wait( 5 );
+        $I->seeElementInDOM(self::$selectFileButton);
 
-        $I->seeElement(self::$fileList);
+        $I->attachFile( self::$uploadFile, $mediaFile );
+        // $I->wait( 10 );
+        $I->waitForElement( ConstantsPage::$fileList, 20);
 
     }
 
     /**
     * uploadMediaUsingStartUplaodButton() -> Will the media when 'Direct Uplaod' is not enabled
     */
-    public function uploadMediaUsingStartUploadButton($I,$userName,$mediaFile,$link){
+    // public function uploadMediaUsingStartUploadButton( $userName, $mediaFile, $link ){
+    public function uploadMediaUsingStartUploadButton( $userName, $mediaFile ){
 
-        self::uploadMedia($I,$userName,$mediaFile,$link);
+        $I = $this->tester;
 
-        self::uploadTermasCheckbox($I);
+        // self::uploadMedia( $userName, $mediaFile, $link );
+        self::uploadMedia( $userName, $mediaFile );
 
-        $I->seeElement(self::$uploadMediaButton);
-        $I->click(self::$uploadMediaButton);
+        $I->seeElement( self::$uploadMediaButton );
+        $I->click( self::$uploadMediaButton );
 
-        $I->wait(10);
+        // $I->wait( 10 );
+        $I->waitForElementNotVisible( ConstantsPage::$fileList, 20);
 
     }
 
     /**
     * uploadMediaDirectly() -> Will the media when 'Direct Uplaod' is enabled
     */
-    public function uploadMediaDirectly($I,$userName,$mediaFile,$link){
+    public function uploadMediaDirectly( $userName, $mediaFile ){
 
-        self::uploadMedia($I,$userName,$mediaFile,$link);
+        $I = $this->tester;
 
-        $I->dontSeeElement(self::$uploadMediaButton);
+        self::uploadMedia( $userName, $mediaFile );
 
-        self::uploadTermasCheckbox($I);
-
-        $I->wait(3);
+        // $I->wait( 3 );
+        $I->waitForElementNotVisible( ConstantsPage::$fileList, 20);
 
     }
 
     /**
     * addStatus() -> Will perform the neccessary steps to add status
     */
-    public function addStatus($I){
+    public function addStatus(){
 
-        $I->seeElementInDOM(self::$scrollPosOnActivityPage);
-        $I->scrollTo(self::$scrollPosOnActivityPage);
+        $I = $this->tester;
 
-        $I->seeElementInDOM(self::$whatIsNewTextarea);
-        $I->click(self::$whatIsNewTextarea);
+        $I->seeElementInDOM( self::$scrollPosOnActivityPage );
+        $I->scrollTo( self::$scrollPosOnActivityPage );
 
-        $I->wait(3);
+        $I->seeElementInDOM( self::$whatIsNewTextarea );
+        $I->click( self::$whatIsNewTextarea );
+
+        // $I->wait( 3 );
+        $I->waitForElementVisible( self::$postUpdateButton, 10);
+    }
+
+    public function postStatus( $status ){
+
+        $I = $this->tester;
+
+        self::addStatus();
+
+        $I->fillfield( self::$whatIsNewTextarea, $status );
+        $I->seeElement( ConstantsPage::$privacyDropdown );
+
+        $I->click( self::$postUpdateButton );
+        $I->waitForText( $status, 20 );;
+        // $I->reloadPage();
+
     }
 
     /**
     * uploadMediaFromActivity() -> Will upload the media from activity page when it is enabled from dashboard
     */
-    public function uploadMediaFromActivity($I,$mediaFile){
+    public function uploadMediaFromActivity( $mediaFile ){
 
-        self::addStatus($I);
+        $I = $this->tester;
 
-        $I->fillfield(self::$whatIsNewTextarea,"test from activity stream");
-        $I->wait(3);
+        self::addStatus();
 
-        $I->attachFile('input[type="file"]',$mediaFile);
-        $I->wait(5);
+        $I->fillfield( self::$whatIsNewTextarea, "test from activity stream" );
+        $I->seeElement( self::$mediaButtonOnActivity );
+        $I->attachFile( self::$uploadFromActivity, $mediaFile );
+        // $I->wait( 10 );
+        $I->waitForElement( ConstantsPage::$fileList, 20);
 
-        self::uploadTermasCheckbox($I);
-
-        $I->click(self::$postUpdateButton);
-        $I->wait(5);
+        $I->click( self::$postUpdateButton );
+        // $I->wait( 10 );
+        $I->waitForElementNotVisible( ConstantsPage::$fileList, 20);
 
     }
     /**
     * bulkUploadMediaFromActivity() -> Will upload the media in bulk from activity page when it is enabled from dashboard
     */
-    public function bulkUploadMediaFromActivity($I,$mediaFile,$numOfMedia){
+    public function bulkUploadMediaFromActivity( $mediaFile, $numOfMedia ){
 
-        self::addStatus($I);
+        $I = $this->tester;
+        $bulkUploadStatus = 'test from activity stream while bulk upload';
 
-        $I->fillfield(self::$whatIsNewTextarea,"test from activity stream");
-        $I->wait(3);
+        self::addStatus();
+
+        $I->fillfield( self::$whatIsNewTextarea, $bulkUploadStatus );
+        // $I->wait( 3 );
+        $I->seeElement( self::$mediaButtonOnActivity );
 
         //if $numOfMedia > 0 then it will execute if condition else for $numOfMedia = 0 it will execute else part
-        if($numOfMedia > 0){
-            for ($i = 0; $i < $numOfMedia; $i++) {
-                $I->attachFile('input[type="file"]',$mediaFile);
-                $I->wait(3);
+        if( $numOfMedia > 0 ){
+            for ( $i = 0; $i < $numOfMedia+1; $i++ ) {
+
+                $I->attachFile( self::$uploadFromActivity, $mediaFile );
+                // $I->wait( 5 );
+                $I->waitForElement( ConstantsPage::$fileList, 20);
             }
         }else{
             $tempMedia = 5;
-            for ($i = 0; $i < $tempMedia; $i++) {
-                $I->attachFile('input[type="file"]',$mediaFile);
-                $I->wait(3);
+            for ( $i = 0; $i < $tempMedia; $i++) {
+                $I->attachFile( self::$uploadFromActivity, $mediaFile );
+                // $I->wait( 5 );
+                $I->waitForElement( ConstantsPage::$fileList, 20);
             }
         }
 
-        self::uploadTermasCheckbox($I);
-
-        $I->click(self::$postUpdateButton);
-        $I->wait(5);
+        $I->click( self::$postUpdateButton );
+        $I->waitForElementNotVisible( ConstantsPage::$fileList, 20);
+        $I->reloadPage();
+        // $I->wait( 20 );
 
     }
 
     /**
     * fisrtThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
     */
-    public function fisrtThumbnailMedia($I){
-
-        $I->click(self::$firstChild);
-        $I->wait(5);
-
-    }
-
-    public function countMedia( $selector ){
+    public function fisrtThumbnailMedia(){
 
         $I = $this->tester;
 
-        $mediaArray = $I->grabMultiple( $selector ); // This will grab the no. of media available on media page
-        echo nl2br( 'No of media on page = '. count( $mediaArray ) );
-
-        return count( $mediaArray );
-
+        $I->click( self::$firstChild );
+        // $I->wait( 10 );
+        $I->waitForElement( ConstantsPage::$mediaContainer, 10);
     }
-
 
 }

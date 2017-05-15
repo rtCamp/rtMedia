@@ -1,50 +1,52 @@
-sudo: required
+dist: trusty
 
-language: node_js
-node_js:
-- "0.10"
+language:
+    - php
+php:
+    - 5.6.4
 
-env:
-- WP_VERSION=4.0 WP_MULTISITE=0
+addons:
+  browserstack:
+    username: rtcamp2
+    access_key:
+        secure: co0cs4Anst7BQJUS7NL0luIvlkD3h9Z0ErtrflhENnju7/NGMvgSPxwLXlkPBefTeeCsvkcnNoN04MUbMYfo4tQgsHWm3HSPk18UTCD6KOaIvhUE08dn1EfqHN2tdN3/P0n/SGwS5xXbz6yzdcQOwALtnM7Mh9Dt34ij2VdWohLhZQWQrttYbjC2xPju0UMXyfz88WH4b8V6aSWC7JTsNDZEElpa0l2GgnID/DIPJEu3KLtGI8vfFgoIumaiuTZZPdx49XQaHmLRdy5B8+DJq33049UBchoTbqVteao0XgTOe8jSJ3r3jfYhrxMQuz+5JaTwxXREjT8wgc3JUH0o0yrFY6sEiuRrU7bQeUg11Xw/E7H14yYEedh43R7yoeVeNmtISGQJGS4wREFiOxKHrErvLQNaSIuHYnl/D6/14++ZJ9qZ/OwXcAwkePxHJRggqgOXrMtmjFUigICMcoFRpWcozBG+iY2qb9SQLMaHQzqKahfFj+3MCchtlSkFrbh7H8tE49ytw1F1aidNzGnWinz6p6fRS+BnWPdRVEktvLLV30uv0Xb4kmnwqbvhdpphfhHeVMoZd81m/iKXNWuXkO0TPtBv/vTkEaEOUcqDKq3soeekhZo+JHxirjM+xwFJmvz4oqwED68Hhsh6nPj4QYXW25X7hR6KFyad6s1c9Mk=
 
 before_install:
 - rm -rf ~/.gnupg
-- sudo apt-get install xvfb
+
+cache:
+  paths:
+  - vendor/
 
 before_script:
 - export PLUGIN_DIR=$(pwd)
 - sudo rm -rf /etc/mysql/
-- sudo apt-get -qq purge mysql* graphviz*
-- sudo apt-get -qq autoremove
-- sudo apt-get update
+- sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
 - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
-- sudo wget -qO ee rt.cx/ee && sudo bash ee
-- source /etc/bash_completion.d/ee_auto.rc
-- sudo ee -v
-- sudo lsb_release  -a
-- sudo ee site create wp.localtest.me --wp --user=ADMINUSER --email=ritesh.patel@rtcamp.com --pass=ADMINPASS
+- wget -qO ee rt.cx/ee && sudo bash ee
+- sudo tail /var/log/ee/ee.log
+- sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
+- sudo sed -i '/^127.0.0.1/ s/$/ test.rtmedia.me/' /etc/hosts
 - sudo chmod 777 -R /var/www
-- sudo cat /etc/mysql/conf.d/my.cnf
-- sudo nginx -t
-- sudo service nginx reload
-- cd /var/www/wp.localtest.me/htdocs/wp-content/plugins/ && ls
-- mkdir rtmedia
+- cd /var/www/test.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
 - cd $PLUGIN_DIR
-- cp -Rf * /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/
-- cd /var/www/wp.localtest.me/htdocs/
-- wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.2.3.1.zip
-- wp --allow-root plugin install https://downloads.wordpress.org/plugin/bbpress.2.5.7.zip
-- wp --allow-root plugin install https://downloads.wordpress.org/plugin/rtsocial.2.1.18.zip
+- cp -Rf * /var/www/test.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
+- cd /var/www/test.rtmedia.me/htdocs/
+- wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
 - wp plugin activate --all
-- wp --allow-root user create EDITORUSER editor@localtest.me --role=editor --user_pass=EDITORPASS
-- wp --allow-root user create AUTHORUSER author@localtest.me --role=author --user_pass=AUTHORPASS
-- wp --allow-root user create CONTRIBUTORUSER contributor@localtest.me --role=contributor --user_pass=CONTRIBUTORPASS
-- wp --allow-root user create SUBSCRIBERUSER subscriber@localtest.me --role=author --user_pass=SUBSCRIBERPASS
+- cd /var/www/test.rtmedia.me/htdocs/wp-content/themes/
+- wp theme activate twentysixteen
 - cd $PLUGIN_DIR
-- cd tests/functional/
-- npm install -g nightwatch
-- npm install
+- cd tests/codeception/tests/_data
 - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
+- cd /tmp
+- wget http://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
+- unzip BrowserStackLocal-linux-x64.zip
+- nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
+- cd $PLUGIN_DIR/tests/codeception/
+- composer install
+- export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
+
 script:
-- xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --test res/setup.js
-- xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --group src/
+
+- wpcept run acceptance --steps 

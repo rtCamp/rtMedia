@@ -8,6 +8,7 @@ class Login
      public static $wpPasswordField = 'input#user_pass';
      public static $wpSubmitButton = 'input#wp-submit';
      public static $loginLink = 'li#wp-admin-bar-bp-login';
+     public static $dashBoardMenu = 'li#menu-dashboard';
 
     public static function route($param)
     {
@@ -21,47 +22,44 @@ class Login
         $this->tester = $I;
     }
 
-    public function login($name, $password)
+    public function loginAsAdmin( $wpUserName, $wpPassword, $saveSession = true )
     {
         $I = $this->tester;
 
-        $I->amOnPage('/');
-        $I->fillField(self::$userNameField, $name);
-        $I->fillField(self::$passwordField, $password);
-        $I->click(self::$loginButton);
-        $I->seeInTitle(self::$titleTag);
+        $I->amOnPage( '/wp-admin' );
 
-        return $this;
+        // Will load the session saved in saveSessionSnapshot().
+        if ( $I->loadSessionSnapshot('login') ) {
+            // $I->reloadPage();
+            echo "skipping login steps";
+            return;
+        }
 
-    }
+        if( !$saveSession ){
+            $I->waitForElement( self::$wpSubmitButton, 10);
+        }
 
-    public function loginAsAdmin($wpUserName,$wpPassword)
-    {
-        $I = $this->tester;
-        $I->amOnPage('/');
-        $I->wait(5);
+        $I->seeElement( self::$wpUserNameField );
+        $I->fillfield( self::$wpUserNameField,$wpUserName );
 
-        $I->seeElementInDOM(self::$loginLink);
-        $I->click(self::$loginLink);
-        $I->wait(10);
+        $I->seeElement( self::$wpPasswordField );
+        $I->fillfield( self::$wpPasswordField, $wpPassword );
 
-        $I->seeElementInDOM(self::$wpUserNameField);
-        $I->fillfield(self::$wpUserNameField,$wpUserName);
+        // $I->seeElement( self::$wpSubmitButton );
+        $I->click( self::$wpSubmitButton );
+        $I->waitForElement( self::$dashBoardMenu, 10 );
 
-        $I->seeElementInDOM(self::$wpPasswordField);
-        $I->fillfield(self::$wpPasswordField,$wpPassword);
+        if( $saveSession ){
+            $I->saveSessionSnapshot('login'); //Saving session
+            echo "Session saved!";
+        }else{
+            echo "Session not saved!";
+        }
+        $I->reloadPage();
+        // $I->seeElement( self::$dashBoardMenu );
 
-        $I->seeElementInDOM(self::$wpSubmitButton);
-        $I->click(self::$wpSubmitButton);
-        $I->wait(5);
-
-        $I->amOnPage('/wp-admin');
-        $I->wait(5);
-
-        $I->see('Dashboard');
         $I->maximizeWindow();
 
-        return $this;
     }
 
 }

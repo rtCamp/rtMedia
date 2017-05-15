@@ -10,18 +10,19 @@ modules:
         - \Helper\Acceptance
         - WPWebDriver
     config:
-          WPWebDriver:
+        WPWebDriver:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'firefox'
-            url: 'http://krupa.rtcamp.info/'
+            url: 'http://test.rtmedia.me/'
             adminUsername: ''
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-              'browserstack.user': ''
-              'browserstack.key': ''
-              'browser_version': 50.0
+              'browserstack.user': 'rtcamp2'
+              'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
               'os': 'OS X'
-              'os_version': 'El Capitan'
+              'os_version': 'sierra'
               'browserstack.debug': 'true'
+              'build': '%TRAVIS_BUILD_NUMBER%'
+              'browserstack.local': 'true'

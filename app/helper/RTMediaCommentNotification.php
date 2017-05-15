@@ -108,7 +108,7 @@ class RTMediaCommentNotification extends RTMediaNotification {
 	 * delete notification of a comment perticular commnet
 	 * @param   int     $comment_id
 	 */
-	function remove_comment_notification($comment_id) {
+	function remove_comment_notification( $comment_id ) {
 
 		$comment_notification_id = (int) get_comment_meta( $comment_id, 'comment_notification_id', true );
 
@@ -118,7 +118,6 @@ class RTMediaCommentNotification extends RTMediaNotification {
 		}
 
 	}
-
 }
 
 /**
