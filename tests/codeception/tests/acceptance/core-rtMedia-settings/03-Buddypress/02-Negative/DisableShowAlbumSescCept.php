@@ -9,13 +9,11 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $saveSession = true;
-
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'Disable Show Album description.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
@@ -30,7 +28,8 @@
     $I->seeElement( ConstantsPage::$firstAlbum );
     $I->click( ConstantsPage::$firstAlbum );
 
-    $I->wait( 5 );
+    // $I->wait( 5 );
+    $I->waitForElement( ConstantsPage::$profilePicture, 10);
 
     $I->dontSeeElement( ConstantsPage::$albumDescSelector );
 

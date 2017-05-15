@@ -1,55 +1,50 @@
 <?php
 
 /**
-* Scenario : To check if Load More - Media display pagination option is enabled
-* Pre condition : The available no of Media should be  > ConstantsPage::$numOfMediaPerPage
-*/
+ * Scenario : To check if Load More - Media display pagination option is enabled
+ * Pre condition : The available no of Media should be  > ConstantsPage::$numOfMediaPerPage
+ */
+use Page\Login as LoginPage;
+use Page\Constants as ConstantsPage;
+use Page\DashboardSettings as DashboardSettingsPage;
+use Page\BuddypressSettings as BuddypressSettingsPage;
+use Page\UploadMedia as UploadMediaPage;
 
-    use Page\Login as LoginPage;
-    use Page\Constants as ConstantsPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
-    use Page\BuddypressSettings as BuddypressSettingsPage;
-    use Page\UploadMedia as UploadMediaPage;
+$I = new AcceptanceTester( $scenario );
+$I->wantTo( 'To check if Load More - Media display pagination option is enabled' );
 
-    $saveSession = true;
+$loginPage = new LoginPage( $I );
+$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To check if Load More - Media display pagination option is enabled' );
+$settings = new DashboardSettingsPage( $I );
+$settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+$settings->verifySelectOption( ConstantsPage::$strMediaDisplayPaginationLabel, ConstantsPage::$paginationRadioButton, ConstantsPage::$numOfMediaTextbox );
+$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
-    $loginPage = new LoginPage($I);
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+if ( $I->grabValueFrom( ConstantsPage::$numOfMediaTextbox ) != ConstantsPage::$numOfMediaPerPage ) {
 
-    $settings = new DashboardSettingsPage( $I );
-    $settings->gotoTab( ConstantsPage::$displayTab,ConstantsPage::$displayTabUrl );
-    $settings->verifySelectOption( ConstantsPage::$strMediaDisplayPaginationLabel, ConstantsPage::$paginationRadioButton, ConstantsPage::$numOfMediaTextbox );
-    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox); //This will check if the direct upload is disabled
+	$settings->setValue( ConstantsPage::$numOfMediaLabel, ConstantsPage::$numOfMediaTextbox, ConstantsPage::$numOfMediaPerPage, ConstantsPage::$customCssTab ); // 4th Arg refers the scrolling position
+}
 
-    if( $I->grabValueFrom( ConstantsPage::$numOfMediaTextbox ) != ConstantsPage::$numOfMediaPerPage  ){
+$buddypress = new BuddypressSettingsPage( $I );
+$buddypress->gotoMedia( ConstantsPage::$userName );
 
-        $settings->setValue( ConstantsPage::$numOfMediaLabel, ConstantsPage::$numOfMediaTextbox, ConstantsPage::$numOfMediaPerPage, ConstantsPage::$customCssTab ); // 4th Arg refers the scrolling position
-    }
+$temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
 
-    $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoMedia( ConstantsPage::$userName );
+$uploadmedia = new UploadMediaPage( $I );
 
-    $temp = $buddypress->countMedia(ConstantsPage::$mediaPerPageOnMediaSelector); // $temp will receive the available no. of media
+if ( $temp <= ConstantsPage::$numOfMediaPerPage ) {
 
-    $uploadmedia = new UploadMediaPage( $I );
+	echo "inside if condition";
 
-    if( $temp <= ConstantsPage::$numOfMediaPerPage ){
+	$numOfMediaTobeUpload = ConstantsPage::$numOfMediaPerPage - $temp + 1;
+	echo "\n Media to b uploaded = " . $numOfMediaTobeUpload;
 
-        echo "inside if condition";
+	for ( $i = 0; $i < $numOfMediaTobeUpload; $i ++ ) {
 
-        $numOfMediaTobeUpload = ConstantsPage::$numOfMediaPerPage - $temp + 1;
-        echo "\n Media to b uploaded = ".$numOfMediaTobeUpload;
-
-        for( $i = 0; $i < $numOfMediaTobeUpload ; $i++ ){
-
-            $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
-
-        }
-
-    }
-
-    $I->seeElementInDOM( ConstantsPage::$paginationPattern );
+		$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+	}
+}
+$I->reloadPage();
+$I->seeElementInDOM( ConstantsPage::$paginationPattern );
 ?>

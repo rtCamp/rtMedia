@@ -1,31 +1,27 @@
 <?php
 
 /**
-* Scenario : To disable the privacy settings for user.
-*/
+ * Scenario : To disable the privacy settings for user.
+ */
+use Page\Login as LoginPage;
+use Page\Constants as ConstantsPage;
+use Page\UploadMedia as UploadMediaPage;
+use Page\DashboardSettings as DashboardSettingsPage;
+use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    use Page\Login as LoginPage;
-    use Page\Constants as ConstantsPage;
-    use Page\UploadMedia as UploadMediaPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
-    use Page\BuddypressSettings as BuddypressSettingsPage;
+$I = new AcceptanceTester( $scenario );
+$I->wantTo( 'To disable the privacy settings for user.' );
 
-    $saveSession = true;
+$loginPage = new LoginPage( $I );
+$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To disable the privacy settings for user.' );
+$settings = new DashboardSettingsPage( $I );
+$settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
+$settings->verifyEnableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
+$settings->verifyDisableStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
 
-    $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+$buddypress = new BuddypressSettingsPage( $I );
+$buddypress->gotoActivityPage( ConstantsPage::$userName );
 
-    $settings = new DashboardSettingsPage( $I );
-    $settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
-    $settings->verifyEnableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
-    $settings->verifyDisableStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
-
-    $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoActivityPage( ConstantsPage::$userName );
-
-    $I->dontSeeElement( ConstantsPage::$privacyDropdown );
-
+$I->dontSeeElement( ConstantsPage::$privacyDropdown );
 ?>

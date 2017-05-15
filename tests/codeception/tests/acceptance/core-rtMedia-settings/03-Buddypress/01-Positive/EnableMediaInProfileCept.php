@@ -1,29 +1,25 @@
 <?php
 
 /**
-* Scenario : To check if media tab appears on profile
-*/
+ * Scenario : To check if media tab appears on profile
+ */
+use Page\Login as LoginPage;
+use Page\Constants as ConstantsPage;
+use Page\BuddypressSettings as BuddypressSettingsPage;
+use Page\DashboardSettings as DashboardSettingsPage;
 
-    use Page\Login as LoginPage;
-    use Page\Constants as ConstantsPage;
-    use Page\BuddypressSettings as BuddypressSettingsPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
+$I = new AcceptanceTester( $scenario );
+$I->wantTo( 'To check if media tab appears on profile' );
 
-    $saveSession = true;
+$loginPage = new LoginPage( $I );
+$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To check if media tab appears on profile' );
+$settings = new DashboardSettingsPage( $I );
+$settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+$settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
 
-    $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+$buddypress = new BuddypressSettingsPage( $I );
+$buddypress->gotoProfile( ConstantsPage::$userName );
 
-    $settings = new DashboardSettingsPage( $I );
-    $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
-    $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
-
-    $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoProfile( ConstantsPage::$userName );
-
-    $I->seeElement( ConstantsPage::$mediaLinkOnProfile );
-
+$I->seeElement( ConstantsPage::$mediaLinkOnProfile );
 ?>

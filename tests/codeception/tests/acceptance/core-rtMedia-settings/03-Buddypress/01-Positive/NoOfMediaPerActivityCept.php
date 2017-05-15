@@ -1,45 +1,42 @@
 <?php
 
 /**
-* Scenario : To set the number media on Activity page while bulk upload.
-*/
+ * Scenario : To set the number media on Activity page while bulk upload.
+ */
+use Page\Login as LoginPage;
+use Page\Constants as ConstantsPage;
+use Page\UploadMedia as UploadMediaPage;
+use Page\DashboardSettings as DashboardSettingsPage;
+use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    use Page\Login as LoginPage;
-    use Page\Constants as ConstantsPage;
-    use Page\UploadMedia as UploadMediaPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
-    use Page\BuddypressSettings as BuddypressSettingsPage;
+$I = new AcceptanceTester( $scenario );
+$I->wantTo( 'To set the number media on Activity page while bulk upload.' );
 
-    $saveSession = true;
+$loginPage = new LoginPage( $I );
+$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To set the number media on Activity page while bulk upload.' );
+$settings = new DashboardSettingsPage( $I );
+$settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+$settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
 
-    $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+$settings->setValue( ConstantsPage::$numOfMediaLabelActivity, ConstantsPage::$numOfMediaTextboxActivity, ConstantsPage::$numOfMediaPerPageOnActivity );
 
-    $settings = new DashboardSettingsPage( $I );
-    $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
-    $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+$I->waitForElement( ConstantsPage::$displayTab, 10 );
+$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox );
 
-    $settings->setValue( ConstantsPage::$numOfMediaLabelActivity, ConstantsPage::$numOfMediaTextboxActivity, ConstantsPage::$numOfMediaPerPageOnActivity );
+$buddypress = new BuddypressSettingsPage( $I );
+$buddypress->gotoActivityPage( ConstantsPage::$userName );
 
-    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
-    $I->wait( 5 );
-    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox );
+$I->seeElementInDOM( ConstantsPage::$uploadButtonOnAtivityPage );
 
-    $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoActivityPage( ConstantsPage::$userName );
+$uploadmedia = new UploadMediaPage( $I );
+$uploadmedia->bulkUploadMediaFromActivity( ConstantsPage::$imageName, ConstantsPage::$numOfMediaPerPageOnActivity );
 
-    $I->seeElementInDOM( ConstantsPage::$uploadButtonOnAtivityPage );
-
-    $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->bulkUploadMediaFromActivity( ConstantsPage::$imageName, ConstantsPage::$numOfMediaPerPageOnActivity );
-
-    if( ConstantsPage::$numOfMediaPerPageOnActivity > 0 ){
-            $I->seeNumberOfElements( ConstantsPage::$mediaPerPageActivitySelector, ConstantsPage::$numOfMediaPerPageOnActivity );
-    }else{
-        $temp = 5;
-        $I->seeNumberOfElements( ConstantsPage::$mediaPerPageActivitySelector, $temp );
-    }
+if ( ConstantsPage::$numOfMediaPerPageOnActivity > 0 ) {
+	$I->seeNumberOfElements( ConstantsPage::$mediaPerPageActivitySelector, ConstantsPage::$numOfMediaPerPageOnActivity );
+} else {
+	$temp = 5;
+	$I->seeNumberOfElements( ConstantsPage::$mediaPerPageActivitySelector, $temp );
+}
 ?>

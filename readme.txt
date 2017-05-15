@@ -1,12 +1,13 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, deepak1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883
+
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 4.7.2
-Stable tag: 4.3.1
+Stable tag: 4.3.2
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -136,6 +137,23 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.3.2 [May 11, 2017] =
+
+* ENHANCEMENTS
+
+ * Added: Filter which allows replacing the text "Like/dislike" with any icon [Documentation](https://rtmedia.io/docs/developers/hooks/rtmedia_like_label_text-rtmedia_like_undo_label_text/)
+
+* FIXED
+
+ * Attach media button issue in comments for IOS devices
+ * Inconsistent name display in the Activity stream
+ * Media attachment button issue under rtMedia comment section
+ * Set as Album Cover button UI issue
+ * rtMedia action button alignment issue on the single media page
+ * Improvise comment media admin settings
+ * JavaScript error while deleting media
+ * Edit media feature when BuddyPress activity stream component is disabled
 
 = 4.3.1 [Feb 23, 2017] =
 
@@ -1333,8 +1351,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.3.1 =
-Remove media title & fixed pagination in media tab along with several other bugs fixed. Please update/re-save the permalinks after the plugin update.
+= 4.3.2 =
+Now set icon for like/dislike text using a simple filter. It also includes some bug fixes. Please update/re-save the permalinks after the plugin update.
 
 == Sponsors ==
 

@@ -1,39 +1,35 @@
 <?php
 
 /**
-* Scenario : Allow upload from activity stream.
-*/
+ * Scenario : Allow upload from activity stream.
+ */
+use Page\Login as LoginPage;
+use Page\Constants as ConstantsPage;
+use Page\UploadMedia as UploadMediaPage;
+use Page\DashboardSettings as DashboardSettingsPage;
+use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    use Page\Login as LoginPage;
-    use Page\Constants as ConstantsPage;
-    use Page\UploadMedia as UploadMediaPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
-    use Page\BuddypressSettings as BuddypressSettingsPage;
+$I = new AcceptanceTester( $scenario );
+$I->wantTo( 'Check if the user is allowed to upload media from activity stream.' );
 
-    $saveSession = true;
+$loginPage = new LoginPage( $I );
+$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'Check if the user is allowed to upload media from activity stream.' );
+$settings = new DashboardSettingsPage( $I );
+$settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+$settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
 
-    $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+$I->scrollTo( ConstantsPage::$topSaveButton );
 
-    $settings = new DashboardSettingsPage( $I );
-    $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
-    $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+$I->waitForElement( ConstantsPage::$displayTab, 10 );
+$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox );
 
-    $I->scrollTo( ConstantsPage::$topSaveButton );
+$buddypress = new BuddypressSettingsPage( $I );
+$buddypress->gotoActivityPage( ConstantsPage::$userName );
 
-    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
-    $I->wait( 5 );
-    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox );
+$I->seeElementInDOM( ConstantsPage::$uploadButtonOnAtivityPage );
 
-    $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoActivityPage( ConstantsPage::$userName );
-
-    $I->seeElementInDOM( ConstantsPage::$uploadButtonOnAtivityPage );
-
-    $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
-
+$uploadmedia = new UploadMediaPage( $I );
+$uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
 ?>

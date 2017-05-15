@@ -1,39 +1,38 @@
 <?php
 
 /**
-* Scenario : To set photo thumbnail height and width when Crop is enabled.
-*/
+ * Scenario : To set photo thumbnail height and width when Crop is enabled.
+ */
+use Page\Login as LoginPage;
+use Page\DashboardSettings as DashboardSettingsPage;
+use Page\UploadMedia as UploadMediaPage;
+use Page\Constants as ConstantsPage;
+use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    use Page\Login as LoginPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
-    use Page\UploadMedia as UploadMediaPage;
-    use Page\Constants as ConstantsPage;
-    use Page\BuddypressSettings as BuddypressSettingsPage;
+$scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
 
-    $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
-    $saveSession = true;
+$I = new AcceptanceTester( $scenario );
+$I->wantTo( 'To set photo thumbnail height and width when Crop is enabled.' );
 
-    $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To set photo thumbnail height and width when Crop is enabled.' );
+$loginPage = new LoginPage( $I );
+$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+$settings = new DashboardSettingsPage( $I );
+$settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
+$settings->setMediaSize( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailWidthTextbox, ConstantsPage::$thumbnailWidth, ConstantsPage::$thumbnailHeightTextbox, ConstantsPage::$thumbnailHeight );
 
-    $settings = new DashboardSettingsPage( $I );
-    $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
-    $settings->setMediaSize( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailWidthTextbox, ConstantsPage::$thumbnailWidth, ConstantsPage::$thumbnailHeightTextbox, ConstantsPage::$thumbnailHeight );
+// $I->scrollTo( ConstantsPage::$topSaveButton );
+//
+// $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailCropCheckbox );
 
-    $I->scrollTo( ConstantsPage::$topSaveButton );
+$buddypress = new BuddypressSettingsPage( $I );
+$buddypress->gotoMedia( ConstantsPage::$userName );
 
-    $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailCropCheckbox );
+$uploadmedia = new UploadMediaPage( $I );
+$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
-    $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoMedia( ConstantsPage::$userName );
+$I->reloadPage();
 
-    $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink );
-
-    echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
-    echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
-
+echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
+echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
 ?>

@@ -9,13 +9,11 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
 
-    $saveSession = true;
-
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'To check if media tab is disabled on profile' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, $saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );

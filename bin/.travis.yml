@@ -1,8 +1,10 @@
 dist: trusty
 language:
-- php
+    - php
+
 php:
-- 5.6.4
+    - 5.6.4
+
 addons:
   browserstack:
     username: "rtcamp2"
@@ -44,8 +46,9 @@ before_script:
 - pwd
 - export PATH="$PATH:/home/travis/build/umeshnevase/rtMedia/tests/codeception/vendor/bin"
 script:
-- wpcept run tests/acceptance/core-rtMedia-settings/01-Privacy/
-- wpcept run tests/acceptance/core-rtMedia-settings/02-Display/
-- wpcept run tests/acceptance/core-rtMedia-settings/03-Buddypress/
-- wpcept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/
-- wpcept run tests/acceptance/core-rtMedia-settings/05-Types/
+
+- wpcept run acceptance --steps
+
+notifications:
+  slack:
+    secure: E9tbxOZ/n4Gcwi8SiCKQ5QVw+5AfwdTq4e/VG4epQF74IqXmJJvaJgQSVKLSVXJm4O1u8JHd+ffN1Xheh1FDaKkscuJYQcT4D+oOc40bHhb0tS71v1fAMzMX7NuyqgEu2a8dbYo7bqVKtdj/EBbOPWnwgfMuA6ylTItVf294spA=
