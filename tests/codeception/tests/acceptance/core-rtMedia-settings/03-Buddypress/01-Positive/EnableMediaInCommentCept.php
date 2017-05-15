@@ -39,7 +39,7 @@
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $uploadmedia->fisrtThumbnailMedia();
+        $uploadmedia->firstThumbnailMedia();
 
         $I->seeElement( ConstantsPage::$commentLink );
         $I->scrollTo( ConstantsPage::$commentLink );
@@ -73,7 +73,7 @@
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $uploadmedia->fisrtThumbnailMedia();
+        $uploadmedia->firstThumbnailMedia();
 
         $I->seeElement( ConstantsPage::$commentLink );
         $I->scrollTo( ConstantsPage::$commentLink );

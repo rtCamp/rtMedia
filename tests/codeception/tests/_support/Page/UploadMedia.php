@@ -100,7 +100,7 @@ class UploadMedia
     }
 
     /**
-     * uploadMediaUsingStartUplaodButton() -> Will the media when 'Direct Uplaod' is not enabled
+     * uploadMediaUsingStartUploadButton() -> Will the media when 'Direct Upload' is not enabled
      */
     // public function uploadMediaUsingStartUploadButton( $userName, $mediaFile, $link ){
     public function uploadMediaUsingStartUploadButton( $userName, $mediaFile ){

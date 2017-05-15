@@ -30,7 +30,7 @@
     $I->reloadPage();
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-    $uploadmedia->fisrtThumbnailMedia();
+    $uploadmedia->firstThumbnailMedia();
 
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
     echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
