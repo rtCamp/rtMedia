@@ -14,7 +14,7 @@ modules:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'firefox'
-            url: 'http://sumeet2.rtmedia.me/'
+            url: 'http://test.rtmedia.me/'
             adminUsername: ''
             adminPassword: ''
             adminPath: '/wp-admin'
@@ -25,6 +25,4 @@ modules:
                 'os_version': 'sierra'
                 'browserstack.debug': 'true'
                 'build': '%TRAVIS_BUILD_NUMBER%'
-                'project': 'rtMedia-core-test-sumeet'
                 'browserstack.local': 'true'
-
