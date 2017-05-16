@@ -3,6 +3,7 @@
 /**
  * Scenario : To check if mesonry layout is enabled.
  */
+
 use Page\Login as LoginPage;
 use Page\DashboardSettings as DashboardSettingsPage;
 use Page\Constants as ConstantsPage;
@@ -28,20 +29,23 @@ $buddypress->gotoMedia( ConstantsPage::$userName );
 $uploadmedia = new UploadMediaPage( $I );
 $temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
 
-if ( $temp == 0 ) {
+if($temp == 0){
 
-	$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
-	$I->waitForElement( ConstantsPage::$displayTab, 10 );
-	$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload ); //This will check if the direct upload is disabled
+    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+    $I->waitForElement( ConstantsPage::$displayTab , 10);
+    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload ); //This will check if the direct upload is disabled
 
-	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
-	$I->reloadPage();
-	// $I->wait( 10 );
+    $I->reloadPage();
+    // $I->wait( 10 );
 
-	$I->seeElementInDOM( ConstantsPage::$masonryLayout );
-} else {
+    $I->seeElementInDOM( ConstantsPage::$masonryLayout );
 
-	$I->seeElementInDOM( ConstantsPage::$masonryLayout );
+}else{
+
+    $I->seeElementInDOM( ConstantsPage::$masonryLayout );
+
 }
+
 ?>

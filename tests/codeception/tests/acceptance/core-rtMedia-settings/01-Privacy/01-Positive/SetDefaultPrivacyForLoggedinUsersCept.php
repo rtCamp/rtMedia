@@ -3,6 +3,7 @@
 /**
  * Scenario : To set default privacy for logged in user.
  */
+
 use Page\Login as LoginPage;
 use Page\Logout as LogoutPage;
 use Page\Constants as ConstantsPage;
@@ -25,7 +26,7 @@ $settings->verifyEnableStatus( ConstantsPage::$privacyUserOverrideLabel, Constan
 $settings->verifySelectOption( ConstantsPage::$defaultPrivacyLabel, ConstantsPage::$loggedInUsersRadioButton );
 
 $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-$I->waitForElement( ConstantsPage::$buddypressTab, 10 );
+$I->waitForElement( ConstantsPage::$buddypressTab , 10);
 $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
 
 $buddypress = new BuddypressSettingsPage( $I );
@@ -36,6 +37,10 @@ $uploadmedia->postStatus( $status );
 
 $logout = new LogoutPage( $I );
 $logout->logout();
+
+$buddypress->gotoActivityPage( ConstantsPage::$userName );
+// $I->dontSee( $status );
+$I->dontSeeElementInDOM( ConstantsPage::$activitySelector );
 
 $buddypress->gotoActivityPage( ConstantsPage::$userName );
 // $I->dontSee( $status );

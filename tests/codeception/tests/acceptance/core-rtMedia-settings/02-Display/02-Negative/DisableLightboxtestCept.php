@@ -33,6 +33,12 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->dontSeeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
 } else {
 
+	$uploadmedia->firstThumbnailMedia();
+	$I->dontSeeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
+
+	$buddypress->gotoMedia( ConstantsPage::$userName );
+	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+
 	$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
 	$I->waitForElement( ConstantsPage::$displayTab, 10 );
 	$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
@@ -43,7 +49,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->reloadPage();
 	// $I->wait( 7 );
 
-	$uploadmedia->fisrtThumbnailMedia();
+	$uploadmedia->firstThumbnailMedia();
 	$I->dontSeeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
 }
 ?>

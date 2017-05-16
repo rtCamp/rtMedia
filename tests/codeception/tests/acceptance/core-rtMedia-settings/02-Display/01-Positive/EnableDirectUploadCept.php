@@ -24,4 +24,5 @@ $buddypress->gotoMedia( ConstantsPage::$userName );
 
 $uploadmedia = new UploadMediaPage( $I );
 $uploadmedia->uploadMediaDirectly( ConstantsPage::$userName, ConstantsPage::$imageName );
+
 ?>

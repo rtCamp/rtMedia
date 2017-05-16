@@ -29,7 +29,9 @@ $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, Const
 
 $uploadmedia->fisrtThumbnailMedia();
 
-echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
+    $uploadmedia->firstThumbnailMedia();
 
-// $I->reloadPage();
+    echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
+
+
 ?>

@@ -25,11 +25,8 @@ $settings->setMediaSize( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$th
 //
 // $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailCropCheckbox );
 
-$buddypress = new BuddypressSettingsPage( $I );
-$buddypress->gotoMedia( ConstantsPage::$userName );
-
-$uploadmedia = new UploadMediaPage( $I );
-$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoMedia( ConstantsPage::$userName );
 
 $I->reloadPage();
 

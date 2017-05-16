@@ -215,10 +215,10 @@ class UploadMedia {
 		// $I->wait( 20 );
 	}
 
-	/**
-	 * fisrtThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
-	 */
-	public function fisrtThumbnailMedia() {
+    /**
+     * firstThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
+     */
+    public function firstThumbnailMedia(){
 
 		$I = $this->tester;
 

@@ -2,8 +2,14 @@ dist: trusty
 language:
     - php
 
+branches:
+  only:
+    - codeception
 php:
     - 5.6.4
+#    - 7.0
+#env:
+#global:
 
 addons:
   browserstack:
@@ -21,18 +27,19 @@ before_script:
 - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
 - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
 - wget -qO ee rt.cx/ee && sudo bash ee
+- sudo apt-get update
 - sudo tail /var/log/ee/ee.log
 - sudo ee site create test.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com
   --pass=ADMINPASS
 - sudo sed -i '/^127.0.0.1/ s/$/ test.rtmedia.me/' /etc/hosts
 - sudo chmod 777 -R /var/www
-- cd /var/www/test.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
+- cd /var/www/sumeet2.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
 - cd $PLUGIN_DIR
-- cp -Rf * /var/www/test.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
-- cd /var/www/test.rtmedia.me/htdocs/
+- cp -Rf * /var/www/sumeet2.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
+- cd /var/www/sumeet2.rtmedia.me/htdocs/
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
 - wp plugin activate --all
-- cd /var/www/test.rtmedia.me/htdocs/wp-content/themes/
+- cd /var/www/sumeet2.rtmedia.me/htdocs/wp-content/themes/
 - wp theme activate twentysixteen
 - cd $PLUGIN_DIR
 - cd tests/codeception/tests/_data
@@ -46,9 +53,6 @@ before_script:
 - pwd
 - export PATH="$PATH:/home/travis/build/umeshnevase/rtMedia/tests/codeception/vendor/bin"
 script:
-
 - wpcept run acceptance --steps
 
-notifications:
-  slack:
-    secure: E9tbxOZ/n4Gcwi8SiCKQ5QVw+5AfwdTq4e/VG4epQF74IqXmJJvaJgQSVKLSVXJm4O1u8JHd+ffN1Xheh1FDaKkscuJYQcT4D+oOc40bHhb0tS71v1fAMzMX7NuyqgEu2a8dbYo7bqVKtdj/EBbOPWnwgfMuA6ylTItVf294spA=
+

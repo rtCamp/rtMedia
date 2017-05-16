@@ -19,8 +19,6 @@ $settings = new DashboardSettingsPage( $I );
 $settings->gotoTab( ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl, $scrollToTab );
 $settings->verifyEnableStatus( ConstantsPage::$footerLinkLabel, ConstantsPage::$footerLinkCheckbox );
 
-// $I->wait( 5 );
-
 $I->amOnPage( '/' );
 $I->seeElement( ConstantsPage::$footerLink );
 ?>

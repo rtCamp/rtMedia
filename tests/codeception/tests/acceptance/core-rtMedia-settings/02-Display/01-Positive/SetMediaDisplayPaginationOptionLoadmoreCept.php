@@ -2,8 +2,9 @@
 
 /**
  * Scenario : To check if Load More - Media display pagination option is enabled
- * Pre condition : The available no of Media should be  > ConstantsPage::$numOfMediaPerPage
+ *Pre condition : The available no of Media should be  > ConstantsPage::$numOfMediaPerPage
  */
+
 use Page\Login as LoginPage;
 use Page\Constants as ConstantsPage;
 use Page\DashboardSettings as DashboardSettingsPage;
@@ -25,4 +26,5 @@ $buddypress = new BuddypressSettingsPage( $I );
 $buddypress->gotoMedia( ConstantsPage::$userName );
 
 $I->seeElementInDOM( ConstantsPage::$loadMore );
+
 ?>

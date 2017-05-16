@@ -17,15 +17,10 @@ $I->wantTo( 'User should not allowed to comment on uploaded media' );
 $loginPage = new LoginPage( $I );
 $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
-$settings->verifyDisableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
-
-// $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-// $I->wait( 5 );
-// $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
-
-$uploadmedia = new UploadMediaPage( $I );
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
+    $settings->verifyDisableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
+    $uploadmedia = new UploadMediaPage( $I );
 
 $buddypress = new BuddypressSettingsPage( $I );
 $buddypress->gotoMedia( ConstantsPage::$userName );
@@ -36,7 +31,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 
 	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-	$uploadmedia->fisrtThumbnailMedia();
+        $uploadmedia->firstThumbnailMedia();
 
 	$I->waitForElementNotVisible( UploadMediaPage::$commentTextArea, 10 );
 } else {
@@ -55,8 +50,9 @@ if ( $temp >= ConstantsPage::$minValue ) {
 
 	$uploadmedia->fisrtThumbnailMedia();
 
-	$I->waitForElementNotVisible( UploadMediaPage::$commentTextArea, 10 );
+        $I->waitForElementNotVisible( UploadMediaPage::$commentTextArea, 10 );
 }
 
-$I->reloadPage();
-?>
+    $I->reloadPage();
+
+	?>

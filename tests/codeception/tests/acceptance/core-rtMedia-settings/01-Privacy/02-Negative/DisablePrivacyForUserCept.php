@@ -3,6 +3,7 @@
 /**
  * Scenario : To disable the privacy settings for user.
  */
+
 use Page\Login as LoginPage;
 use Page\Constants as ConstantsPage;
 use Page\UploadMedia as UploadMediaPage;
@@ -22,6 +23,8 @@ $settings->verifyDisableStatus( ConstantsPage::$privacyUserOverrideLabel, Consta
 
 $buddypress = new BuddypressSettingsPage( $I );
 $buddypress->gotoActivityPage( ConstantsPage::$userName );
+
+$I->dontSeeElement( ConstantsPage::$privacyDropdown );
 
 $I->dontSeeElement( ConstantsPage::$privacyDropdown );
 ?>

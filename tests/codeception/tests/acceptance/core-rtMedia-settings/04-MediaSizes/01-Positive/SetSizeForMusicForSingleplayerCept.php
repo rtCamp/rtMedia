@@ -29,13 +29,7 @@ $uploadmedia = new UploadMediaPage( $I );
 $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$audioName );
 
 $I->reloadPage();
-// $I->waitForElement( ConstantsPage::$profilePicture, 5 );
-
-$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-
 $uploadmedia->fisrtThumbnailMedia();
 
 echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorSingle, 'style' );
-
-// $I->reloadPage();
 ?>
