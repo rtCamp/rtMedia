@@ -20,11 +20,6 @@
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
     $settings->verifyDisableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
-
-    // $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-    // $I->wait( 5 );
-    // $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
-
     $uploadmedia = new UploadMediaPage( $I );
 
     $buddypress = new BuddypressSettingsPage( $I );
@@ -36,7 +31,7 @@
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $uploadmedia->fisrtThumbnailMedia();
+        $uploadmedia->firstThumbnailMedia();
 
         $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10);
 
@@ -54,7 +49,7 @@
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $uploadmedia->fisrtThumbnailMedia();
+        $uploadmedia->firstThumbnailMedia();
 
         $I->waitForElementNotVisible(  UploadMediaPage::$commentTextArea, 10 );
 

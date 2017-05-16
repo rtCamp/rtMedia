@@ -20,7 +20,7 @@ class Constants
     public static $thumbnailWidth = '150';
     public static $thumbnailHeight = '150';
     public static $mediumWidth = '320';
-    public static $mediummHeight = '240';
+    public static $mediumHeight = '240';
     public static $LargeWidth = '700';
     public static $LargeHeight = '0';
 
@@ -50,7 +50,7 @@ class Constants
     public static $mediaSizesTabUrl  = '#rtmedia-sizes';
     public static $privacyTabUrl = '#rtmedia-privacy';
     public static $customCssTabUrl = '#rtmedia-custom-css-settings';
-    public static $otherSeetingsTabUrl = '#rtmedia-general';
+    public static $otherSettingsTabUrl = '#rtmedia-general';
 
     public static $displayTab = 'a#tab-rtmedia-display';
     public static $buddypressTab = 'a#tab-rtmedia-bp';
@@ -58,7 +58,7 @@ class Constants
     public static $mediaSizesTab = 'a#tab-rtmedia-sizes';
     public static $privacyTab = 'a#tab-rtmedia-privacy';
     public static $customCssTab = 'a#tab-rtmedia-custom-css-settings';
-    public static $otherSeetingsTab = 'a#tab-rtmedia-general';
+    public static $otherSettingsTab = 'a#tab-rtmedia-general';
 
     public static $strCommentCheckboxLabel = 'Allow user to comment on uploaded media';
     public static $strDirectUplaodCheckboxLabel = 'Enable Direct Upload';

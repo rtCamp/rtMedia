@@ -19,14 +19,12 @@
     $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
     $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInGrpLabel, ConstantsPage::$enableMediaInGrpCheckbox );
 
-    $I->amOnPage( '/wp-admin/options-general.php?page=bp-components/' ); //Goto Settings->Buddypres page to enable User Group in front end
+    $I->amOnPage( '/wp-admin/options-general.php?page=bp-components/' );
     $I->waitForElement( ConstantsPage::$grpTableRow, 10);
     $I->seeElement( ConstantsPage::$enableUserGrpCheckbox );
     $I->checkOption( ConstantsPage::$enableUserGrpCheckbox );
     $I->seeElement( ConstantsPage::$saveBPSettings );
     $I->click( ConstantsPage::$saveBPSettings );
-    // $I->waitForElement( ConstantsPage::$grpTableRow, 10);
-    // $I->wait( 5 );
     $I->waitForElement( ConstantsPage::$saveMsgSelector, 20);
 
     $buddypress = new BuddypressSettingsPage( $I );

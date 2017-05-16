@@ -18,8 +18,8 @@ class DashboardSettings
     }
 
     /**
-    * saveSettings() -> Will save the settings after any changes made by the user in backend.
-    */
+     * saveSettings() -> Will save the settings after any changes made by the user in backend.
+     */
     public function saveSettings(){
 
         $I = $this->tester;
@@ -34,8 +34,8 @@ class DashboardSettings
     }
 
     /**
-    * gotortMediaSettings() -> Will goto rtmedia-settings tab.
-    */
+     * gotortMediaSettings() -> Will goto rtmedia-settings tab.
+     */
     public function gotortMediaSettings(){
 
         $I = $this->tester;
@@ -47,8 +47,8 @@ class DashboardSettings
     }
 
     /**
-    * gotoTab() -> Will goto the respective tab under rtmedia-settings tab.
-    */
+     * gotoTab() -> Will goto the respective tab under rtmedia-settings tab.
+     */
     public function gotoTab( $tabSelector, $tabUrl, $tabScrollPosition='no' ){
 
         $I = $this->tester;
@@ -92,8 +92,8 @@ class DashboardSettings
     }
 
     /**
-    * enableSetting() -> Will enable the respective checkbox under rtmedia-settings tab.
-    */
+     * enableSetting() -> Will enable the respective checkbox under rtmedia-settings tab.
+     */
     public function enableSetting( $checkboxSelector ){
 
         $I = $this->tester;
@@ -108,8 +108,8 @@ class DashboardSettings
     }
 
     /**
-    * disableSetting() -> Will disable the respective checkbox under rtmedia-settings tab.
-    */
+     * disableSetting() -> Will disable the respective checkbox under rtmedia-settings tab.
+     */
     public function disableSetting( $checkboxSelector ){
 
         $I = $this->tester;
@@ -123,8 +123,8 @@ class DashboardSettings
     }
 
     /**
-    * selectOption() -> Will select the radio button provided with css selector id
-    */
+     * selectOption() -> Will select the radio button provided with css selector id
+     */
     public function selectOption( $radioButtonSelector ){
 
         $I = $this->tester;
@@ -136,8 +136,8 @@ class DashboardSettings
     }
 
     /**
-    * setValue() -> Will fill the textbox/textarea
-    */
+     * setValue() -> Will fill the textbox/textarea
+     */
     public function setValue( $strLabel, $cssSelector, $valueToBeSet, $scrollPosition = 'no' ){
 
         $I = $this->tester;
@@ -160,8 +160,8 @@ class DashboardSettings
     }
 
     /**
-    * verifyEnableStatus() -> Will verify if the checkbox is enabled or not
-    */
+     * verifyEnableStatus() -> Will verify if the checkbox is enabled or not
+     */
     public function verifyEnableStatus( $strLabel, $cssSelector, $scrollPosition = 'no' ){
 
         $I = $this->tester;
@@ -183,8 +183,8 @@ class DashboardSettings
     }
 
     /**
-    * verifyDisableStatus() -> Will verify if the checkbox is disabled or not
-    */
+     * verifyDisableStatus() -> Will verify if the checkbox is disabled or not
+     */
     public function verifyDisableStatus( $strLabel, $cssSelector, $scrollPosition = 'no' ){
 
         $I = $this->tester;
@@ -205,8 +205,8 @@ class DashboardSettings
     }
 
     /**
-    * verifySelectOption() -> Will verify if the radio button is selected or not
-    */
+     * verifySelectOption() -> Will verify if the radio button is selected or not
+     */
     public function verifySelectOption( $strLabel, $cssSelector, $scrollPosition = 'no' ){
 
         $I = $this->tester;

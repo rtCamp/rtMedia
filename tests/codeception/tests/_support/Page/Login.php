@@ -4,11 +4,11 @@ namespace Page;
 class Login
 {
 
-     public static $wpUserNameField = 'input#user_login';
-     public static $wpPasswordField = 'input#user_pass';
-     public static $wpSubmitButton = 'input#wp-submit';
-     public static $loginLink = 'li#wp-admin-bar-bp-login';
-     public static $dashBoardMenu = 'li#menu-dashboard';
+    public static $wpUserNameField = 'input#user_login';
+    public static $wpPasswordField = 'input#user_pass';
+    public static $wpSubmitButton = 'input#wp-submit';
+    public static $loginLink = 'li#wp-admin-bar-bp-login';
+    public static $dashBoardMenu = 'li#menu-dashboard';
 
     public static function route($param)
     {
