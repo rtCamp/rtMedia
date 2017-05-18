@@ -78,6 +78,9 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->scrollTo( ConstantsPage::$commentLink );
 
 
+	$I->seeElement( UploadMediaPage::$commentTextArea );
+	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
+
 	$I->seeElement( ConstantsPage::$mediaButtonInComment );
 	$I->attachFile( ConstantsPage::$uploadFileInComment, ConstantsPage::$imageName );
 	// $I->wait( 10 );

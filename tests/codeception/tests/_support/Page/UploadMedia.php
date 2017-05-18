@@ -63,7 +63,7 @@ class UploadMedia {
 	}
 
 	/**
-	 * uploadMedia() -> Will perform neccessary steps to uplpad media. In this case it will work for image media type.
+	 * uploadMedia() -> Will perform necessary steps to upload media. In this case it will work for image media type.
 	 */
 	// public function uploadMedia( $userName, $mediaFile, $link ){
 	public function uploadMedia( $userName, $mediaFile ) {
@@ -96,7 +96,7 @@ class UploadMedia {
 	}
 
 	/**
-	 * uploadMediaUsingStartUplaodButton() -> Will the media when 'Direct Uplaod' is not enabled
+	 * uploadMediaUsingStartUploadButton() -> Will the media when 'Direct Upload' is not enabled
 	 */
 	// public function uploadMediaUsingStartUploadButton( $userName, $mediaFile, $link ){
 	public function uploadMediaUsingStartUploadButton( $userName, $mediaFile ) {
@@ -114,7 +114,7 @@ class UploadMedia {
 	}
 
 	/**
-	 * uploadMediaDirectly() -> Will the media when 'Direct Uplaod' is enabled
+	 * uploadMediaDirectly() -> Will upload the media when 'Direct Upload' is enabled
 	 */
 	public function uploadMediaDirectly( $userName, $mediaFile ) {
 
@@ -127,7 +127,7 @@ class UploadMedia {
 	}
 
 	/**
-	 * addStatus() -> Will perform the neccessary steps to add status
+	 * addStatus() -> Will perform the necessary steps to add status
 	 */
 	public function addStatus() {
 
@@ -215,10 +215,10 @@ class UploadMedia {
 		// $I->wait( 20 );
 	}
 
-    /**
-     * firstThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
-     */
-    public function firstThumbnailMedia(){
+	/**
+	 * firstThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
+	 */
+	public function firstThumbnailMedia() {
 
 		$I = $this->tester;
 
