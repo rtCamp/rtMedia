@@ -648,6 +648,16 @@ jQuery( 'document' ).ready( function( $ ) {
 		} );
 	}
 
+	// Masonry code for activity
+	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
+		$('#activity-stream .rtmedia-list').masonry({
+			itemSelector: '.rtmedia-list-item',
+			columnWidth: '.rtmedia-list-item',
+			percentPosition: true,
+			gutter: 3,
+		});
+	}
+
 	//    Masonry code
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_container = jQuery( '.rtmedia-container .rtmedia-list' );
