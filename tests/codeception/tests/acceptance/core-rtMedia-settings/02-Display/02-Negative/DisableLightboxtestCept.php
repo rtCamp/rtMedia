@@ -47,7 +47,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
 	$I->reloadPage();
-	// $I->wait( 7 );
+	$I->wait( 7 );
 
 	$uploadmedia->firstThumbnailMedia();
 	$I->dontSeeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
