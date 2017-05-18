@@ -38,7 +38,6 @@ if ( $temp == 0 ) {
 
 	$I->dontSeeElementInDOM( ConstantsPage::$masonryLayout );
 } else {
-
 	$I->dontSeeElementInDOM( ConstantsPage::$masonryLayout );
 }
 ?>

@@ -26,5 +26,4 @@ $buddypress->gotoActivityPage( ConstantsPage::$userName );
 
 $I->dontSeeElement( ConstantsPage::$privacyDropdown );
 
-$I->dontSeeElement( ConstantsPage::$privacyDropdown );
 ?>

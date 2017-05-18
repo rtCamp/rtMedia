@@ -83,8 +83,8 @@ if ( $temp >= ConstantsPage::$minValue ) {
 
 	$I->seeElement( ConstantsPage::$mediaButtonInComment );
 	$I->attachFile( ConstantsPage::$uploadFileInComment, ConstantsPage::$imageName );
-	// $I->wait( 10 );
-	$I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20 );
+
+        $I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20 );
 
 	$I->click( UploadMediaPage::$commentSubmitButton );
 	$I->waitForText( $commentStr, 30 );

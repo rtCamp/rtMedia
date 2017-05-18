@@ -44,7 +44,4 @@ $buddypress->gotoActivityPage( ConstantsPage::$userName );
 //$I->dontSee( $status );
 $I->dontSeeElementInDOM( ConstantsPage::$activitySelector );
 
-$buddypress->gotoActivityPage( ConstantsPage::$userName );
-//$I->dontSee( $status );
-$I->dontSeeElementInDOM( ConstantsPage::$activitySelector );
 ?>
