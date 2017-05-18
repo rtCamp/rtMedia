@@ -14,7 +14,7 @@ $commentStr = 'test comment';
 $I = new AcceptanceTester( $scenario );
 $I->wantTo( 'To check if the user is allowed to comment on uploaded media' );
 
-$loginPage = new LoginPage( $I);
+$loginPage = new LoginPage( $I );
 $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
 $settings = new DashboardSettingsPage( $I );
@@ -27,47 +27,44 @@ $temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); 
 
 $uploadmedia = new UploadMediaPage( $I );
 
-if( $temp >= ConstantsPage::$minValue ){
+if ( $temp >= ConstantsPage::$minValue ) {
 
-    $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-    $uploadmedia->firstThumbnailMedia();
+	$uploadmedia->firstThumbnailMedia();
 
-    $I->scrollTo( ConstantsPage::$commentLink );
+	$I->scrollTo( ConstantsPage::$commentLink );
 
-    $I->seeElement( UploadMediaPage::$commentTextArea );
-    $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
-    $I->click( UploadMediaPage::$commentSubmitButton );
-    // $I->wait( 5 );
-    // $I->see( $commentStr );
-    $I->waitForText( $commentStr, 20 );
+	$I->seeElement( UploadMediaPage::$commentTextArea );
+	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
+	$I->click( UploadMediaPage::$commentSubmitButton );
+	// $I->wait( 5 );
+	// $I->see( $commentStr );
+	$I->waitForText( $commentStr, 20 );
+} else {
 
-}else{
+	$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+	$I->waitForElement( ConstantsPage::$displayTab, 10 );
+	$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
-    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
-    $I->waitForElement( ConstantsPage::$displayTab , 10);
-    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
+	$buddypress->gotoMedia( ConstantsPage::$userName );
 
-    $buddypress->gotoMedia( ConstantsPage::$userName );
+	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
-    //$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink);
-    $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+	$I->reloadPage();
 
-    $I->reloadPage();
+	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-    $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+	$uploadmedia->firstThumbnailMedia();
 
-    $uploadmedia->firstThumbnailMedia();
+	$I->scrollTo( ConstantsPage::$commentLink );
 
-    $I->scrollTo( ConstantsPage::$commentLink );
-
-    $I->seeElement( UploadMediaPage::$commentTextArea );
-    $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
-    $I->click( UploadMediaPage::$commentSubmitButton );
-    // $I->wait( 5 );
-    // $I->see( $commentStr );
-    $I->waitForText( $commentStr, 20 );
-
+	$I->seeElement( UploadMediaPage::$commentTextArea );
+	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
+	$I->click( UploadMediaPage::$commentSubmitButton );
+	// $I->wait( 5 );
+	// $I->see( $commentStr );
+	$I->waitForText( $commentStr, 20 );
 }
 
 $I->reloadPage();
