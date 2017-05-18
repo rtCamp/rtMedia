@@ -20,18 +20,19 @@ $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 $settings = new DashboardSettingsPage( $I );
 $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
 $settings->setMediaSize( ConstantsPage::$photoLargeLabel, ConstantsPage::$largeWidthTextbox, ConstantsPage::$LargeWidth, ConstantsPage::$largeHeightTextbox, ConstantsPage::$LargeHeight );
-
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
-$settings->setMediaSize( ConstantsPage::$photoLargeLabel, ConstantsPage::$largeWidthTextbox, ConstantsPage::$LargeWidth, ConstantsPage::$largeHeightTextbox, ConstantsPage::$LargeHeight );
 $buddypress = new BuddypressSettingsPage( $I );
 $buddypress->gotoMedia( ConstantsPage::$userName );
 
-$I->reloadPage();
+$uploadmedia = new UploadMediaPage( $I );
+$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
+$I->reloadPage();
 $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
 $uploadmedia->firstThumbnailMedia();
+
+echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'width' );
+echo $I->grabAttributeFrom( ConstantsPage::$thumbnailSelector, 'height' );
 
 $I->reloadPage();
 ?>

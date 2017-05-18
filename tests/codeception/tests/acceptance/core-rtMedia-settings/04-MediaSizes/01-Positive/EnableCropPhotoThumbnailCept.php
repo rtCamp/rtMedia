@@ -21,12 +21,11 @@ $settings = new DashboardSettingsPage( $I );
 $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
 $settings->setMediaSize( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailWidthTextbox, ConstantsPage::$thumbnailWidth, ConstantsPage::$thumbnailHeightTextbox, ConstantsPage::$thumbnailHeight );
 
-// $I->scrollTo( ConstantsPage::$topSaveButton );
-//
-// $settings->verifyEnableStatus( ConstantsPage::$photoThumbnailLabel, ConstantsPage::$thumbnailCropCheckbox );
+$buddypress = new BuddypressSettingsPage( $I );
+$buddypress->gotoMedia( ConstantsPage::$userName );
 
-    $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoMedia( ConstantsPage::$userName );
+$uploadmedia = new UploadMediaPage( $I );
+$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
 $I->reloadPage();
 

@@ -26,9 +26,12 @@ $buddypress = new BuddypressSettingsPage( $I );
 $buddypress->gotoMedia( ConstantsPage::$userName );
 
 $uploadmedia = new UploadMediaPage( $I );
-$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$audioName );
+$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$audioName, ConstantsPage::$musicLink );
 
 $I->reloadPage();
+
+$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+
 $uploadmedia->firstThumbnailMedia();
 
 echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorSingle, 'style' );

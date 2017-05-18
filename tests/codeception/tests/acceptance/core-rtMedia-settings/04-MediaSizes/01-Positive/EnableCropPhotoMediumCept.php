@@ -19,14 +19,13 @@ $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
 $settings = new DashboardSettingsPage( $I );
 $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
-$settings->setMediaSize( ConstantsPage::$photoMediumLabel, ConstantsPage::$mediumWidthTextbox, ConstantsPage::$mediumWidth, ConstantsPage::$mediumHeightTextbox, ConstantsPage::$mediummHeight );
+$settings->setMediaSize( ConstantsPage::$photoMediumLabel, ConstantsPage::$mediumWidthTextbox, ConstantsPage::$mediumWidth, ConstantsPage::$mediumHeightTextbox, ConstantsPage::$mediumHeight );
+$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
+$I->waitForElement( ConstantsPage::$buddypressTab, 10 );
+$settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
 
-    $settings = new DashboardSettingsPage( $I );
-    $settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
-    $settings->setMediaSize( ConstantsPage::$photoMediumLabel, ConstantsPage::$mediumWidthTextbox, ConstantsPage::$mediumWidth, ConstantsPage::$mediumHeightTextbox, ConstantsPage::$mediumHeight );
-    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-    $I->waitForElement( ConstantsPage::$buddypressTab , 10);
-    $settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+$buddypress = new BuddypressSettingsPage( $I );
+$buddypress->gotoActivityPage( ConstantsPage::$userName );
 
 $uploadmedia = new UploadMediaPage( $I );
 $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName );
