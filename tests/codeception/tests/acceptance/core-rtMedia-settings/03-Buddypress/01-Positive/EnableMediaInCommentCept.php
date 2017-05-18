@@ -39,7 +39,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 
 	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $uploadmedia->firstThumbnailMedia();
+	$uploadmedia->firstThumbnailMedia();
 
 	$I->seeElement( ConstantsPage::$commentLink );
 	$I->scrollTo( ConstantsPage::$commentLink );
@@ -48,14 +48,15 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->seeElement( UploadMediaPage::$commentTextArea );
 	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
 
-        $I->seeElement( ConstantsPage::$mediaButtonInComment );
-        $I->attachFile( ConstantsPage::$uploadFileInComment, ConstantsPage::$imageName );
+	$I->seeElement( ConstantsPage::$mediaButtonInComment );
+	$I->attachFile( ConstantsPage::$uploadFileInComment, ConstantsPage::$imageName );
 
-        $I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20);
+	$I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20 );
 
-        $I->click( UploadMediaPage::$commentSubmitButton );
+	$I->click( UploadMediaPage::$commentSubmitButton );
 
-        $I->waitForText( $commentStr, 30 );
+	$I->waitForText( $commentStr, 30 );
+} else {
 
 	$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
 	$I->waitForElement( ConstantsPage::$displayTab, 10 );
@@ -80,12 +81,9 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->seeElement( ConstantsPage::$mediaButtonInComment );
 	$I->attachFile( ConstantsPage::$uploadFileInComment, ConstantsPage::$imageName );
 	// $I->wait( 10 );
-        $I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20 );
+	$I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20 );
 
 	$I->click( UploadMediaPage::$commentSubmitButton );
-        $I->waitForText( $commentStr, 30 );
-
-    }
-
-
+	$I->waitForText( $commentStr, 30 );
+}
 ?>
