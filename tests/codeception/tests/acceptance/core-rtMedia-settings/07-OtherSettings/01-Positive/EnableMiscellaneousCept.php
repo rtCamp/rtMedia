@@ -17,7 +17,7 @@ $loginPage = new LoginPage( $I );
 $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
 $settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$otherSeetingsTab, ConstantsPage::$otherSeetingsTabUrl, $scrollToTab );
+$settings->gotoTab( ConstantsPage::$otherSettingsTab, ConstantsPage::$otherSettingsTabUrl, $scrollToTab );
 $settings->verifyEnableStatus( ConstantsPage::$miscellaneousLabel, ConstantsPage::$miscellaneousCheckbox, $scrollPos );
 
 $I->amOnPage( '/' );
