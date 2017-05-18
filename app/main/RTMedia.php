@@ -1079,6 +1079,11 @@ class RTMedia {
 				wp_enqueue_style( 'jquery-masonry' );
 				wp_enqueue_script( 'jquery-masonry' );
 				wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', 'true' );
+				if ( isset( $rtmedia->options ) && isset( $rtmedia->options['general_masonry_layout_activity'] ) && 1 === intval( $rtmedia->options['general_masonry_layout_activity'] ) ) {
+					wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout_activity', 'true' );
+				} else {
+					wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout_activity', 'false' );
+				}
 			} else {
 				wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', 'false' );
 			}
