@@ -12,6 +12,43 @@
 			box-sizing: inherit;
 		}
 	}
+
+	.rtmedia-list.masonry {
+		list-style:none;
+		padding: 0;
+	}
+
+	.rtmedia-list.masonry p {
+		display: none;
+	}
+
+	.rtmedia-list.masonry:after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+
+	.rtmedia-list-item.masonry-brick {
+		float: left;
+		width: 33%;
+		padding: 0 !important;
+
+		.mejs-container {
+			min-width: 33% !important;
+			margin: 0 0 5px 0;
+			width: 100% !important;
+		}
+	}
+
+	.rtmedia-list-item.masonry-brick img {
+		display: block;
+		max-width: 100%;
+	}
+
+	.rtmedia-list-item.masonry-brick .rtmedia-item-title {
+		display:none;
+	}
+
 }
 
 // remove border and padding
