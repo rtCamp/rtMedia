@@ -29,7 +29,7 @@ $uploadmedia = new UploadMediaPage( $I );
 $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$audioName );
 
 $I->reloadPage();
-$uploadmedia->fisrtThumbnailMedia();
+$uploadmedia->firstThumbnailMedia();
 
 echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorSingle, 'style' );
 ?>

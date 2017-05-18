@@ -29,7 +29,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 
 	$I->scrollTo( '.rtm-gallery-title' );
 
-	$uploadmedia->fisrtThumbnailMedia();
+	$uploadmedia->firstThumbnailMedia();
 	$I->dontSeeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
 } else {
 

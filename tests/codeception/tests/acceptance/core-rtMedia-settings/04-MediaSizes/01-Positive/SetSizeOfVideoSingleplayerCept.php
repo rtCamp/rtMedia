@@ -27,11 +27,7 @@ $buddypress->gotoMedia( ConstantsPage::$userName );
 $uploadmedia = new UploadMediaPage( $I );
 $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$videoName );
 
-$uploadmedia->fisrtThumbnailMedia();
+$uploadmedia->firstThumbnailMedia();
 
-    $uploadmedia->firstThumbnailMedia();
-
-    echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
-
-
+echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
 ?>

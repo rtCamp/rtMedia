@@ -48,9 +48,9 @@ if ( $temp >= ConstantsPage::$minValue ) {
 
 	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-	$uploadmedia->fisrtThumbnailMedia();
+	$uploadmedia->firstThumbnailMedia();
 
-        $I->waitForElementNotVisible( UploadMediaPage::$commentTextArea, 10 );
+	$I->waitForElementNotVisible( UploadMediaPage::$commentTextArea, 10 );
 }
 
     $I->reloadPage();
