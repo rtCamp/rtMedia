@@ -650,15 +650,21 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	// Masonry code for activity
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
-		$('#activity-stream .rtmedia-list').masonry({
-			itemSelector: '.rtmedia-list-item',
-			columnWidth: '.rtmedia-list-item',
-			percentPosition: true,
-			gutter: 3,
-		});
+		// Arrange media into masonry view
+		rtmedia_activity_masonry();
 	}
 
-	//    Masonry code
+	// Arrange media into masonry right after upload to activity without pageload
+	jQuery( document ).ajaxComplete( function( event, xhr, settings ) {
+		var params = new URLSearchParams( settings.data );
+		if ( params.get('action') == 'post_update' && typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
+			rtmedia_activity_masonry();
+			// Reload the view after upload
+			rtm_masonry_reload( jQuery('#activity-stream .rtmedia-list') );
+		}
+	});
+
+	// Masonry code
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_container = jQuery( '.rtmedia-container .rtmedia-list' );
 		rtm_masonry_container.masonry( {
@@ -981,4 +987,14 @@ function rtmedia_gallery_action_alert_message( msg, action ) {
 	jQuery( '.rtmedia-gallery-message-box' ).click( function() {
 		jQuery( '.rtmedia-gallery-alert-container' ).remove();
 	} );
+}
+
+// Set masonry view for activity
+function rtmedia_activity_masonry() {
+	jQuery('#activity-stream .rtmedia-list').masonry({
+		itemSelector: '.rtmedia-list-item',
+		columnWidth: '.rtmedia-list-item',
+		percentPosition: true,
+		gutter: 3,
+	});
 }
