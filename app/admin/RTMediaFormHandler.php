@@ -353,6 +353,18 @@ class RTMediaFormHandler {
 				'group'         => '18',
 				'after_content' => esc_html__( 'You might need to', 'buddypress-media' ) . ' <a id="rtm-masonry-change-thumbnail-info" href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . esc_html__( 'change thumbnail size', 'buddypress-media' ) . '</a> ' . esc_html__( 'and uncheck the crop box for thumbnails.', 'buddypress-media' ) . '<br /><br />' . esc_html__( 'To set gallery for fixed width, set image height to 0 and width as per your requirement and vice-versa.', 'buddypress-media' ),
 			),
+			'general_masonry_layout_activity' => array(
+				'title'         => esc_html__( 'Enable Masonry Cascading grid layout for activity', 'buddypress-media' ),
+				'callback'      => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'          => array(
+					'key'   => 'general_masonry_layout_activity',
+					'value' => $options['general_masonry_layout_activity'],
+					'desc'  => esc_html__( 'If you enable masonry view, it will show masonry view got meidas uploaded.', 'buddypress-media' ),
+					'class' => array( 'rtm_enable_masonry_view' ),
+				),
+				'depends'       => 'general_masonry_layout',
+				'group'         => '18',
+			),
 			'general_direct_upload'  => array(
 				'title'    => esc_html__( 'Enable Direct Upload', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
