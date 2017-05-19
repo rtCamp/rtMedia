@@ -9,8 +9,6 @@ use Page\DashboardSettings as DashboardSettingsPage;
 use Page\Constants as ConstantsPage;
 use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$commentStr = 'test comment';
-
 $I = new AcceptanceTester( $scenario );
 $I->wantTo( 'To check if the user is allowed to comment on uploaded media' );
 
@@ -36,11 +34,11 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->scrollTo( ConstantsPage::$commentLink );
 
 	$I->seeElement( UploadMediaPage::$commentTextArea );
-	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
+	$I->fillfield( UploadMediaPage::$commentTextArea, ConstantsPage::$commentStr );
 	$I->click( UploadMediaPage::$commentSubmitButton );
 	// $I->wait( 5 );
 	// $I->see( $commentStr );
-	$I->waitForText( $commentStr, 20 );
+	$I->waitForText( ConstantsPage::$commentStr, 20 );
 } else {
 
 	$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );

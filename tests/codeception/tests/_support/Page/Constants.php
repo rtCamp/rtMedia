@@ -9,6 +9,7 @@ class Constants {
 	public static $imageName = 'test-data/images/test.jpg';
 	public static $audioName = 'test-data/music/mpthreetest.mp3';
 	public static $videoName = 'test-data/videos/testmpfour.mp4';
+	public static $commentStr = 'Test comment';
 	public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
 	public static $customCssEmptyValue = '';
 	public static $numOfMediaPerPage = '2';
