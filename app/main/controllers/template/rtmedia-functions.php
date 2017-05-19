@@ -557,8 +557,8 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 				$size = '';
 			}
 
-			$html = '<audio src="%s" %s type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_%s" controls="controls" preload="none"></audio>';
-			$html .= sprintf( $html, esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ), esc_attr( $size ), esc_attr( $rtmedia_media->id ) );
+			$audio_html = '<audio src="%s" %s type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_%s" controls="controls" preload="none"></audio>';
+			$html = sprintf( $audio_html, esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ), esc_attr( $size ), esc_attr( $rtmedia_media->id ) );
 		} else {
 			$html = false;
 		}
