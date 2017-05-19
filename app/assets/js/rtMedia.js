@@ -993,8 +993,9 @@ function rtmedia_gallery_action_alert_message( msg, action ) {
 function rtmedia_activity_masonry() {
 	jQuery('#activity-stream .rtmedia-list').masonry({
 		itemSelector: '.rtmedia-list-item',
+		fitWidth: true,
 		columnWidth: '.rtmedia-list-item',
 		percentPosition: true,
-		gutter: 3,
+		gutter: 4,
 	});
 }

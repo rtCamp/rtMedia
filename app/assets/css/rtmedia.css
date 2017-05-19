@@ -1540,8 +1540,9 @@ img.mfp-img {
   clear: both;
 }
 .rtmedia-activity-container .rtmedia-list-item.masonry-brick {
+  display: inline-block;
   float: left;
-  width: 33%;
+  width: 32%;
   padding: 0 !important;
 }
 .rtmedia-activity-container .rtmedia-list-item.masonry-brick .mejs-container {
