@@ -654,13 +654,11 @@ jQuery( 'document' ).ready( function( $ ) {
 		rtmedia_activity_masonry();
 	}
 
-	// Arrange media into masonry right after upload to activity without pageload
+	// Arrange media into masonry view right after upload or clicking on readmore link to activity without pageload
 	jQuery( document ).ajaxComplete( function( event, xhr, settings ) {
 		var params = new URLSearchParams( settings.data );
-		if ( params.get('action') == 'post_update' && typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
+		if ( ( params.get('action') == 'post_update' || params.get('action') == 'get_single_activity_content' ) && typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
 			rtmedia_activity_masonry();
-			// Reload the view after upload
-			rtm_masonry_reload( jQuery('#activity-stream .rtmedia-list') );
 		}
 	});
 
@@ -991,11 +989,21 @@ function rtmedia_gallery_action_alert_message( msg, action ) {
 
 // Set masonry view for activity
 function rtmedia_activity_masonry() {
-	jQuery('#activity-stream .rtmedia-list').masonry({
+	jQuery('#activity-stream .rtmedia-activity-container .rtmedia-list').masonry({
 		itemSelector: '.rtmedia-list-item',
-		fitWidth: true,
-		columnWidth: '.rtmedia-list-item',
-		percentPosition: true,
-		gutter: 4,
+		gutter: 6,
 	});
+	var timesRun = 0;
+	var interval = setInterval( function() {
+		timesRun += 1;
+		// Run this for 5 times only.
+		if(timesRun === 5){
+			clearInterval(interval);
+		}
+		jQuery.each( jQuery( '.rtmedia-activity-container .rtmedia-list.masonry .rtmedia-item-title' ), function( i, item ) {
+			jQuery( item ).width( jQuery( item ).siblings( '.rtmedia-item-thumbnail' ).children( 'img' ).width() );
+		} );
+		// Reload masonry view.
+		rtm_masonry_reload( jQuery('#activity-stream .rtmedia-activity-container .rtmedia-list') );
+	}, 1000 );
 }
