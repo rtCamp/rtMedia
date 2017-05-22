@@ -359,7 +359,7 @@ class RTMediaFormHandler {
 				'args'          => array(
 					'key'   => 'general_masonry_layout_activity',
 					'value' => $options['general_masonry_layout_activity'],
-					'desc'  => esc_html__( 'If you enable masonry view, it will show masonry view got meidas uploaded.', 'buddypress-media' ),
+					'desc'  => esc_html__( 'If you enable masonry view, it is advisable to', 'buddypress-media' ) . ' <a href="' . $regenerate_link . '">regenerate thumbnail</a> ' . esc_html__( 'for masonry view.', 'buddypress-media' ),
 					'class' => array( 'rtm_enable_masonry_view' ),
 				),
 				'depends'       => 'general_masonry_layout',
