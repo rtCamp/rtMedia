@@ -991,7 +991,7 @@ function rtmedia_gallery_action_alert_message( msg, action ) {
 function rtmedia_activity_masonry() {
 	jQuery('#activity-stream .rtmedia-activity-container .rtmedia-list').masonry({
 		itemSelector: '.rtmedia-list-item',
-		gutter: 6,
+		gutter: 7,
 	});
 	var timesRun = 0;
 	var interval = setInterval( function() {

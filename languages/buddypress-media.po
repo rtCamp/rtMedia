@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.3.2\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-05-22 09:33:01+00:00\n"
+"POT-Creation-Date: 2017-05-23 05:45:53+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -530,11 +530,11 @@ msgstr ""
 msgid "Cascading grid layout"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:350
+#: app/admin/RTMediaFormHandler.php:350 app/admin/RTMediaFormHandler.php:362
 msgid "If you enable masonry view, it is advisable to"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:350
+#: app/admin/RTMediaFormHandler.php:350 app/admin/RTMediaFormHandler.php:362
 msgid "for masonry view."
 msgstr ""
 
@@ -558,10 +558,6 @@ msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:357
 msgid "Enable Masonry Cascading grid layout for activity"
-msgstr ""
-
-#: app/admin/RTMediaFormHandler.php:362
-msgid "If you enable masonry view, it will show masonry view got meidas uploaded."
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:369
