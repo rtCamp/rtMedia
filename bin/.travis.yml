@@ -16,10 +16,7 @@ addons:
   browserstack:
     username: rtcamp2
     access_key:
-#     secure: T505OAjz+XN2yjCFipX9Mq+2tVAli8THWxtl0iYNnFl6zfHxcngK2xoAxUCt+9Lx5ncMNl4O7VCQW1Df8Eb/NSL04QaOCJMOvRj8wQHGEeqxbp0QmKLxCxrhQcqQLcMJhSQqO2zUb+FbuMwdXO8jxyCY49GLdjd5R7zYhXOjfnursge1pkw+uyXWtZufsDKTZ9UPdo5v6jXNibEVVsn86mUYDv5uuUej1qo8ioyEGfdnSXKmMwTXRqxkb+xbj0TwY+jffeFQv6h3zaT0YOMDNVD9UHJvAd9bRLc1NTbnVvNUa6/9N9HyNFBXGeIp7xy8CQDwprnDiIpix1G0o6wjIS6NndROOzU9bN/pbILXJPenviYneGjoN1ZrPp3zbtb0P0BvpxJuiQ2tL5dAnrG/GEDKun9J9mDWKncoBONM6KyhfIGwO1K6anPQqTbZplKcRJ1pUnyUH3gYxHg4exlkORclNXPyuST8RCJt++DiKdZCpcgQHwvTBX/vQKSh6XXCG0pMYN1JGUQdVWuaTgA6vPLBOHlDE7wvuWrnb0AaUP4Pfof2ApBq+ao+Fy/JccWIpcqcK2UIoNZ/LoWG/4JbkLLVoGRpDSUdKz9k5nJztAwzaXxWf9wzwFyQMne6H5Yf4RyHHZ6yJ9VskwYukbtw6qfq5pyKgyjX7qkeLkXRi08=
-     secure: c9H+FGp+XbHoKJC+gRjLtWKPpy581cELM42CNwm4vNtoFLkWCDRzTS4zyGkKPOC5vfSuS2bCAArAgFSyA0rr8CcyoMS6Qw6d32pUYDxHq4eTboR4j213aD+uvC6EuPPpUeG09Y7yO9nxDTi2IbrPUtm5nQd4zdgGhxhjdW0xOE0=
-
-
+      secure: "fwxPQanBIFXUfvm1WfBC3w0cOw7Cx6f4Lz1NH5Hje7W3t8d6Vj7ckaWsJnymBiOv0nch2kvQtVvPhTobyPXH0B6rJXno0/0HhFZVV9UBdrg/IubJzBxHLlTKIHC+jdP0aklp5O4O3/syQZrMmQAhKjHBKzt+KQuqVohbiUpAnSDYN9zApL/TwRc7bVsEhz1rtlZbPs13cBkyVGlngHghs1BuX6dQ8+gfwQ5ueK1tcfI02iVSs7Lp1Zy9NH2fPERdHp9xuiOhKy7enqR4DzPQ/hj0nH+J1eB5zicVSG2vdhamUCu7IQIB5WGbgyfWyaASnwlc2XD/vFVtM7jo+hDBIWicZ+0111aF/AlzVfzy8S1uI2yoysJNCuYiG6L6Gsj8w3bWrtJ0vUYuUv5d9SkLqiSwQ/wTbUkdmezRhIhXdyhrG7N+tsPA1aiyNMWEnNrD+ZHCkEjdMNXXUOgs68TSR46HrVjhat9vsmskuoOVBs2VXiciyBxZgSWhDjrWbORHsAsqe37vdDq14QmeGWvOvJ9qZSa53DFdzbiSdoSWHRHDhRIV7BcomcDdkx9qScYc4Gf+ZC3nYvFAUm2KwbiQKxl5Ck0TDPmlph2ulsxVg/1DNQKo034Dh8E4KriSUjAboIz2JBva1Tla6DyOyl7H1q7JoAU4czOqR/TnpoO5MzY="
 before_install:
 - rm -rf ~/.gnupg
 
@@ -56,8 +53,7 @@ before_script:
 - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
 - cd $PLUGIN_DIR/tests/codeception/
 - composer update
-- export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
-
+- export PATH="$PATH:/home/travis/build/umeshnevase/rtMedia/tests/codeception/vendor/bin"
 script:
 - wpcept run acceptance --steps
 
