@@ -657,7 +657,7 @@ jQuery( 'document' ).ready( function( $ ) {
 	// Arrange media into masonry view right after upload or clicking on readmore link to activity without pageload
 	jQuery( document ).ajaxComplete( function( event, xhr, settings ) {
 		var params = new URLSearchParams( settings.data );
-		if ( ( params.get('action') == 'post_update' || params.get('action') == 'get_single_activity_content' ) && typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
+		if ( ( params.get('action') == 'post_update' || params.get('action') == 'get_single_activity_content' || params.get('action') == 'activity_get_older_updates' ) && typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
 			rtmedia_activity_masonry();
 		}
 	});
