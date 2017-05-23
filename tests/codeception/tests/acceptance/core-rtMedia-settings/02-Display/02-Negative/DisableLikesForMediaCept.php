@@ -1,46 +1,36 @@
 <?php
 
 /**
- * Scenario : To Allow the user to comment on uploaded media.
+ * Scenario : To Check if the media is likable or not.
  */
 use Page\Login as LoginPage;
+use Page\Constants as ConstantsPage;
 use Page\UploadMedia as UploadMediaPage;
 use Page\DashboardSettings as DashboardSettingsPage;
-use Page\Constants as ConstantsPage;
 use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$commentStr = 'test comment';
-
 $I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To check if the user is allowed to comment on uploaded media' );
+$I->wantTo( 'To check if the Like for media is disabled' );
 
 $loginPage = new LoginPage( $I );
 $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
 $settings = new DashboardSettingsPage( $I );
 $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
-$settings->verifyEnableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
+$settings->verifyDisableStatus( ConstantsPage::$mediaLikeCheckboxLabel, ConstantsPage::$mediaLikeCheckbox );
 
 $buddypress = new BuddypressSettingsPage( $I );
 $buddypress->gotoMedia( ConstantsPage::$userName );
-$temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
 
 $uploadmedia = new UploadMediaPage( $I );
+$temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
 
 if ( $temp >= ConstantsPage::$minValue ) {
 
-	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+	$I->scrollTo( '.rtm-gallery-title' );
 
 	$uploadmedia->firstThumbnailMedia();
-
-	$I->scrollTo( ConstantsPage::$commentLink );
-
-	$I->seeElement( UploadMediaPage::$commentTextArea );
-	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
-	$I->click( UploadMediaPage::$commentSubmitButton );
-	// $I->wait( 5 );
-	// $I->see( $commentStr );
-	$I->waitForText( $commentStr, 20 );
+	$I->waitForElementNotVisible( ConstantsPage::$likeButton, 10 );
 } else {
 
 	$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
@@ -48,24 +38,12 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
 	$buddypress->gotoMedia( ConstantsPage::$userName );
-
 	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
 	$I->reloadPage();
-
-	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+	$I->wait( 7 );
 
 	$uploadmedia->firstThumbnailMedia();
-
-	$I->scrollTo( ConstantsPage::$commentLink );
-
-	$I->seeElement( UploadMediaPage::$commentTextArea );
-	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
-	$I->click( UploadMediaPage::$commentSubmitButton );
-	// $I->wait( 5 );
-	// $I->see( $commentStr );
-	$I->waitForText( $commentStr, 20 );
+	$I->waitForElementNotVisible( ConstantsPage::$likeButton, 10 );
 }
-
-$I->reloadPage();
 ?>

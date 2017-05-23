@@ -201,9 +201,9 @@ class Constants {
 	public static $optionsPopup = '.rtm-options';
 	public static $albumMsg = ' album created successfully.';
 	public static $activitySelector = '#activity-stream';
-	public static $jsonApiLabel = 'Enable JSON API';
-	public static $jsonApiCheckbox = 'input[name="rtmedia-options[rtmedia_enable_api]"]';
-	public static $miscellaneousLabel = 'Allow usage data tracking';
-	public static $miscellaneousCheckbox = 'input[name="rtmedia-options[general_AllowUserData]"]';
+	
+	public static $mediaLikeCheckboxLabel = 'Enable likes for media';
+	public static $mediaLikeCheckbox = 'input[name="rtmedia-options[general_enableLikes]"]';
+	public static $likeButton = '.rtmedia-like';
 
 }
