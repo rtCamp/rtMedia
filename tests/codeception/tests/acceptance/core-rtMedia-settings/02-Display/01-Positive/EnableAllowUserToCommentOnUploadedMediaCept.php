@@ -46,17 +46,13 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
 	$buddypress->gotoMedia( ConstantsPage::$userName );
-
 	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
 	$I->reloadPage();
 
 	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-
 	$uploadmedia->firstThumbnailMedia();
-
 	$I->scrollTo( ConstantsPage::$commentLink );
-
 	$I->seeElement( UploadMediaPage::$commentTextArea );
 	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
 	$I->click( UploadMediaPage::$commentSubmitButton );
