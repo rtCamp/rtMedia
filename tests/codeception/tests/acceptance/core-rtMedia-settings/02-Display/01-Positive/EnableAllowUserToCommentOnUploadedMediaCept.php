@@ -38,8 +38,6 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->seeElement( UploadMediaPage::$commentTextArea );
 	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
 	$I->click( UploadMediaPage::$commentSubmitButton );
-	// $I->wait( 5 );
-	// $I->see( $commentStr );
 	$I->waitForText( $commentStr, 20 );
 } else {
 
@@ -62,8 +60,6 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->seeElement( UploadMediaPage::$commentTextArea );
 	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
 	$I->click( UploadMediaPage::$commentSubmitButton );
-	// $I->wait( 5 );
-	// $I->see( $commentStr );
 	$I->waitForText( $commentStr, 20 );
 }
 

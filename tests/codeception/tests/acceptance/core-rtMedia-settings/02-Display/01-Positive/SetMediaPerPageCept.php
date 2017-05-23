@@ -3,7 +3,6 @@
 /**
  * Scenario : To set the number media per page
  */
-
 use Page\Login as LoginPage;
 use Page\Constants as ConstantsPage;
 use Page\UploadMedia as UploadMediaPage;
@@ -22,39 +21,36 @@ $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 $settings = new DashboardSettingsPage( $I );
 $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
 
-if( $I->grabValueFrom( ConstantsPage::$numOfMediaTextbox ) != ConstantsPage::$numOfMediaPerPage  ){
+if ( $I->grabValueFrom( ConstantsPage::$numOfMediaTextbox ) != ConstantsPage::$numOfMediaPerPage ) {
 
-    $settings->setValue( ConstantsPage::$numOfMediaLabel, ConstantsPage::$numOfMediaTextbox, ConstantsPage::$numOfMediaPerPage, $scrollPos );
+	$settings->setValue( ConstantsPage::$numOfMediaLabel, ConstantsPage::$numOfMediaTextbox, ConstantsPage::$numOfMediaPerPage, $scrollPos );
 }
 
 $buddypress = new BuddypressSettingsPage( $I );
 $buddypress->gotoMedia( ConstantsPage::$userName );
-$temp = $buddypress->countMedia(ConstantsPage::$mediaPerPageOnMediaSelector); // $temp will receive the available no. of media
+$temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
 
-$uploadmedia = new UploadMediaPage($I);
+$uploadmedia = new UploadMediaPage( $I );
 
-if( $temp == ConstantsPage::$numOfMediaPerPage ){
+if ( $temp == ConstantsPage::$numOfMediaPerPage ) {
 
-    $I->seeNumberOfElements( ConstantsPage::$mediaPerPageOnMediaSelector, ConstantsPage::$numOfMediaPerPage );
+	$I->seeNumberOfElements( ConstantsPage::$mediaPerPageOnMediaSelector, ConstantsPage::$numOfMediaPerPage );
+} else {
 
-}else{
+	$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+	$I->waitForElement( ConstantsPage::$displayTab, 10 );
+	$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload ); //This will check if the direct upload is disabled
 
-    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
-    $I->waitForElement( ConstantsPage::$displayTab , 10);
-    $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload); //This will check if the direct upload is disabled
+	$buddypress->gotoMedia( ConstantsPage::$userName );
 
-    $buddypress->gotoMedia( ConstantsPage::$userName );
+	$mediaTobeUploaded = ConstantsPage::$numOfMediaPerPage - $temp;
 
-    $mediaTobeUploaded = ConstantsPage::$numOfMediaPerPage - $temp;
+	for ( $i = 0; $i < $mediaTobeUploaded; $i ++ ) {
 
-    for( $i = 0; $i < $mediaTobeUploaded; $i++ ){
+		$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+	}
 
-        $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
-
-    }
-
-    $I->reloadPage();
-    $I->seeNumberOfElements(ConstantsPage::$mediaPerPageOnMediaSelector,ConstantsPage::$numOfMediaPerPage);
-
+	$I->reloadPage();
+	$I->seeNumberOfElements( ConstantsPage::$mediaPerPageOnMediaSelector, ConstantsPage::$numOfMediaPerPage );
 }
 ?>

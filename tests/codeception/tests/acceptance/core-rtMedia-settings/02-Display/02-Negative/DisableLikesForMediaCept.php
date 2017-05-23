@@ -41,7 +41,6 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
 	$I->reloadPage();
-	$I->wait( 7 );
 
 	$uploadmedia->firstThumbnailMedia();
 	$I->waitForElementNotVisible( ConstantsPage::$likeButton, 10 );

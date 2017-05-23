@@ -41,8 +41,6 @@ $logout = new LogoutPage( $I );
 $logout->logout();
 
 $buddypress->gotoActivityPage( ConstantsPage::$userName );
-// $I->see( $status );
-// $I->seeElementInDOM( ConstantsPage::$activitySelector );
 $I->waitForElementVisible( ConstantsPage::$activitySelector, 20);
 
 ?>

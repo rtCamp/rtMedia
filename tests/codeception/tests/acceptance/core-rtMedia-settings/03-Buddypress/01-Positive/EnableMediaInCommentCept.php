@@ -43,7 +43,6 @@ if ( $temp >= ConstantsPage::$minValue ) {
 
 	$I->seeElement( ConstantsPage::$commentLink );
 	$I->scrollTo( ConstantsPage::$commentLink );
-	// $I->wait( 5 );
 
 	$I->seeElement( UploadMediaPage::$commentTextArea );
 	$I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
@@ -68,7 +67,6 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
 	$I->reloadPage();
-	// $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
 	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
@@ -84,7 +82,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->seeElement( ConstantsPage::$mediaButtonInComment );
 	$I->attachFile( ConstantsPage::$uploadFileInComment, ConstantsPage::$imageName );
 
-        $I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20 );
+	$I->waitForElement( ConstantsPage::$fileListOnMediaComment, 20 );
 
 	$I->click( UploadMediaPage::$commentSubmitButton );
 	$I->waitForText( $commentStr, 30 );
