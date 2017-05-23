@@ -183,8 +183,10 @@ class DashboardSettings {
 		if ( $I->grabAttributeFrom( $cssSelector, "checked" ) == "true" ) {
 			echo nl2br( "Call to disableSetting()... \n" );
 			self::disableSetting( $cssSelector );
+			return false;
 		} else {
 			echo nl2br( "Setting is already disabled \n" );
+			return true;
 		}
 	}
 
@@ -210,6 +212,13 @@ class DashboardSettings {
 			echo nl2br( "Call to selectOption()... \n" );
 			self::selectOption( $cssSelector );
 		}
+	}
+
+	public function disableDirectUpload() {
+		$I = $this->tester;
+		$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+		$I->waitForElement( ConstantsPage::$displayTab, 10 );
+		$status = $this->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 	}
 
 }

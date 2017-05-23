@@ -37,9 +37,8 @@ if ( $temp == ConstantsPage::$numOfMediaPerPage ) {
 	$I->seeNumberOfElements( ConstantsPage::$mediaPerPageOnMediaSelector, ConstantsPage::$numOfMediaPerPage );
 } else {
 
-	$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
-	$I->waitForElement( ConstantsPage::$displayTab, 10 );
-	$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, $scrollToDirectUpload ); //This will check if the direct upload is disabled
+	//Disbale direct upload from settings
+	$settings->disableDirectUpload();
 
 	$buddypress->gotoMedia( ConstantsPage::$userName );
 
