@@ -256,8 +256,12 @@ jQuery( function( $ ) {
 				$( that.el ).html( '' );
 			}
 
+			// Remove no data found message if it's there.
+			if ( $( '.rtmedia-nodata' ).length > 0 ) {
+				$( '.rtmedia-nodata' ).remove();
+			}
 			if ( 0 == this.collection.length ) {
-				$( that.el ).append( rtmedia_no_media_found );
+				$( '.rtmedia-container' ).append( '<p class="rtmedia-nodata">' + rtmedia_no_media_found + '</p>' );
 			} else {
 				$.each( this.collection.toJSON(), function( key, media ) {
 					$( that.el ).append( that.template( media ) );
