@@ -1,5 +1,5 @@
 
-[https://www.browserstack.com/](![Browserstack Logo](https://cloud.githubusercontent.com/assets/8191145/26439362/6de1b090-4145-11e7-8ec5-69bec0d12888.png))
+(![Browserstack Logo](https://cloud.githubusercontent.com/assets/8191145/26439362/6de1b090-4145-11e7-8ec5-69bec0d12888.png)
 
 
 
