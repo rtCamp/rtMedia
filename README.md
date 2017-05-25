@@ -117,11 +117,11 @@ Please visit [rtMedia's FAQ page](https://rtmedia.io/faq/?utm_source####readme&u
 
 Read rtMedia [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)
 
-## Sponsorship Credits ##
+## Sponsorship Credit ##
 
 ![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)
 
-Thanks to [BrowserStack](https://browserstack.com)for supporting the rtMedia project. We use their amazing service for cross-browser compatibility testing across multiple mobile and desktop browsers. 
+Thanks to [BrowserStack](https://browserstack.com) for supporting the rtMedia project. We use their amazing service for cross-browser compatibility testing across multiple mobile and desktop browsers. 
 We wholeheartedly recommend them for all of your testing needs!
 
 ## Screenshots ##
