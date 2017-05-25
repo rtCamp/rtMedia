@@ -2,7 +2,7 @@
 
 ![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=QXJGc0MzZ3ZyUzBaUW9zZHFTSUtYNTMzUFJhMThPNWoxcFh5ZkxjNzE5Zz0tLWRrOTNUb0lzZXdWRC9PL3k3bHF6R3c9PQ==--0cf0d06c7d977c10230d7dbfcb5d907592ab005d)
 
-![alt text](https://plugins.svn.wordpress.org/buddypress-media//assets/banner-772x250.jpg)
+![alt text](https://plugins.svn.wordpress.org/buddypress-media/assets/banner-772x250.jpg)
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
