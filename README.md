@@ -1,4 +1,4 @@
-![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)
+[![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)](https://browserstack.com)
 
 ![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=QXJGc0MzZ3ZyUzBaUW9zZHFTSUtYNTMzUFJhMThPNWoxcFh5ZkxjNzE5Zz0tLWRrOTNUb0lzZXdWRC9PL3k3bHF6R3c9PQ==--0cf0d06c7d977c10230d7dbfcb5d907592ab005d)
 
@@ -119,7 +119,7 @@ Read rtMedia [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_m
 
 ## Sponsorship Credit ##
 
-![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)
+[![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)](https://browserstack.com)
 
 Thanks to [BrowserStack](https://browserstack.com) for supporting the rtMedia project. We use their amazing service for cross-browser compatibility testing across multiple mobile and desktop browsers. 
 We wholeheartedly recommend them for all of your testing needs!
