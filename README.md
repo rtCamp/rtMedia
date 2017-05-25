@@ -1,4 +1,9 @@
-![alt text](https://plugins.svn.wordpress.org/buddypress-media/assets/banner-772x250.jpg)
+[![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)](https://browserstack.com)
+
+![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=QXJGc0MzZ3ZyUzBaUW9zZHFTSUtYNTMzUFJhMThPNWoxcFh5ZkxjNzE5Zz0tLWRrOTNUb0lzZXdWRC9PL3k3bHF6R3c9PQ==--0cf0d06c7d977c10230d7dbfcb5d907592ab005d)
+
+![banner-772x250](https://cloud.githubusercontent.com/assets/8191145/26444356/bb47f150-4159-11e7-997e-b960bca0293d.jpg)
+
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
@@ -26,7 +31,7 @@ If you're in a hurry, you can skip the long list of features in subsequent secti
 
 Since rtMedia has many features video doesn't include all features:
 
-http://www.youtube.com/watch?v####dJrykKQGDcs
+https://www.youtube.com/watch?v=dJrykKQGDcs
 
 #### rtMedia Features ####
 
@@ -112,12 +117,18 @@ Please visit [rtMedia's FAQ page](https://rtmedia.io/faq/?utm_source####readme&u
 
 Read rtMedia [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)
 
+## Sponsorship Credit ##
+
+[![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)](https://browserstack.com)
+
+Thanks to [BrowserStack](https://browserstack.com) for supporting the rtMedia project. We use their amazing service for cross-browser compatibility testing across multiple mobile and desktop browsers. 
+We wholeheartedly recommend them for all of your testing needs!
+
 ## Screenshots ##
 
 You can also check [rtMedia's Live Demo](http://demo.rtmedia.io/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Live Demo") or video below:
 
-http://www.youtube.com/watch?v####dJrykKQGDcs
-
+https://www.youtube.com/watch?v=dJrykKQGDcs
 
 1. Media Settings
 2. Privacy Settings
@@ -129,7 +140,7 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 8. Lightbox
 9. Single Media View
 10. Media Edit View
-12. Media Activity
+11. Media Activity
 12. User Privacy Settings
 13. Media Size Settings
 14. Custom CSS settings
