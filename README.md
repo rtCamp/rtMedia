@@ -121,8 +121,8 @@ Read rtMedia [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_m
 
 ![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)
 
-We would like to thank [BrowserStack](https://browserstack.com) for their generous support in testing of rtMedia project.      
-We at rtCamp love browserstack and recommend them wholeheartedly. Check out  [BrowserStack Pricing](https://www.browserstack.com/pricing)
+Thanks to [BrowserStack](https://browserstack.com)for supporting the rtMedia project. We use their amazing service for cross-browser compatibility testing across multiple mobile and desktop browsers. 
+We wholeheartedly recommend them for all of your testing needs!
 
 ## Screenshots ##
 
