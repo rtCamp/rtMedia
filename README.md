@@ -1,3 +1,7 @@
+![Browserstack Logo](https://cloud.githubusercontent.com/assets/8191145/26439362/6de1b090-4145-11e7-8ec5-69bec0d12888.png)
+
+![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=QXJGc0MzZ3ZyUzBaUW9zZHFTSUtYNTMzUFJhMThPNWoxcFh5ZkxjNzE5Zz0tLWRrOTNUb0lzZXdWRC9PL3k3bHF6R3c9PQ==--0cf0d06c7d977c10230d7dbfcb5d907592ab005d)
+
 ![alt text](https://plugins.svn.wordpress.org/buddypress-media//assets/banner-772x250.jpg)
 
 # rtMedia for WordPress, BuddyPress and bbPress #
@@ -26,7 +30,7 @@ If you're in a hurry, you can skip the long list of features in subsequent secti
 
 Since rtMedia has many features video doesn't include all features:
 
-http://www.youtube.com/watch?v####dJrykKQGDcs
+https://www.youtube.com/watch?v=dJrykKQGDcs
 
 #### rtMedia Features ####
 
