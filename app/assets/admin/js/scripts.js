@@ -198,12 +198,14 @@ jQuery( document ).ready( function( $ ) {
 		var css = jQuery( '#rtmedia-custom-css' ).val();
 		// check if @import is used in css
 		var matches = css.match(/@import\s*(url)?\s*\(?([^;]+?)\)?;/);
-		var removable_line = matches[0];
+		if ( matches != null ) {
+			var removable_line = matches[0];
 
-		// if @import found in the css, then show error message
-		if ( removable_line != null ) {
-			jQuery( '#rtmedia-custom-css' ).after( '<div id="rtcss-notice" class="error"><p>' + rtmedia_admin_strings.wrong_css_input + '</p></div>' );
-			return false;
+			// if @import found in the css, then show error message
+			if ( removable_line != null ) {
+				jQuery( '#rtmedia-custom-css' ).after( '<div id="rtcss-notice" class="error"><p>' + rtmedia_admin_strings.wrong_css_input + '</p></div>' );
+				return false;
+			}
 		}
 	} );
 

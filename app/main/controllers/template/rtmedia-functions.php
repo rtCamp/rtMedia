@@ -535,11 +535,18 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			$src  = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
 			$html = "<img src='" . esc_url( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
 		} elseif ( 'video' === $rtmedia_media->media_type ) {
+			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 			$height = $rtmedia->options['defaultSizes_video_singlePlayer_height'];
 			$height = ( $height * 75 ) / 640;
 			$size   = ' width="' . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . '" height="' . esc_attr( $height ) . '%" ';
 			$html   = "<div id='rtm-mejs-video-container' style='width:" . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . 'px;height:' . esc_attr( $height ) . "%;  max-width:96%;max-height:80%;'>";
-			$html   .= '<video poster="" src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" ' . esc_attr( $size ) . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . esc_attr( $rtmedia_media->id ) . '" controls="controls" preload="true"></video>';
+			if ( empty( $youtube_url ) ) {
+				$html_video = '<video poster="" src="%s" %s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%s" controls="controls" preload="none"></video>';
+				$html .= sprintf( $html_video, esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ), esc_attr( $size ), esc_attr( $rtmedia_media->id ) );
+			} else {
+				$html_video = '<video width="640" height="360" class="url-video" id="video-id-%s" preload="none"><source type="video/youtube" src="%s" /></video>';
+				$html .= sprintf( $html_video, esc_attr( $rtmedia_media->id ), esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) );
+			}
 			$html   .= '</div>';
 		} elseif ( 'music' === $rtmedia_media->media_type ) {
 			$width = $rtmedia->options['defaultSizes_music_singlePlayer_width'];
@@ -550,7 +557,8 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 				$size = '';
 			}
 
-			$html = '<audio src="' . esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) . '" ' . esc_attr( $size ) . ' type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . esc_attr( $rtmedia_media->id ) . '" controls="controls" preload="none"></audio>';
+			$html = '<audio src="%s" %s type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_%s" controls="controls" preload="none"></audio>';
+			$html .= sprintf( $html, esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ), esc_attr( $size ), esc_attr( $rtmedia_media->id ) );
 		} else {
 			$html = false;
 		}
@@ -3725,13 +3733,17 @@ function rtmedia_get_comments_details_for_media_id( $media_id ){
 
 
 /**
-  * Is comment allow in Commented Media.
- **/
+ * Check if comment are allow in Media that are being add in the comment section.
+ *
+ * @since  4.3
+ *
+ * @return boolean $value True if enable else False.
+ */
 function rtmedia_check_comment_in_commented_media_allow() {
 	$value = false;
 	global $rtmedia;
 	/* variable */
-	if( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 == $rtmedia->options['rtmedia_disable_media_in_commented_media'] ){
+	if ( isset( $rtmedia->options ) && isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) && 0 === $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) {
 		$value = true;
 	}
 	return $value;
@@ -3741,8 +3753,12 @@ function rtmedia_check_comment_in_commented_media_allow() {
 
 
 /**
-	* Is comment allow in Commented Media.
- **/
+ * Check if comment in media is allow or not.
+ *
+ * @since  4.3
+ *
+ * @return boolean $value True if enable else False.
+ */
 function rtmedia_check_comment_media_allow() {
 	$value = false;
 	global $rtmedia;
@@ -3926,3 +3942,18 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 	}
 }
 
+
+/**
+ *
+ * Will Check that if the BuddyPress plugin is activated or not.
+ *
+ * @return bool True if BuddyPress is activated or else False.
+ */
+function rtm_is_buddypress_activate() {
+	// check if is_plugin_active exists or not.
+	if ( ! function_exists( 'is_plugin_active' ) ) {
+		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	}
+
+	return is_plugin_active( 'buddypress/bp-loader.php' );
+}
