@@ -1,5 +1,7 @@
 
-![browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26438116/b5f79f2c-413e-11e7-8c0a-6ec0f75be4dc.png)
+[https://www.browserstack.com/](![Browserstack Logo](https://cloud.githubusercontent.com/assets/8191145/26439362/6de1b090-4145-11e7-8ec5-69bec0d12888.png))
+
+
 
 ![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=QXJGc0MzZ3ZyUzBaUW9zZHFTSUtYNTMzUFJhMThPNWoxcFh5ZkxjNzE5Zz0tLWRrOTNUb0lzZXdWRC9PL3k3bHF6R3c9PQ==--0cf0d06c7d977c10230d7dbfcb5d907592ab005d)
 
