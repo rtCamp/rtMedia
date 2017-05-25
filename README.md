@@ -117,6 +117,13 @@ Please visit [rtMedia's FAQ page](https://rtmedia.io/faq/?utm_source####readme&u
 
 Read rtMedia [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)
 
+## Sponsorship Credits ##
+
+![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)
+
+We would like to thank [BrowserStack](https://browserstack.com) for their generous support in testing of rtMedia project.      
+We at rtCamp love browserstack and recommend them wholeheartedly. Check out  [BrowserStack Pricing](https://www.browserstack.com/pricing)
+
 ## Screenshots ##
 
 You can also check [rtMedia's Live Demo](http://demo.rtmedia.io/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Live Demo") or video below:
