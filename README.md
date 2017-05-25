@@ -121,8 +121,7 @@ Read rtMedia [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_m
 
 You can also check [rtMedia's Live Demo](http://demo.rtmedia.io/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Live Demo") or video below:
 
-http://www.youtube.com/watch?v####dJrykKQGDcs
-
+https://www.youtube.com/watch?v=dJrykKQGDcs
 
 1. Media Settings
 2. Privacy Settings
@@ -134,7 +133,7 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 8. Lightbox
 9. Single Media View
 10. Media Edit View
-12. Media Activity
+11. Media Activity
 12. User Privacy Settings
 13. Media Size Settings
 14. Custom CSS settings
