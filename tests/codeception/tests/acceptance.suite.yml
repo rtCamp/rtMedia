@@ -19,7 +19,7 @@ modules:
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-                'browserstack.user': 'rtcamp2'
+                'browserstack.user': 'rtcamp3'
                 'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
                 'os': 'OS X'
                 'os_version': 'sierra'
