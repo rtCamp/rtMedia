@@ -14,7 +14,8 @@ addons:
   browserstack:
     username: rtcamp3
     access_key:
-     secure: MurZFxd9hv26PG2nAue5DhpV/1AGDxaM2X+DMXEWiIzOdTamkWXInAOu1LecZSlUijZFJtjYsXFIo03E386SrPtbG/w7mSa/oz+jcHLoRaUYbXZemV34PJKQaWyAVau+ZhUb00M4V3o3T9KWMuEqSjqJasLUdz7H8aId4Y6IvWVJGg484x8gxdHTHKLzEZpyQpuxztd2qi8n6Tzw6X1UjGhiqIQgKM8MXp/C1j/uIu2m+odYYEBkR/p34VqrGTk7c4p8kwEHvJBjwfFQRQW5R48GVqobZu0zapEUpTHkMwkd8xzCIa/Ye9zm5zv1hOPL52+7msL+CwQgCXbHHTpdSTaVnsrLBsj/qFz3gqnSJQw/l2LhJcfplhQfD3n8SwOl4J/hljg2bsmApMSLxnTnY+ioxfrPjhtFJ4PNXak0VEmoNL4hsI+m/9ofXIFYQFRK1FYm0Ha/+HnJAkLatiqdbxtFdLhg/rJB/xwcXln0Sv0aTVQFs37vIUoPFXE+5iFC/7zr0eT7h4AbZIu/Et7y36dCgxu8ViOKHy6svBmenNOrBHlyobmGMTv6sAa8WZ7KlD3uMHVODCj7OdsDBmPf/SzLCYfQ/yRB9nlOWJHTGz55XDoNFDTBGFh0Hn1S5yTfp1UWvRO0TZzmBU0INmXeJedJARlz56KcMPfi1R8nuSE=
+     secure: VFBgrctr5uDgE4PIea7QoXJDdQqq5TjPhvEcEBBcymbsP7cYUniD8K/0At+hArw5fqKajNlPZZjbxEhBRVv4hXNin++S6qwLeHCQMyHWQTt5vOULL16R2GsO30QUkFT/Egw2rh9v6qBei7Ol2mwz7i+XzZQE8cSDa/TJl7wMVwU=
+
 
 before_install:
 - rm -rf ~/.gnupg
