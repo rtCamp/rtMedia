@@ -14,17 +14,17 @@ modules:
             host: 'hub-cloud.browserstack.com'
             port: 80
             browser: 'firefox'
-            url: 'http://sumeet2.rtmedia.me/'
+            url: 'http://automation.rtmedia.me/'
             adminUsername: ''
             adminPassword: ''
             adminPath: '/wp-admin'
             capabilities:
-                'browserstack.user': 'rtcamp2'
+                'browserstack.user': 'rtcamp3'
                 'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
                 'os': 'OS X'
                 'os_version': 'sierra'
                 'browserstack.debug': 'true'
                 'build': '%TRAVIS_BUILD_NUMBER%'
-                'project': 'rtMedia-core-test-sumeet'
+                'project': 'rtMedia-core-test'
                 'browserstack.local': 'true'
 

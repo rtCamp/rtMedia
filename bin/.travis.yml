@@ -7,22 +7,18 @@ branches:
   only:
     - codeception
 php:
-    - 5.6.4
-#    - 7.0
-#env:
-#global:
+     - 5.6.4
+#    - 7.1
 
 addons:
   browserstack:
-    username: rtcamp2
+    username: rtcamp3
     access_key:
-#     secure: T505OAjz+XN2yjCFipX9Mq+2tVAli8THWxtl0iYNnFl6zfHxcngK2xoAxUCt+9Lx5ncMNl4O7VCQW1Df8Eb/NSL04QaOCJMOvRj8wQHGEeqxbp0QmKLxCxrhQcqQLcMJhSQqO2zUb+FbuMwdXO8jxyCY49GLdjd5R7zYhXOjfnursge1pkw+uyXWtZufsDKTZ9UPdo5v6jXNibEVVsn86mUYDv5uuUej1qo8ioyEGfdnSXKmMwTXRqxkb+xbj0TwY+jffeFQv6h3zaT0YOMDNVD9UHJvAd9bRLc1NTbnVvNUa6/9N9HyNFBXGeIp7xy8CQDwprnDiIpix1G0o6wjIS6NndROOzU9bN/pbILXJPenviYneGjoN1ZrPp3zbtb0P0BvpxJuiQ2tL5dAnrG/GEDKun9J9mDWKncoBONM6KyhfIGwO1K6anPQqTbZplKcRJ1pUnyUH3gYxHg4exlkORclNXPyuST8RCJt++DiKdZCpcgQHwvTBX/vQKSh6XXCG0pMYN1JGUQdVWuaTgA6vPLBOHlDE7wvuWrnb0AaUP4Pfof2ApBq+ao+Fy/JccWIpcqcK2UIoNZ/LoWG/4JbkLLVoGRpDSUdKz9k5nJztAwzaXxWf9wzwFyQMne6H5Yf4RyHHZ6yJ9VskwYukbtw6qfq5pyKgyjX7qkeLkXRi08=
-     secure: c9H+FGp+XbHoKJC+gRjLtWKPpy581cELM42CNwm4vNtoFLkWCDRzTS4zyGkKPOC5vfSuS2bCAArAgFSyA0rr8CcyoMS6Qw6d32pUYDxHq4eTboR4j213aD+uvC6EuPPpUeG09Y7yO9nxDTi2IbrPUtm5nQd4zdgGhxhjdW0xOE0=
+     secure: VFBgrctr5uDgE4PIea7QoXJDdQqq5TjPhvEcEBBcymbsP7cYUniD8K/0At+hArw5fqKajNlPZZjbxEhBRVv4hXNin++S6qwLeHCQMyHWQTt5vOULL16R2GsO30QUkFT/Egw2rh9v6qBei7Ol2mwz7i+XzZQE8cSDa/TJl7wMVwU=
 
 
 before_install:
 - rm -rf ~/.gnupg
-
 
 cache:
   paths:
@@ -36,17 +32,18 @@ before_script:
 - wget -qO ee rt.cx/ee && sudo bash ee
 - sudo apt-get update
 - sudo tail /var/log/ee/ee.log
-- sudo ee site create sumeet2.rtmedia.me --wp --user=ADMINUSER --email=sumeet.sarna@rtcamp.com --pass=ADMINPASS
-- sudo sed -i '/^127.0.0.1/ s/$/ sumeet2.rtmedia.me/' /etc/hosts
+- sudo ee site create automation.rtmedia.me --wp --user=ADMINUSER --email=sumeet.sarna@rtcamp.com --pass=ADMINPASS
+- sudo sed -i '/^127.0.0.1/ s/$/ automation.rtmedia.me/' /etc/hosts
 - sudo chmod 777 -R /var/www
-- cd /var/www/sumeet2.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
+- cd /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
 - cd $PLUGIN_DIR
-- cp -Rf * /var/www/sumeet2.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
-- cd /var/www/sumeet2.rtmedia.me/htdocs/
+- cp -Rf * /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
+- cd /var/www/automation.rtmedia.me/htdocs/
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
 - wp plugin activate --all
-- cd /var/www/sumeet2.rtmedia.me/htdocs/wp-content/themes/
+- cd /var/www/automation.rtmedia.me/htdocs/wp-content/themes/
 - wp theme activate twentysixteen
+#- wp theme activate twentyseventeen
 - cd $PLUGIN_DIR
 - cd tests/codeception/tests/_data
 - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
@@ -58,7 +55,6 @@ before_script:
 - composer update
 - export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
 
+
 script:
 - wpcept run acceptance --steps
-
-
