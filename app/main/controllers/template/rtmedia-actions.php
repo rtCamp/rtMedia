@@ -183,6 +183,7 @@ add_action( 'rtmedia_album_gallery_actions', 'rtmedia_gallery_options', 80 );
 function rtmedia_create_album_modal() {
 
 	global $rtmedia_query;
+	global $rtmedia;
 
 	if ( is_rtmedia_album_enable() && isset( $rtmedia_query->query['context_id'] ) && isset( $rtmedia_query->query['context'] ) && ( ! ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) ) || apply_filters( 'rtmedia_load_add_album_modal', false ) ) {
 		?>
@@ -193,6 +194,10 @@ function rtmedia_create_album_modal() {
 				<p>
 					<label class="rtm-modal-grid-title-column" for="rtmedia_album_name"><?php esc_html_e( 'Album Title : ', 'buddypress-media' ); ?></label>
 					<input type="text" id="rtmedia_album_name" value="" class="rtm-input-medium" />
+				</p>
+				<p>
+					<label class="rtm-modal-grid-title-column" for="rtmedia_album_description"><?php esc_html_e( 'Album Description : ', 'buddypress-media' ); ?></label>
+					<textarea type="text" id="rtmedia_album_description" value="" class="rtm-input-medium"></textarea>
 				</p>
 				<?php do_action( 'rtmedia_add_album_privacy' ); ?>
 				<input type="hidden" id="rtmedia_album_context" value="<?php echo esc_attr( $rtmedia_query->query['context'] ); ?>">

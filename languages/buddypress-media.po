@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.3.2\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-05-11 11:20:09+00:00\n"
+"POT-Creation-Date: 2017-05-29 07:17:36+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2154,9 +2154,9 @@ msgid "Albums"
 msgstr ""
 
 #: app/main/RTMedia.php:673 app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rtmedia-actions.php:313
-#: app/main/controllers/template/rtmedia-actions.php:316
+#: app/main/controllers/template/rtmedia-actions.php:317
 #: app/main/controllers/template/rtmedia-actions.php:320
+#: app/main/controllers/template/rtmedia-actions.php:324
 msgid "Upload"
 msgstr ""
 
@@ -2670,7 +2670,7 @@ msgid "Create"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaAlbum.php:56
-#: app/main/controllers/template/rtmedia-actions.php:202
+#: app/main/controllers/template/rtmedia-actions.php:206
 msgid "Create Album"
 msgstr ""
 
@@ -2758,8 +2758,8 @@ msgid "Unlike"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaLoginPopup.php:38
-#: app/main/controllers/template/rtmedia-actions.php:316
 #: app/main/controllers/template/rtmedia-actions.php:320
+#: app/main/controllers/template/rtmedia-actions.php:324
 msgid "Upload Media"
 msgstr ""
 
@@ -2811,19 +2811,19 @@ msgstr ""
 msgid "You do not have sufficient privileges to view this gallery"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaAJAX.php:35
+#: app/main/controllers/template/RTMediaAJAX.php:36
 msgid "You can not create album in this group."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaAJAX.php:41
+#: app/main/controllers/template/RTMediaAJAX.php:42
 msgid "You can not create album."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaAJAX.php:46
+#: app/main/controllers/template/RTMediaAJAX.php:47
 msgid "You can not create more albums, you exceed your album limit."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaAJAX.php:96
+#: app/main/controllers/template/RTMediaAJAX.php:97
 msgid "Data mismatch, Please insert data properly."
 msgstr ""
 
@@ -2868,76 +2868,80 @@ msgstr ""
 msgid "Album Title : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:242
-#: app/main/controllers/template/rtmedia-actions.php:249
+#: app/main/controllers/template/rtmedia-actions.php:198
+msgid "Album Description : "
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:246
+#: app/main/controllers/template/rtmedia-actions.php:253
 #: app/main/controllers/template/rtmedia-filters.php:92
 msgid "Merge Album"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:245
+#: app/main/controllers/template/rtmedia-actions.php:249
 msgid "Select Album to merge with : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:295
+#: app/main/controllers/template/rtmedia-actions.php:299
 msgid "Merge"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:364
+#: app/main/controllers/template/rtmedia-actions.php:368
 msgid "Empowering your community with "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:365
+#: app/main/controllers/template/rtmedia-actions.php:369
 msgid "The only complete media solution for WordPress, BuddyPress and bbPress"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:384
+#: app/main/controllers/template/rtmedia-actions.php:388
 msgid "Close (Esc)"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:529
+#: app/main/controllers/template/rtmedia-actions.php:533
 msgid "You can consider rtMedia Team for following :"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:531
+#: app/main/controllers/template/rtmedia-actions.php:535
 msgid "rtMedia Customization ( in Upgrade Safe manner )"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:532
+#: app/main/controllers/template/rtmedia-actions.php:536
 msgid "WordPress/BuddyPress Theme Design and Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:533
+#: app/main/controllers/template/rtmedia-actions.php:537
 msgid "WordPress/BuddyPress Plugin Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:536
+#: app/main/controllers/template/rtmedia-actions.php:540
 msgid "Contact Us"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:623
-#: app/main/controllers/template/rtmedia-actions.php:624
+#: app/main/controllers/template/rtmedia-actions.php:627
+#: app/main/controllers/template/rtmedia-actions.php:628
 msgid "Previous"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:625
-#: app/main/controllers/template/rtmedia-actions.php:626
+#: app/main/controllers/template/rtmedia-actions.php:629
+#: app/main/controllers/template/rtmedia-actions.php:630
 #: templates/media/album-single-edit.php:121
 msgid "Next"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:823
+#: app/main/controllers/template/rtmedia-actions.php:827
 msgid "Settings has been saved successfully."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:827
+#: app/main/controllers/template/rtmedia-actions.php:831
 msgid "Refresh the page in case if license data is not showing correct."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:845
+#: app/main/controllers/template/rtmedia-actions.php:849
 msgid "Posted a status update"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:847
+#: app/main/controllers/template/rtmedia-actions.php:851
 msgid "rtMedia Updates"
 msgstr ""
 

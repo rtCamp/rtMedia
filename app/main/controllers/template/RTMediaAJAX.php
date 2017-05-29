@@ -24,6 +24,11 @@ class RTMediaAJAX {
 	function create_album() {
 		$nonce = filter_input( INPUT_POST, 'create_album_nonce', FILTER_SANITIZE_STRING );
 		$_name = filter_input( INPUT_POST, 'name', FILTER_SANITIZE_STRING );
+		$_description = filter_input( INPUT_POST, 'description', FILTER_SANITIZE_STRING );
+
+		if ( empty( $_description ) ) {
+			$_description = '';
+		}
 
 		$return['error'] = false;
 		if ( wp_verify_nonce( $nonce, 'rtmedia_create_album_nonce' ) && isset( $_name ) && $_name && is_rtmedia_album_enable() ) {
@@ -68,9 +73,10 @@ class RTMediaAJAX {
 				'post_id'    => false,
 				'context'    => $context,
 				'context_id' => $context_id,
+				'album_description' => $_description,
 			) );
 
-			$rtmedia_id = $album->add( $album_data['title'], $album_data['author'], $album_data['new'], $album_data['post_id'], $album_data['context'], $album_data['context_id'] );
+			$rtmedia_id = $album->add( $album_data['title'], $album_data['author'], $album_data['new'], $album_data['post_id'], $album_data['context'], $album_data['context_id'], $album_data['album_description'] );
 
 			$rtmedia_nav = new RTMediaNav();
 

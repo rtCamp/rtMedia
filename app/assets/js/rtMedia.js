@@ -330,6 +330,7 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	jQuery( '#rtmedia-create-album-modal' ).on( 'click', '#rtmedia_create_new_album', function( e ) {
 		$albumname = jQuery( '<span/>' ).text( jQuery.trim( jQuery( '#rtmedia_album_name' ).val() ) ).html();
+		$album_description = jQuery( '#rtmedia_album_description' );
 		$context = jQuery.trim( jQuery( '#rtmedia_album_context' ).val() );
 		$context_id = jQuery.trim( jQuery( '#rtmedia_album_context_id' ).val() );
 		$privacy = jQuery.trim( jQuery( '#rtmedia_select_album_privacy' ).val() );
@@ -339,6 +340,7 @@ jQuery( 'document' ).ready( function( $ ) {
 			var data = {
 				action: 'rtmedia_create_album',
 				name: $albumname,
+				description: $album_description.val(),
 				context: $context,
 				context_id: $context_id,
 				create_album_nonce: $create_album_nonce
@@ -357,6 +359,7 @@ jQuery( 'document' ).ready( function( $ ) {
 				if ( typeof response.album != 'undefined' ) {
 					response = jQuery.trim( response.album );
 					var flag = true;
+					$album_description.val('');
 
 					jQuery( '.rtmedia-user-album-list' ).each( function() {
 						jQuery( this ).children( 'optgroup' ).each( function() {
