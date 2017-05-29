@@ -26,10 +26,6 @@ class RTMediaAJAX {
 		$_name = filter_input( INPUT_POST, 'name', FILTER_SANITIZE_STRING );
 		$_description = filter_input( INPUT_POST, 'description', FILTER_SANITIZE_STRING );
 
-		if ( empty( $_description ) ) {
-			$_description = '';
-		}
-
 		$return['error'] = false;
 		if ( wp_verify_nonce( $nonce, 'rtmedia_create_album_nonce' ) && isset( $_name ) && $_name && is_rtmedia_album_enable() ) {
 			$_context    = filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING );
