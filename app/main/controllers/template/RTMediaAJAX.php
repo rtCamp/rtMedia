@@ -63,12 +63,12 @@ class RTMediaAJAX {
 
 			// setup new album data
 			$album_data = apply_filters( 'rtmedia_create_album_data', array(
-				'title'      => $_name,
-				'author'     => get_current_user_id(),
-				'new'        => true,
-				'post_id'    => false,
-				'context'    => $context,
-				'context_id' => $context_id,
+				'title'             => $_name,
+				'author'            => get_current_user_id(),
+				'new'               => true,
+				'post_id'           => false,
+				'context'           => $context,
+				'context_id'        => $context_id,
 				'album_description' => $_description,
 			) );
 

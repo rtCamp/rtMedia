@@ -182,8 +182,7 @@ add_action( 'rtmedia_album_gallery_actions', 'rtmedia_gallery_options', 80 );
  */
 function rtmedia_create_album_modal() {
 
-	global $rtmedia_query;
-	global $rtmedia;
+	global $rtmedia_query, $rtmedia;
 
 	if ( is_rtmedia_album_enable() && isset( $rtmedia_query->query['context_id'] ) && isset( $rtmedia_query->query['context'] ) && ( ! ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) ) || apply_filters( 'rtmedia_load_add_album_modal', false ) ) {
 		?>
