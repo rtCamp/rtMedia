@@ -213,6 +213,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 * @return array $rtmedia_plugins
 		 */
 		public function get_plugin_info() {
+			include_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 			$active_plugins = (array) get_option( 'active_plugins', array() );
 			if ( is_multisite() ) {
 				$active_plugins = array_merge( $active_plugins, rtmedia_get_site_option( 'active_sitewide_plugins', array() ) );
@@ -736,6 +737,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$debug_info['[php.ini] post_max_size'] = esc_html( ini_get( 'post_max_size' ) );
 			$debug_info['[php.ini] upload_max_filesize'] = esc_html( ini_get( 'upload_max_filesize' ) );
 			$debug_info['[php.ini] memory_limit'] = esc_html( ini_get( 'memory_limit' ) );
+			$plugin_info = explode( ',', $this->get_plugin_info() );
+			$debug_info['Installed Plugins']      = implode( ', '. PHP_EOL . str_repeat( ' ', 49 ) , $plugin_info );
 			$active_theme = wp_get_theme();
 			$debug_info['Theme Name'] = esc_html( $active_theme->Name );
 			$debug_info['Theme Version'] = esc_html( $active_theme->Version );
@@ -753,7 +756,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					echo ucwords( str_replace( '_', ' ', $option ) ) . str_repeat( ' ', 50 - strlen($option) ) . wp_strip_all_tags( $value ) . PHP_EOL;
 				}
 
-				readfile("debuginfo.txt");
+				readfile( "debuginfo.txt" );
 				exit();
 			}
 

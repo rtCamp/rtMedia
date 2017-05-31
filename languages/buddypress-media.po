@@ -4,7 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.3.2\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2017-05-24 10:10:37+00:00\n"
+=======
+<<<<<<< HEAD
+"POT-Creation-Date: 2017-05-23 05:45:53+00:00\n"
+=======
+"POT-Creation-Date: 2017-05-31 09:40:56+00:00\n"
+>>>>>>> 1c3a6e11f5f609a4ea0d3baa2dffe0875b4f84d0
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -400,8 +408,13 @@ msgid ""
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1584 app/admin/RTMediaAdmin.php:1602
+<<<<<<< HEAD
 #: app/admin/RTMediaAdmin.php:1620 app/admin/RTMediaFormHandler.php:457
 #: app/admin/RTMediaFormHandler.php:468 app/helper/RTMediaSettings.php:324
+=======
+#: app/admin/RTMediaAdmin.php:1620 app/admin/RTMediaFormHandler.php:458
+#: app/admin/RTMediaFormHandler.php:469 app/helper/RTMediaSettings.php:324
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 #: app/helper/RTMediaSupport.php:416 app/helper/RTMediaSupport.php:694
 msgid "here"
 msgstr ""
@@ -538,11 +551,19 @@ msgstr ""
 msgid "Cascading grid layout"
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:360
 msgid "If you enable masonry view, it is advisable to"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:360
+=======
+#: app/admin/RTMediaFormHandler.php:350 app/admin/RTMediaFormHandler.php:362
+msgid "If you enable masonry view, it is advisable to"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:350 app/admin/RTMediaFormHandler.php:362
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid "for masonry view."
 msgstr ""
 
@@ -564,6 +585,7 @@ msgid ""
 "requirement and vice-versa."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:367
 msgid "Enable Direct Upload"
 msgstr ""
@@ -601,22 +623,70 @@ msgid "Allow usage data tracking"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:424
+=======
+#: app/admin/RTMediaFormHandler.php:357
+msgid "Enable Masonry Cascading grid layout for activity"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:369
+msgid "Enable Direct Upload"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:374
+msgid "Uploading media directly as soon as it gets selected."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:398
+msgid "Single Media View"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:399 app/helper/RTMediaAddon.php:348
+msgid "Media Likes"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:400
+msgid "List Media View"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:401
+msgid "Masonry View"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:402
+msgid "Direct Upload"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:420
+msgid "Allow usage data tracking"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:425
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid ""
 "To make rtMedia better compatible with your sites, you can help the rtMedia "
 "team learn what themes and plugins you are using. No private information "
 "about your setup will be sent during tracking."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:428
 msgid "Admin bar menu integration"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:433
+=======
+#: app/admin/RTMediaFormHandler.php:429
+msgid "Admin bar menu integration"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:434
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid ""
 "Add rtMedia menu to WordPress admin bar for easy access to settings and "
 "moderation page (if enabled)."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:438
 msgid "Add a link to rtMedia in footer"
 msgstr ""
@@ -630,11 +700,27 @@ msgid "Also add my affiliate-id to rtMedia footer link"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:453
+=======
+#: app/admin/RTMediaFormHandler.php:439
+msgid "Add a link to rtMedia in footer"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:444
+msgid "Help us promote rtMedia."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:449
+msgid "Also add my affiliate-id to rtMedia footer link"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:454
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid ""
 "Add your affiliate-id along with footer link and get rewarded by our "
 "affiliation program."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:457
 msgid "Signup for"
 msgstr ""
@@ -648,11 +734,27 @@ msgid "Enable JSON API"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:465
+=======
+#: app/admin/RTMediaFormHandler.php:458
+msgid "Signup for"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:458
+msgid "affiliate program"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:461
+msgid "Enable JSON API"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:466
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid ""
 "This will allow handling API requests for rtMedia sent through any mobile "
 "app."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:468
 msgid "You can refer to the API document from"
 msgstr ""
@@ -746,11 +848,107 @@ msgid "rtMedia default styles"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:893
+=======
+#: app/admin/RTMediaFormHandler.php:469
+msgid "You can refer to the API document from"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:489
+msgid "Admin Settings"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:490
+msgid "API Settings"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:491
+msgid "Miscellaneous"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:492
+msgid "Footer Link"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:572
+msgid "Media Types Settings"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:580 app/helper/RTMediaSettings.php:346
+msgid "Media Type"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:585
+msgid "Allow Upload"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:587
+msgid "Allows you to upload a particular media type on your post."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:595
+msgid "Set Featured"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:597
+msgid "Place a specific media as a featured content on the post."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:645
+msgid "File Extensions"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:776
+msgid "Media Size Settings"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:781
+msgid "Category"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:782
+msgid "Entity"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:783
+msgid "Width"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:784
+msgid "Height"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:785
+msgid "Crop"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:835
+msgid "JPEG/JPG image quality (1-100)"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:841
+msgid "Enter JPEG/JPG Image Quality. Minimum value is 1. 100 is original quality."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:849
+msgid "Image Quality"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:871
+msgid "Custom CSS settings"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:888
+msgid "rtMedia default styles"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:894
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid ""
 "Load default rtMedia styles. You need to write your own style for rtMedia "
 "if you disable it."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:898
 msgid "Paste your CSS code"
 msgstr ""
@@ -780,11 +978,43 @@ msgid "Allow users to set privacy for their content"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:955
+=======
+#: app/admin/RTMediaFormHandler.php:899
+msgid "Paste your CSS code"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:905
+msgid "Custom rtMedia CSS container"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:928
+msgid "Enable privacy"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:934
+msgid "Enable privacy in rtMedia"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:939
+msgid "Default privacy"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:945
+msgid "Set default privacy for media"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:951
+msgid "Allow users to set privacy for their content"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:956
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid ""
 "If you choose this, users will be able to change privacy of their own "
 "uploads."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:959
 msgid "For group uploads, BuddyPress groups privacy is used."
 msgstr ""
@@ -818,11 +1048,47 @@ msgid "Enable media in comment"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1037
+=======
+#: app/admin/RTMediaFormHandler.php:960
+msgid "For group uploads, BuddyPress groups privacy is used."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1002
+msgid "Enable media in profile"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1007
+msgid "Enable Media on BuddyPress Profile"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1012
+msgid "Enable media in group"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1017
+msgid "Enable Media on BuddyPress Groups"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1022
+msgid "Allow upload from activity stream"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1027
+msgid "Allow upload using status update box present on activity stream page"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1033
+msgid "Enable media in comment"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1038
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid ""
 "This will allow users to upload media in comment section for originally "
 "uploaded media up to 1 level."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:1042 app/admin/RTMediaFormHandler.php:1047
 msgid "Disable upload in comment media"
 msgstr ""
@@ -832,6 +1098,17 @@ msgid "Number of media items to show in activity stream"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1058
+=======
+#: app/admin/RTMediaFormHandler.php:1043 app/admin/RTMediaFormHandler.php:1048
+msgid "Disable upload in comment media"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1054
+msgid "Number of media items to show in activity stream"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1059
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid ""
 "With bulk uploads activity, the stream may get flooded. You can control the "
 "maximum number of media items or files per activity. This limit will not "
@@ -839,16 +1116,25 @@ msgid ""
 "unlimited."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:1065
 msgid "Enable media notification"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1070
+=======
+#: app/admin/RTMediaFormHandler.php:1066
+msgid "Enable media notification"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1071
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid ""
 "This will enable notifications to media authors for media likes and "
 "comments."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:1076
 msgid "Create activity for media likes"
 msgstr ""
@@ -870,16 +1156,47 @@ msgid "Organize media into albums"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1104
+=======
+#: app/admin/RTMediaFormHandler.php:1077
+msgid "Create activity for media likes"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1082
+msgid "Enabling this setting will create BuddyPress activity for media likes."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1088
+msgid "Create activity for media comments"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1093
+msgid "Enabling this setting will create BuddyPress activity for media comments."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1099
+msgid "Organize media into albums"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1105
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid ""
 "This will add 'album' tab to BuddyPress profile and group depending on the "
 "^above^ settings."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/admin/RTMediaFormHandler.php:1109
 msgid "Show album description"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:1115
+=======
+#: app/admin/RTMediaFormHandler.php:1110
+msgid "Show album description"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1116
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid "This will show description of an album under album gallery page."
 msgstr ""
 
@@ -1505,6 +1822,7 @@ msgid "New Feature"
 msgstr ""
 
 #: app/helper/RTMediaSupport.php:178
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:284
 msgid "Submit"
 msgstr ""
 
@@ -2166,9 +2484,15 @@ msgid "Albums"
 msgstr ""
 
 #: app/main/RTMedia.php:673 app/main/controllers/media/RTMediaLoginPopup.php:38
+<<<<<<< HEAD
 #: app/main/controllers/template/rtmedia-actions.php:312
 #: app/main/controllers/template/rtmedia-actions.php:315
 #: app/main/controllers/template/rtmedia-actions.php:319
+=======
+#: app/main/controllers/template/rtmedia-actions.php:317
+#: app/main/controllers/template/rtmedia-actions.php:320
+#: app/main/controllers/template/rtmedia-actions.php:324
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid "Upload"
 msgstr ""
 
@@ -2361,11 +2685,19 @@ msgstr ""
 msgid "file deleted successfully."
 msgstr ""
 
+<<<<<<< HEAD
 #: app/main/RTMedia.php:1102
 msgid "There are some uploads in progress. Do you want to cancel them?"
 msgstr ""
 
 #: app/main/RTMedia.php:1212
+=======
+#: app/main/RTMedia.php:1106
+msgid "There are some uploads in progress. Do you want to cancel them?"
+msgstr ""
+
+#: app/main/RTMedia.php:1216
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid "Adding media in Comments is not allowed"
 msgstr ""
 
@@ -2686,7 +3018,7 @@ msgid "Create"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaAlbum.php:56
-#: app/main/controllers/template/rtmedia-actions.php:202
+#: app/main/controllers/template/rtmedia-actions.php:206
 msgid "Create Album"
 msgstr ""
 
@@ -2774,8 +3106,13 @@ msgid "Unlike"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaLoginPopup.php:38
+<<<<<<< HEAD
 #: app/main/controllers/template/rtmedia-actions.php:315
 #: app/main/controllers/template/rtmedia-actions.php:319
+=======
+#: app/main/controllers/template/rtmedia-actions.php:320
+#: app/main/controllers/template/rtmedia-actions.php:324
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 msgid "Upload Media"
 msgstr ""
 
@@ -2827,19 +3164,19 @@ msgstr ""
 msgid "You do not have sufficient privileges to view this gallery"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaAJAX.php:35
+#: app/main/controllers/template/RTMediaAJAX.php:36
 msgid "You can not create album in this group."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaAJAX.php:41
+#: app/main/controllers/template/RTMediaAJAX.php:42
 msgid "You can not create album."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaAJAX.php:46
+#: app/main/controllers/template/RTMediaAJAX.php:47
 msgid "You can not create more albums, you exceed your album limit."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaAJAX.php:96
+#: app/main/controllers/template/RTMediaAJAX.php:98
 msgid "Data mismatch, Please insert data properly."
 msgstr ""
 
@@ -2884,20 +3221,25 @@ msgstr ""
 msgid "Album Title : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:242
-#: app/main/controllers/template/rtmedia-actions.php:249
+#: app/main/controllers/template/rtmedia-actions.php:198
+msgid "Album Description : "
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:246
+#: app/main/controllers/template/rtmedia-actions.php:253
 #: app/main/controllers/template/rtmedia-filters.php:92
 msgid "Merge Album"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:245
+#: app/main/controllers/template/rtmedia-actions.php:249
 msgid "Select Album to merge with : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:295
+#: app/main/controllers/template/rtmedia-actions.php:299
 msgid "Merge"
 msgstr ""
 
+<<<<<<< HEAD
 #: app/main/controllers/template/rtmedia-actions.php:365
 msgid "Empowering your community with "
 msgstr ""
@@ -2937,23 +3279,64 @@ msgstr ""
 
 #: app/main/controllers/template/rtmedia-actions.php:626
 #: app/main/controllers/template/rtmedia-actions.php:627
+=======
+#: app/main/controllers/template/rtmedia-actions.php:368
+msgid "Empowering your community with "
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:369
+msgid "The only complete media solution for WordPress, BuddyPress and bbPress"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:388
+msgid "Close (Esc)"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:533
+msgid "You can consider rtMedia Team for following :"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:535
+msgid "rtMedia Customization ( in Upgrade Safe manner )"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:536
+msgid "WordPress/BuddyPress Theme Design and Development"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:537
+msgid "WordPress/BuddyPress Plugin Development"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:540
+msgid "Contact Us"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:627
+#: app/main/controllers/template/rtmedia-actions.php:628
+msgid "Previous"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:629
+#: app/main/controllers/template/rtmedia-actions.php:630
+>>>>>>> 1bf1754d06990004ff62d90c64d10db4aba97fd5
 #: templates/media/album-single-edit.php:121
 msgid "Next"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:823
+#: app/main/controllers/template/rtmedia-actions.php:827
 msgid "Settings has been saved successfully."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:827
+#: app/main/controllers/template/rtmedia-actions.php:831
 msgid "Refresh the page in case if license data is not showing correct."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:845
+#: app/main/controllers/template/rtmedia-actions.php:849
 msgid "Posted a status update"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:847
+#: app/main/controllers/template/rtmedia-actions.php:851
 msgid "rtMedia Updates"
 msgstr ""
 
@@ -3238,6 +3621,315 @@ msgstr ""
 msgid "under"
 msgstr ""
 
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/internationalized-plugin.php:11
+msgid "This is a dummy plugin"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:42
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:72
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:80
+msgid "There was an error when reading this WXR file"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:43
+msgid ""
+"Details are shown above. The importer will now try again with a different "
+"parser..."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:84
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:89
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:306
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:495
+msgid "This does not appear to be a WXR file, missing/invalid WXR version number"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:132
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:141
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:192
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:196
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:205
+msgid "Sorry, there has been an error."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:133
+msgid "The file does not exist, please try again."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:176
+msgid "All done."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:176
+msgid "Have fun!"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:177
+msgid "Remember to update the passwords and roles of imported users."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:197
+msgid ""
+"The export file could not be found at <code>%s</code>. It is likely that "
+"this was caused by a permissions problem."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:213
+msgid ""
+"This WXR file (version %s) may not be supported by this version of the "
+"importer. Please consider updating."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:238
+msgid ""
+"Failed to import author %s. Their posts will be attributed to the current "
+"user."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:264
+msgid "Assign Authors"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:265
+msgid ""
+"To make it easier for you to edit and save the imported content, you may "
+"want to reassign the author of the imported item to an existing user of "
+"this site. For example, you may want to import all the entries as "
+"<code>admin</code>s entries."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:267
+msgid ""
+"If a new user is created by WordPress, a new password will be randomly "
+"generated and the new user&#8217;s role will be set as %s. Manually "
+"changing the new user&#8217;s details will be necessary."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:277
+msgid "Import Attachments"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:280
+msgid "Download and import file attachments"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:297
+msgid "Import author:"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:308
+msgid "or create new user with login name:"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:311
+msgid "as a new user:"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:319
+msgid "assign posts to an existing user:"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:321
+msgid "or assign posts to an existing user:"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:322
+msgid "- Select -"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:372
+msgid ""
+"Failed to create new user for %s. Their posts will be attributed to the "
+"current user."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:424
+msgid "Failed to import category %s"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:467
+msgid "Failed to import post tag %s"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:516
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:738
+msgid "Failed to import %s %s"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:605
+msgid "Failed to import &#8220;%s&#8221;: Invalid post type %s"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:642
+msgid "%s &#8220;%s&#8221; already exists."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:704
+msgid "Failed to import %s &#8220;%s&#8221;"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:869
+msgid "Menu item skipped due to missing menu slug"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:876
+msgid "Menu item skipped due to invalid menu slug: %s"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:939
+msgid "Fetching attachments is not enabled"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:952
+msgid "Invalid file type"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:996
+msgid "Remote server did not respond"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1002
+msgid "Remote server returned error response %1$d %2$s"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1009
+msgid "Remote file is incorrect size"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1014
+msgid "Zero size file downloaded"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1020
+msgid "Remote file is too large, limit is %s"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1119
+msgid "Import WordPress"
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1126
+msgid ""
+"A new version of this importer is available. Please update to version %s to "
+"ensure compatibility with newer export files."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1141
+msgid ""
+"Howdy! Upload your WordPress eXtended RSS (WXR) file and we&#8217;ll import "
+"the posts, pages, comments, custom fields, categories, and tags into this "
+"site."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1142
+msgid "Choose a WXR (.xml) file to upload, then click Upload file and import."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1216
+msgid ""
+"Import <strong>posts, pages, comments, custom fields, categories, and "
+"tags</strong> from a WordPress export file."
+msgstr ""
+
+#: tests/codeception/vendor/lucatume/wp-browser/src/data/themedir1/internationalized-theme/functions.php:7
+msgid "This is a dummy theme"
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/WP_CLI/CommandWithUpgrade.php:479
+msgid " Try again"
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/WP_CLI/CommandWithUpgrade.php:484
+msgid "API error. Try Again."
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/core.php:755
+msgid "Wildcard DNS may not be configured correctly."
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/cron-event.php:424
+msgid "%s year"
+msgid_plural "%s years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/cron-event.php:425
+msgid "%s month"
+msgid_plural "%s months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/cron-event.php:426
+msgid "%s week"
+msgid_plural "%s weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/cron-event.php:427
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/cron-event.php:428
+msgid "%s hour"
+msgid_plural "%s hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/cron-event.php:429
+msgid "%s minute"
+msgid_plural "%s minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/cron-event.php:430
+msgid "%s second"
+msgid_plural "%s seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/export.php:300
+msgid "Invalid start ID: %d"
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/media.php:104
+msgid "image"
+msgid_plural "images"
+msgstr[0] ""
+msgstr[1] ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/site.php:118
+msgid "Uncategorized"
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/export/class-wp-export-query.php:327
+msgid "Term is missing a parent: %s (%d)"
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/export/writers.php:35
+#: tests/codeception/vendor/wp-cli/wp-cli/php/export/writers.php:39
+msgid "Export Error"
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/export/writers.php:95
+#: tests/codeception/vendor/wp-cli/wp-cli/php/export/writers.php:159
+msgid "WP Export: error opening %s for writing."
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/export/writers.php:112
+#: tests/codeception/vendor/wp-cli/wp-cli/php/export/writers.php:147
+msgid "WP Export: error writing to export file."
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/utils-wp.php:150
+msgid "Inactive Widgets"
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/utils-wp.php:153
+msgid "Drag widgets here to remove them from the sidebar but keep their settings."
+msgstr ""
+
 #. Plugin Name of the plugin/theme
 msgid "rtMedia for WordPress, BuddyPress and bbPress"
 msgstr ""
@@ -3269,4 +3961,16 @@ msgstr ""
 #: app/main/controllers/template/RTMediaNav.php:41
 msgctxt "My Account Privacy sub nav"
 msgid "Privacy"
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/core.php:545
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/core.php:612
+msgctxt "Default network name"
+msgid "%s Sites"
+msgstr ""
+
+#: tests/codeception/vendor/wp-cli/wp-cli/php/commands/site.php:121
+#. translators: Default category slug
+msgctxt "Default category slug"
+msgid "Uncategorized"
 msgstr ""

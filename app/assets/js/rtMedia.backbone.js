@@ -867,6 +867,34 @@ jQuery( function( $ ) {
 
 jQuery( document ).ready( function( $ ) {
 
+	/*
+	 * Fix for file selector does not open in Safari browser in IOS.
+	 * In Safari in IOS, Plupload don't click on it's input(type=file), so file selector dialog won't open.
+	 * In order to fix this, when rtMedia's attach media button is clicked,
+	 * we check if Plupload's input(type=file) is clicked or not, if it's not clicked, then we click it manually
+	 * to open file selector.
+	 */
+
+	// Initially, select file dialog is close.
+	var file_dialog_open = false;
+
+	var button = '#rtmedia-upload-container #rtMedia-upload-button';
+
+	var input_file_el = '#rtmedia-upload-container input[type=file]:first';
+
+	// Bind callback on Plupload's input element.
+	jQuery( document.body ).on( 'click', input_file_el, function() {
+		file_dialog_open = true;
+	} );
+
+	// Bind callback on rtMedia's attach media button.
+	jQuery( document.body ).on( 'click', button, function() {
+		if ( false === file_dialog_open ) {
+			jQuery( input_file_el ).click();
+			file_dialog_open = false;
+		}
+	} );
+
 	// Handling the "post update: button on activity page
 	/**
 	 * Commented by : Naveen giri
@@ -936,8 +964,9 @@ jQuery( document ).ready( function( $ ) {
 			$.each( rfiles, function( i, file ) {
 
 				//Set file title along with file
+				file.title = file.name.substring(0,file.name.lastIndexOf("."));
+
 				rtm_file_name_array = file.name.split( '.' );
-				file.title = rtm_file_name_array[0];
 
 				var hook_respo = rtMediaHook.call( 'rtmedia_js_file_added', [ upl, file, '#rtmedia_uploader_filelist' ] );
 
@@ -1172,7 +1201,7 @@ jQuery( document ).ready( function( $ ) {
 
 			up.settings.multipart_params.context = object;
 			up.settings.multipart_params.context_id = item_id;
-			up.settings.multipart_params.title = files.title.split( '.' )[ 0 ];
+			up.settings.multipart_params.title = files.title;
 
 			if ( typeof files.description != 'undefined' ) {
 				up.settings.multipart_params.description = files.description;
@@ -2367,7 +2396,6 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 			up.settings.multipart_params.rtmedia_update = true;
 			up.settings.multipart_params.activity_id = 'null';
 			up.settings.multipart_params.title = files.title.split( '.' )[ 0 ];
-
 			if ( typeof files.description != 'undefined' ) {
 				up.settings.multipart_params.description = files.description;
 			} else {
