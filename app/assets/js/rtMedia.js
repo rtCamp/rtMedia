@@ -206,7 +206,7 @@ jQuery( 'document' ).ready( function( $ ) {
 		$( '.rtmedia-modal-link' ).magnificPopup( {
 			type: 'inline',
 			midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href
-			closeBtnInside: true
+			closeBtnInside: true,
 		} );
 	}
 
@@ -354,12 +354,12 @@ jQuery( 'document' ).ready( function( $ ) {
 			$( '#rtmedia_create_new_album' ).attr( 'disabled', 'disabled' );
 			var old_val = $( '#rtmedia_create_new_album' ).html();
 			$( '#rtmedia_create_new_album' ).prepend( '<img src=\'' + rMedia_loading_file + '\' />' );
-
 			jQuery.post( rtmedia_ajax_url, data, function( response ) {
 				if ( typeof response.album != 'undefined' ) {
 					response = jQuery.trim( response.album );
 					var flag = true;
 					$album_description.val('');
+					$( '#rtmedia_album_name' ).focus();
 
 					jQuery( '.rtmedia-user-album-list' ).each( function() {
 						jQuery( this ).children( 'optgroup' ).each( function() {
