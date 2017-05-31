@@ -3978,6 +3978,9 @@ function rtm_select_user( $user ) {
 function rtm_fetch_user_by_member_type( $type ) {
 	$member_id = array();
 
+	// Search for uppercase also.
+	$type = strtolower( $type );
+
 	if ( ! empty( $type ) ) {
 		$member_args = array(
 		    'member_type' => array( $type ),
