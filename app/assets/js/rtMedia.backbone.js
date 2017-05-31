@@ -873,6 +873,8 @@ jQuery( document ).ready( function( $ ) {
 				//Set file title along with file
 				file.title = file.name.substring(0,file.name.lastIndexOf("."));
 
+				rtm_file_name_array = file.name.split( '.' );
+
 				var hook_respo = rtMediaHook.call( 'rtmedia_js_file_added', [ upl, file, '#rtmedia_uploader_filelist' ] );
 
 				if ( hook_respo == false ) {
