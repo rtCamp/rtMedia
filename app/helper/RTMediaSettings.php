@@ -46,6 +46,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				'general_enableAlbums'              => 1,
 				'general_enableAlbums_description'  => 0,
 				'general_enableComments'            => 0,
+				'general_enableGallerysearch'       => 0,
 				'general_enableLikes'               => 1,
 				'general_downloadButton'            => 0,
 				'general_enableLightbox'            => 1,
