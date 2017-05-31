@@ -303,7 +303,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_enableGallerysearch',
 					'value' => $options['general_enableGallerysearch'],
-					'desc' => esc_html__( 'This will display the search box in gallery page.', 'buddypress-media' ),
+					'desc' => esc_html__( 'This will enable the search box in gallery page.', 'buddypress-media' ),
 				),
 				'group' => '14',
 			),
