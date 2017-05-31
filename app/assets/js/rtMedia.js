@@ -107,7 +107,7 @@ function apply_rtMagnificPopup( selector ) {
 			                    }, false);
 								// Call the play method
 								// check if it's mobile
-								if( probablymobile && mediaElement.hasClass( "wp-video-shortcode" ) ){
+								if( probablymobile && $( mediaElement ).hasClass( "wp-video-shortcode" ) ){
 									jQuery( 'body' ).on('touchstart', '.mejs-overlay-button' , function(e) {
 										mediaElement.paused ? mediaElement.play() : mediaElement.pause();
 									});
@@ -196,6 +196,16 @@ function rtmedia_init_action_dropdown( parent ) {
 
 jQuery( 'document' ).ready( function( $ ) {
 
+	jQuery( ' .rtmedia-uploader-div' ).css({
+		'opacity': '1',
+		'display': 'block',
+		'visibility': 'visible'
+	});
+
+	jQuery( ' #whats-new-options ' ).css({
+		'opacity': '1',
+	});
+
 	// Tabs
 	if ( typeof $.fn.rtTab !== 'undefined' ) {
 		$( '.rtm-tabs' ).rtTab();
@@ -206,7 +216,7 @@ jQuery( 'document' ).ready( function( $ ) {
 		$( '.rtmedia-modal-link' ).magnificPopup( {
 			type: 'inline',
 			midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href
-			closeBtnInside: true
+			closeBtnInside: true,
 		} );
 	}
 
@@ -330,6 +340,7 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	jQuery( '#rtmedia-create-album-modal' ).on( 'click', '#rtmedia_create_new_album', function( e ) {
 		$albumname = jQuery( '<span/>' ).text( jQuery.trim( jQuery( '#rtmedia_album_name' ).val() ) ).html();
+		$album_description = jQuery( '#rtmedia_album_description' );
 		$context = jQuery.trim( jQuery( '#rtmedia_album_context' ).val() );
 		$context_id = jQuery.trim( jQuery( '#rtmedia_album_context_id' ).val() );
 		$privacy = jQuery.trim( jQuery( '#rtmedia_select_album_privacy' ).val() );
@@ -339,6 +350,7 @@ jQuery( 'document' ).ready( function( $ ) {
 			var data = {
 				action: 'rtmedia_create_album',
 				name: $albumname,
+				description: $album_description.val(),
 				context: $context,
 				context_id: $context_id,
 				create_album_nonce: $create_album_nonce
@@ -352,11 +364,12 @@ jQuery( 'document' ).ready( function( $ ) {
 			$( '#rtmedia_create_new_album' ).attr( 'disabled', 'disabled' );
 			var old_val = $( '#rtmedia_create_new_album' ).html();
 			$( '#rtmedia_create_new_album' ).prepend( '<img src=\'' + rMedia_loading_file + '\' />' );
-
 			jQuery.post( rtmedia_ajax_url, data, function( response ) {
 				if ( typeof response.album != 'undefined' ) {
 					response = jQuery.trim( response.album );
 					var flag = true;
+					$album_description.val('');
+					$( '#rtmedia_album_name' ).focus();
 
 					jQuery( '.rtmedia-user-album-list' ).each( function() {
 						jQuery( this ).children( 'optgroup' ).each( function() {
@@ -928,15 +941,6 @@ window.onload = function() {
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_reload( rtm_masonry_container );
 	}
-	jQuery( ' .rtmedia-uploader-div' ).css({
-		'opacity': '1',
-	    'display': 'block',
-	    'visibility': 'visible'
-	});
-
-	jQuery( ' #whats-new-options ' ).css({
-	    'opacity': '1',
-	});
 };
 
 // Get query string parameters from url
