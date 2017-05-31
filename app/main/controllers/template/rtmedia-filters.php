@@ -684,7 +684,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	$search = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
 	$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
 
-	if ( ! empty( $search ) ) {
+	if ( '' != $search ) {
 		$author_id = rtm_select_user( $search );
 		$member_type = rtm_fetch_user_by_member_type( $search );
 
@@ -744,7 +744,7 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 	$search = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
 	$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
 
-	if ( ! empty( $search ) ) {
+	if ( '' != $search ) {
 			$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
 
 		$request_url = explode( '/', $_SERVER['REQUEST_URI'] );
