@@ -52,7 +52,7 @@ $rand_id = rand( 0, 1000 );
 
 			<?php do_action( 'rtmedia_gallery_after_title' ); ?>
 
-			<div id="rtm-media-options" class="rtm-media-options <?php echo ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ? 'rtm-media-search-enable': '' );  ?>">
+			<div id="rtm-media-options" class="rtm-media-options <?php echo ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ? 'rtm-media-search-enable': '' );  ?> ">
 				<?php do_action( 'rtmedia_media_gallery_actions' ); ?>
 			</div>
 		</div>
