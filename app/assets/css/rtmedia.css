@@ -1663,7 +1663,11 @@ form.rt_media_comment_form .rtmedia-plupload-container {
   text-decoration: underline;
 }
 
-.rtmedia-uploader-div {
+#whats-new-options {
+  opacity: 0;
+  display: none;
+}
+#whats-new-options .rtmedia-uploader-div {
   opacity: 0;
   display: none;
   visibility: hidden;
@@ -2526,9 +2530,15 @@ body div.bp_members.bp_member .entry-content {
   padding: 10px 0;
 }
 
+.rtm-media-options.rtm-media-search-enable > *:nth-last-child(2) {
+  border-right: none;
+}
+
 .rtm-media-options {
   line-height: 1.4;
   margin-bottom: 10px;
+  clear: both;
+  /*overflow: hidden;*/
 }
 .rtm-media-options > div {
   display: inline-block;
@@ -2550,6 +2560,82 @@ body div.bp_members.bp_member .entry-content {
   line-height: 1.4;
 }
 
+#buddypress .media_search.media_search .search_by {
+  margin-top: 3px;
+}
+
+.media_search.media_search {
+  float: right;
+  border: 1px solid #ccc;
+  margin-left: 5px;
+  padding: 3px 0;
+}
+.media_search.media_search .media_search_input {
+  width: 200px;
+  outline: 0;
+  max-width: 200px;
+  margin: 0;
+  box-shadow: none;
+  padding: 5px 6px;
+  border: none;
+  background: transparent;
+  float: left;
+  max-height: 30px;
+}
+.media_search.media_search #media_fatch_loader.load {
+  float: left;
+  width: 20px;
+  height: 30px;
+  position: relative;
+}
+.media_search.media_search #media_fatch_loader.load:before {
+  content: '';
+  border-radius: 50%;
+  border: 1px solid #aaa;
+  border-top-color: rgba(255, 255, 255, 0.9);
+  animation: spinner .8s linear infinite;
+  -webkit-animation: spinner .8s linear infinite;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 24%;
+}
+.media_search.media_search .search_option {
+  padding: 0;
+  background: transparent;
+  color: #000;
+  margin-bottom: 0;
+  line-height: 1;
+  border: none;
+}
+.media_search.media_search .media_search_remove.search_option {
+  display: none;
+}
+.media_search.media_search .media_search_remove.search_option i {
+  margin-top: 4px;
+}
+.media_search.media_search .search_by {
+  background: transparent;
+  margin-top: 3px;
+  float: left;
+  width: auto;
+  margin-bottom: 0;
+  height: auto;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+@keyframes spinner {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spinner {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
 .rtmedia-upload-media-link {
   cursor: pointer;
 }

@@ -106,6 +106,7 @@ function apply_rtMagnificPopup( selector ) {
 									}
 			                    }, false);
 								// Call the play method
+
 								// check if it's mobile
 								if( probablymobile && $( mediaElement ).hasClass( "wp-video-shortcode" ) ){
 									jQuery( 'body' ).on('touchstart', '.mejs-overlay-button' , function(e) {
@@ -196,7 +197,7 @@ function rtmedia_init_action_dropdown( parent ) {
 
 jQuery( 'document' ).ready( function( $ ) {
 
-	jQuery( ' .rtmedia-uploader-div' ).css({
+	jQuery( '.rtmedia-uploader-div' ).css({
 		'opacity': '1',
 		'display': 'block',
 		'visibility': 'visible'
@@ -470,6 +471,10 @@ jQuery( 'document' ).ready( function( $ ) {
 				jQuery( that ).siblings( '.rtm-ac-privacy-updated' ).remove();
 			}, 2000 );
 		} );
+	} );
+
+	jQuery( '.media_search_input' ).on( 'keyup', function() {
+		rtm_search_media_text_validation();
 	} );
 
 	function rtmedia_media_view_counts() {
@@ -938,10 +943,29 @@ function rtm_masonry_reload( el ) {
 })( jQuery );
 
 window.onload = function() {
-	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+	if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && 0 == jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length ) {
 		rtm_masonry_reload( rtm_masonry_container );
 	}
+
+	rtm_search_media_text_validation();
+
+	if ( check_condition( 'search' ) ) {
+		jQuery( '#media_search_remove' ).show();
+	}
+
 };
+
+/**
+ * Update style as per search testbox value
+ * issue: https://github.com/rtMediaWP/rtMedia/issues/834
+ */
+function rtm_search_media_text_validation() {
+	if ( '' === jQuery( '#media_search_input' ).val() ) {
+		jQuery( '#media_search' ).css( 'cursor', 'not-allowed');
+	} else {
+		jQuery( '#media_search' ).css( 'cursor', 'pointer');
+	}
+}
 
 // Get query string parameters from url
 function rtmediaGetParameterByName( name ) {

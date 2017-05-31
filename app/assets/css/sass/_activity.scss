@@ -170,7 +170,6 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 	}
 }
 
-//
 #rtmedia_show_all_comment {
 	cursor: pointer;
 
@@ -179,16 +178,23 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 	}
 }
 
-.rtmedia-uploader-div {
+#whats-new-options {
 	opacity: 0;
 	display: none;
-	visibility: hidden;
+
+	.rtmedia-uploader-div {
+		opacity: 0;
+		display: none;
+		visibility: hidden;
+	}
+
 }
 
 .ac-form .rtmedia-uploader-div, .rt_media_comment_form .rtmedia-uploader-div {
   opacity: 1;
   display: block;
   visibility: visible;
+
 }
 
 #whats-new-options {
