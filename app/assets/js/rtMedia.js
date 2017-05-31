@@ -196,6 +196,16 @@ function rtmedia_init_action_dropdown( parent ) {
 
 jQuery( 'document' ).ready( function( $ ) {
 
+	jQuery( ' .rtmedia-uploader-div' ).css({
+		'opacity': '1',
+		'display': 'block',
+		'visibility': 'visible'
+	});
+
+	jQuery( ' #whats-new-options ' ).css({
+		'opacity': '1',
+	});
+
 	// Tabs
 	if ( typeof $.fn.rtTab !== 'undefined' ) {
 		$( '.rtm-tabs' ).rtTab();
@@ -917,15 +927,6 @@ window.onload = function() {
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_reload( rtm_masonry_container );
 	}
-	jQuery( ' .rtmedia-uploader-div' ).css({
-		'opacity': '1',
-	    'display': 'block',
-	    'visibility': 'visible'
-	});
-
-	jQuery( ' #whats-new-options ' ).css({
-	    'opacity': '1',
-	});
 };
 
 // Get query string parameters from url
