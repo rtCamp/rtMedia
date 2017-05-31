@@ -154,6 +154,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Improvise comment media admin settings
  * JavaScript error while deleting media
  * Edit media feature when BuddyPress activity stream component is disabled
+ * "What's new" section not getting properly styled on page load [Documentation](https://rtmedia.io/docs/troubleshooting/post-update-upload-media-privacy-buttons-not-appearing/)
 
 = 4.3.1 [Feb 23, 2017] =
 
