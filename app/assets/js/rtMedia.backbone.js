@@ -774,6 +774,34 @@ jQuery( function( $ ) {
 
 jQuery( document ).ready( function( $ ) {
 
+	/*
+	 * Fix for file selector does not open in Safari browser in IOS.
+	 * In Safari in IOS, Plupload don't click on it's input(type=file), so file selector dialog won't open.
+	 * In order to fix this, when rtMedia's attach media button is clicked,
+	 * we check if Plupload's input(type=file) is clicked or not, if it's not clicked, then we click it manually
+	 * to open file selector.
+	 */
+
+	// Initially, select file dialog is close.
+	var file_dialog_open = false;
+
+	var button = '#rtmedia-upload-container #rtMedia-upload-button';
+
+	var input_file_el = '#rtmedia-upload-container input[type=file]:first';
+
+	// Bind callback on Plupload's input element.
+	jQuery( document.body ).on( 'click', input_file_el, function() {
+		file_dialog_open = true;
+	} );
+
+	// Bind callback on rtMedia's attach media button.
+	jQuery( document.body ).on( 'click', button, function() {
+		if ( false === file_dialog_open ) {
+			jQuery( input_file_el ).click();
+			file_dialog_open = false;
+		}
+	} );
+
 	// Handling the "post update: button on activity page
 	/**
 	 * Commented by : Naveen giri
