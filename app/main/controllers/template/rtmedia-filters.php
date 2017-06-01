@@ -683,6 +683,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	$term_taxonomy_table = $wpdb->term_taxonomy;
 	$search = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
 	$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
+	$media_type = ( isset( $_REQUEST['media_type'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['media_type'] ) ) : '';
 
 	if ( '' != $search ) {
 		$author_id = rtm_select_user( $search );
@@ -690,6 +691,11 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 
 		$where .= ' AND ';
 		if ( ! empty( $search_by ) ) {
+
+			if ( ! empty( $media_type ) ) {
+				$where .= " $table_name.media_type = '" . $media_type . "' AND ";
+			}
+
 			if ( 'title' == $search_by ) {
 				$where .= " $table_name.media_title LIKE '%" . $search . "%' ";
 			} else if ( 'description' == $search_by ) {
@@ -707,7 +713,9 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 				$where .= '2=2';
 			}
 		} else {
-
+			if ( ! empty( $media_type ) ) {
+				$where .= " $table_name.media_type = '" . $media_type . "' AND ";
+			}
 			$where .= ' ( ';
 			$where .= " $table_name.media_title LIKE '%" . $search . "%' ";
 			if ( ! empty( $author_id ) ) {
@@ -717,9 +725,16 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 				$where .= " OR $table_name.media_author IN  (" . $member_type . ") ";
 			}
 			$where .= " OR post_table.post_content LIKE '%" . $search . "%'";
-			$where .= " OR $table_name.media_type = '" . $search . "' ";
+
+			if ( empty( $media_type ) ) {
+				$where .= " OR $table_name.media_type = '" . $search . "' ";
+			}
 
 			$where .= ' ) ';
+		}
+	} else {
+		if ( ! empty( $media_type ) ) {
+			$where .= " AND $table_name.media_type = '" . $media_type . "' ";
 		}
 	}
 
