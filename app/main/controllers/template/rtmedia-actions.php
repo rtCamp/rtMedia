@@ -864,10 +864,19 @@ add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_
 function add_search_filter( $attr = null ) {
 
 	global $rtmedia, $rtmedia_query;
+	$media_type = get_query_var( 'media' );
+	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
+		// Do not show search box if playlist view is enabled.
+		if ( ! empty( $rtmedia->options['general_enable_music_playlist_view'] ) && 1 == $rtmedia->options['general_enable_music_playlist_view'] && 'music' === $media_type ) {
+			return;
+		}
 
-	if ( function_exists('rtmedia_media_search_enabled') && rtmedia_media_search_enabled() ) {
+		// Do not show search box if table view is enabled for documents.
+		if ( ! empty( $rtmedia->options['general_enable_document_other_table_view'] ) && 1 == $rtmedia->options['general_enable_document_other_table_view'] && 'document' === $media_type ) {
+			return;
+		}
 
-		$search_value = ( isset( $_GET['search'] ) ? sanitize_text_field( $_GET['search'] ) : '' );
+		$search_value = ( isset( $_GET['search'] ) ? sanitize_text_field( wp_unslash( $_GET['search'] ) ) : '' );
 
 		$html  = "<form method='post' id='media_search_form' class='media_search'>";
 		$html .= "<input type='text' id='media_search_input' value='" . esc_attr( $search_value ) . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
