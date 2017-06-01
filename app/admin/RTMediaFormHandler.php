@@ -27,11 +27,13 @@ class RTMediaFormHandler {
 		}
 
 		$args['rtForm_options'] = array();
-		foreach ( $selects as $value => $key ) {
-			$args['rtForm_options'][] = array(
-				$key       => $value,
-				'selected' => ( $default == $value ) ? true : false,
-			);
+		if ( ! empty( $selects ) ) {
+			foreach ( $selects as $value => $key ) {
+				$args['rtForm_options'][] = array(
+					$key       => $value,
+					'selected' => ( $default == $value ) ? true : false,
+				);
+			}
 		}
 
 		$chkObj = new rtForm();
