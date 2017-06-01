@@ -684,6 +684,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	$search = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
 	$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
 	$media_type = ( isset( $_REQUEST['media_type'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['media_type'] ) ) : '';
+	$rtmedia_current_album = ( isset( $_REQUEST['rtmedia-current-album'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['rtmedia-current-album'] ) ) : '';
 
 	if ( '' != $search ) {
 		$author_id = rtm_select_user( $search );
@@ -692,7 +693,11 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 		$where .= ' AND ';
 		if ( ! empty( $search_by ) ) {
 
-			if ( ! empty( $media_type ) ) {
+			if ( ! empty( $rtmedia_current_album ) ) {
+				$where .= " $table_name.album_id = '" . $rtmedia_current_album . "' AND ";
+			}
+
+			if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
 				$where .= " $table_name.media_type = '" . $media_type . "' AND ";
 			}
 
@@ -713,7 +718,11 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 				$where .= '2=2';
 			}
 		} else {
-			if ( ! empty( $media_type ) ) {
+			if ( ! empty( $rtmedia_current_album ) ) {
+				$where .= " $table_name.album_id = '" . $rtmedia_current_album . "' AND ";
+			}
+
+			if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
 				$where .= " $table_name.media_type = '" . $media_type . "' AND ";
 			}
 			$where .= ' ( ';
@@ -731,12 +740,19 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 			}
 
 			$where .= ' ) ';
-		}
+		} // End if().
 	} else {
-		if ( ! empty( $media_type ) ) {
+
+		// Reset data for album's media.
+		if ( ! empty( $rtmedia_current_album ) ) {
+				$where .= " AND $table_name.album_id = '" . $rtmedia_current_album . "' ";
+		}
+
+		// Reset data for particular media type.
+		if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
 			$where .= " AND $table_name.media_type = '" . $media_type . "' ";
 		}
-	}
+	} // End if().
 
 	return $where;
 }
