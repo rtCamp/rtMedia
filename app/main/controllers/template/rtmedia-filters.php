@@ -691,6 +691,11 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 
 		$where .= ' AND ';
 		if ( ! empty( $search_by ) ) {
+
+			if ( ! empty( $media_type ) ) {
+				$where .= " $table_name.media_type = '" . $media_type . "' AND ";
+			}
+
 			if ( 'title' == $search_by ) {
 				$where .= " $table_name.media_title LIKE '%" . $search . "%' ";
 			} else if ( 'description' == $search_by ) {
