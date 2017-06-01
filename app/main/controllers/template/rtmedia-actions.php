@@ -1067,3 +1067,18 @@ if ( ! function_exists( 'rtmedia_gallery_after_title_callback' ) ) {
 	}
 }
 add_action( 'rtmedia_gallery_after_title', 'rtmedia_gallery_after_title_callback', 11, 1 );
+
+/**
+ * Add hidden field for media type.
+ * This will used by search functionality.
+ */
+function rtmedia_hidden_field() {
+	// Get media type from query string.
+	$media_type = get_query_var( 'media' );
+	if ( ! empty( $media_type ) ) {
+	?>
+		<input type="hidden" name="media_type" value="<?php echo esc_attr( $media_type ); ?>" />
+	<?php
+	}
+}
+add_action( 'rtmedia_after_media_gallery_title', 'rtmedia_hidden_field' );
