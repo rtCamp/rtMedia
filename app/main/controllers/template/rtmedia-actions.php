@@ -867,11 +867,23 @@ function add_search_filter( $attr = null ) {
 
 	// Get media type.
 	$media_type = get_query_var( 'media' );
-	$notallowed_types = array( 'likes', 'other', 'favlist', 'playlist' );
+
+	// Prevent search box from these tabs.
+	$notallowed_types = array(
+					'likes'    => true,
+					'other'    => true,
+					'favlist'  => true,
+					'playlist' => true,
+				);
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
 
+		// If found the prevented tab, then stop.
+		if ( ! empty( $media_type ) && isset( $notallowed_types[ $media_type ] ) ) {
+			return;
+		}
+
 		// Prevent showing search box for not allowed media types.
-		if ( ! empty( $media_type ) && in_array( $media_type, $notallowed_types ) || ( isset( $rtmedia_query->query['media_type'] ) && in_array( $rtmedia_query->query['media_type'] , $notallowed_types ) ) ) {
+		if ( isset( $rtmedia_query->query['media_type'] ) && isset( $notallowed_types[ $rtmedia_query->query['media_type'] ] ) ) {
 			return;
 		}
 

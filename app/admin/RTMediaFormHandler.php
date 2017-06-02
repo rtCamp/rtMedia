@@ -31,7 +31,7 @@ class RTMediaFormHandler {
 			foreach ( $selects as $value => $key ) {
 				$args['rtForm_options'][] = array(
 					$key       => $value,
-					'selected' => ( $default == $value ) ? true : false,
+					'selected' => ( $default === $value ) ? true : false,
 				);
 			}
 		}
