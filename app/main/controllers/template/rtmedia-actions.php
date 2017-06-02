@@ -870,11 +870,11 @@ function add_search_filter( $attr = null ) {
 
 	// Prevent search box from these tabs.
 	$notallowed_types = array(
-					'likes'    => true,
-					'other'    => true,
-					'favlist'  => true,
-					'playlist' => true,
-				);
+				'likes'    => true,
+				'other'    => true,
+				'favlist'  => true,
+				'playlist' => true,
+			);
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
 
 		// If found the prevented tab, then stop.
