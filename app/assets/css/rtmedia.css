@@ -1289,6 +1289,9 @@ img.mfp-img {
   position: relative;
 }
 
+.rtmedia-media {
+  margin: 0 auto;
+}
 .rtmedia-media img {
   display: inline-block;
   max-height: inherit;
@@ -2718,7 +2721,9 @@ a.rtmedia-upload-media-link {
 
 @media only screen and (min-width: 1025px) {
   .mfp-content .rtm-lightbox-container {
-    display: block;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     table-layout: fixed;
     width: 100%;
   }
@@ -2726,14 +2731,15 @@ a.rtmedia-upload-media-link {
     background: transparent;
   }
   .mfp-content .rtm-single-media {
-    display: table-cell;
+    display: block;
     width: 66.6667%;
   }
   .mfp-content .rtm-single-meta {
-    display: table-cell;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     width: 33.3333%;
     padding: 20px;
-    height: 473px;
   }
   .mfp-content .rtm-single-meta .rtmedia-scroll {
     height: 100%;
