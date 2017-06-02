@@ -413,7 +413,7 @@ jQuery( function( $ ) {
 			e.preventDefault();
 
 			if ( '' === $( '#media_search_input' ).val() ) {
-				return false;	
+				return false;
 			}
 
 			$( '#media_search' ).css( 'cursor', 'pointer');
@@ -421,22 +421,18 @@ jQuery( function( $ ) {
 			nextpage = 1;
 
 			var href = window.location.href;
-			var remove_url = '';
-			path = window.location;
-			if ( check_condition( '/media' ) ) {
-				remove_url = path.pathname.substr(path.pathname.indexOf('media')+6);
-			} else {
-
+			// Remove query string.
+			if ( href.indexOf('?') > -1) {
+				href = window.location.pathname;
 			}
 
-			href = window.location.pathname.replace( remove_url,'' ) + '?';
-			href += 'search=' + $( '#media_search_input' ).val();
+			href += '?search=' + $( '#media_search_input' ).val();
 			if ( $( '#search_by' ).length > 0 ) {
 				href += '&search_by=' + $( '#search_by' ).val();
 			}
 
 			change_rtBrowserAddressUrl( href, '' );
-			galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
+			galleryObj.getNext( nextpage, $( this ).closest( '.rtmedia-container' ).parent() );
 
 			$( '#media_search_remove' ).show();
 		} );
