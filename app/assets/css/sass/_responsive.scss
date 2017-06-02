@@ -2,7 +2,7 @@
 
 	.mfp-content {
 		.rtm-lightbox-container {
-			display: table;
+			display: block;
 
 			// Fixed issue in Firefox and Opera
 			table-layout: fixed;

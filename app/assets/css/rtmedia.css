@@ -2718,7 +2718,7 @@ a.rtmedia-upload-media-link {
 
 @media only screen and (min-width: 1025px) {
   .mfp-content .rtm-lightbox-container {
-    display: table;
+    display: block;
     table-layout: fixed;
     width: 100%;
   }
