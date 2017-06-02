@@ -412,31 +412,31 @@ jQuery( function( $ ) {
 		$( document ).on( 'submit', 'form#media_search_form', function( e ) {
 			e.preventDefault();
 
-			if ( '' === $( '#media_search_input' ).val() ) {
-				return false;	
+			var $media_search_input = $( '#media_search_input' ).val();
+			var $media_search       = $( '#media_search' );
+			var $media_fatch_loader = $( '#media_fatch_loader' );
+
+			if ( '' === $media_search_input ) {
+				return false;
 			}
 
-			$( '#media_search' ).css( 'cursor', 'pointer');
-			$( '#media_fatch_loader' ).addClass('load');
+			$media_search.css( 'cursor', 'pointer');
+			$media_fatch_loader.addClass('load');
 			nextpage = 1;
 
 			var href = window.location.href;
-			var remove_url = '';
-			path = window.location;
-			if ( check_condition( '/media' ) ) {
-				remove_url = path.pathname.substr(path.pathname.indexOf('media')+6);
-			} else {
-
+			// Remove query string.
+			if ( href.indexOf('?') > -1) {
+				href = window.location.pathname;
 			}
 
-			href = window.location.pathname.replace( remove_url,'' ) + '?';
-			href += 'search=' + $( '#media_search_input' ).val();
+			href += '?search=' + $media_search_input;
 			if ( $( '#search_by' ).length > 0 ) {
 				href += '&search_by=' + $( '#search_by' ).val();
 			}
 
 			change_rtBrowserAddressUrl( href, '' );
-			galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
+			galleryObj.getNext( nextpage, $( this ).closest( '.rtmedia-container' ).parent() );
 
 			$( '#media_search_remove' ).show();
 		} );
