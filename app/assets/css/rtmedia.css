@@ -2731,13 +2731,16 @@ a.rtmedia-upload-media-link {
     background: transparent;
   }
   .mfp-content .rtm-single-media {
-    display: block;
-    width: 66.6667%;
-  }
-  .mfp-content .rtm-single-meta {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    width: 66.6667%;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .mfp-content .rtm-single-meta {
+    display: block;
     width: 33.3333%;
     padding: 20px;
   }

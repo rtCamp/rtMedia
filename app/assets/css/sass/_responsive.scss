@@ -14,12 +14,13 @@
 		}
 
 		.rtm-single-media {
-			display: block;
+			display: flex;
 			width: 66.6667%;
+			align-items: center;
 		}
 
 		.rtm-single-meta {
-			display: flex;
+			display: block;
 			width: 33.3333%;
 			padding: 20px;
 
