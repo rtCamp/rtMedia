@@ -2726,6 +2726,7 @@ a.rtmedia-upload-media-link {
     display: flex;
     table-layout: fixed;
     width: 100%;
+    min-height: 473px;
   }
   .mfp-content .rtm-mfp-close {
     background: transparent;
