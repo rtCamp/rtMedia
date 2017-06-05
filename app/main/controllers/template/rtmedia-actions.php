@@ -864,8 +864,29 @@ add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_
 function add_search_filter( $attr = null ) {
 
 	global $rtmedia, $rtmedia_query;
+
+	// Get media type.
 	$media_type = get_query_var( 'media' );
+
+	// Prevent search box from these tabs.
+	$notallowed_types = array(
+		'likes'    => true,
+		'other'    => true,
+		'favlist'  => true,
+		'playlist' => true,
+	);
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
+
+		// If found the prevented tab, then stop.
+		if ( ! empty( $media_type ) && isset( $notallowed_types[ $media_type ] ) ) {
+			return;
+		}
+
+		// Prevent showing search box for not allowed media types.
+		if ( isset( $rtmedia_query->query['media_type'] ) && isset( $notallowed_types[ $rtmedia_query->query['media_type'] ] ) ) {
+			return;
+		}
+
 		// Do not show search box if playlist view is enabled.
 		if ( ! empty( $rtmedia->options['general_enable_music_playlist_view'] ) && 1 == $rtmedia->options['general_enable_music_playlist_view'] && 'music' === $media_type ) {
 			return;
