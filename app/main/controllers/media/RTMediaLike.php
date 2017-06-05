@@ -67,6 +67,10 @@ class RTMediaLike extends RTMediaUserInteraction {
 		}
 	}
 
+	/**
+	 * This function displays the like button even if comment
+	 * section is disabled.
+	 */
 	function like_button_no_comments_callback() {
 		if ( empty( $this->media ) ) {
 			$this->init();

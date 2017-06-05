@@ -118,7 +118,6 @@
 							</div>
 						<?php } ?>
 
-
 					</div>
 
 					<?php if ( rtmedia_comments_enabled() && is_user_logged_in() ) { ?>
