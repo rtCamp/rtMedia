@@ -138,13 +138,13 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.4 [June 5, 2017] =
+= 4.4 [June 6, 2017] =
 
 * NEW
 
  * Enabled Masonry Cascading grid layout for BuddyPress Activity feed [Documentation](https://rtmedia.io/docs/features/lightboxes-masonry/#masonry-activity-feed)
- * Enabled media search in rtMedia gallery using different media attributes [Documentation](https://rtmedia.io/docs/features/upload-media/#search-media)
- * Added album description input while creating an rtMedia user profile album [Documentation](https://rtmedia.io/docs/features/view-media/#album-description)
+ * Added search functionality in Media Gallery [Documentation](https://rtmedia.io/docs/features/upload-media/#search-media)
+ * Added album description input while creating an album [Documentation](https://rtmedia.io/docs/features/view-media/#album-description)
 
 * ENHANCEMENTS
 
