@@ -142,8 +142,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * NEW
 
- * Enabled Masonry Cascading grid layout for BuddyPress Activity feed [Documentation]
- * Enabled media search in rtMedia gallery using different media attributes [Documentation]
+ * Enabled Masonry Cascading grid layout for BuddyPress Activity feed [Documentation](https://rtmedia.io/docs/features/lightboxes-masonry/#masonry-activity-feed)
+ * Enabled media search in rtMedia gallery using different media attributes [Documentation](https://rtmedia.io/docs/features/upload-media/#search-media)
  * Added album description input while creating an rtMedia user profile album [Documentation]
 
 * ENHANCEMENTS
