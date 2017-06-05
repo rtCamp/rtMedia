@@ -6,8 +6,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 4.7.2
-Stable tag: 4.3.2
+Tested up to: 4.7.5
+Stable tag: 4.4
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -1376,8 +1376,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.3.2 =
-Now set icon for like/dislike text using a simple filter. It also includes some bug fixes. Please update/re-save the permalinks after the plugin update.
+= 4.4 =
+Now enable/disable masonry view for activity and search media through gallery. It also includes some bug fixes. Please update/re-save the permalinks after the plugin update.
 
 == Sponsors ==
 
