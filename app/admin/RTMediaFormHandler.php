@@ -27,11 +27,13 @@ class RTMediaFormHandler {
 		}
 
 		$args['rtForm_options'] = array();
-		foreach ( $selects as $value => $key ) {
-			$args['rtForm_options'][] = array(
-				$key       => $value,
-				'selected' => ( $default == $value ) ? true : false,
-			);
+		if ( ! empty( $selects ) ) {
+			foreach ( $selects as $value => $key ) {
+				$args['rtForm_options'][] = array(
+					$key       => $value,
+					'selected' => ( $default === $value ) ? true : false,
+				);
+			}
 		}
 
 		$chkObj = new rtForm();
@@ -297,6 +299,16 @@ class RTMediaFormHandler {
 				),
 				'group'    => '10',
 			),
+			'general_enableGallerysearch' => array(
+				'title' => esc_html__( 'Enable gallery media search', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'general_enableGallerysearch',
+					'value' => $options['general_enableGallerysearch'],
+					'desc' => esc_html__( 'This will enable the search box in gallery page.', 'buddypress-media' ),
+				),
+				'group' => '14',
+			),
 			'general_enableLikes' => array(
 				'title'    => __( 'Enable likes for media', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
@@ -353,6 +365,18 @@ class RTMediaFormHandler {
 				'group'         => '18',
 				'after_content' => esc_html__( 'You might need to', 'buddypress-media' ) . ' <a id="rtm-masonry-change-thumbnail-info" href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . esc_html__( 'change thumbnail size', 'buddypress-media' ) . '</a> ' . esc_html__( 'and uncheck the crop box for thumbnails.', 'buddypress-media' ) . '<br /><br />' . esc_html__( 'To set gallery for fixed width, set image height to 0 and width as per your requirement and vice-versa.', 'buddypress-media' ),
 			),
+			'general_masonry_layout_activity' => array(
+				'title'         => esc_html__( 'Enable Masonry Cascading grid layout for activity', 'buddypress-media' ),
+				'callback'      => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'          => array(
+					'key'   => 'general_masonry_layout_activity',
+					'value' => $options['general_masonry_layout_activity'],
+					'desc'  => esc_html__( 'If you enable masonry view, it is advisable to', 'buddypress-media' ) . ' <a href="' . $regenerate_link . '">regenerate thumbnail</a> ' . esc_html__( 'for masonry view.', 'buddypress-media' ),
+					'class' => array( 'rtm_enable_masonry_view' ),
+				),
+				'depends'       => 'general_masonry_layout',
+				'group'         => '18',
+			),
 			'general_direct_upload'  => array(
 				'title'    => esc_html__( 'Enable Direct Upload', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
@@ -364,6 +388,11 @@ class RTMediaFormHandler {
 				'group'    => '19',
 			),
 		);
+
+		// If buddypress is not active, then remove the option from rtMedia settings.
+		if ( ! is_plugin_active( 'buddypress/bp-loader.php' ) ) {
+			unset( $render['general_masonry_layout_activity'] );
+		}
 
 		return $render;
 	}
@@ -388,6 +417,7 @@ class RTMediaFormHandler {
 		$general_group[15]	= esc_html__( 'List Media View', 'buddypress-media' );
 		$general_group[18]	= esc_html__( 'Masonry View', 'buddypress-media' );
 		$general_group[19]	= esc_html__( 'Direct Upload', 'buddypress-media' );
+		$general_group[14]	= esc_html__( 'Gallery Media Search', 'buddypress-media' );
 		$general_group		= apply_filters( 'rtmedia_display_content_groups', $general_group );
 		ksort( $general_group );
 		self::render_tab_content( $render_options, $general_group, 20 );
@@ -799,11 +829,11 @@ class RTMediaFormHandler {
 							$args = array(
 								'key' => 'defaultSizes_' . $parent_key . '_' . $entity['title'],
 							);
-						foreach ( $entity as $child_key => $value ) {
-							if ( 'title' !== $child_key ) {
-								$args[ $child_key ] = $value;
+							foreach ( $entity as $child_key => $value ) {
+								if ( 'title' !== $child_key ) {
+									$args[ $child_key ] = $value;
+								}
 							}
-						}
 							self::dimensions( $args );
 							?>
 						</tr>

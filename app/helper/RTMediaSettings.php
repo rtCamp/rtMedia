@@ -43,30 +43,32 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$options = $rtmedia->options;
 
 			$defaults = array(
-				'general_enableAlbums'        => 1,
-				'general_enableAlbums_description'        => 0,
-				'general_enableComments'      => 0,
-				'general_enableLikes'      	  => 1,
-				'general_downloadButton'      => 0,
-				'general_enableLightbox'      => 1,
-				'general_perPageMedia'        => 10,
-				'general_display_media'       => 'load_more',
-				'general_enableMediaEndPoint' => 0,
-				'general_showAdminMenu'       => 0,
-				'general_videothumbs'         => 2,
-				'general_jpeg_image_quality'  => 90,
-				'general_uniqueviewcount'     => 0,
-				'general_viewcount'           => 0,
-				'general_AllowUserData'       => 1,
-				'rtmedia_add_linkback'        => 0,
-				'rtmedia_affiliate_id'        => '',
-				'rtmedia_enable_api'          => 0,
-				'general_masonry_layout'      => 0,
-				'general_direct_upload'       => 0,
+				'general_enableAlbums'              => 1,
+				'general_enableAlbums_description'  => 0,
+				'general_enableComments'            => 0,
+				'general_enableGallerysearch'       => 0,
+				'general_enableLikes'               => 1,
+				'general_downloadButton'            => 0,
+				'general_enableLightbox'            => 1,
+				'general_perPageMedia'              => 10,
+				'general_display_media'             => 'load_more',
+				'general_enableMediaEndPoint'       => 0,
+				'general_showAdminMenu'             => 0,
+				'general_videothumbs'               => 2,
+				'general_jpeg_image_quality'        => 90,
+				'general_uniqueviewcount'           => 0,
+				'general_viewcount'                 => 0,
+				'general_AllowUserData'             => 1,
+				'rtmedia_add_linkback'              => 0,
+				'rtmedia_affiliate_id'              => '',
+				'rtmedia_enable_api'                => 0,
+				'general_masonry_layout'            => 0,
+				'general_masonry_layout_activity'   => 0,
+				'general_direct_upload'             => 0,
 			);
 
 			foreach ( $rtmedia->allowed_types as $type ) {
-				// invalid keys handled in sanitize method
+				// invalid keys handled in sanitize method.
 				$defaults[ 'allowedTypes_' . $type['name'] . '_enabled' ]  = 0;
 				$defaults[ 'allowedTypes_' . $type['name'] . '_featured' ] = 0;
 			}
@@ -213,7 +215,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$rtmedia->options = $options;
 			// Save Settings first then proceed.
 			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_STRING );
-			if ( isset( $rtmedia_option_save ) && current_user_can('manage_options') ) {
+			if ( isset( $rtmedia_option_save ) && current_user_can( 'manage_options' ) ) {
 				$options               = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 				$options               = $this->sanitize_before_save_options( $options );
 				$options               = apply_filters( 'rtmedia_pro_options_save_settings', $options );
@@ -382,7 +384,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			} else {
 				$regenerate_link = wp_nonce_url( admin_url( 'update.php?action=install-plugin&plugin=regenerate-thumbnails' ), 'install-plugin_regenerate-thumbnails' );
 			}
-			echo '<span class="description">' . esc_html__( 'If you make changes to width, height or crop settings, you must use ', 'buddypress-media' ).
+			echo '<span class="description">' . esc_html__( 'If you make changes to width, height or crop settings, you must use ', 'buddypress-media' ) .
 				'<a href="' . esc_url( $regenerate_link ) . '">' . esc_html__( 'Regenerate Thumbnail Plugin', 'buddypress-media' ) . '</a>' .
 				esc_html__( ' to regenerate old images.', 'buddypress-media' ) .
 				'</span>';
