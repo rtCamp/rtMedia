@@ -38,6 +38,27 @@
 			min-width: 33% !important;
 			margin: 0 0 5px 0;
 			width: 100% !important;
+
+			.mejs-controls {
+				width: 100%;
+
+				.mejs-time-total {
+					display: none;
+				}
+
+				.mejs-horizontal-volume-slider {
+					width: 20%;
+					padding-left: 5px;
+
+					.mejs-horizontal-volume-total {
+						width: 100%;
+					}
+
+					.mejs-time-loaded {
+						display: none;
+					}
+				}
+			}
 		}
 	}
 

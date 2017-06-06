@@ -1289,6 +1289,9 @@ img.mfp-img {
   position: relative;
 }
 
+.rtmedia-media {
+  margin: 0 auto;
+}
 .rtmedia-media img {
   display: inline-block;
   max-height: inherit;
@@ -1549,6 +1552,22 @@ img.mfp-img {
   min-width: 33% !important;
   margin: 0 0 5px 0;
   width: 100% !important;
+}
+.rtmedia-activity-container .rtmedia-list-item.masonry-brick .mejs-container .mejs-controls {
+  width: 100%;
+}
+.rtmedia-activity-container .rtmedia-list-item.masonry-brick .mejs-container .mejs-controls .mejs-time-total {
+  display: none;
+}
+.rtmedia-activity-container .rtmedia-list-item.masonry-brick .mejs-container .mejs-controls .mejs-horizontal-volume-slider {
+  width: 20%;
+  padding-left: 5px;
+}
+.rtmedia-activity-container .rtmedia-list-item.masonry-brick .mejs-container .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-total {
+  width: 100%;
+}
+.rtmedia-activity-container .rtmedia-list-item.masonry-brick .mejs-container .mejs-controls .mejs-horizontal-volume-slider .mejs-time-loaded {
+  display: none;
 }
 .rtmedia-activity-container .rtmedia-list-item.masonry-brick img {
   display: block;
@@ -2718,22 +2737,29 @@ a.rtmedia-upload-media-link {
 
 @media only screen and (min-width: 1025px) {
   .mfp-content .rtm-lightbox-container {
-    display: table;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     table-layout: fixed;
     width: 100%;
+    min-height: 473px;
   }
   .mfp-content .rtm-mfp-close {
     background: transparent;
   }
   .mfp-content .rtm-single-media {
-    display: table-cell;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     width: 66.6667%;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   .mfp-content .rtm-single-meta {
-    display: table-cell;
+    display: block;
     width: 33.3333%;
     padding: 20px;
-    height: 473px;
   }
   .mfp-content .rtm-single-meta .rtmedia-scroll {
     height: 100%;
