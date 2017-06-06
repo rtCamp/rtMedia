@@ -46,6 +46,7 @@ class RTMediaBuddyPressActivity {
 		add_filter( 'bp_activity_user_can_delete', array( $this, 'rtm_bp_activity_user_can_delete' ), 10, 2 );
 
 		add_filter( 'bp_activity_permalink_access', array( $this, 'rtm_bp_activity_permalink_access' ) );
+		add_action( 'bp_activity_comment_posted', array( $this, 'rtm_check_privacy_for_comments' ), 10, 3 );
 	}
 
 	function bp_activity_deleted_activities( $activity_ids_deleted ) {
@@ -846,5 +847,27 @@ class RTMediaBuddyPressActivity {
 
 		return $has_access;
 
+	}
+
+	public function rtm_check_privacy_for_comments( $comment_id, $r, $activity ) {
+		global $wpdb;
+		$db_prefix = $wpdb->base_prefix;
+		$table_name = 'rt_rtm_activity';
+		$activity_id = $r['activity_id'];
+		$user_id = $r['user_id'];
+		$privacy_id = bp_activity_get_meta( $activity_id, 'rtmedia_privacy' );
+		$blog_id = get_current_blog_id();
+
+		if ( '60' === $privacy_id ) {
+			$wpdb->insert(
+				$db_prefix . $table_name,
+				array(
+					'activity_id' => $comment_id,
+					'user_id' => $user_id,
+					'privacy' => $privacy_id,
+					'blog_id' => $blog_id,
+				)
+			);
+		}
 	}
 }
