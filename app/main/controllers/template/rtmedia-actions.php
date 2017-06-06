@@ -182,7 +182,7 @@ add_action( 'rtmedia_album_gallery_actions', 'rtmedia_gallery_options', 80 );
  */
 function rtmedia_create_album_modal() {
 
-	global $rtmedia_query;
+	global $rtmedia_query, $rtmedia;
 
 	if ( is_rtmedia_album_enable() && isset( $rtmedia_query->query['context_id'] ) && isset( $rtmedia_query->query['context'] ) && ( ! ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) ) || apply_filters( 'rtmedia_load_add_album_modal', false ) ) {
 		?>
@@ -193,6 +193,10 @@ function rtmedia_create_album_modal() {
 				<p>
 					<label class="rtm-modal-grid-title-column" for="rtmedia_album_name"><?php esc_html_e( 'Album Title : ', 'buddypress-media' ); ?></label>
 					<input type="text" id="rtmedia_album_name" value="" class="rtm-input-medium" />
+				</p>
+				<p>
+					<label class="rtm-modal-grid-title-column" for="rtmedia_album_description"><?php esc_html_e( 'Album Description : ', 'buddypress-media' ); ?></label>
+					<textarea type="text" id="rtmedia_album_description" value="" class="rtm-input-medium"></textarea>
 				</p>
 				<?php do_action( 'rtmedia_add_album_privacy' ); ?>
 				<input type="hidden" id="rtmedia_album_context" value="<?php echo esc_attr( $rtmedia_query->query['context'] ); ?>">
@@ -308,7 +312,6 @@ function add_upload_button() {
 		/**
 		 * Add filter to transfer "Upload" string,
 		 * issue: http://git.rtcamp.com/rtmedia/rtMedia/issues/133
-		 * By: Yahil
 		 */
 		$upload_string = apply_filters( 'rtmedia_upload_button_string', __( 'Upload', 'buddypress-media' ) );
 
@@ -326,6 +329,8 @@ function add_upload_button() {
 
 add_action( 'rtmedia_media_gallery_actions', 'add_upload_button', 99 );
 add_action( 'rtmedia_album_gallery_actions', 'add_upload_button', 99 );
+
+
 
 /**
  * Add music cover art
@@ -709,11 +714,11 @@ function rt_check_addon_status() {
 
 	foreach ( $addons as $addon ) {
 
-		if ( isset( $addon['args'] ) && isset( $addon['args']['addon_id'] ) && ! empty( $addon['args']['addon_id'] ) ){
+		if ( ! empty( $addon['args']['addon_id'] ) ) {
 
 			$addon_id = $addon['args']['addon_id'];
 			// If license key is not present, then remove the status from config
-			// This forces the `Deactivate License` to `Activate License`
+			// This forces the `Deactivate License` to `Activate License`.
 			if ( empty( $addon['args']['license_key'] ) ) {
 				delete_option( 'edd_' . $addon_id . '_license_status' );
 			}
@@ -721,7 +726,7 @@ function rt_check_addon_status() {
 			$addon_data = get_option( 'edd_' . $addon_id . '_active' );
 
 			// Remove the license from the addon if black license/input is provided
-			// This allows user to remove the license from the addon
+			// This allows user to remove the license from the addon.
 			if ( ! empty( $addon_data ) && is_object( $addon_data ) && empty( $addon['args']['license_key'] ) ) {
 				if ( isset( $addon_data->success ) && isset( $addon_data->license ) ) {
 					if ( ( isset( $_POST[ 'edd_' . $addon_id . '_license_key' ] ) && '' == $_POST[ 'edd_' . $addon_id . '_license_key' ] ) || '' == $addon_data->success || 'invalid' == $addon_data->license ) {
@@ -731,7 +736,6 @@ function rt_check_addon_status() {
 					}
 				}
 			}
-
 		}
 
 		if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
@@ -852,7 +856,118 @@ add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_
 
 
 /**
- * rtmedia_set_permalink Re-save premalink settings on plugin activation or plugin updates
+ * Search Media mockup
+ * @param       array       $attr
+ *
+ * @since  4.4
+ */
+function add_search_filter( $attr = null ) {
+
+	global $rtmedia, $rtmedia_query;
+
+	// Get media type.
+	$media_type = get_query_var( 'media' );
+
+	// Prevent search box from these tabs.
+	$notallowed_types = array(
+		'likes'    => true,
+		'other'    => true,
+		'favlist'  => true,
+		'playlist' => true,
+	);
+	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
+
+		// If found the prevented tab, then stop.
+		if ( ! empty( $media_type ) && isset( $notallowed_types[ $media_type ] ) ) {
+			return;
+		}
+
+		// Prevent showing search box for not allowed media types.
+		if ( isset( $rtmedia_query->query['media_type'] ) && isset( $notallowed_types[ $rtmedia_query->query['media_type'] ] ) ) {
+			return;
+		}
+
+		// Do not show search box if playlist view is enabled.
+		if ( ! empty( $rtmedia->options['general_enable_music_playlist_view'] ) && 1 == $rtmedia->options['general_enable_music_playlist_view'] && 'music' === $media_type ) {
+			return;
+		}
+
+		// Do not show search box if table view is enabled for documents.
+		if ( ! empty( $rtmedia->options['general_enable_document_other_table_view'] ) && 1 == $rtmedia->options['general_enable_document_other_table_view'] && 'document' === $media_type ) {
+			return;
+		}
+
+		$search_value = ( isset( $_GET['search'] ) ? sanitize_text_field( wp_unslash( $_GET['search'] ) ) : '' );
+
+		$html  = "<form method='post' id='media_search_form' class='media_search'>";
+		$html .= "<input type='text' id='media_search_input' value='" . esc_attr( $search_value ) . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
+		$html .= "<span id='media_fatch_loader'></span>";
+
+		$search_by = '';
+		/**
+		 * Filters the search by parameter for searching media with specific type.
+		 *
+		 * @param string $search_by Default is blank.
+		 */
+		$search_by = apply_filters( 'rtmedia_media_search_by', $search_by );
+
+		if (  isset( $search_by ) && $search_by ) {
+			$html .= "<select id='search_by' class='search_by'>";
+
+			if ( ! rtm_check_member_type() || strpos( $_SERVER['REQUEST_URI'], 'members' ) || ( isset( $attr['media_author'] ) && $attr['media_author'] ) ) {
+				unset( $search_by['member_type'] );
+			}
+
+			if ( strpos( $_SERVER['REQUEST_URI'], 'members' ) ) {
+				unset( $search_by['author'] );
+			}
+
+			if ( function_exists( 'is_plugin_active' ) && ! is_plugin_active( 'rtmedia-custom-attributes/index.php' ) ) {
+				unset( $search_by['attribute'] );
+			}
+
+			if ( strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {
+				unset( $search_by['attribute'] );
+			}
+
+			if ( isset( $rtmedia_query->media_query['media_type'] ) && ! is_array( $rtmedia_query->media_query['media_type'] ) ) {
+				unset( $search_by['media_type'] );
+			}
+
+			if ( isset( $attr['media_author'] ) && $attr['media_author'] ) {
+				unset( $search_by['author'] );
+			}
+			foreach ( $search_by as $key => $value ) {
+				$selected = ( isset( $_REQUEST['search_by'] ) && $_REQUEST['search_by'] == $key ? 'selected' : '' );
+				if ( $search_by[ $key ] ) {
+					$key = esc_attr( $key );
+					$search_keyword = str_replace( '_', ' ', $key );
+
+					$html .= "<option value='$key' $selected > " . esc_html__( $search_keyword, 'buddypress-media' ) . "</option>";
+				}
+			}
+
+			$html .= '</select>';
+		}
+
+		$html .= "<span id='media_search_remove' class='media_search_remove search_option'><i class='dashicons dashicons-no rtmicon'></i></span>";
+		$html .= "<button type='submit' id='media_search' class='search_option'><i class='dashicons dashicons-search rtmicon'></i></button>";
+		$html .= '</form>';
+
+		/**
+		 * Filters the html of search form.
+		 *
+		 * @param string $html HTML content of form.
+		 */
+		echo apply_filters( 'rtmedia_gallery_search', $html );
+	}
+}
+
+add_action( 'rtmedia_media_gallery_actions', 'add_search_filter', 99 );
+
+
+/**
+ * Re-save premalink settings on plugin activation or plugin updates
  */
 function rtmedia_set_permalink() {
 	$is_permalink_reset = get_option( 'is_permalink_reset' );
@@ -982,3 +1097,18 @@ if ( ! function_exists( 'rtmedia_gallery_after_title_callback' ) ) {
 	}
 }
 add_action( 'rtmedia_gallery_after_title', 'rtmedia_gallery_after_title_callback', 11, 1 );
+
+/**
+ * Add hidden field for media type.
+ * This will used by search functionality.
+ */
+function rtmedia_hidden_field() {
+	// Get media type from query string.
+	$media_type = get_query_var( 'media' );
+	if ( ! empty( $media_type ) ) {
+	?>
+		<input type="hidden" name="media_type" value="<?php echo esc_attr( $media_type ); ?>" />
+	<?php
+	}
+}
+add_action( 'rtmedia_after_media_gallery_title', 'rtmedia_hidden_field' );
