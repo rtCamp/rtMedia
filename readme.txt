@@ -1378,7 +1378,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.4 =
-Now enable/disable masonry view for activity and search media through gallery. It also includes some bug fixes. Please update/re-save the permalinks after the plugin update.
+Masonry in the Activity feed, media search functionality, album descriptions and lots more! Please update/re-save the permalinks after the plugin updates.
 
 == Sponsors ==
 
