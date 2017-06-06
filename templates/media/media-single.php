@@ -105,8 +105,18 @@
 									</div>
 								</div>
 							</div>
+						<?php } else { ?>
+							<div class="rtmedia-item-comments">
+								<div class="rtmedia-actions-before-comments clearfix">
+									<div class="like-button-no-comments">
+										<?php do_action( 'like_button_no_comments' ); ?>
+									</div>
+								</div>
+								<div class="rtm-like-comments-info">
+									<?php show_rtmedia_like_counts(); ?>
+								</div>
+							</div>
 						<?php } ?>
-
 
 					</div>
 
