@@ -160,6 +160,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * UI issue of options tab with some WordPress default themes[Documentation](https://github.com/rtMediaWP/library/edit/develop/media/rtmc_media_options_overflow_fix.txt)
  * rtMedia shortcode uploader issue with IOS mobile safari browser
  * Issue while playing video on IOS safari
+ * Isshue of white strip in lightbox
 
 
 = 4.3.2 [May 11, 2017] =
