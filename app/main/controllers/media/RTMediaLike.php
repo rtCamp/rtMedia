@@ -30,6 +30,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		remove_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );
 		add_action( 'rtmedia_action_buttons_after_media', array( $this, 'button_filter' ), 12 );
 		add_action( 'rtmedia_actions_before_comments', array( $this, 'like_button_filter' ), 10 );
+		add_action( 'like_button_no_comments', array( $this, 'like_button_no_comments_callback' ), 10 );
 		add_action( 'rtmedia_like_button_filter', array( $this, 'like_button_filter_nonce' ), 10, 1 );
 		if ( ! rtmedia_comments_enabled() ) {
 			add_action( 'rtmedia_actions_without_lightbox', array( $this, 'like_button_without_lightbox_filter' ) );
@@ -56,6 +57,21 @@ class RTMediaLike extends RTMediaUserInteraction {
 	}
 
 	function like_button_filter() {
+		if ( empty( $this->media ) ) {
+			$this->init();
+		}
+		$button = $this->render();
+
+		if ( $button ) {
+			echo '<span>' . $button . '</span>'; // @codingStandardsIgnoreLine
+		}
+	}
+
+	/**
+	 * This function displays the like button even if comment
+	 * section is disabled.
+	 */
+	function like_button_no_comments_callback() {
 		if ( empty( $this->media ) ) {
 			$this->init();
 		}
