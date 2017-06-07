@@ -66,7 +66,7 @@ class RTMediaPrivacy {
 			}
 
 			//todo strict standard error
-			if ( isset( $activities_template->activity->privacy ) && $activities_template->activity->privacy != '80' && ( bp_is_activity_directory() || bp_is_my_profile() ) && get_current_user_id() == $activities_template->activity->user_id ) {
+			if ( isset( $activities_template->activity->privacy ) && '80' != $activities_template->activity->privacy && ( bp_is_activity_directory() || bp_is_my_profile() ) && get_current_user_id() === $activities_template->activity->user_id ) {
 				self::select_privacy_ui( true, 'rtm-ac-privacy-' . $activities_template->activity->id, array( 'rtm-activity-privacy-opt' ), $selected );
 			}
 		}
