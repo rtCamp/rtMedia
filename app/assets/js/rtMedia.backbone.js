@@ -257,11 +257,11 @@ jQuery( function( $ ) {
 			}
 
 			// Remove no data found message if it's there.
-			if ( $( '.rtmedia-nodata' ).length > 0 ) {
-				$( '.rtmedia-nodata' ).remove();
+			if ( $( 'div[id^="rtmedia_gallery_container_"] .rtmedia-nodata' ).length > 0 ) {
+				$( 'div[id^="rtmedia_gallery_container_"] .rtmedia-nodata' ).remove();
 			}
 			if ( 0 == this.collection.length ) {
-				$( '.rtmedia-container' ).append( '<p class="rtmedia-nodata">' + rtmedia_no_media_found + '</p>' );
+				$( 'div[id^="rtmedia_gallery_container_"]' ).append( '<p class="rtmedia-nodata">' + rtmedia_no_media_found + '</p>' );
 			} else {
 				$.each( this.collection.toJSON(), function( key, media ) {
 					$( that.el ).append( that.template( media ) );
