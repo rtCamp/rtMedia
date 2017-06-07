@@ -157,7 +157,6 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Audio player display issue in lightbox
  * Fixed trimming media name issue when it contains a dot in the name
  * Added missing data in debuginfo file
- * UI issue of options tab with some WordPress default themes[Documentation](https://github.com/rtMediaWP/library/edit/develop/media/rtmc_media_options_overflow_fix.txt)
  * rtMedia shortcode uploader issue with IOS mobile safari browser
  * Issue while playing video on IOS safari
  * White strip-line issue in lightbox

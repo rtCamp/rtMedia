@@ -148,6 +148,31 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.4 [June 6, 2017] ###
+
+* NEW
+
+ * Enabled Masonry Cascading grid layout for BuddyPress Activity feed [Documentation](https://rtmedia.io/docs/features/lightboxes-masonry/#masonry-activity-feed)
+ * Added search functionality in Media Gallery [Documentation](https://rtmedia.io/docs/features/upload-media/#search-media)
+ * Added album description input while creating an album [Documentation](https://rtmedia.io/docs/features/view-media/#album-description)
+
+* ENHANCEMENTS
+
+ * Added media description parameter in JSON API [Documentation](https://rtmedia.io/docs/developers/json-api/#media-upload)
+ * Added: Filter to change the text "Are you sure you want to delete this media?" [Documentation](https://rtmedia.io/docs/developers/hooks/rtmedia_delete_prompt_message/)
+ * Applied Post Update button style once the document is ready instead of window load
+
+* FIXED
+
+ * Audio player display issue in lightbox
+ * Fixed trimming media name issue when it contains a dot in the name
+ * Added missing data in debuginfo file
+ * rtMedia shortcode uploader issue with IOS mobile safari browser
+ * Issue while playing video on IOS safari
+ * White strip-line issue in lightbox
+ * Like button will display in the right sidebar of light box even when media comments are deactivated
+
+
 #### 4.3.2 [May 11, 2017] ####
 
 * ENHANCEMENTS
