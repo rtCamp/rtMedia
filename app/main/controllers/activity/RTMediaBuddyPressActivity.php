@@ -849,9 +849,16 @@ class RTMediaBuddyPressActivity {
 
 	}
 
-	public function rtm_check_privacy_for_comments( $comment_id, $r, $activity ) {
+	/**
+	 * Makes the comments hidden (private) if the parent comment's
+	 * privacy is set to private.
+	 *
+	 * @param string $comment_id Activity id of the comment.
+	 * @param array  $r          Array of arguments.
+	 */
+	public function rtm_check_privacy_for_comments( $comment_id, $r ) {
 		global $wpdb;
-		$db_prefix = $wpdb->base_prefix;
+		$db_prefix = $wpdb->get_blog_prefix();
 		$table_name = 'rt_rtm_activity';
 		$activity_id = $r['activity_id'];
 		$user_id = $r['user_id'];
@@ -863,9 +870,9 @@ class RTMediaBuddyPressActivity {
 				$db_prefix . $table_name,
 				array(
 					'activity_id' => $comment_id,
-					'user_id' => $user_id,
-					'privacy' => $privacy_id,
-					'blog_id' => $blog_id,
+					'user_id'     => $user_id,
+					'privacy'     => $privacy_id,
+					'blog_id'     => $blog_id,
 				)
 			);
 		}
