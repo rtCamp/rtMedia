@@ -858,14 +858,15 @@ class RTMediaBuddyPressActivity {
 	 */
 	public function rtm_check_privacy_for_comments( $comment_id, $r ) {
 		global $wpdb;
-		$db_prefix = $wpdb->get_blog_prefix();
-		$table_name = 'rt_rtm_activity';
-		$activity_id = $r['activity_id'];
-		$user_id = $r['user_id'];
-		$privacy_id = bp_activity_get_meta( $activity_id, 'rtmedia_privacy' );
-		$blog_id = get_current_blog_id();
 
-		if ( '60' === $privacy_id ) {
+		$db_prefix   = $wpdb->get_blog_prefix();
+		$table_name  = 'rt_rtm_activity';
+		$activity_id = $r['activity_id'];
+		$user_id     = $r['user_id'];
+		$privacy_id  = bp_activity_get_meta( $activity_id, 'rtmedia_privacy' );
+		$blog_id     = get_current_blog_id();
+
+		if ( '60' === $privacy_id && ! empty( $comment_id ) && ! empty( $r ) ) {
 			$wpdb->insert(
 				$db_prefix . $table_name,
 				array(
