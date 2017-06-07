@@ -859,6 +859,10 @@ class RTMediaBuddyPressActivity {
 	public function rtm_check_privacy_for_comments( $comment_id, $r ) {
 		global $wpdb;
 
+		if ( empty( $r ) || empty( $comment_id ) || ( ! is_array( $r ) ) ) {
+			return;
+		}
+
 		$db_prefix   = $wpdb->get_blog_prefix();
 		$table_name  = 'rt_rtm_activity';
 		$activity_id = $r['activity_id'];
@@ -866,15 +870,30 @@ class RTMediaBuddyPressActivity {
 		$privacy_id  = bp_activity_get_meta( $activity_id, 'rtmedia_privacy' );
 		$blog_id     = get_current_blog_id();
 
-		if ( '60' === $privacy_id && ! empty( $comment_id ) && ! empty( $r ) ) {
+		if ( '60' === $privacy_id ) {
+			$row_values_rtm_media = array(
+				'activity_id' => $comment_id,
+				'user_id'     => $user_id,
+				'privacy'     => $privacy_id,
+				'blog_id'     => $blog_id,
+			);
+
 			$wpdb->insert(
 				$db_prefix . $table_name,
-				array(
-					'activity_id' => $comment_id,
-					'user_id'     => $user_id,
-					'privacy'     => $privacy_id,
-					'blog_id'     => $blog_id,
-				)
+				$row_values_rtm_media
+			);
+
+			$table_name = 'bp_activity_meta';
+			$row_values_activity_meta = array(
+				'id'          => '',
+				'activity_id' => $comment_id,
+				'meta_key'    => 'rtmedia_privacy',
+				'meta_value'  => 60,
+			);
+
+			$wpdb->insert(
+				$db_prefix . $table_name,
+				$row_values_activity_meta
 			);
 		}
 	}
