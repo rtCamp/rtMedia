@@ -1548,8 +1548,10 @@ jQuery( document ).ready( function( $ ) {
 				// $( '.rtmedia-like-counter' ).html( data.count );
 				if ( data.count > 0 ) {
 					$( '.rtmedia-like-info' ).removeClass( 'hide' );
+					$( '.rtm-like-comments-info' ).removeClass( 'hide' );
 				} else {
 					$( '.rtmedia-like-info' ).addClass( 'hide' );
+					$( '.rtm-like-comments-info' ).addClass( 'hide' );
 				}
 			}
 		} );
