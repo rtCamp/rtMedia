@@ -179,11 +179,20 @@ jQuery( function( $ ) {
 
 						rtMedia.gallery = {};
 						rtMedia.gallery.page = page;
+
+						var image_src = [];
+						$( '.rtmedia-list-item' ).each( function( index ) {
+							image_src.push( $( this ).find( 'img' ).attr( 'src' ) );
+						});
+
 						var galleryViewObj = new rtMedia.GalleryView( {
 							collection: new rtMedia.Gallery( response.data ),
 							el: list_el,
 						} );
 
+						$( '.rtmedia-list-item' ).each( function( index ) {
+							$( this ).find( 'img' ).attr( 'src', image_src[ index ] );
+						});
 						//Element.show();
 
 						// get current gallery container object
