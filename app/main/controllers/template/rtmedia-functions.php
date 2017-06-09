@@ -348,18 +348,19 @@ function rtmedia_id( $media_id = false ) {
  * @return      int
  */
 function rtmedia_media_id( $id = false ) {
+	global $rtmedia_media;
 
 	if ( $id ) {
 		$model = new RTMediaModel();
+
 		$media = $model->get_media( array(
 			'id' => $id,
 		), 0, 1 );
-
 		return $media[0]->media_id;
 	} else {
-		global $rtmedia_media;
-
-		return $rtmedia_media->media_id;
+		if ( is_object( $rtmedia_media ) ) {
+			return $rtmedia_media->media_id;
+		}
 	}
 
 }
