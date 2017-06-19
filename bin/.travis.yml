@@ -56,4 +56,4 @@ before_script:
 
 
 script:
-- wpcept run acceptance --steps
+- codecept run acceptance --steps
