@@ -30,7 +30,7 @@ class Constants {
 	public static $imgQualityValue = '80';
 	public static $rtMediaSettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings';
 	public static $saveSettingsButtonBottom = '.rtm-button-container.bottom .rtmedia-settings-submit';
-	public static $rtMediaSeetings = '#toplevel_page_rtmedia-settings';
+	public static $rtMediaSettings = '#toplevel_page_rtmedia-settings';
 	public static $topSaveButton = '.rtm-button-container.top input.rtmedia-settings-submit';
 	public static $grpTableRow = 'tbody#the-list tr#groups';
 	public static $enableUserGrpCheckbox = 'input[name="bp_components[groups]"]';
@@ -183,7 +183,7 @@ class Constants {
 	public static $mediaPageScrollPos = '#user-activity';   //Scroll position for activity and media pages
 	public static $profilePicture = 'div#item-header-avatar';
 	public static $commentLink = 'span > a.rtmedia-comment-link';
-	public static $mediaSeachSelector = '.media_search';
+	public static $mediaSearchSelector = '.media_search';
 	public static $activityPrivacyStatus = '#activity-stream.activity-list.item-list > li.activity.activity_update.activity-item > div.activity-content > div.activity-inner p';
 	public static $commentDiv = 'div.rtmedia-comment-content p';
 	public static $goBackToAlbumPage = 'a.rtm-button-back';

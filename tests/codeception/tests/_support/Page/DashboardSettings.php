@@ -36,7 +36,7 @@ class DashboardSettings {
 
 		$I = $this->tester;
 
-		$I->click( ConstantsPage::$rtMediaSeetings );
+		$I->click( ConstantsPage::$rtMediaSettings );
 		$I->waitForElement( ConstantsPage::$buddypressTab, 10 );
 	}
 
