@@ -13,7 +13,8 @@ modules:
         WPWebDriver:
             host: 'hub-cloud.browserstack.com'
             port: 80
-            browser: 'firefox'
+#            browser: 'firefox'
+            browser: 'chrome'
             url: 'http://automation.rtmedia.me/'
             adminUsername: ''
             adminPassword: ''
