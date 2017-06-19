@@ -90,9 +90,14 @@ class DashboardSettings {
 		$I = $this->tester;
 
 		$I->dontSeeCheckboxIsChecked( $checkboxSelector );
-		$I->checkOption( $checkboxSelector );
+
+		if ( preg_match( '/"([^"]+)"/', $checkboxSelector, $m ) ) {
+			$script = 'return document.getElementsByName("' . $m[ 1 ] . '")[0].click()';
+			$I->executeJs( $script );
+		}
 
 		self::saveSettings();
+
 
 		$I->seeCheckboxIsChecked( $checkboxSelector );
 	}
