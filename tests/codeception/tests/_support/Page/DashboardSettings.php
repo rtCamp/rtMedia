@@ -99,13 +99,32 @@ class DashboardSettings
         $I = $this->tester;
 
         $I->dontSeeCheckboxIsChecked( $checkboxSelector );
-        $I->checkOption( $checkboxSelector );
+        //$I->checkOption( $checkboxSelector );
+        $I->executeJS("jQuery('$checkboxSelector').click()");
 
         self::saveSettings();
 
         $I->seeCheckboxIsChecked( $checkboxSelector );
 
     }
+
+
+    /**
+     * enableSettingChrome() -> Will enable the respective checkbox under rtmedia-settings tab on chrome browser
+     */
+
+    public function enableSettingChrome( $checkboxSelector ) {
+
+        $I = $this->tester;
+        $I->dontSeeCheckboxIsChecked( $checkboxSelector );
+        //$I->checkOption( $checkboxSelector );
+        $I->executeJS("jQuery('$checkboxSelector').click()");
+
+        self::saveSettings();
+        $I->seeCheckboxIsChecked( $checkboxSelector );
+
+    }
+
 
     /**
      * disableSetting() -> Will disable the respective checkbox under rtmedia-settings tab.
@@ -179,6 +198,8 @@ class DashboardSettings
         }else{
             echo nl2br( "Call to enableSetting()... \n" );
             self::enableSetting( $cssSelector );
+            //self::enableSettingChrome($cssSelector);
+
         }
     }
 
