@@ -138,6 +138,18 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
+= 4.4.1 [June 20, 2017] =
+
+* NEW
+
+ * Media search issue under album
+ * Gallery reload issue while uploading new media under a single album page
+ * Duplicate "no media found" message under media gallery
+ * Cancel media search button issue under albums tab
+ * PHP notice
+ * UI for caret under like button
+ * Load more for albums
+
 = 4.4 [June 6, 2017] =
 
 * NEW
@@ -157,7 +169,6 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Audio player display issue in lightbox
  * Fixed trimming media name issue when it contains a dot in the name
  * Added missing data in debuginfo file
- * UI issue of options tab with some WordPress default themes[Documentation](https://github.com/rtMediaWP/library/edit/develop/media/rtmc_media_options_overflow_fix.txt)
  * rtMedia shortcode uploader issue with IOS mobile safari browser
  * Issue while playing video on IOS safari
  * White strip-line issue in lightbox

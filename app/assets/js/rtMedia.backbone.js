@@ -179,11 +179,11 @@ jQuery( function( $ ) {
 
 						rtMedia.gallery = {};
 						rtMedia.gallery.page = page;
+
 						var galleryViewObj = new rtMedia.GalleryView( {
 							collection: new rtMedia.Gallery( response.data ),
 							el: list_el,
 						} );
-
 						//Element.show();
 
 						// get current gallery container object
@@ -247,7 +247,7 @@ jQuery( function( $ ) {
 		render: function() {
 
 			that = this;
-
+			var rtmedia_gallery_container_nodata = $( 'div[id^="rtmedia_gallery_container_"] .rtmedia-nodata' );
 			if ( upload_sync ) {
 				$( that.el ).html( '' );
 			}
@@ -257,11 +257,11 @@ jQuery( function( $ ) {
 			}
 
 			// Remove no data found message if it's there.
-			if ( $( '.rtmedia-nodata' ).length > 0 ) {
-				$( '.rtmedia-nodata' ).remove();
+			if ( rtmedia_gallery_container_nodata.length > 0 ) {
+				rtmedia_gallery_container_nodata.remove();
 			}
-			if ( 0 == this.collection.length ) {
-				$( '.rtmedia-container' ).append( '<p class="rtmedia-nodata">' + rtmedia_no_media_found + '</p>' );
+			if ( 0 === this.collection.length ) {
+				$( 'div[id^="rtmedia_gallery_container_"]' ).append( '<p class="rtmedia-nodata">' + rtmedia_no_media_found + '</p>' );
 			} else {
 				$.each( this.collection.toJSON(), function( key, media ) {
 					$( that.el ).append( that.template( media ) );
@@ -1547,9 +1547,9 @@ jQuery( document ).ready( function( $ ) {
 				//Update the like counter
 				// $( '.rtmedia-like-counter' ).html( data.count );
 				if ( data.count > 0 ) {
-					$( '.rtmedia-like-info' ).removeClass( 'hide' );
+					$( '.rtmedia-like-info, .rtm-like-comments-info' ).removeClass( 'hide' );
 				} else {
-					$( '.rtmedia-like-info' ).addClass( 'hide' );
+					$( '.rtmedia-like-info, .rtm-like-comments-info' ).addClass( 'hide' );
 				}
 			}
 		} );
