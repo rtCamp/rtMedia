@@ -142,12 +142,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * NEW
 
- * Fixed media search under album
- * Fixed album display issue after uploading a new image
- * Fixed duplicate error message
- * Fixed media search cancel button issue under albums
+ * Media search issue under album
+ * Album display issue after uploading a new image
+ * Duplicate error message on no results after search
+ * Media search cancel button issue under albums
  * Handled PHP notice error
- * UI fix for caret under like button
+ * UI for caret under like button
 
 = 4.4 [June 6, 2017] =
 
