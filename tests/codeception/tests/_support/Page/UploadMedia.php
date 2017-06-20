@@ -110,7 +110,7 @@ class UploadMedia
 
         $I->seeElement( self::$uploadMediaButton );
         $I->click( self::$uploadMediaButton );
-        $I->waitForElementNotVisible( ConstantsPage::$fileList, 40);
+        $I->waitForElementNotVisible( ConstantsPage::$fileList, 50);
 
     }
 
@@ -224,7 +224,7 @@ class UploadMedia
     public function firstThumbnailMedia(){
 
         $I = $this->tester;
-        $I->waitForElement( self::$firstChild, 40);
+        $I->waitForElement( self::$firstChild, 50);
         $I->click( self::$firstChild );
         // $I->wait( 10 );
         $I->waitForElement( ConstantsPage::$mediaContainer, 10);
