@@ -260,7 +260,7 @@ jQuery( function( $ ) {
 			if ( rtmedia_gallery_container_nodata.length > 0 ) {
 				rtmedia_gallery_container_nodata.remove();
 			}
-			if ( 0 == this.collection.length ) {
+			if ( 0 === this.collection.length ) {
 				$( 'div[id^="rtmedia_gallery_container_"]' ).append( '<p class="rtmedia-nodata">' + rtmedia_no_media_found + '</p>' );
 			} else {
 				$.each( this.collection.toJSON(), function( key, media ) {
