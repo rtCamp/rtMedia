@@ -138,7 +138,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.4.1 [June 20, 2017]
+= 4.4.1 [June 20, 2017] =
 
 * NEW
 
