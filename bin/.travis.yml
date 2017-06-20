@@ -58,6 +58,6 @@ before_script:
 
 
 script:
-#- codecept run acceptance --steps
-- codecept run acceptance tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Positive/SetSizeOfVideoSingleplayerCept.php --steps
+- codecept run acceptance --steps
+#- codecept run acceptance tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Positive/SetSizeOfVideoSingleplayerCept.php --steps
 
