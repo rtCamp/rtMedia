@@ -14,8 +14,8 @@ addons:
   browserstack:
     username: rtcamp3
     access_key:
-#     secure: VFBgrctr5uDgE4PIea7QoXJDdQqq5TjPhvEcEBBcymbsP7cYUniD8K/0At+hArw5fqKajNlPZZjbxEhBRVv4hXNin++S6qwLeHCQMyHWQTt5vOULL16R2GsO30QUkFT/Egw2rh9v6qBei7Ol2mwz7i+XzZQE8cSDa/TJl7wMVwU=
-      secure: j7XE5uUiMYLvM1GeLYzC28IF+v9XPW5n1+dhtK9had4BWlTdkJEjcUeE8czkNQZB6fY//mB5mRMsZrmofF6fB5D/5QNzcK5hmIj1kL/UVTl+9KpTmpRHJMESx2hQM4ORwv2ir/kXSE1x8NqvFrjEebdaOTqAMiG0fRIuluX/NYa/d741l7WkA2EULDcHNDQfLOVzwByBdiij8CgnAI0lGri/TErvVZjcTarJmsx67U7wYurMi5cWQvYd6MRLDNhbST8nqFCH5wvx7Dl/extbgVk5pPw94eRmyEIGT+BqeGjZSwv9GP2HkQ1irDHCiWEhk56PsRT7skaMs00EMbJjyV4we0+ilsj5y1t5AOc8gPjJqE0DFH889Bw50MjhQ6EeDdbpv0kSwZ+2uRZ2rOYGY0nWOu2hlhBosBzEGhQMJWDhzCDbgie1Wbz/QBgaxZ12aGSOC4A6TVWL9J6f2TVza7Aij6X/LMM5bjVVkI8cRolo6wRKOkBc/WsYg5nngsuVR61Aod2dc7pUWNICwG/ou1y0uTvSN6bEt7aRpGTY/SRO0+yW5btw45U5NZ9LAMKdpOpteUbcu6UbAeRNbaxVGpasr8m9uacbTvGehFYJSFqm06d/elE5eveT4vcp7qp4onjdqc4kmAlNZ5R2vNANkuretUJCpEMb9xRQ3h2U6v8=
+     secure: VFBgrctr5uDgE4PIea7QoXJDdQqq5TjPhvEcEBBcymbsP7cYUniD8K/0At+hArw5fqKajNlPZZjbxEhBRVv4hXNin++S6qwLeHCQMyHWQTt5vOULL16R2GsO30QUkFT/Egw2rh9v6qBei7Ol2mwz7i+XzZQE8cSDa/TJl7wMVwU=
+#      secure: j7XE5uUiMYLvM1GeLYzC28IF+v9XPW5n1+dhtK9had4BWlTdkJEjcUeE8czkNQZB6fY//mB5mRMsZrmofF6fB5D/5QNzcK5hmIj1kL/UVTl+9KpTmpRHJMESx2hQM4ORwv2ir/kXSE1x8NqvFrjEebdaOTqAMiG0fRIuluX/NYa/d741l7WkA2EULDcHNDQfLOVzwByBdiij8CgnAI0lGri/TErvVZjcTarJmsx67U7wYurMi5cWQvYd6MRLDNhbST8nqFCH5wvx7Dl/extbgVk5pPw94eRmyEIGT+BqeGjZSwv9GP2HkQ1irDHCiWEhk56PsRT7skaMs00EMbJjyV4we0+ilsj5y1t5AOc8gPjJqE0DFH889Bw50MjhQ6EeDdbpv0kSwZ+2uRZ2rOYGY0nWOu2hlhBosBzEGhQMJWDhzCDbgie1Wbz/QBgaxZ12aGSOC4A6TVWL9J6f2TVza7Aij6X/LMM5bjVVkI8cRolo6wRKOkBc/WsYg5nngsuVR61Aod2dc7pUWNICwG/ou1y0uTvSN6bEt7aRpGTY/SRO0+yW5btw45U5NZ9LAMKdpOpteUbcu6UbAeRNbaxVGpasr8m9uacbTvGehFYJSFqm06d/elE5eveT4vcp7qp4onjdqc4kmAlNZ5R2vNANkuretUJCpEMb9xRQ3h2U6v8=
 
 before_install:
 - rm -rf ~/.gnupg
@@ -53,10 +53,10 @@ before_script:
 - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
 - cd $PLUGIN_DIR/tests/codeception/
 - composer update
-#- export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
-- export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
+- export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
+#- export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
 
 
 script:
 - codecept run acceptance --steps
-#- codecept run acceptance tests/acceptance/core-rtMedia-settings/01-Privacy/01-Positive/SetDefaultPrivacyForLoggedinUsersCept.php --steps
+
