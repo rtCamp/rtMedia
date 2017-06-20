@@ -611,12 +611,12 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 		), false, false );
 
 		if ( 'photo' === $rtmedia_query->query['media_type'] ) {
-			if ( isset( $media[$key] ) ) {
-				$media_object = $media[$key];
+			if ( isset( $media[ $key ] ) ) {
+				$media_object = $media[ $key ];
 			} else {
 				return false;
 			}
-		} else if ( isset( $media[0] ) ) {
+		} elseif ( isset( $media[0] ) ) {
 			$media_object = $media[0];
 		} else {
 			return false;

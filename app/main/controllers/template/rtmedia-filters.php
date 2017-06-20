@@ -677,13 +677,13 @@ add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_mo
  */
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
-		$search = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
-		$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
-		$media_type = ( isset( $_REQUEST['media_type'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['media_type'] ) ) : '';
+		$search                = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+		$search_by             = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
+		$media_type            = ( isset( $_REQUEST['media_type'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['media_type'] ) ) : '';
 		$rtmedia_current_album = ( isset( $_REQUEST['rtmedia-current-album'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['rtmedia-current-album'] ) ) : '';
 
 		if ( '' !== $search ) {
-			$author_id = rtm_select_user( $search );
+			$author_id   = rtm_select_user( $search );
 			$member_type = rtm_fetch_user_by_member_type( $search );
 
 			if ( ! empty( $rtmedia_current_album ) ) {
@@ -703,7 +703,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 
 				if ( 'title' === $search_by ) {
 					$where .= " $table_name.media_title LIKE '%" . $search . "%' ";
-				} else if ( 'description' === $search_by ) {
+				} elseif ( 'description' === $search_by ) {
 					$where .= " post_table.post_content LIKE '%" . $search . "%'";
 
 				} elseif ( 'author' === $search_by ) {
@@ -768,19 +768,19 @@ add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 1
 function rtmedia_search_fillter_join_query( $join, $table_name ) {
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
 		global $wpdb;
-		$posts_table = $wpdb->posts;
-		$terms_table = $wpdb->terms;
+		$posts_table              = $wpdb->posts;
+		$terms_table              = $wpdb->terms;
 		$term_relationships_table = $wpdb->term_relationships;
-		$term_taxonomy_table = $wpdb->term_taxonomy;
-		$search = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
-		$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
+		$term_taxonomy_table      = $wpdb->term_taxonomy;
+		$search                   = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+		$search_by                = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
 
-		if ( '' != $search ) {
+		if ( '' !== $search ) {
 				$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
 
-			$request_uri = filter_input( INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL );
+			$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 			$request_url = explode( '/', $request_uri );
-			if ( ! empty( $search_by ) && 'attribute' === $search_by && ! in_array( 'attribute', $request_url ) ) {
+			if ( ! empty( $search_by ) && 'attribute' === $search_by && ! in_array( 'attribute', $request_url, true ) ) {
 				$join .= " 	INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = 'attachment' )
 		                    INNER JOIN $terms_table ON ( $terms_table.slug IN ('" . $search . "') )
 		                    INNER JOIN $term_taxonomy_table ON ( $term_taxonomy_table.term_id = $terms_table.term_id )
@@ -799,7 +799,7 @@ add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11,
  * @return array
  */
 function rtmedia_model_query_columns( $columns ) {
-	$search = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+	$search    = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
 	$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
 	if ( ! empty( $search ) ) {
 		if ( ! empty( $search_by ) && 'media_type' === $search_by ) {
