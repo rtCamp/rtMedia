@@ -148,6 +148,17 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.4.1 [June 20, 2017]
+
+* FIXED
+
+ * Fixed media search under album
+ * Fixed album display issue after uploading a new image
+ * Fixed duplicate error message
+ * Fixed media search cancel button issue under albums
+ * Handled PHP notice error
+ * UI fix for caret under like button
+
 ### 4.4 [June 6, 2017] ###
 
 * NEW
