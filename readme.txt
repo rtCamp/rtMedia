@@ -143,11 +143,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * NEW
 
  * Media search issue under album
- * Album display issue after uploading a new image
- * Duplicate error message on no results after search
- * Media search cancel button issue under albums
- * Handled PHP notice error
+ * Gallery reload issue while uploading new media under a single album page
+ * Duplicate no media found message under media gallery
+ * Cancel media search button issue under albums tab
+ * PHP notice
  * UI for caret under like button
+ * Load more for albums
 
 = 4.4 [June 6, 2017] =
 
