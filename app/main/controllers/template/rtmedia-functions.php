@@ -592,9 +592,11 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
  *
  * @return      bool|int|string|void
  */
-function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true ) {
+function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true, $key = 0 ) {
 
 	global $rtmedia_backbone;
+	global $rtmedia;
+	global $rtmedia_query;
 
 	if ( $rtmedia_backbone['backbone'] ) {
 		echo '<%= guid %>';
@@ -608,7 +610,13 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 			'id' => $id,
 		), false, false );
 
-		if ( isset( $media[0] ) ) {
+		if ( 'photo' === $rtmedia_query->query['media_type'] ) {
+			if ( isset( $media[$key] ) ) {
+				$media_object = $media[$key];
+			} else {
+				return false;
+			}
+		} else if ( isset( $media[0] ) ) {
 			$media_object = $media[0];
 		} else {
 			return false;
