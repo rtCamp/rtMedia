@@ -134,7 +134,8 @@ class DashboardSettings
         $I = $this->tester;
 
         $I->seeCheckboxIsChecked( $checkboxSelector );
-        $I->uncheckOption( $checkboxSelector );
+//        $I->uncheckOption( $checkboxSelector );
+        $I->executeJS("jQuery('$checkboxSelector').click()");
 
         self::saveSettings();
 

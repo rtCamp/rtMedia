@@ -58,5 +58,5 @@ before_script:
 
 
 script:
-#- codecept run acceptance --steps
-- codecept run acceptance tests/acceptance/core-rtMedia-settings/01-Privacy/01-Positive/SetDefaultPrivacyForLoggedinUsersCept.php --steps
+- codecept run acceptance --steps
+#- codecept run acceptance tests/acceptance/core-rtMedia-settings/01-Privacy/01-Positive/SetDefaultPrivacyForLoggedinUsersCept.php --steps
