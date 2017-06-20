@@ -110,7 +110,7 @@
 								<div class="rtmedia-actions-before-comments clearfix">
 									<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 								</div>
-								<div class="rtm-like-comments-info <?php echo $class; ?>">
+								<div class="rtm-like-comments-info <?php echo esc_attr( $class ) ?>">
 									<?php show_rtmedia_like_counts(); ?>
 									<div class="rtmedia-comments-container">
 										<?php rtmedia_comments(); ?>
@@ -124,7 +124,7 @@
 										<?php do_action( 'like_button_no_comments' ); ?>
 									</div>
 								</div>
-								<div class="rtm-like-comments-info <?php echo $class; ?>">
+								<div class="rtm-like-comments-info <?php echo esc_attr( $class ) ?>">
 									<?php show_rtmedia_like_counts(); ?>
 								</div>
 							</div>
@@ -161,7 +161,7 @@
 								<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 							</div>
 
-							<div class="rtm-like-comments-info <?php echo $class; ?>">
+							<div class="rtm-like-comments-info <?php echo esc_attr( $class ) ?>">
 								<?php show_rtmedia_like_counts(); ?>
 								<div class="rtmedia-comments-container">
 									<?php rtmedia_comments(); ?>
