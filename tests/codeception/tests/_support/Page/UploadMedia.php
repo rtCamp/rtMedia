@@ -224,7 +224,7 @@ class UploadMedia
     public function firstThumbnailMedia(){
 
         $I = $this->tester;
-
+        $I->waitForElement( self::$firstChild, 40);
         $I->click( self::$firstChild );
         // $I->wait( 10 );
         $I->waitForElement( ConstantsPage::$mediaContainer, 10);
