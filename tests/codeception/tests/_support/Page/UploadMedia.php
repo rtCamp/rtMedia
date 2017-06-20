@@ -111,6 +111,7 @@ class UploadMedia
         $I->seeElement( self::$uploadMediaButton );
         $I->click( self::$uploadMediaButton );
         $I->waitForElementNotVisible( ConstantsPage::$fileList, 50);
+        $I->reloadPage();
 
     }
 

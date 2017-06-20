@@ -27,9 +27,10 @@
 
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$videoFile );
-    $I->wait( 10 );
+    $I->wait( 2 );
+    $I->reloadPage();
     $uploadmedia->firstThumbnailMedia();
-    $I->wait( 10 );
+    $I->wait( 2 );
     echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
 
 
