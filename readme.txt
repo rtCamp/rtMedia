@@ -144,7 +144,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
  * Media search issue under album
  * Gallery reload issue while uploading new media under a single album page
- * Duplicate no media found message under media gallery
+ * Duplicate "no media found" message under media gallery
  * Cancel media search button issue under albums tab
  * PHP notice
  * UI for caret under like button
