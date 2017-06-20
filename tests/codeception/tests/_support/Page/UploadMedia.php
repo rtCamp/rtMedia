@@ -85,12 +85,12 @@ class UploadMedia
         // $I->wait( 5 );
 
         $I->waitForElementVisible( self::$uploadLink, 20);
-        // $I->seeElement( self::$uploadLink );
+
         $I->click( self::$uploadLink );
-        // $I->wait( 5 );
+
         $I->waitForElement( self::$uploadContainer, 10 );
         // $I->seeElement( self::$uploadContainer);
-        // $I->wait( 5 );
+
         $I->seeElementInDOM(self::$selectFileButton);
 
         $I->attachFile( self::$uploadFile, $mediaFile );
@@ -102,19 +102,15 @@ class UploadMedia
     /**
      * uploadMediaUsingStartUploadButton() -> Will the media when 'Direct Upload' is not enabled
      */
-    // public function uploadMediaUsingStartUploadButton( $userName, $mediaFile, $link ){
     public function uploadMediaUsingStartUploadButton( $userName, $mediaFile ){
 
         $I = $this->tester;
 
-        // self::uploadMedia( $userName, $mediaFile, $link );
         self::uploadMedia( $userName, $mediaFile );
 
         $I->seeElement( self::$uploadMediaButton );
         $I->click( self::$uploadMediaButton );
-
-        // $I->wait( 10 );
-        $I->waitForElementNotVisible( ConstantsPage::$fileList, 20);
+        $I->waitForElementNotVisible( ConstantsPage::$fileList, 40);
 
     }
 
