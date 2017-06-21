@@ -120,18 +120,19 @@ jQuery( function( $ ) {
 				if( check_condition( 'search' ) ) {
 					if ( '' != $( '#media_search_input' ).val() ) {
 						var search = check_url( 'search' );
-						query.search = search;
+						if ( search ) {
+							query.search = search;
+						}
 						if ( check_condition( 'search_by' ) ) {
 							var search_by = check_url( 'search_by' );
-							query.search_by = search_by;
+							if ( search_by ) {
+								query.search_by = search_by;
+							}
 						}
-						query.rtmedia_page = nextpage;
-					} else {
-						query.rtmedia_page = 1;
 					}
-				} else {
-					query.rtmedia_page = nextpage;
 				}
+
+				query.rtmedia_page = nextpage;
 
 				if ( el == undefined ) {
 					el = jQuery( '.rtmedia-list' ).parent().parent();
@@ -392,12 +393,14 @@ jQuery( function( $ ) {
 			}
 
 			if( check_condition( 'search' ) ) {
-				var search_val = check_url( 'search' );
-				href += '?search=' + search_val;
+				if ( '' != $( '#media_search_input' ).val() ) {
+					var search_val = check_url( 'search' );
+					href += '?search=' + search_val;
 
-				if( check_condition( 'search_by' ) ) {
-					var search_by = check_url( 'search_by' );
-					href += '&search_by=' + search_by ;
+					if( check_condition( 'search_by' ) ) {
+						var search_by = check_url( 'search_by' );
+						href += '&search_by=' + search_by ;
+					}
 				}
 			}
 
@@ -718,6 +721,8 @@ jQuery( function( $ ) {
 
 			jQuery( '.start-media-upload' ).on( 'click', function( e ) {
 				e.preventDefault();
+				// Make search box blank while uploading a media. So that newly uploaded media can be shown after upload.
+				jQuery( '#media_search_input' ).val('');
 
 				/**
 				* To check if any media file is selected or not for uploading
