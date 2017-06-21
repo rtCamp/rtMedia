@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : To check if mesonry layout is disabled.
+* Scenario : To check if masonry layout is disabled.
 */
 
     use Page\Login as LoginPage;
@@ -11,7 +11,7 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To check if mesonry layout is enabled.' );
+    $I->wantTo( 'To check if masonry layout is enabled.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );

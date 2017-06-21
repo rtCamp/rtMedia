@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : To disable upload media in comment.
+* Scenario : To disable media upload in a comment.
 */
     use Page\Login as LoginPage;
     use Page\Constants as ConstantsPage;
@@ -10,7 +10,7 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( "To disable upload media in comment." );
+    $I->wantTo( "To disable media upload in a comment." );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );

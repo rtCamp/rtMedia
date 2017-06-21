@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : To check Admin bar menu integration is enabled.
+* Scenario : To check if Admin bar menu shows when setting is enabled.
 */
 
     use Page\Login as LoginPage;
@@ -12,7 +12,7 @@
     $scrollPos = ConstantsPage::$displayTab;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To check if Admin bar menu integration is enabled.' );
+    $I->wantTo( 'To check if Admin bar menu shows when setting is enabled.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );

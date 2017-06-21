@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : To Check if the media is opening in Light Box.
+* Scenario : To Check if the media is not opening in Light Box when setting is disabled.
 */
 
     use Page\Login as LoginPage;

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scenario : To set the number media per page
+ * Scenario : To set the number of media per page
  */
 
 use Page\Login as LoginPage;

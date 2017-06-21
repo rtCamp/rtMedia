@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : set custom css when default rtmedia style is disabled.
+* Scenario : Set Custom CSS when default rtMedia style is disabled.
 */
 
     use Page\Login as LoginPage;
@@ -10,7 +10,7 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'Set custom css code when default rtMedia style is disabled.' );
+    $I->wantTo( 'Set Custom CSS code when default rtMedia style is disabled.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );

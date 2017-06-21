@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario :Allow upload for video media types.
+* Scenario: Allow upload for video media types.
 */
     use Page\Login as LoginPage;
     use Page\Constants as ConstantsPage;

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scenario : To check if mesonry layout is enabled.
+ * Scenario : To check if masonry layout is enabled.
  */
 
 use Page\Login as LoginPage;
@@ -14,7 +14,7 @@ $scrollPosition = ConstantsPage::$numOfMediaTextbox;
 $scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
 
 $I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To check if mesonry layout is enabled.' );
+$I->wantTo( 'To check if masonry layout is enabled.' );
 
 $loginPage = new LoginPage( $I );
 $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );

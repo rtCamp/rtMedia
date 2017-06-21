@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario :Allow upload for photo media types.
+* Scenario: Allow upload for photo media types.
 */
     use Page\Login as LoginPage;
     use Page\Constants as ConstantsPage;

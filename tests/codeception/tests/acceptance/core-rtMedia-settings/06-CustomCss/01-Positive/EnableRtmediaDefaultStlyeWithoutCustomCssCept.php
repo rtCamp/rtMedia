@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : Use default rtmedia style when custom code is not provided.
+* Scenario : Use default rtMedia style when custom code is not provided.
 */
 
     use Page\Login as LoginPage;

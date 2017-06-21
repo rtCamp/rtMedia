@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : To check if media tab for group.
+* Scenario : To check if media tab is enabled for group.
 */
 
     use Page\Login as LoginPage;
