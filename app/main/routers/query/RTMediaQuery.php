@@ -329,6 +329,8 @@ class RTMediaQuery {
 						if ( 'pg' === $second_modifier ) {
 							if ( isset( $raw_query[2] ) && is_numeric( $raw_query[2] ) ) {
 								$pageno = $raw_query[2];
+							} elseif ( 'edit' === $raw_query[2] ) {
+								$action = 'edit';
 							}
 						}
 					}
