@@ -1,4 +1,4 @@
-dist: trusty
+#dist: trusty
 language: php
 sudo: required
 php:
@@ -9,7 +9,7 @@ branches:
 
 before_install:
   - rm -rf ~/.gnupg
-  - sudo apt-get install xvfb
+#  - sudo apt-get install xvfb
 
 addons:
   browserstack:
@@ -21,15 +21,6 @@ cache:
   paths:
   - vendor/
 before_script:
-  ## PHP_CodeSniffer
-  - pear install pear/PHP_CodeSniffer-2.9.0
-  - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
-  - phpenv rehash
-  - phpcs -i
-  - phpenv rehash
-  - phpcs --config-set installed_paths $(pear config-get php_dir)/PHP/CodeSniffer/Standards
-  - phpcs --config-set error_severity 0
-  - phpcs --config-set warning_severity 0
   - export PLUGIN_DIR=$(pwd)
   - sudo rm -rf /etc/mysql/
   - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
@@ -58,6 +49,15 @@ before_script:
   - cd $PLUGIN_DIR/tests/codeception/
   - composer update
   - export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
+  ## PHP_CodeSniffer
+  - pear install pear/PHP_CodeSniffer-2.9.0
+  - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
+  - phpenv rehash
+  - phpcs -i
+  - phpenv rehash
+  - phpcs --config-set installed_paths $(pear config-get php_dir)/PHP/CodeSniffer/Standards
+  - phpcs --config-set error_severity 0
+  - phpcs --config-set warning_severity 0
 
 script:
   ## PHP_CodeSniffer
