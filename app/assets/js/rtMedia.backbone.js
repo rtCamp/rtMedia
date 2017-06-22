@@ -118,7 +118,7 @@ jQuery( function( $ ) {
 
 				//media search
 				if( check_condition( 'search' ) ) {
-					if ( '' != $( '#media_search_input' ).val() ) {
+					if ( '' !== $( '#media_search_input' ).val() ) {
 						var search = check_url( 'search' );
 						if ( search ) {
 							query.search = search;
@@ -393,7 +393,7 @@ jQuery( function( $ ) {
 			}
 
 			if( check_condition( 'search' ) ) {
-				if ( '' != $( '#media_search_input' ).val() ) {
+				if ( '' !== $( '#media_search_input' ).val() ) {
 					var search_val = check_url( 'search' );
 					href += '?search=' + search_val;
 
