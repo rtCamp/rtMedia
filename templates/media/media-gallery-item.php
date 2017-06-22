@@ -21,7 +21,7 @@ if ( isset( $is_edit_allowed[0] ) ) {
 }
 
 ?>
-<!-- rtmedia_id is return backbone object if we use esc_attr then it will create > & < into &lt; &gt; it will not interpret backbone object into media id -->
+<?php // rtmedia_id is return backbone object if we use esc_attr then it will create > & < into &lt; &gt; it will not interpret backbone object into media id ?>
 <li class="rtmedia-list-item" id="<?php echo rtmedia_id(); // @codingStandardsIgnoreLine ?>">
 
 	<?php do_action( 'rtmedia_before_item' ); ?>
