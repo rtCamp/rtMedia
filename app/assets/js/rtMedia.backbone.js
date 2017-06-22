@@ -399,7 +399,7 @@ jQuery( function( $ ) {
 
 					if( check_condition( 'search_by' ) ) {
 						var search_by = check_url( 'search_by' );
-						href += '&search_by=' + search_by ;
+						href += '&search_by=' + search_by;
 					}
 				}
 			}
