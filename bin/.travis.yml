@@ -1,4 +1,4 @@
-#dist: trusty
+dist: trusty
 language: php
 sudo: required
 php:
@@ -9,7 +9,7 @@ branches:
 
 before_install:
   - rm -rf ~/.gnupg
-#  - sudo apt-get install xvfb
+  - sudo apt-get install xvfb
 
 addons:
   browserstack:
