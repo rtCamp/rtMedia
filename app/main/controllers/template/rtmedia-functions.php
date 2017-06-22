@@ -610,7 +610,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 			'id' => $id,
 		), false, false );
 
-		if ( 'photo' === $rtmedia_query->query['media_type'] ) {
+		if ( isset( $rtmedia_query->query['media_type'] ) && 'photo' === $rtmedia_query->query['media_type'] ) {
 			if ( isset( $media[ $key ] ) ) {
 				$media_object = $media[ $key ];
 			} else {
