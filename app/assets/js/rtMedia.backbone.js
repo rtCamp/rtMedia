@@ -722,7 +722,10 @@ jQuery( function( $ ) {
 			jQuery( '.start-media-upload' ).on( 'click', function( e ) {
 				e.preventDefault();
 				// Make search box blank while uploading a media. So that newly uploaded media can be shown after upload.
-				jQuery( '#media_search_input' ).val('');
+				var search_box = jQuery( '#media_search_input' );
+				if ( search_box.length > 0 ) {
+					search_box.val('');
+				}
 
 				/**
 				* To check if any media file is selected or not for uploading
