@@ -329,7 +329,14 @@ class RTMediaQuery {
 						if ( 'pg' === $second_modifier ) {
 							if ( isset( $raw_query[2] ) && is_numeric( $raw_query[2] ) ) {
 								$pageno = $raw_query[2];
-							} elseif ( 'edit' === $raw_query[2] ) {
+							}
+							/**
+							 * Fix for URL
+							 * like http://website.com/members/<user>/media/2/pg/edit/
+							 *
+							 * Fix for 'pg' (pagination) in URL
+							 */
+							elseif ( 'edit' === $raw_query[2] ) {
 								$action = 'edit';
 							}
 						}
