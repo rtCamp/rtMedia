@@ -17,9 +17,6 @@ addons:
     access_key:
      secure: VFBgrctr5uDgE4PIea7QoXJDdQqq5TjPhvEcEBBcymbsP7cYUniD8K/0At+hArw5fqKajNlPZZjbxEhBRVv4hXNin++S6qwLeHCQMyHWQTt5vOULL16R2GsO30QUkFT/Egw2rh9v6qBei7Ol2mwz7i+XzZQE8cSDa/TJl7wMVwU=
 
-cache:
-  paths:
-  - vendor/
 before_script:
   - export PLUGIN_DIR=$(pwd)
   - sudo rm -rf /etc/mysql/
