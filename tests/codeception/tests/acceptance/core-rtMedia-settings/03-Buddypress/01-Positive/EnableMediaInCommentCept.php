@@ -43,7 +43,6 @@
 
         $I->seeElement( ConstantsPage::$commentLink );
         $I->scrollTo( ConstantsPage::$commentLink );
-        // $I->wait( 5 );
 
         $I->seeElement( UploadMediaPage::$commentTextArea );
         $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
@@ -69,7 +68,6 @@
         $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
         $I->reloadPage();
-        // $I->waitForElement( ConstantsPage::$profilePicture, 5 );
 
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 

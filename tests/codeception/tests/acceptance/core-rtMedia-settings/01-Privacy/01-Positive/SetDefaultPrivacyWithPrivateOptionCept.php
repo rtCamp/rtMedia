@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scenario : To set default privacy as Private.
+ * Scenario : To set default Privacy as Private.
  */
 
 use Page\Login as LoginPage;
@@ -41,7 +41,7 @@ $logout = new LogoutPage( $I );
 $logout->logout();
 
 $buddypress->gotoActivityPage( ConstantsPage::$userName );
-//$I->dontSee( $status );
+
 $I->dontSeeElementInDOM( ConstantsPage::$activitySelector );
 
 ?>
