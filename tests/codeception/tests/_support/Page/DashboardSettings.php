@@ -27,10 +27,8 @@ class DashboardSettings
         $I->seeElementInDOM( ConstantsPage::$saveSettingsButtonBottom );
         $I->scrollTo( ConstantsPage::$saveSettingsButtonBottom );
         $I->click( ConstantsPage::$saveSettingsButtonBottom );
-        // $I->wait( 5 );
-        // $I->waitForElement( ConstantsPage::$buddypressTab , 10);
         $I->waitForText( 'Settings saved successfully!', 30);
-        // $I->see('Settings saved successfully!');
+
     }
 
     /**
@@ -41,9 +39,8 @@ class DashboardSettings
         $I = $this->tester;
 
         $I->click( ConstantsPage::$rtMediaSeetings );
-        // $I->wait( 5 );
         $I->waitForElement( ConstantsPage::$buddypressTab , 10);
-        // $I->seeInCurrentUrl( ConstantsPage::$rtMediaSettingsUrl );
+
     }
 
     /**
@@ -65,7 +62,7 @@ class DashboardSettings
 
         $I->click( $tabSelector );
         $I->waitForElement( ConstantsPage::$topSaveButton , 5);
-        // $I->seeInCurrentUrl( $urlStr );
+
     }
 
 
@@ -99,7 +96,7 @@ class DashboardSettings
         $I = $this->tester;
 
         $I->dontSeeCheckboxIsChecked( $checkboxSelector );
-        //$I->checkOption( $checkboxSelector );
+
         $I->executeJS("jQuery('$checkboxSelector').click()");
 
         self::saveSettings();
@@ -117,7 +114,7 @@ class DashboardSettings
 
         $I = $this->tester;
         $I->dontSeeCheckboxIsChecked( $checkboxSelector );
-        //$I->checkOption( $checkboxSelector );
+
         $I->executeJS("jQuery('$checkboxSelector').click()");
 
         self::saveSettings();
@@ -134,7 +131,7 @@ class DashboardSettings
         $I = $this->tester;
 
         $I->seeCheckboxIsChecked( $checkboxSelector );
-//        $I->uncheckOption( $checkboxSelector );
+
         $I->executeJS("jQuery('$checkboxSelector').click()");
 
         self::saveSettings();
@@ -199,7 +196,7 @@ class DashboardSettings
         }else{
             echo nl2br( "Call to enableSetting()... \n" );
             self::enableSetting( $cssSelector );
-            //self::enableSettingChrome($cssSelector);
+
 
         }
     }

@@ -52,7 +52,7 @@ class BuddypressSettings
 
         $I->seeElement( self::$groupNameLink );
         $I->click( self::$groupNameLink );
-        //   $I->wait( 3 );
+
         $I->waitForElement( ConstantsPage::$manageGrpLink, 10 );
 
     }
@@ -92,7 +92,7 @@ class BuddypressSettings
 
         $I->seeElement( ConstantsPage::$createGroupButton );
         $I->click( ConstantsPage::$createGroupButton );
-        // $I->wait( 5 );
+
         $I->waitForElement( ConstantsPage::$nextGrpButton, 20);
 
         self::gotoGroup();
@@ -108,9 +108,9 @@ class BuddypressSettings
 
         $url = 'members/'.$userName;
         $I->amOnPage($url);
-        // $I->wait( 5 );
+
         $I->waitForElement( ConstantsPage::$mediaPageScrollPos, 10);
-        // $I->seeElement( ConstantsPage::$mediaPageScrollPos );
+
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
     }
 
@@ -183,27 +183,25 @@ class BuddypressSettings
 
         $I->seeElement( ConstantsPage::$mediaOptionButton );
         $I->click( ConstantsPage::$mediaOptionButton );
-        // $I->wait( 2 );
+
         $I->waitForElementVisible( ConstantsPage::$optionsPopup, 10 );
 
         $I->seeElement( ConstantsPage::$addAlbumButtonLink );
-        // $I->waitForElement('selector', 60);
+
         $I->click( ConstantsPage::$addAlbumButtonLink );
 
         $I->waitForElementVisible( ConstantsPage::$createAlbumPopup, 10 );
-        // $I->seeElement( ConstantsPage::$createAlbumPopup );
+
         $I->seeElement( ConstantsPage::$albumNameTextbox );
         $I->fillField( ConstantsPage::$albumNameTextbox, $albumName );
         $I->seeElement( ConstantsPage::$createAlbumButton );
         $I->click( ConstantsPage::$createAlbumButton );
-        // $I->wait( 5 );
+
         $I->waitForText( $albumCreationMsg, 20 );
 
         $I->seeElement( ConstantsPage::$closeAlbumButton );
         $I->click( ConstantsPage::$closeAlbumButton );
         echo "Album created";
-
-        // $I->wait( 5 );
         $I->reloadPage();
         $I->waitForElement( ConstantsPage::$profilePicture, 10);
 

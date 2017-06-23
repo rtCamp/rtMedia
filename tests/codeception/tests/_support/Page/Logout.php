@@ -21,7 +21,6 @@ class Logout
 
         $I->seeElement( ConstantsPage::$logoutLink );
         $I->click( ConstantsPage::$logoutLink );
-        // $I->wait( 5 );
         $I->waitForElement( ConstantsPage::$logoutMsg, 10);
     }
 

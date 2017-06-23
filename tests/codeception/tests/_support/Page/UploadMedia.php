@@ -75,26 +75,14 @@ class UploadMedia
 
         $I->seeElement( ConstantsPage::$mediaPageScrollPos );
         $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-        // $I->seeElement( $link );
-        // $I->click( $link );
-        //
-        // // $I->wait( 5 );
-        // $I->waitForElement( $link, 10);
-        // $I->seeElementInDOM( ConstantsPage::$mediaPageScrollPos );
-        // $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-        // $I->wait( 5 );
-
         $I->waitForElementVisible( self::$uploadLink, 20);
 
         $I->click( self::$uploadLink );
 
         $I->waitForElement( self::$uploadContainer, 10 );
-        // $I->seeElement( self::$uploadContainer);
-
         $I->seeElementInDOM(self::$selectFileButton);
 
         $I->attachFile( self::$uploadFile, $mediaFile );
-        // $I->wait( 10 );
         $I->waitForElement( ConstantsPage::$fileList, 20);
 
     }
@@ -123,8 +111,6 @@ class UploadMedia
         $I = $this->tester;
 
         self::uploadMedia( $userName, $mediaFile );
-
-        // $I->wait( 3 );
         $I->waitForElementNotVisible( ConstantsPage::$fileList, 20);
 
     }
@@ -142,7 +128,6 @@ class UploadMedia
         $I->seeElementInDOM( self::$whatIsNewTextarea );
         $I->click( self::$whatIsNewTextarea );
 
-        // $I->wait( 3 );
         $I->waitForElementVisible( self::$postUpdateButton, 10);
     }
 
@@ -157,8 +142,6 @@ class UploadMedia
 
         $I->click( self::$postUpdateButton );
         $I->waitForText( $status, 20 );;
-        // $I->reloadPage();
-
     }
 
     /**
@@ -173,11 +156,11 @@ class UploadMedia
         $I->fillfield( self::$whatIsNewTextarea, "test from activity stream" );
         $I->seeElement( self::$mediaButtonOnActivity );
         $I->attachFile( self::$uploadFromActivity, $mediaFile );
-        // $I->wait( 10 );
+
         $I->waitForElement( ConstantsPage::$fileList, 20);
 
         $I->click( self::$postUpdateButton );
-        // $I->wait( 10 );
+
         $I->waitForElementNotVisible( ConstantsPage::$fileList, 20);
 
     }
@@ -192,7 +175,7 @@ class UploadMedia
         self::addStatus();
 
         $I->fillfield( self::$whatIsNewTextarea, $bulkUploadStatus );
-        // $I->wait( 3 );
+
         $I->seeElement( self::$mediaButtonOnActivity );
 
         //if $numOfMedia > 0 then it will execute if condition else for $numOfMedia = 0 it will execute else part
@@ -200,14 +183,14 @@ class UploadMedia
             for ( $i = 0; $i < $numOfMedia+1; $i++ ) {
 
                 $I->attachFile( self::$uploadFromActivity, $mediaFile );
-                // $I->wait( 5 );
+
                 $I->waitForElement( ConstantsPage::$fileList, 20);
             }
         }else{
             $tempMedia = 5;
             for ( $i = 0; $i < $tempMedia; $i++) {
                 $I->attachFile( self::$uploadFromActivity, $mediaFile );
-                // $I->wait( 5 );
+
                 $I->waitForElement( ConstantsPage::$fileList, 20);
             }
         }
@@ -215,7 +198,7 @@ class UploadMedia
         $I->click( self::$postUpdateButton );
         $I->waitForElementNotVisible( ConstantsPage::$fileList, 20);
         $I->reloadPage();
-        // $I->wait( 20 );
+
 
     }
 
@@ -227,7 +210,6 @@ class UploadMedia
         $I = $this->tester;
         $I->waitForElement( self::$firstChild, 50);
         $I->click( self::$firstChild );
-        // $I->wait( 10 );
         $I->waitForElement( ConstantsPage::$mediaContainer, 10);
     }
 
