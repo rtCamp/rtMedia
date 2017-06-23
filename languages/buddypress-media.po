@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.4.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2017-06-22 12:37:33+00:00\n"
+"POT-Creation-Date: 2017-06-23 09:37:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2279,16 +2279,16 @@ msgstr ""
 #: app/main/RTMedia.php:1031
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:63
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
-#: app/main/controllers/template/rtmedia-functions.php:1154
-#: app/main/controllers/template/rtmedia-functions.php:1173
+#: app/main/controllers/template/rtmedia-functions.php:1156
+#: app/main/controllers/template/rtmedia-functions.php:1175
 msgid "Edit"
 msgstr ""
 
 #: app/main/RTMedia.php:1032
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:67
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
-#: app/main/controllers/template/rtmedia-functions.php:2064
-#: app/main/controllers/template/rtmedia-functions.php:2073
+#: app/main/controllers/template/rtmedia-functions.php:2066
+#: app/main/controllers/template/rtmedia-functions.php:2075
 #: templates/media/album-single-edit.php:78
 msgid "Delete"
 msgstr ""
@@ -2380,7 +2380,7 @@ msgstr ""
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:336
 #: app/main/controllers/media/RTMediaComment.php:172
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:100
-#: app/main/controllers/template/rtmedia-functions.php:2103
+#: app/main/controllers/template/rtmedia-functions.php:2105
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
@@ -2966,7 +2966,7 @@ msgid "rtMedia Updates"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-ajax-actions.php:88
-#: app/main/controllers/template/rtmedia-functions.php:2003
+#: app/main/controllers/template/rtmedia-functions.php:2005
 msgid "Comment"
 msgstr ""
 
@@ -2982,105 +2982,105 @@ msgstr ""
 msgid "Delete Album"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1236
+#: app/main/controllers/template/rtmedia-functions.php:1238
 msgid "There are no comments on this media yet."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1268
+#: app/main/controllers/template/rtmedia-functions.php:1270
 msgid "Show all %s comments"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1301
+#: app/main/controllers/template/rtmedia-functions.php:1303
 msgid "Delete Comment"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1635
+#: app/main/controllers/template/rtmedia-functions.php:1637
 msgid "Go to page no : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1640
+#: app/main/controllers/template/rtmedia-functions.php:1642
 msgid "Go"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2001
+#: app/main/controllers/template/rtmedia-functions.php:2003
 msgid "Type Comment..."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2064
-#: app/main/controllers/template/rtmedia-functions.php:2073
+#: app/main/controllers/template/rtmedia-functions.php:2066
+#: app/main/controllers/template/rtmedia-functions.php:2075
 msgid "Delete Media"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2321
+#: app/main/controllers/template/rtmedia-functions.php:2323
 msgid "Profile Albums"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2325
-#: app/main/controllers/template/rtmedia-functions.php:2370
+#: app/main/controllers/template/rtmedia-functions.php:2327
+#: app/main/controllers/template/rtmedia-functions.php:2372
 msgid "Group Albums"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2546
+#: app/main/controllers/template/rtmedia-functions.php:2548
 msgid "Privacy : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2897
+#: app/main/controllers/template/rtmedia-functions.php:2899
 msgid "You like this"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2907
+#: app/main/controllers/template/rtmedia-functions.php:2909
 msgid "You and "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2926
+#: app/main/controllers/template/rtmedia-functions.php:2928
 msgid " person likes this"
 msgid_plural " people like this"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3031
+#: app/main/controllers/template/rtmedia-functions.php:3033
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3036
+#: app/main/controllers/template/rtmedia-functions.php:3038
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3041
+#: app/main/controllers/template/rtmedia-functions.php:3043
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3046
+#: app/main/controllers/template/rtmedia-functions.php:3048
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3051
+#: app/main/controllers/template/rtmedia-functions.php:3053
 msgid "Blocked temporarily"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3104
+#: app/main/controllers/template/rtmedia-functions.php:3106
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3118
+#: app/main/controllers/template/rtmedia-functions.php:3120
 msgid "1 second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3122
+#: app/main/controllers/template/rtmedia-functions.php:3124
 msgid "1 minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3126
+#: app/main/controllers/template/rtmedia-functions.php:3128
 msgid "1 hour"
 msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3726
+#: app/main/controllers/template/rtmedia-functions.php:3728
 #. translators: date format, see http:php.net/date
 msgid "View Conversation"
 msgstr ""
