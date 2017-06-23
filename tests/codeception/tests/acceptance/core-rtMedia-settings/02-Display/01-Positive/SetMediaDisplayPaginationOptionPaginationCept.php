@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scenario : To check if Load More - Media display pagination option is enabled
+ * Scenario : To check if Pagination is enabled
  * Pre condition : The available no of Media should be  > ConstantsPage::$numOfMediaPerPage
  */
 
@@ -12,7 +12,7 @@ use Page\BuddypressSettings as BuddypressSettingsPage;
 use Page\UploadMedia as UploadMediaPage;
 
 $I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To check if Load More - Media display pagination option is enabled' );
+$I->wantTo( 'To check if Pagination is enabled' );
 
 $loginPage = new LoginPage($I);
 $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
@@ -39,7 +39,7 @@ if( $temp <= ConstantsPage::$numOfMediaPerPage ){
     echo "inside if condition";
 
     $numOfMediaTobeUpload = ConstantsPage::$numOfMediaPerPage - $temp + 1;
-    echo "\n Media to b uploaded = ".$numOfMediaTobeUpload;
+    echo "\n Media to be uploaded = ".$numOfMediaTobeUpload;
 
     for( $i = 0; $i < $numOfMediaTobeUpload ; $i++ ){
 

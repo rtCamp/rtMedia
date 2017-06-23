@@ -18,7 +18,7 @@ $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
 $settings = new DashboardSettingsPage( $I );
 $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
-$settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab ); //Last arg refers scroll postion
+$settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab ); //Last arg refers scroll position
 
 $buddypress = new BuddypressSettingsPage( $I );
 $buddypress->gotoMedia( ConstantsPage::$userName );
@@ -45,14 +45,9 @@ if( $temp >= ConstantsPage::$minValue ){
     $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
     $I->reloadPage();
-    // $I->wait( 7 );
-
     $uploadmedia->firstThumbnailMedia();
 
     $I->seeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
     $I->click( ConstantsPage::$closeButton );
-
 }
-
-// $I->reloadPage();
 ?>

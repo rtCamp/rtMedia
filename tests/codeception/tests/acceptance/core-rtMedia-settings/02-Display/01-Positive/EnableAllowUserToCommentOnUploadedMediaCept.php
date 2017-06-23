@@ -38,8 +38,6 @@ if( $temp >= ConstantsPage::$minValue ){
     $I->seeElement( UploadMediaPage::$commentTextArea );
     $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
     $I->click( UploadMediaPage::$commentSubmitButton );
-    // $I->wait( 5 );
-    // $I->see( $commentStr );
     $I->waitForText( $commentStr, 20 );
 
 }else{
@@ -47,10 +45,7 @@ if( $temp >= ConstantsPage::$minValue ){
     $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
     $I->waitForElement( ConstantsPage::$displayTab , 10);
     $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
-
     $buddypress->gotoMedia( ConstantsPage::$userName );
-
-    //$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName, ConstantsPage::$photoLink);
     $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
     $I->reloadPage();
@@ -64,8 +59,7 @@ if( $temp >= ConstantsPage::$minValue ){
     $I->seeElement( UploadMediaPage::$commentTextArea );
     $I->fillfield( UploadMediaPage::$commentTextArea, $commentStr );
     $I->click( UploadMediaPage::$commentSubmitButton );
-    // $I->wait( 5 );
-    // $I->see( $commentStr );
+
     $I->waitForText( $commentStr, 20 );
 
 }

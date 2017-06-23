@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Scenario : To set the number media on Activity page while bulk upload.
+* Scenario : To set the number of media items on Activity page while bulk upload.
 */
 
     use Page\Login as LoginPage;
@@ -11,7 +11,7 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To set the number media on Activity page while bulk upload.' );
+    $I->wantTo( 'To set the number of media items on Activity page while bulk upload.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
