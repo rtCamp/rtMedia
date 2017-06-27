@@ -610,16 +610,18 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 			'id' => $id,
 		), false, false );
 
-		if ( isset( $rtmedia_query->query['media_type'] ) && 'photo' === $rtmedia_query->query['media_type'] ) {
-			if ( isset( $media[ $key ] ) ) {
-				$media_object = $media[ $key ];
+		if ( ! empty( $rtmedia_query ) && is_object( $rtmedia_query ) ) {
+			if ( isset( $rtmedia_query->query['media_type'] ) && 'photo' === $rtmedia_query->query['media_type'] ) {
+				if ( isset( $media[ $key ] ) ) {
+					$media_object = $media[ $key ];
+				} else {
+					return false;
+				}
+			} elseif ( isset( $media[0] ) ) {
+				$media_object = $media[0];
 			} else {
 				return false;
 			}
-		} elseif ( isset( $media[0] ) ) {
-			$media_object = $media[0];
-		} else {
-			return false;
 		}
 	} else {
 		global $rtmedia_media;
