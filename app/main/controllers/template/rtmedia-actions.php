@@ -1103,6 +1103,8 @@ add_action( 'rtmedia_gallery_after_title', 'rtmedia_gallery_after_title_callback
  * This will used by search functionality.
  */
 function rtmedia_hidden_field() {
+	global $rtmedia_query;
+
 	// Get media type from query string.
 	$media_type = get_query_var( 'media' );
 	if ( ! empty( $media_type ) ) {
@@ -1121,13 +1123,14 @@ function rtmedia_hidden_field() {
 	 * Check issue number 14 in the above link.
 	 */
 
-	global $rtmedia_query;
-
 	// is_plugin_active() won't work without including this file.
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-	if ( $rtmedia_query->is_album() && is_plugin_active( 'rtmedia-membership/index.php' ) ) : ?>
-		<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="<?php echo esc_attr( $media_type ) ?>" />
+	if ( is_object( $rtmedia_query )
+		&& ! empty( $rtmedia_query )
+		&& $rtmedia_query->is_album()
+		&& is_plugin_active( 'rtmedia-membership/index.php' ) ) : ?>
+		<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="<?php echo esc_attr( $media_type ); ?>" />
 	<?php endif;
 }
 add_action( 'rtmedia_after_media_gallery_title', 'rtmedia_hidden_field' );
