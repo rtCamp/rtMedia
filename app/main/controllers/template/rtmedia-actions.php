@@ -1119,8 +1119,8 @@ function rtmedia_hidden_field() {
 	 * to work properly inside albums.
 	 *
 	 * @since 28/06/2017
-	 * @link http://git.rtcamp.com/rtmedia/rtMedia/issues/186
 	 *
+	 * @link http://git.rtcamp.com/rtmedia/rtMedia/issues/186
 	 * Check issue number 14 in the above link.
 	 */
 
