@@ -1120,6 +1120,7 @@ function rtmedia_hidden_field() {
 	 *
 	 * @since 28/06/2017
 	 * @link http://git.rtcamp.com/rtmedia/rtMedia/issues/186
+	 *
 	 * Check issue number 14 in the above link.
 	 */
 
@@ -1127,7 +1128,6 @@ function rtmedia_hidden_field() {
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 	if ( is_object( $rtmedia_query )
-		&& ! empty( $rtmedia_query )
 		&& $rtmedia_query->is_album()
 		&& is_plugin_active( 'rtmedia-membership/index.php' ) ) : ?>
 		<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="<?php echo esc_attr( $media_type ); ?>" />
