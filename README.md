@@ -159,6 +159,14 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
  * PHP notice
  * UI for caret under like button
  * Load more for albums
+ * Issue editing album when pagination is enabled
+ * UI issue for music player when opened in the lightbox
+ * PHP warnings
+
+* ENHANCEMENTS
+
+ * Replaced HTML comments '<!-- -->' with PHP comments '<?php // ?>'
+
 
 ### 4.4 [June 6, 2017] ###
 
