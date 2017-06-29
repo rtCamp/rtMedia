@@ -139,7 +139,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 = 4.4.1 [June 29, 2017] =
 
-* NEW
+* FIXED
 
  * Media search issue under album
  * Gallery reload issue while uploading new media under a single album page
