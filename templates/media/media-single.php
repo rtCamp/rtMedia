@@ -1,7 +1,7 @@
 <div class="rtmedia-container rtmedia-single-container">
 	<div class="rtm-lightbox-container clearfix">
 		<?php
-		global $rt_ajax_request;
+		global $rt_ajax_request, $rtmedia;
 		do_action( 'rtmedia_before_media' );
 
 		if ( have_rtmedia() ) : rtmedia();
@@ -10,6 +10,8 @@
 			$type = ! empty( $rtmedia_media->media_type ) ? $rtmedia_media->media_type : 'none';
 			$class = '';
 
+			$if_comments_enable = isset( $rtmedia->options['general_enableComments'] ) ? $rtmedia->options['general_enableComments'] : 0;
+
 			// Count of likes.
 			if ( isset( $rtmedia_media->likes ) ) {
 				$count = intval( $rtmedia_media->likes );
@@ -17,7 +19,8 @@
 				$count = 0;
 			}
 
-			if ( ! intval( $count ) ) {
+			// Add hide class to this element when "comment on media" is not enabled.
+			if ( ! intval( $count ) && '0' === $if_comments_enable ) {
 				$class = 'hide';
 			}
 			?>
