@@ -1551,13 +1551,19 @@ jQuery( document ).ready( function( $ ) {
 				$( '.rtmedia-like-counter-wrap' ).html( data.person_text );
 				$( '.rtm-like-loading' ).remove();
 				$( that ).removeAttr( 'disabled' );
+				var comments_container = $( '.rtmedia-comments-container' ).length;
 
 				//Update the like counter
 				// $( '.rtmedia-like-counter' ).html( data.count );
 				if ( data.count > 0 ) {
 					$( '.rtmedia-like-info, .rtm-like-comments-info' ).removeClass( 'hide' );
 				} else {
-					$( '.rtmedia-like-info, .rtm-like-comments-info' ).addClass( 'hide' );
+					$( '.rtmedia-like-info' ).addClass( 'hide' );
+
+					// Add hide class to this element when "comment on media" is not enabled.
+					if ( 0 === comments_container ) {
+						$( '.rtm-like-comments-info' ).addClass( 'hide' );
+					}
 				}
 			}
 		} );
