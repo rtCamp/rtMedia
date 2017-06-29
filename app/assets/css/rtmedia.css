@@ -153,6 +153,19 @@ body.media.buddypress {
   padding-left: 15px;
 }
 
+#buddypress form#whats-new-form #whats-new-content.active #whats-new-options[style] #whats-new-post-in-box {
+  margin-top: 0;
+}
+
+#whats-new-post-in-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .rtmedia-container {
   box-sizing: border-box;
 }
@@ -1729,6 +1742,10 @@ a.rtmedia-comment-link.rtmedia-comments-link {
 
 .rtm-single-actions.rtm-item-actions {
   float: none;
+}
+
+.rtm-media-type-music .rtmedia-media {
+  width: 100%;
 }
 
 /*------------------------------------------------------------------------------
