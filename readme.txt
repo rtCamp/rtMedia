@@ -139,6 +139,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 = 4.4.1 [June 29, 2017] =
 
+* ENHANCEMENTS
+
+ * Replaced HTML comments '<!-- -->' with PHP comments '<?php // ?>'
+
 * FIXED
 
  * Media search issue under album
@@ -150,10 +154,6 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Load more issue for albums tab
  * Issue editing album when pagination is enabled
  * UI issue for music player when opened in the lightbox
-
-* ENHANCEMENTS
-
- * Replaced HTML comments '<!-- -->' with PHP comments '<?php // ?>'
 
 
 = 4.4 [June 6, 2017] =
