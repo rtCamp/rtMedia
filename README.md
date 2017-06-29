@@ -156,12 +156,11 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
  * Gallery reload issue while uploading new media under a single album page
  * Duplicate "no media found" message under media gallery
  * Cancel media search button issue under albums tab
- * PHP notice
+ * PHP notice and warnings
  * UI for caret under like button
- * Load more for albums
+ * Load more issue for albums tab
  * Issue editing album when pagination is enabled
  * UI issue for music player when opened in the lightbox
- * PHP warnings
 
 * ENHANCEMENTS
 
