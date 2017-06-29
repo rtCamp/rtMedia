@@ -1103,8 +1103,6 @@ add_action( 'rtmedia_gallery_after_title', 'rtmedia_gallery_after_title_callback
  * This will used by search functionality.
  */
 function rtmedia_hidden_field() {
-	global $rtmedia_query;
-
 	// Get media type from query string.
 	$media_type = get_query_var( 'media' );
 	if ( ! empty( $media_type ) ) {
@@ -1112,25 +1110,5 @@ function rtmedia_hidden_field() {
 		<input type="hidden" name="media_type" value="<?php echo esc_attr( $media_type ); ?>" />
 	<?php
 	}
-
-	/**
-	 * Adds hidden field when rtMedia Membership plugin is active.
-	 * This hidden field sends the album ID necessary for media search
-	 * to work properly inside albums.
-	 *
-	 * @since 28/06/2017
-	 *
-	 * @link http://git.rtcamp.com/rtmedia/rtMedia/issues/186
-	 * Check issue number 14 in the above link.
-	 */
-
-	// is_plugin_active() won't work without including this file.
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-	if ( is_object( $rtmedia_query )
-		&& $rtmedia_query->is_album()
-		&& is_plugin_active( 'rtmedia-membership/index.php' ) ) : ?>
-		<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="<?php echo esc_attr( $media_type ); ?>" />
-	<?php endif;
 }
 add_action( 'rtmedia_after_media_gallery_title', 'rtmedia_hidden_field' );
