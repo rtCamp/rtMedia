@@ -77,3 +77,12 @@ body.media.buddypress {
 		}
 	}
 }
+
+#buddypress form#whats-new-form #whats-new-content.active #whats-new-options[style] #whats-new-post-in-box {
+	margin-top: 0;
+}
+
+#whats-new-post-in-box {
+	display: flex;
+	align-items: center;
+}
