@@ -6,7 +6,6 @@
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
-
 * **Donate Link:** http://rtcamp.com/donate/
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
@@ -138,7 +137,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
-### 4.4.1 [June 29, 2017] ###
+#### 4.4.1 [June 29, 2017] ####
 
 * ENHANCEMENTS
 
@@ -157,7 +156,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * UI issue for music player when opened in the lightbox
 
 
-### 4.4 [June 6, 2017] ###
+#### 4.4 [June 6, 2017] ####
 
 * NEW
 
@@ -176,7 +175,6 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Audio player display issue in lightbox
  * Fixed trimming media name issue when it contains a dot in the name
  * Added missing data in debuginfo file
- * UI issue of options tab with some WordPress default themes[Documentation](https://github.com/rtMediaWP/library/edit/develop/media/rtmc_media_options_overflow_fix.txt)
  * rtMedia shortcode uploader issue with IOS mobile safari browser
  * Issue while playing video on IOS safari
  * White strip-line issue in lightbox
@@ -1394,8 +1392,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.4 ####
-Masonry in the Activity feed, media search functionality, album descriptions and lots more! Please update/re-save the permalinks after the plugin updates.
+#### 4.4.1 ####
+rtMedia 4.4.1, Minor release which fixes issues with Search Media and pagination in the Albums tab.
 
 ## Sponsors ##
 
