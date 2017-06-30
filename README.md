@@ -148,6 +148,13 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.4.2 [June 30, 2017] ###
+
+* FIXED
+
+ * Broken images in sidebar gallery, albums and shortcodes
+
+
 ### 4.4.1 [June 29, 2017] ###
 
 * ENHANCEMENTS
