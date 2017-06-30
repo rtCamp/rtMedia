@@ -141,14 +141,14 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * FIXED
 
- * Broken images in sidebar gallery, albums and shortcodes
+ * Broken thumbnails in sidebar widget gallery and sorting gallery shortcode
 
 
 = 4.4.1 [June 29, 2017] =
 
 * ENHANCEMENTS
 
- * Replaced HTML comments '<!-- -->' with PHP comments '<?php // ?>'
+ * Replaced HTML comments '&lt;!-- --&gt;' with PHP comments '&lt;?php // ?&gt;'
 
 * FIXED
 
