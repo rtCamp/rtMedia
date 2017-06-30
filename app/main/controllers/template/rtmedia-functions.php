@@ -609,6 +609,10 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 			'id' => $id,
 		), false, false );
 
+		/**
+		 * Added because the function was generating duplicate thumbnails for
+		 * search result in particular album.
+		 */
 		if ( isset( $media[ $key ] ) ) {
 			$media_object = $media[ $key ];
 		} elseif ( isset( $media[0] ) ) {
