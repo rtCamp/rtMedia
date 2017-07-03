@@ -2152,6 +2152,22 @@ borger color while dragging a file over the uploader drop area */
   position: relative;
 }
 
+#item-body .imgedit-settings .imgedit-group-top h2 {
+  display: inline-block;
+  margin: 0;
+}
+
+.rtmedia-container .imgedit-settings label {
+  display: inline-block;
+  float: none;
+  margin-right: 0;
+}
+.rtmedia-container .imgedit-settings .dashicons-editor-help {
+  padding: 0;
+  height: auto;
+  margin-top: 10px;
+}
+
 .imgedit-settings p {
   margin: 8px 0;
 }
@@ -2249,7 +2265,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-crop {
-  background: transparent url("../../../../../../wp-admin/images/imgedit-icons.png") no-repeat scroll -9px -31px;
   margin: 0 8px 0 0;
 }
 
@@ -2262,7 +2277,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-rleft {
-  background: transparent url("../../../../../../wp-admin/images/imgedit-icons.png") no-repeat scroll -46px -31px;
   margin: 0 3px;
 }
 
@@ -2275,7 +2289,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-rright {
-  background: transparent url("../../../../../../wp-admin/images/imgedit-icons.png") no-repeat scroll -77px -31px;
   margin: 0 8px 0 3px;
 }
 
@@ -2288,7 +2301,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-flipv {
-  background: transparent url("../../../../../../wp-admin/images/imgedit-icons.png") no-repeat scroll -115px -31px;
   margin: 0 3px;
 }
 
@@ -2301,7 +2313,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-fliph {
-  background: transparent url("../../../../../../wp-admin/images/imgedit-icons.png") no-repeat scroll -147px -31px;
   margin: 0 8px 0 3px;
 }
 
@@ -2314,7 +2325,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-undo {
-  background: transparent url("../../../../../../wp-admin/images/imgedit-icons.png") no-repeat scroll -184px -31px;
   margin: 0 3px;
 }
 
@@ -2327,7 +2337,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-redo {
-  background: transparent url("../../../../../../wp-admin/images/imgedit-icons.png") no-repeat scroll -215px -31px;
   margin: 0 8px 0 3px;
 }
 
