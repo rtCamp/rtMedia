@@ -674,11 +674,12 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	// Arrange media into masonry view right after upload or clicking on readmore link to activity without pageload
 	jQuery( document ).ajaxComplete( function( event, xhr, settings ) {
-		var params = new URLSearchParams( settings.data );
-		if ( ( params.get('action') == 'post_update' || params.get('action') == 'get_single_activity_content' || params.get('action') == 'activity_get_older_updates' ) && typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
+		var get_action = get_parameter( 'action', settings.data );
+
+		if ( ( get_action == 'post_update' || get_action == 'get_single_activity_content' || get_action == 'activity_get_older_updates' ) && typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
 			rtmedia_activity_masonry();
 		}
-	});
+	} );
 
 	// Masonry code
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
@@ -1034,4 +1035,27 @@ function rtmedia_activity_masonry() {
 		// Reload masonry view.
 		rtm_masonry_reload( jQuery('#activity-stream .rtmedia-activity-container .rtmedia-list') );
 	}, 1000 );
+}
+
+/**
+ * Get specific parameter value.
+ */
+function get_parameter( query, data ) {
+	if ( ! query ) {
+		return false;
+	}
+	if ( ! data ) {
+		data = window.location.href;
+	}
+
+	query       = query.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	var expr    = query+"=([^&#]*)";
+	var regex   = new RegExp( expr );
+	var results = regex.exec( data );
+
+	if( null !== results ) {
+		return results[1];
+	} else {
+		return false;
+	}
 }
