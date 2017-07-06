@@ -151,6 +151,19 @@ function apply_rtMagnificPopup( selector ) {
 				jQuery(this).text(text.replace('OK', 'Save'));
 			});
 		});
+
+		/**
+		 * NOTE: Do not change.
+		 * ISSUE: BuddyPress activity upload issue with Microsoft Edge
+		 * GL: 132 [ http://git.rtcamp.com/rtmedia/rtMedia/issues/132 ]
+		 * Reason: Trigger event not working for hidden element in Microsoft Edge browser
+		 */
+		if (/Edge/.test( navigator.userAgent ) ) {
+			jQuery( '.rtmedia-add-media-button' ).on( 'click', function() { 
+				jQuery( this ).closest( '.rtm-upload-button-wrapper' ).find( 'input[type=file]' ).click();
+			} );
+		}
+
 	} );
 }
 var rtMediaHook = {
