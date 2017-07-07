@@ -158,7 +158,7 @@ function apply_rtMagnificPopup( selector ) {
 		 * GL: 132 [ http://git.rtcamp.com/rtmedia/rtMedia/issues/132 ]
 		 * Reason: Trigger event not working for hidden element in Microsoft Edge browser
 		 */
-		if (/Edge/.test( navigator.userAgent ) ) {
+		if ( /Edge/.test( navigator.userAgent ) ) {
 			jQuery( '.rtmedia-add-media-button' ).on( 'click', function() { 
 				jQuery( this ).closest( '.rtm-upload-button-wrapper' ).find( 'input[type=file]' ).click();
 			} );
@@ -1051,22 +1051,22 @@ function rtmedia_activity_masonry() {
 }
 
 /**
- * Get specific parameter value.
+ * Get specific parameter value from Query string.
  */
-function get_parameter( query, data ) {
-	if ( ! query ) {
+function get_parameter( parameter, data ) {
+	if ( ! parameter ) {
 		return false;
 	}
 	if ( ! data ) {
 		data = window.location.href;
 	}
 
-	query       = query.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-	var expr    = query+"=([^&#]*)";
-	var regex   = new RegExp( expr );
-	var results = regex.exec( data );
+	var parameter = parameter.replace( /[\[]/, "\\\[" ).replace( /[\]]/, "\\\]" );
+	var expr      = parameter + "=([^&#]*)";
+	var regex     = new RegExp( expr );
+	var results   = regex.exec( data );
 
-	if( null !== results ) {
+	if ( null !== results ) {
 		return results[1];
 	} else {
 		return false;
