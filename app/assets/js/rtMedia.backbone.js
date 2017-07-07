@@ -959,6 +959,17 @@ jQuery( document ).ready( function( $ ) {
 			$( '#rtmedia-whts-new-upload-container > div' ).css( 'top', '0' );
 			$( '#rtmedia-whts-new-upload-container > div' ).css( 'left', '0' );
 
+			/**
+			 * NOTE: Do not change.
+			 * ISSUE: BuddyPress activity upload issue with Microsoft Edge
+			 * GL: 132 [ http://git.rtcamp.com/rtmedia/rtMedia/issues/132 ]
+			 * Reason: Trigger event not working for hidden element in Microsoft Edge browser
+			 * Condition to check current browser.
+			 */
+			if ( /Edge/.test( navigator.userAgent ) ) {
+				jQuery( this ).closest( '.rtm-upload-button-wrapper' ).find( 'input[type=file]' ).click();
+			}
+
 			//Enable 'post update' button when media get select
 			$( '#aw-whats-new-submit' ).prop( 'disabled', false );
 		} );
