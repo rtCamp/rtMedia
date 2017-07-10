@@ -1164,7 +1164,7 @@ class RTMedia {
 			$url_upload = substr( $url, 0, strrpos( $url, $rtmedia_slug ) );
 			$url        = trailingslashit( $url_upload ) . 'upload/';
 		} else {
-			$url = trailingslashit( $url ) . 'upload/';
+			$url = 'upload' . trim( $url, '/' );
 		}
 
 		$params = array(
