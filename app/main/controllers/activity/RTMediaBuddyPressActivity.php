@@ -281,7 +281,7 @@ class RTMediaBuddyPressActivity {
 			$url_upload                              = implode( '/', $slug_split );
 			$url                                     = trailingslashit( $url_upload ) . 'upload/';
 		} else {
-			$url = trailingslashit( $url ) . 'upload/';
+			$url = 'upload' . trim( $url, '/' );
 		}
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ) {
 			$params = array(
