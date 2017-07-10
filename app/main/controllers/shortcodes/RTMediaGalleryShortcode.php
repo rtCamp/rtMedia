@@ -74,7 +74,12 @@ class RTMediaGalleryShortcode {
 			$url_upload = substr( $url, 0, strrpos( $url, $rtmedia_slug ) );
 			$url        = trailingslashit( $url_upload ) . 'upload/';
 		} else {
-			$url = trailingslashit( $url ) . 'upload/';
+			if ( strstr( $url, '?' ) ) {
+				$url = explode( '?', $url );
+				$url = $url[0] . 'upload?' . trim( $url[1], '/' );
+			} else {
+				$url = trailingslashit( $url ) . 'upload/';
+			}
 		}
 
 		$params = array(
