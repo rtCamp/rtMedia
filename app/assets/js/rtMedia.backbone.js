@@ -386,11 +386,6 @@ jQuery( function( $ ) {
 				page_base_url = $( this ).data( 'page-base-url' );
 				href = page_base_url + nextpage;
 				}
-				if ( $( this ).data( 'page-type' ) == 'num' ) {
-					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
-				} else {
-					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
-			}
 
 			if( check_condition( 'search' ) ) {
 				if ( '' !== $( '#media_search_input' ).val() ) {
@@ -405,11 +400,7 @@ jQuery( function( $ ) {
 			}
 
 			change_rtBrowserAddressUrl( href, '' );
-			if ( $( this ).data( 'page-type' ) == 'num' ) {
-				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
-			} else {
-				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
-			}
+			galleryObj.getNext( nextpage, $( this ).parents( '#item-body' ), $( this ).parents( '.rtm-pagination' ) );
 		} );
 
 		$( document ).on( 'submit', 'form#media_search_form', function( e ) {
