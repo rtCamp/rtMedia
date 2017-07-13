@@ -6,10 +6,11 @@ use Page\Constants as ConstantsPage;
 
 class BuddypressSettings {
 
-        $I->seeElement( self::$groupNameLink );
-        $I->click( self::$groupNameLink );
-
-        $I->waitForElement( ConstantsPage::$manageGrpLink, 10 );
+	public static $userProfileLink = 'a#user-xprofile';
+	public static $mediaLinkOnProfile = 'a#user-media';
+	public static $myGroupLink = '#groups-personal';
+	public static $groupNameLink = 'ul#groups-list li:first-child .item .item-title a';
+	protected $tester;
 
 	public function __construct( \AcceptanceTester $I ) {
 		$this->tester = $I;
@@ -64,10 +65,7 @@ class BuddypressSettings {
 	 */
 	public function createGroup() {
 
-        $I->seeElement( ConstantsPage::$createGroupButton );
-        $I->click( ConstantsPage::$createGroupButton );
-
-        $I->waitForElement( ConstantsPage::$nextGrpButton, 20);
+		echo "this is from create grp function.";
 
 		$I = $this->tester;
 
@@ -80,13 +78,8 @@ class BuddypressSettings {
 		$I->seeElementInDOM( ConstantsPage::$groupNameTextbox );
 		$I->fillField( ConstantsPage::$groupNameTextbox, 'Test Group Name from Script' );
 
-        $url = 'members/'.$userName;
-        $I->amOnPage($url);
-
-        $I->waitForElement( ConstantsPage::$mediaPageScrollPos, 10);
-
-        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-    }
+		$I->seeElementInDOM( ConstantsPage::$groupDescTextarea );
+		$I->fillField( ConstantsPage::$groupDescTextarea, 'Test Group Desc from Script' );  // Enter group Description
 
 		$I->seeElement( ConstantsPage::$createGroupButton );
 		$I->click( ConstantsPage::$createGroupButton );
@@ -169,29 +162,23 @@ class BuddypressSettings {
 
 		$I = $this->tester;
 
-        $I->seeElement( ConstantsPage::$mediaOptionButton );
-        $I->click( ConstantsPage::$mediaOptionButton );
+		self::gotoAlbumPage();
 
-        $I->waitForElementVisible( ConstantsPage::$optionsPopup, 10 );
+		$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $I->seeElement( ConstantsPage::$addAlbumButtonLink );
+		$I->seeElement( ConstantsPage::$mediaOptionButton );
+		$I->click( ConstantsPage::$mediaOptionButton );
+		$I->waitForElementVisible( ConstantsPage::$optionsPopup, 10 );
 
-        $I->click( ConstantsPage::$addAlbumButtonLink );
+		$I->seeElement( ConstantsPage::$addAlbumButtonLink );
+		$I->click( ConstantsPage::$addAlbumButtonLink );
 
-        $I->waitForElementVisible( ConstantsPage::$createAlbumPopup, 10 );
-
-        $I->seeElement( ConstantsPage::$albumNameTextbox );
-        $I->fillField( ConstantsPage::$albumNameTextbox, $albumName );
-        $I->seeElement( ConstantsPage::$createAlbumButton );
-        $I->click( ConstantsPage::$createAlbumButton );
-
-        $I->waitForText( $albumCreationMsg, 20 );
-
-        $I->seeElement( ConstantsPage::$closeAlbumButton );
-        $I->click( ConstantsPage::$closeAlbumButton );
-        echo "Album created";
-        $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 10);
+		$I->waitForElementVisible( ConstantsPage::$createAlbumPopup, 10 );
+		$I->seeElement( ConstantsPage::$albumNameTextbox );
+		$I->fillField( ConstantsPage::$albumNameTextbox, $albumName );
+		$I->seeElement( ConstantsPage::$createAlbumButton );
+		$I->click( ConstantsPage::$createAlbumButton );
+		$I->waitForText( $albumCreationMsg, 20 );
 
 		$I->seeElement( ConstantsPage::$closeAlbumButton );
 		$I->click( ConstantsPage::$closeAlbumButton );
