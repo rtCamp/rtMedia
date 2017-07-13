@@ -11,7 +11,7 @@ use Page\UploadMedia as UploadMediaPage;
 use Page\DashboardSettings as DashboardSettingsPage;
 use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$status = 'For loggedin uses only..';
+$status = 'For logged in uses only..';
 
 $I = new AcceptanceTester( $scenario );
 $I->wantTo( 'To set default privacy for logged in user.' );
