@@ -1,69 +1,67 @@
 <?php
 
 /**
-* Scenario : To disable media upload in a comment.
-*/
-    use Page\Login as LoginPage;
-    use Page\Constants as ConstantsPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
-    use Page\UploadMedia as UploadMediaPage;
-    use Page\BuddypressSettings as BuddypressSettingsPage;
+ * Scenario : To disable upload media in comment.
+ */
+use Page\Login as LoginPage;
+use Page\Constants as ConstantsPage;
+use Page\DashboardSettings as DashboardSettingsPage;
+use Page\UploadMedia as UploadMediaPage;
+use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $I = new AcceptanceTester( $scenario );
-    $I->wantTo( "To disable media upload in a comment." );
+$I = new AcceptanceTester( $scenario );
+$I->wantTo( "To disable upload media in comment." );
 
-    $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+$loginPage = new LoginPage( $I );
+$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $settings = new DashboardSettingsPage( $I );
+$settings = new DashboardSettingsPage( $I );
 
-    $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl ); // First we need to check if the user is allowed to cooment on upload media.
-    $settings->verifyEnableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
-    $settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab ); //Last arg refers scroll postion
+$settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl ); // First we need to check if the user is allowed to cooment on upload media.
+$settings->verifyEnableStatus( ConstantsPage::$strCommentCheckboxLabel, ConstantsPage::$commentCheckbox );
+$settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab ); //Last arg refers scroll postion
 
-    $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-    $I->waitForElement( ConstantsPage::$buddypressTab , 10);
+$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
+$I->waitForElement( ConstantsPage::$buddypressTab, 10 );
 
-    $settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox ); //We need to check media is enabled for profile or not.
-    $settings->verifyDisableStatus( ConstantsPage::$strMediaInCommnetLabel, ConstantsPage::$mediaInCommentCheckbox );
+$settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox ); //We need to check media is enabled for profile or not.
+$settings->verifyDisableStatus( ConstantsPage::$strMediaInCommnetLabel, ConstantsPage::$mediaInCommentCheckbox );
 
-    $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoMedia( ConstantsPage::$userName );
-    $temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
+$buddypress = new BuddypressSettingsPage( $I );
+$buddypress->gotoMedia( ConstantsPage::$userName );
+$temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
 
-    $uploadmedia = new UploadMediaPage( $I );
+$uploadmedia = new UploadMediaPage( $I );
 
-    if( $temp >= ConstantsPage::$minValue ){
+if ( $temp >= ConstantsPage::$minValue ) {
 
-        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $uploadmedia->firstThumbnailMedia();
+	$uploadmedia->firstThumbnailMedia();
 
-        $I->seeElement( ConstantsPage::$commentLink );
-        $I->scrollTo( ConstantsPage::$commentLink );
-        $I->seeElement( UploadMediaPage::$commentTextArea );
-        $I->dontSeeElement( ConstantsPage::$mediaButtonInComment );
+	$I->seeElement( ConstantsPage::$commentLink );
+	$I->scrollTo( ConstantsPage::$commentLink );
+	$I->seeElement( UploadMediaPage::$commentTextArea );
+	$I->dontSeeElement( ConstantsPage::$mediaButtonInComment );
+} else {
 
-    }else{
+	$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+	$I->waitForElement( ConstantsPage::$displayTab, 10 );
+	$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
 
-        $I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
-        $I->waitForElement( ConstantsPage::$displayTab , 10);
-        $settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
+	$buddypress->gotoMedia( ConstantsPage::$userName );
+	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $buddypress->gotoMedia( ConstantsPage::$userName );
-        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
-        $uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+	$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+	$uploadmedia->firstThumbnailMedia();
 
-        $uploadmedia->firstThumbnailMedia();
+	$I->seeElement( ConstantsPage::$commentLink );
+	$I->scrollTo( ConstantsPage::$commentLink );
 
-        $I->seeElement( ConstantsPage::$commentLink );
-        $I->scrollTo( ConstantsPage::$commentLink );
-
-        $I->seeElement( UploadMediaPage::$commentTextArea );
-        $I->dontSeeElement( ConstantsPage::$mediaButtonInComment );
-
-    }
+	$I->seeElement( UploadMediaPage::$commentTextArea );
+	$I->dontSeeElement( ConstantsPage::$mediaButtonInComment );
+}
 ?>

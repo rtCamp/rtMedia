@@ -1,253 +1,233 @@
 <?php
+
 namespace Page;
 
 use Page\Constants as ConstantsPage;
 
-class BuddypressSettings
-{
-    public static $userProfileLink = 'a#user-xprofile';
-    public static $mediaLinkOnProfile = 'a#user-media';
-    public static $myGroupLink = '#groups-personal';
-    public static $groupNameLink = 'ul#groups-list li:first-child .item .item-title a';
+class BuddypressSettings {
+
+	public static $userProfileLink = 'a#user-xprofile';
+	public static $mediaLinkOnProfile = 'a#user-media';
+	public static $myGroupLink = '#groups-personal';
+	public static $groupNameLink = 'ul#groups-list li:first-child .item .item-title a';
+	protected $tester;
 
-    protected $tester;
+	public function __construct( \AcceptanceTester $I ) {
+		$this->tester = $I;
+	}
 
-    public function __construct( \AcceptanceTester $I )
-    {
-        $this->tester = $I;
-    }
+	/**
+	 * gotoProfilePage() -> Will take the user to his/her profile page
+	 */
+	public function gotoProfile( $userName ) {
 
-    /**
-     * gotoProfilePage() -> Will take the user to his/her profile page
-     */
-    public function gotoProfile( $userName ){
+		$I = $this->tester;
 
-        $I = $this->tester;
+		$url = 'members/' . $userName . '/profile';
+		$I->amOnPage( $url );
+		$I->waitForElement( ConstantsPage::$profilePicture, 5 );
+	}
 
-        $url = 'members/'.$userName.'/profile';
-        $I->amOnPage( $url );
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+	/**
+	 * countGroup() -> Will count the no of groups available
+	 */
+	public function countGroup( $selector ) {
 
-    }
+		$I = $this->tester;
+		$groupsArray = $I->grabMultiple( $selector );
+		return count( $groupsArray );
+	}
 
-    /**
-     * countGroup() -> Will count the no of groups available
-     */
-    public function countGroup( $selector ){
+	/**
+	 * checkMediaInGroup() -> Will check if the media is available in group
+	 */
+	public function checkMediaInGroup() {
 
-        $I = $this->tester;
+		$I = $this->tester;
 
-        $groupsArray = $I->grabMultiple( $selector );
+		$I->seeElement( self::$groupNameLink );
+		$I->click( self::$groupNameLink );
+		$I->waitForElement( ConstantsPage::$manageGrpLink, 10 );
+	}
 
-        return count( $groupsArray );
+	/**
+	 * gotoGroupPage() -> Will take the user to group page
+	 */
+	public function gotoGroup() {
 
-    }
+		$I = $this->tester;
+		$I->amonPage( '/groups' );
+		$I->waitForElement( ConstantsPage::$createGroupLink, 5 );
+	}
 
-    /**
-     * checkMediaInGroup() -> Will check if the media is available in group
-     */
-    public function checkMediaInGroup(){
+	/**
+	 * createGroup() -> Will create a new group
+	 */
+	public function createGroup() {
 
-        $I = $this->tester;
+		echo "this is from create grp function.";
 
-        $I->seeElement( self::$groupNameLink );
-        $I->click( self::$groupNameLink );
+		$I = $this->tester;
 
-        $I->waitForElement( ConstantsPage::$manageGrpLink, 10 );
+		$I->seeElementInDOM( ConstantsPage::$createGroupLink );
+		$I->click( ConstantsPage::$createGroupLink );
 
-    }
+		$I->waitForElement( ConstantsPage::$createGroupTabs, 5 );
+		$I->scrollTo( ConstantsPage::$createGroupTabs );
 
-    /**
-     * gotoGroupPage() -> Will take the user to group page
-     */
-    public function gotoGroup(){
+		$I->seeElementInDOM( ConstantsPage::$groupNameTextbox );
+		$I->fillField( ConstantsPage::$groupNameTextbox, 'Test Group Name from Script' );
 
-        $I = $this->tester;
+		$I->seeElementInDOM( ConstantsPage::$groupDescTextarea );
+		$I->fillField( ConstantsPage::$groupDescTextarea, 'Test Group Desc from Script' );  // Enter group Description
 
-        $I->amonPage('/groups');
-        $I->waitForElement( ConstantsPage::$createGroupLink, 5 );
+		$I->seeElement( ConstantsPage::$createGroupButton );
+		$I->click( ConstantsPage::$createGroupButton );
+		// $I->wait( 5 );
+		$I->waitForElement( ConstantsPage::$nextGrpButton, 20 );
 
-    }
+		self::gotoGroup();
+	}
 
-    /**
-     * createGroup() -> Will create a new group
-     */
-    public function createGroup(){
+	/**
+	 * gotoActivityPage() -> Will take the user to activity page
+	 */
+	public function gotoActivityPage( $userName ) {
 
-        echo "this is from create grp function.";
+		$I = $this->tester;
 
-        $I = $this->tester;
+		$url = 'members/' . $userName;
+		$I->amOnPage( $url );
+		$I->waitForElement( ConstantsPage::$mediaPageScrollPos, 10 );
+		$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+	}
 
-        $I->seeElementInDOM( ConstantsPage::$createGroupLink );
-        $I->click( ConstantsPage::$createGroupLink );
+	/**
+	 * gotoMedia() -> Will take the user to media page
+	 */
+	public function gotoMedia( $userName ) {
 
-        $I->waitForElement( ConstantsPage::$createGroupTabs, 5 );
-        $I->scrollTo( ConstantsPage::$createGroupTabs );
+		$I = $this->tester;
 
-        $I->seeElementInDOM( ConstantsPage::$groupNameTextbox );
-        $I->fillField( ConstantsPage::$groupNameTextbox, 'Test Group Name from Script' );
+		$url = 'members/' . $userName . '/media';
+		$I->amOnPage( $url );
 
-        $I->seeElementInDOM( ConstantsPage::$groupDescTextarea );
-        $I->fillField( ConstantsPage::$groupDescTextarea, 'Test Group Desc from Script' );  // Enter group Description
+		$I->waitForElement( ConstantsPage::$profilePicture, 5 );
+	}
 
-        $I->seeElement( ConstantsPage::$createGroupButton );
-        $I->click( ConstantsPage::$createGroupButton );
+	/**
+	 * gotoPhotoPage() -> Will take the user to photo page
+	 */
+	public function gotoPhotoPage( $userName ) {
 
-        $I->waitForElement( ConstantsPage::$nextGrpButton, 20);
+		$I = $this->tester;
 
-        self::gotoGroup();
+		$url = 'members/' . $userName . '/media/photo';
+		$I->amOnPage( $url );
+		$I->waitForElement( 'div.rtmedia-container', 10 );
+	}
 
-    }
+	/**
+	 * countMedia() -> Will count media
+	 */
+	public function countMedia( $selector ) {
 
-    /**
-     * gotoActivityPage() -> Will take the user to activity page
-     */
-    public function gotoActivityPage( $userName ){
+		$I = $this->tester;
 
-        $I = $this->tester;
+		$mediaArray = $I->grabMultiple( $selector ); // This will grab the no. of media available on media page
+		echo nl2br( 'No of media on page = ' . count( $mediaArray ) );
 
-        $url = 'members/'.$userName;
-        $I->amOnPage($url);
+		return count( $mediaArray );
+	}
 
-        $I->waitForElement( ConstantsPage::$mediaPageScrollPos, 10);
+	/**
+	 * gotoAlubmPage() -> Will take the user to album page
+	 */
+	public function gotoAlbumPage() {
 
-        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-    }
+		$I = $this->tester;
 
-    /**
-     * gotoMedia() -> Will take the user to media page
-     */
-    public function gotoMedia( $userName ){
+		$url = 'members/' . ConstantsPage::$userName . '/media/album/';
+		$I->amOnPage( $url );
+		$I->waitForElement( 'div.rtmedia-container', 10 );
+	}
 
-        $I = $this->tester;
+	/**
+	 * createNewAlbum() -> Will create new album
+	 */
+	public function createNewAlbum() {
 
-        $url = 'members/'.$userName.'/media';
-        $I->amOnPage($url);
+		$albumName = 'My test album';
+		$albumCreationMsg = $albumName . ConstantsPage::$albumMsg;
 
-        $I->waitForElement( ConstantsPage::$profilePicture, 5 );
+		$I = $this->tester;
 
-    }
+		self::gotoAlbumPage();
 
-    /**
-     * gotoPhotoPage() -> Will take the user to photo page
-     */
-    public function gotoPhotoPage( $userName ){
+		$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-        $I = $this->tester;
+		$I->seeElement( ConstantsPage::$mediaOptionButton );
+		$I->click( ConstantsPage::$mediaOptionButton );
+		$I->waitForElementVisible( ConstantsPage::$optionsPopup, 10 );
 
-        $url = 'members/'.$userName.'/media/photo';
-        $I->amOnPage( $url );
-        $I->waitForElement('div.rtmedia-container', 10);
+		$I->seeElement( ConstantsPage::$addAlbumButtonLink );
+		$I->click( ConstantsPage::$addAlbumButtonLink );
 
-    }
+		$I->waitForElementVisible( ConstantsPage::$createAlbumPopup, 10 );
+		$I->seeElement( ConstantsPage::$albumNameTextbox );
+		$I->fillField( ConstantsPage::$albumNameTextbox, $albumName );
+		$I->seeElement( ConstantsPage::$createAlbumButton );
+		$I->click( ConstantsPage::$createAlbumButton );
+		$I->waitForText( $albumCreationMsg, 20 );
 
-    /**
-     * countMedia() -> Will count media
-     */
-    public function countMedia( $selector ){
+		$I->seeElement( ConstantsPage::$closeAlbumButton );
+		$I->click( ConstantsPage::$closeAlbumButton );
+		echo "Album created";
 
-        $I = $this->tester;
+		$I->reloadPage();
+		$I->waitForElement( ConstantsPage::$profilePicture, 10 );
+	}
 
-        $mediaArray = $I->grabMultiple( $selector ); // This will grab the no. of media available on media page
-        echo nl2br( 'No of media on page = '. count( $mediaArray ) );
+	/**
+	 * editAlbumDesc() -> Will edit the desc for created new album
+	 */
+	public function editAlbumDesc() {
 
-        return count( $mediaArray );
+		$albumDesc = 'My test album desc';
+		$I = $this->tester;
+		echo "Inside edit album function";
 
-    }
+		$I->seeElement( ConstantsPage::$firstAlbum );
+		$I->click( ConstantsPage::$firstAlbum );
 
-    /**
-     * gotoAlubmPage() -> Will take the user to album page
-     */
-    public function gotoAlbumPage(){
+		$I->wait( 10 );
+		$tempUri = $I->grabFromCurrentUrl();
+		echo $tempUri;
 
-        $I = $this->tester;
+		$t = $tempUri . 'edit/';
+		echo $t;
+		$I->amOnPage( $t );
+		$I->waitForElement( ConstantsPage::$profilePicture, 10 );
 
-        $url = 'members/'.ConstantsPage::$userName.'/media/album/';
-        $I->amOnPage( $url );
-        $I->waitForElement('div.rtmedia-container', 10);
-    }
+		$I->waitForElementVisible( ConstantsPage::$scrollSelector, 20 );
+		$I->scrollTo( ConstantsPage::$scrollSelector );
 
-    /**
-     * createNewAlbum() -> Will create new album
-     */
-    public function createNewAlbum(){
+		$I->seeElement( ConstantsPage::$albumDescTeaxtarea );
+		$I->fillField( ConstantsPage::$albumDescTeaxtarea, $albumDesc );
+		$I->seeElement( ConstantsPage::$saveAlbumButton );
+		$I->click( ConstantsPage::$saveAlbumButton );
 
-        $albumName = 'My test album';
-        $albumCreationMsg = $albumName.ConstantsPage::$albumMsg;
+		$I->wait( 5 );
+		$I->reloadPage();
+		$I->scrollTo( ConstantsPage::$scrollSelector );
 
-        $I = $this->tester;
+		$I->amOnPage( $tempUri );
+		$I->wait( 5 );
+		$I->scrollTo( ConstantsPage::$scrollSelector );
 
-        self::gotoAlbumPage();
+		echo "After scroll";
 
-        $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
-
-        $I->seeElement( ConstantsPage::$mediaOptionButton );
-        $I->click( ConstantsPage::$mediaOptionButton );
-
-        $I->waitForElementVisible( ConstantsPage::$optionsPopup, 10 );
-
-        $I->seeElement( ConstantsPage::$addAlbumButtonLink );
-
-        $I->click( ConstantsPage::$addAlbumButtonLink );
-
-        $I->waitForElementVisible( ConstantsPage::$createAlbumPopup, 10 );
-
-        $I->seeElement( ConstantsPage::$albumNameTextbox );
-        $I->fillField( ConstantsPage::$albumNameTextbox, $albumName );
-        $I->seeElement( ConstantsPage::$createAlbumButton );
-        $I->click( ConstantsPage::$createAlbumButton );
-
-        $I->waitForText( $albumCreationMsg, 20 );
-
-        $I->seeElement( ConstantsPage::$closeAlbumButton );
-        $I->click( ConstantsPage::$closeAlbumButton );
-        echo "Album created";
-        $I->reloadPage();
-        $I->waitForElement( ConstantsPage::$profilePicture, 10);
-
-    }
-
-    /**
-     * editAlbumDesc() -> Will edit the desc for created new album
-     */
-    public function editAlbumDesc(){
-
-        $albumDesc = 'My test album desc';
-        $I = $this->tester;
-        echo "Inside edit album function";
-
-        $I->seeElement( ConstantsPage::$firstAlbum );
-        $I->click( ConstantsPage::$firstAlbum );
-
-        $I->wait(10);
-        $tempUri = $I->grabFromCurrentUrl();
-        echo $tempUri;
-
-        $t = $tempUri.'edit/';
-        echo $t;
-        $I->amOnPage($t);
-        $I->waitForElement( ConstantsPage::$profilePicture, 10);
-
-        $I->waitForElementVisible( ConstantsPage::$scrollSelector, 20 );
-        $I->scrollTo( ConstantsPage::$scrollSelector );
-
-        $I->seeElement( ConstantsPage::$albumDescTeaxtarea );
-        $I->fillField( ConstantsPage::$albumDescTeaxtarea, $albumDesc );
-        $I->seeElement( ConstantsPage::$saveAlbumButton );
-        $I->click( ConstantsPage::$saveAlbumButton );
-
-        $I->wait(5);
-        $I->reloadPage();
-        $I->scrollTo( ConstantsPage::$scrollSelector );
-
-        $I->amOnPage($tempUri);
-        $I->wait(5);
-        $I->scrollTo( ConstantsPage::$scrollSelector );
-
-        echo "After scroll";
-
-        $I->seeElementInDOM( ConstantsPage::$albumDescSelector );
-
-    }
+		$I->seeElementInDOM( ConstantsPage::$albumDescSelector );
+	}
 
 }
