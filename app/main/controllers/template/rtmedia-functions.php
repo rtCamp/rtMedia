@@ -1467,9 +1467,12 @@ function rtmedia_pagination_next_link() {
  */
 function rtmedia_pagination_page_link( $page_no = '' ) {
 
-	global $rtmedia_interaction, $rtmedia_query, $post, $rtmedia;
+	global $rtmedia_interaction, $rtmedia_query, $post, $rtmedia, $wp_query;
 
 	$wp_default_context = array( 'page', 'post' );
+	$rtm_context        = $wp_query->query_vars['rtm_context'];
+	$rtm_attr           = $wp_query->query_vars['rtm_attr'];
+	$rtm_term           = $wp_query->query_vars['rtm_term'];
 
 	if ( isset( $_GET['context'] ) && in_array( $_GET['context'], $wp_default_context ) && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
 		$post = get_post( intval( $_GET['context_id'] ) );
@@ -1488,6 +1491,8 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		} else {
 			if ( $is_shortcode_on_home ) {
 				$link .= $site_url;
+			} elseif ( 'group' === $rtm_context ) {
+				$link .= $site_url . 'rtm_context/' . $rtm_context . '/attribute/' . $rtm_attr . '/' . $rtm_term . '/';
 			} else {
 				$link .= $site_url . 'author/' . $author_name . '/';
 			}
