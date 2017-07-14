@@ -238,6 +238,11 @@ class RTMediaTemplate {
 				$media_array[ $key ]->media_class  = $media_class;
 				$media_array[ $key ]               = apply_filters( 'rtmedia_media_array_backbone', $media_array[ $key ] );
 			}
+
+			// Add back all filters used for search functionality.
+			add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 10, 3 );
+			add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11, 2 );
+			add_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns', 10, 1 );
 		}
 
 		$return_array['data'] = $media_array;

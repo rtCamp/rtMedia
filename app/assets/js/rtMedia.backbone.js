@@ -400,7 +400,7 @@ jQuery( function( $ ) {
 			}
 
 			change_rtBrowserAddressUrl( href, '' );
-			galleryObj.getNext( nextpage, $( this ).parents( '#item-body' ), $( this ).parents( '.rtm-pagination' ) );
+			galleryObj.getNext( nextpage, $( this ).closest( '.rtmedia-container' ).parent(), $( this ).closest( '.rtm-pagination' ) );
 		} );
 
 		$( document ).on( 'submit', 'form#media_search_form', function( e ) {
