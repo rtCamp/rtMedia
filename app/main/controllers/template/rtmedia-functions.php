@@ -1470,6 +1470,9 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	global $rtmedia_interaction, $rtmedia_query, $post, $rtmedia;
 
 	$wp_default_context = array( 'page', 'post' );
+	$rtm_context        = get_query_var( 'rtm_context' );
+	$rtm_attr           = get_query_var( 'rtm_attr' );
+	$rtm_term           = get_query_var( 'rtm_term'  );
 
 	if ( isset( $_GET['context'] ) && in_array( $_GET['context'], $wp_default_context ) && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
 		$post = get_post( intval( $_GET['context_id'] ) );
@@ -1488,6 +1491,8 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		} else {
 			if ( $is_shortcode_on_home ) {
 				$link .= $site_url;
+			} elseif ( 'group' === $rtm_context || 'profile' === $rtm_context ) {
+				$link .= $site_url . 'rtm_context/' . $rtm_context . '/attribute/' . $rtm_attr . '/' . $rtm_term . '/';
 			} else {
 				$link .= $site_url . 'author/' . $author_name . '/';
 			}

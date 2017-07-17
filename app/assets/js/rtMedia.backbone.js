@@ -83,13 +83,14 @@ jQuery( function( $ ) {
 					url = window.location.pathname.substr( 0, window.location.pathname.lastIndexOf( 'pg/' ) );
 				}
 			}
-			if ( ! upload_sync && nextpage > 1 ) {
+			if ( ! upload_sync && nextpage >= 1 ) {
 				if ( url.substr( url.length - 1 ) != '/' ) {
 					url += '/';
 				}
 
 				url += 'pg/' + nextpage + '/';
 			}
+			
 			return url;
 		},
 		getNext: function( page, el, element) {
@@ -345,6 +346,7 @@ jQuery( function( $ ) {
 
 				var page_base_url = $( '#' + current_gallery_id + ' .rtmedia-page-no .rtmedia-page-link' ).data( 'page-base-url' );
 				var href = page_base_url + nextpage;
+				
 				change_rtBrowserAddressUrl( href, '' );
 
 				galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
@@ -392,8 +394,9 @@ jQuery( function( $ ) {
 					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
 			}
 
+			var media_search_input = $( '#media_search_input' );
 			if( check_condition( 'search' ) ) {
-				if ( '' !== $( '#media_search_input' ).val() ) {
+				if ( media_search_input.length > 0 && '' !== media_search_input.val() ) {
 					var search_val = check_url( 'search' );
 					href += '?search=' + search_val;
 
@@ -456,6 +459,7 @@ jQuery( function( $ ) {
 				remove_href =  href.substring( remove_index );
 				href = href.replace( remove_href, '' );
 			}
+
 			change_rtBrowserAddressUrl( href, '' );
 			galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
 			$( '#media_search_remove' ).hide();
