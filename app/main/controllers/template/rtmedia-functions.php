@@ -1467,7 +1467,7 @@ function rtmedia_pagination_next_link() {
  */
 function rtmedia_pagination_page_link( $page_no = '' ) {
 
-	global $rtmedia_interaction, $rtmedia_query, $post, $rtmedia, $wp_query;
+	global $rtmedia_interaction, $rtmedia_query, $post, $rtmedia;
 
 	$wp_default_context = array( 'page', 'post' );
 	$rtm_context        = get_query_var( 'rtm_context' );
