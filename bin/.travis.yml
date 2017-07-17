@@ -15,6 +15,7 @@ before_script:
   - phpcs -i
   - phpenv rehash
   - phpcs --config-set installed_paths $(pear config-get php_dir)/PHP/CodeSniffer/Standards
+  - phpcs --config-set installed_paths $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
   - phpcs -i
   - phpcs --config-set error_severity 0
   - phpcs --config-set warning_severity 0
