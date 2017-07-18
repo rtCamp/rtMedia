@@ -536,7 +536,7 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			$src  = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
 
 			/**
-			 * Used `set_url_scheme` because it breaks the image if there is special characters are there into image name.
+			 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
 			 * Added by checking the code from "wp-admin/includes/media.php:2740".
 			 * Because in media library, it was not breaking.
 			 */
