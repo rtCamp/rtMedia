@@ -534,7 +534,13 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 	if ( isset( $rtmedia_media->media_type ) ) {
 		if ( 'photo' === $rtmedia_media->media_type ) {
 			$src  = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
-			$html = "<img src='" . esc_url( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+
+			/**
+			 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
+			 * Added by checking the code from "wp-admin/includes/media.php:2740".
+			 * Because in media library, it was not breaking.
+			 */
+			$html = "<img src='" . set_url_scheme( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
 		} elseif ( 'video' === $rtmedia_media->media_type ) {
 			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 			$height = $rtmedia->options['defaultSizes_video_singlePlayer_height'];
