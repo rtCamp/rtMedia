@@ -31,7 +31,8 @@ if ( isset( $is_edit_allowed[0] ) ) {
 
 		<?php
 			global $rtmedia_query;
-			$alt_text = rtmedia_image_alt( false, false );
+
+			$alt_text      = rtmedia_image_alt( false, false );
 			$rtmedia_media = $rtmedia_query->rtmedia;
 		?>
 		<div class="rtmedia-item-thumbnail">
