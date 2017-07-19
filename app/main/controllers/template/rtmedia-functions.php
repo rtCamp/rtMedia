@@ -452,6 +452,8 @@ function rtmedia_type( $id = false ) {
 
 		if ( is_object( $rtmedia_media ) ) {
 			return $rtmedia_media->media_type;
+		} else {
+			return '';
 		}
 	}
 
