@@ -41,9 +41,7 @@ if ( isset( $is_edit_allowed[0] ) ) {
 			);
 		?>
 		<div class="rtmedia-item-thumbnail">
-			<?php
-				echo wp_kses( rtmedia_duration(), $allowed_html );
-			?>
+			<?php echo wp_kses( rtmedia_duration(), $allowed_html ); ?>
 			<img src="<?php rtmedia_image( 'rt_media_thumbnail' ); ?>" alt="<?php echo esc_attr( apply_filters( 'rtmc_change_alt_text', $alt_text, $rtmedia_media ) ); ?>">
 		</div>
 
