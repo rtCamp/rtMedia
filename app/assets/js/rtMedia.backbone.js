@@ -1650,7 +1650,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '<div class="plupload_file_size">';
-	rtmedia_plupload_file += plupload.formatSize( file.size );
+	rtmedia_plupload_file += plupload.formatSize( file.size ).toUpperCase();
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '<div class="plupload_file_fields">';
 	rtmedia_plupload_file += '</div>';
