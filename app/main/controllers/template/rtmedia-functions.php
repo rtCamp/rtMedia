@@ -4005,7 +4005,7 @@ function rtm_fetch_user_by_member_type( $type ) {
 		    'member_type' => array( $type ),
 		);
 
-		if ( bp_has_members( $member_args ) ) {
+		if ( rtm_is_buddypress_activate() && bp_has_members( $member_args ) ) {
 			while ( bp_members() ) {
 				bp_the_member();
 
