@@ -382,9 +382,9 @@ class RTMediaMigration {
 					<?php 
 			/* translators: %1$s gets replaced by '<strong>', and %2$s by '</strong>' */
 			echo sprintf(
-				__('Please Backup your %1$sDATABASE%2$s and %1$sUPLOAD%2$s folder before Migration.', 'buddypress-media' )
+				__( 'Please Backup your %1$sDATABASE%2$s and %1$sUPLOAD%2$s folder before Migration.', 'buddypress-media' ),
 				'<strong>', 
-				'</strong>')
+				'</strong>' )
 			); 
 					?>
 				</p>
