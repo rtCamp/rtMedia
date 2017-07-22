@@ -384,8 +384,7 @@ class RTMediaMigration {
 			echo sprintf(
 				__( 'Please Backup your %1$sDATABASE%2$s and %1$sUPLOAD%2$s folder before Migration.', 'buddypress-media' ),
 				'<strong>', 
-				'</strong>' )
-			); 
+				'</strong>' );
 					?>
 				</p>
 			</div>
