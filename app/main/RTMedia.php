@@ -1158,13 +1158,20 @@ class RTMedia {
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url          = trailingslashit( $request_uri );
 		$rtmedia_slug = '/' . RTMEDIA_MEDIA_SLUG;
-		// check position of media slug from end of the URL
+		// check position of media slug from end of the URL.
 		if ( strrpos( $url, $rtmedia_slug ) !== false ) {
-			// split the url upto the last occurance of media slug
+			// split the url upto the last occurrence of media slug.
 			$url_upload = substr( $url, 0, strrpos( $url, $rtmedia_slug ) );
 			$url        = trailingslashit( $url_upload ) . 'upload/';
 		} else {
-			$url = 'upload' . trim( $url, '/' );
+
+			// If url contains '?' then put query string at last.
+			if ( strstr( $url, '?' ) ) {
+				$url = explode( '?', $url );
+				$url = $url[0] . 'upload/?' . trim( $url[1], '/' );
+			} else {
+				$url = trailingslashit( $url ) . 'upload/';
+			}
 		}
 
 		$params = array(

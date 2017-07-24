@@ -274,14 +274,21 @@ class RTMediaBuddyPressActivity {
 		$url_raw    = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url        = trailingslashit( $url_raw );
 		$slug_split = explode( '/', $url );
-		// check position of media slug for end of the URL
+		// check position of media slug for end of the URL.
 		if ( RTMEDIA_MEDIA_SLUG === $slug_split[ count( $slug_split ) - 1 ] ) {
-			// replace media slug with the blank space
+			// replace media slug with the blank space.
 			$slug_split[ count( $slug_split ) - 1 ] = '';
-			$url_upload                              = implode( '/', $slug_split );
-			$url                                     = trailingslashit( $url_upload ) . 'upload/';
+			$url_upload                             = implode( '/', $slug_split );
+			$url                                    = trailingslashit( $url_upload ) . 'upload/';
 		} else {
-			$url = 'upload' . trim( $url, '/' );
+
+			// If url contains '?' then put query string at last.
+			if ( strstr( $url, '?' ) ) {
+				$url = explode( '?', $url );
+				$url = $url[0] . 'upload/?' . trim( $url[1], '/' );
+			} else {
+				$url = trailingslashit( $url ) . 'upload/';
+			}
 		}
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ) {
 			$params = array(
