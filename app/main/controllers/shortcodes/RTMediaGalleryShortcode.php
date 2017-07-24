@@ -76,7 +76,7 @@ class RTMediaGalleryShortcode {
 		} else {
 			if ( strstr( $url, '?' ) ) {
 				$url = explode( '?', $url );
-				$url = $url[0] . 'upload?' . trim( $url[1], '/' );
+				$url = $url[0] . 'upload/?' . trim( $url[1], '/' );
 			} else {
 				$url = trailingslashit( $url ) . 'upload/';
 			}
