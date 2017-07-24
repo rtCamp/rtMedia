@@ -672,11 +672,11 @@ jQuery( 'document' ).ready( function( $ ) {
 		rtmedia_activity_masonry();
 	}
 
-	// Arrange media into masonry view right after upload or clicking on readmore link to activity without pageload
+	// Arrange media into masonry view right after upload or clicking on readmore link to activity without page load.
 	jQuery( document ).ajaxComplete( function( event, xhr, settings ) {
 		var get_action = get_parameter( 'action', settings.data );
 
-		if ( ( get_action == 'post_update' || get_action == 'get_single_activity_content' || get_action == 'activity_get_older_updates' ) && typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
+		if ( ( 'post_update' === get_action || 'get_single_activity_content' === get_action || 'activity_get_older_updates' === get_action ) && typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
 			rtmedia_activity_masonry();
 		}
 	} );
