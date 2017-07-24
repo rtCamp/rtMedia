@@ -83,13 +83,14 @@ jQuery( function( $ ) {
 					url = window.location.pathname.substr( 0, window.location.pathname.lastIndexOf( 'pg/' ) );
 				}
 			}
-			if ( ! upload_sync && nextpage > 1 ) {
+			if ( ! upload_sync && nextpage >= 1 ) {
 				if ( url.substr( url.length - 1 ) != '/' ) {
 					url += '/';
 				}
 
 				url += 'pg/' + nextpage + '/';
 			}
+			
 			return url;
 		},
 		getNext: function( page, el, element) {
@@ -345,6 +346,7 @@ jQuery( function( $ ) {
 
 				var page_base_url = $( '#' + current_gallery_id + ' .rtmedia-page-no .rtmedia-page-link' ).data( 'page-base-url' );
 				var href = page_base_url + nextpage;
+				
 				change_rtBrowserAddressUrl( href, '' );
 
 				galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
@@ -386,14 +388,10 @@ jQuery( function( $ ) {
 				page_base_url = $( this ).data( 'page-base-url' );
 				href = page_base_url + nextpage;
 				}
-				if ( $( this ).data( 'page-type' ) == 'num' ) {
-					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
-				} else {
-					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
-			}
 
+			var media_search_input = $( '#media_search_input' );
 			if( check_condition( 'search' ) ) {
-				if ( '' !== $( '#media_search_input' ).val() ) {
+				if ( media_search_input.length > 0 && '' !== media_search_input.val() ) {
 					var search_val = check_url( 'search' );
 					href += '?search=' + search_val;
 
@@ -405,11 +403,7 @@ jQuery( function( $ ) {
 			}
 
 			change_rtBrowserAddressUrl( href, '' );
-			if ( $( this ).data( 'page-type' ) == 'num' ) {
-				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
-			} else {
-				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
-			}
+			galleryObj.getNext( nextpage, $( this ).closest( '.rtmedia-container' ).parent(), $( this ).closest( '.rtm-pagination' ) );
 		} );
 
 		$( document ).on( 'submit', 'form#media_search_form', function( e ) {
@@ -456,6 +450,7 @@ jQuery( function( $ ) {
 				remove_href =  href.substring( remove_index );
 				href = href.replace( remove_href, '' );
 			}
+
 			change_rtBrowserAddressUrl( href, '' );
 			galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
 			$( '#media_search_remove' ).hide();
@@ -1655,7 +1650,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '<div class="plupload_file_size">';
-	rtmedia_plupload_file += plupload.formatSize( file.size );
+	rtmedia_plupload_file += plupload.formatSize( file.size ).toUpperCase();
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '<div class="plupload_file_fields">';
 	rtmedia_plupload_file += '</div>';
