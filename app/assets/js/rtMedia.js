@@ -1044,9 +1044,11 @@ function rtmedia_activity_masonry() {
  * @return bool
  */
 function get_parameter( parameter, data ) {
+
 	if ( ! parameter ) {
 		return false;
 	}
+
 	if ( ! data ) {
 		data = window.location.href;
 	}
