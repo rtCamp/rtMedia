@@ -1039,6 +1039,9 @@ function rtmedia_activity_masonry() {
 
 /**
  * Get specific parameter value from Query string.
+ * @param string parameter Parameter of query string.
+ * @param object data Set of data.
+ * @return bool
  */
 function get_parameter( parameter, data ) {
 	if ( ! parameter ) {
