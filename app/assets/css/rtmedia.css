@@ -211,7 +211,7 @@ form .rtmedia-container .rtm-plupload-list li,
   margin: 4px;
   max-width: 110px;
   padding: 5px;
-  z-index: 1;
+  z-index: 2;
   position: relative;
 }
 #rtmedia-uploader-form .rtm-plupload-list li.upload-error,
