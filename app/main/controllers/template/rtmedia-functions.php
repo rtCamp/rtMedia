@@ -450,7 +450,11 @@ function rtmedia_type( $id = false ) {
 	} else {
 		global $rtmedia_media;
 
-		return $rtmedia_media->media_type;
+		if ( is_object( $rtmedia_media ) ) {
+			return $rtmedia_media->media_type;
+		} else {
+			return '';
+		}
 	}
 
 }
@@ -534,7 +538,13 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 	if ( isset( $rtmedia_media->media_type ) ) {
 		if ( 'photo' === $rtmedia_media->media_type ) {
 			$src  = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
-			$html = "<img src='" . esc_url( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+
+			/**
+			 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
+			 * Added by checking the code from "wp-admin/includes/media.php:2740".
+			 * Because in media library, it was not breaking.
+			 */
+			$html = "<img src='" . set_url_scheme( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
 		} elseif ( 'video' === $rtmedia_media->media_type ) {
 			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 			$height = $rtmedia->options['defaultSizes_video_singlePlayer_height'];
@@ -1470,6 +1480,9 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	global $rtmedia_interaction, $rtmedia_query, $post, $rtmedia;
 
 	$wp_default_context = array( 'page', 'post' );
+	$rtm_context        = get_query_var( 'rtm_context' );
+	$rtm_attr           = get_query_var( 'rtm_attr' );
+	$rtm_term           = get_query_var( 'rtm_term'  );
 
 	if ( isset( $_GET['context'] ) && in_array( $_GET['context'], $wp_default_context ) && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
 		$post = get_post( intval( $_GET['context_id'] ) );
@@ -1488,6 +1501,8 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		} else {
 			if ( $is_shortcode_on_home ) {
 				$link .= $site_url;
+			} elseif ( 'group' === $rtm_context || 'profile' === $rtm_context ) {
+				$link .= $site_url . 'rtm_context/' . $rtm_context . '/attribute/' . $rtm_attr . '/' . $rtm_term . '/';
 			} else {
 				$link .= $site_url . 'author/' . $author_name . '/';
 			}
@@ -3994,7 +4009,7 @@ function rtm_fetch_user_by_member_type( $type ) {
 		    'member_type' => array( $type ),
 		);
 
-		if ( bp_has_members( $member_args ) ) {
+		if ( rtm_is_buddypress_activate() && bp_has_members( $member_args ) ) {
 			while ( bp_members() ) {
 				bp_the_member();
 

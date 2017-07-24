@@ -46,6 +46,7 @@ class RTMediaBuddyPressActivity {
 		add_filter( 'bp_activity_user_can_delete', array( $this, 'rtm_bp_activity_user_can_delete' ), 10, 2 );
 
 		add_filter( 'bp_activity_permalink_access', array( $this, 'rtm_bp_activity_permalink_access' ) );
+		add_action( 'bp_activity_comment_posted', array( $this, 'rtm_check_privacy_for_comments' ), 10, 3 );
 	}
 
 	function bp_activity_deleted_activities( $activity_ids_deleted ) {
@@ -846,5 +847,54 @@ class RTMediaBuddyPressActivity {
 
 		return $has_access;
 
+	}
+
+	/**
+	 * Makes the comments hidden (private) if the parent comment's
+	 * privacy is set to private.
+	 *
+	 * @param string $comment_id Activity id of the comment.
+	 * @param array  $r          Array of arguments.
+	 */
+	public function rtm_check_privacy_for_comments( $comment_id, $r ) {
+		global $wpdb;
+
+		if ( empty( $r ) || empty( $comment_id ) || ( ! is_array( $r ) ) ) {
+			return;
+		}
+
+		$db_prefix   = $wpdb->get_blog_prefix();
+		$table_name  = 'rt_rtm_activity';
+		$activity_id = $r['activity_id'];
+		$user_id     = $r['user_id'];
+		$privacy_id  = bp_activity_get_meta( $activity_id, 'rtmedia_privacy' );
+		$blog_id     = get_current_blog_id();
+
+		if ( '60' === $privacy_id ) {
+			$row_values_rtm_media = array(
+				'activity_id' => $comment_id,
+				'user_id'     => $user_id,
+				'privacy'     => $privacy_id,
+				'blog_id'     => $blog_id,
+			);
+
+			$wpdb->insert(
+				$db_prefix . $table_name,
+				$row_values_rtm_media
+			);
+
+			$table_name = 'bp_activity_meta';
+			$row_values_activity_meta = array(
+				'id'          => '',
+				'activity_id' => $comment_id,
+				'meta_key'    => 'rtmedia_privacy',
+				'meta_value'  => 60,
+			);
+
+			$wpdb->insert(
+				$db_prefix . $table_name,
+				$row_values_activity_meta
+			);
+		}
 	}
 }

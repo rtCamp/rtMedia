@@ -29,9 +29,20 @@ if ( isset( $is_edit_allowed[0] ) ) {
 	<a href="<?php rtmedia_permalink(); ?>" title="<?php echo esc_attr( rtmedia_title() ); ?>"
 	   class="<?php echo esc_attr( apply_filters( 'rtmedia_gallery_list_item_a_class', 'rtmedia-list-item-a' ) ); ?>">
 
+		<?php
+			global $rtmedia_query;
+
+			$alt_text      = rtmedia_image_alt( false, false );
+			$rtmedia_media = $rtmedia_query->rtmedia;
+			$allowed_html  = array(
+				'span' => array(
+					'class' => array(),
+				),
+			);
+		?>
 		<div class="rtmedia-item-thumbnail">
-			<?php echo wp_kses( rtmedia_duration(), array( 'span' => array( 'class' => array() ) ) ); ?>
-			<img src="<?php rtmedia_image( 'rt_media_thumbnail' ); ?>" alt="<?php rtmedia_image_alt(); ?>">
+			<?php echo wp_kses( rtmedia_duration(), $allowed_html ); ?>
+			<img src="<?php rtmedia_image( 'rt_media_thumbnail' ); ?>" alt="<?php echo esc_attr( apply_filters( 'rtmc_change_alt_text', $alt_text, $rtmedia_media ) ); ?>">
 		</div>
 
 		<?php if ( apply_filters( 'rtmedia_media_gallery_show_media_title', true ) ) { ?>
