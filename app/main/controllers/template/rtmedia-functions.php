@@ -450,7 +450,11 @@ function rtmedia_type( $id = false ) {
 	} else {
 		global $rtmedia_media;
 
-		return $rtmedia_media->media_type;
+		if ( is_object( $rtmedia_media ) ) {
+			return $rtmedia_media->media_type;
+		} else {
+			return '';
+		}
 	}
 
 }
