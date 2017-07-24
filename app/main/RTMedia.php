@@ -1168,7 +1168,7 @@ class RTMedia {
 			// If url contains '?' then put query string at last.
 			if ( strstr( $url, '?' ) ) {
 				$url = explode( '?', $url );
-				$url = $url[0] . 'upload/?' . trim( $url[1], '/' );
+				$url = trailingslashit( $url[0] ) . 'upload/?' . trim( $url[1], '/' );
 			} else {
 				$url = trailingslashit( $url ) . 'upload/';
 			}
