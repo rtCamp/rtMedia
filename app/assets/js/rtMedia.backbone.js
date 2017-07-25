@@ -388,11 +388,6 @@ jQuery( function( $ ) {
 				page_base_url = $( this ).data( 'page-base-url' );
 				href = page_base_url + nextpage;
 				}
-				if ( $( this ).data( 'page-type' ) == 'num' ) {
-					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
-				} else {
-					galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
-			}
 
 			var media_search_input = $( '#media_search_input' );
 			if( check_condition( 'search' ) ) {
@@ -408,11 +403,7 @@ jQuery( function( $ ) {
 			}
 
 			change_rtBrowserAddressUrl( href, '' );
-			if ( $( this ).data( 'page-type' ) == 'num' ) {
-				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
-			} else {
-				galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
-			}
+			galleryObj.getNext( nextpage, $( this ).closest( '.rtmedia-container' ).parent(), $( this ).closest( '.rtm-pagination' ) );
 		} );
 
 		$( document ).on( 'submit', 'form#media_search_form', function( e ) {
@@ -962,6 +953,17 @@ jQuery( document ).ready( function( $ ) {
 			objUploadView.uploader.refresh();
 			$( '#rtmedia-whts-new-upload-container > div' ).css( 'top', '0' );
 			$( '#rtmedia-whts-new-upload-container > div' ).css( 'left', '0' );
+
+			/**
+			 * NOTE: Do not change.
+			 * ISSUE: BuddyPress activity upload issue with Microsoft Edge
+			 * GL: 132 [ http://git.rtcamp.com/rtmedia/rtMedia/issues/132 ]
+			 * Reason: Trigger event not working for hidden element in Microsoft Edge browser
+			 * Condition to check current browser.
+			 */
+			if ( /Edge/.test( navigator.userAgent ) ) {
+				jQuery( this ).closest( '.rtm-upload-button-wrapper' ).find( 'input[type=file]' ).click();
+			}
 
 			//Enable 'post update' button when media get select
 			$( '#aw-whats-new-submit' ).prop( 'disabled', false );
@@ -1659,7 +1661,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '<div class="plupload_file_size">';
-	rtmedia_plupload_file += plupload.formatSize( file.size );
+	rtmedia_plupload_file += plupload.formatSize( file.size ).toUpperCase();
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '<div class="plupload_file_fields">';
 	rtmedia_plupload_file += '</div>';

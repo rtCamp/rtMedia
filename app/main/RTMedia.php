@@ -1362,7 +1362,7 @@ function get_rtmedia_permalink( $id ) {
 	// Adding filter to get permalink for current blog
 	add_filter( 'bp_get_root_domain', 'rtmedia_get_current_blog_url' );
 
-	if ( ! isset( $media[0]->context ) ) {
+	if ( is_object( $media[0] ) && ! isset( $media[0]->context ) ) {
 		if ( function_exists( 'bp_get_groups_root_slug' ) && isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
 			$parent_link = get_rtmedia_group_link( $rtmedia_query->query['context_id'] );
 		} else {
