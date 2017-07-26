@@ -4071,21 +4071,26 @@ function rtm_is_buddypress_activate() {
  * @return url             URL of uploader.
  */
 function rtmedia_get_upload_url( $request_uri ) {
-	$url        = trailingslashit( $request_uri );
+
+	$url        = esc_url( trailingslashit( $request_uri ) );
 	$slug_split = explode( '/', $url );
 	$slug_split = array_values( array_filter( $slug_split ) );
+
 	// check position of media slug for end of the URL.
-	if ( RTMEDIA_MEDIA_SLUG === $slug_split[ count( $slug_split ) - 1 ] ) {
+	if ( is_array( $slug_split ) && ! empty( $slug_split ) && RTMEDIA_MEDIA_SLUG === $slug_split[ count( $slug_split ) - 1 ] ) {
 		// replace media slug with the blank space.
 		$slug_split[ count( $slug_split ) - 1 ] = '';
 		$url_upload                             = implode( '/', $slug_split );
 		$url                                    = trailingslashit( $url_upload ) . 'upload/';
 	} else {
-
 		// If url contains '?' then put query string at last.
 		if ( strstr( $url, '?' ) ) {
-			$url = explode( '?', $url );
-			$url = trailingslashit( $url[0] ) . 'upload/?' . trim( $url[1], '/' );
+			$url_arr = explode( '?', $url );
+			if ( is_array( $url_arr ) && ! empty( $url_arr ) && count( $url_arr ) > 1 ) {
+				$sub_url      = isset( $url_arr[0] ) ? $url_arr[0] : '';
+				$query_string = isset( $url_arr[1] ) ? $url_arr[1] : '';
+				$url          = trailingslashit( $sub_url ) . 'upload/?' . trim( $query_string, '/' );
+			}
 		} else {
 			$url = trailingslashit( $url ) . 'upload/';
 		}
