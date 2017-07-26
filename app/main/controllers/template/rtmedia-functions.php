@@ -4063,3 +4063,33 @@ function rtm_is_buddypress_activate() {
 
 	return is_plugin_active( 'buddypress/bp-loader.php' );
 }
+
+/**
+ * Get the uploader url for uploading media.
+ *
+ * @param url $request_uri sub url of current page.
+ * @return url             URL of uploader.
+ */
+function rtmedia_get_upload_url( $request_uri ) {
+	$url        = trailingslashit( $request_uri );
+	$slug_split = explode( '/', $url );
+	$slug_split = array_values( array_filter( $slug_split ) );
+	// check position of media slug for end of the URL.
+	if ( RTMEDIA_MEDIA_SLUG === $slug_split[ count( $slug_split ) - 1 ] ) {
+		// replace media slug with the blank space.
+		$slug_split[ count( $slug_split ) - 1 ] = '';
+		$url_upload                             = implode( '/', $slug_split );
+		$url                                    = trailingslashit( $url_upload ) . 'upload/';
+	} else {
+
+		// If url contains '?' then put query string at last.
+		if ( strstr( $url, '?' ) ) {
+			$url = explode( '?', $url );
+			$url = trailingslashit( $url[0] ) . 'upload/?' . trim( $url[1], '/' );
+		} else {
+			$url = trailingslashit( $url ) . 'upload/';
+		}
+	}
+
+	return $url;
+}

@@ -271,25 +271,8 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function bp_after_activity_post_form() {
-		$url_raw    = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
-		$url        = trailingslashit( $url_raw );
-		$slug_split = explode( '/', $url );
-		// check position of media slug for end of the URL.
-		if ( RTMEDIA_MEDIA_SLUG === $slug_split[ count( $slug_split ) - 1 ] ) {
-			// replace media slug with the blank space.
-			$slug_split[ count( $slug_split ) - 1 ] = '';
-			$url_upload                             = implode( '/', $slug_split );
-			$url                                    = trailingslashit( $url_upload ) . 'upload/';
-		} else {
-
-			// If url contains '?' then put query string at last.
-			if ( strstr( $url, '?' ) ) {
-				$url = explode( '?', $url );
-				$url = trailingslashit( $url[0] ) . 'upload/?' . trim( $url[1], '/' );
-			} else {
-				$url = trailingslashit( $url ) . 'upload/';
-			}
-		}
+		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
+		$url         = rtmedia_get_upload_url( $request_uri );
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ) {
 			$params = array(
 				'url'                 => $url,
@@ -317,7 +300,7 @@ class RTMediaBuddyPressActivity {
 					'redirect'             => 'no',
 					'rtmedia_update'       => 'true',
 					'action'               => 'wp_handle_upload',
-					'_wp_http_referer'     => $url_raw,
+					'_wp_http_referer'     => $request_uri,
 					'mode'                 => 'file_upload',
 					'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ),
 				) ),
