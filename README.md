@@ -159,7 +159,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
  * Unit of media size doesn't display correctly
  * Buttons UI of edit media screen for default WordPress themes
  * BuddyPress activity upload issue with Microsoft Edge
- * Some notices
+ * Notices of "Undefined offset" and "get property of non-object"
  * UI issue of media close button on Twenty Seventeen theme
  * Pagination issue with album search
  * Upload falls over while using special characters into filename
