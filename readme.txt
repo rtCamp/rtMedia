@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 4.8
-Stable tag: 4.4.1
+Stable tag: 4.4.2
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -136,6 +136,23 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.4.3 [July 26, 2017] =
+
+* ENHANCEMENTS
+
+ * Add filter to change the "alt" attribute value for photos in media gallery [Documentation](https://rtmedia.io/docs/developers/hooks/rtmc_change_alt_text/)
+
+* FIXED
+
+ * Unit of media size doesn't display correctly
+ * Buttons UI of edit media screen for default WordPress themes
+ * BuddyPress activity upload issue with Microsoft Edge
+ * Some notices
+ * UI issue of media close button on Twenty Seventeen theme
+ * Pagination issue with album search
+ * Upload falls over while using special characters into filename
+ * Fatal Error in gallery search if BuddyPress is not installed
 
 = 4.4.2 [June 30, 2017] =
 
