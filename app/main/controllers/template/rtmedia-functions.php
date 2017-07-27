@@ -3910,6 +3910,10 @@ if ( ! function_exists( 'rtmedia_get_album_description_setting' ) ) {
 
 if ( ! function_exists( 'rtmedia_hide_title_media_gallery' ) ) {
 	function rtmedia_hide_title_media_gallery( $media_type = false ) {
+		global $rtmedia_query;
+
+		// Check if the page is gallery shortcode or not.
+		$is_gallery_shortcode = ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) ? true : false;
 		$return = 'hide';
 		$media_type_allow = array();
 		$media_type_allow = apply_filters( 'rtmedia_show_title_media_gallery', $media_type_allow );
@@ -3917,7 +3921,8 @@ if ( ! function_exists( 'rtmedia_hide_title_media_gallery' ) ) {
 			$media_type_allow = array();
 		}
 
-		if ( is_array( $media_type_allow ) && ! empty( $media_type ) && in_array( $media_type, $media_type_allow ) ) {
+		// Set this class for allowed media type and gallery shortcode.
+		if ( ( is_array( $media_type_allow ) && ! empty( $media_type ) && in_array( $media_type, $media_type_allow ) ) || ( true === $is_gallery_shortcode ) ) {
 			$return = 'show';
 		}
 		return $return;

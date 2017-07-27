@@ -602,6 +602,10 @@ class RTMediaQuery {
 	}
 
 	function populate_media() {
+		global $rtmedia_query;
+
+		// Check if the page is gallery shortcode or not.
+		$is_gallery_shortcode = ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) ? true : false;
 
 		$this->set_privacy();
 		if ( $this->is_single() ) {
@@ -676,13 +680,13 @@ class RTMediaQuery {
 			unset( $this->media_query['lightbox'] );
 		}
 
-		// media title option
-		if ( isset( $this->media_query['media_title'] ) ) {
-			if ( 'false' === $this->media_query['media_title'] ) {
-				// Add filter show media title
+		// Media title option.
+		if ( isset( $this->media_query ) ) {
+			if ( ( isset( $this->media_query['media_title'] ) && 'false' === $this->media_query['media_title'] ) || ( true === $is_gallery_shortcode && ! isset( $this->media_query['media_title'] ) ) ) {
+				// Add filter show media title.
 				add_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_gallery_do_not_show_media_title', 10, 1 );
 			}
-			// Unset the media title parameter from media query
+			// Unset the media title parameter from media query.
 			unset( $this->media_query['media_title'] );
 		}
 
