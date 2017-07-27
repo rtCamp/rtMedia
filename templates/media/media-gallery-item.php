@@ -34,7 +34,13 @@ if ( isset( $is_edit_allowed[0] ) ) {
 			<img src="<?php rtmedia_image( 'rt_media_thumbnail' ); ?>" alt="<?php rtmedia_image_alt(); ?>">
 		</div>
 
-		<?php if ( apply_filters( 'rtmedia_media_gallery_show_media_title', true ) ) { ?>
+		<?php
+		/**
+		 * Filter to hide or show media titles in gallery.
+		 *
+		 * @param bool true Default value is true.
+		 */
+		if ( apply_filters( 'rtmedia_media_gallery_show_media_title', true ) ) { ?>
 			<div class="rtmedia-item-title <?php echo esc_html( rtmedia_show_title() ); ?>" >
 				<h4 title="<?php echo esc_attr( rtmedia_title() ); ?>">
 					<?php echo esc_html( rtmedia_title() ); ?>
