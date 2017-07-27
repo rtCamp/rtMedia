@@ -302,9 +302,9 @@ class RTMedia {
 
 	function custom_style_for_activity_image_size() {
 
-		// get width from rtMedia settings.
+		// Get width from rtMedia settings.
 		$width  = ( isset( $this->options['defaultSizes_photo_medium_width'] ) ) ? $this->options['defaultSizes_photo_medium_width'] : '0';
-		// get height from rtMedia settings.
+		// Get height from rtMedia settings.
 		$height = ( isset( $this->options['defaultSizes_photo_medium_height'] ) ) ? $this->options['defaultSizes_photo_medium_height'] : '0';
 
 		$media_height = $height . 'px';
