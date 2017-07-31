@@ -4096,11 +4096,11 @@ function rtmedia_get_upload_url( $request_uri ) {
 	$slug_split   = explode( '/', $url );
 	$slug_split   = array_values( array_filter( $slug_split ) );
 	$rtmedia_slug = '/' . RTMEDIA_MEDIA_SLUG;
-
+	$slug_pos     = strrpos( $url, $rtmedia_slug );
 	// check position of media slug for end of the URL.
-	if ( is_array( $slug_split ) && ! empty( $slug_split ) && false !== strrpos( $url, $rtmedia_slug ) ) {
+	if ( is_array( $slug_split ) && ! empty( $slug_split ) && false !== $slug_pos ) {
 		// replace media slug with the blank space.
-		$url_upload   = substr( $url, 0, strrpos( $url, $rtmedia_slug ) );
+		$url_upload   = substr( $url, 0, $slug_pos );
 		$url          = trailingslashit( $url_upload ) . 'upload/';
 	} else {
 		// If url contains '?' then put query string at last.
