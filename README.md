@@ -164,6 +164,8 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
  * Pagination issue with album search
  * Upload falls over while using special characters into filename
  * Fatal Error in gallery search if BuddyPress is not installed
+ * Medium image size not working correctly with zero height
+ * `medi_title` attribute was not working for gallery shortcode
 
 ### 4.4.2 [June 30, 2017] ###
 
