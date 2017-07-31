@@ -181,13 +181,13 @@ abbr.required {
 	background: #f7f7f7;
 	background-image: -webkit-gradient(linear, left bottom, left top, from(#fff), to(#f7f7f7));
 	background-image: -webkit-linear-gradient(bottom, #fff, #f7f7f7);
-	background-image:    -moz-linear-gradient(bottom, #fff, #f7f7f7);
-	background-image:      -o-linear-gradient(bottom, #fff, #f7f7f7);
+	background-image: -moz-linear-gradient(bottom, #fff, #f7f7f7);
+	background-image: -o-linear-gradient(bottom, #fff, #f7f7f7);
 	background-image: linear-gradient(to top, #fff, #f7f7f7);
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
-	-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
-	box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
+	-webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+	box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 .media-item .bar {
@@ -198,13 +198,13 @@ abbr.required {
 	background-color: #8cc1e9;
 	background-image: -webkit-gradient(linear, left bottom, left top, from(#72a7cf), to(#8cc1e9));
 	background-image: -webkit-linear-gradient(bottom, #72a7cf, #8cc1e9);
-	background-image:    -moz-linear-gradient(bottom, #72a7cf, #8cc1e9);
-	background-image:      -o-linear-gradient(bottom, #72a7cf, #8cc1e9);
+	background-image: -moz-linear-gradient(bottom, #72a7cf, #8cc1e9);
+	background-image: -o-linear-gradient(bottom, #72a7cf, #8cc1e9);
 	background-image: linear-gradient(to top, #72a7cf, #8cc1e9);
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
-	-webkit-box-shadow: 0 0 3px rgba(0,0,0,0.3);
-	box-shadow: 0 0 3px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
 .media-item .progress .percent {
@@ -212,8 +212,8 @@ abbr.required {
 	position: relative;
 	width: 200px;
 	padding: 0 8px;
-	text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-	color: rgba(0,0,0,0.6);
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+	color: rgba(0, 0, 0, 0.6);
 }
 
 .upload-php .fixed .column-parent {
@@ -331,7 +331,7 @@ abbr.required {
 	left: 0;
 	background-color: #000;
 	opacity: 0.6;
-	filter: alpha(opacity=60);
+	filter: alpha(opacity = 60);
 }
 
 ul#dismissed-updates {
@@ -414,6 +414,37 @@ borger color while dragging a file over the uploader drop area */
 	position: relative;
 }
 
+#item-body {
+	.imgedit-settings {
+		.imgedit-group-top {
+			h2 {
+				display: inline-block;
+				margin: 0;
+			}
+		}
+	}
+}
+
+.rtmedia-container {
+	.rtmedia-image-editor-cotnainer {
+		label {
+			display: inline-block;
+			float: none;
+			margin-right: 0;
+		}
+
+		.dashicons-editor-help {
+			padding: 0;
+			height: auto;
+			margin-top: 10px;
+		}
+
+		.hidden {
+			display: none;
+		}
+	}
+}
+
 .imgedit-settings p {
 	margin: 8px 0;
 }
@@ -447,7 +478,7 @@ td.imgedit-settings input {
 	background: #fff url(../../../../../../wp-admin/images/wpspin_light.gif) no-repeat scroll 22px 10px;
 	background-size: 16px 16px;
 	opacity: 0.7;
-	filter: alpha(opacity=70);
+	filter: alpha(opacity = 70);
 	width: 100%;
 	height: 500px;
 	display: none;
@@ -459,7 +490,7 @@ td.imgedit-settings input {
 	display: none;
 	float: right;
 	opacity: 0.7;
-	filter: alpha(opacity=70);
+	filter: alpha(opacity = 70);
 	width: 16px;
 	height: 16px;
 	margin: 5px 5px 0;
@@ -470,7 +501,7 @@ td.imgedit-settings input {
 }
 
 .media-disabled,
-.imgedit-settings .disabled  {
+.imgedit-settings .disabled {
 	color: grey;
 }
 
@@ -511,7 +542,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-crop {
-	background: transparent url('../../../../../../wp-admin/images/imgedit-icons.png') no-repeat scroll -9px -31px;
 	margin: 0 8px 0 0;
 }
 
@@ -524,7 +554,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-rleft {
-	background: transparent url('../../../../../../wp-admin/images/imgedit-icons.png') no-repeat scroll -46px -31px;
 	margin: 0 3px;
 }
 
@@ -537,7 +566,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-rright {
-	background: transparent url('../../../../../../wp-admin/images/imgedit-icons.png') no-repeat scroll -77px -31px;
 	margin: 0 8px 0 3px;
 }
 
@@ -550,7 +578,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-flipv {
-	background: transparent url('../../../../../../wp-admin/images/imgedit-icons.png') no-repeat scroll -115px -31px;
 	margin: 0 3px;
 }
 
@@ -563,7 +590,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-fliph {
-	background: transparent url('../../../../../../wp-admin/images/imgedit-icons.png') no-repeat scroll -147px -31px;
 	margin: 0 8px 0 3px;
 }
 
@@ -576,7 +602,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-undo {
-	background: transparent url('../../../../../../wp-admin/images/imgedit-icons.png') no-repeat scroll -184px -31px;
 	margin: 0 3px;
 }
 
@@ -589,7 +614,6 @@ td.imgedit-settings input {
 }
 
 .imgedit-redo {
-	background: transparent url('../../../../../../wp-admin/images/imgedit-icons.png') no-repeat scroll -215px -31px;
 	margin: 0 8px 0 3px;
 }
 
@@ -676,7 +700,7 @@ span.imgedit-scale-warn {
 .imgedit-menu div.disabled {
 	border-color: #ccc;
 	background-color: #ddd;
-	filter: alpha(opacity=50);
+	filter: alpha(opacity = 50);
 	opacity: 0.5;
 }
 
@@ -684,19 +708,34 @@ span.imgedit-scale-warn {
   Custom Styles
 ------------------------------------------------------------------------------*/
 
-.bp-media-image-editor-cotnainer { margin-top : 35px; }
-.wp_attachment_image .bp-media-image-edit { float: left; }
-.wp_attachment_image .spinner { display: none; }
-.bp-media-image-editor-cotnainer .hidden { display: none; }
-.bp-media-image-editor-cotnainer div.updated {
-    margin: 5px 0 15px;
-    background-color: #ffffe0;
-    border-color: #e6db55;
-    padding: 0 .6em;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    border-width: 1px;
-    border-style: solid;
+.bp-media-image-editor-cotnainer {
+	margin-top: 35px;
 }
 
-.bp-media-image-editor-cotnainer div.updated p { margin: .5em 0;padding: 2px; }
+.wp_attachment_image .bp-media-image-edit {
+	float: left;
+}
+
+.wp_attachment_image .spinner {
+	display: none;
+}
+
+.bp-media-image-editor-cotnainer .hidden {
+	display: none;
+}
+
+.bp-media-image-editor-cotnainer div.updated {
+	margin: 5px 0 15px;
+	background-color: #ffffe0;
+	border-color: #e6db55;
+	padding: 0 .6em;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.bp-media-image-editor-cotnainer div.updated p {
+	margin: .5em 0;
+	padding: 2px;
+}
