@@ -4092,16 +4092,16 @@ function rtm_is_buddypress_activate() {
  */
 function rtmedia_get_upload_url( $request_uri ) {
 
-	$url        = esc_url( trailingslashit( $request_uri ) );
-	$slug_split = explode( '/', $url );
-	$slug_split = array_values( array_filter( $slug_split ) );
-
+	$url          = esc_url( trailingslashit( $request_uri ) );
+	$slug_split   = explode( '/', $url );
+	$slug_split   = array_values( array_filter( $slug_split ) );
+	$rtmedia_slug = '/' . RTMEDIA_MEDIA_SLUG;
+	$slug_pos     = strrpos( $url, $rtmedia_slug );
 	// check position of media slug for end of the URL.
-	if ( is_array( $slug_split ) && ! empty( $slug_split ) && RTMEDIA_MEDIA_SLUG === $slug_split[ count( $slug_split ) - 1 ] ) {
+	if ( is_array( $slug_split ) && ! empty( $slug_split ) && false !== $slug_pos ) {
 		// replace media slug with the blank space.
-		$slug_split[ count( $slug_split ) - 1 ] = '';
-		$url_upload                             = implode( '/', $slug_split );
-		$url                                    = trailingslashit( $url_upload ) . 'upload/';
+		$url_upload   = substr( $url, 0, $slug_pos );
+		$url          = trailingslashit( $url_upload ) . 'upload/';
 	} else {
 		// If url contains '?' then put query string at last.
 		if ( strstr( $url, '?' ) ) {
