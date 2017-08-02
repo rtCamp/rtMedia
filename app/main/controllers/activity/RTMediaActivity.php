@@ -122,7 +122,7 @@ class RTMediaActivity {
 				$thumbnail_id = $media->media_id;
 				if ( $thumbnail_id ) {
 					list( $src, $width, $height ) = wp_get_attachment_image_src( $thumbnail_id, apply_filters( 'rtmedia_activity_image_size', 'rt_media_activity_image' ) );
-					$html = '<img alt="' . esc_attr( $media->media_title ) . '" src="' . esc_url( $src ) . '" />';
+					$html = '<img alt="' . esc_attr( $media->media_title ) . '" src="' . set_url_scheme( $src ) . '" />';
 				}
 			} elseif ( 'video' === $media->media_type ) {
 				$cover_art = rtmedia_get_cover_art_src( $media->id );

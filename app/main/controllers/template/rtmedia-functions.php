@@ -687,7 +687,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 	$src = apply_filters( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
 
 	if ( true === $recho ) {
-		echo esc_url( $src );
+		echo set_url_scheme( $src );
 	} else {
 		return $src;
 	}
