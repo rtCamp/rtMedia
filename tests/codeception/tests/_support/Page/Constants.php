@@ -4,8 +4,8 @@ namespace Page;
 
 class Constants {
 
-	public static $userName = 'ADMINUSER';
-	public static $password = 'ADMINPASS';
+	public static $userName = 'admin';
+	public static $password = 'test';
 	public static $imageName = 'test-data/images/test.jpg';
 	public static $audioName = 'test-data/music/mpthreetest.mp3';
 	public static $videoName = 'test-data/videos/testmpfour.mp4';
@@ -159,7 +159,7 @@ class Constants {
 	public static $mediaAlbumLink = 'a#rtmedia-nav-item-albums';
 	public static $uploadButtonOnAtivityPage = '.rtmedia-add-media-button';
 	public static $privacyDropdown = 'select#rtSelectPrivacy';
-	public static $mediaPerPageActivitySelector = 'ul#activity-stream  > li:first-child ul li';
+	public static $mediaPerPageActivitySelector = 'ul#activity-stream > li:first-child ul li';
 	public static $mediaPerPageOnMediaSelector = 'ul.rtm-gallery-list li';
 	public static $groupListSelector = 'div#groups-dir-list > ul#groups-list li';
 	public static $createGroupLink = 'ul li#group-create-nav';
@@ -187,8 +187,8 @@ class Constants {
 	public static $activityPrivacyStatus = '#activity-stream.activity-list.item-list > li.activity.activity_update.activity-item > div.activity-content > div.activity-inner p';
 	public static $commentDiv = 'div.rtmedia-comment-content p';
 	public static $goBackToAlbumPage = 'a.rtm-button-back';
-	public static $metaSection = '.widget_meta';
-	public static $logoutLink = '.widget_meta > ul > li:nth-child(2) a';
+	public static $metaSection = '#wp-admin-bar-logout';
+	public static $logoutLink = '#wp-admin-bar-user-actions #wp-admin-bar-logout a';
 	public static $logoutMsg = 'p.message';
 	public static $saveSession = false;
 	public static $fileList = '#rtmedia_uploader_filelist';

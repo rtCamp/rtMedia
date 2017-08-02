@@ -6,6 +6,7 @@ class Login {
 
 	public static $wpUserNameField = 'input#user_login';
 	public static $wpPasswordField = 'input#user_pass';
+	public static $wpDashboard = '#adminmenu';
 	public static $wpSubmitButton = 'input#wp-submit';
 	public static $loginLink = 'li#wp-admin-bar-bp-login';
 	public static $dashBoardMenu = 'li#menu-dashboard';
@@ -44,6 +45,7 @@ class Login {
 
 		// $I->seeElement( self::$wpSubmitButton );
 		$I->click( self::$wpSubmitButton );
+		$I->waitForElement( '#adminmenu', 10 );
 		$I->waitForElement( self::$dashBoardMenu, 10 );
 
 		if ( $saveSession ) {

@@ -11,7 +11,7 @@ class UploadMedia {
 	public static $selectFileButton = 'input#rtMedia-upload-button';
 	public static $fileList = '#rtmedia_uploader_filelist';
 	public static $uploadTermsCheckbox = '#rtmedia_upload_terms_conditions';
-	public static $uploadMediaButton = '.start-media-upload';
+	public static $uploadMediaButton = '#rtmedia-upload-container .start-media-upload';
 	public static $firstChild = 'ul.rtm-gallery-list li:first-child';
 	public static $commentSubmitButton = '.rt_media_comment_submit';
 	public static $whatIsNewTextarea = '#whats-new';
@@ -89,7 +89,7 @@ class UploadMedia {
 		$I = $this->tester;
 
 		self::uploadMedia( $userName, $mediaFile );
-
+		$I->waitForElementVisible( self::$uploadMediaButton );
 		$I->seeElement( self::$uploadMediaButton );
 		$I->click( self::$uploadMediaButton );
 
@@ -106,6 +106,7 @@ class UploadMedia {
 		self::uploadMedia( $userName, $mediaFile );
 
 		$I->waitForElementNotVisible( ConstantsPage::$fileList, 20 );
+		$I->wait( 5 );
 	}
 
 	/**
@@ -167,7 +168,7 @@ class UploadMedia {
 
 		$I->fillfield( self::$whatIsNewTextarea, $bulkUploadStatus );
 		$I->seeElement( self::$mediaButtonOnActivity );
-
+		
 		//if $numOfMedia > 0 then it will execute if condition else for $numOfMedia = 0 it will execute else part
 		if ( $numOfMedia > 0 ) {
 			for ( $i = 0; $i < $numOfMedia + 1; $i ++ ) {

@@ -34,6 +34,7 @@ $uploadmedia = new UploadMediaPage( $I );
 $uploadmedia->bulkUploadMediaFromActivity( ConstantsPage::$imageName, ConstantsPage::$numOfMediaPerPageOnActivity );
 
 if ( ConstantsPage::$numOfMediaPerPageOnActivity > 0 ) {
+	$I->waitForElement( ConstantsPage::$mediaPerPageActivitySelector, 10 );
 	$I->seeNumberOfElements( ConstantsPage::$mediaPerPageActivitySelector, ConstantsPage::$numOfMediaPerPageOnActivity );
 } else {
 	$temp = 5;

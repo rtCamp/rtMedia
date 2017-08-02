@@ -9,7 +9,7 @@ class BuddypressSettings {
 	public static $userProfileLink = 'a#user-xprofile';
 	public static $mediaLinkOnProfile = 'a#user-media';
 	public static $myGroupLink = '#groups-personal';
-	public static $groupNameLink = 'ul#groups-list li:first-child .item .item-title a';
+	public static $groupNameLink = '#groups-dir-list ul#groups-list > li:first-child  a img';
 	protected $tester;
 
 	public function __construct( \AcceptanceTester $I ) {
@@ -83,7 +83,6 @@ class BuddypressSettings {
 
 		$I->seeElement( ConstantsPage::$createGroupButton );
 		$I->click( ConstantsPage::$createGroupButton );
-		// $I->wait( 5 );
 		$I->waitForElement( ConstantsPage::$nextGrpButton, 20 );
 
 		self::gotoGroup();
