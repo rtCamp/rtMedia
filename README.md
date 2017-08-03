@@ -2,9 +2,9 @@
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
-* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty)
+* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [mangeshp] (http://profiles.wordpress.org/mangeshp), [sanket.parmar] (http://profiles.wordpress.org/sanket.parmar), [pranalipatel] (http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani] (http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36] (http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode] (http://profiles.wordpress.org/kiranpotphode), [yahil] (http://profiles.wordpress.org/yahil), [1naveengiri] (http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90] (http://profiles.wordpress.org/bhargavbhandari90), [raftaar1191] (http://profiles.wordpress.org/raftaar1191), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [sagarjadhav] (http://profiles.wordpress.org/sagarjadhav), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [faishal] (http://profiles.wordpress.org/faishal), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [rahul286] (http://profiles.wordpress.org/rahul286), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay), [jarretc] (http://profiles.wordpress.org/jarretc), [tobiaskluge] (http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal] (http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla] (http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar] (http://profiles.wordpress.org/mehulkaklotar), [tannermirabel] (http://profiles.wordpress.org/tannermirabel), [kishores] (http://profiles.wordpress.org/kishores), [chandrapatel] (http://profiles.wordpress.org/chandrapatel), [rahul3883] (http://profiles.wordpress.org/rahul3883), [nomnom99] (http://profiles.wordpress.org/nomnom99), [sayanchakraborty] (http://profiles.wordpress.org/sayanchakraborty),
 
-* **License:** [GPL v2 or later]( http://www.gnu.org/licenses/gpl-2.0.html)
+* **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
 * **Donate Link:** http://rtcamp.com/donate/
 
@@ -137,7 +137,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
-### 4.4.3 [August 3, 2017] ###
+#### 4.4.3 [August 3, 2017] ####
 
 * ENHANCEMENTS
 
@@ -156,7 +156,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Medium image size not working correctly with zero height
  * `media_title` attribute was not working for gallery shortcode
 
-### 4.4.2 [June 30, 2017] ###
+#### 4.4.2 [June 30, 2017] ####
 
 * FIXED
 
@@ -1418,8 +1418,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.4.1 ####
-rtMedia 4.4.1, Minor release which fixes issues with Search Media and pagination in the Albums tab.
+#### 4.4.3 ####
+rtMedia 4.4.3, with the fix of pagination issue while searching in album. Also introducing filter to change the "alt" attribute value for photos in media gallery.
 
 ## Sponsors ##
 
