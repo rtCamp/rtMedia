@@ -450,7 +450,11 @@ function rtmedia_type( $id = false ) {
 	} else {
 		global $rtmedia_media;
 
-		return $rtmedia_media->media_type;
+		if ( is_object( $rtmedia_media ) ) {
+			return $rtmedia_media->media_type;
+		} else {
+			return '';
+		}
 	}
 
 }
@@ -534,7 +538,13 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 	if ( isset( $rtmedia_media->media_type ) ) {
 		if ( 'photo' === $rtmedia_media->media_type ) {
 			$src  = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
-			$html = "<img src='" . esc_url( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+
+			/**
+			 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
+			 * Added by checking the code from "wp-admin/includes/media.php:2740".
+			 * Because in media library, it was not breaking.
+			 */
+			$html = "<img src='" . set_url_scheme( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
 		} elseif ( 'video' === $rtmedia_media->media_type ) {
 			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 			$height = $rtmedia->options['defaultSizes_video_singlePlayer_height'];
@@ -677,7 +687,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 	$src = apply_filters( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
 
 	if ( true === $recho ) {
-		echo esc_url( $src );
+		echo set_url_scheme( $src );
 	} else {
 		return $src;
 	}
@@ -1470,6 +1480,9 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	global $rtmedia_interaction, $rtmedia_query, $post, $rtmedia;
 
 	$wp_default_context = array( 'page', 'post' );
+	$rtm_context        = get_query_var( 'rtm_context' );
+	$rtm_attr           = get_query_var( 'rtm_attr' );
+	$rtm_term           = get_query_var( 'rtm_term'  );
 
 	if ( isset( $_GET['context'] ) && in_array( $_GET['context'], $wp_default_context ) && isset( $_GET['rtmedia_shortcode'] ) && 'true' === $_GET['rtmedia_shortcode'] ) {
 		$post = get_post( intval( $_GET['context_id'] ) );
@@ -1488,6 +1501,8 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 		} else {
 			if ( $is_shortcode_on_home ) {
 				$link .= $site_url;
+			} elseif ( 'group' === $rtm_context || 'profile' === $rtm_context ) {
+				$link .= $site_url . 'rtm_context/' . $rtm_context . '/attribute/' . $rtm_attr . '/' . $rtm_term . '/';
 			} else {
 				$link .= $site_url . 'author/' . $author_name . '/';
 			}
@@ -3910,6 +3925,10 @@ if ( ! function_exists( 'rtmedia_get_album_description_setting' ) ) {
 
 if ( ! function_exists( 'rtmedia_hide_title_media_gallery' ) ) {
 	function rtmedia_hide_title_media_gallery( $media_type = false ) {
+		global $rtmedia_query;
+
+		// Check if the page is gallery shortcode or not.
+		$is_gallery_shortcode = ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) ? true : false;
 		$return = 'hide';
 		$media_type_allow = array();
 		$media_type_allow = apply_filters( 'rtmedia_show_title_media_gallery', $media_type_allow );
@@ -3917,7 +3936,8 @@ if ( ! function_exists( 'rtmedia_hide_title_media_gallery' ) ) {
 			$media_type_allow = array();
 		}
 
-		if ( is_array( $media_type_allow ) && ! empty( $media_type ) && in_array( $media_type, $media_type_allow ) ) {
+		// Set this class for allowed media type and gallery shortcode.
+		if ( ( is_array( $media_type_allow ) && ! empty( $media_type ) && in_array( $media_type, $media_type_allow ) ) || ( true === $is_gallery_shortcode ) ) {
 			$return = 'show';
 		}
 		return $return;
@@ -3994,7 +4014,7 @@ function rtm_fetch_user_by_member_type( $type ) {
 		    'member_type' => array( $type ),
 		);
 
-		if ( bp_has_members( $member_args ) ) {
+		if ( rtm_is_buddypress_activate() && bp_has_members( $member_args ) ) {
 			while ( bp_members() ) {
 				bp_the_member();
 
@@ -4062,4 +4082,39 @@ function rtm_is_buddypress_activate() {
 	}
 
 	return is_plugin_active( 'buddypress/bp-loader.php' );
+}
+
+/**
+ * Get the uploader url for uploading media.
+ *
+ * @param url $request_uri sub url of current page.
+ * @return url             URL of uploader.
+ */
+function rtmedia_get_upload_url( $request_uri ) {
+
+	$url          = esc_url( trailingslashit( $request_uri ) );
+	$slug_split   = explode( '/', $url );
+	$slug_split   = array_values( array_filter( $slug_split ) );
+	$rtmedia_slug = '/' . RTMEDIA_MEDIA_SLUG;
+	$slug_pos     = strrpos( $url, $rtmedia_slug );
+	// check position of media slug for end of the URL.
+	if ( is_array( $slug_split ) && ! empty( $slug_split ) && false !== $slug_pos ) {
+		// replace media slug with the blank space.
+		$url_upload   = substr( $url, 0, $slug_pos );
+		$url          = trailingslashit( $url_upload ) . 'upload/';
+	} else {
+		// If url contains '?' then put query string at last.
+		if ( strstr( $url, '?' ) ) {
+			$url_arr = explode( '?', $url );
+			if ( is_array( $url_arr ) && ! empty( $url_arr ) && count( $url_arr ) > 1 ) {
+				$sub_url      = isset( $url_arr[0] ) ? $url_arr[0] : '';
+				$query_string = isset( $url_arr[1] ) ? $url_arr[1] : '';
+				$url          = trailingslashit( $sub_url ) . 'upload/?' . trim( $query_string, '/' );
+			}
+		} else {
+			$url = trailingslashit( $url ) . 'upload/';
+		}
+	}
+
+	return $url;
 }

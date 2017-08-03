@@ -46,6 +46,7 @@ class RTMediaBuddyPressActivity {
 		add_filter( 'bp_activity_user_can_delete', array( $this, 'rtm_bp_activity_user_can_delete' ), 10, 2 );
 
 		add_filter( 'bp_activity_permalink_access', array( $this, 'rtm_bp_activity_permalink_access' ) );
+		add_action( 'bp_activity_comment_posted', array( $this, 'rtm_check_privacy_for_comments' ), 10, 3 );
 	}
 
 	function bp_activity_deleted_activities( $activity_ids_deleted ) {
@@ -271,18 +272,8 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function bp_after_activity_post_form() {
-		$url_raw    = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
-		$url        = trailingslashit( $url_raw );
-		$slug_split = explode( '/', $url );
-		// check position of media slug for end of the URL
-		if ( RTMEDIA_MEDIA_SLUG === $slug_split[ count( $slug_split ) - 1 ] ) {
-			// replace media slug with the blank space
-			$slug_split[ count( $slug_split ) - 1 ] = '';
-			$url_upload                              = implode( '/', $slug_split );
-			$url                                     = trailingslashit( $url_upload ) . 'upload/';
-		} else {
-			$url = trailingslashit( $url ) . 'upload/';
-		}
+		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
+		$url         = rtmedia_get_upload_url( $request_uri );
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ) {
 			$params = array(
 				'url'                 => $url,
@@ -310,7 +301,7 @@ class RTMediaBuddyPressActivity {
 					'redirect'             => 'no',
 					'rtmedia_update'       => 'true',
 					'action'               => 'wp_handle_upload',
-					'_wp_http_referer'     => $url_raw,
+					'_wp_http_referer'     => $request_uri,
 					'mode'                 => 'file_upload',
 					'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ),
 				) ),
@@ -846,5 +837,54 @@ class RTMediaBuddyPressActivity {
 
 		return $has_access;
 
+	}
+
+	/**
+	 * Makes the comments hidden (private) if the parent comment's
+	 * privacy is set to private.
+	 *
+	 * @param string $comment_id Activity id of the comment.
+	 * @param array  $r          Array of arguments.
+	 */
+	public function rtm_check_privacy_for_comments( $comment_id, $r ) {
+		global $wpdb;
+
+		if ( empty( $r ) || empty( $comment_id ) || ( ! is_array( $r ) ) ) {
+			return;
+		}
+
+		$db_prefix   = $wpdb->get_blog_prefix();
+		$table_name  = 'rt_rtm_activity';
+		$activity_id = $r['activity_id'];
+		$user_id     = $r['user_id'];
+		$privacy_id  = bp_activity_get_meta( $activity_id, 'rtmedia_privacy' );
+		$blog_id     = get_current_blog_id();
+
+		if ( '60' === $privacy_id ) {
+			$row_values_rtm_media = array(
+				'activity_id' => $comment_id,
+				'user_id'     => $user_id,
+				'privacy'     => $privacy_id,
+				'blog_id'     => $blog_id,
+			);
+
+			$wpdb->insert(
+				$db_prefix . $table_name,
+				$row_values_rtm_media
+			);
+
+			$table_name = 'bp_activity_meta';
+			$row_values_activity_meta = array(
+				'id'          => '',
+				'activity_id' => $comment_id,
+				'meta_key'    => 'rtmedia_privacy',
+				'meta_value'  => 60,
+			);
+
+			$wpdb->insert(
+				$db_prefix . $table_name,
+				$row_values_activity_meta
+			);
+		}
 	}
 }
