@@ -1,6 +1,11 @@
-![alt text](https://plugins.svn.wordpress.org/buddypress-media//assets/banner-772x250.jpg)
+[![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)](https://browserstack.com)
+
+![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=QXJGc0MzZ3ZyUzBaUW9zZHFTSUtYNTMzUFJhMThPNWoxcFh5ZkxjNzE5Zz0tLWRrOTNUb0lzZXdWRC9PL3k3bHF6R3c9PQ==--0cf0d06c7d977c10230d7dbfcb5d907592ab005d)
+
+![banner-772x250](https://cloud.githubusercontent.com/assets/8191145/26444356/bb47f150-4159-11e7-997e-b960bca0293d.jpg)
 
 # rtMedia for WordPress, BuddyPress and bbPress #
+
 
 * **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty)
 
@@ -1424,8 +1429,8 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.3.1 ####
-Remove media title & fixed pagination in media tab along with several other bugs fixed. Please update/re-save the permalinks after the plugin update.
+#### 4.3 ####
+Now upload media in comment & fixed rtMedia shortcode pagination along with several other bugs. Please update/re-save the permalinks after the plugin update.
 
 ## Sponsors ##
 
@@ -1455,3 +1460,7 @@ rtMedia includes [full translation support](https://rtmedia.io/docs/translations
 rtMedia uses the following projects/sources for some functionality
 
 * [MediaElement.js](http://mediaelementjs.com/) for html5 audio/video player
+* [Maginific Popup](http://dimsemenov.com/plugins/magnific-popup/) for responsive lightbox
+* [getID3](http://getid3.sourceforge.net/) gets us some ID tags for the media
+* [Foundation](http://foundation.zurb.com/) for the media grid and layout
+* [Backbone.js](http://backbonejs.org/) for an MVC architecture for the frontend
