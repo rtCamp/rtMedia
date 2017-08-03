@@ -4,8 +4,8 @@ namespace Page;
 
 class Constants {
 
-	public static $userName = 'admin';
-	public static $password = 'test';
+	public static $userName = 'ADMINUSER';
+	public static $password = 'ADMINPASS';
 	public static $imageName = 'test-data/images/test.jpg';
 	public static $audioName = 'test-data/music/mpthreetest.mp3';
 	public static $videoName = 'test-data/videos/testmpfour.mp4';
