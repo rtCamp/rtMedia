@@ -137,7 +137,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.4.3 [July 26, 2017] =
+= 4.4.3 [August 3, 2017] =
 
 * ENHANCEMENTS
 
