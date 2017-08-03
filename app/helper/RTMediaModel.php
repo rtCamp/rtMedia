@@ -135,6 +135,7 @@ class RTMediaModel extends RTDBModel {
 
 			$sql .= $limit;
 		}
+
 		if ( ! $count_flag ) {
 			return $wpdb->get_results( $sql ); // @codingStandardsIgnoreLine
 		} else {

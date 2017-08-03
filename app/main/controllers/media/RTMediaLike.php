@@ -30,6 +30,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		remove_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );
 		add_action( 'rtmedia_action_buttons_after_media', array( $this, 'button_filter' ), 12 );
 		add_action( 'rtmedia_actions_before_comments', array( $this, 'like_button_filter' ), 10 );
+		add_action( 'like_button_no_comments', array( $this, 'like_button_no_comments_callback' ), 10 );
 		add_action( 'rtmedia_like_button_filter', array( $this, 'like_button_filter_nonce' ), 10, 1 );
 		if ( ! rtmedia_comments_enabled() ) {
 			add_action( 'rtmedia_actions_without_lightbox', array( $this, 'like_button_without_lightbox_filter' ) );
@@ -56,6 +57,21 @@ class RTMediaLike extends RTMediaUserInteraction {
 	}
 
 	function like_button_filter() {
+		if ( empty( $this->media ) ) {
+			$this->init();
+		}
+		$button = $this->render();
+
+		if ( $button ) {
+			echo '<span>' . $button . '</span>'; // @codingStandardsIgnoreLine
+		}
+	}
+
+	/**
+	 * This function displays the like button even if comment
+	 * section is disabled.
+	 */
+	function like_button_no_comments_callback() {
 		if ( empty( $this->media ) ) {
 			$this->init();
 		}
@@ -124,19 +140,21 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$actions = intval( $actions[0]->{$actionwa} );
 		if ( true === $this->increase ) {
 			$actions ++;
-			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->undo_label );
+			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_undo_label_text', $this->undo_label );
+			$return['prev'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 		} else {
 			$actions --;
 			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
+			$return['prev'] = apply_filters( 'rtmedia_' . $this->action . '_undo_label_text', $this->undo_label );
 		}
 
 		$like_html = '<span class="rtmedia-like-counter"></span>';
-		if( $actions > 0  && function_exists( 'rtmedia_who_like_html' ) ) {
+		if ( $actions > 0  && function_exists( 'rtmedia_who_like_html' ) ) {
 			$like_html = rtmedia_who_like_html( $actions, $this->increase );
 		}
 
 		/* label for "person/people like this" in media popup" */
-		if( 1 === $actions ){
+		if ( 1 === $actions ) {
 			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $like_html );
 		} else {
 			$return['person_text'] = apply_filters( 'rtmedia_' . $this->action . '_person_label_text', $like_html );
@@ -145,8 +163,6 @@ class RTMediaLike extends RTMediaUserInteraction {
 		if ( $actions < 0 ) {
 			$actions = 0;
 		}
-
-
 
 		$return['count'] = $actions;
 		$this->model->update( array( 'likes' => $actions ), array( 'id' => $this->action_query->id ) );

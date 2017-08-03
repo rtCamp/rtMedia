@@ -260,13 +260,14 @@
 	& > div,
 	& > form {
 		float: left;
-		margin: 0 2px;
+		margin: 0 4px 0 0;
 		padding: 7px 0;
 		position: relative;
 	}
 }
 
 .rtmedia-media {
+	margin: 0 auto;
 	img {
 		display: inline-block;
 		max-height: inherit;

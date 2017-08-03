@@ -146,7 +146,7 @@ class RTMediaAlbum {
 	 * @global type $rtmedia_interaction
 	 *
 	 */
-	function add( $title = '', $author_id = false, $new = true, $post_id = false, $context = false, $context_id = false ) {
+	function add( $title = '', $author_id = false, $new = true, $post_id = false, $context = false, $context_id = false, $album_description = '' ) {
 
 		global $rtmedia_interaction;
 		/* action to perform any task before adding the album */
@@ -161,6 +161,10 @@ class RTMediaAlbum {
 			'post_author' => $author_id,
 			'post_status' => 'hidden',
 		);
+
+		if ( ! empty( $album_description ) ) {
+			$post_vars['post_content'] = $album_description; 
+		}
 
 		/* Check whether to create a new album in wp_post table
 		 * This is the case when a user creates a album of his own. We need to

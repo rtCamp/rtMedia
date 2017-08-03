@@ -2,11 +2,12 @@
 
 	.mfp-content {
 		.rtm-lightbox-container {
-			display: table;
+			display: flex;
 
 			// Fixed issue in Firefox and Opera
 			table-layout: fixed;
 			width: 100%;
+			min-height: 473px;
 		}
 
 		.rtm-mfp-close {
@@ -14,15 +15,15 @@
 		}
 
 		.rtm-single-media {
-			display: table-cell;
+			display: flex;
 			width: 66.6667%;
+			align-items: center;
 		}
 
 		.rtm-single-meta {
-			display: table-cell;
+			display: block;
 			width: 33.3333%;
 			padding: 20px;
-			height: 473px;
 
 			.rtmedia-scroll {
 				height: 100%;

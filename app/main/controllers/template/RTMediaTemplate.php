@@ -219,6 +219,12 @@ class RTMediaTemplate {
 		$media_array = array();
 
 		if ( $rtmedia_query->media ) {
+
+			// Remove all filters used for search functionality to avoid modifying query for current media results.
+			remove_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 10, 3 );
+			remove_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11, 2 );
+			remove_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns', 10, 1 );
+
 			foreach ( $rtmedia_query->media as $key => $media ) {
 				$media_class = 'hide';
 				if( isset( $media->media_type ) && function_exists( 'rtmedia_hide_title_media_gallery' ) ) {
@@ -226,12 +232,17 @@ class RTMediaTemplate {
 				}
 				$media_array[ $key ]               = $media;
 				$media_array[ $key ]->media_count  = rtm_get_album_media_count( $media->id );
-				$media_array[ $key ]->guid         = rtmedia_image( 'rt_media_thumbnail', $media->id, false );
+				$media_array[ $key ]->guid         = rtmedia_image( 'rt_media_thumbnail', $media->id, false, $key );
 				$media_array[ $key ]->rt_permalink = get_rtmedia_permalink( $media->id );
 				$media_array[ $key ]->duration     = rtmedia_duration( $media->id );
 				$media_array[ $key ]->media_class  = $media_class;
 				$media_array[ $key ]               = apply_filters( 'rtmedia_media_array_backbone', $media_array[ $key ] );
 			}
+
+			// Add back all filters used for search functionality.
+			add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 10, 3 );
+			add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11, 2 );
+			add_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns', 10, 1 );
 		}
 
 		$return_array['data'] = $media_array;

@@ -116,26 +116,31 @@ class RTMediaActivity {
 	function media( $media, $type = 'activity' ) {
 		$html = false;
 
-		$video_class = 'wp-video-shortcode';
-
 		if ( isset( $media->media_type ) ) {
 			global $rtmedia;
 			if ( 'photo' === $media->media_type ) {
 				$thumbnail_id = $media->media_id;
 				if ( $thumbnail_id ) {
 					list( $src, $width, $height ) = wp_get_attachment_image_src( $thumbnail_id, apply_filters( 'rtmedia_activity_image_size', 'rt_media_activity_image' ) );
-					$html = '<img alt="' . esc_attr( $media->media_title ) . '" src="' . esc_url( $src ) . '" />';
+					$html = '<img alt="' . esc_attr( $media->media_title ) . '" src="' . set_url_scheme( $src ) . '" />';
 				}
 			} elseif ( 'video' === $media->media_type ) {
 				$cover_art = rtmedia_get_cover_art_src( $media->id );
+				$video_class = 'wp-video-shortcode';
+				$youtube_url = get_rtmedia_meta( $media->id, 'video_url_uploaded_from' );
 				if ( $cover_art ) {
 					$poster = 'poster = "' . esc_url( $cover_art ) . '"';
 				} else {
 					$poster = '';
 				}
-				$html = '<video ' . $poster . ' src="' . esc_url( wp_get_attachment_url( $media->media_id ) ) . '" width="' . esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_width'] ) . '" height="' . esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_height'] ) . '" type="video/mp4" class="'.$video_class.'" id="rt_media_video_' . esc_attr( $media->id ) . '" controls="controls" preload="none"></video>';
+				if ( empty( $youtube_url ) ) {
+					$html = '<video %s src="%s" width="%d" height="%d" type="video/mp4" class="%s" id="rt_media_video_%s" controls="controls" preload="none"></video>';
+					$html = sprintf( $html, $poster, esc_url( wp_get_attachment_url( $media->media_id ) ), esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_width'] ), esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_height'] ), $video_class, esc_attr( $media->id ) );
+				}
 			} elseif ( 'music' === $media->media_type ) {
-				$html = '<audio src="' . esc_url( wp_get_attachment_url( $media->media_id ) ) . '" width="' . esc_attr( $rtmedia->options['defaultSizes_music_activityPlayer_width'] ) . '" height="0" type="audio/mp3" class="wp-audio-shortcode" id="rt_media_audio_' . esc_attr( $media->id ) . '" controls="controls" preload="none"></audio>';
+				//$html = '<audio src="' . esc_url( wp_get_attachment_url( $media->media_id ) ) . '" width="' . esc_attr( $rtmedia->options['defaultSizes_music_activityPlayer_width'] ) . '" height="0" type="audio/mp3" class="wp-audio-shortcode" id="rt_media_audio_' . esc_attr( $media->id ) . '" controls="controls" preload="none"></audio>';
+				$html = '<audio src="%s" width="%d" height="0" type="audio/mp3" class="wp-audio-shortcode" id="rt_media_audio_%s" controls="controls" preload="none"></audio>';
+				$html = sprintf( $html, esc_url( wp_get_attachment_url( $media->media_id ) ), esc_attr( $rtmedia->options['defaultSizes_music_activityPlayer_width'] ), esc_attr( $media->id ) );
 			}
 		}
 

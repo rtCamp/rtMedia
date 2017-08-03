@@ -1,13 +1,28 @@
 <div class="rtmedia-container rtmedia-single-container">
 	<div class="rtm-lightbox-container clearfix">
 		<?php
-		global $rt_ajax_request;
+		global $rt_ajax_request, $rtmedia;
 		do_action( 'rtmedia_before_media' );
 
 		if ( have_rtmedia() ) : rtmedia();
 
 			global $rtmedia_media;
 			$type = ! empty( $rtmedia_media->media_type ) ? $rtmedia_media->media_type : 'none';
+			$class = '';
+
+			$if_comments_enable = isset( $rtmedia->options['general_enableComments'] ) ? $rtmedia->options['general_enableComments'] : 0;
+
+			// Count of likes.
+			if ( isset( $rtmedia_media->likes ) ) {
+				$count = intval( $rtmedia_media->likes );
+			} else {
+				$count = 0;
+			}
+
+			// Add hide class to this element when "comment on media" is not enabled.
+			if ( ! intval( $count ) && '0' === $if_comments_enable ) {
+				$class = 'hide';
+			}
 			?>
 			<div id="rtmedia-single-media-container"
 			     class="rtmedia-single-media rtm-single-media rtm-media-type-<?php echo esc_attr( $type ); ?>">
@@ -98,15 +113,25 @@
 								<div class="rtmedia-actions-before-comments clearfix">
 									<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 								</div>
-								<div class="rtm-like-comments-info">
+								<div class="rtm-like-comments-info <?php echo esc_attr( $class ) ?>">
 									<?php show_rtmedia_like_counts(); ?>
 									<div class="rtmedia-comments-container">
 										<?php rtmedia_comments(); ?>
 									</div>
 								</div>
 							</div>
+						<?php } else { ?>
+							<div class="rtmedia-item-comments">
+								<div class="rtmedia-actions-before-comments clearfix">
+									<div class="like-button-no-comments">
+										<?php do_action( 'like_button_no_comments' ); ?>
+									</div>
+								</div>
+								<div class="rtm-like-comments-info <?php echo esc_attr( $class ) ?>">
+									<?php show_rtmedia_like_counts(); ?>
+								</div>
+							</div>
 						<?php } ?>
-
 
 					</div>
 
@@ -139,7 +164,7 @@
 								<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 							</div>
 
-							<div class="rtm-like-comments-info">
+							<div class="rtm-like-comments-info <?php echo esc_attr( $class ) ?>">
 								<?php show_rtmedia_like_counts(); ?>
 								<div class="rtmedia-comments-container">
 									<?php rtmedia_comments(); ?>
