@@ -15,7 +15,6 @@ addons:
   browserstack:
     username: rtcamp3
     access_key:
-#     secure: "VFBgrctr5uDgE4PIea7QoXJDdQqq5TjPhvEcEBBcymbsP7cYUniD8K/0At+hArw5fqKajNlPZZjbxEhBRVv4hXNin++S6qwLeHCQMyHWQTt5vOULL16R2GsO30QUkFT/Egw2rh9v6qBei7Ol2mwz7i+XzZQE8cSDa/TJl7wMVwU="
       secure: u+tAJa3Cm/eTH4zyFk2Gm1JCeWqSnFbdhJ6n6vv2+u4wlMhVHDGbK1ZtGsMAgY2T/ut0XxqVrG83Grjpn+mZzSfz8bgpvd53eEJ+zyk3Cg2s2xyfg2Ty0vpZMLb8otUNfQ7aEBdsr3IgfDZ4D3J7VPF+8uuAR+AwF/s4LZMzLNWravlB1RUY79Gsm+9SmQoYot0X14IQpeDR56RFnowW9vdfjh0Cjp5wMwCo0ZvRV5HbVqSp5sHUcvkT1iZKIO0BBphI0hHzhRpny65Sp5C71sTbGNPOaOgA/6Iuz3s1bczQtUj2iyofF+jRLhdG/BdGf4EUwoGI2YhsSnzcMzCuX60H4bcAwfAosgssEBFffXqxB1n2/cr9FYrQe7pFBIDv2Ij5OrElN6p8p2yfUMoNmYuqvO6AvaxkHWL04K836rb/RFtfyoT49FMBOCdwOd3PBvuTDQr+Xgssdc9bChGVvl5mBjGC0QTWcR/qzNb/vJsz2jZhGrKtlA6iqB+ofZp+odFvZqW1tnXp5BXJ8dL4uVwEWd0M706o4x8lkxvagu8XUTYKmbkGaBVmHM7M/A0a21OqRoCdPhzfoUfJxHcKNpslUDkecCqG/xhJRl2y99An8Cs56pWiS0CkCdLN+Yrgm4fj3mlOx4w3QgUP5dvlDMKh1TFkb9hTPv2Ex38mk4w=
 
 before_script:
@@ -35,6 +34,8 @@ before_script:
   - cd /var/www/automation.rtmedia.me/htdocs/
   - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
   - wp plugin activate --all
+  - cd /var/www/automation.rtmedia.me/htdocs/wp-content/themes/
+  - wp theme activate twentysixteen
   - cd $PLUGIN_DIR
   - cd tests/codeception/tests/_data
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
@@ -63,3 +64,6 @@ script:
   - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./tests/acceptance -name '*.php')
   - if find . -name "*.php" ! -path "./node_modules/*" ! -path "./vendor/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
   - codecept run acceptance --steps
+#notifications:
+#  slack:
+#    secure: E9tbxOZ/n4Gcwi8SiCKQ5QVw+5AfwdTq4e/VG4epQF74IqXmJJvaJgQSVKLSVXJm4O1u8JHd+ffN1Xheh1FDaKkscuJYQcT4D+oOc40bHhb0tS71v1fAMzMX7NuyqgEu2a8dbYo7bqVKtdj/EBbOPWnwgfMuA6ylTItVf294spA=
