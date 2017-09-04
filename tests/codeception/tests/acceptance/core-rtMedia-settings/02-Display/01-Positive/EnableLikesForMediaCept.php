@@ -10,14 +10,14 @@ use Page\Constants as ConstantsPage;
 use Page\BuddypressSettings as BuddypressSettingsPage;
 
 $I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To check if the lightbox is enabled' );
+$I->wantTo( 'To check if the likes for media is enabled' );
 
 $loginPage = new LoginPage( $I );
 $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
 $settings = new DashboardSettingsPage( $I );
 $settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
-$settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab ); //Last arg refers scroll position
+$settings->verifyEnableStatus( ConstantsPage::$mediaLikeCheckboxLabel, ConstantsPage::$mediaLikeCheckbox ); //Last arg refers scroll postion
 
 $buddypress = new BuddypressSettingsPage( $I );
 $buddypress->gotoMedia( ConstantsPage::$userName );
@@ -31,8 +31,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 
 	$uploadmedia->firstThumbnailMedia();
 
-	$I->seeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
-	$I->click( ConstantsPage::$closeButton );
+	$I->seeElement( ConstantsPage::$likeButton );   //The close button will only be visible if the media is opened in Lightbox
 } else {
 
 	//Disbale direct upload from settings
@@ -42,9 +41,8 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
 
 	$I->reloadPage();
-	$uploadmedia->firstThumbnailMedia();
 
-	$I->seeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
-	$I->click( ConstantsPage::$closeButton );
+	$uploadmedia->firstThumbnailMedia();
+	$I->seeElement( ConstantsPage::$likeButton );   //The close button will only be visible if the media is opened in Lightbox
 }
 ?>

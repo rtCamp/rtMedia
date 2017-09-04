@@ -1,27 +1,29 @@
 <?php
+
 namespace Page;
 
 use Page\Constants as ConstantsPage;
 
-class Logout
-{
-    protected $tester;
+class Logout {
 
-    public function __construct(\AcceptanceTester $I)
-    {
-        $this->tester = $I;
-    }
+	protected $tester;
 
-    public function logout(){
+	public function __construct( \AcceptanceTester $I ) {
+		$this->tester = $I;
+	}
 
-        $I = $this->tester;
+	public function logout() {
 
-        $I->seeElement( ConstantsPage::$metaSection );
-        $I->scrollTo( ConstantsPage::$metaSection );
+		$I = $this->tester;
 
-        $I->seeElement( ConstantsPage::$logoutLink );
-        $I->click( ConstantsPage::$logoutLink );
-        $I->waitForElement( ConstantsPage::$logoutMsg, 10);
-    }
+		$I->moveMouseOver( '#wp-admin-bar-my-account' );
+		$I->executeJS( "jQuery('#wp-admin-bar-my-account .ab-sub-wrapper').css({'display':'block'});" );
+// $I->waitForElement(ConstantsPage::$metaSection);
+//		$I->seeElement( ConstantsPage::$metaSection );
+//		$I->scrollTo( ConstantsPage::$metaSection );
+//		$I->seeElement( ConstantsPage::$logoutLink );
+		$I->click( ConstantsPage::$logoutLink );
+//		$I->waitForElement( ConstantsPage::$logoutMsg, 10 );
+	}
 
 }

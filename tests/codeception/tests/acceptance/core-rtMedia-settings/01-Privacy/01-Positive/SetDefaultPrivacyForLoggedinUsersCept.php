@@ -39,7 +39,6 @@ $logout = new LogoutPage( $I );
 $logout->logout();
 
 $buddypress->gotoActivityPage( ConstantsPage::$userName );
-
 $I->dontSeeElementInDOM( ConstantsPage::$activitySelector );
 
 ?>

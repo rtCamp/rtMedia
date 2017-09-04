@@ -27,4 +27,3 @@ modules:
                 'build': '%TRAVIS_BUILD_NUMBER%'
                 'project': 'rtMedia-core-test'
                 'browserstack.local': 'true'
-
