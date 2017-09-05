@@ -3,7 +3,7 @@
 
 
 
-![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=QXJGc0MzZ3ZyUzBaUW9zZHFTSUtYNTMzUFJhMThPNWoxcFh5ZkxjNzE5Zz0tLWRrOTNUb0lzZXdWRC9PL3k3bHF6R3c9PQ==--0cf0d06c7d977c10230d7dbfcb5d907592ab005d)
+![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=MU1JamdmRnppK0hhQy9QMU8wdDJ2MUEyb1ZuS0ljVFQvSHZ6anFvNzUxTT0tLXhUNnliTnZGcE5CcW93N0I1eXdnM3c9PQ==--8c124e667dd0c317618efde1bed2b260000916b6)
 
 
 # README #
