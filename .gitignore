@@ -2,6 +2,9 @@
 *.bak
 tests/functional/node_modules/
 /tests/functional/reports/
+/tests/codeception/vendor
+/tests/codeception/tests/_output
+/tests/codeception/tests/_support/_generated
 selenium-*.jar
 .sass-cache
 *.sass-cache
