@@ -19,7 +19,6 @@ addons:
 #        secure: j7XE5uUiMYLvM1GeLYzC28IF+v9XPW5n1+dhtK9had4BWlTdkJEjcUeE8czkNQZB6fY//mB5mRMsZrmofF6fB5D/5QNzcK5hmIj1kL/UVTl+9KpTmpRHJMESx2hQM4ORwv2ir/kXSE1x8NqvFrjEebdaOTqAMiG0fRIuluX/NYa/d741l7WkA2EULDcHNDQfLOVzwByBdiij8CgnAI0lGri/TErvVZjcTarJmsx67U7wYurMi5cWQvYd6MRLDNhbST8nqFCH5wvx7Dl/extbgVk5pPw94eRmyEIGT+BqeGjZSwv9GP2HkQ1irDHCiWEhk56PsRT7skaMs00EMbJjyV4we0+ilsj5y1t5AOc8gPjJqE0DFH889Bw50MjhQ6EeDdbpv0kSwZ+2uRZ2rOYGY0nWOu2hlhBosBzEGhQMJWDhzCDbgie1Wbz/QBgaxZ12aGSOC4A6TVWL9J6f2TVza7Aij6X/LMM5bjVVkI8cRolo6wRKOkBc/WsYg5nngsuVR61Aod2dc7pUWNICwG/ou1y0uTvSN6bEt7aRpGTY/SRO0+yW5btw45U5NZ9LAMKdpOpteUbcu6UbAeRNbaxVGpasr8m9uacbTvGehFYJSFqm06d/elE5eveT4vcp7qp4onjdqc4kmAlNZ5R2vNANkuretUJCpEMb9xRQ3h2U6v8=
 
 before_script:
-  ## PHP_CodeSniffer
   - export PLUGIN_DIR=$(pwd)
   - sudo rm -rf /etc/mysql/
   - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
@@ -48,6 +47,7 @@ before_script:
   - export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
 #  - export PATH="$PATH:/home/travis/build/sumeetsarna/rtMedia/tests/codeception/vendor/bin"
     ## PHP_CodeSniffer
+  - cd $PLUGIN_DIR
   - sudo pear install pear/PHP_CodeSniffer-2.9.1
   - sudo git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
   - phpenv rehash
