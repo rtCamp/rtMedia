@@ -1,6 +1,6 @@
 dist: trusty
 language: php
-sudo: required
+sudo: false
 php:
   - 5.5
 branches:
