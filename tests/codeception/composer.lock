@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1af70229d6523fc36d8f111ebae8c0ad",
-    "content-hash": "85ccad5a6ab900e9a81b13a5ac4b1995",
+    "hash": "70a13d44b18003ce937469dcac1a256d",
+    "content-hash": "6c147045b6affbba7384573a74bd22ed",
     "packages": [],
     "packages-dev": [
         {
@@ -514,6 +514,72 @@
                 "validator"
             ],
             "time": "2017-04-03 19:08:52"
+        },
+        {
+            "name": "dealerdirect/phpcodesniffer-composer-installer",
+            "version": "v0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DealerDirect/phpcodesniffer-composer-installer.git",
+                "reference": "2a3580be232c7b0c1d0b8654c32fe9e076cd7834"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DealerDirect/phpcodesniffer-composer-installer/zipball/2a3580be232c7b0c1d0b8654c32fe9e076cd7834",
+                "reference": "2a3580be232c7b0c1d0b8654c32fe9e076cd7834",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "require-dev": {
+                "composer/composer": "*"
+            },
+            "suggest": {
+                "dealerdirect/qa-tools": "All the PHP QA tools you'll need"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Franck Nijhof",
+                    "email": "f.nijhof@dealerdirect.nl",
+                    "homepage": "http://workingatdealerdirect.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
+            "homepage": "http://workingatdealerdirect.eu",
+            "keywords": [
+                "PHPCodeSniffer",
+                "PHP_CodeSniffer",
+                "code quality",
+                "codesniffer",
+                "composer",
+                "installer",
+                "phpcs",
+                "plugin",
+                "qa",
+                "quality",
+                "standard",
+                "standards",
+                "style guide",
+                "stylecheck",
+                "tests"
+            ],
+            "time": "2016-11-01 14:51:16"
         },
         {
             "name": "dg/mysql-dump",
@@ -4191,6 +4257,58 @@
                 "validate"
             ],
             "time": "2016-11-23 20:04:58"
+        },
+        {
+            "name": "wimg/php-compatibility",
+            "version": "8.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wimg/PHPCompatibility.git",
+                "reference": "4c4385fb891dff0501009670f988d4fe36785249"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/4c4385fb891dff0501009670f988d4fe36785249",
+                "reference": "4c4385fb891dff0501009670f988d4fe36785249",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "squizlabs/php_codesniffer": "^2.2 || ^3.0.2"
+            },
+            "conflict": {
+                "squizlabs/php_codesniffer": "2.6.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
+            },
+            "suggest": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1"
+            },
+            "type": "phpcodesniffer-standard",
+            "autoload": {
+                "psr-4": {
+                    "PHPCompatibility\\": "PHPCompatibility/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Wim Godden",
+                    "role": "lead"
+                }
+            ],
+            "description": "A set of sniffs for PHP_CodeSniffer that checks for PHP version compatibility.",
+            "homepage": "http://techblog.wimgodden.be/tag/codesniffer/",
+            "keywords": [
+                "compatibility",
+                "phpcs",
+                "standards"
+            ],
+            "time": "2017-08-07 19:39:05"
         },
         {
             "name": "wp-cli/autoload-splitter",
