@@ -37,7 +37,7 @@ if ( $temp == ConstantsPage::$numOfMediaPerPage ) {
 	$I->seeNumberOfElements( ConstantsPage::$mediaPerPageOnMediaSelector, ConstantsPage::$numOfMediaPerPage );
 } else {
 
-	//Disbale direct upload from settings
+	//Disable direct upload from settings
 	$settings->disableDirectUpload();
 
 	$buddypress->gotoMedia( ConstantsPage::$userName );

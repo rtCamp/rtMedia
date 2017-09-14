@@ -34,7 +34,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->seeElement( ConstantsPage::$likeButton );   //The close button will only be visible if the media is opened in Lightbox
 } else {
 
-	//Disbale direct upload from settings
+	//Disable direct upload from settings
 	$settings->disableDirectUpload();
 
 	$buddypress->gotoMedia( ConstantsPage::$userName );

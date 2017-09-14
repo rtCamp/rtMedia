@@ -41,7 +41,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->waitForText( $commentStr, 20 );
 } else {
 	
-	//Disbale direct upload from settings
+	//Disable direct upload from settings
 	$settings->disableDirectUpload();
 
 	$buddypress->gotoMedia( ConstantsPage::$userName );

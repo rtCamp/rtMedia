@@ -35,7 +35,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->click( ConstantsPage::$closeButton );
 } else {
 
-	//Disbale direct upload from settings
+	//Disable direct upload from settings
 	$settings->disableDirectUpload();
 
 	$buddypress->gotoMedia( ConstantsPage::$userName );

@@ -28,8 +28,7 @@ class Login {
 
 		// Will load the session saved in saveSessionSnapshot().
 		if ( $I->loadSessionSnapshot( 'login' ) ) {
-			// $I->reloadPage();
-			echo "skipping login steps";
+            echo "skipping login steps";
 			return;
 		}
 
@@ -42,9 +41,7 @@ class Login {
 
 		$I->seeElement( self::$wpPasswordField );
 		$I->fillfield( self::$wpPasswordField, $wpPassword );
-
-		// $I->seeElement( self::$wpSubmitButton );
-		$I->click( self::$wpSubmitButton );
+        $I->click( self::$wpSubmitButton );
 		$I->waitForElement( '#adminmenu', 10 );
 		$I->waitForElement( self::$dashBoardMenu, 10 );
 
@@ -55,9 +52,7 @@ class Login {
 			echo "Session not saved!";
 		}
 		$I->reloadPage();
-		// $I->seeElement( self::$dashBoardMenu );
-
-		$I->maximizeWindow();
+        $I->maximizeWindow();
 	}
 
 }

@@ -110,8 +110,7 @@ class DashboardSettings {
 		$I = $this->tester;
 
 		$I->seeCheckboxIsChecked( $checkboxSelector );
-//		$I->uncheckOption( $checkboxSelector );
-		if ( preg_match( '/"([^"]+)"/', $checkboxSelector, $m ) ) {
+        if ( preg_match( '/"([^"]+)"/', $checkboxSelector, $m ) ) {
 			$script = 'return document.getElementsByName("' . $m[ 1 ] . '")[0].click()';
 			$I->executeJs( $script );
 		}
