@@ -361,12 +361,12 @@ class RTMedia {
 		?>
 		.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail {
 		width: <?php echo esc_attr( $media_width ); ?>px;
-		height: <?php echo esc_attr( $$media_height ); ?>px;
-		line-height: <?php echo esc_attr( $$media_height ); ?>px;
+		height: <?php echo esc_attr( $media_height ); ?>px;
+		line-height: <?php echo esc_attr( $media_height ); ?>px;
 		}
 		.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail img {
 		max-width: <?php echo esc_attr( $media_width ); ?>px;
-		max-height: <?php echo esc_attr( $$media_height ); ?>px;
+		max-height: <?php echo esc_attr( $media_height ); ?>px;
 		}
 		.rtmedia-container .rtmedia-list  .rtmedia-list-item {
 		width: <?php echo $media_width; ?>;
