@@ -342,18 +342,34 @@ class RTMedia {
 	}
 
 	function custom_style_for_gallery_image_size() {
+		// Get width from rtMedia settings.
+		$width  = ( isset( $this->options['defaultSizes_photo_medium_width'] ) ) ? $this->options['defaultSizes_photo_medium_width'] : '0';
+		// Get height from rtMedia settings.
+		$height = ( isset( $this->options['defaultSizes_photo_medium_height'] ) ) ? $this->options['defaultSizes_photo_medium_height'] : '0';
+
+		$media_height = $height . 'px';
+		$media_width  = $width . 'px';
+
+		// If height or width given zero, then show it's original height or with.
+		if ( '0' === $height ) {
+			$media_height = '100%';
+		}
+
+		if ( '0' === $width ) {
+			$media_width = '100%';
+		}
 		?>
 		.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail {
-		width: <?php echo esc_attr( $this->options['defaultSizes_photo_thumbnail_width'] ); ?>px;
-		height: <?php echo esc_attr( $this->options['defaultSizes_photo_thumbnail_height'] ); ?>px;
-		line-height: <?php echo esc_attr( $this->options['defaultSizes_photo_thumbnail_height'] ); ?>px;
+		width: <?php echo esc_attr( $media_width ); ?>px;
+		height: <?php echo esc_attr( $$media_height ); ?>px;
+		line-height: <?php echo esc_attr( $$media_height ); ?>px;
 		}
 		.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail img {
-		max-width: <?php echo esc_attr( $this->options['defaultSizes_photo_thumbnail_width'] ); ?>px;
-		max-height: <?php echo esc_attr( $this->options['defaultSizes_photo_thumbnail_height'] ); ?>px;
+		max-width: <?php echo esc_attr( $media_width ); ?>px;
+		max-height: <?php echo esc_attr( $$media_height ); ?>px;
 		}
 		.rtmedia-container .rtmedia-list  .rtmedia-list-item {
-		width: <?php echo intval( $this->options['defaultSizes_photo_thumbnail_width'] ); ?>px;
+		width: <?php echo $media_width; ?>;
 		}
 		<?php
 	}
