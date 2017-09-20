@@ -99,9 +99,6 @@ class RTMediaGalleryShortcode {
 				ini_get( 'post_max_size' ),
 			) ) ),
 		);
-		if ( wp_is_mobile() ) {
-			$params['multi_selection'] = false;
-		}
 
 		$params = apply_filters( 'rtmedia_modify_upload_params', $params );
 
