@@ -188,7 +188,12 @@ class RTMediaNav {
 
 	public function sub_nav() {
 		global $rtmedia, $rtmedia_query;
-		if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+
+		$active_components = bp_get_option( 'bp-active-components' );
+		$user_groups = $active_components['groups'];
+		$user_group_status = ( '1' === $user_groups ) ? true : false;
+
+		if ( function_exists( 'bp_is_group' ) && bp_is_group() && $user_group_status ) {
 			if ( isset( $rtmedia->options['buddypress_enableOnGroup'] ) && 0 === intval( $rtmedia->options['buddypress_enableOnGroup'] ) ) {
 				return;
 			}
@@ -202,7 +207,7 @@ class RTMediaNav {
 		}
 
 		$default = false;
-		if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+		if ( function_exists( 'bp_is_group' ) && bp_is_group() && $user_group_status ) {
 			$link        = get_rtmedia_group_link( bp_get_group_id() );
 			$model       = new RTMediaModel();
 			$other_count = $model->get_other_album_count( bp_get_group_id(), 'group' );
@@ -265,11 +270,11 @@ class RTMediaNav {
 			$name       = strtoupper( $type['name'] );
 			$is_group   = false;
 			$profile    = self::profile_id();
+
 			if ( ! $profile ) {
 				$profile  = self::group_id();
 				$is_group = true;
 			}
-
 			if ( ! $is_group ) {
 				$profile_link = trailingslashit(
 					get_rtmedia_user_link(
@@ -277,11 +282,13 @@ class RTMediaNav {
 					)
 				);
 			} else {
-				$profile_link = trailingslashit(
-					get_rtmedia_group_link(
-						$profile
-					)
-				);
+				if ( $user_group_status ) {
+					$profile_link = trailingslashit(
+						get_rtmedia_group_link(
+							$profile
+						)
+					);
+				}
 			}
 
 			$type_label = esc_html__( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'buddypress-media' );
