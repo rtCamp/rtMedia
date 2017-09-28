@@ -1,231 +1,233 @@
 <?php
+
 namespace Page;
 
 use Page\Constants as ConstantsPage;
 
-class DashboardSettings
-{
+class DashboardSettings {
 
-    public function route($param)
-    {
-        return static::$URL.$param;
-    }
+	public function route( $param ) {
+		return static::$URL . $param;
+	}
 
-    protected $tester;
-    public function __construct( \AcceptanceTester $I )
-    {
-        $this->tester = $I;
-    }
+	protected $tester;
 
-    /**
-     * saveSettings() -> Will save the settings after any changes made by the user in backend.
-     */
-    public function saveSettings(){
+	public function __construct( \AcceptanceTester $I ) {
+		$this->tester = $I;
+	}
 
-        $I = $this->tester;
+	/**
+	 * saveSettings() -> Will save the settings after any changes made by the user in backend.
+	 */
+	public function saveSettings() {
 
-        $I->seeElementInDOM( ConstantsPage::$saveSettingsButtonBottom );
-        $I->scrollTo( ConstantsPage::$saveSettingsButtonBottom );
-        $I->click( ConstantsPage::$saveSettingsButtonBottom );
-        // $I->wait( 5 );
-        // $I->waitForElement( ConstantsPage::$buddypressTab , 10);
-        $I->waitForText( 'Settings saved successfully!', 30);
-        // $I->see('Settings saved successfully!');
-    }
+		$I = $this->tester;
 
-    /**
-     * gotortMediaSettings() -> Will goto rtmedia-settings tab.
-     */
-    public function gotortMediaSettings(){
+		$I->seeElementInDOM( ConstantsPage::$saveSettingsButtonBottom );
+		$I->scrollTo( ConstantsPage::$saveSettingsButtonBottom );
+		$I->click( ConstantsPage::$saveSettingsButtonBottom );
+		$I->waitForText( 'Settings saved successfully!', 30 );
+	}
 
-        $I = $this->tester;
+	/**
+	 * gotortMediaSettings() -> Will goto rtmedia-settings tab.
+	 */
+	public function gotortMediaSettings() {
 
-        $I->click( ConstantsPage::$rtMediaSeetings );
-        // $I->wait( 5 );
-        $I->waitForElement( ConstantsPage::$buddypressTab , 10);
-        // $I->seeInCurrentUrl( ConstantsPage::$rtMediaSettingsUrl );
-    }
+		$I = $this->tester;
 
-    /**
-     * gotoTab() -> Will goto the respective tab under rtmedia-settings tab.
-     */
-    public function gotoTab( $tabSelector, $tabUrl, $tabScrollPosition='no' ){
+		$I->click( ConstantsPage::$rtMediaSettings );
+		$I->waitForElement( ConstantsPage::$buddypressTab, 10 );
+	}
 
-        $I = $this->tester;
+	/**
+	 * gotoTab() -> Will goto the respective tab under rtmedia-settings tab.
+	 */
+	public function gotoTab( $tabSelector, $tabUrl, $tabScrollPosition = 'no' ) {
 
-        self::gotortMediaSettings();
+		$I = $this->tester;
 
-        $urlStr = ConstantsPage::$rtMediaSettingsUrl.$tabUrl;
+		self::gotortMediaSettings();
 
-        $I->seeElementInDOM( $tabSelector );
+		$urlStr = ConstantsPage::$rtMediaSettingsUrl . $tabUrl;
 
-        if( 'no' !== $tabScrollPosition ){
-            $I->scrollTo( $tabScrollPosition );
-        }
+		$I->seeElementInDOM( $tabSelector );
 
-        $I->click( $tabSelector );
-        $I->waitForElement( ConstantsPage::$topSaveButton , 5);
-        // $I->seeInCurrentUrl( $urlStr );
-    }
+		if ( 'no' !== $tabScrollPosition ) {
+			$I->scrollTo( $tabScrollPosition );
+		}
 
+		$I->click( $tabSelector );
+		$I->waitForElement( ConstantsPage::$topSaveButton, 5 );
+	}
 
-    public function setMediaSize( $strLabel, $widthTextbox, $width, $heightTextbox='no', $height='no', $scrollPos='no' ){
+	public function setMediaSize( $strLabel, $widthTextbox, $width, $heightTextbox = 'no', $height = 'no', $scrollPos = 'no' ) {
 
-        $I = $this->tester;
+		$I = $this->tester;
 
-        $I->see( $strLabel );
+		$I->see( $strLabel );
 
-        if( 'no' != $scrollPos ){
-            $I->scrollTo( $scrollPos );
-        }
+		if ( 'no' != $scrollPos ) {
+			$I->scrollTo( $scrollPos );
+		}
 
-        $I->seeElementInDOM( $widthTextbox );
-        $I->fillField( $widthTextbox, $width );
+		$I->seeElementInDOM( $widthTextbox );
+		$I->fillField( $widthTextbox, $width );
 
-        if( 'no' !== $heightTextbox && 'no' != $height ){
-            $I->seeElementInDOM( $heightTextbox );
-            $I->fillField( $heightTextbox, $height );
-        }
+		if ( 'no' !== $heightTextbox && 'no' != $height ) {
+			$I->seeElementInDOM( $heightTextbox );
+			$I->fillField( $heightTextbox, $height );
+		}
 
-        self::saveSettings();
+		self::saveSettings();
+	}
 
-    }
+	/**
+	 * enableSetting() -> Will enable the respective checkbox under rtmedia-settings tab.
+	 */
+	public function enableSetting( $checkboxSelector ) {
 
-    /**
-     * enableSetting() -> Will enable the respective checkbox under rtmedia-settings tab.
-     */
-    public function enableSetting( $checkboxSelector ){
+		$I = $this->tester;
 
-        $I = $this->tester;
+		$I->dontSeeCheckboxIsChecked( $checkboxSelector );
 
-        $I->dontSeeCheckboxIsChecked( $checkboxSelector );
-        $I->checkOption( $checkboxSelector );
+		if ( preg_match( '/"([^"]+)"/', $checkboxSelector, $m ) ) {
+			$script = 'return document.getElementsByName("' . $m[ 1 ] . '")[0].click()';
+			$I->executeJs( $script );
+		}
 
-        self::saveSettings();
+		self::saveSettings();
 
-        $I->seeCheckboxIsChecked( $checkboxSelector );
 
-    }
+		$I->seeCheckboxIsChecked( $checkboxSelector );
+	}
 
-    /**
-     * disableSetting() -> Will disable the respective checkbox under rtmedia-settings tab.
-     */
-    public function disableSetting( $checkboxSelector ){
+	/**
+	 * disableSetting() -> Will disable the respective checkbox under rtmedia-settings tab.
+	 */
+	public function disableSetting( $checkboxSelector ) {
 
-        $I = $this->tester;
+		$I = $this->tester;
 
-        $I->seeCheckboxIsChecked( $checkboxSelector );
-        $I->uncheckOption( $checkboxSelector );
+		$I->seeCheckboxIsChecked( $checkboxSelector );
+//		$I->uncheckOption( $checkboxSelector );
+		if ( preg_match( '/"([^"]+)"/', $checkboxSelector, $m ) ) {
+			$script = 'return document.getElementsByName("' . $m[ 1 ] . '")[0].click()';
+			$I->executeJs( $script );
+		}
 
-        self::saveSettings();
+		self::saveSettings();
 
-        $I->dontSeeCheckboxIsChecked( $checkboxSelector );
-    }
+		$I->dontSeeCheckboxIsChecked( $checkboxSelector );
+	}
 
-    /**
-     * selectOption() -> Will select the radio button provided with css selector id
-     */
-    public function selectOption( $radioButtonSelector ){
+	/**
+	 * selectOption() -> Will select the radio button provided with css selector id
+	 */
+	public function selectOption( $radioButtonSelector ) {
 
-        $I = $this->tester;
+		$I = $this->tester;
 
-        $I->checkOption( $radioButtonSelector );
+		$I->checkOption( $radioButtonSelector );
 
-        self::saveSettings();
+		self::saveSettings();
+	}
 
-    }
+	/**
+	 * setValue() -> Will fill the textbox/textarea
+	 */
+	public function setValue( $strLabel, $cssSelector, $valueToBeSet, $scrollPosition = 'no' ) {
 
-    /**
-     * setValue() -> Will fill the textbox/textarea
-     */
-    public function setValue( $strLabel, $cssSelector, $valueToBeSet, $scrollPosition = 'no' ){
+		$I = $this->tester;
 
-        $I = $this->tester;
+		$I->see( $strLabel );
 
-        $I->see( $strLabel );
+		if ( 'no' != $scrollPosition ) {
 
-        if ( 'no' != $scrollPosition) {
+			$I->scrollTo( $scrollPosition );
+		}
 
-            $I->scrollTo( $scrollPosition );
+		$I->seeElementInDOM( $cssSelector );
 
-        }
+		$I->fillField( $cssSelector, $valueToBeSet );
 
-        $I->seeElementInDOM( $cssSelector );
+		self::saveSettings();
+	}
 
-        $I->fillField( $cssSelector, $valueToBeSet );
+	/**
+	 * verifyEnableStatus() -> Will verify if the checkbox is enabled or not
+	 */
+	public function verifyEnableStatus( $strLabel, $cssSelector, $scrollPosition = 'no' ) {
 
+		$I = $this->tester;
 
-        self::saveSettings();
+		if ( 'no' != $scrollPosition ) {
 
-    }
+			$I->scrollTo( $scrollPosition );
+		}
+		$I->see( $strLabel );
+		$I->seeElementInDOM( $cssSelector );
 
-    /**
-     * verifyEnableStatus() -> Will verify if the checkbox is enabled or not
-     */
-    public function verifyEnableStatus( $strLabel, $cssSelector, $scrollPosition = 'no' ){
+		if ( $I->grabAttributeFrom( $cssSelector, "checked" ) == "true" ) {
+			echo nl2br( "Setting is already enabled \n" );
+		} else {
+			echo nl2br( "Call to enableSetting()... \n" );
+			self::enableSetting( $cssSelector );
+		}
+	}
 
-        $I = $this->tester;
+	/**
+	 * verifyDisableStatus() -> Will verify if the checkbox is disabled or not
+	 */
+	public function verifyDisableStatus( $strLabel, $cssSelector, $scrollPosition = 'no' ) {
 
-        if ( 'no' != $scrollPosition ) {
+		$I = $this->tester;
 
-            $I->scrollTo( $scrollPosition );
+		if ( 'no' != $scrollPosition ) {
+			$I->scrollTo( $scrollPosition );
+		}
+		$I->see( $strLabel );
+		$I->seeElementInDOM( $cssSelector );
 
-        }
-        $I->see( $strLabel );
-        $I->seeElementInDOM( $cssSelector );
+		if ( $I->grabAttributeFrom( $cssSelector, "checked" ) == "true" ) {
+			echo nl2br( "Call to disableSetting()... \n" );
+			self::disableSetting( $cssSelector );
+			return false;
+		} else {
+			echo nl2br( "Setting is already disabled \n" );
+			return true;
+		}
+	}
 
-        if( $I->grabAttributeFrom( $cssSelector , "checked" ) == "true" ){
-            echo nl2br( "Setting is already enabled \n" );
-        }else{
-            echo nl2br( "Call to enableSetting()... \n" );
-            self::enableSetting( $cssSelector );
-        }
-    }
+	/**
+	 * verifySelectOption() -> Will verify if the radio button is selected or not
+	 */
+	public function verifySelectOption( $strLabel, $cssSelector, $scrollPosition = 'no' ) {
 
-    /**
-     * verifyDisableStatus() -> Will verify if the checkbox is disabled or not
-     */
-    public function verifyDisableStatus( $strLabel, $cssSelector, $scrollPosition = 'no' ){
+		$I = $this->tester;
 
-        $I = $this->tester;
+		$I->see( $strLabel );
 
-        if ( 'no' != $scrollPosition ) {
-            $I->scrollTo( $scrollPosition );
+		if ( 'no' != $scrollPosition ) {
 
-        }
-        $I->see( $strLabel );
-        $I->seeElementInDOM( $cssSelector );
+			$I->scrollTo( $scrollPosition );
+		}
 
-        if( $I->grabAttributeFrom( $cssSelector , "checked" ) == "true" ){
-            echo nl2br( "Call to disableSetting()... \n" );
-            self::disableSetting( $cssSelector );
-        }else{
-            echo nl2br( "Setting is already disabled \n" );
-        }
-    }
+		$I->seeElementInDOM( $cssSelector );
 
-    /**
-     * verifySelectOption() -> Will verify if the radio button is selected or not
-     */
-    public function verifySelectOption( $strLabel, $cssSelector, $scrollPosition = 'no' ){
+		if ( $I->grabAttributeFrom( $cssSelector, "checked" ) == "true" ) {
+			echo nl2br( "Option is already selected... \n" );
+		} else {
+			echo nl2br( "Call to selectOption()... \n" );
+			self::selectOption( $cssSelector );
+		}
+	}
 
-        $I = $this->tester;
+	public function disableDirectUpload() {
+		$I = $this->tester;
+		$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
+		$I->waitForElement( ConstantsPage::$displayTab, 10 );
+		$status = $this->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
+	}
 
-        $I->see( $strLabel );
-
-        if( 'no' != $scrollPosition ){
-
-            $I->scrollTo($scrollPosition);
-
-        }
-
-        $I->seeElementInDOM( $cssSelector );
-
-        if( $I->grabAttributeFrom( $cssSelector , "checked" ) == "true" ){
-            echo nl2br( "Option is already selected... \n" );
-        }else{
-            echo nl2br( "Call to selectOption()... \n" );
-            self::selectOption( $cssSelector );
-        }
-    }
 }

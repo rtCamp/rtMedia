@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scenario : To set default privacy with private option.
+ * Scenario : To set default Privacy as Private.
  */
 
 use Page\Login as LoginPage;
@@ -14,7 +14,7 @@ use Page\BuddypressSettings as BuddypressSettingsPage;
 $status = 'Private Status';
 
 $I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To set default privacy with private option' );
+$I->wantTo( 'To set default privacy as Private' );
 
 $loginPage = new LoginPage( $I );
 $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, ConstantsPage::$saveSession );
@@ -41,7 +41,6 @@ $logout = new LogoutPage( $I );
 $logout->logout();
 
 $buddypress->gotoActivityPage( ConstantsPage::$userName );
-//$I->dontSee( $status );
 $I->dontSeeElementInDOM( ConstantsPage::$activitySelector );
 
 ?>

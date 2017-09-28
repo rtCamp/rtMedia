@@ -1,27 +1,25 @@
 <?php
 
 /**
-* Scenario : Allow user to Organize media into albums.
-*/
+ * Scenario : Allow user to Organize media into albums.
+ */
+use Page\Login as LoginPage;
+use Page\Constants as ConstantsPage;
+use Page\DashboardSettings as DashboardSettingsPage;
+use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    use Page\Login as LoginPage;
-    use Page\Constants as ConstantsPage;
-    use Page\DashboardSettings as DashboardSettingsPage;
-    use Page\BuddypressSettings as BuddypressSettingsPage;
+$I = new AcceptanceTester( $scenario );
+$I->wantTo( 'Check if the user is allowed to Organize media into albums.' );
 
-    $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'Check if the user is allowed to Organize media into albums.' );
+$loginPage = new LoginPage( $I );
+$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-    $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+$settings = new DashboardSettingsPage( $I );
+$settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+$settings->verifyEnableStatus( ConstantsPage::$strEnableAlbumLabel, ConstantsPage::$enableAlbumCheckbox );
 
-    $settings = new DashboardSettingsPage( $I );
-    $settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
-    $settings->verifyEnableStatus( ConstantsPage::$strEnableAlbumLabel, ConstantsPage::$enableAlbumCheckbox );
+$gotoMediaPage = new BuddypressSettingsPage( $I );
+$gotoMediaPage->gotoMedia( ConstantsPage::$userName );
 
-    $gotoMediaPage = new BuddypressSettingsPage( $I );
-    $gotoMediaPage->gotoMedia( ConstantsPage::$userName );
-
-    $I->seeElement( ConstantsPage::$mediaAlbumLink );
-
+$I->seeElement( ConstantsPage::$mediaAlbumLink );
 ?>
