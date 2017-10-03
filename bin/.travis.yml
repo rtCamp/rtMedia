@@ -32,7 +32,7 @@ before_script:
   - cd $PLUGIN_DIR
   - cp -Rf * /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
   - cd /var/www/automation.rtmedia.me/htdocs/
-  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.8.2.zip
+  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.9.1.zip
   - wp plugin activate --all
   - cd $PLUGIN_DIR
   - cd tests/codeception/tests/_data
