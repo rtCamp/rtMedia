@@ -25,7 +25,7 @@ before_script:
   - wget -qO ee rt.cx/ee && sudo bash ee
   - sudo apt-get update
   - sudo tail /var/log/ee/ee.log
-  - ee stack install --wpcli
+  - sudo ee stack install --wpcli
   - sudo wp --allow-root cli update --nightly
   - sudo ee site create automation.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
   - sudo sed -i '/^127.0.0.1/ s/$/ automation.rtmedia.me/' /etc/hosts
