@@ -25,7 +25,7 @@ before_script:
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
   - wget -qO ee rt.cx/ee && sudo bash ee
   - sudo ee stack install
-  - sudo wp --allow-root cli update --nightly -y
+  - sudo wp --yes --allow-root cli update --nightly
   - sudo apt-get update
   - sudo tail /var/log/ee/ee.log
   - sudo ee site create automation.rtmedia.me --wp --user=ADMINUSER --email=sumeet.sarna@rtcamp.com --pass=ADMINPASS
