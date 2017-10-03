@@ -23,10 +23,10 @@ before_script:
   - sudo rm -rf /etc/mysql/
   - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
+  - sudo wp --allow-root cli update --nightly
   - wget -qO ee rt.cx/ee && sudo bash ee
   - sudo apt-get update
   - sudo tail /var/log/ee/ee.log
-  - sudo wp --allow-root cli update --nightly
   - sudo ee site create automation.rtmedia.me --wp --user=ADMINUSER --email=sumeet.sarna@rtcamp.com --pass=ADMINPASS
   - sudo sed -i '/^127.0.0.1/ s/$/ automation.rtmedia.me/' /etc/hosts
   - sudo chmod 777 -R /var/www
