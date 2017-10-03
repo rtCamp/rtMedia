@@ -24,6 +24,7 @@ before_script:
   - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
   - wget -qO ee rt.cx/ee && sudo bash ee
+  - sudo ee stack install
   - sudo wp --allow-root cli update --nightly
   - sudo apt-get update
   - sudo tail /var/log/ee/ee.log
