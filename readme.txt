@@ -1,13 +1,12 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883
-
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 4.7.2
-Stable tag: 4.3.2
+Tested up to: 4.8.1
+Stable tag: 4.4.3
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -138,6 +137,76 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
+= 4.4.3 [August 3, 2017] =
+
+* ENHANCEMENTS
+
+ * Add filter to change the "alt" attribute value for photos in media gallery [Documentation](https://rtmedia.io/docs/developers/hooks/rtmc_change_alt_text/)
+
+* FIXED
+
+ * Unit text (MB/KB) of media size doesn't display correctly
+ * Buttons UI of edit media screen for default WordPress themes
+ * BuddyPress activity upload issue with Microsoft Edge
+ * Notices of "Undefined offset" and "get property of non-object"
+ * UI issue of media close button on Twenty Seventeen theme
+ * Pagination issue with album search
+ * Upload falls over while using special characters into filename
+ * Fatal Error in gallery search if BuddyPress is not installed
+ * Medium image size not working correctly with zero height
+ * `media_title` attribute was not working for gallery shortcode
+
+= 4.4.2 [June 30, 2017] =
+
+* FIXED
+
+ * Broken thumbnails in sidebar widget gallery and sorting gallery shortcode
+
+
+= 4.4.1 [June 29, 2017] =
+
+* ENHANCEMENTS
+
+ * Replaced HTML comments '&lt;!-- --&gt;' with PHP comments '&lt;?php // ?&gt;'
+
+* FIXED
+
+ * Media search issue under album
+ * Gallery reload issue while uploading new media under a single album page
+ * Duplicate "no media found" message under media gallery
+ * Cancel media search button issue under albums tab
+ * PHP notice and warnings
+ * UI for caret under like button
+ * Load more issue for albums tab
+ * Issue editing album when pagination is enabled
+ * UI issue for music player when opened in the lightbox
+
+
+= 4.4 [June 6, 2017] =
+
+* NEW
+
+ * Enabled Masonry Cascading grid layout for BuddyPress Activity feed [Documentation](https://rtmedia.io/docs/features/lightboxes-masonry/#masonry-activity-feed)
+ * Added search functionality in Media Gallery [Documentation](https://rtmedia.io/docs/features/upload-media/#search-media)
+ * Added album description input while creating an album [Documentation](https://rtmedia.io/docs/features/view-media/#album-description)
+
+* ENHANCEMENTS
+
+ * Added media description parameter in JSON API [Documentation](https://rtmedia.io/docs/developers/json-api/#media-upload)
+ * Added: Filter to change the text "Are you sure you want to delete this media?" [Documentation](https://rtmedia.io/docs/developers/hooks/rtmedia_delete_prompt_message/)
+ * Applied Post Update button style once the document is ready instead of window load
+
+* FIXED
+
+ * Audio player display issue in lightbox
+ * Fixed trimming media name issue when it contains a dot in the name
+ * Added missing data in debuginfo file
+ * rtMedia shortcode uploader issue with IOS mobile safari browser
+ * Issue while playing video on IOS safari
+ * White strip-line issue in lightbox
+ * Like button will display in the right sidebar of light box even when media comments are deactivated
+
+
 = 4.3.2 [May 11, 2017] =
 
 * ENHANCEMENTS
@@ -154,6 +223,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Improvise comment media admin settings
  * JavaScript error while deleting media
  * Edit media feature when BuddyPress activity stream component is disabled
+ * "What's new" section not getting properly styled on page load [Documentation](https://rtmedia.io/docs/troubleshooting/post-update-upload-media-privacy-buttons-not-appearing/)
 
 = 4.3.1 [Feb 23, 2017] =
 
@@ -1351,8 +1421,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.3.2 =
-Now set icon for like/dislike text using a simple filter. It also includes some bug fixes. Please update/re-save the permalinks after the plugin update.
+= 4.4.3 =
+rtMedia 4.4.3, with the fix of pagination issue while searching in album. Also introducing filter to change the "alt" attribute value for photos in media gallery.
 
 == Sponsors ==
 

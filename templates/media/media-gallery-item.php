@@ -21,7 +21,7 @@ if ( isset( $is_edit_allowed[0] ) ) {
 }
 
 ?>
-<!-- rtmedia_id is return backbone object if we use esc_attr then it will create > & < into &lt; &gt; it will not interpret backbone object into media id -->
+<?php // rtmedia_id is return backbone object if we use esc_attr then it will create > & < into &lt; &gt; it will not interpret backbone object into media id ?>
 <li class="rtmedia-list-item" id="<?php echo rtmedia_id(); // @codingStandardsIgnoreLine ?>">
 
 	<?php do_action( 'rtmedia_before_item' ); ?>
@@ -29,12 +29,29 @@ if ( isset( $is_edit_allowed[0] ) ) {
 	<a href="<?php rtmedia_permalink(); ?>" title="<?php echo esc_attr( rtmedia_title() ); ?>"
 	   class="<?php echo esc_attr( apply_filters( 'rtmedia_gallery_list_item_a_class', 'rtmedia-list-item-a' ) ); ?>">
 
+		<?php
+			global $rtmedia_query;
+
+			$alt_text      = rtmedia_image_alt( false, false );
+			$rtmedia_media = $rtmedia_query->rtmedia;
+			$allowed_html  = array(
+				'span' => array(
+					'class' => array(),
+				),
+			);
+		?>
 		<div class="rtmedia-item-thumbnail">
-			<?php echo wp_kses( rtmedia_duration(), array( 'span' => array( 'class' => array() ) ) ); ?>
-			<img src="<?php rtmedia_image( 'rt_media_thumbnail' ); ?>" alt="<?php rtmedia_image_alt(); ?>">
+			<?php echo wp_kses( rtmedia_duration(), $allowed_html ); ?>
+			<img src="<?php rtmedia_image( 'rt_media_thumbnail' ); ?>" alt="<?php echo esc_attr( apply_filters( 'rtmc_change_alt_text', $alt_text, $rtmedia_media ) ); ?>">
 		</div>
 
-		<?php if ( apply_filters( 'rtmedia_media_gallery_show_media_title', true ) ) { ?>
+		<?php
+		/**
+		 * Filter to hide or show media titles in gallery.
+		 *
+		 * @param bool true Default value is true.
+		 */
+		if ( apply_filters( 'rtmedia_media_gallery_show_media_title', true ) ) { ?>
 			<div class="rtmedia-item-title <?php echo esc_html( rtmedia_show_title() ); ?>" >
 				<h4 title="<?php echo esc_attr( rtmedia_title() ); ?>">
 					<?php echo esc_html( rtmedia_title() ); ?>

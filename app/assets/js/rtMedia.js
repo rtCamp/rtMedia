@@ -106,8 +106,9 @@ function apply_rtMagnificPopup( selector ) {
 									}
 			                    }, false);
 								// Call the play method
+
 								// check if it's mobile
-								if( probablymobile && mediaElement.hasClass( "wp-video-shortcode" ) ){
+								if( probablymobile && $( mediaElement ).hasClass( "wp-video-shortcode" ) ){
 									jQuery( 'body' ).on('touchstart', '.mejs-overlay-button' , function(e) {
 										mediaElement.paused ? mediaElement.play() : mediaElement.pause();
 									});
@@ -196,6 +197,16 @@ function rtmedia_init_action_dropdown( parent ) {
 
 jQuery( 'document' ).ready( function( $ ) {
 
+	jQuery( '.rtmedia-uploader-div' ).css({
+		'opacity': '1',
+		'display': 'block',
+		'visibility': 'visible'
+	});
+
+	jQuery( ' #whats-new-options ' ).css({
+		'opacity': '1',
+	});
+
 	// Tabs
 	if ( typeof $.fn.rtTab !== 'undefined' ) {
 		$( '.rtm-tabs' ).rtTab();
@@ -206,7 +217,7 @@ jQuery( 'document' ).ready( function( $ ) {
 		$( '.rtmedia-modal-link' ).magnificPopup( {
 			type: 'inline',
 			midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href
-			closeBtnInside: true
+			closeBtnInside: true,
 		} );
 	}
 
@@ -330,6 +341,7 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	jQuery( '#rtmedia-create-album-modal' ).on( 'click', '#rtmedia_create_new_album', function( e ) {
 		$albumname = jQuery( '<span/>' ).text( jQuery.trim( jQuery( '#rtmedia_album_name' ).val() ) ).html();
+		$album_description = jQuery( '#rtmedia_album_description' );
 		$context = jQuery.trim( jQuery( '#rtmedia_album_context' ).val() );
 		$context_id = jQuery.trim( jQuery( '#rtmedia_album_context_id' ).val() );
 		$privacy = jQuery.trim( jQuery( '#rtmedia_select_album_privacy' ).val() );
@@ -339,6 +351,7 @@ jQuery( 'document' ).ready( function( $ ) {
 			var data = {
 				action: 'rtmedia_create_album',
 				name: $albumname,
+				description: $album_description.val(),
 				context: $context,
 				context_id: $context_id,
 				create_album_nonce: $create_album_nonce
@@ -352,11 +365,12 @@ jQuery( 'document' ).ready( function( $ ) {
 			$( '#rtmedia_create_new_album' ).attr( 'disabled', 'disabled' );
 			var old_val = $( '#rtmedia_create_new_album' ).html();
 			$( '#rtmedia_create_new_album' ).prepend( '<img src=\'' + rMedia_loading_file + '\' />' );
-
 			jQuery.post( rtmedia_ajax_url, data, function( response ) {
 				if ( typeof response.album != 'undefined' ) {
 					response = jQuery.trim( response.album );
 					var flag = true;
+					$album_description.val('');
+					$( '#rtmedia_album_name' ).focus();
 
 					jQuery( '.rtmedia-user-album-list' ).each( function() {
 						jQuery( this ).children( 'optgroup' ).each( function() {
@@ -457,6 +471,10 @@ jQuery( 'document' ).ready( function( $ ) {
 				jQuery( that ).siblings( '.rtm-ac-privacy-updated' ).remove();
 			}, 2000 );
 		} );
+	} );
+
+	jQuery( '.media_search_input' ).on( 'keyup', function() {
+		rtm_search_media_text_validation();
 	} );
 
 	function rtmedia_media_view_counts() {
@@ -648,7 +666,22 @@ jQuery( 'document' ).ready( function( $ ) {
 		} );
 	}
 
-	//    Masonry code
+	// Masonry code for activity
+	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
+		// Arrange media into masonry view
+		rtmedia_activity_masonry();
+	}
+
+	// Arrange media into masonry view right after upload or clicking on readmore link to activity without page load.
+	jQuery( document ).ajaxComplete( function( event, xhr, settings ) {
+		var get_action = get_parameter( 'action', settings.data );
+
+		if ( ( 'post_update' === get_action || 'get_single_activity_content' === get_action || 'activity_get_older_updates' === get_action ) && typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && typeof rtmedia_masonry_layout_activity != 'undefined' && rtmedia_masonry_layout_activity == 'true' ) {
+			rtmedia_activity_masonry();
+		}
+	} );
+
+	// Masonry code
 	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 		rtm_masonry_container = jQuery( '.rtmedia-container .rtmedia-list' );
 		rtm_masonry_container.masonry( {
@@ -911,19 +944,29 @@ function rtm_masonry_reload( el ) {
 })( jQuery );
 
 window.onload = function() {
-	if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+	if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && 0 == jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length ) {
 		rtm_masonry_reload( rtm_masonry_container );
 	}
-	jQuery( ' .rtmedia-uploader-div' ).css({
-		'opacity': '1',
-	    'display': 'block',
-	    'visibility': 'visible'
-	});
 
-	jQuery( ' #whats-new-options ' ).css({
-	    'opacity': '1',
-	});
+	rtm_search_media_text_validation();
+
+	if ( check_condition( 'search' ) ) {
+		jQuery( '#media_search_remove' ).show();
+	}
+
 };
+
+/**
+ * Update style as per search testbox value
+ * issue: https://github.com/rtMediaWP/rtMedia/issues/834
+ */
+function rtm_search_media_text_validation() {
+	if ( '' === jQuery( '#media_search_input' ).val() ) {
+		jQuery( '#media_search' ).css( 'cursor', 'not-allowed');
+	} else {
+		jQuery( '#media_search' ).css( 'cursor', 'pointer');
+	}
+}
 
 // Get query string parameters from url
 function rtmediaGetParameterByName( name ) {
@@ -971,4 +1014,53 @@ function rtmedia_gallery_action_alert_message( msg, action ) {
 	jQuery( '.rtmedia-gallery-message-box' ).click( function() {
 		jQuery( '.rtmedia-gallery-alert-container' ).remove();
 	} );
+}
+
+// Set masonry view for activity
+function rtmedia_activity_masonry() {
+	jQuery('#activity-stream .rtmedia-activity-container .rtmedia-list').masonry({
+		itemSelector: '.rtmedia-list-item',
+		gutter: 7,
+	});
+	var timesRun = 0;
+	var interval = setInterval( function() {
+		timesRun += 1;
+		// Run this for 5 times only.
+		if(timesRun === 5){
+			clearInterval(interval);
+		}
+		jQuery.each( jQuery( '.rtmedia-activity-container .rtmedia-list.masonry .rtmedia-item-title' ), function( i, item ) {
+			jQuery( item ).width( jQuery( item ).siblings( '.rtmedia-item-thumbnail' ).children( 'img' ).width() );
+		} );
+		// Reload masonry view.
+		rtm_masonry_reload( jQuery('#activity-stream .rtmedia-activity-container .rtmedia-list') );
+	}, 1000 );
+}
+
+/**
+ * Get specific parameter value from Query string.
+ * @param string parameter Parameter of query string.
+ * @param object data Set of data.
+ * @return bool
+ */
+function get_parameter( parameter, data ) {
+
+	if ( ! parameter ) {
+		return false;
+	}
+
+	if ( ! data ) {
+		data = window.location.href;
+	}
+
+	var parameter = parameter.replace( /[\[]/, "\\\[" ).replace( /[\]]/, "\\\]" );
+	var expr      = parameter + "=([^&#]*)";
+	var regex     = new RegExp( expr );
+	var results   = regex.exec( data );
+
+	if ( null !== results ) {
+		return results[1];
+	} else {
+		return false;
+	}
 }

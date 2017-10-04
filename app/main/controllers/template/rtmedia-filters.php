@@ -668,6 +668,152 @@ function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_i
 }
 add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_more_like_callback', 10, 2 );
 
+/**
+ * Update where query for media search
+ * @param  string $where
+ * @param  string $table_name
+ * @param  string $join
+ * @return string
+ */
+function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
+	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
+		$search                = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+		$search_by             = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
+		$media_type            = ( isset( $_REQUEST['media_type'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['media_type'] ) ) : '';
+		$rtmedia_current_album = ( isset( $_REQUEST['rtmedia-current-album'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['rtmedia-current-album'] ) ) : '';
+
+		if ( '' !== $search ) {
+			$author_id   = rtm_select_user( $search );
+			$member_type = rtm_fetch_user_by_member_type( $search );
+
+			if ( ! empty( $rtmedia_current_album ) ) {
+				$where = '';
+			}
+
+			$where .= ' AND ';
+			if ( ! empty( $search_by ) ) {
+
+				if ( ! empty( $rtmedia_current_album ) ) {
+					$where .= " $table_name.album_id = '" . $rtmedia_current_album . "' AND ";
+				}
+
+				if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
+					$where .= " $table_name.media_type = '" . $media_type . "' AND ";
+				}
+
+				if ( 'title' === $search_by ) {
+					$where .= " $table_name.media_title LIKE '%" . $search . "%' ";
+				} elseif ( 'description' === $search_by ) {
+					$where .= " post_table.post_content LIKE '%" . $search . "%'";
+
+				} elseif ( 'author' === $search_by ) {
+					if ( ! empty( $author_id ) ) {
+						$where .= " $table_name.media_author IN  (" . $author_id . ") ";
+					}
+				} elseif ( 'member_type' === $search_by ) {
+					if ( ! empty( $member_type ) ) {
+						$where .= " $table_name.media_author IN  (" . $member_type . ") ";
+					}
+				} else {
+					$where .= '2=2';
+				}
+			} else {
+				if ( ! empty( $rtmedia_current_album ) ) {
+					$where .= " $table_name.album_id = '" . $rtmedia_current_album . "' AND ";
+				}
+
+				if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
+					$where .= " $table_name.media_type = '" . $media_type . "' AND ";
+				}
+				$where .= ' ( ';
+				$where .= " $table_name.media_title LIKE '%" . $search . "%' ";
+				if ( ! empty( $author_id ) ) {
+					$where .= " OR $table_name.media_author IN  (" . $author_id . ") ";
+				}
+				if ( ! empty( $member_type ) ) {
+					$where .= " OR $table_name.media_author IN  (" . $member_type . ") ";
+				}
+				$where .= " OR post_table.post_content LIKE '%" . $search . "%'";
+
+				if ( empty( $media_type ) ) {
+					$where .= " OR $table_name.media_type = '" . $search . "' ";
+				}
+
+				$where .= ' ) ';
+			} // End if().
+		} else {
+
+			// Reset data for album's media.
+			if ( '' !== $search && ! empty( $rtmedia_current_album ) ) {
+					$where .= " AND $table_name.album_id = '" . $rtmedia_current_album . "' ";
+			}
+
+			// Reset data for particular media type.
+			if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
+				$where .= " AND $table_name.media_type = '" . $media_type . "' ";
+			}
+		} // End if().
+	} // End if().
+	return $where;
+}
+
+add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 10, 3 );
+
+/**
+ * Update join query for media search
+ * @param  string $join
+ * @param  string $table_name
+ * @return string
+ */
+function rtmedia_search_fillter_join_query( $join, $table_name ) {
+	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
+		global $wpdb;
+		$posts_table              = $wpdb->posts;
+		$terms_table              = $wpdb->terms;
+		$term_relationships_table = $wpdb->term_relationships;
+		$term_taxonomy_table      = $wpdb->term_taxonomy;
+		$search                   = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+		$search_by                = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
+
+		if ( '' !== $search ) {
+				$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
+
+			$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
+			$request_url = explode( '/', $request_uri );
+			if ( ! empty( $search_by ) && 'attribute' === $search_by && ! in_array( 'attribute', $request_url, true ) ) {
+				$join .= " 	INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = 'attachment' )
+		                    INNER JOIN $terms_table ON ( $terms_table.slug IN ('" . $search . "') )
+		                    INNER JOIN $term_taxonomy_table ON ( $term_taxonomy_table.term_id = $terms_table.term_id )
+		                    INNER JOIN $term_relationships_table ON ( $term_relationships_table.term_taxonomy_id = $term_taxonomy_table.term_taxonomy_id AND $term_relationships_table.object_id = $posts_table.ID ) ";
+			}
+		}
+	}
+	return $join;
+}
+
+add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11, 2 );
+
+/**
+ * Update media type for media search
+ * @param  array $columns
+ * @return array
+ */
+function rtmedia_model_query_columns( $columns ) {
+	$search    = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+	$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
+	if ( ! empty( $search ) ) {
+		if ( ! empty( $search_by ) && 'media_type' === $search_by ) {
+			if ( isset( $columns['media_type']['value'] ) && is_array( $columns['media_type']['value'] ) ) {
+				$columns['media_type']['value'] = array( $search );
+			}
+		}
+	}
+
+	return $columns;
+}
+
+add_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns', 10, 1 );
+
 function rtmedia_comment_max_links_callback( $values, $option = '' ) {
 	$new_values = $values;
 	if ( apply_filters( 'rtmedia_comment_max_links', true ) && 'comment_max_links' == $option ) {

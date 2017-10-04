@@ -5,7 +5,7 @@ php:
   - 5.5
 branches:
   only:
-    - codeception
+    - develop
 
 before_install:
   - rm -rf ~/.gnupg
@@ -18,6 +18,7 @@ addons:
        secure: VFBgrctr5uDgE4PIea7QoXJDdQqq5TjPhvEcEBBcymbsP7cYUniD8K/0At+hArw5fqKajNlPZZjbxEhBRVv4hXNin++S6qwLeHCQMyHWQTt5vOULL16R2GsO30QUkFT/Egw2rh9v6qBei7Ol2mwz7i+XzZQE8cSDa/TJl7wMVwU=
 
 before_script:
+  ## PHP_CodeSniffer
   - export PLUGIN_DIR=$(pwd)
   - sudo rm -rf /etc/mysql/
   - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove

@@ -74,6 +74,7 @@ form .rtmedia-container .rtm-plupload-list,
 		margin: 4px;
 		max-width: 110px;
 		padding: 5px;
+		z-index: 1;
 		position: relative;
 
 		&.upload-error {
