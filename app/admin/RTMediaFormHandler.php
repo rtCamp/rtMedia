@@ -245,6 +245,35 @@ class RTMediaFormHandler {
 	}
 
 	/**
+	 * Show rtmedia input file in admin options.
+	 *
+	 * @access static
+	 *
+	 * @param  array $args
+	 *
+	 * @return void
+	 */
+	public static function inputfile( $args ) {
+		global $rtmedia;
+		$options = $rtmedia->options;
+		$defaults = array(
+			'key' => '',
+			'desc' => '',
+		);
+		$args = wp_parse_args( $args, $defaults );
+		extract( $args );
+
+		if ( ! empty( $key ) ) {
+			$args[ 'name' ] = $key;
+		}
+
+		$args[ 'value' ] = $value;
+
+		$numObj = new rtForm();
+		$numObj->display_inputfile( $args );
+	}
+	
+	/**
 	 * extract settings.
 	 *
 	 * @access static
