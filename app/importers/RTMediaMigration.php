@@ -366,7 +366,7 @@ class RTMediaMigration {
 		global $rtmedia_error;
 		if ( isset( $rtmedia_error ) && true === $rtmedia_error ) {
 			?>
-			<div class="error"><p> Please Resolve create database error before migration.</p></div>
+			<div class="error"><p><?php esc_html__( 'Please Resolve create database error before migration.', 'buddypress-media' ); ?></p></div>
 			<?php
 		}
 
@@ -378,11 +378,11 @@ class RTMediaMigration {
 		} else {
 			?>
 			<div class="error">
-				<p> <?php esc_html_e( 'Please Backup your ', 'buddypress-media' ); ?>
-					<strong><?php esc_html_e( 'DATABASE', 'buddypress-media' ); ?></strong>
-					<?php esc_html_e( ' and ', 'buddypress-media' ); ?>
-					<strong><?php esc_html_e( 'UPLOAD', 'buddypress-media' ); ?></strong>
-					<?php esc_html_e( ' folder before Migration.', 'buddypress-media' ); ?>
+				<p>
+					<?php
+					/* translators: %1$s gets replaced by '<strong>', and %2$s by '</strong>' */
+					echo sprintf( esc_html__( 'Please Backup your %1$sDATABASE%2$s and %1$sUPLOAD%2$s folder before Migration.', 'buddypress-media' ), '<strong>', '</strong>' );
+					?>
 				</p>
 			</div>
 			<?php
