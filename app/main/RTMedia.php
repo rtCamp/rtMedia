@@ -343,9 +343,9 @@ class RTMedia {
 
 	function custom_style_for_gallery_image_size() {
 		// Get width from rtMedia settings.
-		$width  = ( isset( $this->options['defaultSizes_photo_medium_width'] ) ) ? $this->options['defaultSizes_photo_medium_width'] : '0';
+		$width  = ( isset( $this->options['defaultSizes_photo_thumbnail_width'] ) ) ? $this->options['defaultSizes_photo_thumbnail_width'] : '0';
 		// Get height from rtMedia settings.
-		$height = ( isset( $this->options['defaultSizes_photo_medium_height'] ) ) ? $this->options['defaultSizes_photo_medium_height'] : '0';
+		$height = ( isset( $this->options['defaultSizes_photo_thumbnail_height'] ) ) ? $this->options['defaultSizes_photo_thumbnail_height'] : '0';
 
 		$media_height = $height . 'px';
 		$media_width  = $width . 'px';
