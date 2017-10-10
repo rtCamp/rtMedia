@@ -190,7 +190,7 @@ class RTMediaNav {
 		global $rtmedia, $rtmedia_query;
 
 		$active_components = bp_get_option( 'bp-active-components' );
-		$user_groups = $active_components['groups'];
+		$user_groups       = $active_components['groups'];
 		$user_group_status = ( '1' === $user_groups ) ? true : false;
 
 		if ( function_exists( 'bp_is_group' ) && bp_is_group() && $user_group_status ) {
@@ -281,14 +281,12 @@ class RTMediaNav {
 						$profile
 					)
 				);
-			} else {
-				if ( $user_group_status ) {
-					$profile_link = trailingslashit(
-						get_rtmedia_group_link(
-							$profile
-						)
-					);
-				}
+			} elseif ( $user_group_status ) {
+				$profile_link = trailingslashit(
+					get_rtmedia_group_link(
+						$profile
+					)
+				);
 			}
 
 			$type_label = esc_html__( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'buddypress-media' );
