@@ -366,7 +366,7 @@ class RTMediaMigration {
 		global $rtmedia_error;
 		if ( isset( $rtmedia_error ) && true === $rtmedia_error ) {
 			?>
-			<div class="error"><p><?php esc_html__( 'Please Resolve create database error before migration.', 'buddypress-media' ); ?></p></div>
+			<div class="error"><p><?php echo esc_html__( 'Please Resolve create database error before migration.', 'buddypress-media' ); ?></p></div>
 			<?php
 		}
 
