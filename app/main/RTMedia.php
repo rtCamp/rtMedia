@@ -312,11 +312,11 @@ class RTMedia {
 
 		// If height or width given zero, then show it's original height or with.
 		if ( '0' === $height ) {
-			$media_height = '100%';
+			$media_height = 'auto';
 		}
 
 		if ( '0' === $width ) {
-			$media_width = '100%';
+			$media_width = 'auto';
 		}
 
 		?>
@@ -352,21 +352,21 @@ class RTMedia {
 
 		// If height or width given zero, then show it's original height or with.
 		if ( '0' === $height ) {
-			$media_height = '100%';
+			$media_height = 'auto';
 		}
 
 		if ( '0' === $width ) {
-			$media_width = '100%';
+			$media_width = 'auto';
 		}
 		?>
 		.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail {
-		width: <?php echo esc_attr( $media_width ); ?>px;
-		height: <?php echo esc_attr( $media_height ); ?>px;
-		line-height: <?php echo esc_attr( $media_height ); ?>px;
+		width: <?php echo esc_attr( $media_width ); ?>;
+		height: <?php echo esc_attr( $media_height ); ?>;
+		line-height: <?php echo esc_attr( $media_height ); ?>;
 		}
 		.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail img {
-		max-width: <?php echo esc_attr( $media_width ); ?>px;
-		max-height: <?php echo esc_attr( $media_height ); ?>px;
+		max-width: <?php echo esc_attr( $media_width ); ?>;
+		max-height: <?php echo esc_attr( $media_height ); ?>;
 		}
 		.rtmedia-container .rtmedia-list  .rtmedia-list-item {
 		width: <?php echo $media_width; ?>;
