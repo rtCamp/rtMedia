@@ -148,6 +148,14 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.4.4 [October 12, 2017] ###
+
+* FIXED
+
+ * Media display issue if masonry view is disabled and width is set to zero
+ * Upload multiple images on mobile devices
+ * Improve localization, thanks to [xavivars](https://github.com/xavivars)
+
 ### 4.4.3 [August 3, 2017] ###
 
 * ENHANCEMENTS
