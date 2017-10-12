@@ -50,12 +50,12 @@ class Constants {
 	public static $customCssTab = 'a#tab-rtmedia-custom-css-settings';
 	public static $otherSettingsTab = 'a#tab-rtmedia-general';
 	public static $strCommentCheckboxLabel = 'Allow user to comment on uploaded media';
+	public static $strEnableGalleryMediaSearchLabel = 'Enable gallery media search';
 	public static $strDirectUplaodCheckboxLabel = 'Enable Direct Upload';
 	public static $strLightboxCheckboxLabel = 'Use lightbox to display media';
 	public static $numOfMediaLabel = 'Number of media per page';
 	public static $strMasonaryCheckboxLabel = 'Enable Masonry Cascading grid layout';
 	public static $strMediaDisplayPaginationLabel = 'Media display pagination option';
-	public static $strMediaSearchLabel = 'Enable gallery media search';
 	public static $strEnableMediaInProLabel = 'Enable media in profile';
 	public static $strEnableMediaInGrpLabel = 'Enable media in group';
 	public static $numOfMediaLabelActivity = 'Number of media items to show in activity stream';
@@ -201,7 +201,7 @@ class Constants {
 	public static $optionsPopup = '.rtm-options';
 	public static $albumMsg = ' album created successfully.';
 	public static $activitySelector = '#activity-stream';
-	
+
 	public static $mediaLikeCheckboxLabel = 'Enable likes for media';
 	public static $mediaLikeCheckbox = 'input[name="rtmedia-options[general_enableLikes]"]';
 	public static $likeButton = '.rtmedia-like';
