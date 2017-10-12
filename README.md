@@ -148,6 +148,15 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.4.4 [October 12, 2017] ###
+
+* FIXED
+
+ * Media display issue if masonry view is disabled and width is set to zero
+ * Upload multiple images on mobile devices
+ * Improve localization, thanks to [xavivars](https://github.com/xavivars)
+ * Added a check for BuddyPress Group component while using bp_before_member_header action
+
 ### 4.4.3 [August 3, 2017] ###
 
 * ENHANCEMENTS
