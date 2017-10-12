@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 4.8.1
-Stable tag: 4.4.3
+Tested up to: 4.8.2
+Stable tag: 4.4.4
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
