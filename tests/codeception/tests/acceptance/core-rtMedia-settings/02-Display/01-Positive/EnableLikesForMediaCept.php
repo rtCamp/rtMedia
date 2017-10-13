@@ -31,7 +31,9 @@ if ( $temp >= ConstantsPage::$minValue ) {
 
 	$uploadmedia->firstThumbnailMedia();
 
-	$I->seeElement( ConstantsPage::$likeButton );   //The close button will only be visible if the media is opened in Lightbox
+	$I->seeElement( ConstantsPage::$likeButton );
+	$I->executeJS( 'jQuery( ".rtmedia-item-comments .rtmedia-like" ).click();' );
+	$I->seeInSource( '<span>Unlike</span>' );
 } else {
 
 	//Disbale direct upload from settings
@@ -43,6 +45,8 @@ if ( $temp >= ConstantsPage::$minValue ) {
 	$I->reloadPage();
 
 	$uploadmedia->firstThumbnailMedia();
-	$I->seeElement( ConstantsPage::$likeButton );   //The close button will only be visible if the media is opened in Lightbox
+	$I->seeElement( ConstantsPage::$likeButton );
+	$I->executeJS( 'jQuery( ".rtmedia-item-comments .rtmedia-like" ).click();' );
+	$I->seeInSource( '<span>Unlike</span>' );
 }
 ?>
