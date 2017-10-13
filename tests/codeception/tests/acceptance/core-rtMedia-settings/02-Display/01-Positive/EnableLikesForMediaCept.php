@@ -33,7 +33,7 @@ if ( $temp >= ConstantsPage::$minValue ) {
 
 	$I->seeElement( ConstantsPage::$likeButton );
 	$I->executeJS( 'jQuery( ".rtmedia-item-comments .rtmedia-like" ).click();' );
-	$I->seeInSource( '<span>Unlike</span>' );
+	$I->waitForElement('.rtm-like-comments-info', 60);
 } else {
 
 	//Disbale direct upload from settings
