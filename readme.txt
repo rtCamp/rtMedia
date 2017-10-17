@@ -137,7 +137,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.4.4 [October 12, 2017] =
+= 4.4.4 [October 17, 2017] =
 
 * FIXED
 
