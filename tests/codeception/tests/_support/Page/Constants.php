@@ -4,11 +4,16 @@ namespace Page;
 
 class Constants {
 
+	// Username and Password
 	public static $userName = 'ADMINUSER';
 	public static $password = 'ADMINPASS';
+
+	// Media files Name with path
 	public static $imageName = 'test-data/images/test.jpg';
 	public static $audioName = 'test-data/music/mpthreetest.mp3';
 	public static $videoName = 'test-data/videos/testmpfour.mp4';
+
+	// Constant Values
 	public static $commentStr = 'Test comment';
 	public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
 	public static $customCssEmptyValue = '';
@@ -19,36 +24,28 @@ class Constants {
 	public static $thumbnailHeight = '150';
 	public static $mediumWidth = '320';
 	public static $mediumHeight = '240';
-	public static $LargeWidth = '700';
-	public static $LargeHeight = '0';
+	public static $largeWidth = '700';
+	public static $largeHeight = '300';
 	public static $activityVideoPlayerWidth = '320';
 	public static $activityVideoPlayerHeight = '240';
 	public static $singleVideoWidth = '500';
 	public static $singleVideoHeight = '480';
 	public static $activityMusicPlayerWidth = '350';
-	public static $singleMusicPlayerWidth = '640';
+	public static $singleMusicPlayerWidth = '600';
 	public static $imgQualityValue = '80';
+
+	// URLs to target setting tabs
 	public static $rtMediaSettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings';
-	public static $saveSettingsButtonBottom = '.rtm-button-container.bottom .rtmedia-settings-submit';
-	public static $rtMediaSettings = '#toplevel_page_rtmedia-settings';
-	public static $topSaveButton = '.rtm-button-container.top input.rtmedia-settings-submit';
-	public static $grpTableRow = 'tbody#the-list tr#groups';
-	public static $enableUserGrpCheckbox = 'input[name="bp_components[groups]"]';
-	public static $saveBPSettings = 'input#bp-admin-component-submit';
-	public static $displayTabUrl = '#rtmedia-display';
-	public static $buddypressTabUrl = '#rtmedia-bp';
-	public static $typesTabUrl = '#rtmedia-types';
-	public static $mediaSizesTabUrl = '#rtmedia-sizes';
-	public static $privacyTabUrl = '#rtmedia-privacy';
-	public static $customCssTabUrl = '#rtmedia-custom-css-settings';
-	public static $otherSettingsTabUrl = '#rtmedia-general';
-	public static $displayTab = 'a#tab-rtmedia-display';
-	public static $buddypressTab = 'a#tab-rtmedia-bp';
-	public static $typesTab = 'a#tab-rtmedia-types';
-	public static $mediaSizesTab = 'a#tab-rtmedia-sizes';
-	public static $privacyTab = 'a#tab-rtmedia-privacy';
-	public static $customCssTab = 'a#tab-rtmedia-custom-css-settings';
-	public static $otherSettingsTab = 'a#tab-rtmedia-general';
+	public static $displaySettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display';
+	public static $buddypressSettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp';
+	public static $typesSettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-types';
+	public static $mediaSizeSettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-sizes';
+	public static $privacySettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-privacy';
+	public static $customCssSettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-custom-css-settings';
+	public static $otherSettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-general';
+	public static $bpComponentsUrl = '/wp-admin/options-general.php?page=bp-components/';
+
+	// Labels
 	public static $strCommentCheckboxLabel = 'Allow user to comment on uploaded media';
 	public static $strEnableGalleryMediaSearchLabel = 'Enable gallery media search';
 	public static $strDirectUplaodCheckboxLabel = 'Enable Direct Upload';
@@ -61,8 +58,8 @@ class Constants {
 	public static $numOfMediaLabelActivity = 'Number of media items to show in activity stream';
 	public static $strEnableAlbumLabel = 'Organize media into albums';
 	public static $strMediaNotificationLabel = 'Enable media notification';
-	public static $strActivityMediaLikeLabel = 'Create activity for media likes';
-	public static $strActivityMediaCommentLabel = 'Create activity for media comments';
+	public static $strCreateActivityMediaLikeLabel = 'Create activity for media likes';
+	public static $strCreateActivityForMediaCommentLabel = 'Create activity for media comments';
 	public static $strMediaUploadFromActivityLabel = 'Allow upload from activity stream';
 	public static $strMediaInCommnetLabel = 'Enable media in comment';
 	public static $strShowAlbumDescLabel = 'Show album description';
@@ -86,6 +83,8 @@ class Constants {
 	public static $strEnableUsageDataTrackingLabel = 'Allow usage data tracking';
 	public static $adminbarMenuLabel = 'Admin bar menu integration';
 	public static $footerLinkLabel = 'Add a link to rtMedia in footer';
+
+	// Checkbox, Textbox and Radio buttons selectors
 	public static $commentCheckbox = 'input[name="rtmedia-options[general_enableComments]"]';
 	public static $directUploadCheckbox = 'input[name="rtmedia-options[general_direct_upload]"]';
 	public static $lightboxCheckbox = 'input[name="rtmedia-options[general_enableLightbox]"]';
@@ -139,14 +138,32 @@ class Constants {
 	public static $enableUsageDataTrackingCheckbox = 'input[name="rtmedia-options[general_AllowUserData]"]';
 	public static $adminbarMenuCheckbox = 'input[name="rtmedia-options[general_showAdminMenu]"]';
 	public static $footerLinkCheckbox = 'input[name="rtmedia-options[rtmedia_add_linkback]"]';
+	public static $scrollPosForDirectUpload = 'input[name="rtmedia-options[general_masonry_layout]"]';
+	public static $saveSettingsButtonBottom = '.rtm-button-container.bottom .rtmedia-settings-submit';
+	public static $rtMediaSettings = '#toplevel_page_rtmedia-settings';
+	public static $topSaveButton = '.rtm-button-container.top input.rtmedia-settings-submit';
+	public static $grpTableRow = 'tbody#the-list tr#groups';
+	public static $userGroupsLabelStr = 'User Groups';
+	public static $enableUserGrpCheckbox = 'input[name="bp_components[groups]"]';
+	public static $saveBPSettings = 'input#bp-admin-component-submit';
+	public static $displayTab = 'a#tab-rtmedia-display';
+	public static $buddypressTab = 'a#tab-rtmedia-bp';
+	public static $typesTab = 'a#tab-rtmedia-types';
+	public static $mediaSizesTab = 'a#tab-rtmedia-sizes';
+	public static $privacyTab = 'a#tab-rtmedia-privacy';
+	public static $customCssTab = 'a#tab-rtmedia-custom-css-settings';
+	public static $otherSettingsTab = 'a#tab-rtmedia-general';
+
+	// Frontend selectors
 	public static $photoLink = 'a#rtmedia-nav-item-photo';
 	public static $videoLink = 'a#rtmedia-nav-item-video';
 	public static $musicLink = 'a#rtmedia-nav-item-music';
-	public static $thumbnailSelector = '.rtmedia-item-thumbnail img';
+	public static $thumbnailImgSelector = '.rtmedia-item-thumbnail img';
+	public static $mediumImgSelector = '.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img';
+	public static $largImgeSelector = '.rtmedia-media img';
 	public static $videoSelectorSingle = 'div#rtm-mejs-video-container';
 	public static $videoSelectorActivity = 'div.mejs-container.svg.wp-video-shortcode.mejs-video';
-	public static $audioSelectorActivity = 'div.mejs-container.svg.wp-audio-shortcode.mejs-audio';
-	public static $audioSelectorSingle = 'div.mejs-container.svg.wp-audio-shortcode.mejs-audio';
+	public static $audioSelector = '.mejs-container';
 	public static $closeButton = '.rtm-mfp-close';
 	public static $masonryLayoutXpath = '//*[@id="rtm-gallery-title-container"]/h2';
 	public static $masonryLayout = 'ul.masonry';
@@ -157,7 +174,7 @@ class Constants {
 	public static $mediaLinkOnProfile = 'a#user-media';
 	public static $mediaLinkOnGroup = 'a#media';
 	public static $mediaAlbumLink = 'a#rtmedia-nav-item-albums';
-	public static $uploadButtonOnAtivityPage = '.rtmedia-add-media-button';
+	public static $uploadButtonOnAtivityPage = 'button.rtmedia-add-media-button';
 	public static $privacyDropdown = 'select#rtSelectPrivacy';
 	public static $mediaPerPageActivitySelector = 'ul#activity-stream > li:first-child ul li';
 	public static $mediaPerPageOnMediaSelector = 'ul.rtm-gallery-list li';
@@ -193,7 +210,7 @@ class Constants {
 	public static $saveSession = false;
 	public static $fileList = '#rtmedia_uploader_filelist';
 	public static $siteEntryTitle = '.entry-title';
-	public static $mediaContainer = 'div.rtm-lightbox-container';
+	public static $mediaContainer = '.rtmedia-container.rtmedia-single-container';
 	public static $fileListOnMediaComment = 'div.rtmedia-plupload-notice';
 	public static $saveMsgSelector = '#setting-error-settings_updated';
 	public static $nextGrpButton = '#group-creation-next';
@@ -201,9 +218,42 @@ class Constants {
 	public static $optionsPopup = '.rtm-options';
 	public static $albumMsg = ' album created successfully.';
 	public static $activitySelector = '#activity-stream';
-
 	public static $mediaLikeCheckboxLabel = 'Enable likes for media';
 	public static $mediaLikeCheckbox = 'input[name="rtmedia-options[general_enableLikes]"]';
 	public static $likeButton = '.rtmedia-like';
+	public static $uploadFromActivity = 'div#whats-new-options div input[type="file"]';
+	public static $whatIsNewTextarea = '#whats-new';
+	public static $postUpdateButton = 'input#aw-whats-new-submit';
+	public static $fileNotSupportedSelector = '.dashicons-info';
+	public static $firstMediaChild = 'ul.rtm-gallery-list li:first-child';
+	public static $uploadLink = '.rtmedia-upload-media-link';
+	public static $uploadContainer = '#rtmedia-upload-container';
+	public static $selectFileButton = 'input#rtMedia-upload-button';
+	public static $uploadFile = 'div.moxie-shim.moxie-shim-html5 input[type=file]';
+	public static $uploadMediaButton = '#rtmedia-upload-container .start-media-upload';
+	public static $commentTextArea = '#comment_content';
+	public static $commentSubmitButton = '.rt_media_comment_submit';
+	public static $likeInfoSelector = '.rtm-like-comments-info';
+	public static $firstMusicElementOnActivity = 'ul#activity-stream > li:first-child li.rtmedia-list-item.media-type-music';
+	public static $firstPhotoElementOnActivity = 'ul#activity-stream > li:first-child li.rtmedia-list-item.media-type-photo';
+	public static $firstVideoElementOnActivity = 'ul#activity-stream > li:first-child li.rtmedia-list-item.media-type-video';
+	public static $activityMediaCommentSelector = 'ul#activity-stream > li:first-child.rtmedia_comment_activity';
+	public static $activityMediaLikeSelector = 'ul#activity-stream > li:first-child.rtmedia_like_activity';
+	public static $groupNameLink = '#groups-dir-list ul#groups-list > li:first-child  a img';
+
+	// Custom Messages
+	public static $enabledSettingMsg = "Setting is already enabled.";
+	public static $disabledSettingMsg = "Setting is already disabled.";
+
+	// Login Selectors
+	public static $wpUserNameField = 'input#user_login';
+	public static $wpPasswordField = 'input#user_pass';
+	public static $wpDashboard = '#adminmenu';
+	public static $wpSubmitButton = 'input#wp-submit';
+	public static $loginLink = 'li#wp-admin-bar-bp-login';
+	public static $dashBoardMenu = 'li#menu-dashboard';
+
+	//Logout Selectors
+	public static $adminBarMenuSelector = '#wp-admin-bar-my-account';
 
 }

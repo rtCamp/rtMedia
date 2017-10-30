@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scenario :Allow upload for video media types.
+ * Scenario : To set height and width of video player for activity page.
  */
     use Page\Login as LoginPage;
     use Page\Constants as ConstantsPage;
@@ -12,25 +12,29 @@
     $numOfMedia = 1;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'Allow upload for video media types' );
+    $I->wantTo( 'To set height and width of video player for activity page' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
+    $settings->gotoSettings( ConstantsPage::$mediaSizeSettingsUrl );
+    $settings->setMediaSize( ConstantsPage::$activityPlayerLabel, ConstantsPage::$activityVideoWidthTextbox, ConstantsPage::$activityVideoPlayerWidth, ConstantsPage::$activityVideoHeightTextbox, ConstantsPage::$activityVideoPlayerHeight );
+
     $settings->enableRequestedMediaTypes( ConstantsPage::$videoLabel, ConstantsPage::$videoCheckbox );
 
     $settings->enableUploadFromActivity();
+
+    $settings->disableDirectUpload();
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivity();
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->addStatus( "Testing for Video Media Types." );
+    $uploadmedia->addStatus( "Upload from activity to check mediz sizes." );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName, $numOfMedia );
 
     $I->reloadPage();
 
-    $I->seeElementInDOM( ConstantsPage::$firstVideoElementOnActivity );
-    echo nl2br( "Video is uploaded.. \n" );
+    $I->assertGreaterThanOrEqual( ConstantsPage::$activityVideoPlayerWidth, $I->grabAttributeFrom( ConstantsPage::$videoSelectorActivity, 'style' ), "Width and height is as expected!" );
 ?>

@@ -3,44 +3,45 @@
 /**
  * Scenario : To check if media tab for group.
  */
-use Page\Login as LoginPage;
-use Page\Constants as ConstantsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
-use Page\DashboardSettings as DashboardSettingsPage;
+	use Page\Login as LoginPage;
+	use Page\Constants as ConstantsPage;
+	use Page\DashboardSettings as DashboardSettingsPage;
+	use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To check if media tab is enabled for group' );
+	$I = new AcceptanceTester( $scenario );
+	$I->wantTo( 'To check if media tab is enabled for group' );
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$loginPage = new LoginPage( $I );
+	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
-$settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInGrpLabel, ConstantsPage::$enableMediaInGrpCheckbox );
+	$settings = new DashboardSettingsPage( $I );
+	$settings->gotoSettings( ConstantsPage::$buddypressSettingsUrl );
 
-$I->amOnPage( '/wp-admin/options-general.php?page=bp-components/' );
-$I->waitForElement( ConstantsPage::$grpTableRow, 10 );
-$I->seeElement( ConstantsPage::$enableUserGrpCheckbox );
-$I->checkOption( ConstantsPage::$enableUserGrpCheckbox );
-$I->seeElement( ConstantsPage::$saveBPSettings );
-$I->click( ConstantsPage::$saveBPSettings );
-$I->waitForElement( ConstantsPage::$saveMsgSelector, 20 );
+	$verifyEnableStatusOfMediaInGroupCheckbox = $settings->verifyStatus( ConstantsPage::$strEnableMediaInGrpLabel, ConstantsPage::$enableMediaInGrpCheckbox );
+	if ( $verifyEnableStatusOfMediaInGroupCheckbox ) {
+        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+    } else {
+        $settings->enableSetting( ConstantsPage::$enableMediaInGrpCheckbox );
+        $settings->saveSettings();
+    }
 
-$buddypress = new BuddypressSettingsPage( $I );
-$buddypress->gotoGroup();
+	$settings->enableBPGroupComponent();
 
-$temp = $buddypress->countGroup( ConstantsPage::$groupListSelector );
-echo "Total no. of groups = " . $temp;
+	$buddypress = new BuddypressSettingsPage( $I );
+	$buddypress->gotoGroup();
 
-if ( $temp > 0 ) {
+	$totalCount = $buddypress->countGroup( ConstantsPage::$groupListSelector );
+	echo "Total no. of groups = " . $totalCount;
 
-	$buddypress->checkMediaInGroup();
-	$I->seeElement( ConstantsPage::$mediaLinkOnGroup );
-} else {
+	if ( $totalCount > 0 ) {
 
-	$buddypress->createGroup();
-	echo "group is created!";
-	$buddypress->checkMediaInGroup();
-	$I->seeElement( ConstantsPage::$mediaLinkOnGroup );
-}
+		$buddypress->checkMediaInGroup();
+		$I->seeElement( ConstantsPage::$mediaLinkOnGroup );
+	} else {
+
+		$buddypress->createGroup();
+		echo "group is created!";
+		$buddypress->checkMediaInGroup();
+		$I->seeElement( ConstantsPage::$mediaLinkOnGroup );
+	}
 ?>
