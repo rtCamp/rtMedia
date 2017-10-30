@@ -3,25 +3,38 @@
 /**
  * Scenario : Disable organize media into albums.
  */
-use Page\Login as LoginPage;
-use Page\Constants as ConstantsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
-use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\Login as LoginPage;
+    use Page\Constants as ConstantsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'Disable organize media into albums.' );
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'Disable organize media into albums.' );
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
-$settings->verifyDisableStatus( ConstantsPage::$strEnableAlbumLabel, ConstantsPage::$enableAlbumCheckbox );
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoSettings( ConstantsPage::$buddypressSettingsUrl );
+    $verifyDisableStatusOfAlbumCheckbox = $settings->verifyStatus( ConstantsPage::$strEnableAlbumLabel, ConstantsPage::$enableAlbumCheckbox );
 
-$settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox ); //This must be enabled else it will not identify the element in front end.
+	if ( $verifyDisableStatusOfAlbumCheckbox ) {
+		$settings->disableSetting( ConstantsPage::$enableAlbumCheckbox );
+		$settings->saveSettings();
+	} else {
+		echo nl2br( ConstantsPage::$disabledSettingMsg . "\n" );
+	}
 
-$gotoMediaPage = new BuddypressSettingsPage( $I );
-$gotoMediaPage->gotoMedia( ConstantsPage::$userName );
+    $verifyEnableStatusOfMediaInProfileCheckbox = $settings->verifyStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
+	if ( $verifyEnableStatusOfMediaInProfileCheckbox ) {
+        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+    } else {
+        $settings->enableSetting( ConstantsPage::$enableMediaInProCheckbox );
+        $settings->saveSettings();
+    }
 
-$I->dontSeeElement( ConstantsPage::$mediaAlbumLink );
+    $gotoMediaPage = new BuddypressSettingsPage( $I );
+    $gotoMediaPage->gotoMedia();
+
+    $I->dontSeeElement( ConstantsPage::$mediaAlbumLink );
 ?>

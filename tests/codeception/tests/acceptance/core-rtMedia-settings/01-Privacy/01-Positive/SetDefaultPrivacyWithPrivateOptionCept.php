@@ -4,43 +4,57 @@
  * Scenario : To set default Privacy as Private.
  */
 
-use Page\Login as LoginPage;
-use Page\Logout as LogoutPage;
-use Page\Constants as ConstantsPage;
-use Page\UploadMedia as UploadMediaPage;
-use Page\DashboardSettings as DashboardSettingsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\Login as LoginPage;
+    use Page\Logout as LogoutPage;
+    use Page\Constants as ConstantsPage;
+    use Page\UploadMedia as UploadMediaPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$status = 'Private Status';
+    $numOfMedia = 1;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To set default privacy as Private' );
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set default privacy as Private' );
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, ConstantsPage::$saveSession );
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, ConstantsPage::$saveSession );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$privacyTab, ConstantsPage::$privacyTabUrl );
-$settings->verifyEnableStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
-$settings->verifyEnableStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
-$settings->verifySelectOption( ConstantsPage::$defaultPrivacyLabel, ConstantsPage::$privateRadioButton );
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoSettings( ConstantsPage::$privacySettingsUrl );
 
-$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-$I->waitForElement( ConstantsPage::$buddypressTab , 10);
-$settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+    $verifyEnableStatusOfPrivacyCheckbox = $settings->verifyStatus( ConstantsPage::$privacyLabel, ConstantsPage::$privacyCheckbox );
 
-$buddypress = new BuddypressSettingsPage( $I );
-$buddypress->gotoActivityPage( ConstantsPage::$userName );
+    if ( $verifyEnableStatusOfPrivacyCheckbox ) {
+        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+    } else {
+        $settings->enableSetting( ConstantsPage::$privacyCheckbox );
+        $settings->saveSettings();
+    }
 
-$I->seeElementInDOM( ConstantsPage::$privacyDropdown );
+    $verifySelectionStateOfPrivacyPrivateRadioButton = $settings->verifyStatus( ConstantsPage::$defaultPrivacyLabel, ConstantsPage::$privateRadioButton );
 
-$uploadmedia = new UploadMediaPage( $I );
-$uploadmedia->postStatus( $status );
+	if ( $verifySelectionStateOfPrivacyPrivateRadioButton ) {
+        echo nl2br( "Option is already selected." . "\n" );
+    } else {
+        $settings->selectOption( ConstantsPage::$privateRadioButton );
+        $settings->saveSettings();
+    }
 
-$logout = new LogoutPage( $I );
-$logout->logout();
+    $settings->enableUploadFromActivity();
+    $settings->disableDirectUpload();
+    $settings->enableRequestedMediaTypes( ConstantsPage::$photoLabel, ConstantsPage::$photoCheckbox );
 
-$buddypress->gotoActivityPage( ConstantsPage::$userName );
-$I->dontSeeElementInDOM( ConstantsPage::$activitySelector );
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivity();
+
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->addStatus( "Upload from activity to test privacy for  Private mode." );
+    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName, $numOfMedia );
+
+    $logout = new LogoutPage( $I );
+    $logout->logout();
+
+    $buddypress->gotoActivity();
+    $I->dontSeeElementInDOM( ConstantsPage::$firstPhotoElementOnActivity );
 
 ?>

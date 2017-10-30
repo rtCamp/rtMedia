@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scenario : Should not allow the user to upload media directly.
+ * Scenario : Allow upload from activity stream.
  */
     use Page\Login as LoginPage;
     use Page\Constants as ConstantsPage;
@@ -9,22 +9,27 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
+    $scrollPos = ConstantsPage::$masonaryCheckbox;
+    $numOfMedia = 1;
+
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To check if the user is allowed to upload the media directly' );
+    $I->wantTo( 'Check if the user is allowed to upload media from activity stream.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
-    $settings->gotoSettings( ConstantsPage::$displaySettingsUrl );
+    $settings->enableUploadFromActivity();
+
     $settings->disableDirectUpload();
 
+    $settings->enableRequestedMediaTypes( ConstantsPage::$photoLabel, ConstantsPage::$photoCheckbox );
+
     $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoMedia();
+    $buddypress->gotoActivity();
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->uploadMedia( ConstantsPage::$imageName );
-    $I->seeElement( ConstantsPage::$uploadMediaButton );
+    $uploadmedia->addStatus( "Upload from activity" );
+    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName, $numOfMedia );
 
-    $I->reloadPage();
 ?>

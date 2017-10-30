@@ -3,26 +3,45 @@
 /**
  * Scenario : Enable Show Album description.
  */
-use Page\Login as LoginPage;
-use Page\Constants as ConstantsPage;
-use Page\DashboardSettings as DashboardSettingsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\Login as LoginPage;
+    use Page\Constants as ConstantsPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'Enable Show Album description.' );
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'Enable Show Album description.' );
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoSettings( ConstantsPage::$buddypressSettingsUrl );
 
-$settings->verifyEnableStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
-$settings->verifyEnableStatus( ConstantsPage::$strEnableAlbumLabel, ConstantsPage::$enableAlbumCheckbox );
-$settings->verifyEnableStatus( ConstantsPage::$strShowAlbumDescLabel, ConstantsPage::$albumDescCheckbox );
+    $verifyEnableStatusOfMediaInProfileCheckbox = $settings->verifyStatus( ConstantsPage::$strEnableMediaInProLabel, ConstantsPage::$enableMediaInProCheckbox );
+	if ( $verifyEnableStatusOfMediaInProfileCheckbox ) {
+        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+    } else {
+        $settings->enableSetting( ConstantsPage::$enableMediaInProCheckbox );
+        $settings->saveSettings();
+    }
 
-$buddypress = new BuddypressSettingsPage( $I );
+    $verifyEnableStatusOfAlbumCheckbox = $settings->verifyStatus( ConstantsPage::$strEnableAlbumLabel, ConstantsPage::$enableAlbumCheckbox );
+	if ( $verifyEnableStatusOfAlbumCheckbox ) {
+        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+    } else {
+        $settings->enableSetting( ConstantsPage::$enableAlbumCheckbox );
+        $settings->saveSettings();
+    }
 
-$buddypress->createNewAlbum();
-$buddypress->editAlbumDesc();
+    $verifyEnableStatusOfAlbumDescCheckbox = $settings->verifyStatus( ConstantsPage::$strShowAlbumDescLabel, ConstantsPage::$albumDescCheckbox );
+	if ( $verifyEnableStatusOfAlbumDescCheckbox ) {
+        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+    } else {
+        $settings->enableSetting( ConstantsPage::$albumDescCheckbox );
+        $settings->saveSettings();
+    }
+
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->createNewAlbum();
+    $buddypress->editAlbumDesc();
 ?>
