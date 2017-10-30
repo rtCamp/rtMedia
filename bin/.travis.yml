@@ -16,7 +16,9 @@ addons:
   browserstack:
     username: rtcamp3
     access_key:
-       secure: VFBgrctr5uDgE4PIea7QoXJDdQqq5TjPhvEcEBBcymbsP7cYUniD8K/0At+hArw5fqKajNlPZZjbxEhBRVv4hXNin++S6qwLeHCQMyHWQTt5vOULL16R2GsO30QUkFT/Egw2rh9v6qBei7Ol2mwz7i+XzZQE8cSDa/TJl7wMVwU=
+       secure: Q1L7zh2EKW8AAevwvJfI2c2/edcM1R6eImxDLpLLDbmN81yBzTHSRrUYljPxgu6+Vc7zoSLtIoR5ue040JFNHlWptxvuRo0HLp5Ez9XdTWOerHz6GFuMFZpu8jVrdHPmKpG3Xw2wU9qD+McCdpAZKjEccZW+ECTgiLFv5Fp0P527WwgaKTFF863CV3Ll4dYnjkx/ldi92wqsVFU8S70n+oN0C9Xrrc1pES1dlUDHv6DKSQHVYaGGt0MuwI35l0UWIcvxw05Gos6VmvxZ91+t67okp7sJZit01Wkq5dflnJEgTqPliFEWGABzT5IeEiljL5XpV/539rbDCHQuHPKZuKBoEMvAwFiNXsHV7a1GH9nAAHvEG88kZUjGzI9ikIKz4Jpemqet5aufF9AdgjgqdNRE+dZasaKTFj6DoZDefzxkH3mmpIyxAGzrt/9p7EAMsOl8yy8Mq88luKYBxtojTh05gyCS3b2IPclMm0G22Nwd+Wjje4/+zu/QTeNvWmxcQ6GVPnNDhlBorkYX/7/XbXPonJJX1cvF0uLuO0UBdgHYU9KA5dB2FI+HdTqOUrYJ53hzofrqftoRF7cB/gULV0m3V/IN4W8a8CMoleB4Jg4TW29a9We9OMCFHhi6HeE1JXi4mDFyDlAAQthCaMRv/HozqxKj+4tyJvdCRLFrNeg=
+
+        #    VFBgrctr5uDgE4PIea7QoXJDdQqq5TjPhvEcEBBcymbsP7cYUniD8K/0At+hArw5fqKajNlPZZjbxEhBRVv4hXNin++S6qwLeHCQMyHWQTt5vOULL16R2GsO30QUkFT/Egw2rh9v6qBei7Ol2mwz7i+XzZQE8cSDa/TJl7wMVwU=
 
 before_script:
 
@@ -45,7 +47,7 @@ before_script:
   - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
   - cd $PLUGIN_DIR/tests/codeception/
   - composer update
-  - export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
+  - export PATH="$PATH:/home/travis/build/kjnanda/rtMedia/tests/codeception/vendor/bin"
     ## PHP_CodeSniffer
   - pear install pear/PHP_CodeSniffer-2.9.1
   - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
