@@ -123,6 +123,15 @@ form .rtmedia-container .rtm-plupload-list,
 	clear: both;
 }
 
+.rtmedia-container.rtmedia-single-container #rtmedia_media_single_edit .rtmedia-editor-buttons {
+	padding: .25rem 0;
+
+	.rtm-button-back {
+		border-radius: 2px;
+		padding: 2px 10px 3px;
+	}
+}
+
 .rtm-upload-button-wrapper button.rtmedia-comment-media-upload,
 button.rtmedia-comment-media-upload {
 	padding: 3px 6px;
