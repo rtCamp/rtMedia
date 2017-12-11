@@ -2145,6 +2145,7 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 				jQuery( input_file_el ).click();
 				file_dialog_open = false;
 			}
+			$(this).blur();
 		} );
 
 		var form_html = jQuery( "."+comment_media_wrapper+widget_id );
