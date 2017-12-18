@@ -4,47 +4,54 @@
  * Scenario : To check if Pagination is enabled
  * Pre condition : The available no of Media should be  > ConstantsPage::$numOfMediaPerPage
  */
-use Page\Login as LoginPage;
-use Page\Constants as ConstantsPage;
-use Page\DashboardSettings as DashboardSettingsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
-use Page\UploadMedia as UploadMediaPage;
+	use Page\Login as LoginPage;
+	use Page\Constants as ConstantsPage;
+	use Page\UploadMedia as UploadMediaPage;
+	use Page\DashboardSettings as DashboardSettingsPage;
+	use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To check if Pagination is enabled' );
+	$scrollPos = ConstantsPage::$numOfMediaTextbox;
+	$scrollPosition = ConstantsPage::$customCssTab;
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$I = new AcceptanceTester( $scenario );
+	$I->wantTo( 'To check if Pagination is enabled' );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
-$settings->verifySelectOption( ConstantsPage::$strMediaDisplayPaginationLabel, ConstantsPage::$paginationRadioButton, ConstantsPage::$numOfMediaTextbox );
-$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
+	$loginPage = new LoginPage( $I );
+	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-if ( $I->grabValueFrom( ConstantsPage::$numOfMediaTextbox ) != ConstantsPage::$numOfMediaPerPage ) {
+	$settings = new DashboardSettingsPage( $I );
+	$settings->gotoSettings( ConstantsPage::$displaySettingsUrl );
+	$checkSelectionStatusOfPaginationRadioButton = $settings->verifyStatus( ConstantsPage::$strMediaDisplayPaginationLabel, ConstantsPage::$paginationRadioButton, $scrollPos );
 
-	$settings->setValue( ConstantsPage::$numOfMediaLabel, ConstantsPage::$numOfMediaTextbox, ConstantsPage::$numOfMediaPerPage, ConstantsPage::$customCssTab ); // 4th Arg refers the scrolling position
-}
+	if ( $checkSelectionStatusOfPaginationRadioButton ) {
+        echo nl2br( "Option is already selected." . "\n" );
+    } else {
+        $settings->selectOption( ConstantsPage::$paginationRadioButton );
+        $settings->saveSettings();
+    }
 
-$buddypress = new BuddypressSettingsPage( $I );
-$buddypress->gotoMedia( ConstantsPage::$userName );
+	$settings->setValue( ConstantsPage::$numOfMediaLabel, ConstantsPage::$numOfMediaTextbox, ConstantsPage::$numOfMediaPerPage, $scrollPosition );
+	$settings->saveSettings();
 
-$temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
+	$settings->disableDirectUpload();
 
-$uploadmedia = new UploadMediaPage( $I );
+	$buddypress = new BuddypressSettingsPage( $I );
+	$buddypress->gotoMedia();
 
-if ( $temp <= ConstantsPage::$numOfMediaPerPage ) {
+	$totalMedia = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector );
 
-	echo "inside if condition";
+	$uploadmedia = new UploadMediaPage( $I );
 
-	$numOfMediaTobeUpload = ConstantsPage::$numOfMediaPerPage - $temp + 1;
-	echo "\n Media to b uploaded = " . $numOfMediaTobeUpload;
+	if ( $totalMedia <= ConstantsPage::$numOfMediaPerPage ) {
 
-	for ( $i = 0; $i < $numOfMediaTobeUpload; $i ++ ) {
+		echo "inside if condition";
 
-		$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+		$numOfMediaTobeUpload = ConstantsPage::$numOfMediaPerPage - $totalMedia + 1;
+		echo "\n Media to be uploaded = " . $numOfMediaTobeUpload;
+
+		$uploadmedia->uploadMedia( ConstantsPage::$imageName, $numOfMediaTobeUpload );
+		$uploadmedia->uploadMediaUsingStartUploadButton();
 	}
-}
-$I->reloadPage();
-$I->seeElementInDOM( ConstantsPage::$paginationPattern );
+	$I->reloadPage();
+	$I->seeElementInDOM( ConstantsPage::$paginationPattern );
 ?>
