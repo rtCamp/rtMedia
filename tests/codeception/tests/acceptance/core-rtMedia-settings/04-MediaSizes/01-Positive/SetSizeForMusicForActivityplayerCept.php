@@ -12,7 +12,7 @@
     $numOfMedia = 1;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To set height and width of video player for activity page' );
+    $I->wantTo( 'To set height and width of music player for activity page' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
@@ -22,7 +22,7 @@
     $settings->setMediaSize( ConstantsPage::$activityPlayerLabel, ConstantsPage::$activityMusicWidthTextbox, ConstantsPage::$activityMusicPlayerWidth );
 
     $settings->enableRequestedMediaTypes( ConstantsPage::$musicLabel, ConstantsPage::$musicCheckbox );
-    
+
     $settings->enableUploadFromActivity();
 
     $settings->disableDirectUpload();
@@ -35,6 +35,7 @@
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName, $numOfMedia );
 
     $I->reloadPage();
+    $I->wait( 3 );
 
     $I->assertGreaterThanOrEqual( ConstantsPage::$activityMusicPlayerWidth, $I->grabAttributeFrom( ConstantsPage::$audioSelector, 'style' ), "Width and height is as expected!" );
 
