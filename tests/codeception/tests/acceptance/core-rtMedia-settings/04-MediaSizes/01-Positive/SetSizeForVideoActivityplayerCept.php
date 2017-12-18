@@ -35,6 +35,7 @@
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName, $numOfMedia );
 
     $I->reloadPage();
+    $I->wait( 3 );
 
     $I->assertGreaterThanOrEqual( ConstantsPage::$activityVideoPlayerWidth, $I->grabAttributeFrom( ConstantsPage::$videoSelectorActivity, 'style' ), "Width and height is as expected!" );
 ?>

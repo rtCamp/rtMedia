@@ -162,8 +162,10 @@ class Constants {
 	public static $mediumImgSelector = '.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img';
 	public static $largImgeSelector = '.rtmedia-media img';
 	public static $videoSelectorSingle = 'div#rtm-mejs-video-container';
-	public static $videoSelectorActivity = 'div.mejs-container.svg.wp-video-shortcode.mejs-video';
-	public static $audioSelector = '.mejs-container';
+	// public static $videoSelectorActivity = 'div.mejs-container.svg.wp-video-shortcode.mejs-video';
+	public static $videoSelectorActivity = 'div.mejs-container.wp-video-shortcode.mejs-video';
+	// public static $audioSelector = '.mejs-container';
+	public static $audioSelector = '.mejs-container.wp-audio-shortcode.mejs-audio';
 	public static $closeButton = '.rtm-mfp-close';
 	public static $masonryLayoutXpath = '//*[@id="rtm-gallery-title-container"]/h2';
 	public static $masonryLayout = 'ul.masonry';
