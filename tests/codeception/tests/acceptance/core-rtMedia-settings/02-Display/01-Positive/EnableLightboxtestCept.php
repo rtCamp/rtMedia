@@ -3,48 +3,57 @@
 /**
  * Scenario : To Check if the media is opening in Light Box.
  */
-use Page\Login as LoginPage;
-use Page\UploadMedia as UploadMediaPage;
-use Page\DashboardSettings as DashboardSettingsPage;
-use Page\Constants as ConstantsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
+	use Page\Login as LoginPage;
+	use Page\UploadMedia as UploadMediaPage;
+	use Page\DashboardSettings as DashboardSettingsPage;
+	use Page\Constants as ConstantsPage;
+	use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To check if the lightbox is enabled' );
+	$scrollPos = ConstantsPage::$customCssTab;
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$I = new AcceptanceTester( $scenario );
+	$I->wantTo( 'To check if the lightbox is enabled' );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
-$settings->verifyEnableStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, ConstantsPage::$customCssTab ); //Last arg refers scroll position
+	$loginPage = new LoginPage( $I );
+	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-$buddypress = new BuddypressSettingsPage( $I );
-$buddypress->gotoMedia( ConstantsPage::$userName );
+	$settings = new DashboardSettingsPage( $I );
+	$settings->gotoSettings( ConstantsPage::$displaySettingsUrl );
+	$verifyEnableStatusOfLightboxCheckbox = $settings->verifyStatus( ConstantsPage::$strLightboxCheckboxLabel, ConstantsPage::$lightboxCheckbox, $scrollPos );
 
-$uploadmedia = new UploadMediaPage( $I );
-$temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
+	if ( $verifyEnableStatusOfLightboxCheckbox ) {
+        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+    } else {
+        $settings->enableSetting( ConstantsPage::$lightboxCheckbox );
+        $settings->saveSettings();
+    }
 
-if ( $temp >= ConstantsPage::$minValue ) {
+	$buddypress = new BuddypressSettingsPage( $I );
+	$buddypress->gotoMedia();
 
-	$I->scrollTo( '.rtm-gallery-title' );
+	$uploadmedia = new UploadMediaPage( $I );
+	$totalMedia = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector );
 
-	$uploadmedia->firstThumbnailMedia();
+	if ( $totalMedia >= ConstantsPage::$minValue ) {
 
-	$I->seeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
-	$I->click( ConstantsPage::$closeButton );
-} else {
+		$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-	//Disbale direct upload from settings
-	$settings->disableDirectUpload();
+		$buddypress->firstThumbnailMedia();
 
-	$buddypress->gotoMedia( ConstantsPage::$userName );
-	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+		$I->seeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
+		$I->click( ConstantsPage::$closeButton );
+	} else {
 
-	$I->reloadPage();
-	$uploadmedia->firstThumbnailMedia();
+		$settings->disableDirectUpload();
 
-	$I->seeElement( ConstantsPage::$closeButton );   //The close button will only be visible if the media is opened in Lightbox
-	$I->click( ConstantsPage::$closeButton );
-}
+		$buddypress->gotoMedia();
+		$uploadmedia->uploadMedia( ConstantsPage::$imageName );
+		$uploadmedia->uploadMediaUsingStartUploadButton();
+
+		$I->reloadPage();
+		$buddypress->firstThumbnailMedia();
+
+		$I->seeElement( ConstantsPage::$closeButton );
+		$I->click( ConstantsPage::$closeButton );
+	}
 ?>

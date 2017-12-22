@@ -9,6 +9,7 @@ modules:
     enabled:
         - \Helper\Acceptance
         - WPWebDriver
+        - Asserts
     config:
         WPWebDriver:
             host: 'hub-cloud.browserstack.com'
@@ -24,6 +25,7 @@ modules:
                 'os': 'OS X'
                 'os_version': 'sierra'
                 'browserstack.debug': 'true'
+                'browserstack.networkLogs': 'true'
                 'build': '%TRAVIS_BUILD_NUMBER%'
-                'project': 'rtMedia-core-test'
+                'project': 'Core-rtMedia Automation'
                 'browserstack.local': 'true'

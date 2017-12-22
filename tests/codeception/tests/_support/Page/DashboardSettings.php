@@ -16,51 +16,31 @@ class DashboardSettings {
 		$this->tester = $I;
 	}
 
-	/**
-	 * saveSettings() -> Will save the settings after any changes made by the user in backend.
-	 */
-	public function saveSettings() {
+	// saveSettings() -> Will save the settings after any changes made by the user in backend.
+	public function saveSettings( $customMsg = 'no' ) {
 
 		$I = $this->tester;
 
 		$I->seeElementInDOM( ConstantsPage::$saveSettingsButtonBottom );
-		$I->scrollTo( ConstantsPage::$saveSettingsButtonBottom );
-		$I->click( ConstantsPage::$saveSettingsButtonBottom );
-		$I->waitForText( 'Settings saved successfully!', 30 );
-	}
+		$I->executeJS( "jQuery('.rtm-button-container.bottom .rtmedia-settings-submit').click();" );
 
-	/**
-	 * gotortMediaSettings() -> Will goto rtmedia-settings tab.
-	 */
-	public function gotortMediaSettings() {
-
-		$I = $this->tester;
-
-		$I->click( ConstantsPage::$rtMediaSettings );
-		$I->waitForElement( ConstantsPage::$buddypressTab, 10 );
-	}
-
-	/**
-	 * gotoTab() -> Will goto the respective tab under rtmedia-settings tab.
-	 */
-	public function gotoTab( $tabSelector, $tabUrl, $tabScrollPosition = 'no' ) {
-
-		$I = $this->tester;
-
-		self::gotortMediaSettings();
-
-		$urlStr = ConstantsPage::$rtMediaSettingsUrl . $tabUrl;
-
-		$I->seeElementInDOM( $tabSelector );
-
-		if ( 'no' !== $tabScrollPosition ) {
-			$I->scrollTo( $tabScrollPosition );
+		if ( 'no' != $customMsg ) {
+			// Verify Custom message
+		} else {
+			$I->waitForText( 'Settings saved successfully!', 30 );
 		}
-
-		$I->click( $tabSelector );
-		$I->waitForElement( ConstantsPage::$topSaveButton, 5 );
 	}
 
+	// gotoSettings() -> Will goto the requested url.
+	public function gotoSettings( $url ) {
+
+		$I = $this->tester;
+
+		$I->amOnPage( $url );
+		$I->waitForElement( ConstantsPage::$topSaveButton, 20 );
+	}
+
+	// setMediaSize() -> It will set the media size
 	public function setMediaSize( $strLabel, $widthTextbox, $width, $heightTextbox = 'no', $height = 'no', $scrollPos = 'no' ) {
 
 		$I = $this->tester;
@@ -82,9 +62,7 @@ class DashboardSettings {
 		self::saveSettings();
 	}
 
-	/**
-	 * enableSetting() -> Will enable the respective checkbox under rtmedia-settings tab.
-	 */
+	// enableSetting() -> Will enable the respective checkbox.
 	public function enableSetting( $checkboxSelector ) {
 
 		$I = $this->tester;
@@ -95,46 +73,31 @@ class DashboardSettings {
 			$script = 'return document.getElementsByName("' . $m[ 1 ] . '")[0].click()';
 			$I->executeJs( $script );
 		}
-
-		self::saveSettings();
-
-
-		$I->seeCheckboxIsChecked( $checkboxSelector );
 	}
 
-	/**
-	 * disableSetting() -> Will disable the respective checkbox under rtmedia-settings tab.
-	 */
+	//disableSetting() -> Will disable the respective checkbox.
 	public function disableSetting( $checkboxSelector ) {
 
 		$I = $this->tester;
 
 		$I->seeCheckboxIsChecked( $checkboxSelector );
+
 		if ( preg_match( '/"([^"]+)"/', $checkboxSelector, $m ) ) {
 			$script = 'return document.getElementsByName("' . $m[ 1 ] . '")[0].click()';
 			$I->executeJs( $script );
 		}
 
-		self::saveSettings();
-
-		$I->dontSeeCheckboxIsChecked( $checkboxSelector );
 	}
 
-	/**
-	 * selectOption() -> Will select the radio button provided with css selector id
-	 */
+	// selectOption() -> Will select the respective radio button.
 	public function selectOption( $radioButtonSelector ) {
 
 		$I = $this->tester;
 
 		$I->checkOption( $radioButtonSelector );
-
-		self::saveSettings();
 	}
 
-	/**
-	 * setValue() -> Will fill the textbox/textarea
-	 */
+	// setValue() -> Will fill the textbox
 	public function setValue( $strLabel, $cssSelector, $valueToBeSet, $scrollPosition = 'no' ) {
 
 		$I = $this->tester;
@@ -147,16 +110,11 @@ class DashboardSettings {
 		}
 
 		$I->seeElementInDOM( $cssSelector );
-
 		$I->fillField( $cssSelector, $valueToBeSet );
-
-		self::saveSettings();
 	}
 
-	/**
-	 * verifyEnableStatus() -> Will verify if the checkbox is enabled or not
-	 */
-	public function verifyEnableStatus( $strLabel, $cssSelector, $scrollPosition = 'no' ) {
+	// verifyStatus() -> Will verify and return the status of checkbox and/or radio button.
+	public function verifyStatus( $strLabel, $cssSelector, $scrollPosition = 'no' ) {
 
 		$I = $this->tester;
 
@@ -164,69 +122,82 @@ class DashboardSettings {
 
 			$I->scrollTo( $scrollPosition );
 		}
+
 		$I->see( $strLabel );
 		$I->seeElementInDOM( $cssSelector );
 
-		if ( $I->grabAttributeFrom( $cssSelector, "checked" ) == "true" ) {
-			echo nl2br( "Setting is already enabled \n" );
-		} else {
-			echo nl2br( "Call to enableSetting()... \n" );
-			self::enableSetting( $cssSelector );
-		}
+		return $I->grabAttributeFrom( $cssSelector, "checked" );
+
 	}
 
-	/**
-	 * verifyDisableStatus() -> Will verify if the checkbox is disabled or not
-	 */
-	public function verifyDisableStatus( $strLabel, $cssSelector, $scrollPosition = 'no' ) {
-
-		$I = $this->tester;
-
-		if ( 'no' != $scrollPosition ) {
-			$I->scrollTo( $scrollPosition );
-		}
-		$I->see( $strLabel );
-		$I->seeElementInDOM( $cssSelector );
-
-		if ( $I->grabAttributeFrom( $cssSelector, "checked" ) == "true" ) {
-			echo nl2br( "Call to disableSetting()... \n" );
-			self::disableSetting( $cssSelector );
-			return false;
-		} else {
-			echo nl2br( "Setting is already disabled \n" );
-			return true;
-		}
-	}
-
-	/**
-	 * verifySelectOption() -> Will verify if the radio button is selected or not
-	 */
-	public function verifySelectOption( $strLabel, $cssSelector, $scrollPosition = 'no' ) {
-
-		$I = $this->tester;
-
-		$I->see( $strLabel );
-
-		if ( 'no' != $scrollPosition ) {
-
-			$I->scrollTo( $scrollPosition );
-		}
-
-		$I->seeElementInDOM( $cssSelector );
-
-		if ( $I->grabAttributeFrom( $cssSelector, "checked" ) == "true" ) {
-			echo nl2br( "Option is already selected... \n" );
-		} else {
-			echo nl2br( "Call to selectOption()... \n" );
-			self::selectOption( $cssSelector );
-		}
-	}
-
+	// disableDirectUpload() -> Will disable direct upload setting.
 	public function disableDirectUpload() {
+
 		$I = $this->tester;
-		$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
-		$I->waitForElement( ConstantsPage::$displayTab, 10 );
-		$status = $this->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
+
+		self::gotoSettings( ConstantsPage::$displaySettingsUrl );
+	    $flag = self::verifyStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$scrollPosForDirectUpload );
+
+	    if ( $flag ) {
+	        self::disableSetting( ConstantsPage::$directUploadCheckbox );
+	        self::saveSettings();
+	    } else {
+	        echo nl2br( ConstantsPage::$disabledSettingMsg . "\n" );
+	    }
+
 	}
 
+	// enableRequestedMediaTypes() -> Will enable the requested media types
+	public function enableRequestedMediaTypes( $strLabel, $mediaTypeCheckboxSelector ){
+
+		$I = $this->tester;
+
+		self::gotoSettings( ConstantsPage::$typesSettingsUrl );
+		$verifyEnableStatusOfMediaTypeCheckbox = self::verifyStatus( $strLabel, $mediaTypeCheckboxSelector );
+
+	    if ( $verifyEnableStatusOfMediaTypeCheckbox ) {
+	        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+	    } else {
+	        self::enableSetting( $mediaTypeCheckboxSelector );
+	        self::saveSettings();
+	    }
+
+	}
+
+	// enableUploadFromActivity() -> Will allow the user to upload them media from activity
+	public function enableUploadFromActivity(){
+
+		$I = $this->tester;
+
+		self::gotoSettings( ConstantsPage::$buddypressSettingsUrl );
+
+		$verifyEnableStatusOfUploadFromActivityCheckbox = self::verifyStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+
+	    if ( $verifyEnableStatusOfUploadFromActivityCheckbox ) {
+	        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+	    } else {
+	        self::enableSetting( ConstantsPage::$mediaUploadFromActivityCheckbox );
+	        self::saveSettings();
+	    }
+
+	}
+
+	// enableBPGroupComponent() -> Will enable the Grops Component from Setting
+	public function enableBPGroupComponent(){
+
+		$I = $this->tester;
+
+		$I->amOnPage( ConstantsPage::$bpComponentsUrl );
+		$I->waitForElement( ConstantsPage::$grpTableRow, 10 );
+		$I->seeElement( ConstantsPage::$enableUserGrpCheckbox );
+
+		if ( $I->grabAttributeFrom( ConstantsPage::$enableUserGrpCheckbox, "checked" ) == "true" ) {
+			echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+		} else {
+			$I->checkOption( ConstantsPage::$enableUserGrpCheckbox );
+			$I->seeElement( ConstantsPage::$saveBPSettings );
+			$I->click( ConstantsPage::$saveBPSettings );
+			$I->waitForElement( ConstantsPage::$saveMsgSelector, 20 );
+		}
+	}
 }

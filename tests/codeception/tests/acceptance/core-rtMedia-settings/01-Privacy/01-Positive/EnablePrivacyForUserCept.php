@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scenario : To set default privacy as Public.
+ * Scenario : To enable privacy for users.
  */
 
     use Page\Login as LoginPage;
@@ -11,10 +11,8 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $numOfMedia = 1;
-
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To check if the user is allowed to set default privacy with public option' );
+    $I->wantTo( 'To enable privacy for user.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, ConstantsPage::$saveSession );
@@ -31,30 +29,23 @@
         $settings->saveSettings();
     }
 
-    $verifySelectionStateOfPrivacyPrivateRadioButton = $settings->verifyStatus( ConstantsPage::$defaultPrivacyLabel, ConstantsPage::$publicRadioButton );
+    $verifyEnableStatusOfPrivacyUserOverrideCheckbox = $settings->verifyStatus( ConstantsPage::$privacyUserOverrideLabel, ConstantsPage::$privacyUserOverrideCheckbox );
 
-	if ( $verifySelectionStateOfPrivacyPrivateRadioButton ) {
-        echo nl2br( "Option is already selected." . "\n" );
+    if ( $verifyEnableStatusOfPrivacyUserOverrideCheckbox ) {
+        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
     } else {
-        $settings->selectOption( ConstantsPage::$publicRadioButton );
+        $settings->enableSetting( ConstantsPage::$privacyUserOverrideCheckbox );
         $settings->saveSettings();
     }
 
     $settings->enableUploadFromActivity();
-    $settings->disableDirectUpload();
-    $settings->enableRequestedMediaTypes( ConstantsPage::$photoLabel, ConstantsPage::$photoCheckbox );
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivity();
 
-    $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->addStatus( "Upload from activity to test privacy for Public users." );
-    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName, $numOfMedia );
+    $I->seeElementInDOM( ConstantsPage::$privacyDropdown );
 
     $logout = new LogoutPage( $I );
     $logout->logout();
-
-    $buddypress->gotoActivity();
-    $I->seeElementInDOM( ConstantsPage::$firstPhotoElementOnActivity );
 
 ?>

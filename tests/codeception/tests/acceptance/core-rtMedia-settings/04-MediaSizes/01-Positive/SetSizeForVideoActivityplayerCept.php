@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scenario : To set width of Music player for activity page.
+ * Scenario : To set height and width of video player for activity page.
  */
     use Page\Login as LoginPage;
     use Page\Constants as ConstantsPage;
@@ -12,16 +12,16 @@
     $numOfMedia = 1;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To set height and width of music player for activity page' );
+    $I->wantTo( 'To set height and width of video player for activity page' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$mediaSizeSettingsUrl );
-    $settings->setMediaSize( ConstantsPage::$activityPlayerLabel, ConstantsPage::$activityMusicWidthTextbox, ConstantsPage::$activityMusicPlayerWidth );
+    $settings->setMediaSize( ConstantsPage::$activityPlayerLabel, ConstantsPage::$activityVideoWidthTextbox, ConstantsPage::$activityVideoPlayerWidth, ConstantsPage::$activityVideoHeightTextbox, ConstantsPage::$activityVideoPlayerHeight );
 
-    $settings->enableRequestedMediaTypes( ConstantsPage::$musicLabel, ConstantsPage::$musicCheckbox );
+    $settings->enableRequestedMediaTypes( ConstantsPage::$videoLabel, ConstantsPage::$videoCheckbox );
 
     $settings->enableUploadFromActivity();
 
@@ -32,11 +32,10 @@
 
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->addStatus( "Upload from activity to check mediz sizes." );
-    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName, $numOfMedia );
+    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName, $numOfMedia );
 
     $I->reloadPage();
     $I->wait( 3 );
 
-    $I->assertGreaterThanOrEqual( ConstantsPage::$activityMusicPlayerWidth, $I->grabAttributeFrom( ConstantsPage::$audioSelector, 'style' ), "Width and height is as expected!" );
-
+    $I->assertGreaterThanOrEqual( ConstantsPage::$activityVideoPlayerWidth, $I->grabAttributeFrom( ConstantsPage::$videoSelectorActivity, 'style' ), "Width and height is as expected!" );
 ?>
