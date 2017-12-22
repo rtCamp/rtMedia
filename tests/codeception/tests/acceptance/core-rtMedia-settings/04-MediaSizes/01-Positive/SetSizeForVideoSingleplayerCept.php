@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scenario : To set width of single music player.
+ * Scenario : To set height and width of single video player.
  */
     use Page\Login as LoginPage;
     use Page\Constants as ConstantsPage;
@@ -10,16 +10,16 @@
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
     $I = new AcceptanceTester( $scenario );
-    $I->wantTo( 'To set width of single music player.' );
+    $I->wantTo( 'To set height and width of single video player.' );
 
     $loginPage = new LoginPage( $I );
     $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$mediaSizeSettingsUrl );
-    $settings->setMediaSize( ConstantsPage::$singlePlayerLabel, ConstantsPage::$singleMusicWidthTextbox, ConstantsPage::$singleMusicPlayerWidth );
+    $settings->setMediaSize( ConstantsPage::$singlePlayerLabel, ConstantsPage::$singleVideoWidthTextbox, ConstantsPage::$singleVideoWidth, ConstantsPage::$singleVideoHeightTextbox, ConstantsPage::$singleVideoHeight );
 
-    $settings->enableRequestedMediaTypes( ConstantsPage::$musicLabel, ConstantsPage::$musicCheckbox );
+    $settings->enableRequestedMediaTypes( ConstantsPage::$videoLabel, ConstantsPage::$videoCheckbox );
 
     $settings->disableDirectUpload();
 
@@ -27,7 +27,7 @@
     $buddypress->gotoMedia();
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->uploadMedia( ConstantsPage::$audioName );
+    $uploadmedia->uploadMedia( ConstantsPage::$videoName );
     $uploadmedia->uploadMediaUsingStartUploadButton();
 
     $I->reloadPage();
@@ -36,5 +36,6 @@
 
     $buddypress->firstThumbnailMedia();
 
-    $I->assertGreaterThanOrEqual( ConstantsPage::$singleMusicPlayerWidth, $I->grabAttributeFrom( ConstantsPage::$audioSelector, 'style' ), "Width and height is as expected!" );
+    echo $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' );
+    $I->assertGreaterThanOrEqual( ConstantsPage::$singleVideoWidth, $I->grabAttributeFrom( ConstantsPage::$videoSelectorSingle, 'style' ), "Width and height is as expected!" );
 ?>

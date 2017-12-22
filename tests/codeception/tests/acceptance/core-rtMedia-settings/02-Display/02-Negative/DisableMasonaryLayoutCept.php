@@ -3,40 +3,51 @@
 /**
  * Scenario : To check if mesonry layout is disabled.
  */
-use Page\Login as LoginPage;
-use Page\Constants as ConstantsPage;
-use Page\UploadMedia as UploadMediaPage;
-use Page\DashboardSettings as DashboardSettingsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
+	use Page\Login as LoginPage;
+	use Page\Constants as ConstantsPage;
+	use Page\UploadMedia as UploadMediaPage;
+	use Page\DashboardSettings as DashboardSettingsPage;
+	use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To check if mesonry layout is enabled.' );
+	$scrollPos = ConstantsPage::$numOfMediaTextbox;
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$I = new AcceptanceTester( $scenario );
+	$I->wantTo( 'To check if mesonry layout is enabled.' );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
-$settings->verifyDisableStatus( ConstantsPage::$strMasonaryCheckboxLabel, ConstantsPage::$masonaryCheckbox, ConstantsPage::$numOfMediaTextbox );
+	$loginPage = new LoginPage( $I );
+	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-$buddypress = new BuddypressSettingsPage( $I );
-$buddypress->gotoMedia( ConstantsPage::$userName );
+	$settings = new DashboardSettingsPage( $I );
 
-$uploadmedia = new UploadMediaPage( $I );
-$temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
+	$settings->gotoSettings( ConstantsPage::$displaySettingsUrl );
+    $verifyDisableStatusOfMasonryCheckbox = $settings->verifyStatus( ConstantsPage::$strMasonaryCheckboxLabel, ConstantsPage::$masonaryCheckbox, $scrollPos );
 
-if ( $temp == 0 ) {
+    if ( $verifyDisableStatusOfMasonryCheckbox ) {
+        $settings->disableSetting( ConstantsPage::$masonaryCheckbox );
+        $settings->saveSettings();
+    } else {
+        echo nl2br( ConstantsPage::$disabledSettingMsg . "\n" );
+    }
 
-	$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-display' );
-	$I->waitForElement( ConstantsPage::$displayTab, 10 );
-	$settings->verifyDisableStatus( ConstantsPage::$strDirectUplaodCheckboxLabel, ConstantsPage::$directUploadCheckbox, ConstantsPage::$masonaryCheckbox ); //This will check if the direct upload is disabled
+	$buddypress = new BuddypressSettingsPage( $I );
+	$buddypress->gotoMedia();
 
-	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+	$uploadmedia = new UploadMediaPage( $I );
+	$totalMedia = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
 
-	$I->reloadPage();
+	if ( $totalMedia == 0 ) {
 
-	$I->dontSeeElementInDOM( ConstantsPage::$masonryLayout );
-} else {
-	$I->dontSeeElementInDOM( ConstantsPage::$masonryLayout );
-}
+		$settings->disableDirectUpload();
+
+		$buddypress->gotoMedia();
+
+		$uploadmedia->uploadMedia( ConstantsPage::$imageName );
+		$uploadmedia->uploadMediaUsingStartUploadButton();
+
+		$I->reloadPage();
+
+		$I->dontSeeElementInDOM( ConstantsPage::$masonryLayout );
+	} else {
+		$I->dontSeeElementInDOM( ConstantsPage::$masonryLayout );
+	}
 ?>
