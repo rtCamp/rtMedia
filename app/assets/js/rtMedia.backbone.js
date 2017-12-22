@@ -96,7 +96,7 @@ jQuery( function( $ ) {
 		getNext: function( page, el, element) {
 
 			if ( jQuery( '.rtmedia-no-media-found' ).length > 0 ) {
-				jQuery( '.rtmedia-no-media-found' ).replaceWith( '<ul class=\'rtmedia-list rtmedia-list-media\'></ul>' );
+				jQuery( '.rtmedia-no-media-found' ).replaceWith( '<ul class=\'rtmedia-list rtmedia-list-media rtm-pro-allow-action\'></ul>' );
 			}
 			that = this;
 			if ( rtmedia_load_template_flag == true ) {
