@@ -194,12 +194,10 @@ button#rtmedia-add-media-button-post-update {
 	}
 }
 
-#buddypress .rtmedia-editor-main {
-	.rtmedia-editor-buttons {
-		.rtm-button-back{
+#buddypress {
+		a.rtm-button-back{
 			padding: 3px 10px;
 		}
-	}
 }
 
 // Pagination
