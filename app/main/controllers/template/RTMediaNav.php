@@ -193,7 +193,7 @@ class RTMediaNav {
 		if ( isset( $active_components['groups'] ) ) {
 			$user_groups = $active_components['groups'];
 		}
-		$user_group_status = isset ( $user_groups ) && ( '1' === $user_groups ) ? true : false;
+		$user_group_status = ( isset( $user_groups ) && ( '1' === $user_groups ) ) ? true : false;
 		if ( function_exists( 'bp_is_group' ) && bp_is_group() && $user_group_status ) {
 			if ( isset( $rtmedia->options['buddypress_enableOnGroup'] ) && 0 === intval( $rtmedia->options['buddypress_enableOnGroup'] ) ) {
 				return;
