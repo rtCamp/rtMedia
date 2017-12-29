@@ -589,7 +589,7 @@ class RTMediaBuddyPressActivity {
 	 * @param $params array
 	 */
 	function activity_after_media_comment( $params ) {
-		if ( class_exists( 'BuddyPress' ) ) {
+		if ( class_exists( 'BuddyPress' ) && function_exists( 'bp_activity_add' ) ) {
 			if ( isset( $params['comment_post_ID'] ) ) {
 
 				// get media details
