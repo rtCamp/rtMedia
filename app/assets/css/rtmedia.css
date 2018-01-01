@@ -317,16 +317,19 @@ button#rtmedia-add-media-button-post-update .dashicons {
 }
 
 .plupload_file_status {
-  height: 18px;
+  height: 15px;
+  margin-bottom: 10px;
   overflow: hidden;
-  position: relative;
+  background-color: #f5f5f5;
 }
 
 .plupload_file_progress {
   background: #7AD03A;
-  height: 4px;
-  position: absolute;
-  top: 0;
+  height: 100%;
+  font-size: 10px;
+  line-height: 15px;
+  color: #fff;
+  text-align: center;
 }
 
 .rtm-form .rtm-field-wrap {
@@ -781,7 +784,7 @@ button::-moz-focus-inner {
   padding: 0;
   width: 90px;
   height: 110px;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   opacity: 0;
   z-index: 10;
   -webkit-transition: all 300ms ease-out;
@@ -2735,7 +2738,7 @@ a.rtmedia-upload-media-link {
 #buddypress .mejs-controls button {
   padding: 4px 8px;
   border: none;
-  background: transparent url("../../../lib/media-element/controls.png") no-repeat;
+  background: rgba(0, 0, 0, 0) url("../../../lib/media-element/controls.png") no-repeat;
 }
 #buddypress .mejs-controls .mejs-play button {
   background-position: 0 0;
