@@ -472,7 +472,7 @@ jQuery( function( $ ) {
 				// 'ext_enabled' will get value of enabled media types if nothing is enabled,
 				// then an error message will be displayed.
 				var ext_enabled = config.filters[0].extensions.length;
-				if ( ext_enabled === 0 ){
+				if ( ext_enabled === 0 ) {
 						this.uploader.bind( 'Browse', function( up ) {
 							rtmedia_gallery_action_alert_message( rtmedia_media_disabled_error_message, 'warning' );
 						} );
