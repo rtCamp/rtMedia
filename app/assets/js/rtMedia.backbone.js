@@ -742,7 +742,7 @@ jQuery( function( $ ) {
 				var progressBar = jQuery( '<div/>', {
 					'class': 'plupload_file_progress ui-widget-header',
 				});
-				progressBar.css( 'width', file.percent + '%');
+				progressBar.css( 'width', file.percent + '%' );
 				$( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
 				// filter to customize existing progress bar can be used to display
 				// `%` of upload completed.
@@ -1251,7 +1251,7 @@ jQuery( document ).ready( function( $ ) {
 			var progressBar = jQuery( '<div/>', {
 				'class': 'plupload_file_progress ui-widget-header',
 			});
-			progressBar.css( 'width', file.percent + '%');
+			progressBar.css( 'width', file.percent + '%' );
 			$( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
 			// filter to customize existing progress bar can be used to display
 			// `%` of upload completed.
@@ -2451,7 +2451,7 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 			var progressBar = jQuery( '<div/>', {
 				'class': 'plupload_file_progress ui-widget-header',
 			});
-			progressBar.css( 'width', file.percent + '%');
+			progressBar.css( 'width', file.percent + '%' );
 			$( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
 			// filter to customize existing progress bar can be used to display
 			// `%` of upload completed.
