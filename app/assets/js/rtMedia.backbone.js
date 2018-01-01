@@ -469,7 +469,7 @@ jQuery( function( $ ) {
 			},
 			initialize: function( config ) {
 				this.uploader = new plupload.Uploader( config );
-				// `ext_enabled` will get value of enabled media types if nothing is enabled,
+				// 'ext_enabled' will get value of enabled media types if nothing is enabled,
 				// then an error message will be displayed.
 				var ext_enabled = config.filters[0].extensions.length;
 				if ( ext_enabled === 0 ){
