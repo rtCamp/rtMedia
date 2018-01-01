@@ -552,6 +552,10 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
   padding: 0 5px;
 }
 
+.rtmedia-no-media-found, .rtmedia-list-media {
+  min-height: 95px;
+}
+
 .rtm-tabs.rtm-tabs {
   border-bottom: 1px solid #EEEEEE;
   list-style: none;
@@ -781,7 +785,7 @@ button::-moz-focus-inner {
   padding: 0;
   width: 90px;
   height: 110px;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   opacity: 0;
   z-index: 10;
   -webkit-transition: all 300ms ease-out;
@@ -2735,7 +2739,7 @@ a.rtmedia-upload-media-link {
 #buddypress .mejs-controls button {
   padding: 4px 8px;
   border: none;
-  background: transparent url("../../../lib/media-element/controls.png") no-repeat;
+  background: rgba(0, 0, 0, 0) url("../../../lib/media-element/controls.png") no-repeat;
 }
 #buddypress .mejs-controls .mejs-play button {
   background-position: 0 0;
