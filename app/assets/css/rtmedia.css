@@ -327,8 +327,8 @@ button#rtmedia-add-media-button-post-update .dashicons {
   height: 100%;
   font-size: 10px;
   line-height: 15px;
-  color: #fff;
   text-align: center;
+  word-wrap: initial;
 }
 
 .rtm-form .rtm-field-wrap {
