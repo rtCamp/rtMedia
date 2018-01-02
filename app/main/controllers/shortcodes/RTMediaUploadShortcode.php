@@ -39,7 +39,7 @@ class RTMediaUploadShortcode {
 		$flag          = ( ! ( is_home() || is_post_type_archive() || is_author() ) )
 		&& is_user_logged_in()
 		&& ( $media_enabled )
-		// added condition to disable upload when media is disabled in profile/group but user visits media tab.
+		// Added condition to disable upload when media is disabled in profile/group but user visits media tab.
 		&& ( ( isset( $rtmedia_query->is_upload_shortcode ) && true === $rtmedia_query->is_upload_shortcode )
 				|| ( is_rtmedia_bp_profile() && is_rtmedia_profile_media_enable() )
 				|| ( is_rtmedia_bp_group() && is_rtmedia_group_media_enable() ) );
