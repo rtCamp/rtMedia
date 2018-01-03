@@ -1187,7 +1187,7 @@ class RTMediaFormHandler {
 			<script>
 				jQuery( '#rtmedia-bp-enable-activity, #rtmedia-enable-comment-activity, #rtmedia-enable-like-activity' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
 				jQuery( '#rtmedia-activity-feed-limit' ).prop( "disabled", true );
-			</script>0
+			</script>
 			<?php
 		}
 	}
