@@ -1178,8 +1178,10 @@ class RTMediaFormHandler {
 		self::render_tab_content( $render_options, $general_group, 10 );
 
 		do_action( 'rtmedia_buddypress_setting_content' );
-		// Disable inputs and change background color to differentiate disabled inputs.
-		// If activity stream is disabled in BuddyPress Settings.
+		/**
+		 * Disable inputs and change background color to differentiate disabled inputs.
+		 * If activity stream is disabled in BuddyPress Settings.
+		*/
 		if ( ! bp_is_active( 'activity' ) ) {
 			?>
 			<script>
