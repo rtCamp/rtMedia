@@ -1077,6 +1077,7 @@ class RTMediaFormHandler {
 					'desc'	=> esc_html__( 'With bulk uploads activity, the stream may get flooded. You can control the maximum number of media items or files per activity. This limit will not affect the actual number of uploads. This is only for display. "0" means unlimited.', 'buddypress-media' ),
 					'class'	=> array( 'rtmedia-setting-text-box rtmedia-bp-activity-setting' ),
 					'min'	=> 0,
+					'id'    => 'rtmedia-activity-feed-limit',
 				),
 				'group'    => 10,
 			),
@@ -1098,6 +1099,7 @@ class RTMediaFormHandler {
 					'key'	=> 'buddypress_mediaLikeActivity',
 					'value'	=> $options['buddypress_mediaLikeActivity'],
 					'desc'	=> esc_html__( 'Enabling this setting will create BuddyPress activity for media likes.', 'buddypress-media' ),
+					'id'    => 'rtmedia-enable-like-activity',
 
 				),
 				'group'    => 10,
@@ -1109,6 +1111,7 @@ class RTMediaFormHandler {
 					'key'	=> 'buddypress_mediaCommentActivity',
 					'value'	=> $options['buddypress_mediaCommentActivity'],
 					'desc'	=> esc_html__( 'Enabling this setting will create BuddyPress activity for media comments.', 'buddypress-media' ),
+					'id'    => 'rtmedia-enable-comment-activity',
 
 				),
 				'group'    => 10,
@@ -1160,6 +1163,13 @@ class RTMediaFormHandler {
 		$general_group		= apply_filters( 'rtmedia_buddypress_setting_group', $general_group );
 
 		$render_options	= self::buddypress_render_options( $rtmedia->options );
+		if ( ! bp_is_active( 'activity' ) ) {
+			$render_options['rtmedia-enable-on-activity']['args']['desc']      =
+			$render_options['rtmedia-activity-feed-limit']['args']['desc']     =
+			$render_options['rtmedia-enable-like-activity']['args']['desc']    =
+			$render_options['rtmedia-enable-comment-activity']['args']['desc'] =
+				'Please Enable BuddyPress Activity Streams to update option';
+		}
 		$render_options	= apply_filters( 'rtmedia_album_control_setting', $render_options, $rtmedia->options );
 
 		$render_options = apply_filters( 'rtmedia_buddypress_setting_options', $render_options );
@@ -1167,6 +1177,16 @@ class RTMediaFormHandler {
 		self::render_tab_content( $render_options, $general_group, 10 );
 
 		do_action( 'rtmedia_buddypress_setting_content' );
+		if ( ! bp_is_active( 'activity' ) ) {
+			?>
+			<script>
+				jQuery( '#rtmedia-bp-enable-activity' ).prop( "disabled", true ).next().css( 'background', 'grey' );
+				jQuery( '#rtmedia-activity-feed-limit' ).prop( "disabled", true );
+				jQuery( '#rtmedia-enable-like-activity' ).prop( "disabled", true ).next().css( 'background', 'grey' );
+				jQuery( '#rtmedia-enable-comment-activity' ).prop( "disabled", true ).next().css( 'background', 'grey' );
+			</script>
+			<?php
+		}
 	}
 
 	/**
