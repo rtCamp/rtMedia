@@ -1185,10 +1185,10 @@ class RTMediaFormHandler {
 		if ( ! bp_is_active( 'activity' ) ) {
 			?>
 			<script>
-				jQuery( '#rtmedia-bp-enable-activity' ).prop( "disabled", true ).next().css( 'background', 'grey' );
+				jQuery( '#rtmedia-bp-enable-activity' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
 				jQuery( '#rtmedia-activity-feed-limit' ).prop( "disabled", true );
-				jQuery( '#rtmedia-enable-like-activity' ).prop( "disabled", true ).next().css( 'background', 'grey' );
-				jQuery( '#rtmedia-enable-comment-activity' ).prop( "disabled", true ).next().css( 'background', 'grey' );
+				jQuery( '#rtmedia-enable-like-activity' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
+				jQuery( '#rtmedia-enable-comment-activity' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
 			</script>0
 			<?php
 		}
