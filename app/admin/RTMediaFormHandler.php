@@ -1171,7 +1171,7 @@ class RTMediaFormHandler {
 			$render_options['rtmedia-enable-comment-activity']['args']['desc'] =
 				'Please Enable BuddyPress Activity Streams to update option';
 		}
-		$render_options	= apply_filters( 'rtmedia_album_control_setting', $render_options, $rtmedia->options );
+		$render_options = apply_filters( 'rtmedia_album_control_setting', $render_options, $rtmedia->options );
 
 		$render_options = apply_filters( 'rtmedia_buddypress_setting_options', $render_options );
 
@@ -1185,10 +1185,8 @@ class RTMediaFormHandler {
 		if ( ! bp_is_active( 'activity' ) ) {
 			?>
 			<script>
-				jQuery( '#rtmedia-bp-enable-activity' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
+				jQuery( '#rtmedia-bp-enable-activity, #rtmedia-enable-comment-activity, #rtmedia-enable-like-activity' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
 				jQuery( '#rtmedia-activity-feed-limit' ).prop( "disabled", true );
-				jQuery( '#rtmedia-enable-like-activity' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
-				jQuery( '#rtmedia-enable-comment-activity' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
 			</script>0
 			<?php
 		}
