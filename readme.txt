@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 4.8.1
-Stable tag: 4.4.3
+Tested up to: 4.8.2
+Stable tag: 4.4.4
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -136,6 +136,15 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.4.4 [October 17, 2017] =
+
+* FIXED
+
+ * Media display issue if masonry view is disabled and width is set to zero
+ * Upload multiple images on mobile devices
+ * Improve localization, thanks to [xavivars](https://github.com/xavivars)
+ * Added a check for BuddyPress Group component while using bp_before_member_header action
 
 = 4.4.3 [August 3, 2017] =
 
@@ -1421,8 +1430,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.4.3 =
-rtMedia 4.4.3, with the fix of pagination issue while searching in album. Also introducing filter to change the "alt" attribute value for photos in media gallery.
+= 4.4.4 =
+rtMedia 4.4.4, with the fix of multiple media upload with mobile devices and media display issue with masonry setting when media width is set to zero.
 
 == Sponsors ==
 
