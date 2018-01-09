@@ -261,18 +261,19 @@ class RTMediaFormHandler {
 			'desc' => '',
 		);
 		$args = wp_parse_args( $args, $defaults );
+
 		extract( $args );
 
 		if ( ! empty( $key ) ) {
-			$args[ 'name' ] = $key;
+			$args['name'] = $key;
 		}
 
-		$args[ 'value' ] = $value;
+		$args['value'] = $value;
 
-		$numObj = new rtForm();
-		$numObj->display_inputfile( $args );
+		$num_obj = new rtForm();
+		$num_obj->display_inputfile( $args );
 	}
-	
+
 	/**
 	 * extract settings.
 	 *
