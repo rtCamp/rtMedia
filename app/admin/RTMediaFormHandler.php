@@ -1033,6 +1033,7 @@ class RTMediaFormHandler {
 					'key'   => 'buddypress_enableOnGroup',
 					'value' => $options['buddypress_enableOnGroup'],
 					'desc'  => esc_html__( 'Enable Media on BuddyPress Groups', 'buddypress-media' ),
+					'id'    => 'rtmedia-enable-on-group',
 				),
 				'group'    => 10,
 			),
@@ -1171,6 +1172,11 @@ class RTMediaFormHandler {
 			$render_options['rtmedia-enable-comment-activity']['args']['desc'] =
 				'Please Enable BuddyPress Activity Streams to update option';
 		}
+
+		if ( ! bp_is_active( 'groups' ) ) {
+			$render_options['rtmedia-enable-on-group']['args']['desc'] =
+				'Please Enable BuddyPress User Groups to update option';
+		}
 		$render_options = apply_filters( 'rtmedia_album_control_setting', $render_options, $rtmedia->options );
 
 		$render_options = apply_filters( 'rtmedia_buddypress_setting_options', $render_options );
@@ -1190,6 +1196,14 @@ class RTMediaFormHandler {
 			</script>
 			<?php
 		}
+		if ( ! bp_is_active( 'groups' ) ) {
+			?>
+			<script>
+				jQuery( '#rtmedia-enable-on-group' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
+			</script>
+			<?php
+		}
+
 	}
 
 	/**
