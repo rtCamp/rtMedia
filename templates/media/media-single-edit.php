@@ -3,7 +3,7 @@
 	if ( have_rtmedia() ) : rtmedia();
 		if ( rtmedia_edit_allowed() ) {
 			global $rtmedia_media;
-
+			// Added to get nonce of current media.
 			$media_id_nonce = wp_create_nonce( "image_editor-$rtmedia_media->media_id" );
 			?>
 			<div class="rtmedia-single-edit-title-container">
