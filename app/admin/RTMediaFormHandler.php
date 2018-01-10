@@ -1164,18 +1164,19 @@ class RTMediaFormHandler {
 		$general_group      = apply_filters( 'rtmedia_buddypress_setting_group', $general_group );
 
 		$render_options = self::buddypress_render_options( $rtmedia->options );
-		// Change option description when activity stream is disabled.
+		// Change option description when 'Activity Streams' component is disabled.
 		if ( ! bp_is_active( 'activity' ) ) {
 			$render_options['rtmedia-enable-on-activity']['args']['desc']      =
 			$render_options['rtmedia-activity-feed-limit']['args']['desc']     =
 			$render_options['rtmedia-enable-like-activity']['args']['desc']    =
 			$render_options['rtmedia-enable-comment-activity']['args']['desc'] =
-				'Please Enable BuddyPress Activity Streams to update option';
+				esc_html__( 'Please Enable BuddyPress Activity Streams to update option', 'buddypress-media' );
 		}
 
+		// Change option description when 'User Groups' component is disabled.
 		if ( ! bp_is_active( 'groups' ) ) {
 			$render_options['rtmedia-enable-on-group']['args']['desc'] =
-				'Please Enable BuddyPress User Groups to update option';
+				esc_html__( 'Please Enable BuddyPress User Groups to update option', 'buddypress-media' );
 		}
 		$render_options = apply_filters( 'rtmedia_album_control_setting', $render_options, $rtmedia->options );
 
@@ -1185,17 +1186,23 @@ class RTMediaFormHandler {
 
 		do_action( 'rtmedia_buddypress_setting_content' );
 		/**
-		 * Disable inputs and change background color to differentiate disabled inputs.
-		 * If activity stream is disabled in BuddyPress Settings.
+		 * Disable inputs and change background color to differentiate disabled inputs,
+		 * if 'Activity Streams' component is disabled in BuddyPress Settings.
 		*/
 		if ( ! bp_is_active( 'activity' ) ) {
 			?>
 			<script>
-				jQuery( '#rtmedia-bp-enable-activity, #rtmedia-enable-comment-activity, #rtmedia-enable-like-activity' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
+				jQuery( '#rtmedia-bp-enable-activity, #rtmedia-enable-comment-activity, #rtmedia-enable-like-activity' )
+					.prop( "disabled", true )
+					.next().css( 'background-color', '#808080' );
 				jQuery( '#rtmedia-activity-feed-limit' ).prop( "disabled", true );
 			</script>
 			<?php
 		}
+		/**
+		 * Disable inputs and change background color to differentiate disabled inputs,
+		 * if 'User Groups' component is disabled in BuddyPress Settings.
+		 */
 		if ( ! bp_is_active( 'groups' ) ) {
 			?>
 			<script>
