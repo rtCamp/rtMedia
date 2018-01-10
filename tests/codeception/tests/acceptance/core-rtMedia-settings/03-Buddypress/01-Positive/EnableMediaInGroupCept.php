@@ -16,6 +16,7 @@
 
 	$settings = new DashboardSettingsPage( $I );
 	$settings->gotoSettings( ConstantsPage::$buddypressSettingsUrl );
+	$settings->enableBPGroupComponent();
 
 	$verifyEnableStatusOfMediaInGroupCheckbox = $settings->verifyStatus( ConstantsPage::$strEnableMediaInGrpLabel, ConstantsPage::$enableMediaInGrpCheckbox );
 	if ( $verifyEnableStatusOfMediaInGroupCheckbox ) {
@@ -25,7 +26,6 @@
         $settings->saveSettings();
     }
 
-	$settings->enableBPGroupComponent();
 
 	$buddypress = new BuddypressSettingsPage( $I );
 	$buddypress->gotoGroup();
