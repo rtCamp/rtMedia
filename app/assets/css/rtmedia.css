@@ -781,7 +781,7 @@ button::-moz-focus-inner {
   padding: 0;
   width: 90px;
   height: 110px;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   opacity: 0;
   z-index: 10;
   -webkit-transition: all 300ms ease-out;
@@ -2735,29 +2735,32 @@ a.rtmedia-upload-media-link {
 #buddypress .mejs-controls button {
   padding: 4px 8px;
   border: none;
-  background: transparent url("../../../lib/media-element/controls.png") no-repeat;
+  background: rgba(0, 0, 0, 0) url("../../../lib/media-element/mejs-controls.png") no-repeat;
 }
-#buddypress .mejs-controls .mejs-play button {
+#buddypress .mejs-controls .mejs-play > button {
   background-position: 0 0;
 }
-#buddypress .mejs-controls .mejs-pause button {
-  background-position: 0 -16px;
+#buddypress .mejs-controls .mejs-pause > button {
+  background-position: -20px 0;
 }
-#buddypress .mejs-controls .mejs-unmute button {
-  background-position: -16px 0;
+#buddypress .mejs-controls .mejs-unmute > button {
+  background-position: -40px 0;
 }
-#buddypress .mejs-controls .mejs-mute button {
-  background-position: -16px -16px;
+#buddypress .mejs-controls .mejs-mute > button {
+  background-position: -60px 0;
 }
-#buddypress .mejs-controls .mejs-fullscreen-button button {
-  background-position: -32px 0;
+#buddypress .mejs-controls .mejs-fullscreen-button > button {
+  background-position: -80px 0;
 }
-#buddypress .mejs-controls .mejs-unfullscreen button {
-  background-position: -32px -16px;
+#buddypress .mejs-controls .mejs-unfullscreen > button {
+  background-position: -100px 0;
+}
+#buddypress .mejs-controls .mejs-replay > button {
+  background-position: -160px 0;
 }
 
 .mejs-container .mejs-controls .mejs-time {
-  padding: 10px 3px 0;
+  padding: 15px 3px 0;
   content: '';
 }
 
