@@ -81,7 +81,9 @@ function apply_rtMagnificPopup( selector ) {
 						}
 
 						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).mediaelementplayer( {
-							// If the <video width> is not specified, this is the default
+							// This is required to work with new MediaElement version.
+                                                        classPrefix: 'mejs-',
+                                                        // If the <video width> is not specified, this is the default
 							defaultVideoWidth: 480,
 							// always show the volume button
 							hideVolumeOnTouchDevices: false,
