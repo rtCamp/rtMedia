@@ -3,24 +3,32 @@
 /**
  * Scenario : Disable upload from activity stream.
  */
-use Page\Login as LoginPage;
-use Page\Constants as ConstantsPage;
-use Page\UploadMedia as UploadMediaPage;
-use Page\DashboardSettings as DashboardSettingsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\Login as LoginPage;
+    use Page\Constants as ConstantsPage;
+    use Page\UploadMedia as UploadMediaPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'Disable upload from activity stream.' );
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'Disable upload from activity stream.' );
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
-$settings->verifyDisableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoSettings( ConstantsPage::$buddypressSettingsUrl );
 
-$buddypress = new BuddypressSettingsPage( $I );
-$buddypress->gotoActivityPage( ConstantsPage::$userName );
+    $verifyDisableStatusOfUploadFromActivityCheckbox = $settings->verifyStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
 
-$I->dontSeeElementInDOM( ConstantsPage::$uploadButtonOnAtivityPage );
+	if ( $verifyDisableStatusOfUploadFromActivityCheckbox ) {
+		$settings->disableSetting( ConstantsPage::$mediaUploadFromActivityCheckbox );
+		$settings->saveSettings();
+	} else {
+		echo nl2br( ConstantsPage::$disabledSettingMsg . "\n" );
+	}
+
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivity();
+
+    $I->dontSeeElementInDOM( ConstantsPage::$uploadButtonOnAtivityPage );
 ?>
