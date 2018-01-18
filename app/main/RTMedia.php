@@ -990,14 +990,11 @@ class RTMedia {
 
 	function enqueue_scripts_styles() {
 		global $rtmedia;
-		if ( wp_script_is( 'wp-mediaelement', 'registered' ) ) {
-			wp_enqueue_style( 'wp-mediaelement' );
-			wp_enqueue_script( 'wp-mediaelement' );
-		} else {
-			wp_enqueue_script( 'wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
-			wp_enqueue_style( 'wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION );
-			wp_enqueue_script( 'wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true );
-		}
+
+		wp_deregister_script('wp-mediaelement');
+		wp_enqueue_script( 'wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
+		wp_enqueue_style( 'wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION );
+		wp_enqueue_script( 'wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true );
 
 		// Dashicons: Needs if not loaded by WP
 		wp_enqueue_style( 'dashicons' );
