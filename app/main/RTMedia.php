@@ -990,14 +990,11 @@ class RTMedia {
 
 	function enqueue_scripts_styles() {
 		global $rtmedia;
-		if ( wp_script_is( 'wp-mediaelement', 'registered' ) ) {
-			wp_enqueue_style( 'wp-mediaelement' );
-			wp_enqueue_script( 'wp-mediaelement' );
-		} else {
-			wp_enqueue_script( 'wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
-			wp_enqueue_style( 'wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION );
-			wp_enqueue_script( 'wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true );
-		}
+
+		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
+		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
+		wp_enqueue_style( 'rt-mediaelement-wp', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.min.css', '', RTMEDIA_VERSION );
+		wp_enqueue_script( 'rt-mediaelement-wp', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.min.js', 'rt-mediaelement', RTMEDIA_VERSION, true );
 
 		// Dashicons: Needs if not loaded by WP
 		wp_enqueue_style( 'dashicons' );
@@ -1012,20 +1009,20 @@ class RTMedia {
 		if ( '' === $suffix ) {
 			wp_enqueue_script( 'rtmedia-magnific-popup', RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js', array(
 				'jquery',
-				'wp-mediaelement',
+				'rt-mediaelement-wp',
 			), RTMEDIA_VERSION );
 			wp_enqueue_script( 'rtmedia-admin-tabs', RTMEDIA_URL . 'app/assets/admin/js/vendors/tabs.js', array(
 				'jquery',
-				'wp-mediaelement',
+				'rt-mediaelement-wp',
 			), RTMEDIA_VERSION );
 			wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array(
 				'jquery',
-				'wp-mediaelement',
+				'rt-mediaelement-wp',
 			), RTMEDIA_VERSION );
 		} else {
 			wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtmedia.min.js', array(
 				'jquery',
-				'wp-mediaelement',
+				'rt-mediaelement-wp',
 			), RTMEDIA_VERSION );
 		}
 
