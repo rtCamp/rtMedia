@@ -1365,7 +1365,9 @@ jQuery( document ).ready( function( $ ) {
 						//$("#div-attache-rtmedia").hide();
 						apply_rtMagnificPopup( jQuery( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' ) );
 						jQuery( 'ul.activity-list li.rtmedia_update:first-child .wp-audio-shortcode, ul.activity-list li.rtmedia_update:first-child .wp-video-shortcode' ).mediaelementplayer( {
-							// If the <video width> is not specified, this is the default
+							// This is required to work with new MediaElement version.
+                                                        classPrefix: 'mejs-',
+                                                        // If the <video width> is not specified, this is the default
 							defaultVideoWidth: 480,
 							// If the <video height> is not specified, this is the default
 							defaultVideoHeight: 270
@@ -1799,7 +1801,9 @@ jQuery(document).ready(function($) {
 
 function rtmedia_reset_video_and_audio(){
 	jQuery( 'ul.activity-list li.activity-item div.rtmedia-item-thumbnail > audio.wp-audio-shortcode, ul.activity-list li.activity-item div.rtmedia-item-thumbnail > video.wp-video-shortcode' ).mediaelementplayer( {
-		// If the <video width> is not specified, this is the default
+		// This is required to work with new MediaElement version.
+                classPrefix: 'mejs-',
+                // If the <video width> is not specified, this is the default
 		defaultVideoWidth: 480,
 		// If the <video height> is not specified, this is the default
 		defaultVideoHeight: 270
@@ -1833,7 +1837,9 @@ function rtmedia_single_page_popup_close(){
 
 function rtmedia_reset_video_and_audio_for_popup(){
 	jQuery( '.rtm-lightbox-container .rtmedia-comments-container ul.rtm-comment-list li.rtmedia-comment div.rtmedia-item-thumbnail > audio.wp-audio-shortcode, .rtm-lightbox-container .rtmedia-comments-container ul.rtm-comment-list li.rtmedia-comment div.rtmedia-item-thumbnail > video.wp-video-shortcode' ).mediaelementplayer( {
-		// If the <video width> is not specified, this is the default
+		// This is required to work with new MediaElement version.
+                classPrefix: 'mejs-',
+                // If the <video width> is not specified, this is the default
 		defaultVideoWidth: 200,
 		// If the <video height> is not specified, this is the default
 		defaultVideoHeight: 200
