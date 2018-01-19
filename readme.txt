@@ -1437,7 +1437,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.4.5 =
-rtMedia 4.4.5, with upgraded mediaelement library.
+rtMedia 4.4.5, with the upgraded mediaelement library.
 
 == Sponsors ==
 
