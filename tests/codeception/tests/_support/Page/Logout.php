@@ -16,9 +16,11 @@ class Logout {
 
 		$I = $this->tester;
 
-		$I->moveMouseOver( '#wp-admin-bar-my-account' );
+		$I->moveMouseOver( ConstantsPage::$adminBarMenuSelector );
 		$I->executeJS( "jQuery('#wp-admin-bar-my-account .ab-sub-wrapper').css({'display':'block'});" );
 		$I->click( ConstantsPage::$logoutLink );
+		$I->waitForElement('#login', 20);
+
 	}
 
 }

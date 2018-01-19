@@ -3,36 +3,40 @@
 /**
  * Scenario : To set width of Music player for activity page.
  */
-use Page\Login as LoginPage;
-use Page\Constants as ConstantsPage;
-use Page\UploadMedia as UploadMediaPage;
-use Page\DashboardSettings as DashboardSettingsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\Login as LoginPage;
+    use Page\Constants as ConstantsPage;
+    use Page\UploadMedia as UploadMediaPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$scrollToDirectUpload = ConstantsPage::$masonaryCheckbox;
-$scrollPos = ConstantsPage::$customCssTab;
+    $numOfMedia = 1;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To set height and width of video player for activity page' );
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To set height and width of music player for activity page' );
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$mediaSizesTab, ConstantsPage::$mediaSizesTabUrl );
-$settings->setMediaSize( ConstantsPage::$activityPlayerLabel, ConstantsPage::$activityMusicWidthTextbox, ConstantsPage::$activityMusicPlayerWidth, $scrollPos );
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoSettings( ConstantsPage::$mediaSizeSettingsUrl );
+    $settings->setMediaSize( ConstantsPage::$activityPlayerLabel, ConstantsPage::$activityMusicWidthTextbox, ConstantsPage::$activityMusicPlayerWidth );
 
-$I->amOnPage( '/wp-admin/admin.php?page=rtmedia-settings#rtmedia-bp' );
-$I->waitForElement( ConstantsPage::$buddypressTab, 10 );
-$settings->verifyEnableStatus( ConstantsPage::$strMediaUploadFromActivityLabel, ConstantsPage::$mediaUploadFromActivityCheckbox );
+    $settings->enableRequestedMediaTypes( ConstantsPage::$musicLabel, ConstantsPage::$musicCheckbox );
 
-$buddypress = new BuddypressSettingsPage( $I );
-$buddypress->gotoActivityPage( ConstantsPage::$userName );
+    $settings->enableUploadFromActivity();
 
-$uploadmedia = new UploadMediaPage( $I );
-$uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName );
+    $settings->disableDirectUpload();
 
-$I->reloadPage();
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoActivity();
 
-echo $I->grabAttributeFrom( ConstantsPage::$audioSelectorActivity, 'style' );
+    $uploadmedia = new UploadMediaPage( $I );
+    $uploadmedia->addStatus( "Upload from activity to check mediz sizes." );
+    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName, $numOfMedia );
+
+    $I->reloadPage();
+    $I->wait( 3 );
+
+    $I->assertGreaterThanOrEqual( ConstantsPage::$activityMusicPlayerWidth, $I->grabAttributeFrom( ConstantsPage::$audioSelector, 'style' ), "Width and height is as expected!" );
+
 ?>
