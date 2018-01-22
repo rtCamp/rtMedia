@@ -772,7 +772,7 @@ function rt_check_addon_status() {
 					$dont_check_verification = get_transient( 'check_rtmedia_license_verifiction_' . $addon_id );
 				}
 
-				if ( $now > $expiration || ( false === $dont_check_verification ) ) {
+				if ( $now > $expiration && ( false === $dont_check_verification ) ) {
 
 					// Get license key  information from the store
 					$license_data = rtmedia_activate_addon_license( $addon );
