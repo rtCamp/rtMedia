@@ -1752,7 +1752,6 @@ function check_url( query ) {
     var results = regex.exec( window.location.href );
     if( null !== results ) {
         return results[1];
-        return decodeURIComponent(results[1].replace(/\+/g, " "));
     } else {
         return false;
     }
