@@ -10,6 +10,8 @@ rtMediaAdmin.templates = {
 };
 
 jQuery( document ).ready( function ( $ ) {
+	
+	$('#rtm-licenses .license-inner:first input:first').focus();
 
 	var support_form_loader_div = document.createElement('div');
 	support_form_loader_div.className = 'support_form_loader';
