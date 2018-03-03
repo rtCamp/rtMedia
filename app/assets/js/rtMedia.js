@@ -989,7 +989,39 @@ function rtmedia_single_media_alert_message( msg, action ) {
 		action_class = 'rtmedia-warning';
 	}
 
-	jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '0.2' );
+	/**
+	 * Fixed code
+	 */
+	var comment_form = jQuery( '#rt_media_comment_form' );
+	var msg_container = jQuery( '.rtmedia-message-container' );
+	if( comment_form.next().attr('class') === 'rtmedia-message-container' ){
+		msg_container.remove();
+		comment_form.after( '<div title="Click to dismiss" class=\'rtmedia-message-container\' style="margin:1em 0;"><span style="border: 2px solid #884646;" class=\'' + action_class + '\'>' + msg + ' </span></div>' );
+
+		msg_container = jQuery( '.rtmedia-message-container' );
+		var span = msg_container.find('span');
+		setTimeout(function(){
+			span.css({border:'none'});
+		},500);
+
+	} else {
+		comment_form.after( '<div title="Click to dismiss" class=\'rtmedia-message-container\' style="margin:1em 0;"><span class=\'' + action_class + '\'>' + msg + ' </span></div>' );
+		msg_container = jQuery( '.rtmedia-message-container' );
+	}
+
+	setTimeout( function() {
+		msg_container.remove();
+	}, 3000 );
+
+	msg_container.click( function() {
+		msg_container.remove();
+	} );
+
+
+	/**
+	 * Issued code
+	 */
+	/*jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '0.2' );
 	jQuery( '.rtmedia-single-media .rtmedia-media' ).after( '<div class=\'rtmedia-message-container\'><span class=\'' + action_class + '\'>' + msg + ' </span></div>' );
 
 	setTimeout( function() {
@@ -1000,7 +1032,7 @@ function rtmedia_single_media_alert_message( msg, action ) {
 	jQuery( '.rtmedia-message-container' ).click( function() {
 		jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
 		jQuery( '.rtmedia-message-container' ).remove();
-	} );
+	} );*/
 }
 
 function rtmedia_gallery_action_alert_message( msg, action ) {
