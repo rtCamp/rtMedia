@@ -34,7 +34,7 @@ if ( isset( $is_edit_allowed[0] ) ) {
 
 			$alt_text      = rtmedia_image_alt( false, false );
 			$rtmedia_media = '';
-                        if ( ! empty( $rtmedia_media ) && isset( $rtmedia_query->rtmedia ) ) {
+                        if ( ! empty( $rtmedia_query ) && isset( $rtmedia_query->rtmedia ) ) {
                             $rtmedia_media = $rtmedia_query->rtmedia;
                         }
 			$allowed_html  = array(
