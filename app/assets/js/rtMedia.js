@@ -990,24 +990,33 @@ function rtmedia_single_media_alert_message( msg, action ) {
 	}
 
 	/**
-	 * Fixed code
+	 * Fixed issue 152 (Media single page comment)
 	 */
 	var comment_form = jQuery( '#rt_media_comment_form' );
 	var msg_container = jQuery( '.rtmedia-message-container' );
+
+	var $div = jQuery("<div>",{
+		"title" : "Click to dismiss",
+		"class" : "rtmedia-message-container",
+		"style" : "margin:1em 0;",
+	});
+	var $span = jQuery("<span>",{
+		"class":action_class,
+	});
+	$span.html(msg);
+
 	if( comment_form.next().attr('class') === 'rtmedia-message-container' ){
 		msg_container.remove();
-		comment_form.after( '<div title="Click to dismiss" class=\'rtmedia-message-container\' style="margin:1em 0;"><span style="border: 2px solid #884646;" class=\'' + action_class + '\'>' + msg + ' </span></div>' );
+		$span.css({border:'2px solid #884646'});
 
-		msg_container = jQuery( '.rtmedia-message-container' );
-		var span = msg_container.find('span');
 		setTimeout(function(){
-			span.css({border:'none'});
+			$span.css({border:'none'});
 		},500);
-
-	} else {
-		comment_form.after( '<div title="Click to dismiss" class=\'rtmedia-message-container\' style="margin:1em 0;"><span class=\'' + action_class + '\'>' + msg + ' </span></div>' );
-		msg_container = jQuery( '.rtmedia-message-container' );
 	}
+
+	$span.appendTo($div);
+	comment_form.after($div);
+	msg_container = $div;
 
 	var comment_content = $('#comment_content');
 	if( comment_content ){
@@ -1021,23 +1030,10 @@ function rtmedia_single_media_alert_message( msg, action ) {
 	msg_container.click( function() {
 		msg_container.remove();
 	} );
-
-
 	/**
-	 * Issued code
+	 * End of issue 152
 	 */
-	/*jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '0.2' );
-	jQuery( '.rtmedia-single-media .rtmedia-media' ).after( '<div class=\'rtmedia-message-container\'><span class=\'' + action_class + '\'>' + msg + ' </span></div>' );
 
-	setTimeout( function() {
-		jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
-		jQuery( '.rtmedia-message-container' ).remove();
-	}, 3000 );
-
-	jQuery( '.rtmedia-message-container' ).click( function() {
-		jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
-		jQuery( '.rtmedia-message-container' ).remove();
-	} );*/
 }
 
 function rtmedia_gallery_action_alert_message( msg, action ) {
