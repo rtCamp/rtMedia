@@ -1009,6 +1009,11 @@ function rtmedia_single_media_alert_message( msg, action ) {
 		msg_container = jQuery( '.rtmedia-message-container' );
 	}
 
+	var comment_content = $('#comment_content');
+	if( comment_content ){
+		comment_content.focus();
+	}
+
 	setTimeout( function() {
 		msg_container.remove();
 	}, 3000 );
