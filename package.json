@@ -1,7 +1,8 @@
 {
   "name": "rtMedia",
   "dependencies": {
-    "load-grunt-tasks": "~0.2.1"
+    "load-grunt-tasks": "~0.2.1",
+    "npm": "^5.7.1"
   },
   "devDependencies": {
     "grunt": "~1.0.1",
