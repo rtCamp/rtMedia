@@ -11,8 +11,8 @@ rtMediaAdmin.templates = {
 
 jQuery( document ).ready( function ( $ ) {
 	
-	if($('#rtm-licenses').length){
-		$('#rtm-licenses .license-inner:first input:first').focus();
+	if ($( '#rtm-licenses' ).length ) {
+		$( '#rtm-licenses .license-inner:first input:first' ).focus();
 	}
 
 	var support_form_loader_div = document.createElement('div');
