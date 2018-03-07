@@ -8,6 +8,38 @@ var rtmedia_load_template_flag = true;
 
 jQuery( function( $ ) {
 
+
+	/**
+	 * Issue 1059 fixed: negative comment count
+	 */
+	$(document).ready(function(){
+
+		/**
+		 * Bind dynamic event on delete button to remove media ul
+		 */
+		$('#activity-stream').on('click','.acomment-delete',function(){
+
+			/**
+			 * get media ul
+			 */
+			let media_children = $(this).parent().parent().find('div.acomment-content ul.rtmedia-list');
+			if( media_children.length > 0 ){
+				
+				/**
+				 * remove ul if exists, so buddypress comment js doesn't get confused between media ul and child comment ul
+				 */
+				media_children.remove();
+				
+			}
+
+		});
+
+	});
+	/**
+	 * End of issue 1059 fix
+	 */
+
+
 	var o_is_album, o_is_edit_allowed;
 	if ( typeof ( is_album ) == 'undefined' ) {
 		o_is_album = new Array( '' );
