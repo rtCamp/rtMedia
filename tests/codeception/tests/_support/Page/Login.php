@@ -2,18 +2,9 @@
 
 namespace Page;
 
+use Page\Constants as ConstantsPage;
+
 class Login {
-
-	public static $wpUserNameField = 'input#user_login';
-	public static $wpPasswordField = 'input#user_pass';
-	public static $wpDashboard = '#adminmenu';
-	public static $wpSubmitButton = 'input#wp-submit';
-	public static $loginLink = 'li#wp-admin-bar-bp-login';
-	public static $dashBoardMenu = 'li#menu-dashboard';
-
-	public static function route( $param ) {
-		return static::$URL . $param;
-	}
 
 	protected $tester;
 
@@ -22,38 +13,40 @@ class Login {
 	}
 
 	public function loginAsAdmin( $wpUserName, $wpPassword, $saveSession = true ) {
+
 		$I = $this->tester;
 
 		$I->amOnPage( '/wp-admin' );
 
 		// Will load the session saved in saveSessionSnapshot().
 		if ( $I->loadSessionSnapshot( 'login' ) ) {
-			echo "skipping login steps";
+			echo nl2br( " skipping login steps... \n" );
 			return;
 		}
 
 		if ( ! $saveSession ) {
-			$I->waitForElement( self::$wpSubmitButton, 10 );
+			$I->waitForElement( ConstantsPage::$wpSubmitButton, 10 );
 		}
 
-		$I->seeElement( self::$wpUserNameField );
-		$I->fillfield( self::$wpUserNameField, $wpUserName );
+		$I->seeElement( ConstantsPage::$wpUserNameField );
+		$I->fillfield( ConstantsPage::$wpUserNameField, $wpUserName );
 
-		$I->seeElement( self::$wpPasswordField );
-		$I->fillfield( self::$wpPasswordField, $wpPassword );
+		$I->seeElement( ConstantsPage::$wpPasswordField );
+		$I->fillfield( ConstantsPage::$wpPasswordField, $wpPassword );
 
-		$I->click( self::$wpSubmitButton );
-		$I->waitForElement( '#adminmenu', 10 );
-		$I->waitForElement( self::$dashBoardMenu, 10 );
+		$I->click( ConstantsPage::$wpSubmitButton );
+		$I->waitForElement( ConstantsPage::$wpDashboard, 10 );
+		$I->waitForElement( ConstantsPage::$dashBoardMenu, 10 );
 
+		// Will Save the Session
 		if ( $saveSession ) {
-			$I->saveSessionSnapshot( 'login' ); //Saving session
-			echo "Session saved!";
+			$I->saveSessionSnapshot( 'login' );
+			echo nl2br( "Session Saved! \n" );
 		} else {
-			echo "Session not saved!";
+			echo nl2br( "Session Not Saved! \n" );
 		}
-		$I->reloadPage();
 
+		$I->reloadPage();
 		$I->maximizeWindow();
 	}
 

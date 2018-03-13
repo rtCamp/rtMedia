@@ -1,52 +1,60 @@
 <?php
 
 /**
- * Scenario : To Check if the media is opening in Light Box.
+ * Scenario : To enable the like for media.
  */
-use Page\Login as LoginPage;
-use Page\UploadMedia as UploadMediaPage;
-use Page\DashboardSettings as DashboardSettingsPage;
-use Page\Constants as ConstantsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
+	use Page\Login as LoginPage;
+	use Page\Constants as ConstantsPage;
+	use Page\UploadMedia as UploadMediaPage;
+	use Page\DashboardSettings as DashboardSettingsPage;
+	use Page\BuddypressSettings as BuddypressSettingsPage;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'To check if the likes for media is enabled' );
+	$I = new AcceptanceTester( $scenario );
+	$I->wantTo( 'To check if the likes for media is enabled' );
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$loginPage = new LoginPage( $I );
+	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$displayTab, ConstantsPage::$displayTabUrl );
-$settings->verifyEnableStatus( ConstantsPage::$mediaLikeCheckboxLabel, ConstantsPage::$mediaLikeCheckbox ); //Last arg refers scroll postion
+	$settings = new DashboardSettingsPage( $I );
+	$settings->gotoSettings( ConstantsPage::$displaySettingsUrl );
+	$verifyEnableStatusOfMediaLikesCheckbox = $settings->verifyStatus( ConstantsPage::$mediaLikeCheckboxLabel, ConstantsPage::$mediaLikeCheckbox );
 
-$buddypress = new BuddypressSettingsPage( $I );
-$buddypress->gotoMedia( ConstantsPage::$userName );
+	if ( $verifyEnableStatusOfMediaLikesCheckbox ) {
+        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+    } else {
+        $settings->enableSetting( ConstantsPage::$mediaLikeCheckbox );
+        $settings->saveSettings();
+    }
 
-$uploadmedia = new UploadMediaPage( $I );
-$temp = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector ); // $temp will receive the available no. of media
+	$buddypress = new BuddypressSettingsPage( $I );
+	$buddypress->gotoMedia();
+	$totalMedia = $buddypress->countMedia( ConstantsPage::$mediaPerPageOnMediaSelector );
 
-if ( $temp >= ConstantsPage::$minValue ) {
+	if ( $totalMedia >= ConstantsPage::$minValue ) {
 
-	$I->scrollTo( '.rtm-gallery-title' );
+		$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
-	$uploadmedia->firstThumbnailMedia();
+		$buddypress->firstThumbnailMedia();
 
-	$I->seeElement( ConstantsPage::$likeButton );
-	$I->executeJS( 'jQuery( ".rtmedia-item-comments .rtmedia-like" ).click();' );
-	$I->waitForElement('.rtm-like-comments-info', 60);
-} else {
+		$I->seeElement( ConstantsPage::$likeButton );
+		$I->executeJS( 'jQuery( ".rtmedia-item-comments .rtmedia-like" ).click();' );
+		$I->waitForElement( ConstantsPage::$likeInfoSelector, 20 );
+	} else {
 
-	//Disbale direct upload from settings
-	$settings->disableDirectUpload();
+		$settings->disableDirectUpload();
 
-	$buddypress->gotoMedia( ConstantsPage::$userName );
-	$uploadmedia->uploadMediaUsingStartUploadButton( ConstantsPage::$userName, ConstantsPage::$imageName );
+		$buddypress->gotoMedia();
+		
+		$uploadmedia = new UploadMediaPage( $I );
+		$uploadmedia->uploadMedia( ConstantsPage::$imageName );
+		$uploadmedia->uploadMediaUsingStartUploadButton();
 
-	$I->reloadPage();
+		$I->reloadPage();
 
-	$uploadmedia->firstThumbnailMedia();
-	$I->seeElement( ConstantsPage::$likeButton );
-	$I->executeJS( 'jQuery( ".rtmedia-item-comments .rtmedia-like" ).click();' );
-	$I->seeInSource( '<span>Unlike</span>' );
-}
+		$buddypress->firstThumbnailMedia();
+
+		$I->seeElement( ConstantsPage::$likeButton );
+		$I->executeJS( 'jQuery( ".rtmedia-item-comments .rtmedia-like" ).click();' );
+		$I->waitForElement( ConstantsPage::$likeInfoSelector, 20 );
+	}
 ?>

@@ -3,23 +3,31 @@
 /**
  * Scenario : To check if media tab is disabled for group.
  */
-use Page\Login as LoginPage;
-use Page\Constants as ConstantsPage;
-use Page\BuddypressSettings as BuddypressSettingsPage;
-use Page\DashboardSettings as DashboardSettingsPage;
+    use Page\Login as LoginPage;
+    use Page\Constants as ConstantsPage;
+    use Page\BuddypressSettings as BuddypressSettingsPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
 
-$I = new AcceptanceTester( $scenario );
-$I->wantTo( 'Disabled media for group.' );
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'Disabled media for group.' );
 
-$loginPage = new LoginPage( $I );
-$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
 
-$settings = new DashboardSettingsPage( $I );
-$settings->gotoTab( ConstantsPage::$buddypressTab, ConstantsPage::$buddypressTabUrl );
-$settings->verifyDisableStatus( ConstantsPage::$strEnableMediaInGrpLabel, ConstantsPage::$enableMediaInGrpCheckbox );
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoSettings( ConstantsPage::$buddypressSettingsUrl );
 
-$buddypress = new BuddypressSettingsPage( $I );
-$buddypress->gotoGroup();
+    $verifyDisableStatusOfMediaInGroupCheckbox = $settings->verifyStatus( ConstantsPage::$strEnableMediaInGrpLabel, ConstantsPage::$enableMediaInGrpCheckbox );
 
-$I->dontSeeElement( ConstantsPage::$mediaLinkOnGroup );
+	if ( $verifyDisableStatusOfMediaInGroupCheckbox ) {
+		$settings->disableSetting( ConstantsPage::$enableMediaInGrpCheckbox );
+		$settings->saveSettings();
+	} else {
+		echo nl2br( ConstantsPage::$disabledSettingMsg . "\n" );
+	}
+
+    $buddypress = new BuddypressSettingsPage( $I );
+    $buddypress->gotoGroup();
+
+    $I->dontSeeElement( ConstantsPage::$mediaLinkOnGroup );
 ?>
