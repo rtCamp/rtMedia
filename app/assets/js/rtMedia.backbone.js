@@ -694,7 +694,7 @@ jQuery( function( $ ) {
 				 *
 				 */
 				var terms_conditions = $('#rtmedia_upload_terms_conditions');
-				if(terms_conditions.attr('id') === 'rtmedia_upload_terms_conditions'){
+				if(terms_conditions.length > 0){
 
 					terms_conditions.unbind('click');
 
