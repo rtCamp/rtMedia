@@ -4118,3 +4118,39 @@ function rtmedia_get_upload_url( $request_uri ) {
 
 	return $url;
 }
+
+/**
+ * Checking if document upload is enabled.
+ *
+ * @global      RTMedia     $rtmedia
+ *
+ * @return      bool
+ */
+function is_rtmedia_upload_document_enabled() {
+
+	global $rtmedia;
+
+	if ( isset( $rtmedia->options['allowedTypes_document_enabled'] ) && 0 !== intval( $rtmedia->options['allowedTypes_document_enabled'] ) ) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Checking if other media upload is enabled.
+ *
+ * @global      RTMedia     $rtmedia
+ *
+ * @return      bool
+ */
+function is_rtmedia_upload_other_enabled() {
+
+	global $rtmedia;
+
+	if ( isset( $rtmedia->options['allowedTypes_other_enabled'] ) && 0 !== intval( $rtmedia->options['allowedTypes_other_enabled'] ) ) {
+		return true;
+	}
+
+	return false;
+}
