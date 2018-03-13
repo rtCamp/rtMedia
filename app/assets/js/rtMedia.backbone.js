@@ -469,6 +469,16 @@ jQuery( function( $ ) {
 			},
 			initialize: function( config ) {
 				this.uploader = new plupload.Uploader( config );
+				/*
+				* 'ext_enabled' will get value of enabled media types if nothing is enabled,
+				* then an error message will be displayed.
+				*/
+				var ext_enabled = config.filters[0].extensions.length;
+				if ( ext_enabled === 0 ) {
+						this.uploader.bind( 'Browse', function( up ) {
+							rtmedia_gallery_action_alert_message( rtmedia_media_disabled_error_message, 'warning' );
+						} );
+				}
 			},
 			render: function() {
 
@@ -866,6 +876,8 @@ jQuery( function( $ ) {
 			} );
 		} else {
 			jQuery( document ).on( 'click', '#rtm_show_upload_ui', function() {
+				// If no media type is enabled error message will be displayed.
+				rtmedia_gallery_action_alert_message( rtmedia_media_disabled_error_message, 'warning' );
 				jQuery( '#rtm-media-gallery-uploader' ).slideToggle();
 				jQuery( '#rtm_show_upload_ui' ).toggleClass( 'primary' );
 			} );
