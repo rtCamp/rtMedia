@@ -19,7 +19,7 @@ jQuery( function( $ ) {
 			/**
 			 * get media ul
 			 */
-			let media_children = $( this ).parent().parent().find( 'div.acomment-content ul.rtmedia-list' );
+			let media_children = $( this ).closest('li').find( 'div.acomment-content ul.rtmedia-list' );
 			if ( media_children.length > 0 ) {
 				/**
 				 * remove ul if exists, so buddypress comment js doesn't get confused between media ul and child comment ul
