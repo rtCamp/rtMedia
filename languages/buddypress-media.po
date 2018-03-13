@@ -4,11 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.4.5\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2018-01-01 11:06:25+00:00\n"
-=======
-"POT-Creation-Date: 2018-01-19 05:56:06+00:00\n"
->>>>>>> develop
+"POT-Creation-Date: 2018-03-13 10:02:16+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2364,15 +2360,11 @@ msgstr ""
 msgid "There are some uploads in progress. Do you want to cancel them?"
 msgstr ""
 
-<<<<<<< HEAD
-#: app/main/RTMedia.php:1143
+#: app/main/RTMedia.php:1140
 msgid "Media upload is disabled. Please Enable at least one media type to proceed."
 msgstr ""
 
-#: app/main/RTMedia.php:1244
-=======
-#: app/main/RTMedia.php:1239
->>>>>>> develop
+#: app/main/RTMedia.php:1241
 msgid "Adding media in Comments is not allowed"
 msgstr ""
 
@@ -2381,8 +2373,8 @@ msgid "Media Files"
 msgstr ""
 
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:325
-#: app/main/controllers/media/RTMediaComment.php:172
-#: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:100
+#: app/main/controllers/media/RTMediaComment.php:175
+#: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:102
 #: app/main/controllers/template/rtmedia-functions.php:2117
 msgid "You are not allowed to upload/attach media."
 msgstr ""
@@ -2734,8 +2726,8 @@ msgstr ""
 msgid "Untitled Album"
 msgstr ""
 
-#: app/main/controllers/media/RTMediaComment.php:160
-#: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:88
+#: app/main/controllers/media/RTMediaComment.php:163
+#: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:90
 msgid "The web browser on your device cannot be used to upload files."
 msgstr ""
 
