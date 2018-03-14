@@ -126,13 +126,16 @@ class RTMediaComment {
 	 */
 	static function display_allowed() {
 		global $rtmedia_query;
-		$flag = ( ! (  is_home() || is_post_type_archive() || is_author()))
+		$media_enabled = ( is_rtmedia_upload_music_enabled() || is_rtmedia_upload_photo_enabled()
+			|| is_rtmedia_upload_video_enabled() || is_rtmedia_upload_document_enabled()
+			|| is_rtmedia_upload_other_enabled() );
+		$flag          = ( ! ( is_home() || is_post_type_archive() || is_author() ) )
 		&& is_user_logged_in()
-		&& (is_rtmedia_upload_music_enabled() || is_rtmedia_upload_photo_enabled() || is_rtmedia_upload_video_enabled())
-		 //added condition to disable upload when media is disabled in profile/group but user visits media tab
+		&& ( $media_enabled )
+		// Added condition to disable upload when media is disabled in profile/group but user visits media tab.
 		&& ( ( isset( $rtmedia_query->is_upload_shortcode ) && true === $rtmedia_query->is_upload_shortcode )
 				|| ( is_rtmedia_bp_profile() && is_rtmedia_profile_media_enable() )
-				||  (is_rtmedia_bp_group() && is_rtmedia_group_media_enable()) );
+				|| ( is_rtmedia_bp_group() && is_rtmedia_group_media_enable() ) );
 		$flag = apply_filters( 'before_rtmedia_comment_uploader_display', $flag );
 		return $flag;
 	}
