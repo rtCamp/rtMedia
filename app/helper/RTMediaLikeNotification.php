@@ -82,7 +82,7 @@ class RTMediaLikeNotification extends RTMediaNotification {
 			$rtmedia_id = rtmedia_id( $post_id );
 			$liked_list = $this->fetch_media_like_stats( $rtmedia_id );
                         $liked_by   = '';
-                        if( ! empty( $liked_list ) && is_object( $liked_list[0] ) && ! empty( $liked_list[0] ) && isset( $liked_list[0]->user_id ) ) {
+                        if( ! empty( $liked_list ) && ! empty( $liked_list[0] ) && is_object( $liked_list[0] ) && isset( $liked_list[0]->user_id ) ) {
                             $liked_by   = bp_core_get_username( $liked_list[0]->user_id );
                         }
 			$like_count = get_rtmedia_like( $post_id );
