@@ -1136,6 +1136,8 @@ class RTMedia {
 		}
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_upload_progress_error_message', esc_html__( 'There are some uploads in progress. Do you want to cancel them?', 'buddypress-media' ) );
+		// Added to display error message when all media types upload are disabled.
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_disabled_error_message', esc_html__( 'Media upload is disabled. Please Enable at least one media type to proceed.', 'buddypress-media' ) );
 
 		// localise media size config
 		$media_size_config = array(
