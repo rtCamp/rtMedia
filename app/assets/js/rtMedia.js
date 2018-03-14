@@ -547,6 +547,19 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	function rtmedia_init_popup_navigation() {
 		var rtm_mfp = jQuery.magnificPopup.instance;
+		
+		var probablyMobile = rtm_mfp.probablyMobile;
+		var tooltipShown   = getCookie( 'rtmedia-touch-swipe-tooltip' );
+
+		// Check if its mobile and tooltip is first time dispaly.
+		if ( probablyMobile && "" === tooltipShown ) {
+		    jQuery( '#mobile-swipe-overlay' ).show();
+		    jQuery( '#mobile-swipe-overlay' ).on ( 'click', function( e ) {
+			setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
+			jQuery( this ).hide();
+		    } );
+		}
+
 		jQuery( '.mfp-arrow-right' ).on( 'click', function( e ) {
 			rtm_mfp.next();
 		} );
@@ -568,6 +581,41 @@ jQuery( 'document' ).ready( function( $ ) {
 		} );
 	}
 
+	/**
+	 * Sets Cookie.
+	 * 
+	 * @param {string} cname
+	 * @param {string} cvalue
+	 * @param {int} exdays
+	 * @return void
+	 */
+	function setCookie(cname, cvalue, exdays) {
+	    var d = new Date();
+	    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	    var expires = "expires="+d.toUTCString();
+	    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+
+	/**
+	 * Get Cookie.
+	 * 
+	 * @param {string} cname
+	 * @return {string}
+	 */
+	function getCookie(cname) {
+	    var name = cname + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+		    c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+		    return c.substring(name.length, c.length);
+		}
+	    }
+	    return "";
+	}
 
 	function rtmedia_disable_popup_navigation_all(){
 		// hide the left and right key

@@ -1076,6 +1076,21 @@ function rtmedia_after_media_callback() {
 }
 add_action( 'rtmedia_after_media', 'rtmedia_after_media_callback', 10 );
 
+/**
+ * Adds swipe tooltip on mobile
+ */
+function rtmedia_after_media_swipe_tooltip() {
+	if ( wp_is_mobile() ) {
+	?>
+			<div id="mobile-swipe-overlay">
+				<div class="swipe-icon">
+					<img src="<?php echo esc_url( RTMEDIA_URL . '/app/assets/img/touchswipe-200.png' ); ?>" />
+				</div>
+			</div>
+	<?php
+	}
+}
+add_action( 'rtmedia_after_media', 'rtmedia_after_media_swipe_tooltip', 10 );
 
 if ( ! function_exists( 'rtmedia_gallery_after_title_callback' ) ) {
 	function rtmedia_gallery_after_title_callback() {
