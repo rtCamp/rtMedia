@@ -1384,7 +1384,7 @@ function get_rtmedia_permalink( $id ) {
 	// Adding filter to get permalink for current blog
 	add_filter( 'bp_get_root_domain', 'rtmedia_get_current_blog_url' );
 
-	if ( is_object( $media[0] ) && ! isset( $media[0]->context ) ) {
+	if ( is_object( $media[0] ) && ! empty( $media[0] ) && ! isset( $media[0]->context ) ) {
 		if ( function_exists( 'bp_get_groups_root_slug' ) && isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
 			$parent_link = get_rtmedia_group_link( $rtmedia_query->query['context_id'] );
 		} else {
@@ -1395,13 +1395,15 @@ function get_rtmedia_permalink( $id ) {
 			}
 		}
 	} else {
-		if ( function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
+		if ( is_object( $media[0] ) && ! empty( $media[0] ) && isset( $media[0]->context )  && function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
 			$parent_link = get_rtmedia_group_link( $media[0]->context_id );
 		} else {
 			// check for global album
 			$parent_link = parentlink_global_album( $id );
 			if ( '' === $parent_link ) {
-				$parent_link = get_rtmedia_user_link( $media[0]->media_author );
+                            if( is_object( $media[0] ) && ! empty( $media[0] ) && isset( $media[0]->media_author ) ) {
+                                $parent_link = get_rtmedia_user_link( $media[0]->media_author );
+                            }
 			}
 		}
 	}
