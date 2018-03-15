@@ -852,8 +852,17 @@ jQuery( function( $ ) {
 			} );
 		} else {
 			jQuery( document ).on( 'click', '#rtm_show_upload_ui', function() {
-				// If no media type is enabled error message will be displayed.
-				rtmedia_gallery_action_alert_message( rtmedia_media_disabled_error_message, 'warning' );
+				/*
+				* 'enabled_ext' will get value of enabled media types if nothing is enabled,
+				* then an error message will be displayed.
+				*/
+				var enabled_ext = rtMedia_plupload_config.filters[0].extensions.length;
+
+				if ( enabled_ext === 0 ) {
+					// If no media type is enabled error message will be displayed.
+					rtmedia_gallery_action_alert_message( rtmedia_media_disabled_error_message, 'warning' );
+				}
+
 				jQuery( '#rtm-media-gallery-uploader' ).slideToggle();
 				jQuery( '#rtm_show_upload_ui' ).toggleClass( 'primary' );
 			} );
