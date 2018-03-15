@@ -2142,7 +2142,7 @@ msgstr ""
 msgid "Public - Visible to the world"
 msgstr ""
 
-#: app/main/RTMedia.php:681 app/main/controllers/template/RTMediaNav.php:227
+#: app/main/RTMedia.php:681 app/main/controllers/template/RTMediaNav.php:228
 #: app/main/controllers/template/rtmedia-functions.php:136
 msgid "All"
 msgstr ""
