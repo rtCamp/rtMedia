@@ -133,6 +133,11 @@ function apply_rtMagnificPopup( selector ) {
 
 						apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
 					},
+                                                                                open: function() {
+                                            var lightBoxBackgrundHeight = jQuery( '.mfp-bg' );
+                                            var lightBox = jQuery( '.mfp-wrap' );
+                                            lightBoxBackgrundHeight.height( lightBoxBackgrundHeight.height() + lightBox.height() )
+                                        },
 					close: function( e ) {
 						//Console.log(e);
 						rtmedia_single_page_popup_close();
