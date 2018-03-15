@@ -6,8 +6,8 @@ var uploaderObj;
 var objUploadView;
 var rtmedia_load_template_flag = true;
 
-jQuery( function( $ ) {
 
+jQuery( function( $ ) {
 	var o_is_album, o_is_edit_allowed;
 	if ( typeof ( is_album ) == 'undefined' ) {
 		o_is_album = new Array( '' );
@@ -909,6 +909,40 @@ jQuery( function( $ ) {
 
 jQuery( document ).ready( function( $ ) {
 
+
+	/**
+	 * Uploader improper enter behavior issue(124) fixed
+	 *
+	 * @param e
+	 */
+	var submit_function = function (e) {
+		/**
+		 * Execute code only on enter key
+		 */
+		if (e.keyCode === 13) {
+			/**
+			 * Prevent default behavior and fire custom click
+			 */
+			e.preventDefault();
+			$(this).trigger('click');
+			/**
+			 * stop textarea from disabling
+			 * @type {*|jQuery|HTMLElement}
+			 */
+			var textarea = $('#whats-new');
+			textarea.removeAttr('disabled');
+			/**
+			 * set focus to textarea after buddypress timeout code
+			 */
+			setTimeout(function () {
+				textarea.focus();
+			}, 200);
+		}
+	};
+	/**
+	 * End of issue 124 fix
+	 */
+
 	/*
 	 * Fix for file selector does not open in Safari browser in IOS.
 	 * In Safari in IOS, Plupload don't click on it's input(type=file), so file selector dialog won't open.
@@ -1174,7 +1208,9 @@ jQuery( document ).ready( function( $ ) {
 			/**
 			 * Uploader improper enter behavior issue(124) fixed
 			 */
-			$('#aw-whats-new-submit').focus();
+			jQuery('#aw-whats-new-submit').focus();
+			jQuery(document).off('keydown', '#aw-whats-new-submit', submit_function);
+			jQuery(document).on('keydown', '#aw-whats-new-submit', submit_function);
 			/**
 			 * End issue 124
 			 */
