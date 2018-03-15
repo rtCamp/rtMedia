@@ -1211,9 +1211,9 @@ jQuery( document ).ready( function( $ ) {
 			/**
 			 * Uploader improper enter behavior issue(124) fixed
 			 */
-			jQuery('#aw-whats-new-submit').focus();
-			jQuery(document).off('keydown', '#aw-whats-new-submit', submit_function);
-			jQuery(document).on('keydown', '#aw-whats-new-submit', submit_function);
+			$('#aw-whats-new-submit').focus();
+			$(document).off('keydown', '#aw-whats-new-submit', submit_function);
+			$(document).on('keydown', '#aw-whats-new-submit', submit_function);
 			/**
 			 * End issue 124
 			 */
