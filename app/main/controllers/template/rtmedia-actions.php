@@ -1084,8 +1084,9 @@ function rtmedia_after_media_swipe_tooltip() {
 	?>
 			<div id="mobile-swipe-overlay">
 				<div class="swipe-icon">
-					<img src="<?php echo esc_url( RTMEDIA_URL . '/app/assets/img/touchswipe-200.png' ); ?>" />
+					<img src="<?php echo esc_url( RTMEDIA_URL . '/app/assets/img/swipe-tooltip.png' ); ?>" />
 				</div>
+				<p class="swipe-tootlip"><?php esc_html_e( 'Please swipe for more media.', 'buddypress-media' ); ?></p>
 			</div>
 	<?php
 	}

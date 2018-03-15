@@ -1553,16 +1553,22 @@ img.mfp-img {
 }
 #mobile-swipe-overlay .swipe-icon {
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   font-size: 50px;
   color: #000;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
+  width: 200px;
 }
 #mobile-swipe-overlay .swipe-tootlip {
-  font-size: 16px;
+  font-weight: 800;
+  position: absolute;
+  padding: 20px;
+  top: 45%;
+  width: 100%;
+  text-align: center;
 }
 
 .rtmedia-activity-container {

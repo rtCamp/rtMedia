@@ -553,13 +553,27 @@ jQuery( 'document' ).ready( function( $ ) {
 
 		// Check if its mobile and tooltip is first time dispaly.
 		if ( probablyMobile && "" === tooltipShown ) {
+
+		    // Show tooltip.
 		    jQuery( '#mobile-swipe-overlay' ).show();
+		    
+		    // On touch hide tooltip.
 		    jQuery( '#mobile-swipe-overlay' ).on ( 'click', function( e ) {
 			setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
 			jQuery( this ).hide();
 		    } );
+		    
+		    // On swipe hide tooltip.
+		    jQuery( '#mobile-swipe-overlay' ).swipe( {
+			 //Generic swipe handler for all directions
+			swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+			  setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
+			  jQuery( '#mobile-swipe-overlay' ).hide();
+			},
+			threshold:0
+		    } );
 		}
-
+		
 		jQuery( '.mfp-arrow-right' ).on( 'click', function( e ) {
 			rtm_mfp.next();
 		} );
