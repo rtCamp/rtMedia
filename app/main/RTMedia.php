@@ -1395,13 +1395,13 @@ function get_rtmedia_permalink( $id ) {
 			}
 		}
 	} else {
-		if ( is_object( $media[0] ) && ! empty( $media[0] ) && isset( $media[0]->context )  && function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
+		if ( isset( $media[0]->context )  && function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
 			$parent_link = get_rtmedia_group_link( $media[0]->context_id );
 		} else {
 			// check for global album
 			$parent_link = parentlink_global_album( $id );
 			if ( '' === $parent_link ) {
-                            if( ! empty( $media ) && isset( $media[0] ) && ! empty( $media[0] ) && isset( $media[0]->media_author ) ) {
+                            if ( isset( $media[0]->media_author ) ) {
                                 $parent_link = get_rtmedia_user_link( $media[0]->media_author );
                             }
 			}
