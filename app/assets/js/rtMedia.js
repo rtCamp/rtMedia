@@ -81,7 +81,9 @@ function apply_rtMagnificPopup( selector ) {
 						}
 
 						$( '.mfp-content .rtmedia-single-media .wp-audio-shortcode,.mfp-content .rtmedia-single-media .wp-video-shortcode,.mfp-content .rtmedia-single-media .bp_media_content video' ).mediaelementplayer( {
-							// If the <video width> is not specified, this is the default
+							// This is required to work with new MediaElement version.
+                                                        classPrefix: 'mejs-',
+                                                        // If the <video width> is not specified, this is the default
 							defaultVideoWidth: 480,
 							// always show the volume button
 							hideVolumeOnTouchDevices: false,
@@ -274,7 +276,9 @@ jQuery( 'document' ).ready( function( $ ) {
 			    setTimeout( function() {
 				    apply_rtMagnificPopup( '.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' );
 				    jQuery( 'ul.activity-list li.rtmedia_update:first-child .wp-audio-shortcode, ul.activity-list li.rtmedia_update:first-child .wp-video-shortcode' ).mediaelementplayer( {
-					    // If the <video width> is not specified, this is the default
+					    // This is required to work with new MediaElement version.
+                                            classPrefix: 'mejs-',
+                                            // If the <video width> is not specified, this is the default
 					    defaultVideoWidth: 480,
 					    // If the <video height> is not specified, this is the default
 					    defaultVideoHeight: 270
@@ -299,7 +303,9 @@ jQuery( 'document' ).ready( function( $ ) {
 				apply_rtMagnificPopup( '.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' );
 
 				jQuery( 'ul.activity-list li.rtmedia_update div.rtmedia-item-thumbnail > audio.wp-audio-shortcode, ul.activity-list li.rtmedia_update div.rtmedia-item-thumbnail > video.wp-video-shortcode' ).mediaelementplayer( {
-					// If the <video width> is not specified, this is the default
+					// This is required to work with new MediaElement version.
+                                        classPrefix: 'mejs-',
+                                        // If the <video width> is not specified, this is the default
 					defaultVideoWidth: 480,
 					// If the <video height> is not specified, this is the default
 					defaultVideoHeight: 270
