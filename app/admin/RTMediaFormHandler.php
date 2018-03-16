@@ -255,9 +255,9 @@ class RTMediaFormHandler {
 	 */
 	public static function inputfile( $args ) {
 		global $rtmedia;
-		$options = $rtmedia->options;
+		$options  = $rtmedia->options;
 		$defaults = array(
-			'key' => '',
+			'key'  => '',
 			'desc' => '',
 		);
 		$args = wp_parse_args( $args, $defaults );

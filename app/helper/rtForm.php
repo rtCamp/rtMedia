@@ -634,7 +634,6 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param string/array $attributes
 		 *
 		 * @return string
-		 * @throws rtFormInvalidArgumentsException
 		 */
 		public function get_textbox( $attributes = '' ) {
 
@@ -653,7 +652,6 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param string/array $attributes
 		 *
 		 * @return string
-		 * @throws rtFormInvalidArgumentsException
 		 */
 		public function get_inputfile( $attributes = '' ) {
 
