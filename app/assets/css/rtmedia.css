@@ -333,6 +333,10 @@ button#rtmedia-add-media-button-post-update .dashicons {
   margin-bottom: 20px;
 }
 
+#buddypress a.rtm-button-back {
+  padding: 3px 10px;
+}
+
 .rtmedia_next_prev {
   padding: 0 10px;
 }
