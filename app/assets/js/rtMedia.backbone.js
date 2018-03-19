@@ -856,11 +856,12 @@ jQuery( function( $ ) {
 				* 'enabled_ext' will get value of enabled media types if nothing is enabled,
 				* then an error message will be displayed.
 				*/
-				var enabled_ext = rtMedia_plupload_config.filters[0].extensions.length;
-
-				if ( enabled_ext === 0 ) {
-					// If no media type is enabled error message will be displayed.
-					rtmedia_gallery_action_alert_message( rtmedia_media_disabled_error_message, 'warning' );
+				if ( 'object' === typeof rtMedia_plupload_config ) {
+					var enabled_ext = rtMedia_plupload_config.filters[0].extensions.length;
+					if ( 0 === enabled_ext ) {
+						// If no media type is enabled error message will be displayed.
+						rtmedia_gallery_action_alert_message( rtmedia_media_disabled_error_message, 'warning' );
+					}
 				}
 
 				jQuery( '#rtm-media-gallery-uploader' ).slideToggle();
