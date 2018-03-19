@@ -2734,7 +2734,7 @@ a.rtmedia-upload-media-link {
 }
 
 #buddypress #item-body {
-  padding: 0 0 20px 20px;
+  padding: 0 20px;
 }
 #buddypress .mejs-controls button {
   padding: 4px 8px;
