@@ -1460,6 +1460,11 @@ img.mfp-img {
   margin-top: -3px;
 }
 
+.rt_media_comment_form textarea {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
 .rtmedia-item-comments textarea {
   font-size: 14px;
   padding: 4px;
