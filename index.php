@@ -113,6 +113,8 @@ try {
 	echo esc_html( $e->getMessage() );
 }
 
+include RTMEDIA_PATH . "templates/media/media-with-message.php";
+
 /**
  * Instantiate the BuddyPressMedia class.
  */

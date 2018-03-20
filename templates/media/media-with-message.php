@@ -81,10 +81,10 @@ function rtm_bp_message_media_add_upload_media_button() {
 }
 
 /**
-	Add additional parameter media ID in BuddyPress message SEND MESSAGE process. and Insert data into MEDIA_META table.
-
-	@param object $message Getting parameter response when sending message.
- **/
+* Add additional parameter media ID in BuddyPress message SEND MESSAGE process. and Insert data into MEDIA_META table.
+*
+* @param object $message Getting parameter response when sending message.
+**/
 function rtm_add_message_media_params( $message ) {
 	$insert_media_object  = new RTDBModel( 'rtm_media_meta' );
 	$message->media_array = filter_input( INPUT_POST, 'rtm_bpm_uploaded_media' );
@@ -111,9 +111,8 @@ function rtm_add_message_media_params( $message ) {
 }
 
 /**
-
-	As a result show attached media with message.
- **/
+* As a result show attached media with message.
+**/
 function show_rtm_bp_msg_media() {
 	$get_data_object = new RTDBModel( 'rtm_media_meta' );
 	$media_result    = $get_data_object->get( [ 'meta_value' => bp_get_the_thread_message_id() ] );  // phpcs:ignore
@@ -149,3 +148,19 @@ add_action( 'bp_after_message_reply_box', 'rtm_bp_message_media_add_upload_media
 add_action( 'messages_message_sent', 'rtm_add_message_media_params' );
 // Showing media below BuddyPress message.
 add_action( 'bp_after_message_content', 'show_rtm_bp_msg_media' );
+
+
+//rtm_bp_message_media_add_button function will add Media attachment button to both Compose message tab and Send a reply in BuddyPress
+function rtm_bp_message_media_add_button(){
+	?>
+	<label for="rtm_media_message_content"><?php _e( 'Attach Media ( Optional )', 'buddypress' ); ?></label>
+	<input type="file" name="rtm_media_message_content" id="rtm_media_message_content" />
+
+	<?php
+}
+
+//Adding Browse button under message in Compose tab
+add_action( 'bp_after_messages_compose_content', 'rtm_bp_message_media_add_button' );
+
+//Adding Browse button under message in Send reply tab
+add_action( 'bp_after_message_thread_reply', 'rtm_bp_message_media_add_button' );
