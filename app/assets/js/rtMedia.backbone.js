@@ -1325,6 +1325,15 @@ jQuery( document ).ready( function( $ ) {
 						$( '#whats-new-form #rtmedia_upload_terms_conditions' ).removeAttr( 'disabled' );
 						$( '#whats-new-form #rtmedia-whts-new-upload-container' ).find( 'input' ).removeAttr( 'disabled' );
 
+						/**
+						 * Issue fixed: 1056(rtmedia-upload-terms) - Not allowing to upload
+						 */
+						var activity_textarea = $( '#whats-new' );
+						activity_textarea.removeAttr('disabled');
+						/**
+						 * End of issue 1056 fix
+						 */
+
 						return false;
 					}
 
