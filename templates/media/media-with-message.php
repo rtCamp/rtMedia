@@ -164,3 +164,13 @@ add_action( 'bp_after_messages_compose_content', 'rtm_bp_message_media_add_butto
 
 //Adding Browse button under message in Send reply tab
 add_action( 'bp_after_message_reply_box', 'rtm_bp_message_media_add_button' );
+
+function rtm_bp_message_media_show_media(){
+    ?>
+    <div class="rtm-media-for-message">
+        <img src="https://static.easygenerator.com/wp-content/uploads/2013/09/demo.jpg">
+    </div>
+<?php
+}
+
+add_action( 'bp_after_message_content', 'rtm_bp_message_media_show_media' );
