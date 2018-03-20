@@ -751,7 +751,15 @@ jQuery( function( $ ) {
 			uploaderObj.uploader.bind( 'UploadProgress', function( up, file ) {
 				//$("#" + file.id + " .plupload_file_status").html(file.percent + "%");
 				//$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_uploading_msg + '( ' + file.percent + '% )' );
-				$( '#' + file.id + ' .plupload_file_status' ).html( '<div class="plupload_file_progress ui-widget-header" style="width: ' + file.percent + '%;"></div>' );
+				// creates a progress bar to display file upload status
+				var progressBar = jQuery( '<div/>', {
+					'class': 'plupload_file_progress ui-widget-header',
+				});
+				progressBar.css( 'width', file.percent + '%' );
+				$( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
+				// filter to customize existing progress bar can be used to display
+				// '%' of upload completed.
+				rtMediaHook.call( 'rtm_custom_progress_bar_content', [ file ] );
 				$( '#' + file.id ).addClass( 'upload-progress' );
 				if ( file.percent == 100 ) {
 					$( '#' + file.id ).toggleClass( 'upload-success' );
@@ -1254,7 +1262,15 @@ jQuery( document ).ready( function( $ ) {
 
 		objUploadView.uploader.bind( 'UploadProgress', function( up, file ) {
 			//$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_uploading_msg + '( ' + file.percent + '% )' );
-			$( '#' + file.id + ' .plupload_file_status' ).html( '<div class="plupload_file_progress ui-widget-header" style="width: ' + file.percent + '%;"></div>' );
+			// creates a progress bar to display file upload status
+			var progressBar = jQuery( '<div/>', {
+				'class': 'plupload_file_progress ui-widget-header',
+			});
+			progressBar.css( 'width', file.percent + '%' );
+			$( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
+			// filter to customize existing progress bar can be used to display
+			// '%' of upload completed.
+			rtMediaHook.call( 'rtm_custom_progress_bar_content', [ file ] );
 			$( '#' + file.id ).addClass( 'upload-progress' );
 			if ( file.percent == 100 ) {
 				$( '#' + file.id ).toggleClass( 'upload-success' );
@@ -2451,7 +2467,15 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 		} );
 
         commentObj[ widget_id ].uploader.bind( 'UploadProgress', function( up, file ) {
-			jQuery( '#' + file.id + ' .plupload_file_status' ).html( '<div class="plupload_file_progress ui-widget-header" style="width: ' + file.percent + '%;"></div>' );
+			// creates a progress bar to display file upload status
+			var progressBar = jQuery( '<div/>', {
+				'class': 'plupload_file_progress ui-widget-header',
+			});
+			progressBar.css( 'width', file.percent + '%' );
+			$( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
+			// filter to customize existing progress bar can be used to display
+			// '%' of upload completed.
+			rtMediaHook.call( 'rtm_custom_progress_bar_content', [ file ] );
 			jQuery( '#' + file.id ).addClass( 'upload-progress' );
 			if ( file.percent == 100 ) {
 				jQuery( '#' + file.id ).toggleClass( 'upload-success' );

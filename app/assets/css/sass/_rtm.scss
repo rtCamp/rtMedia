@@ -176,16 +176,18 @@ button#rtmedia-add-media-button-post-update {
 }
 
 .plupload_file_status {
-	height: 18px;
+	height: 15px;
+	margin-bottom: 5px;
 	overflow: hidden;
-	position: relative;
 }
 
 .plupload_file_progress {
 	background: $success;
-	height: 4px;
-	position: absolute;
-	top: 0;
+	height: 100%;
+	font-size: 10px;
+	line-height: 15px;
+	text-align: center;
+	word-wrap: initial;
 }
 
 .rtm-form {
