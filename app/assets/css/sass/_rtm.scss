@@ -470,3 +470,9 @@ table.rtmedia-edit-media-list {
 		padding: 0 5px;
 	}
 }
+
+// add minimum height when no media found to display options
+// menu properly
+.rtmedia-no-media-found, .rtmedia-list-media {
+	min-height: 95px;
+}
