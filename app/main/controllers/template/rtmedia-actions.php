@@ -90,7 +90,7 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 		$thumb_url = wp_get_attachment_image_src( $media_id, 'thumbnail', true );
 
 		echo '<div id="imgedit-response-' . esc_attr( $media_id ) . '"></div>';
-		echo '<div class="wp_attachment_image" id="media-head-' . esc_attr( $media_id ) . '">' . '<p id="thumbnail-head-' . esc_attr( $id ) . '"><img class="thumbnail" src="' . esc_url( set_url_scheme( $thumb_url[0] ) ) . '" alt="" /></p>' . $modify_button . '</div>'; // @codingStandardsIgnoreLine
+		echo '<div class="wp_attachment_image" id="media-head-' . esc_attr( $media_id ) . '">' . '<p id="thumbnail-head-' . esc_attr( $media_id ) . '"><img class="thumbnail" src="' . esc_url( set_url_scheme( $thumb_url[0] ) ) . '" alt="' . esc_attr( rtmedia_title() ) . '" /></p>' . $modify_button . '</div>'; // @codingStandardsIgnoreLine
 		echo '</div>';
 		echo '</div>';
 	}

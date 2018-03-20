@@ -471,6 +471,10 @@ table.rtmedia-edit-media-list {
 	}
 }
 
+input.imgedit-submit-btn {
+	display: none;
+}
+
 // add minimum height when no media found to display options
 // menu properly
 .rtmedia-no-media-found, .rtmedia-list-media {

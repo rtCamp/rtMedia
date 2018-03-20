@@ -3,6 +3,8 @@
 	if ( have_rtmedia() ) : rtmedia();
 		if ( rtmedia_edit_allowed() ) {
 			global $rtmedia_media;
+			// Added to get nonce of current media.
+			$media_id_nonce = wp_create_nonce( "image_editor-$rtmedia_media->media_id" );
 			?>
 			<div class="rtmedia-single-edit-title-container">
 				<h2 class="rtmedia-title"><?php esc_html_e( 'Edit Media', 'buddypress-media' ); ?></h2>
@@ -45,9 +47,9 @@
 					</div>
 					<div class="rtmedia-editor-buttons">
 						<input type="submit" class="button rtm-button rtm-button-save"
-						       value="<?php esc_attr_e( 'Save', 'buddypress-media' ); ?>"/>
+						onclick="imageEdit.save(<?php echo esc_attr( $rtmedia_media->media_id ) . ', \'' . esc_attr( $media_id_nonce ); ?>')" value="<?php esc_attr_e( 'Save', 'buddypress-media' ); ?>"/>
 						<a class="button rtm-button rtm-button-back"
-						   href="<?php rtmedia_permalink(); ?>"><?php esc_html_e( 'Back', 'buddypress-media' ); ?></a>
+						href="<?php rtmedia_permalink(); ?>"><?php esc_html_e( 'Back', 'buddypress-media' ); ?></a>
 					</div>
 				</div>
 			</form>

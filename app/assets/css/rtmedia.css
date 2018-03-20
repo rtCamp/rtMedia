@@ -558,6 +558,10 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
   padding: 0 5px;
 }
 
+input.imgedit-submit-btn {
+  display: none;
+}
+
 .rtmedia-no-media-found, .rtmedia-list-media {
   min-height: 95px;
 }
