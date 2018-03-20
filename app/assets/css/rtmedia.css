@@ -335,6 +335,10 @@ button#rtmedia-add-media-button-post-update .dashicons {
   margin-bottom: 20px;
 }
 
+#buddypress a.rtm-button-back {
+  padding: 3px 10px;
+}
+
 .rtmedia_next_prev {
   padding: 0 10px;
 }
@@ -1456,6 +1460,11 @@ img.mfp-img {
 .rtmedia-comment-details {
   line-height: 1.5;
   margin-top: -3px;
+}
+
+.rt_media_comment_form textarea {
+  display: inline-block;
+  margin-bottom: 5px;
 }
 
 .rtmedia-item-comments textarea {

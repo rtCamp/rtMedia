@@ -48,4 +48,6 @@
     $logout = new LogoutPage( $I );
     $logout->logout();
 
+    $buddypress->gotoActivity();
+
 ?>

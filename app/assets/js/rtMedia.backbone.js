@@ -96,7 +96,10 @@ jQuery( function( $ ) {
 		getNext: function( page, el, element) {
 
 			if ( jQuery( '.rtmedia-no-media-found' ).length > 0 ) {
-				jQuery( '.rtmedia-no-media-found' ).replaceWith( '<ul class=\'rtmedia-list rtmedia-list-media\'></ul>' );
+				var rtmediaListUl = jQuery( '<ul/>', {
+					'class': 'rtmedia-list rtmedia-list-media rtm-pro-allow-action',
+				});
+				jQuery( '.rtmedia-no-media-found' ).replaceWith( rtmediaListUl );
 			}
 			that = this;
 			if ( rtmedia_load_template_flag == true ) {
@@ -1780,7 +1783,6 @@ function check_url( query ) {
     var results = regex.exec( window.location.href );
     if( null !== results ) {
         return results[1];
-        return decodeURIComponent(results[1].replace(/\+/g, " "));
     } else {
         return false;
     }
