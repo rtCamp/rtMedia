@@ -163,4 +163,4 @@ function rtm_bp_message_media_add_button(){
 add_action( 'bp_after_messages_compose_content', 'rtm_bp_message_media_add_button' );
 
 //Adding Browse button under message in Send reply tab
-add_action( 'bp_after_message_thread_reply', 'rtm_bp_message_media_add_button' );
+add_action( 'bp_after_message_reply_box', 'rtm_bp_message_media_add_button' );
