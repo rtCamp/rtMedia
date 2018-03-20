@@ -594,14 +594,14 @@ if ( ! class_exists( 'rtForm' ) ) {
 				$html .= $this->processAttributes( $element, $attributes );
 
 				/* Ending the tag */
-				$html .= ' /><input type="hidden" name="rtmedia-options[' . $attributes['name'] . '_hid]" value="' . $attributes['value'] . '" />';
+				$html .= ' /><input type="hidden" name="rtmedia-options[' . esc_attr( $attributes['name'] ) . '_hid]" value="' . esc_attr( $attributes['value'] ) . '" />';
 				if ( ! empty( $attributes['value'] ) ) {
 					$img_src  = wp_get_attachment_image_src( $attributes['value'], 'thumbnail' );
 					$img_path = get_attached_file( $attributes['value'] );
 
 					if ( file_exists( $img_path ) && ! empty( $img_src[0] ) ) {
 						$html .= '<span class="rtm-file-preview">';
-						$html .= '<img src="' . $img_src[0] . '" width="100">';
+						$html .= sprintf( '<img src="%s" width="100">', esc_url( $img_src[0] ) );
 						$html .= '<a href="#" class="no-popup rtm-delete-preview" title="' . esc_attr__( 'Delete this file', 'buddypress-media' ) . '" data-media_type="' . $attributes['name'] . '">';
 						$html .= '<i class="remove-from-queue dashicons dashicons-dismiss"></i>';
 						$html .= '</a></span>';
@@ -620,7 +620,8 @@ if ( ! class_exists( 'rtForm' ) ) {
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
-				return wp_kses_post( $html );
+				return $html;
+				
 			} else {
 				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
