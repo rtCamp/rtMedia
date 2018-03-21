@@ -566,9 +566,11 @@ jQuery( 'document' ).ready( function( $ ) {
 		    // On swipe hide tooltip.
 		    jQuery( '#mobile-swipe-overlay' ).swipe( {
 			 //Generic swipe handler for all directions
-			swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+			swipe:function( event, direction, distance, duration, fingerCount, fingerData ) {
+
 			  setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
 			  jQuery( '#mobile-swipe-overlay' ).hide();
+
 			},
 			threshold:0
 		    } );
@@ -603,11 +605,13 @@ jQuery( 'document' ).ready( function( $ ) {
 	 * @param {int} exdays
 	 * @return void
 	 */
-	function setCookie(cname, cvalue, exdays) {
+	function setCookie( cname, cvalue, exdays ) {
+
 	    var d = new Date();
-	    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-	    var expires = "expires="+d.toUTCString();
+	    d.setTime( d.getTime() + ( exdays * 24 * 60 * 60 * 1000 ) );
+	    var expires = "expires=" + d.toUTCString();
 	    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+
 	}
 
 	/**
@@ -616,19 +620,22 @@ jQuery( 'document' ).ready( function( $ ) {
 	 * @param {string} cname
 	 * @return {string}
 	 */
-	function getCookie(cname) {
+	function getCookie( cname ) {
+
 	    var name = cname + "=";
-	    var ca = document.cookie.split(';');
-	    for(var i = 0; i < ca.length; i++) {
+	    var ca = document.cookie.split( ';' );
+	    for( var i = 0; i < ca.length; i++ ) {
 		var c = ca[i];
-		while (c.charAt(0) == ' ') {
-		    c = c.substring(1);
+		while ( ' ' == c.charAt( 0 ) ) {
+		    c = c.substring( 1 );
 		}
-		if (c.indexOf(name) == 0) {
-		    return c.substring(name.length, c.length);
+		if ( 0 == c.indexOf( name ) ) {
+		    return c.substring( name.length, c.length );
 		}
 	    }
+
 	    return "";
+
 	}
 
 	function rtmedia_disable_popup_navigation_all(){
