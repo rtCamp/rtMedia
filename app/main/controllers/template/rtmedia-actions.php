@@ -90,7 +90,7 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 		$thumb_url = wp_get_attachment_image_src( $media_id, 'thumbnail', true );
 
 		echo '<div id="imgedit-response-' . esc_attr( $media_id ) . '"></div>';
-		echo '<div class="wp_attachment_image" id="media-head-' . esc_attr( $media_id ) . '">' . '<p id="thumbnail-head-' . esc_attr( $id ) . '"><img class="thumbnail" src="' . esc_url( set_url_scheme( $thumb_url[0] ) ) . '" alt="" /></p>' . $modify_button . '</div>'; // @codingStandardsIgnoreLine
+		echo '<div class="wp_attachment_image" id="media-head-' . esc_attr( $media_id ) . '">' . '<p id="thumbnail-head-' . esc_attr( $media_id ) . '"><img class="thumbnail" src="' . esc_url( set_url_scheme( $thumb_url[0] ) ) . '" alt="' . esc_attr( rtmedia_title() ) . '" /></p>' . $modify_button . '</div>'; // @codingStandardsIgnoreLine
 		echo '</div>';
 		echo '</div>';
 	}
@@ -772,7 +772,7 @@ function rt_check_addon_status() {
 					$dont_check_verification = get_transient( 'check_rtmedia_license_verifiction_' . $addon_id );
 				}
 
-				if ( $now > $expiration || ( false === $dont_check_verification ) ) {
+				if ( $now > $expiration && ( false === $dont_check_verification ) ) {
 
 					// Get license key  information from the store
 					$license_data = rtmedia_activate_addon_license( $addon );

@@ -268,6 +268,7 @@
 
 .rtmedia-media {
 	margin: 0 auto;
+
 	img {
 		display: inline-block;
 		max-height: inherit;
@@ -454,6 +455,13 @@
 .rtmedia-comment-details {
 	line-height: 1.5;
 	margin-top: -3px;
+}
+
+.rt_media_comment_form {
+	textarea {
+		display: inline-block;
+		margin-bottom: 5px;
+	}
 }
 
 .rtmedia-item-comments {
