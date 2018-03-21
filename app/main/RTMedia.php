@@ -1039,7 +1039,7 @@ class RTMedia {
 		//javascript messages
 		wp_localize_script( 'rtmedia-magnific', 'rtmedia_load_more', esc_html__( 'Loading media', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_activity_msg', esc_html__( 'Please enter some content to post.', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_comment_msg', esc_html__( 'Empty Comment is not allowed.', 'buddypress-media' ) );
+		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_comment_msg', esc_html__( 'Empty comment is not allowed.', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_delete_confirmation', apply_filters( 'rtmedia_delete_prompt_message', esc_html__( 'Are you sure you want to delete this media?', 'buddypress-media' ) ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_comment_delete_confirmation', esc_html__( 'Are you sure you want to delete this comment?', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_album_delete_confirmation', esc_html__( 'Are you sure you want to delete this Album?', 'buddypress-media' ) );
@@ -1136,6 +1136,8 @@ class RTMedia {
 		}
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_upload_progress_error_message', esc_html__( 'There are some uploads in progress. Do you want to cancel them?', 'buddypress-media' ) );
+		// Added to display error message when all media types upload are disabled.
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_disabled_error_message', esc_html__( 'Media upload is disabled. Please Enable at least one media type to proceed.', 'buddypress-media' ) );
 
 		// localise media size config
 		$media_size_config = array(

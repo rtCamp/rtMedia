@@ -589,7 +589,7 @@ class RTMediaBuddyPressActivity {
 	 * @param $params array
 	 */
 	function activity_after_media_comment( $params ) {
-		if ( class_exists( 'BuddyPress' ) ) {
+		if ( class_exists( 'BuddyPress' ) && function_exists( 'bp_activity_add' ) ) {
 			if ( isset( $params['comment_post_ID'] ) ) {
 
 				// get media details
@@ -725,7 +725,7 @@ class RTMediaBuddyPressActivity {
 	 * @param $comment_id
 	 */
 	function remove_activity_after_media_comment_delete( $comment_id ) {
-		if ( ! empty( $comment_id ) ) {
+		if ( ! empty( $comment_id ) && function_exists( 'bp_activity_delete' ) ) {
 
 			// get comment details from comment id
 			$comment = get_comment( $comment_id );

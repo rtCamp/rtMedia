@@ -176,22 +176,30 @@ button#rtmedia-add-media-button-post-update {
 }
 
 .plupload_file_status {
-	height: 18px;
+	height: 15px;
+	margin-bottom: 5px;
 	overflow: hidden;
-	position: relative;
 }
 
 .plupload_file_progress {
 	background: $success;
-	height: 4px;
-	position: absolute;
-	top: 0;
+	height: 100%;
+	font-size: 10px;
+	line-height: 15px;
+	text-align: center;
+	word-wrap: initial;
 }
 
 .rtm-form {
 	.rtm-field-wrap {
 		margin-bottom: 20px;
 	}
+}
+
+#buddypress {
+		a.rtm-button-back{
+			padding: 3px 10px;
+		}
 }
 
 // Pagination
@@ -461,4 +469,14 @@ table.rtmedia-edit-media-list {
 		color: white;
 		padding: 0 5px;
 	}
+}
+
+input.imgedit-submit-btn {
+	display: none;
+}
+
+// add minimum height when no media found to display options
+// menu properly
+.rtmedia-no-media-found, .rtmedia-list-media {
+	min-height: 95px;
 }
