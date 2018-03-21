@@ -317,16 +317,18 @@ button#rtmedia-add-media-button-post-update .dashicons {
 }
 
 .plupload_file_status {
-  height: 18px;
+  height: 15px;
+  margin-bottom: 5px;
   overflow: hidden;
-  position: relative;
 }
 
 .plupload_file_progress {
   background: #7AD03A;
-  height: 4px;
-  position: absolute;
-  top: 0;
+  height: 100%;
+  font-size: 10px;
+  line-height: 15px;
+  text-align: center;
+  word-wrap: initial;
 }
 
 .rtm-form .rtm-field-wrap {
@@ -554,6 +556,14 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
   background-color: black;
   color: white;
   padding: 0 5px;
+}
+
+input.imgedit-submit-btn {
+  display: none;
+}
+
+.rtmedia-no-media-found, .rtmedia-list-media {
+  min-height: 95px;
 }
 
 .rtm-tabs.rtm-tabs {
@@ -1460,6 +1470,11 @@ img.mfp-img {
 .rtmedia-comment-details {
   line-height: 1.5;
   margin-top: -3px;
+}
+
+.rt_media_comment_form textarea {
+  display: inline-block;
+  margin-bottom: 5px;
 }
 
 .rtmedia-item-comments textarea {

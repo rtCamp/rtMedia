@@ -1016,125 +1016,129 @@ class RTMediaFormHandler {
 	 */
 	static function buddypress_render_options( $options ) {
 		$render = array(
-			'rtmedia-enable-on-profile'       => array(
-				'title'		=> esc_html__( 'Enable media in profile', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'key'	=> 'buddypress_enableOnProfile',
-					'value'	=> $options['buddypress_enableOnProfile'],
-					'desc'	=> esc_html__( 'Enable Media on BuddyPress Profile', 'buddypress-media' ),
+			'rtmedia-enable-on-profile'                => array(
+				'title'    => esc_html__( 'Enable media in profile', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'key'   => 'buddypress_enableOnProfile',
+					'value' => $options['buddypress_enableOnProfile'],
+					'desc'  => esc_html__( 'Enable Media on BuddyPress Profile', 'buddypress-media' ),
 				),
 				'group'    => 10,
 			),
-			'rtmedia-enable-on-group'         => array(
-				'title'		=> esc_html__( 'Enable media in group', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'key'	=> 'buddypress_enableOnGroup',
-					'value'	=> $options['buddypress_enableOnGroup'],
-					'desc'	=> esc_html__( 'Enable Media on BuddyPress Groups', 'buddypress-media' ),
+			'rtmedia-enable-on-group'                  => array(
+				'title'    => esc_html__( 'Enable media in group', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'key'   => 'buddypress_enableOnGroup',
+					'value' => $options['buddypress_enableOnGroup'],
+					'desc'  => esc_html__( 'Enable Media on BuddyPress Groups', 'buddypress-media' ),
+					'id'    => 'rtmedia-enable-on-group',
 				),
 				'group'    => 10,
 			),
-			'rtmedia-enable-on-activity'      => array(
-				'title'		=> esc_html__( 'Allow upload from activity stream', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'key'	=> 'buddypress_enableOnActivity',
-					'value'	=> $options['buddypress_enableOnActivity'],
-					'desc'	=> esc_html__( 'Allow upload using status update box present on activity stream page', 'buddypress-media' ),
-					'id'	=> 'rtmedia-bp-enable-activity',
+			'rtmedia-enable-on-activity'               => array(
+				'title'    => esc_html__( 'Allow upload from activity stream', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'key'   => 'buddypress_enableOnActivity',
+					'value' => $options['buddypress_enableOnActivity'],
+					'desc'  => esc_html__( 'Allow upload using status update box present on activity stream page', 'buddypress-media' ),
+					'id'    => 'rtmedia-bp-enable-activity',
 				),
 				'group'    => 10,
 			),
-			'buddypress_enableOnComment'      => array(
-				'title'		=> esc_html__( 'Enable media in comment', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'key'	=> 'buddypress_enableOnComment',
-					'value'	=> $options['buddypress_enableOnComment'],
-					'desc'	=> esc_html__( 'This will allow users to upload media in comment section for originally uploaded media up to 1 level.', 'buddypress-media' ),
+			'buddypress_enableOnComment'               => array(
+				'title'    => esc_html__( 'Enable media in comment', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'key'   => 'buddypress_enableOnComment',
+					'value' => $options['buddypress_enableOnComment'],
+					'desc'  => esc_html__( 'This will allow users to upload media in comment section for originally uploaded media up to 1 level.', 'buddypress-media' ),
 				),
 				'group'    => 660,
 			),
-			'rtmedia_disable_media_in_commented_media'      => array(
-				'title'		=> esc_html__( 'Disable upload in comment media', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'key'	=> 'rtmedia_disable_media_in_commented_media',
-					'value'	=> $options['rtmedia_disable_media_in_commented_media'],
-					'desc'	=> esc_html__( 'Disable upload in comment media', 'buddypress-media' ),
+			'rtmedia_disable_media_in_commented_media' => array(
+				'title'    => esc_html__( 'Disable upload in comment media', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'key'   => 'rtmedia_disable_media_in_commented_media',
+					'value' => $options['rtmedia_disable_media_in_commented_media'],
+					'desc'  => esc_html__( 'Disable upload in comment media', 'buddypress-media' ),
 				),
 				'group'    => 660,
-				'depends'       => 'buddypress_enableOnComment',
+				'depends'  => 'buddypress_enableOnComment',
 			),
-			'rtmedia-activity-feed-limit'     => array(
-				'title'		=> esc_html__( 'Number of media items to show in activity stream', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'number' ),
-				'args'		=> array(
-					'key'	=> 'buddypress_limitOnActivity',
-					'value'	=> $options['buddypress_limitOnActivity'],
-					'desc'	=> esc_html__( 'With bulk uploads activity, the stream may get flooded. You can control the maximum number of media items or files per activity. This limit will not affect the actual number of uploads. This is only for display. "0" means unlimited.', 'buddypress-media' ),
-					'class'	=> array( 'rtmedia-setting-text-box rtmedia-bp-activity-setting' ),
-					'min'	=> 0,
+			'rtmedia-activity-feed-limit'              => array(
+				'title'    => esc_html__( 'Number of media items to show in activity stream', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'number' ),
+				'args'     => array(
+					'key'   => 'buddypress_limitOnActivity',
+					'value' => $options['buddypress_limitOnActivity'],
+					'desc'  => esc_html__( 'With bulk uploads activity, the stream may get flooded. You can control the maximum number of media items or files per activity. This limit will not affect the actual number of uploads. This is only for display. "0" means unlimited.', 'buddypress-media' ),
+					'class' => array( 'rtmedia-setting-text-box rtmedia-bp-activity-setting' ),
+					'min'   => 0,
+					'id'    => 'rtmedia-activity-feed-limit',
 				),
 				'group'    => 10,
 			),
-			'rtmedia-enable-notification'     => array(
-				'title'		=> esc_html__( 'Enable media notification', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'key'	=> 'buddypress_enableNotification',
-					'value'	=> $options['buddypress_enableNotification'],
-					'desc'	=> esc_html__( 'This will enable notifications to media authors for media likes and comments.', 'buddypress-media' ),
+			'rtmedia-enable-notification'              => array(
+				'title'    => esc_html__( 'Enable media notification', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'key'   => 'buddypress_enableNotification',
+					'value' => $options['buddypress_enableNotification'],
+					'desc'  => esc_html__( 'This will enable notifications to media authors for media likes and comments.', 'buddypress-media' ),
 
 				),
 				'group'    => 10,
 			),
-			'rtmedia-enable-like-activity'    => array(
-				'title'		=> esc_html__( 'Create activity for media likes', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'key'	=> 'buddypress_mediaLikeActivity',
-					'value'	=> $options['buddypress_mediaLikeActivity'],
-					'desc'	=> esc_html__( 'Enabling this setting will create BuddyPress activity for media likes.', 'buddypress-media' ),
+			'rtmedia-enable-like-activity'             => array(
+				'title'    => esc_html__( 'Create activity for media likes', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'key'   => 'buddypress_mediaLikeActivity',
+					'value' => $options['buddypress_mediaLikeActivity'],
+					'desc'  => esc_html__( 'Enabling this setting will create BuddyPress activity for media likes.', 'buddypress-media' ),
+					'id'    => 'rtmedia-enable-like-activity',
 
 				),
 				'group'    => 10,
 			),
-			'rtmedia-enable-comment-activity' => array(
-				'title'		=> esc_html__( 'Create activity for media comments', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'key'	=> 'buddypress_mediaCommentActivity',
-					'value'	=> $options['buddypress_mediaCommentActivity'],
-					'desc'	=> esc_html__( 'Enabling this setting will create BuddyPress activity for media comments.', 'buddypress-media' ),
+			'rtmedia-enable-comment-activity'          => array(
+				'title'    => esc_html__( 'Create activity for media comments', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'key'   => 'buddypress_mediaCommentActivity',
+					'value' => $options['buddypress_mediaCommentActivity'],
+					'desc'  => esc_html__( 'Enabling this setting will create BuddyPress activity for media comments.', 'buddypress-media' ),
+					'id'    => 'rtmedia-enable-comment-activity',
 
 				),
 				'group'    => 10,
 			),
-			'general_enableAlbums'            => array(
-				'title'		=> esc_html__( 'Organize media into albums', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'id'	=> 'rtmedia-album-enable',
-					'key'	=> 'general_enableAlbums',
-					'value'	=> $options['general_enableAlbums'],
-					'desc'	=> esc_html__( 'This will add \'album\' tab to BuddyPress profile and group depending on the ^above^ settings.', 'buddypress-media' ),
+			'general_enableAlbums'                     => array(
+				'title'    => esc_html__( 'Organize media into albums', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'id'    => 'rtmedia-album-enable',
+					'key'   => 'general_enableAlbums',
+					'value' => $options['general_enableAlbums'],
+					'desc'  => esc_html__( 'This will add \'album\' tab to BuddyPress profile and group depending on the ^above^ settings.', 'buddypress-media' ),
 				),
-				'group'	=> 50,
+				'group'    => 50,
 			),
-			'general_enableAlbums_description'            => array(
-				'title'		=> esc_html__( 'Show album description', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'id'	=> 'rtmedia-album-description-enable',
-					'key'	=> 'general_enableAlbums_description',
-					'value'	=> $options['general_enableAlbums_description'],
-					'desc'	=> esc_html__( 'This will show description of an album under album gallery page.', 'buddypress-media' ),
+			'general_enableAlbums_description'         => array(
+				'title'    => esc_html__( 'Show album description', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'id'    => 'rtmedia-album-description-enable',
+					'key'   => 'general_enableAlbums_description',
+					'value' => $options['general_enableAlbums_description'],
+					'desc'  => esc_html__( 'This will show description of an album under album gallery page.', 'buddypress-media' ),
 				),
-				'group'	=> 50,
-				'depends' => 'general_enableAlbums',
+				'group'    => 50,
+				'depends'  => 'general_enableAlbums',
 			),
 		);
 
@@ -1153,20 +1157,60 @@ class RTMediaFormHandler {
 	public static function buddypress_content() {
 		global $rtmedia;
 
-		$general_group		= array();
-		$general_group[10]	= 'Integration With BuddyPress Features';
-		$general_group[660]	= 'Comment Media';
-		$general_group[50]	= 'Album Settings';
-		$general_group		= apply_filters( 'rtmedia_buddypress_setting_group', $general_group );
+		$general_group      = array();
+		$general_group[10]  = 'Integration With BuddyPress Features';
+		$general_group[660] = 'Comment Media';
+		$general_group[50]  = 'Album Settings';
+		$general_group      = apply_filters( 'rtmedia_buddypress_setting_group', $general_group );
 
-		$render_options	= self::buddypress_render_options( $rtmedia->options );
-		$render_options	= apply_filters( 'rtmedia_album_control_setting', $render_options, $rtmedia->options );
+		$render_options = self::buddypress_render_options( $rtmedia->options );
+		// Change option description when 'Activity Streams' component is disabled.
+		if ( ! bp_is_active( 'activity' ) ) {
+			$render_options['rtmedia-enable-on-activity']['args']['desc']      =
+			$render_options['rtmedia-activity-feed-limit']['args']['desc']     =
+			$render_options['rtmedia-enable-like-activity']['args']['desc']    =
+			$render_options['rtmedia-enable-comment-activity']['args']['desc'] =
+				esc_html__( 'Please Enable BuddyPress Activity Streams to update option', 'buddypress-media' );
+		}
+
+		// Change option description when 'User Groups' component is disabled.
+		if ( ! bp_is_active( 'groups' ) ) {
+			$render_options['rtmedia-enable-on-group']['args']['desc'] =
+				esc_html__( 'Please Enable BuddyPress User Groups to update option', 'buddypress-media' );
+		}
+		$render_options = apply_filters( 'rtmedia_album_control_setting', $render_options, $rtmedia->options );
 
 		$render_options = apply_filters( 'rtmedia_buddypress_setting_options', $render_options );
 
 		self::render_tab_content( $render_options, $general_group, 10 );
 
 		do_action( 'rtmedia_buddypress_setting_content' );
+		/**
+		 * Disable inputs and change background color to differentiate disabled inputs,
+		 * if 'Activity Streams' component is disabled in BuddyPress Settings.
+		*/
+		if ( ! bp_is_active( 'activity' ) ) {
+			?>
+			<script>
+				jQuery( '#rtmedia-bp-enable-activity, #rtmedia-enable-comment-activity, #rtmedia-enable-like-activity' )
+					.prop( "disabled", true )
+					.next().css( 'background-color', '#808080' );
+				jQuery( '#rtmedia-activity-feed-limit' ).prop( "disabled", true );
+			</script>
+			<?php
+		}
+		/**
+		 * Disable inputs and change background color to differentiate disabled inputs,
+		 * if 'User Groups' component is disabled in BuddyPress Settings.
+		 */
+		if ( ! bp_is_active( 'groups' ) ) {
+			?>
+			<script>
+				jQuery( '#rtmedia-enable-on-group' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
+			</script>
+			<?php
+		}
+
 	}
 
 	/**
