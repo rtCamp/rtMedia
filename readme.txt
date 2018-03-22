@@ -141,11 +141,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * NEW
 
- * Added intuitive left-right swipe gesture guide while opening gallery for the  first time on mobile
+ * Added intuitive left-right swipe gesture guide while opening gallery for the first time on mobile
 
 * ENHANCEMENTS
 
- * Added filter to customize existing progress bar  [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-js-hooks/#rtmcustomprogressbarcontent)
+ * Added filter to customize existing progress bar [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-js-hooks/#rtmcustomprogressbarcontent)
  * Improved edit media process with single save button
 
 * FIXED
