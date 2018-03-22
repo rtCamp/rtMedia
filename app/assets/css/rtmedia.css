@@ -1409,8 +1409,10 @@ img.mfp-img {
 }
 
 .rtm-comment-list.rtm-comment-list {
+  height: 340px;
   list-style: none;
   margin: 0;
+  overflow: auto;
   padding: 0;
 }
 .rtm-comment-list li {
