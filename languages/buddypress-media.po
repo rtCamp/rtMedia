@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.4.5\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2018-03-21 10:38:49+00:00\n"
+"POT-Creation-Date: 2018-03-22 08:18:48+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -809,33 +809,33 @@ msgstr ""
 msgid "Enable Media on BuddyPress Groups"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1040
+#: app/admin/RTMediaFormHandler.php:1041
 msgid "Allow upload from activity stream"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1045
+#: app/admin/RTMediaFormHandler.php:1046
 msgid "Allow upload using status update box present on activity stream page"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1051
+#: app/admin/RTMediaFormHandler.php:1052
 msgid "Enable media in comment"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1056
+#: app/admin/RTMediaFormHandler.php:1057
 msgid ""
 "This will allow users to upload media in comment section for originally "
 "uploaded media up to 1 level."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1061 app/admin/RTMediaFormHandler.php:1066
+#: app/admin/RTMediaFormHandler.php:1062 app/admin/RTMediaFormHandler.php:1067
 msgid "Disable upload in comment media"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1072
+#: app/admin/RTMediaFormHandler.php:1073
 msgid "Number of media items to show in activity stream"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1077
+#: app/admin/RTMediaFormHandler.php:1078
 msgid ""
 "With bulk uploads activity, the stream may get flooded. You can control the "
 "maximum number of media items or files per activity. This limit will not "
@@ -843,48 +843,56 @@ msgid ""
 "unlimited."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1084
+#: app/admin/RTMediaFormHandler.php:1086
 msgid "Enable media notification"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1089
+#: app/admin/RTMediaFormHandler.php:1091
 msgid ""
 "This will enable notifications to media authors for media likes and "
 "comments."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1095
+#: app/admin/RTMediaFormHandler.php:1097
 msgid "Create activity for media likes"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1100
+#: app/admin/RTMediaFormHandler.php:1102
 msgid "Enabling this setting will create BuddyPress activity for media likes."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1106
+#: app/admin/RTMediaFormHandler.php:1109
 msgid "Create activity for media comments"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1111
+#: app/admin/RTMediaFormHandler.php:1114
 msgid "Enabling this setting will create BuddyPress activity for media comments."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1117
+#: app/admin/RTMediaFormHandler.php:1121
 msgid "Organize media into albums"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1123
+#: app/admin/RTMediaFormHandler.php:1127
 msgid ""
 "This will add 'album' tab to BuddyPress profile and group depending on the "
 "^above^ settings."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1128
+#: app/admin/RTMediaFormHandler.php:1132
 msgid "Show album description"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1134
+#: app/admin/RTMediaFormHandler.php:1138
 msgid "This will show description of an album under album gallery page."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1173
+msgid "Please Enable BuddyPress Activity Streams to update option"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:1179
+msgid "Please Enable BuddyPress User Groups to update option"
 msgstr ""
 
 #: app/admin/templates/tmpl-rtm-album-favourites-importer.php:4
@@ -1590,7 +1598,7 @@ msgid "Subject"
 msgstr ""
 
 #: app/helper/RTMediaSupport.php:527 templates/media/album-single-edit.php:20
-#: templates/media/media-single-edit.php:17
+#: templates/media/media-single-edit.php:19
 msgid "Details"
 msgstr ""
 
@@ -2188,7 +2196,7 @@ msgid "Please enter some content to post."
 msgstr ""
 
 #: app/main/RTMedia.php:1042
-msgid "Empty Comment is not allowed."
+msgid "Empty comment is not allowed."
 msgstr ""
 
 #: app/main/RTMedia.php:1043
@@ -2284,7 +2292,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: app/main/RTMedia.php:1064 templates/media/media-single-edit.php:8
+#: app/main/RTMedia.php:1064 templates/media/media-single-edit.php:10
 msgid "Edit Media"
 msgstr ""
 
@@ -3169,7 +3177,7 @@ msgid "Album List"
 msgstr ""
 
 #: templates/media/album-gallery.php:75
-#: templates/media/media-single-edit.php:63
+#: templates/media/media-single-edit.php:65
 #: templates/media/media-single.php:190
 msgid "Sorry !! There's no media found for the request !!"
 msgstr ""
@@ -3183,17 +3191,17 @@ msgid "Manage Media"
 msgstr ""
 
 #: templates/media/album-single-edit.php:39
-#: templates/media/media-single-edit.php:27
+#: templates/media/media-single-edit.php:29
 msgid "Title : "
 msgstr ""
 
 #: templates/media/album-single-edit.php:44
-#: templates/media/media-single-edit.php:33
+#: templates/media/media-single-edit.php:35
 msgid "Description: "
 msgstr ""
 
 #: templates/media/album-single-edit.php:57
-#: templates/media/media-single-edit.php:50
+#: templates/media/media-single-edit.php:52
 msgid "Back"
 msgstr ""
 
@@ -3233,11 +3241,11 @@ msgstr ""
 msgid "Media Gallery"
 msgstr ""
 
-#: templates/media/media-single-edit.php:48
+#: templates/media/media-single-edit.php:50
 msgid "Save"
 msgstr ""
 
-#: templates/media/media-single-edit.php:57
+#: templates/media/media-single-edit.php:59
 msgid "Sorry !! You do not have rights to edit this media"
 msgstr ""
 
