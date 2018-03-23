@@ -317,20 +317,26 @@ button#rtmedia-add-media-button-post-update .dashicons {
 }
 
 .plupload_file_status {
-  height: 18px;
+  height: 15px;
+  margin-bottom: 5px;
   overflow: hidden;
-  position: relative;
 }
 
 .plupload_file_progress {
   background: #7AD03A;
-  height: 4px;
-  position: absolute;
-  top: 0;
+  height: 100%;
+  font-size: 10px;
+  line-height: 15px;
+  text-align: center;
+  word-wrap: initial;
 }
 
 .rtm-form .rtm-field-wrap {
   margin-bottom: 20px;
+}
+
+#buddypress a.rtm-button-back {
+  padding: 3px 10px;
 }
 
 .rtmedia_next_prev {
@@ -550,6 +556,14 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
   background-color: black;
   color: white;
   padding: 0 5px;
+}
+
+input.imgedit-submit-btn {
+  display: none;
+}
+
+.rtmedia-no-media-found, .rtmedia-list-media {
+  min-height: 95px;
 }
 
 .rtm-tabs.rtm-tabs {
@@ -1395,8 +1409,10 @@ img.mfp-img {
 }
 
 .rtm-comment-list.rtm-comment-list {
+  height: 340px;
   list-style: none;
   margin: 0;
+  overflow: auto;
   padding: 0;
 }
 .rtm-comment-list li {
@@ -1454,6 +1470,11 @@ img.mfp-img {
 .rtmedia-comment-details {
   line-height: 1.5;
   margin-top: -3px;
+}
+
+.rt_media_comment_form textarea {
+  display: inline-block;
+  margin-bottom: 5px;
 }
 
 .rtmedia-item-comments textarea {
@@ -1536,6 +1557,39 @@ img.mfp-img {
 .rtmedia-gallery-message-box span {
   position: relative;
   left: -50%;
+}
+
+#mobile-swipe-overlay {
+  position: absolute;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 15;
+  cursor: pointer;
+}
+#mobile-swipe-overlay .swipe-icon {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  font-size: 50px;
+  color: #000;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  width: 200px;
+}
+#mobile-swipe-overlay .swipe-tootlip {
+  font-weight: 800;
+  position: absolute;
+  padding: 20px;
+  top: 45%;
+  width: 100%;
+  text-align: center;
 }
 
 .rtmedia-activity-container {
@@ -2730,7 +2784,7 @@ a.rtmedia-upload-media-link {
 }
 
 #buddypress #item-body {
-  padding: 0 0 20px 20px;
+  padding: 0 20px;
 }
 #buddypress .mejs-controls button {
   padding: 4px 8px;

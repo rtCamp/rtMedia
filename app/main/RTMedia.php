@@ -1039,7 +1039,7 @@ class RTMedia {
 		//javascript messages
 		wp_localize_script( 'rtmedia-magnific', 'rtmedia_load_more', esc_html__( 'Loading media', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_activity_msg', esc_html__( 'Please enter some content to post.', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_comment_msg', esc_html__( 'Empty Comment is not allowed.', 'buddypress-media' ) );
+		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_comment_msg', esc_html__( 'Empty comment is not allowed.', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_delete_confirmation', apply_filters( 'rtmedia_delete_prompt_message', esc_html__( 'Are you sure you want to delete this media?', 'buddypress-media' ) ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_comment_delete_confirmation', esc_html__( 'Are you sure you want to delete this comment?', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_album_delete_confirmation', esc_html__( 'Are you sure you want to delete this Album?', 'buddypress-media' ) );
@@ -1136,6 +1136,8 @@ class RTMedia {
 		}
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_upload_progress_error_message', esc_html__( 'There are some uploads in progress. Do you want to cancel them?', 'buddypress-media' ) );
+		// Added to display error message when all media types upload are disabled.
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_disabled_error_message', esc_html__( 'Media upload is disabled. Please Enable at least one media type to proceed.', 'buddypress-media' ) );
 
 		// localise media size config
 		$media_size_config = array(
@@ -1384,7 +1386,7 @@ function get_rtmedia_permalink( $id ) {
 	// Adding filter to get permalink for current blog
 	add_filter( 'bp_get_root_domain', 'rtmedia_get_current_blog_url' );
 
-	if ( is_object( $media[0] ) && ! isset( $media[0]->context ) ) {
+	if ( ! empty( $media ) && is_object( $media[0] ) && ! isset( $media[0]->context ) ) {
 		if ( function_exists( 'bp_get_groups_root_slug' ) && isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
 			$parent_link = get_rtmedia_group_link( $rtmedia_query->query['context_id'] );
 		} else {
@@ -1395,13 +1397,13 @@ function get_rtmedia_permalink( $id ) {
 			}
 		}
 	} else {
-		if ( function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
+		if ( isset( $media[0]->context )  &&  function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
 			$parent_link = get_rtmedia_group_link( $media[0]->context_id );
 		} else {
 			// check for global album
 			$parent_link = parentlink_global_album( $id );
-			if ( '' === $parent_link ) {
-				$parent_link = get_rtmedia_user_link( $media[0]->media_author );
+			if ( '' === $parent_link && isset( $media[0]->media_author ) ) {
+                            $parent_link = get_rtmedia_user_link( $media[0]->media_author );
 			}
 		}
 	}

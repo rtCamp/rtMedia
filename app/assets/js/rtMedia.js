@@ -133,6 +133,11 @@ function apply_rtMagnificPopup( selector ) {
 
 						apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
 					},
+                                        open: function() {
+                                            var lightBoxBackgrundHeight = jQuery( '.mfp-bg' );
+                                            var lightBox = jQuery( '.mfp-wrap' );
+                                            lightBoxBackgrundHeight.height( lightBoxBackgrundHeight.height() + lightBox.height() )
+                                        },
 					close: function( e ) {
 						//Console.log(e);
 						rtmedia_single_page_popup_close();
@@ -547,6 +552,35 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	function rtmedia_init_popup_navigation() {
 		var rtm_mfp = jQuery.magnificPopup.instance;
+		
+		var probablyMobile = rtm_mfp.probablyMobile;
+		var tooltipShown   = getCookie( 'rtmedia-touch-swipe-tooltip' );
+
+		// Check if its mobile and tooltip is first time dispaly.
+		if ( probablyMobile && "" === tooltipShown ) {
+
+		    // Show tooltip.
+		    jQuery( '#mobile-swipe-overlay' ).show();
+		    
+		    // On touch hide tooltip.
+		    jQuery( '#mobile-swipe-overlay' ).on ( 'click', function( e ) {
+			setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
+			jQuery( this ).hide();
+		    } );
+		    
+		    // On swipe hide tooltip.
+		    jQuery( '#mobile-swipe-overlay' ).swipe( {
+			 //Generic swipe handler for all directions
+			swipe:function( event, direction, distance, duration, fingerCount, fingerData ) {
+
+			  setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
+			  jQuery( '#mobile-swipe-overlay' ).hide();
+
+			},
+			threshold:0
+		    } );
+		}
+		
 		jQuery( '.mfp-arrow-right' ).on( 'click', function( e ) {
 			rtm_mfp.next();
 		} );
@@ -568,6 +602,46 @@ jQuery( 'document' ).ready( function( $ ) {
 		} );
 	}
 
+	/**
+	 * Sets Cookie.
+	 * 
+	 * @param {string} cname
+	 * @param {string} cvalue
+	 * @param {int} exdays
+	 * @return void
+	 */
+	function setCookie( cname, cvalue, exdays ) {
+
+	    var d = new Date();
+	    d.setTime( d.getTime() + ( exdays * 24 * 60 * 60 * 1000 ) );
+	    var expires = "expires=" + d.toUTCString();
+	    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+
+	}
+
+	/**
+	 * Get Cookie.
+	 * 
+	 * @param {string} cname
+	 * @return {string}
+	 */
+	function getCookie( cname ) {
+
+	    var name = cname + "=";
+	    var ca = document.cookie.split( ';' );
+	    for( var i = 0; i < ca.length; i++ ) {
+		var c = ca[i];
+		while ( ' ' == c.charAt( 0 ) ) {
+		    c = c.substring( 1 );
+		}
+		if ( 0 == c.indexOf( name ) ) {
+		    return c.substring( name.length, c.length );
+		}
+	    }
+
+	    return "";
+
+	}
 
 	function rtmedia_disable_popup_navigation_all(){
 		// hide the left and right key
@@ -989,18 +1063,51 @@ function rtmedia_single_media_alert_message( msg, action ) {
 		action_class = 'rtmedia-warning';
 	}
 
-	jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '0.2' );
-	jQuery( '.rtmedia-single-media .rtmedia-media' ).after( '<div class=\'rtmedia-message-container\'><span class=\'' + action_class + '\'>' + msg + ' </span></div>' );
+	/**
+	 * Fixed issue 152 (Media single page comment)
+	 */
+	var comment_form = jQuery( '#rt_media_comment_form' );
+	var msg_container = jQuery( '.rtmedia-message-container' );
+
+	var $div = jQuery("<div>",{
+		"title" : "Click to dismiss",
+		"class" : "rtmedia-message-container",
+		"style" : "margin:1em 0;",
+	});
+	var $span = jQuery("<span>",{
+		"class":action_class,
+	});
+	$span.html(msg);
+
+	if( comment_form.next().attr('class') === 'rtmedia-message-container' ){
+		msg_container.remove();
+		$span.css({border:'2px solid #884646'});
+
+		setTimeout(function(){
+			$span.css({border:'none'});
+		},500);
+	}
+
+	$span.appendTo($div);
+	comment_form.after($div);
+	msg_container = $div;
+
+	var comment_content = $('#comment_content');
+	if( comment_content ){
+		comment_content.focus();
+	}
 
 	setTimeout( function() {
-		jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
-		jQuery( '.rtmedia-message-container' ).remove();
+		msg_container.remove();
 	}, 3000 );
 
-	jQuery( '.rtmedia-message-container' ).click( function() {
-		jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
-		jQuery( '.rtmedia-message-container' ).remove();
+	msg_container.click( function() {
+		msg_container.remove();
 	} );
+	/**
+	 * End of issue 152
+	 */
+
 }
 
 function rtmedia_gallery_action_alert_message( msg, action ) {
