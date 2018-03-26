@@ -1462,7 +1462,7 @@ jQuery( document ).ready( function( $ ) {
 
 		if( show_error ){
 
-			rtmedia_single_media_alert_message( rtmedia_empty_comment_msg, 'warning' );
+			rtmedia_single_media_alert_message( rtmedia_empty_comment_msg, 'warning', true );
 
 			if ( widget_id ) {
 				rtmedia_comment_media_input_button( widget_id, false );
