@@ -90,7 +90,7 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 		$thumb_url = wp_get_attachment_image_src( $media_id, 'thumbnail', true );
 
 		echo '<div id="imgedit-response-' . esc_attr( $media_id ) . '"></div>';
-		echo '<div class="wp_attachment_image" id="media-head-' . esc_attr( $media_id ) . '">' . '<p id="thumbnail-head-' . esc_attr( $id ) . '"><img class="thumbnail" src="' . esc_url( set_url_scheme( $thumb_url[0] ) ) . '" alt="" /></p>' . $modify_button . '</div>'; // @codingStandardsIgnoreLine
+		echo '<div class="wp_attachment_image" id="media-head-' . esc_attr( $media_id ) . '">' . '<p id="thumbnail-head-' . esc_attr( $media_id ) . '"><img class="thumbnail" src="' . esc_url( set_url_scheme( $thumb_url[0] ) ) . '" alt="' . esc_attr( rtmedia_title() ) . '" /></p>' . $modify_button . '</div>'; // @codingStandardsIgnoreLine
 		echo '</div>';
 		echo '</div>';
 	}
@@ -772,7 +772,7 @@ function rt_check_addon_status() {
 					$dont_check_verification = get_transient( 'check_rtmedia_license_verifiction_' . $addon_id );
 				}
 
-				if ( $now > $expiration || ( false === $dont_check_verification ) ) {
+				if ( $now > $expiration && ( false === $dont_check_verification ) ) {
 
 					// Get license key  information from the store
 					$license_data = rtmedia_activate_addon_license( $addon );
@@ -1076,6 +1076,22 @@ function rtmedia_after_media_callback() {
 }
 add_action( 'rtmedia_after_media', 'rtmedia_after_media_callback', 10 );
 
+/**
+ * Adds swipe tooltip on mobile
+ */
+function rtmedia_after_media_swipe_tooltip() {
+	if ( wp_is_mobile() ) {
+	?>
+			<div id="mobile-swipe-overlay">
+				<div class="swipe-icon">
+					<img src="<?php echo esc_url( RTMEDIA_URL . '/app/assets/img/swipe-tooltip.png' ); ?>" />
+				</div>
+				<p class="swipe-tootlip"><?php esc_html_e( 'Please swipe for more media.', 'buddypress-media' ); ?></p>
+			</div>
+	<?php
+	}
+}
+add_action( 'rtmedia_after_media', 'rtmedia_after_media_swipe_tooltip', 10 );
 
 if ( ! function_exists( 'rtmedia_gallery_after_title_callback' ) ) {
 	function rtmedia_gallery_after_title_callback() {
