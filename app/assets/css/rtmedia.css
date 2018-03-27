@@ -1584,7 +1584,6 @@ img.mfp-img {
   width: 200px;
 }
 #mobile-swipe-overlay .swipe-icon img {
-  /** To fix git lab issue 208 */
   width: 100%;
 }
 #mobile-swipe-overlay .swipe-tootlip {

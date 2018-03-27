@@ -115,6 +115,7 @@ function apply_rtMagnificPopup( selector ) {
 										mediaElement.paused ? mediaElement.play() : mediaElement.pause();
 									});
 								} else {
+									// Changed to .pause() in PR 1082 to stop autoplay.
 									mediaElement.pause();
 								}
 							}
@@ -574,13 +575,14 @@ jQuery( 'document' ).ready( function( $ ) {
 				//Generic swipe handler for all directions
 				swipe:function( event, direction, distance, duration, fingerCount, fingerData ) {
 
-				  setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
-				  jQuery( '#mobile-swipe-overlay' ).hide();
-				  jQuery( '#rtmedia-single-media-container .mejs-playpause-button' ).trigger( 'click' );
+					setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
+					jQuery( '#mobile-swipe-overlay' ).hide();
+					jQuery( '#rtmedia-single-media-container .mejs-playpause-button' ).trigger( 'click' );
 				},
 				threshold:0
 		    } );
 		} else {
+			// play video or audio if user visited previously.
 			jQuery( '#rtmedia-single-media-container .mejs-playpause-button' ).trigger( 'click' );
 		}
 
