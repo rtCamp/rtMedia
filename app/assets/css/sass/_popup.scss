@@ -580,6 +580,11 @@
 	transform: translate(-50%,-50%);
 	-ms-transform: translate(-50%,-50%);
 	width: 200px;
+
+		img {
+			/** To fix git lab issue 208 */
+			width: 100%;
+		}
     }
     .swipe-tootlip{
 	font-weight: 800;
