@@ -358,7 +358,7 @@ function rtmedia_media_id( $id = false ) {
 		), 0, 1 );
 
 		// update code to fix GL-21-rtmoderation.
-		if ( isset( $media[0] ) && ! empty( $media[0] ) ) {
+		if ( ! empty( $media ) && ! empty( $media[0] ) ) {
 			return $media[0]->media_id;
 		}
 	} else {
