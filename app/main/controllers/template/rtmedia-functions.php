@@ -2489,8 +2489,8 @@ function rtmedia_load_template() {
 	do_action( 'rtmedia_before_template_load' );
 
 	$template_name = RTMediaTemplate::locate_template();
-	if ( isset( $template_name ) && ! empty( $template_name ) && file_exists( $template_name ) ) {
-		include $template_name;
+	if ( ! empty( $template_name ) && file_exists( $template_name ) ) {
+		include_once $template_name;
 	}
 
 	do_action( 'rtmedia_after_template_load' );

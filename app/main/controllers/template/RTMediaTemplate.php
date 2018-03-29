@@ -783,7 +783,7 @@ class RTMediaTemplate {
 	function check_delete_comments() {
 		global $rtmedia_query;
 
-		if ( isset( $rtmedia_query->action_query->action ) && 'delete-comment' !== $rtmedia_query->action_query->action ) {
+		if ( ! empty( $rtmedia_query->action_query->action ) && 'delete-comment' !== $rtmedia_query->action_query->action ) {
 			return;
 		}
 
