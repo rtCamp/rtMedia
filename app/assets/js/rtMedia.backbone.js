@@ -6,7 +6,7 @@ var uploaderObj;
 var objUploadView;
 var rtmedia_load_template_flag = true;
 var rtmedia_add_media_button_post_update = false;
-
+var msg_media_files = [];
 
 jQuery( document ).ready( function () {
 

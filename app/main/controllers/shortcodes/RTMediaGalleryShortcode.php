@@ -99,6 +99,16 @@ class RTMediaGalleryShortcode {
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
 
+		/*
+        * @param array $url_array
+        * @param mixed $url
+        * Redirects to 'upload.php' when we are composing message and uplaod media with BP message
+        */
+		if (strpos($url, '/messages') !== false) {
+			$url_array = explode('/messages', $url);
+			$url = trailingslashit($url_array[0]).'upload/';
+		}
+
 		$upload_max_size = ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M';
 		$params          = array(
 			'url'                 => $url,
