@@ -853,3 +853,5 @@ if ( ! function_exists( 'rtmedia_gallery_shortcode_parameter_pre_filter_callback
 }
 add_filter( 'rtmedia_gallery_shortcode_parameter_pre_filter', 'rtmedia_gallery_shortcode_parameter_pre_filter_callback', 10, 1 );
 
+// Modify the number format. number_to_human_readable() defined is in rtmedai-functions.php
+add_filter( 'bp_core_number_format', 'number_to_human_readable', 10, 3 );

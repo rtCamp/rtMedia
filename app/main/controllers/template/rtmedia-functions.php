@@ -4154,3 +4154,23 @@ function is_rtmedia_upload_other_enabled() {
 
 	return false;
 }
+
+/**
+ * Format a number to human readable format.
+ *
+ * @param Integer $n Number to be formatted.
+ * @return String Return format a number to human readable format.
+ */
+function number_to_human_readable( $n ) {
+	if ( $n >= 1000000000000 ) {
+		return round( ( $n / 1000000000000 ), 1 ) . 'T';
+	} elseif ( $n >= 1000000000 ) {
+		return round( ( $n / 1000000000 ), 1 ) . 'B';
+	} elseif ( $n >= 1000000 ) {
+		return round( ( $n / 1000000 ), 1 ) . 'M';
+	} elseif ( $n >= 1000 ) {
+		return round( ( $n / 1000 ), 1 ) . 'K';
+	} else {
+		return $n;
+	}
+}
