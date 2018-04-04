@@ -3252,24 +3252,3 @@ a.rtmedia-upload-media-link {
 .rtl .alignright {
   float: left;
 }
-
-.rtm-media-message {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-}
-.rtm-media-message img {
-  width: -webkit-calc( 92% / 4 );
-  width: calc( 92% / 4 );
-  height: 100px;
-  margin: 5px;
-}
-@media screen and (max-width: 550px) {
-  .rtm-media-message img {
-    width: -webkit-calc( 92% / 2 );
-    width: calc( 92% / 2 );
-    margin: 5px;
-  }
-}

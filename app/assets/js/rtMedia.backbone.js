@@ -600,6 +600,17 @@ jQuery( function( $ ) {
 			initialize: function( config ) {
 				this.uploader = new plupload.Uploader( config );
 				/*
+				/**
+				* var current_url will fetch present working area's address and we will find if it contains message in url though find valirable.
+				* If message is there in URL then we need to mention that it is message.
+				* we have appended message:true in config.
+				*/
+				var current_url = document.URL, find= 'message';
+				if( -1 !== current_url.indexOf( find ) ){
+					config.message=true;
+				}
+
+				/**
 				* 'ext_enabled' will get value of enabled media types if nothing is enabled,
 				* then an error message will be displayed.
 				*/
@@ -976,14 +987,14 @@ jQuery( function( $ ) {
 			} );
 
 			uploaderObj.uploader.bind( 'FileUploaded', function( up, file, res ) {
-                var uploaded_response_data = JSON.parse(res.response);
-				if(uploaded_response_data.length<=0){
-					jQuery( '.rtm-media-msg-upload-button' ).html("");
-					jQuery( '.rtm-media-msg-upload-button' ).removeAttr( "id" );
-					jQuery( '.rtm-media-msg-upload-button' ).html("<p style='background: #db001e; padding: 20px; color:white;'>Media attachement failed! Please try again!</p>");
-				}else{
-					msg_media_files.push(uploaded_response_data['media_id']);
-				}
+                var uploaded_response_data = JSON.parse( res.response );
+                if( uploaded_response_data.length<=0 ){
+                    jQuery( '.rtm-media-msg-upload-button' ).html( '' );
+                    jQuery( '.rtm-media-msg-upload-button' ).removeAttr( 'id' );
+                    jQuery( '.rtm-media-msg-upload-button' ).html( jQuery( '<p>', { id: 'rtm_bpm_success' }, { style: 'background: #db001e; padding: 20px;' }, { text: 'Media attachement failed! Please try again!' } ) );
+                }else{
+                    msg_media_files.push( uploaded_response_data['media_id'] );
+                }
 
 				store_array_in_hidden_field();
 				if ( /MSIE (\d+\.\d+);/.test( navigator.userAgent ) ) { //Test for MSIE x.x;
