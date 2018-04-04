@@ -185,6 +185,14 @@ body.media.buddypress {
   padding: 0;
 }
 
+#rtmedia_uploader_filelist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
 .rtmedia-list-item > a {
   border: 0;
   display: inline-block;

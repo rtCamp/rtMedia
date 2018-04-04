@@ -6,7 +6,7 @@ var uploaderObj;
 var objUploadView;
 var rtmedia_load_template_flag = true;
 var rtmedia_add_media_button_post_update = false;
-var msg_media_files = [];
+var msg_media_files = []; // To store media id in BP Message.
 
 jQuery( document ).ready( function () {
 
@@ -669,6 +669,12 @@ jQuery( function( $ ) {
 
 			uploaderObj.uploader.bind( 'UploadComplete', function( up, files ) {
 
+				// Success message for BudyyPress Media Message
+				if ( jQuery( '.rtm-media-msg-upload-button' ).length == 1 ) {
+					jQuery( '.rtm-media-msg-upload-button' ).html( "" );
+					jQuery( '.rtm-media-msg-upload-button' ).removeAttr( "id" );
+					jQuery( '.rtm-media-msg-upload-button' ).html( "<p id='rtm_bpm_success' style='background: #98ef98; padding: 20px;'>Media has been attached with this message!</p>" );
+				}
 				activity_id = -1;
 				var hook_respo = rtMediaHook.call( 'rtmedia_js_after_files_uploaded' );
 				if ( typeof rtmedia_gallery_reload_on_upload != 'undefined' && rtmedia_gallery_reload_on_upload == '1' ) { //Reload gallery view when upload completes if enabled( by default enabled)
@@ -928,6 +934,11 @@ jQuery( function( $ ) {
 				};
 			} );
 
+			// This function will store hidden values of Media ID in Array
+        	function store_array_in_hidden_field(){
+				jQuery("#rtm_bpm_uploaded_media").attr("value", msg_media_files.toString());
+			}
+
 			uploaderObj.uploader.bind( 'BeforeUpload', function( up, file ) {
 				// We send terms conditions data on backend to validate this on server side.
 				rtMediaHook.call( 'rtmedia_js_before_upload', { uploader: up, file: file, src: 'uploader' } );
@@ -965,6 +976,16 @@ jQuery( function( $ ) {
 			} );
 
 			uploaderObj.uploader.bind( 'FileUploaded', function( up, file, res ) {
+                var uploaded_response_data = JSON.parse(res.response);
+				if(uploaded_response_data.length<=0){
+					jQuery( '.rtm-media-msg-upload-button' ).html("");
+					jQuery( '.rtm-media-msg-upload-button' ).removeAttr( "id" );
+					jQuery( '.rtm-media-msg-upload-button' ).html("<p style='background: #db001e; padding: 20px; color:white;'>Media attachement failed! Please try again!</p>");
+				}else{
+					msg_media_files.push(uploaded_response_data['media_id']);
+				}
+
+				store_array_in_hidden_field();
 				if ( /MSIE (\d+\.\d+);/.test( navigator.userAgent ) ) { //Test for MSIE x.x;
 					var ieversion = new Number( RegExp.$1 ); // Capture x.x portion and store as a number
 
