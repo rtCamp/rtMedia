@@ -103,7 +103,11 @@ function rtmedia_autoloader( $class_name ) {
 	}
 }
 
+/**
+ * Allow media in BuddyPress message
+ */
 require_once RTMEDIA_PATH . '/templates/media/media-with-message.php';
+
 /**
  * Register the autoloader function into spl_autoload
  */
