@@ -99,7 +99,9 @@ function rtm_add_message_media_params( $message ) {
 			$insert_media_object->insert(
 				[
 					'media_id'   => $media_id,
+					// Adding meta data into custom meta table
 					'meta_key'   => 'rtm-bp-message-media', // phpcs:ignore
+					// Adding meta data into custom meta table
 					'meta_value' => $message->id, // phpcs:ignore
 				]
 			);
