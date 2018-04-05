@@ -193,6 +193,11 @@ body.media.buddypress {
       flex-wrap: wrap;
 }
 
+.rtmedia_bp_msg_media_upload_render {
+  display: inline;
+  float: left;
+}
+
 .rtmedia-list-item > a {
   border: 0;
   display: inline-block;

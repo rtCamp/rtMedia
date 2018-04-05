@@ -28,16 +28,16 @@ function rtm_bp_message_media_add_upload_media_button() {
 				offset = jQuery('#message-recipients').offset();
 				var button = jQuery("input#send_reply_button");
 				jQuery(button).addClass('loading');
-				jQuery.post( ajaxurl, {
-					action: 'messages_send_reply',
-					'cookie': bp_get_cookies(),
-					'_wpnonce': jQuery("input#send_message_nonce").val(),
-					'content': jQuery("#message_content").val(),
-					'send_to': jQuery("input#send_to").val(),
-					'subject': jQuery("input#subject").val(),
-					'thread_id': jQuery("input#thread_id").val(),
-					'rtm_bpm_uploaded_media': jQuery("input#rtm_bpm_uploaded_media").val()
-				},
+                jQuery.post( ajaxurl, {
+                        action                  : 'messages_send_reply',
+                        'cookie'                : bp_get_cookies(),
+                        '_wpnonce'              : jQuery( 'input#send_message_nonce' ).val(),
+                        'content'               : jQuery( '#message_content' ).val(),
+                        'send_to'				: jQuery( 'input#send_to' ).val(),
+                        'subject'				: jQuery( 'input#subject' ).val(),
+                        'thread_id'				: jQuery( 'input#thread_id' ).val(),
+                        'rtm_bpm_uploaded_media': jQuery( 'input#rtm_bpm_uploaded_media' ).val()
+                    },
 				function(response)
 				{
 					if ( response[0] + response[1] == "-1" ) {
@@ -60,7 +60,7 @@ function rtm_bp_message_media_add_upload_media_button() {
 				});
 				return false;
 			};
-			$( "input#send_reply_button" ).unbind( "click").bind("click", handler);
+			$( 'input#send_reply_button' ).unbind( 'click' ).bind( 'click', handler );
 		});
 
 	</script>
@@ -102,10 +102,14 @@ function rtm_add_message_media_params( $message ) {
 	}
 	?>
 	<script>
-		jQuery("#msg-success-bp-msg-media").hide();
-		jQuery(".rtm-media-msg-upload-button").attr("id", "rtm_show_upload_ui");
-		jQuery(".rtm-media-msg-upload-button").html("");
-		jQuery(".rtm-media-msg-upload-button").html("<i class='dashicons dashicons-upload rtmicon'></i>Upload Media File");
+		jQuery( '#msg-success-bp-msg-media' ).hide();
+		jQuery( '.rtm-media-msg-upload-button' ).attr( 'id', 'rtm_show_upload_ui' );
+		jQuery( '.rtm-media-msg-upload-button' ).html( '' );
+		jQuery( '.rtm-media-msg-upload-button' ).html(
+			jQuery( '<i>',
+				{ class: 'dashicons dashicons-upload rtmicon' }
+			) );
+		jQuery( '#rtm_show_upload_ui' ).append( 'Upload Media File' );
 	</script>
 	<?php
 }

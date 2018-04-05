@@ -103,7 +103,7 @@ function rtmedia_autoloader( $class_name ) {
 	}
 }
 
-require_once RTMEDIA_PATH.'/templates/media/media-with-message.php';
+require_once RTMEDIA_PATH . '/templates/media/media-with-message.php';
 /**
  * Register the autoloader function into spl_autoload
  */
@@ -112,8 +112,6 @@ try {
 } catch ( Exception $e ) {
 	echo esc_html( $e->getMessage() );
 }
-
-include RTMEDIA_PATH . "templates/media/media-with-message.php";
 
 /**
  * Instantiate the BuddyPressMedia class.
