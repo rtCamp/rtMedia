@@ -20,41 +20,41 @@ function rtm_bp_message_media_add_upload_media_button() {
 				} else {
 					$("#rtm_show_upload_ui").slideDown();
 				}
-			});
-		});
-		jQuery(document).ready(function(){
-			handler = function(){
-				var order = jQuery('#messages_order').val() || 'ASC',
-				offset = jQuery('#message-recipients').offset();
-				var button = jQuery("input#send_reply_button");
-				jQuery(button).addClass('loading');
+			} );
+		} );
+        jQuery( document ).ready( function() {
+            handler = function() {
+                var order = jQuery( '#messages_order' ).val() || 'ASC',
+                    offset = jQuery( '#message-recipients' ).offset();
+                var button = jQuery( 'input#send_reply_button' );
+                jQuery(button).addClass( 'loading' );
                 jQuery.post( ajaxurl, {
                         action                  : 'messages_send_reply',
                         'cookie'                : bp_get_cookies(),
                         '_wpnonce'              : jQuery( 'input#send_message_nonce' ).val(),
                         'content'               : jQuery( '#message_content' ).val(),
-                        'send_to'				: jQuery( 'input#send_to' ).val(),
-                        'subject'				: jQuery( 'input#subject' ).val(),
-                        'thread_id'				: jQuery( 'input#thread_id' ).val(),
+                        'send_to'               : jQuery( 'input#send_to' ).val(),
+                        'subject'               : jQuery( 'input#subject' ).val(),
+                        'thread_id'             : jQuery( 'input#thread_id' ).val(),
                         'rtm_bpm_uploaded_media': jQuery( 'input#rtm_bpm_uploaded_media' ).val()
                     },
-				function(response)
-				{
-					if ( response[0] + response[1] == "-1" ) {
-						jQuery('form#send-reply').prepend( response.substr( 2, response.length ) );
-					} else {
-						jQuery('form#send-reply div#message').remove();
-						jQuery("#message_content").val('');
-						jQuery("#rtm_bpm_uploaded_media").removeAttr('value');
-						if ( 'ASC' == order ) {
-							jQuery('form#send-reply').before( response );
-						} else {
-							jQuery('#message-recipients').after( response );
-							jQuery(window).scrollTop(offset.top);
-						}
-					jQuery(".new-message").hide().slideDown( 200, function() {
-						jQuery('.new-message').removeClass('new-message');
-					});
+                    function( response )
+                    {
+                        if ( response[0] + response[1] == "-1" ) {
+                            jQuery('form#send-reply').prepend( response.substr( 2, response.length ) );
+                        } else {
+                            jQuery('form#send-reply div#message').remove();
+                            jQuery("#message_content").val('');
+                            jQuery("#rtm_bpm_uploaded_media").removeAttr('value');
+                            if ( 'ASC' == order ) {
+                                jQuery('form#send-reply').before( response );
+                            } else {
+                                jQuery('#message-recipients').after( response );
+                                jQuery(window).scrollTop(offset.top);
+                            }
+                        jQuery( ".new-message" ).hide().slideDown( 200, function() {
+                            jQuery( '.new-message' ).removeClass('new-message');
+                        } );
 					}
 					jQuery(button).removeClass('loading');
 				});
@@ -64,7 +64,12 @@ function rtm_bp_message_media_add_upload_media_button() {
 		});
 
 	</script>
-	<span class="primary rtm-media-msg-upload-button rtmedia-upload-media-link" id="rtm_show_upload_ui" title="Upload Media"><i class="dashicons dashicons-upload rtmicon"></i>Upload Media File</span>
+
+	<span class="primary rtm-media-msg-upload-button rtmedia-upload-media-link"
+		id="rtm_show_upload_ui" title="Upload Media">
+		<i class="dashicons dashicons-upload rtmicon"></i>
+			<?php echo esc_html__( 'Upload Media File', 'buddypress-media' ); ?>
+	</span>
 	<div id="rtm-media-gallery-uploader" class="rtm-media-gallery-uploader">
 		<?php
 		rtmedia_uploader(
