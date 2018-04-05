@@ -4174,3 +4174,4 @@ function number_to_human_readable( $n ) {
 		return $n;
 	}
 }
+
