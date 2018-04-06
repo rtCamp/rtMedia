@@ -112,7 +112,7 @@ function rtm_add_message_media_params( $message ) {
 		jQuery( '#msg-success-bp-msg-media' ).hide();
 		jQuery( '.rtm-media-msg-upload-button' ).attr( 'id', 'rtm_show_upload_ui' );
 		jQuery( '.rtm-media-msg-upload-button' ).html( '' );
-		jQuery( '.rtm-media-msg-upload-button' ).html(
+		jQuery( '.rtm-media-msg-upload-button' ).append(
 			jQuery( '<i>',
 				{ class: 'dashicons dashicons-upload rtmicon' }
 			) );
@@ -134,6 +134,16 @@ function show_rtm_bp_msg_media() {
 	$get_data_object = new RTDBModel( 'rtm_media_meta' );
 	$media_result    = $get_data_object->get( [ 'meta_value' => bp_get_the_thread_message_id() ] );  // phpcs:ignore
 	$url             = explode( 'messages/', sanitize_text_field( wp_unslash( filter_input( INPUT_SERVER, 'REQUEST_URI' ) ) ) );
+	$get_data_object = new RTDBModel( 'rtm_media_meta' );
+	$media_result    = $get_data_object->get( [ 'meta_value' => bp_get_the_thread_message_id() ] );  // phpcs:ignore
+	$url             = explode( 'messages/', sanitize_text_field( wp_unslash( filter_input( INPUT_SERVER, 'REQUEST_URI' ) ) ) );
+
+	// Add filter to add no-popup rtmedia-list-item-a in a tag.
+	$rtm_gallary_list_filter = apply_filters( 'rtmedia_gallery_list_item_a_class', 'rtmedia-list-item-a' );
+
+	// Add filter to change alter text of media.
+	$rtm_change_alt_text_filter = apply_filters( 'rtmc_change_alt_text', $alt_text, $rtmedia_media );
+
 	if ( '0' !== $media_result[0]->media_id ) {
 	?>
 	<ul class="rtmedia-list-media rtm-gallery-list clearfix" style = "margin-top: 10px;">
