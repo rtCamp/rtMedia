@@ -1001,9 +1001,9 @@ jQuery( function( $ ) {
                         { 'background: #db001e':'#db001e', 'padding':'20px' }
                     );
                     jQuery( '#rtm_bpm_success' ).append(
-                        'Media attachement failed! Please try again!'
+                        rtmedia_backbone_strings.rtm_bp_msg_media_failure
                     );
-                }else{
+                } else {
                     msg_media_files.push( uploaded_response_data['media_id'] );
                     jQuery( '#rtm_bpm_uploaded_media' ).val(
                         jQuery( '#rtm_bpm_uploaded_media' ).val() ?
