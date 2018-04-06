@@ -49,6 +49,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_action( 'wp_ajax_rtmedia_correct_upload_filetypes', array( $this, 'correct_upload_filetypes' ), 1 );
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_meta_premium_addon_link' ), 1, 2 );
 			add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widgets' ), 0 );
+			add_action( 'wp_ajax_rtmedia_export_settings', array( $this, 'export_settings' ), 1 );
 			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array(
 				$this,
 				'rtmedia_hide_addon_update_notice',
@@ -1453,6 +1454,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				'name'     => esc_html__( 'Other Settings', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'general_content' ),
 			);
+			// adds export/import tab in rtMedia Settings.
+			$tabs[] = array(
+				'href'     => '#rtmedia-export-import',
+				'icon'     => 'dashicons-image-flip-vertical',
+				'title'    => esc_html__( 'Export/Import', 'buddypress-media' ),
+				'name'     => esc_html__( 'Export/Import', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'rtm_export_import' ),
+			);
 
 			return $tabs;
 		}
@@ -1531,6 +1540,83 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			} else {
 				return rtmedia_update_site_option( 'rtmedia-add-linkback', false );
 			}
+		}
+
+		/**
+		 * Export rtMedia Settings
+		 *
+		 * @access public
+		 */
+		public function export_settings() {
+
+			$rtmedia_option            = get_option( 'rtmedia-options' );
+			$rtmedia_option['rtm_key'] = md5( 'rtmedia-options' );
+
+			if ( ! empty( $rtmedia_option ) ) {
+
+				wp_send_json( $rtmedia_option );
+			}
+		}
+
+		/**
+		 * Import rtMedia Settings
+		 *
+		 * @access public
+		 *
+		 * @param string $file_path path to json file to be imported.
+		 */
+		public function import_settings( $file_path = '' ) {
+
+			if ( '' !== $file_path ) {
+
+				ob_start();
+				include $file_path;
+				$settings_data_json = ob_get_clean();
+
+				if ( file_exists( $file_path ) ) {
+					unlink( $file_path ); // @codingStandardsIgnoreLine
+				}
+
+				if ( false !== $settings_data_json ) {
+					$settings_data = json_decode( $settings_data_json, true );
+					$response      = array();
+					if ( ! empty( $settings_data['rtm_key'] ) ) {
+
+						$rtm_key = md5( 'rtmedia-options' );
+
+						if ( $rtm_key === $settings_data['rtm_key'] ) {
+
+							unset( $settings_data['rtm_key'] );
+
+							$new_value = sanitize_option( 'rtmedia-options', $settings_data );
+							$old_value = sanitize_option( 'rtmedia-options', get_option( 'rtmedia-options' ) );
+
+							if ( $new_value === $old_value ) {
+								$response['rtm_response']     = 'error';
+								$response['rtm_response_msg'] = esc_html__( 'Data passed for settings is unchanged!', 'buddypress-media' );
+							} else {
+								if ( update_option( 'rtmedia-options', $settings_data ) ) {
+									$response['rtm_response']     = 'success';
+									$response['rtm_response_msg'] = esc_html__( 'rtMedia Settings imported successfully!', 'buddypress-media' );
+								} else {
+									$response['rtm_response']     = 'error';
+									$response['rtm_response_msg'] = esc_html__( 'Could not update rtMedia Settings', 'buddypress-media' );
+								}
+							}
+						} else {
+							$response['rtm_response']     = 'error';
+							$response['rtm_response_msg'] = esc_html__( 'Invalid JSON Supplied!', 'buddypress-media' );
+						}
+					} else {
+						$response['rtm_response']     = 'error';
+						$response['rtm_response_msg'] = esc_html__( 'Invalid JSON Supplied!', 'buddypress-media' );
+					}
+				} else {
+					$response['rtm_response']     = 'error';
+					$response['rtm_response_msg'] = esc_html__( 'Unable to read supplied file!', 'buddypress-media' );
+				}
+			}
+			wp_send_json( $response );
 		}
 
 		public function convert_videos_mailchimp_send() {

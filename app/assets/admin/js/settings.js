@@ -881,6 +881,26 @@ jQuery( document ).ready( function ( $ ) {
 			contentType: false,
 			success: function( data ) {
 
+				if ( data.hasOwnProperty('rtm_response') && data.hasOwnProperty('rtm_response_msg') ) {
+					jQuery('#rtm-setting-msg').remove();
+					var setting_message = jQuery( '<div/>', {
+						'id'    : 'rtm-setting-msg',
+						'class' : 'rtm-fly-warning',
+					});
+
+					if( data.rtm_response === 'success' ) {
+						setting_message.addClass( 'rtm-success rtm-save-settings-msg' );
+						setting_message.text( data.rtm_response_msg );
+						jQuery('.rtm-button-container.top').append( setting_message );
+						location.reload();
+					} else if ( data.rtm_response === 'error' ) {
+						setting_message.addClass( 'rtm-warning' );
+						setting_message.text( data.rtm_response_msg );
+						jQuery('.rtm-button-container.top').append( setting_message );
+						setting_message.delay( 3000 ).fadeOut( 100 );
+					}
+				}
+
 				if( typeof data.error === 'undefined' ) {
 					if ( data.exceed_size_msg ) {
 						jQuery( '#debuglog' ).val( '' );
@@ -916,6 +936,20 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 	jQuery( "#rtm-masonry-change-thumbnail-info" ).click( function ( e ) {
 		jQuery( "html, body" ).animate( { scrollTop: 0 }, '500', 'swing' );
+	} );
+
+	jQuery( '#rtm-export-button' ).click( function () {
+		data = {
+			action: "rtmedia_export_settings",
+		};
+		jQuery.post( ajaxurl, data, function ( data ) {
+			var dataStr            = "data:text/json;charset=utf-8," + encodeURIComponent( JSON.stringify( data ) );
+			var downloadAnchorNode = document.createElement( 'a' );
+			downloadAnchorNode.setAttribute( 'href', dataStr );
+			downloadAnchorNode.setAttribute( 'download', 'rtm-settings' + '.json' );
+			downloadAnchorNode.click();
+			downloadAnchorNode.remove();
+		} );
 	} );
 } );
 

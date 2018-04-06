@@ -78,26 +78,30 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * if id for any element is not given then these count will be used in id generation
 		 */
 		private static $id_counts = array(
-			'rtText'     => 0,
-			'rtNumber'   => 0,
-			'rtDate'     => 0,
-			'rtRadio'    => 0,
-			'rtCheckbox' => 0,
-			'rtSelect'   => 0,
-			'rtTextarea' => 0,
-			'rtHidden'   => 0,
-			'rtWysiwyg'  => 0,
+			'rtText'      => 0,
+			'rtNumber'    => 0,
+			'rtDate'      => 0,
+			'rtRadio'     => 0,
+			'rtCheckbox'  => 0,
+			'rtSelect'    => 0,
+			'rtTextarea'  => 0,
+			'rtHidden'    => 0,
+			'rtWysiwyg'   => 0,
+			'rtButton'    => 0,
+			'rtFileInput' => 0,
 		);
 		private static $default_classes = array(
-			'rtText'     => 'rtm-form-text',
-			'rtNumber'   => 'rtm-form-number',
-			'rtDate'     => 'rtm-form-date',
-			'rtRadio'    => 'rtm-form-radio',
-			'rtCheckbox' => 'rtm-form-checkbox',
-			'rtSelect'   => 'rtm-form-select',
-			'rtTextarea' => 'rtm-form-textarea',
-			'rtHidden'   => 'rtm-form-hidden',
-			'rtWysiwyg'  => 'rtm-form-wysiwyg',
+			'rtText'      => 'rtm-form-text',
+			'rtNumber'    => 'rtm-form-number',
+			'rtDate'      => 'rtm-form-date',
+			'rtRadio'     => 'rtm-form-radio',
+			'rtCheckbox'  => 'rtm-form-checkbox',
+			'rtSelect'    => 'rtm-form-select',
+			'rtTextarea'  => 'rtm-form-textarea',
+			'rtHidden'    => 'rtm-form-hidden',
+			'rtWysiwyg'   => 'rtm-form-wysiwyg',
+			'rtButton'    => 'rtm-form-button',
+			'rtFileInput' => 'rtm-form-file-input',
 		);
 
 		/**
@@ -236,6 +240,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 				case 'rtHidden': //hidden
 				case 'rtNumber': //number
 				case 'rtText' : //text
+				case 'rtButton': //button
 					$html .= 'value="';
 					$html .= esc_attr( ( isset( $attributes['value'] ) ) ? $attributes['value'] : '' );
 					$html .= '" ';
@@ -1074,6 +1079,130 @@ if ( ! class_exists( 'rtForm' ) ) {
 
 		public function display_select( $args = '' ) {
 			echo $this->get_select( $args );
+		}
+
+		/**
+		 * Generate rtmedia html button in admin options.
+		 *
+		 * @access protected
+		 *
+		 * @param $attributes
+		 *
+		 * @return string
+		 * @throws rtFormInvalidArgumentsException
+		 */
+		protected function generate_button( $attributes ) {
+
+			$element = 'rtButton';
+			if ( is_array( $attributes ) ) {
+
+				/* Starting the input tag */
+				$html = '<input type="button" ';
+
+				/* generating attributes */
+				$html .= $this->processAttributes( $element, $attributes );
+
+				/* ending the tag */
+				$html .= ' />';
+
+				if ( isset( $attributes['label'] ) ) {
+					if ( isset( $attributes['labelClass'] ) ) {
+						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+					} else {
+						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+					}
+				}
+
+				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ) {
+					$html .= $this->generate_element_desc( $attributes );
+				}
+
+				return $html;
+			} else {
+				throw new rtFormInvalidArgumentsException( 'attributes' );
+			}
+		}
+
+		/**
+		 * Get rtmedia html button in admin options.
+		 *
+		 * @access public
+		 *
+		 * @param string/array $attributes
+		 *
+		 * @return string
+		 * @throws rtFormInvalidArgumentsException
+		 */
+		public function get_button( $attributes = '' ) {
+
+			return $this->generate_button( $attributes );
+		}
+
+		public function display_button( $args = '' ) {
+
+			echo $this->get_button( $args );
+		}
+
+		/**
+		 * Generate rtmedia html file input in admin options.
+		 *
+		 * @access protected
+		 *
+		 * @param $attributes
+		 *
+		 * @return string
+		 * @throws rtFormInvalidArgumentsException
+		 */
+		protected function generate_file_input( $attributes ) {
+
+			$element = 'rtFileInput';
+			if ( is_array( $attributes ) ) {
+
+				/* Starting the input tag */
+				$html = '<input type="file" ';
+
+				/* generating attributes */
+				$html .= $this->processAttributes( $element, $attributes );
+
+				/* ending the tag */
+				$html .= ' />';
+
+				if ( isset( $attributes['label'] ) ) {
+					if ( isset( $attributes['labelClass'] ) ) {
+						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+					} else {
+						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+					}
+				}
+
+				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ) {
+					$html .= $this->generate_element_desc( $attributes );
+				}
+
+				return $html;
+			} else {
+				throw new rtFormInvalidArgumentsException( 'attributes' );
+			}
+		}
+
+		/**
+		 * Get rtmedia html file input in admin options.
+		 *
+		 * @access public
+		 *
+		 * @param string/array $attributes
+		 *
+		 * @return string
+		 * @throws rtFormInvalidArgumentsException
+		 */
+		public function get_file_input( $attributes = '' ) {
+
+			return $this->generate_file_input( $attributes );
+		}
+
+		public function display_file_input( $args = '' ) {
+
+			echo $this->get_file_input( $args );
 		}
 	}
 
