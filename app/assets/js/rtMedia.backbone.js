@@ -605,7 +605,7 @@ jQuery( function( $ ) {
                  * we have appended message:true in config.
                  */
 				var current_url = document.URL, find= 'message';
-				if( -1 !== current_url.indexOf( find ) ){
+				if ( -1 !== current_url.indexOf( find ) ){
 					config.message = true;
 				}
 
