@@ -27,10 +27,20 @@ if ( ! empty( $_FILES ) ) {
 	foreach ( $_FILES as $file ) {
 		if ( $file['size'] <= 2000000 ) {
 			$ext = pathinfo( basename( $file['name'] ), PATHINFO_EXTENSION );
-			if ( in_array( strtolower( $ext ), $allowd_type ) && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
-				$files[] = $uploaddir . $file['name'];
+
+			if ( 'json' === $ext && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
+				$uploaded_file = $uploaddir . $file['name'];
+
+				$rtadmin  = new RTMediaAdmin();
+				$response = $rtadmin->import_settings( $uploaded_file );
+				echo json_encode( $response );
+				exit();
 			} else {
-				$error = true;
+				if ( in_array( strtolower( $ext ), $allowd_type ) && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
+				$files[] = $uploaddir . $file['name'];
+				} else {
+					$error = true;
+				}
 			}
 		} else {
 			$size_error = array( 'exceed_size_msg' => esc_html__( 'You can not upload more than 2 MB.', 'buddypress-media' ) );
