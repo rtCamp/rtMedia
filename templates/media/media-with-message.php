@@ -122,8 +122,14 @@ function rtm_add_message_media_params( $message ) {
 }
 
 /**
-* As a result show attached media with message.
-**/
+ * As a result show attached media with message.
+ *
+ * @var object $get_data_object            Object for having DB actions.
+ * @var array  $media_result               Getting media_ids attached with messages.
+ * @var array  $url                        Partitions of current URL to redirect to perticular media.
+ * @var mixed  $rtm_gallary_list_filter    Filter for Media gallary listing.
+ * @var mixed  $rtm_change_alt_text_filter Filter for changing alter text of an image.
+ **/
 function show_rtm_bp_msg_media() {
 	$get_data_object = new RTDBModel( 'rtm_media_meta' );
 	$media_result    = $get_data_object->get( [ 'meta_value' => bp_get_the_thread_message_id() ] );  // phpcs:ignore
