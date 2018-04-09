@@ -1549,13 +1549,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function export_settings() {
 
-			$rtmedia_option            = get_option( 'rtmedia-options' );
-			$rtmedia_option['rtm_key'] = md5( 'rtmedia-options' );
+			$rtmedia_option = get_option( 'rtmedia-options' );
 
-			if ( ! empty( $rtmedia_option ) ) {
-
-				wp_send_json( $rtmedia_option );
+			if ( is_array( $rtmedia_option ) ) {
+				$rtmedia_option['rtm_key'] = md5( 'rtmedia-options' );
 			}
+
+			wp_send_json( $rtmedia_option );
 		}
 
 		/**
@@ -1567,20 +1567,21 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function import_settings( $file_path = '' ) {
 
-			if ( '' !== $file_path ) {
+			$response = array();
 
-				ob_start();
-				include $file_path;
-				$settings_data_json = ob_get_clean();
+			if ( ! empty( $file_path ) ) {
 
+				$settings_data_json = false;
 				if ( file_exists( $file_path ) ) {
-					unlink( $file_path ); // @codingStandardsIgnoreLine
+					ob_start();
+					include $file_path; // @codingStandardsIgnoreLine
+					$settings_data_json = ob_get_clean();
+					wp_delete_file( $file_path );
 				}
 
-				if ( false !== $settings_data_json ) {
+				if ( false !== $settings_data_json || ! empty( $settings_data_json ) ) {
 					$settings_data = json_decode( $settings_data_json, true );
-					$response      = array();
-					if ( ! empty( $settings_data['rtm_key'] ) ) {
+					if ( ! is_array( $settings_data ) || ! empty( $settings_data['rtm_key'] ) ) {
 
 						$rtm_key = md5( 'rtmedia-options' );
 
