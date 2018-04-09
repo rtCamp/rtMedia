@@ -867,6 +867,12 @@ jQuery( document ).ready( function ( $ ) {
 
 		/* Create a formdata object and add the files */
 		var data = new FormData();
+		/**
+		 * Append extra field defining the uploaded file must be settings json file
+		 */
+		if ( undefined !== event && undefined !== event.target && undefined !== event.target.name && 'rtFileInput' === event.target.name ) {
+			data.append( 'import_export_control', event.target.name );
+		}
 		jQuery.each( files, function( key, value ) {
 			data.append( key, value );
 		});
@@ -888,12 +894,12 @@ jQuery( document ).ready( function ( $ ) {
 						'class' : 'rtm-fly-warning',
 					});
 
-					if( data.rtm_response === 'success' ) {
+					if( 'success' === data.rtm_response ) {
 						setting_message.addClass( 'rtm-success rtm-save-settings-msg' );
 						setting_message.text( data.rtm_response_msg );
 						jQuery('.rtm-button-container.top').append( setting_message );
 						location.reload();
-					} else if ( data.rtm_response === 'error' ) {
+					} else if ( 'error' === data.rtm_response ) {
 						setting_message.addClass( 'rtm-warning' );
 						setting_message.text( data.rtm_response_msg );
 						jQuery('.rtm-button-container.top').append( setting_message );
