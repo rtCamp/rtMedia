@@ -16,7 +16,7 @@ addons:
   browserstack:
     username: rtcamp3
     access_key:
-       secure: VFBgrctr5uDgE4PIea7QoXJDdQqq5TjPhvEcEBBcymbsP7cYUniD8K/0At+hArw5fqKajNlPZZjbxEhBRVv4hXNin++S6qwLeHCQMyHWQTt5vOULL16R2GsO30QUkFT/Egw2rh9v6qBei7Ol2mwz7i+XzZQE8cSDa/TJl7wMVwU=
+       secure: UZ/nVtvmVlZJfNH1MXXy7/JKx+wnNO5OFoXMF4B54/W9B1Hca4LcShBHIudRNyY1w4n6nEvKBUU9Bo6QLNRo+GQt/Qvb4Jm/unOPMha4sqMTfqUHd0ZM+4a/7Q0LErBijjc2Bn5EN8XgYS/BbM7w/8/ffqvDAlW1Io7GMHEbgF0=
 
 before_script:
 

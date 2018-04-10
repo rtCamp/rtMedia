@@ -228,7 +228,7 @@ jQuery( function( $ ) {
 						jQuery( '#' + current_gallery_id + ' .rtmedia_next_prev br' ).remove();
 						jQuery( '#' + current_gallery_id + ' .rtmedia_next_prev' ).append( response.pagination );
 
-						if ( jQuery( '.rtm-uploader-main-wrapper div.rtm-upload-url' ).is( ':visible' ) == false ) {
+						if ( jQuery( 'li#rtm-url-upload' ).length === 0 ) {
 							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( 'opacity', '1' );
 							jQuery( '#rtm-media-gallery-uploader' ).slideUp();
 						}

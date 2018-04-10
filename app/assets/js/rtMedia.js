@@ -115,7 +115,8 @@ function apply_rtMagnificPopup( selector ) {
 										mediaElement.paused ? mediaElement.play() : mediaElement.pause();
 									});
 								} else {
-									mediaElement.play();
+									// Changed to .pause() in PR 1082 to stop autoplay.
+									mediaElement.pause();
 								}
 							}
 						} );
@@ -552,7 +553,7 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	function rtmedia_init_popup_navigation() {
 		var rtm_mfp = jQuery.magnificPopup.instance;
-		
+
 		var probablyMobile = rtm_mfp.probablyMobile;
 		var tooltipShown   = getCookie( 'rtmedia-touch-swipe-tooltip' );
 
@@ -561,26 +562,30 @@ jQuery( 'document' ).ready( function( $ ) {
 
 		    // Show tooltip.
 		    jQuery( '#mobile-swipe-overlay' ).show();
-		    
+
 		    // On touch hide tooltip.
 		    jQuery( '#mobile-swipe-overlay' ).on ( 'click', function( e ) {
-			setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
-			jQuery( this ).hide();
+				setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
+				jQuery( this ).hide();
+				jQuery( '#rtmedia-single-media-container .mejs-playpause-button' ).trigger( 'click' );
 		    } );
-		    
+
 		    // On swipe hide tooltip.
 		    jQuery( '#mobile-swipe-overlay' ).swipe( {
-			 //Generic swipe handler for all directions
-			swipe:function( event, direction, distance, duration, fingerCount, fingerData ) {
+				//Generic swipe handler for all directions
+				swipe:function( event, direction, distance, duration, fingerCount, fingerData ) {
 
-			  setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
-			  jQuery( '#mobile-swipe-overlay' ).hide();
-
-			},
-			threshold:0
+					setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
+					jQuery( '#mobile-swipe-overlay' ).hide();
+					jQuery( '#rtmedia-single-media-container .mejs-playpause-button' ).trigger( 'click' );
+				},
+				threshold:0
 		    } );
+		} else {
+			// play video or audio if user visited previously.
+			jQuery( '#rtmedia-single-media-container .mejs-playpause-button' ).trigger( 'click' );
 		}
-		
+
 		jQuery( '.mfp-arrow-right' ).on( 'click', function( e ) {
 			rtm_mfp.next();
 		} );
@@ -604,7 +609,7 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	/**
 	 * Sets Cookie.
-	 * 
+	 *
 	 * @param {string} cname
 	 * @param {string} cvalue
 	 * @param {int} exdays
@@ -621,7 +626,7 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	/**
 	 * Get Cookie.
-	 * 
+	 *
 	 * @param {string} cname
 	 * @return {string}
 	 */
