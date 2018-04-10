@@ -33,7 +33,10 @@ if ( isset( $is_edit_allowed[0] ) ) {
 			global $rtmedia_query;
 
 			$alt_text      = rtmedia_image_alt( false, false );
-			$rtmedia_media = $rtmedia_query->rtmedia;
+			$rtmedia_media = '';
+                        if ( ! empty( $rtmedia_query ) && isset( $rtmedia_query->rtmedia ) ) {
+                            $rtmedia_media = $rtmedia_query->rtmedia;
+                        }
 			$allowed_html  = array(
 				'span' => array(
 					'class' => array(),

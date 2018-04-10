@@ -8,6 +8,31 @@ var rtmedia_load_template_flag = true;
 
 
 jQuery( function( $ ) {
+	/**
+	 * Issue 1059 fixed: negative comment count
+	 */
+	$( document ).ready( function () {
+		/**
+		 * Bind dynamic event on delete button to remove media ul
+		 */
+		$( '#activity-stream' ).on( 'click', '.acomment-delete', function () {
+			/**
+			 * get media ul
+			 */
+			let media_children = $( this ).closest('li').find( 'div.acomment-content ul.rtmedia-list' );
+			if ( media_children.length > 0 ) {
+				/**
+				 * remove ul if exists, so buddypress comment js doesn't get confused between media ul and child comment ul
+				 */
+				media_children.remove();
+			}
+		});
+	});
+	/**
+	 * End of issue 1059 fix
+	 */
+
+
 	var o_is_album, o_is_edit_allowed;
 	if ( typeof ( is_album ) == 'undefined' ) {
 		o_is_album = new Array( '' );
@@ -203,7 +228,7 @@ jQuery( function( $ ) {
 						jQuery( '#' + current_gallery_id + ' .rtmedia_next_prev br' ).remove();
 						jQuery( '#' + current_gallery_id + ' .rtmedia_next_prev' ).append( response.pagination );
 
-						if ( jQuery( '.rtm-uploader-main-wrapper div.rtm-upload-url' ).is( ':visible' ) == false ) {
+						if ( jQuery( 'li#rtm-url-upload' ).length === 0 ) {
 							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( 'opacity', '1' );
 							jQuery( '#rtm-media-gallery-uploader' ).slideUp();
 						}
@@ -778,7 +803,15 @@ jQuery( function( $ ) {
 			uploaderObj.uploader.bind( 'UploadProgress', function( up, file ) {
 				//$("#" + file.id + " .plupload_file_status").html(file.percent + "%");
 				//$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_uploading_msg + '( ' + file.percent + '% )' );
-				$( '#' + file.id + ' .plupload_file_status' ).html( '<div class="plupload_file_progress ui-widget-header" style="width: ' + file.percent + '%;"></div>' );
+				// creates a progress bar to display file upload status
+				var progressBar = jQuery( '<div/>', {
+					'class': 'plupload_file_progress ui-widget-header',
+				});
+				progressBar.css( 'width', file.percent + '%' );
+				$( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
+				// filter to customize existing progress bar can be used to display
+				// '%' of upload completed.
+				rtMediaHook.call( 'rtm_custom_progress_bar_content', [ file ] );
 				$( '#' + file.id ).addClass( 'upload-progress' );
 				if ( file.percent == 100 ) {
 					$( '#' + file.id ).toggleClass( 'upload-success' );
@@ -879,8 +912,18 @@ jQuery( function( $ ) {
 			} );
 		} else {
 			jQuery( document ).on( 'click', '#rtm_show_upload_ui', function() {
-				// If no media type is enabled error message will be displayed.
-				rtmedia_gallery_action_alert_message( rtmedia_media_disabled_error_message, 'warning' );
+				/*
+				* 'enabled_ext' will get value of enabled media types if nothing is enabled,
+				* then an error message will be displayed.
+				*/
+				if ( 'object' === typeof rtMedia_plupload_config ) {
+					var enabled_ext = rtMedia_plupload_config.filters[0].extensions.length;
+					if ( 0 === enabled_ext ) {
+						// If no media type is enabled error message will be displayed.
+						rtmedia_gallery_action_alert_message( rtmedia_media_disabled_error_message, 'warning' );
+					}
+				}
+
 				jQuery( '#rtm-media-gallery-uploader' ).slideToggle();
 				jQuery( '#rtm_show_upload_ui' ).toggleClass( 'primary' );
 			} );
@@ -1326,7 +1369,15 @@ jQuery( document ).ready( function( $ ) {
 
 		objUploadView.uploader.bind( 'UploadProgress', function( up, file ) {
 			//$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_uploading_msg + '( ' + file.percent + '% )' );
-			$( '#' + file.id + ' .plupload_file_status' ).html( '<div class="plupload_file_progress ui-widget-header" style="width: ' + file.percent + '%;"></div>' );
+			// creates a progress bar to display file upload status
+			var progressBar = jQuery( '<div/>', {
+				'class': 'plupload_file_progress ui-widget-header',
+			});
+			progressBar.css( 'width', file.percent + '%' );
+			$( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
+			// filter to customize existing progress bar can be used to display
+			// '%' of upload completed.
+			rtMediaHook.call( 'rtm_custom_progress_bar_content', [ file ] );
 			$( '#' + file.id ).addClass( 'upload-progress' );
 			if ( file.percent == 100 ) {
 				$( '#' + file.id ).toggleClass( 'upload-success' );
@@ -1380,6 +1431,15 @@ jQuery( document ).ready( function( $ ) {
 					if ( ! allowActivityPost ) {
 						$( '#whats-new-form #rtmedia_upload_terms_conditions' ).removeAttr( 'disabled' );
 						$( '#whats-new-form #rtmedia-whts-new-upload-container' ).find( 'input' ).removeAttr( 'disabled' );
+
+						/**
+						 * Issue fixed: 1056(rtmedia-upload-terms) - Not allowing to upload
+						 */
+						var activity_textarea = $( '#whats-new' );
+						activity_textarea.removeAttr('disabled');
+						/**
+						 * End of issue 1056 fix
+						 */
 
 						return false;
 					}
@@ -1839,7 +1899,6 @@ function check_url( query ) {
     var results = regex.exec( window.location.href );
     if( null !== results ) {
         return results[1];
-        return decodeURIComponent(results[1].replace(/\+/g, " "));
     } else {
         return false;
     }
@@ -2533,7 +2592,15 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 		} );
 
         commentObj[ widget_id ].uploader.bind( 'UploadProgress', function( up, file ) {
-			jQuery( '#' + file.id + ' .plupload_file_status' ).html( '<div class="plupload_file_progress ui-widget-header" style="width: ' + file.percent + '%;"></div>' );
+			// creates a progress bar to display file upload status
+			var progressBar = jQuery( '<div/>', {
+				'class': 'plupload_file_progress ui-widget-header',
+			});
+			progressBar.css( 'width', file.percent + '%' );
+			$( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
+			// filter to customize existing progress bar can be used to display
+			// '%' of upload completed.
+			rtMediaHook.call( 'rtm_custom_progress_bar_content', [ file ] );
 			jQuery( '#' + file.id ).addClass( 'upload-progress' );
 			if ( file.percent == 100 ) {
 				jQuery( '#' + file.id ).toggleClass( 'upload-success' );
