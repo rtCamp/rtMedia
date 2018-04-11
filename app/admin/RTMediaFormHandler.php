@@ -247,7 +247,7 @@ class RTMediaFormHandler {
 	/**
 	 * Show rtmedia button in admin options.
 	 *
-	 * @access static
+	 * @access public
 	 *
 	 * @param  array $args arguments to create button.
 	 *
@@ -259,15 +259,12 @@ class RTMediaFormHandler {
 			'desc' => '',
 		);
 		$args     = wp_parse_args( $args, $defaults );
-		extract( $args );
 
-		if ( ! isset( $value ) ) {
+		if ( empty( $args['value'] ) ) {
 			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
 
 			return;
 		}
-
-		$args['value'] = $value;
 
 		$buttonObj = new rtForm();
 		$buttonObj->display_button( $args );
@@ -276,9 +273,9 @@ class RTMediaFormHandler {
 	/**
 	 * Show rtmedia file input in admin options.
 	 *
-	 * @access static
+	 * @access public
 	 *
-	 * @param  array $args
+	 * @param  array $args arguments to create file input control.
 	 *
 	 * @return void
 	 */
@@ -288,15 +285,12 @@ class RTMediaFormHandler {
 			'desc' => '',
 		);
 		$args     = wp_parse_args( $args, $defaults );
-		extract( $args );
 
-		if ( ! isset( $value ) ) {
+		if ( empty( $args['value'] ) ) {
 			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
 
 			return;
 		}
-
-		$args['value'] = $value;
 
 		$fileObj = new rtForm();
 		$fileObj->display_file_input( $args );
@@ -574,35 +568,35 @@ class RTMediaFormHandler {
 	/**
 	 * render export import.
 	 *
-	 * @access static
+	 * @access public
 	 *
 	 * @return array $render
 	 */
 	static function render_export_import() {
 		$render = array(
 			'rtmedia_export_settings' => array(
-				'title'               => esc_html__( 'Export rtMedia Settings', 'buddypress-media' ),
-				'callback'            => array( 'RTMediaFormHandler', 'button' ),
-				'args'                => array(
+				'title'    => esc_html__( 'Export rtMedia Settings', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'button' ),
+				'args'     => array(
 					'id'    => 'rtm-export-button',
 					'key'   => 'rtmedia_export_settings',
 					'value' => esc_html__( 'Export Settings', 'buddypress-media' ),
 					'desc'  => esc_html__( 'This will export rtMedia settings into a JSON file.', 'buddypress-media' ),
-					'class' => array( 'button button-primary button-small' ),
+					'class' => array( 'button', 'button-primary', 'button-small' ),
 				),
-				'group'               => 10,
+				'group'    => 10,
 			),
 			'rtmedia_import_settings' => array(
-				'title'               => esc_html__( 'Import rtMedia Settings', 'buddypress-media' ),
-				'callback'            => array( 'RTMediaFormHandler', 'fileinput' ),
-				'args'                => array(
+				'title'         => esc_html__( 'Import rtMedia Settings', 'buddypress-media' ),
+				'callback'      => array( 'RTMediaFormHandler', 'fileinput' ),
+				'args'          => array(
 					'id'    => 'rtm-import-button',
 					'key'   => 'rtmedia_import_settings',
 					'value' => esc_html__( 'Import Settings', 'buddypress-media' ),
 					'desc'  => esc_html__( 'This will import rtMedia settings. Allowed File Type: json', 'buddypress-media' ),
 				),
-				'group'               => 10,
-				'after_content' => esc_html__('Importing invalid files/settings may break your site. Please import valid file exported from rtMedia only.', 'buddypress-media') ,
+				'group'         => 10,
+				'after_content' => esc_html__( 'Importing invalid files/settings may break your site. Please import valid file exported from rtMedia plugin only.', 'buddypress-media' ),
 			),
 		);
 
@@ -611,19 +605,27 @@ class RTMediaFormHandler {
 
 
 	/**
-	 * Define rtm_export_import
+	 * Render content in export/import settings tab
 	 *
-	 * @access static
+	 * @access public
 	 *
 	 * @return void
 	 */
 	static function rtm_export_import() {
 		global $rtmedia;
-		$render_options           = self::render_export_import();
-		$render_options           = apply_filters( 'rtmedia_export_import_add_itmes', $render_options );
-		$export_import_group      = array();
-		$export_import_group[10]  = esc_html__( 'Export/Import Settings', 'buddypress-media' );
-		$export_import_group      = apply_filters( 'rtmedia_export_import_groups', $export_import_group );
+		$render_options = self::render_export_import();
+		/**
+		 * Filter 'rtmedia_export_import_add_itmes' to modify controls in export/import settings tab
+		 * @since 4.4.8
+		 */
+		$render_options          = apply_filters( 'rtmedia_export_import_add_itmes', $render_options );
+		$export_import_group     = array();
+		$export_import_group[10] = esc_html__( 'Export/Import Settings', 'buddypress-media' );
+		/**
+		 * Filter 'rtmedia_export_import_groups' to modify groups in export/import settings tab
+		 * @since 4.4.8
+		 */
+		$export_import_group = apply_filters( 'rtmedia_export_import_groups', $export_import_group );
 		ksort( $export_import_group );
 		self::render_tab_content( $render_options, $export_import_group, 100 );
 	}

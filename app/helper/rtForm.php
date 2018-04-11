@@ -242,7 +242,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 				case 'rtText' : //text
 				case 'rtButton': //button
 					$html .= 'value="';
-					$html .= esc_attr( ( isset( $attributes['value'] ) ) ? $attributes['value'] : '' );
+					$html .= ( isset( $attributes['value'] ) ) ? esc_attr( $attributes['value'] ) : '';
 					$html .= '" ';
 					break;
 
@@ -1086,41 +1086,41 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @access protected
 		 *
-		 * @param $attributes
+		 * @param array $attributes attributes for button control in key => value
 		 *
 		 * @return string
 		 * @throws rtFormInvalidArgumentsException
 		 */
 		protected function generate_button( $attributes ) {
 
-			$element = 'rtButton';
-			if ( is_array( $attributes ) ) {
-
-				/* Starting the input tag */
-				$html = '<input type="button" ';
-
-				/* generating attributes */
-				$html .= $this->processAttributes( $element, $attributes );
-
-				/* ending the tag */
-				$html .= ' />';
-
-				if ( isset( $attributes['label'] ) ) {
-					if ( isset( $attributes['labelClass'] ) ) {
-						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
-					} else {
-						$html = $this->enclose_label( $element, $html, $attributes['label'] );
-					}
-				}
-
-				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ) {
-					$html .= $this->generate_element_desc( $attributes );
-				}
-
-				return $html;
-			} else {
+			if ( ! is_array( $attributes ) ) {
 				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
+
+			$element = 'rtButton';
+
+			/* Starting the input tag */
+			$html = '<input type="button" ';
+
+			/* generating attributes */
+			$html .= $this->processAttributes( $element, $attributes );
+
+			/* ending the tag */
+			$html .= ' />';
+
+			if ( isset( $attributes['label'] ) ) {
+				if ( isset( $attributes['labelClass'] ) ) {
+					$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+				} else {
+					$html = $this->enclose_label( $element, $html, $attributes['label'] );
+				}
+			}
+
+			if ( ! empty( $attributes['show_desc'] ) ) {
+				$html .= $this->generate_element_desc( $attributes );
+			}
+
+			return $html;
 		}
 
 		/**
@@ -1128,19 +1128,26 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param string/array $attributes
+		 * @param string/array $attributes attributes for button control
 		 *
 		 * @return string
 		 * @throws rtFormInvalidArgumentsException
 		 */
-		public function get_button( $attributes = '' ) {
+		public function get_button( $attributes ) {
 
 			return $this->generate_button( $attributes );
 		}
 
-		public function display_button( $args = '' ) {
+		/**
+		 * Prints the HTML for button control based on arguments
+		 *
+		 * @param array $args arguments for button control
+		 *
+		 * @throws rtFormInvalidArgumentsException
+		 */
+		public function display_button( $args ) {
 
-			echo $this->get_button( $args );
+			echo $this->get_button( $args ); // WPCS: XSS ok.
 		}
 
 		/**
@@ -1155,34 +1162,34 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 */
 		protected function generate_file_input( $attributes ) {
 
-			$element = 'rtFileInput';
-			if ( is_array( $attributes ) ) {
-
-				/* Starting the input tag */
-				$html = '<input type="file" ';
-
-				/* generating attributes */
-				$html .= $this->processAttributes( $element, $attributes );
-
-				/* ending the tag */
-				$html .= ' />';
-
-				if ( isset( $attributes['label'] ) ) {
-					if ( isset( $attributes['labelClass'] ) ) {
-						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
-					} else {
-						$html = $this->enclose_label( $element, $html, $attributes['label'] );
-					}
-				}
-
-				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ) {
-					$html .= $this->generate_element_desc( $attributes );
-				}
-
-				return $html;
-			} else {
+			if ( ! is_array( $attributes ) ) {
 				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
+
+			$element = 'rtFileInput';
+
+			/* Starting the input tag */
+			$html = '<input type="file" ';
+
+			/* generating attributes */
+			$html .= $this->processAttributes( $element, $attributes );
+
+			/* ending the tag */
+			$html .= ' />';
+
+			if ( isset( $attributes['label'] ) ) {
+				if ( isset( $attributes['labelClass'] ) ) {
+					$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+				} else {
+					$html = $this->enclose_label( $element, $html, $attributes['label'] );
+				}
+			}
+
+			if ( ! empty( $attributes['show_desc'] ) ) {
+				$html .= $this->generate_element_desc( $attributes );
+			}
+
+			return $html;
 		}
 
 		/**
@@ -1195,12 +1202,17 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @return string
 		 * @throws rtFormInvalidArgumentsException
 		 */
-		public function get_file_input( $attributes = '' ) {
+		public function get_file_input( $attributes ) {
 
 			return $this->generate_file_input( $attributes );
 		}
 
-		public function display_file_input( $args = '' ) {
+		/**
+		 * @param $args
+		 *
+		 * @throws rtFormInvalidArgumentsException
+		 */
+		public function display_file_input( $args ) {
 
 			echo $this->get_file_input( $args );
 		}

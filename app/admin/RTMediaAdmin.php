@@ -1565,56 +1565,54 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 *
 		 * @param string $file_path path to json file to be imported.
 		 */
-		public function import_settings( $file_path = '' ) {
+		public function import_settings( $file_path ) {
 
 			$response = array();
 
-			if ( ! empty( $file_path ) ) {
+			if ( empty( $file_path ) || validate_file( $file_path ) !== 0 ) {
+				$response['rtm_response']     = 'error';
+				$response['rtm_response_msg'] = esc_html__( 'Unable to read file!', 'buddypress-media' );
+				wp_send_json( $response );
+			}
 
-				$settings_data_json = false;
-				if ( file_exists( $file_path ) ) {
-					ob_start();
-					include $file_path; // @codingStandardsIgnoreLine
-					$settings_data_json = ob_get_clean();
-					wp_delete_file( $file_path );
-				}
+			ob_start();
+			include $file_path;
+			$settings_data_json = ob_get_clean();
+			wp_delete_file( $file_path );
 
-				if ( false !== $settings_data_json || ! empty( $settings_data_json ) ) {
-					$settings_data = json_decode( $settings_data_json, true );
-					if ( ! is_array( $settings_data ) || ! empty( $settings_data['rtm_key'] ) ) {
+			if ( empty( $settings_data_json ) ) {
+				$response['rtm_response']     = 'error';
+				$response['rtm_response_msg'] = esc_html__( 'Invalid JSON Supplied!', 'buddypress-media' );
+				wp_send_json( $response );
+			}
 
-						$rtm_key = md5( 'rtmedia-options' );
+			$settings_data = json_decode( $settings_data_json, true );
+			if ( ! is_array( $settings_data ) || empty( $settings_data['rtm_key'] ) ) {
+				$response['rtm_response']     = 'error';
+				$response['rtm_response_msg'] = esc_html__( 'Invalid JSON Supplied!', 'buddypress-media' );
+				wp_send_json( $response );
+			}
 
-						if ( $rtm_key === $settings_data['rtm_key'] ) {
+			if ( md5( 'rtmedia-options' ) !== $settings_data['rtm_key'] ) {
+				$response['rtm_response']     = 'error';
+				$response['rtm_response_msg'] = esc_html__( 'Invalid JSON Supplied!', 'buddypress-media' );
+				wp_send_json( $response );
+			}
 
-							unset( $settings_data['rtm_key'] );
+			unset( $settings_data['rtm_key'] );
+			$new_value = json_encode( $settings_data );
+			$old_value = json_encode( get_option( 'rtmedia-options' ) );
 
-							$new_value = sanitize_option( 'rtmedia-options', $settings_data );
-							$old_value = sanitize_option( 'rtmedia-options', get_option( 'rtmedia-options' ) );
-
-							if ( $new_value === $old_value ) {
-								$response['rtm_response']     = 'error';
-								$response['rtm_response_msg'] = esc_html__( 'Data passed for settings is unchanged!', 'buddypress-media' );
-							} else {
-								if ( update_option( 'rtmedia-options', $settings_data ) ) {
-									$response['rtm_response']     = 'success';
-									$response['rtm_response_msg'] = esc_html__( 'rtMedia Settings imported successfully!', 'buddypress-media' );
-								} else {
-									$response['rtm_response']     = 'error';
-									$response['rtm_response_msg'] = esc_html__( 'Could not update rtMedia Settings', 'buddypress-media' );
-								}
-							}
-						} else {
-							$response['rtm_response']     = 'error';
-							$response['rtm_response_msg'] = esc_html__( 'Invalid JSON Supplied!', 'buddypress-media' );
-						}
-					} else {
-						$response['rtm_response']     = 'error';
-						$response['rtm_response_msg'] = esc_html__( 'Invalid JSON Supplied!', 'buddypress-media' );
-					}
+			if ( $new_value === $old_value ) {
+				$response['rtm_response']     = 'error';
+				$response['rtm_response_msg'] = esc_html__( 'Data passed for settings is unchanged!', 'buddypress-media' );
+			} else {
+				if ( update_option( 'rtmedia-options', $settings_data ) ) {
+					$response['rtm_response']     = 'success';
+					$response['rtm_response_msg'] = esc_html__( 'rtMedia Settings imported successfully!', 'buddypress-media' );
 				} else {
 					$response['rtm_response']     = 'error';
-					$response['rtm_response_msg'] = esc_html__( 'Unable to read supplied file!', 'buddypress-media' );
+					$response['rtm_response_msg'] = esc_html__( 'Could not update rtMedia Settings', 'buddypress-media' );
 				}
 			}
 			wp_send_json( $response );
