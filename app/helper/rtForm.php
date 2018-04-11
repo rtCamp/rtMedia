@@ -1155,7 +1155,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @access protected
 		 *
-		 * @param $attributes
+		 * @param array $attributes arguments to create file input control
 		 *
 		 * @return string
 		 * @throws rtFormInvalidArgumentsException
