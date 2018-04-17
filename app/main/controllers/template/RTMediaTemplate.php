@@ -17,7 +17,13 @@ class RTMediaTemplate {
 
 		if ( $rtmedia_query ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
+
+			/**
+			 * Load media edit scripts only if user is logged in
+			 */
+			if ( is_user_logged_in() ) {
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
+			}
 		}
 	}
 
