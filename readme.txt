@@ -1480,7 +1480,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.4.7 =
-rtMedia 4.4.7, with few bug fixes and enhancements.
+rtMedia 4.4.7, with improved media count display and gallery swipe gesture compatibility with WordPress themes older than Twenty Fifteen.
 
 == Sponsors ==
 
