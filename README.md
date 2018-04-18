@@ -154,16 +154,16 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * ENHANCEMENTS
 
 	 * Set auto focus for key field on the Licenses Page
-     * Improved media count display for large numbers
+	 * Improved media count display for large numbers
 
 
 * FIXED
 
 	 * Gallery swipe gesture with all the WordPress themes older than Twenty Fifteen
-     * Media player height issue on single media page for video
-     * Media gallery conflict with rtMedia Upload By URL
-     * Conflict of empty comment check with other validation message location
-     * PHP notice and warnings
+	 * Media player height issue on single media page for video
+	 * Media gallery conflict with rtMedia Upload By URL
+	 * Conflict of empty comment check with other validation message location
+	 * PHP notice and warnings
 
 ### 4.4.6 [March 22, 2018] ###
 
