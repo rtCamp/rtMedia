@@ -7,7 +7,7 @@
 # rtMedia for WordPress, BuddyPress and bbPress #
 
 
-* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty), [milindmore22](https://profiles.wordpress.org/milindmore22), [thrijith](https://profiles.wordpress.org/thrijith), [abhijitrakas](https://profiles.wordpress.org/abhijitrakas), [sid177](https://profiles.wordpress.org/sid177), [montu3366](https://profiles.wordpress.org/montu3366)
+* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty), [milindmore22](https://profiles.wordpress.org/milindmore22), [thrijith](https://profiles.wordpress.org/thrijith), [abhijitrakas](https://profiles.wordpress.org/abhijitrakas), [sid177](https://profiles.wordpress.org/sid177), [montu3366](https://profiles.wordpress.org/montu3366), [jashwini](https://profiles.wordpress.org/jashwini)
 
 
 * **License:** [GPL v2 or later]( http://www.gnu.org/licenses/gpl-2.0.html)
@@ -149,195 +149,239 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.4.7 [April 18, 2018] ###
+
+* ENHANCEMENTS
+
+	 * Set auto focus for key field on the Licenses Page
+     * Improved media count display for large numbers
+
+
+* FIXED
+
+	 * Gallery swipe gesture with all the WordPress themes older than Twenty Fifteen
+     * Media player height issue on single media page for video
+     * Media gallery conflict with rtMedia Upload By URL
+     * Conflict of empty comment check with other validation message location
+     * PHP notice and warnings
+
+### 4.4.6 [March 22, 2018] ###
+
+* NEW
+
+ 	* Added intuitive left-right swipe gesture guide while opening gallery for the first time on mobile
+
+* ENHANCEMENTS
+
+	 * Added filter to customize existing progress bar [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-js-hooks/#rtmcustomprogressbarcontent)
+	 * Improved edit media process with single save button
+
+* FIXED
+
+	* PHP notice and warnings
+	* Visibility issue with Edit & Delete action links after first media upload
+	* Added check for BuddyPress activity component while adding comment on media
+	* Added check for empty comments on media
+	* Added informative message while uploading media without enabling media type setting
+	* BuddyPress activity media upload conflict with [rtMedia Upload Terms](https://rtmedia.io/products/rtmedia-upload-terms/)
+	* Issue with rtMedia comment count under BuddyPress activity
+	* Improved license verification process of rtMedia add-ons
+	* Lightbox height issue with rtMedia media comments
+	* UI issue with Back button on the edit media page for theme twentyseventeen
+	* Option button’s visibility issue with twentyseventeen theme
+	* Console warning for FireFox browser
+	* UI issue for comment media upload button
+	* Minor UI issues for mobile users
+
 ### 4.4.5 [January 19, 2018] ###
 
 * ENHANCEMENTS
 
- * Upgraded MediaElement library
+ 	* Upgraded MediaElement library
 
 ### 4.4.4 [October 17, 2017] ###
 
 * FIXED
 
- * Media display issue if masonry view is disabled and width is set to zero
- * Upload multiple images on mobile devices
- * Improve localization, thanks to [xavivars](https://github.com/xavivars)
- * Added a check for BuddyPress Group component while using bp_before_member_header action
+	 * Media display issue if masonry view is disabled and width is set to zero
+	 * Upload multiple images on mobile devices
+	 * Improve localization, thanks to [xavivars](https://github.com/xavivars)
+	 * Added a check for BuddyPress Group component while using bp_before_member_header action
 
 ### 4.4.3 [August 3, 2017] ###
 
 * ENHANCEMENTS
 
- * Add filter to change the "alt" attribute value for photos in media gallery [Documentation](https://rtmedia.io/docs/developers/hooks/rtmc_change_alt_text/)
+ 	* Add filter to change the "alt" attribute value for photos in media gallery [Documentation](https://rtmedia.io/docs/developers/hooks/rtmc_change_alt_text/)
 
 * FIXED
-
- * Unit text (MB/KB) of media size doesn't display correctly
- * Buttons UI of edit media screen for default WordPress themes
- * BuddyPress activity upload issue with Microsoft Edge
- * Notices of "Undefined offset" and "get property of non-object"
- * UI issue of media close button on Twenty Seventeen theme
- * Pagination issue with album search
- * Upload falls over while using special characters into filename
- * Fatal Error in gallery search if BuddyPress is not installed
- * Medium image size not working correctly with zero height
- * `media_title` attribute was not working for gallery shortcode
+	
+	 * Unit text (MB/KB) of media size doesn't display correctly
+	 * Buttons UI of edit media screen for default WordPress themes
+	 * BuddyPress activity upload issue with Microsoft Edge
+	 * Notices of "Undefined offset" and "get property of non-object"
+	 * UI issue of media close button on Twenty Seventeen theme
+	 * Pagination issue with album search
+	 * Upload falls over while using special characters into filename
+	 * Fatal Error in gallery search if BuddyPress is not installed
+	 * Medium image size not working correctly with zero height
+	 * `media_title` attribute was not working for gallery shortcode
 
 ### 4.4.2 [June 30, 2017] ###
 
 * FIXED
 
- * Broken thumbnails in sidebar widget gallery and sorting gallery shortcode
+ 	* Broken thumbnails in sidebar widget gallery and sorting gallery shortcode
 
 
 ### 4.4.1 [June 29, 2017] ###
 
 * ENHANCEMENTS
 
- * Replaced HTML comments '&lt;!-- --&gt;' with PHP comments '&lt;?php // ?&gt;'
+ 	* Replaced HTML comments '&lt;!-- --&gt;' with PHP comments '&lt;?php // ?&gt;'
 
 * FIXED
 
- * Media search issue under album
- * Gallery reload issue while uploading new media under a single album page
- * Duplicate "no media found" message under media gallery
- * Cancel media search button issue under albums tab
- * PHP notice and warnings
- * UI for caret under like button
- * Load more issue for albums tab
- * Issue editing album when pagination is enabled
- * UI issue for music player when opened in the lightbox
+	 * Media search issue under album
+	 * Gallery reload issue while uploading new media under a single album page
+	 * Duplicate "no media found" message under media gallery
+	 * Cancel media search button issue under albums tab
+	 * PHP notice and warnings
+	 * UI for caret under like button
+	 * Load more issue for albums tab
+	 * Issue editing album when pagination is enabled
+	 * UI issue for music player when opened in the lightbox
 
 
 ### 4.4 [June 6, 2017] ###
 
 * NEW
 
- * Enabled Masonry Cascading grid layout for BuddyPress Activity feed [Documentation](https://rtmedia.io/docs/features/lightboxes-masonry/#masonry-activity-feed)
- * Added search functionality in Media Gallery [Documentation](https://rtmedia.io/docs/features/upload-media/#search-media)
- * Added album description input while creating an album [Documentation](https://rtmedia.io/docs/features/view-media/#album-description)
+	 * Enabled Masonry Cascading grid layout for BuddyPress Activity feed [Documentation](https://rtmedia.io/docs/features/lightboxes-masonry/#masonry-activity-feed)
+	 * Added search functionality in Media Gallery [Documentation](https://rtmedia.io/docs/features/upload-media/#search-media)
+	 * Added album description input while creating an album [Documentation](https://rtmedia.io/docs/features/view-media/#album-description)
 
 * ENHANCEMENTS
 
- * Added media description parameter in JSON API [Documentation](https://rtmedia.io/docs/developers/json-api/#media-upload)
- * Added: Filter to change the text "Are you sure you want to delete this media?" [Documentation](https://rtmedia.io/docs/developers/hooks/rtmedia_delete_prompt_message/)
- * Applied Post Update button style once the document is ready instead of window load
+	 * Added media description parameter in JSON API [Documentation](https://rtmedia.io/docs/developers/json-api/#media-upload)
+	 * Added: Filter to change the text "Are you sure you want to delete this media?" [Documentation](https://rtmedia.io/docs/developers/hooks/rtmedia_delete_prompt_message/)
+	 * Applied Post Update button style once the document is ready instead of window load
 
 * FIXED
 
- * Audio player display issue in lightbox
- * Fixed trimming media name issue when it contains a dot in the name
- * Added missing data in debuginfo file
- * rtMedia shortcode uploader issue with IOS mobile safari browser
- * Issue while playing video on IOS safari
- * White strip-line issue in lightbox
- * Like button will display in the right sidebar of light box even when media comments are deactivated
+	 * Audio player display issue in lightbox
+	 * Fixed trimming media name issue when it contains a dot in the name
+	 * Added missing data in debuginfo file
+	 * rtMedia shortcode uploader issue with IOS mobile safari browser
+	 * Issue while playing video on IOS safari
+	 * White strip-line issue in lightbox
+	 * Like button will display in the right sidebar of light box even when media comments are deactivated
 
 
 #### 4.3.2 [May 11, 2017] ####
 
 * ENHANCEMENTS
 
- * Added: Filter which allows replacing the text "Like/dislike" with any icon [Documentation](https://rtmedia.io/docs/developers/hooks/rtmedia_like_label_text-rtmedia_like_undo_label_text/)
+ 	* Added: Filter which allows replacing the text "Like/dislike" with any icon [Documentation](https://rtmedia.io/docs/developers/hooks/rtmedia_like_label_text-rtmedia_like_undo_label_text/)
 
 * FIXED
 
- * Attach media button issue in comments for IOS devices
- * Inconsistent name display in the Activity stream
- * Media attachment button issue under rtMedia comment section
- * Set as Album Cover button UI issue
- * rtMedia action button alignment issue on the single media page
- * Improvise comment media admin settings
- * JavaScript error while deleting media
- * Edit media feature when BuddyPress activity stream component is disabled
- * "What's new" section not getting properly styled on page load [Documentation](https://rtmedia.io/docs/troubleshooting/post-update-upload-media-privacy-buttons-not-appearing/)
+	 * Attach media button issue in comments for IOS devices
+	 * Inconsistent name display in the Activity stream
+	 * Media attachment button issue under rtMedia comment section
+	 * Set as Album Cover button UI issue
+	 * rtMedia action button alignment issue on the single media page
+	 * Improvise comment media admin settings
+	 * JavaScript error while deleting media
+	 * Edit media feature when BuddyPress activity stream component is disabled
+	 * "What's new" section not getting properly styled on page load [Documentation](https://rtmedia.io/docs/troubleshooting/post-update-upload-media-privacy-buttons-not-appearing/)
 
 #### 4.3.1 [Feb 23, 2017] ####
 
 * ENHANCEMENTS
 
- * Remove media titles from media tab
- * Change text in rtMedia setting for comment media
- * Added: Filter to change user id while fetching user's album list
+	 * Remove media titles from media tab
+	 * Change text in rtMedia setting for comment media
+	 * Added: Filter to change user id while fetching user's album list
 
 * FIXED
 
- * Pagination and navigation fix in media tab
- * Warnings when uploading media in activity comment
- * Privacy for reported media in moderation
+	 * Pagination and navigation fix in media tab
+	 * Warnings when uploading media in activity comment
+	 * Privacy for reported media in moderation
 
 #### 4.3 [Feb 14, 2017] ####
 
 * NEW FEATURES
 
- * Comment Media - User can upload media in comment box
+ 	* Comment Media - User can upload media in comment box
 
 * ENHANCEMENTS
 
- * rtMedia settings to unable or disable likes for Media
- * Attachment upload in rtMedia support form
- * Added: rtMedia Version Constant
- * Added: Action to Change rtMedia query before shortcode run
- * Added: Filter to Change Media menu position in admin bar
+	 * rtMedia settings to unable or disable likes for Media
+	 * Attachment upload in rtMedia support form
+	 * Added: rtMedia Version Constant
+	 * Added: Action to Change rtMedia query before shortcode run
+	 * Added: Filter to Change Media menu position in admin bar
 
 * FIXED
 
- * Bulk delete in Media library Dashboard
- * Warnings when user click on pagination
- * rtMedia gallery shortcode pagination
- * Remove unwanted fields in rtMedia support form
- * Sorting & Options issue in Media Tab
- * Comment and Like Privacy issue
- * Comment and Like for media delete issue in Group
- * Load More issue on activity and group Tab
+	 * Bulk delete in Media library Dashboard
+	 * Warnings when user click on pagination
+	 * rtMedia gallery shortcode pagination
+	 * Remove unwanted fields in rtMedia support form
+	 * Sorting & Options issue in Media Tab
+	 * Comment and Like Privacy issue
+	 * Comment and Like for media delete issue in Group
+	 * Load More issue on activity and group Tab
 
 #### 4.2.1 [Dec 21, 2016] ####
 
 * FIXED
 
- * Security issues pointed out by James Golovich
- * Direct access of a file
- * Access rights to modify/update the rtMedia settings
- * Added validation on custom CSS before saving
- * Section fluctuation when user drags media into activity box
- * Audio / Video autoplay in Safari browser
- * JS error on media comments when activity stream is disabled from the backend
- * Media upload error when activity stream is disabled from the backend
- * Invalid license key notice appearing even when all keys are valid
- * Addon validation checks will happen every six hours (only if addons installed)
- * Changed plugin's review link to rate on WordPress.org
+	 * Security issues pointed out by James Golovich
+	 * Direct access of a file
+	 * Access rights to modify/update the rtMedia settings
+	 * Added validation on custom CSS before saving
+	 * Section fluctuation when user drags media into activity box
+	 * Audio / Video autoplay in Safari browser
+	 * JS error on media comments when activity stream is disabled from the backend
+	 * Media upload error when activity stream is disabled from the backend
+	 * Invalid license key notice appearing even when all keys are valid
+	 * Addon validation checks will happen every six hours (only if addons installed)
+	 * Changed plugin's review link to rate on WordPress.org
 
 #### 4.2 [Nov 17, 2016] ####
 
 * NEW FEATURES
 
- * Albums will now display media count by default
- * "@mentions" in comments added to lightbox and single media page
- * Added "Next" / "Previous" navigation links to single media page
+	 * Albums will now display media count by default
+	 * "@mentions" in comments added to lightbox and single media page
+	 * Added "Next" / "Previous" navigation links to single media page
 
 * ENHANCEMENTS
 
- * rtMedia "Support" tab improvements- Directly attach a screenshot while submitting a support ticket Debug Info can now be easily downloaded as a .txt file
- * Added: "Show more comments" link in media pop-up (lightbox) and single media page
- * Added: Action to target area below media comments in lightbox or single media page
- * Added: Filter to add extra component to comments
- * Added: Filter to disallow blank text field while uploading media in Activity
- * Added: Filter to modify "Options" & "Upload" labels in Media Gallery
+	 * rtMedia "Support" tab improvements- Directly attach a screenshot while submitting a support ticket Debug Info can now be easily downloaded as a .txt file
+	 * Added: "Show more comments" link in media pop-up (lightbox) and single media page
+	 * Added: Action to target area below media comments in lightbox or single media page
+	 * Added: Filter to add extra component to comments
+	 * Added: Filter to disallow blank text field while uploading media in Activity
+	 * Added: Filter to modify "Options" & "Upload" labels in Media Gallery
 
 * FIXED
 
- * After uploading media, the Upload panel will now collapse
- * Incorrect pagination text display in Media tab
- * "posted an update" string not getting translated in Activity feed for posts with attached media. Added translation support for all "rtmedia_update" Activity type
- * Duplicate activity generation when "Post Update" is clicked multiple times
- * Singular/plural form of "n people liked this" string
- * BuddyPress Group Media tab not displaying in Beta version 2.7.2
- * Media description not saving properly when uploading multiple media
- * Link to comment in WordPress backend not leading back to comment
- * Video popup UI for vertical videos
- * CSS-related responsive video layout issue
- * Fixed broken "Import media sizes" anchor link in admin notice
- * Lightbox privacy symbol alignment issue
+	 * After uploading media, the Upload panel will now collapse
+	 * Incorrect pagination text display in Media tab
+	 * "posted an update" string not getting translated in Activity feed for posts with attached media. Added translation support for all "rtmedia_update" Activity type
+	 * Duplicate activity generation when "Post Update" is clicked multiple times
+	 * Singular/plural form of "n people liked this" string
+	 * BuddyPress Group Media tab not displaying in Beta version 2.7.2
+	 * Media description not saving properly when uploading multiple media
+	 * Link to comment in WordPress backend not leading back to comment
+	 * Video popup UI for vertical videos
+	 * CSS-related responsive video layout issue
+	 * Fixed broken "Import media sizes" anchor link in admin notice
+	 * Lightbox privacy symbol alignment issue
 
 #### 4.1.8 [Oct 05, 2016] ####
 * Fix fatal error for older PHP version
