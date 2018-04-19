@@ -552,8 +552,9 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			$size   = ' width="' . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . '" height="' . esc_attr( $height ) . '%" ';
 			$html   = "<div id='rtm-mejs-video-container' style='width:" . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . 'px;height:' . esc_attr( $height ) . "%;  max-width:96%;max-height:80%;'>";
 			if ( empty( $youtube_url ) ) {
-				$html_video = '<video poster="" src="%s" %s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%s" controls="controls" preload="none"></video>';
-				$html .= sprintf( $html_video, esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ), esc_attr( $size ), esc_attr( $rtmedia_media->id ) );
+				// added poster for showing thumbnail and changed preload value to fix rtMedia GL-209.
+				$html_video = '<video poster="%s" src="%s" %s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%s" controls="controls" preload="metadata"></video>';
+				$html      .= sprintf( $html_video, esc_url( $rtmedia_media->cover_art ), esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ), esc_attr( $size ), esc_attr( $rtmedia_media->id ) );
 			} else {
 				$html_video = '<video width="640" height="360" class="url-video" id="video-id-%s" preload="none"><source type="video/youtube" src="%s" /></video>';
 				$html .= sprintf( $html_video, esc_attr( $rtmedia_media->id ), esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) );
@@ -2488,7 +2489,10 @@ function rtmedia_load_template() {
 
 	do_action( 'rtmedia_before_template_load' );
 
-	include( RTMediaTemplate::locate_template() );
+	$template_name = RTMediaTemplate::locate_template();
+	if ( ! empty( $template_name ) && file_exists( $template_name ) ) {
+		include_once $template_name;
+	}
 
 	do_action( 'rtmedia_after_template_load' );
 
@@ -4154,3 +4158,24 @@ function is_rtmedia_upload_other_enabled() {
 
 	return false;
 }
+
+/**
+ * Format a number to human readable format.
+ *
+ * @param Integer $n Number to be formatted.
+ * @return String Return format a number to human readable format.
+ */
+function rtmedia_number_to_human_readable( $n ) {
+	if ( $n >= 1000000000000 ) {
+		return round( ( $n / 1000000000000 ), 1 ) . 'T';
+	} elseif ( $n >= 1000000000 ) {
+		return round( ( $n / 1000000000 ), 1 ) . 'B';
+	} elseif ( $n >= 1000000 ) {
+		return round( ( $n / 1000000 ), 1 ) . 'M';
+	} elseif ( $n >= 1000 ) {
+		return round( ( $n / 1000 ), 1 ) . 'K';
+	} else {
+		return $n;
+	}
+}
+

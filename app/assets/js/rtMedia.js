@@ -115,7 +115,8 @@ function apply_rtMagnificPopup( selector ) {
 										mediaElement.paused ? mediaElement.play() : mediaElement.pause();
 									});
 								} else {
-									mediaElement.play();
+									// Changed to .pause() in PR 1082 to stop autoplay.
+									mediaElement.pause();
 								}
 							}
 						} );
@@ -552,7 +553,7 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	function rtmedia_init_popup_navigation() {
 		var rtm_mfp = jQuery.magnificPopup.instance;
-		
+
 		var probablyMobile = rtm_mfp.probablyMobile;
 		var tooltipShown   = getCookie( 'rtmedia-touch-swipe-tooltip' );
 
@@ -561,26 +562,30 @@ jQuery( 'document' ).ready( function( $ ) {
 
 		    // Show tooltip.
 		    jQuery( '#mobile-swipe-overlay' ).show();
-		    
+
 		    // On touch hide tooltip.
 		    jQuery( '#mobile-swipe-overlay' ).on ( 'click', function( e ) {
-			setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
-			jQuery( this ).hide();
+				setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
+				jQuery( this ).hide();
+				jQuery( '#rtmedia-single-media-container .mejs-playpause-button' ).trigger( 'click' );
 		    } );
-		    
+
 		    // On swipe hide tooltip.
 		    jQuery( '#mobile-swipe-overlay' ).swipe( {
-			 //Generic swipe handler for all directions
-			swipe:function( event, direction, distance, duration, fingerCount, fingerData ) {
+				//Generic swipe handler for all directions
+				swipe:function( event, direction, distance, duration, fingerCount, fingerData ) {
 
-			  setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
-			  jQuery( '#mobile-swipe-overlay' ).hide();
-
-			},
-			threshold:0
+					setCookie( 'rtmedia-touch-swipe-tooltip' , true, 365 );
+					jQuery( '#mobile-swipe-overlay' ).hide();
+					jQuery( '#rtmedia-single-media-container .mejs-playpause-button' ).trigger( 'click' );
+				},
+				threshold:0
 		    } );
+		} else {
+			// play video or audio if user visited previously.
+			jQuery( '#rtmedia-single-media-container .mejs-playpause-button' ).trigger( 'click' );
 		}
-		
+
 		jQuery( '.mfp-arrow-right' ).on( 'click', function( e ) {
 			rtm_mfp.next();
 		} );
@@ -604,7 +609,7 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	/**
 	 * Sets Cookie.
-	 * 
+	 *
 	 * @param {string} cname
 	 * @param {string} cvalue
 	 * @param {int} exdays
@@ -621,7 +626,7 @@ jQuery( 'document' ).ready( function( $ ) {
 
 	/**
 	 * Get Cookie.
-	 * 
+	 *
 	 * @param {string} cname
 	 * @return {string}
 	 */
@@ -1056,7 +1061,7 @@ function rtmediaGetParameterByName( name ) {
 	return results == null ? '' : decodeURIComponent( results[1].replace( /\+/g, ' ' ) );
 }
 
-function rtmedia_single_media_alert_message( msg, action ) {
+function rtmedia_single_media_alert_message( msg, action, is_comment ) {
 	var action_class = 'rtmedia-success';
 
 	if ( 'warning' == action ) {
@@ -1064,49 +1069,94 @@ function rtmedia_single_media_alert_message( msg, action ) {
 	}
 
 	/**
-	 * Fixed issue 152 (Media single page comment)
+	 * Remove existing task specific message containers
 	 */
-	var comment_form = jQuery( '#rt_media_comment_form' );
-	var msg_container = jQuery( '.rtmedia-message-container' );
-
-	var $div = jQuery("<div>",{
-		"title" : "Click to dismiss",
-		"class" : "rtmedia-message-container",
-		"style" : "margin:1em 0;",
-	});
-	var $span = jQuery("<span>",{
-		"class":action_class,
-	});
-	$span.html(msg);
-
-	if( comment_form.next().attr('class') === 'rtmedia-message-container' ){
-		msg_container.remove();
-		$span.css({border:'2px solid #884646'});
-
-		setTimeout(function(){
-			$span.css({border:'none'});
-		},500);
-	}
-
-	$span.appendTo($div);
-	comment_form.after($div);
-	msg_container = $div;
-
-	var comment_content = $('#comment_content');
-	if( comment_content ){
-		comment_content.focus();
-	}
-
-	setTimeout( function() {
-		msg_container.remove();
-	}, 3000 );
-
-	msg_container.click( function() {
-		msg_container.remove();
+	var exists = false;
+	var msg_containers = jQuery( '.rtmedia-message-container' );
+	msg_containers.each( function( i, container ) {
+		/**
+		 * Convert DOM to jQuery element.
+		 */
+		container = jQuery( container );
+		/**
+		 * If is comment error and has dedicated error class, then only remove
+		 */
+		if ( is_comment && container.hasClass( 'rtmedia-empty-comment-error-class' ) ) {
+			container.remove();
+			exists = true;
+			return false;
+		}
+		/**
+		 * If is not comment error and container doesn't have dedicated error class, then only remove
+		 */
+		if ( is_comment === undefined && ! container.hasClass( 'rtmedia-empty-comment-error-class' ) ) {
+			container.remove();
+			exists = true;
+			return false;
+		}
 	} );
 	/**
-	 * End of issue 152
+	 * Construct message container
 	 */
+	var $div = jQuery( "<div>", {
+		"title" : "Click to dismiss",
+		"class" : "rtmedia-message-container" + ( is_comment ? " rtmedia-empty-comment-error-class" : "" ),
+		"style" : "margin:1em 0;",
+	});
+	var $span = jQuery( "<span>", {
+		"class" : action_class,
+	});
+	/**
+	 * Append constructed html
+	 */
+	$span.html( msg );
+	$span.appendTo( $div );
+
+	var container;
+	if ( is_comment ) {
+		/**
+		 * container should be comment form
+		 */
+		container = jQuery( '#rt_media_comment_form' );
+		jQuery( '#comment_content' ).focus();
+	} else if ( is_comment === undefined ) {
+		/**
+		 * container should be main rtmedia container
+		 */
+		container = jQuery( '.rtmedia-single-media .rtmedia-media' );
+		container.css( 'opacity', '0.2' );
+	}
+	/**
+	 * Append final element
+	 */
+	container.after( $div );
+	if ( exists ) {
+		/**
+		 * Add border if message already exists
+		 */
+		$span.css( { border : '2px solid #884646' } );
+		setTimeout( function() {
+			$span.css( { border : 'none' } );
+		}, 500 );
+	}
+	/**
+	 * Remove element after 3 seconds
+	 */
+	setTimeout( function() {
+		$div.remove();
+		if ( is_comment === undefined ) {
+			container.css( 'opacity', '1' );
+		}
+	}, 3000 );
+	/**
+	 * Remove element on click
+	 */
+	$div.click( function() {
+		$div.remove();
+		if ( is_comment === undefined ) {
+			container.css( 'opacity', '1' );
+		}
+	} );
 
 }
 
