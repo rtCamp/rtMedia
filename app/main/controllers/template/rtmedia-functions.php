@@ -2680,7 +2680,7 @@ function is_rtmedia_privacy_enable() {
 	if ( isset( $rtmedia->options['privacy_enabled'] ) && 0 !== intval( $rtmedia->options['privacy_enabled'] ) ) {
 		return true;
 	}
-
+	
 	return false;
 
 }
