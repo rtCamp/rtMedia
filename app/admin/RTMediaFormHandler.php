@@ -612,17 +612,22 @@ class RTMediaFormHandler {
 	 * @return void
 	 */
 	static function rtm_export_import() {
+
 		global $rtmedia;
 		$render_options = self::render_export_import();
+
 		/**
 		 * Filter 'rtmedia_export_import_add_itmes' to modify controls in export/import settings tab
+		 *
 		 * @since 4.4.8
 		 */
 		$render_options          = apply_filters( 'rtmedia_export_import_add_itmes', $render_options );
 		$export_import_group     = array();
 		$export_import_group[10] = esc_html__( 'Export/Import Settings', 'buddypress-media' );
+
 		/**
 		 * Filter 'rtmedia_export_import_groups' to modify groups in export/import settings tab
+		 *
 		 * @since 4.4.8
 		 */
 		$export_import_group = apply_filters( 'rtmedia_export_import_groups', $export_import_group );

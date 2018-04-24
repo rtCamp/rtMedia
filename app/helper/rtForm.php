@@ -1214,7 +1214,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 */
 		public function display_file_input( $args ) {
 
-			echo $this->get_file_input( $args );
+			echo $this->get_file_input( $args ); // WPCS: XSS ok.
 		}
 	}
 

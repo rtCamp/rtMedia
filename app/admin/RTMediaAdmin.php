@@ -49,7 +49,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_action( 'wp_ajax_rtmedia_correct_upload_filetypes', array( $this, 'correct_upload_filetypes' ), 1 );
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_meta_premium_addon_link' ), 1, 2 );
 			add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widgets' ), 0 );
-			add_action( 'wp_ajax_rtmedia_export_settings', array( $this, 'export_settings' ), 1 );
+			add_action( 'wp_ajax_rtmedia_export_settings', array( $this, 'export_settings' ), 10 );
 			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array(
 				$this,
 				'rtmedia_hide_addon_update_notice',
@@ -1595,13 +1595,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			if ( md5( 'rtmedia-options' ) !== $settings_data['rtm_key'] ) {
 				$response['rtm_response']     = 'error';
-				$response['rtm_response_msg'] = esc_html__( 'Invalid JSON Supplied!', 'buddypress-media' );
+				$response['rtm_response_msg'] = esc_html__( 'Invalid JSON Supplied. The JSON you supplied is not exported from rtMedia!', 'buddypress-media' );
 				wp_send_json( $response );
 			}
 
 			unset( $settings_data['rtm_key'] );
-			$new_value = json_encode( $settings_data );
-			$old_value = json_encode( get_option( 'rtmedia-options' ) );
+			$new_value = wp_json_encode( $settings_data );
+			$old_value = wp_json_encode( get_option( 'rtmedia-options' ) );
 
 			if ( $new_value === $old_value ) {
 				$response['rtm_response']     = 'error';
