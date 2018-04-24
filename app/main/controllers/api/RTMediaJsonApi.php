@@ -1118,8 +1118,7 @@ class RTMediaJsonApi {
 				$args['media_author'] = (int) $media_author;
 			}
 		}
-
-		// FILTER_NULL_ON_FAILURE is only for boolean values, using it will return FALSE only.
+		
 		$page     = sanitize_text_field( filter_input( INPUT_POST, 'page', FILTER_SANITIZE_NUMBER_INT ) );
 		$per_page = sanitize_text_field( filter_input( INPUT_POST, 'per_page', FILTER_SANITIZE_NUMBER_INT ) );
 		$order_by = sanitize_text_field( filter_input( INPUT_POST, 'order_by', FILTER_SANITIZE_STRING ) );
