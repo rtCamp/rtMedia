@@ -77,6 +77,8 @@ function rtm_bp_message_media_add_upload_media_button() {
 				'is_up_shortcode' => false,
 				'allow_anonymous' => true,
 				'privacy_enabled' => false,
+				'context'         => 'message-media',
+				'context_id'      => get_current_user_id(),
 			]
 		);
 			?>
