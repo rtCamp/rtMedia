@@ -1342,8 +1342,13 @@ class RTMediaFormHandler {
 				</th>
 				<td>
 					<fieldset>
-						<span
-							class="rtm-field-wrap"><?php call_user_func( $option['callback'], $option['args'] ); ?></span>
+					<?php
+                    if ( is_callable( $option['callback'] )  ) {
+                    ?>
+                        <span class="rtm-field-wrap"><?php call_user_func( $option['callback'], $option['args'] ); ?></span>
+                    <?php
+                    }
+                	?>
 						<span class="rtm-tooltip">
 							<i class="dashicons dashicons-info rtmicon"></i>
 							<span class="rtm-tip">
