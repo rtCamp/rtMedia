@@ -197,13 +197,15 @@ class RTMediaInteraction {
 			}
 		}
 		if ( function_exists( 'bp_is_group' ) ) {
-			if ( bp_is_group() or bp_is_group_forum() or bp_is_group_forum_topic() ) {
-				if ( bp_is_group_forum_topic() ) {
-					$title .= $sep . bp_get_the_topic_title();
+			if ( bp_is_groups_component() ) {
+				if ( bp_is_group() or bp_is_group_forum_topic() ) {
+					if ( bp_is_group_forum_topic() ) {
+						$title .= $sep . bp_get_the_topic_title();
+						$sep    = $oldSep;
+					}
+					$title .= $sep . bp_get_current_group_name();
 					$sep = $oldSep;
 				}
-				$title .= $sep . bp_get_current_group_name();
-				$sep = $oldSep;
 			}
 		}
 		if ( function_exists( 'bp_get_displayed_user_fullname' ) && bp_displayed_user_id() != 0 ) {
