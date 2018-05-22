@@ -149,6 +149,12 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.4.8 [May 22, 2018] ###
+
+* FIXED
+
+	 * Fix issue with latest BuddyPress release.
+
 ### 4.4.7 [April 18, 2018] ###
 
 * ENHANCEMENTS
