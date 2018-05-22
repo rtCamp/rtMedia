@@ -989,7 +989,9 @@ class RTMedia {
 	}
 
 	function enqueue_scripts_styles() {
-		global $rtmedia;
+		global $rtmedia, $bp;
+		
+		$bp_template = get_option( '_bp_theme_package_id' );
 
 		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
@@ -1024,6 +1026,7 @@ class RTMedia {
 				'jquery',
 				'rt-mediaelement-wp',
 			), RTMEDIA_VERSION );
+			wp_localize_script( 'rtmedia-main', 'bp_template_pack', $bp_template );
 		}
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_ajax_url', admin_url( 'admin-ajax.php' ) );
