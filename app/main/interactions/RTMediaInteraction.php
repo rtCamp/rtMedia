@@ -204,7 +204,7 @@ class RTMediaInteraction {
 						$sep    = $oldSep;
 					}
 					$title .= $sep . bp_get_current_group_name();
-					$sep = $oldSep;
+					$sep    = $oldSep;
 				}
 			}
 		}
