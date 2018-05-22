@@ -1407,7 +1407,10 @@ jQuery( document ).ready( function( $ ) {
 
 				};
 				options.success = function( response ) {
-					orignalSuccess( response );
+					if ( orignalSuccess ) {
+                                            orignalSuccess( response );
+                                        }
+
 					if ( response[0] + response[1] == '-1' ) {
 						//Error
 
@@ -1440,6 +1443,12 @@ jQuery( document ).ready( function( $ ) {
 							//videoHeight: 1
 						} );
 
+                                                // For BuddyPress New Template hacks
+                                                jQuery( '.plupload_filelist_content.rtm-plupload-list' ).html('');
+                                                var rtmedia_terms_conditions = $( '#rtmedia_upload_terms_conditions' );
+                                                if ( rtmedia_terms_conditions && rtmedia_terms_conditions.is(':checked') ) {
+                                                    rtmedia_terms_conditions.prop( 'checked', false );
+                                                }
 
 						rtMediaHook.call( 'rtmedia_js_after_activity_added', [ ] );
 					}
