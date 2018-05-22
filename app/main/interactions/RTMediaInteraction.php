@@ -201,7 +201,7 @@ class RTMediaInteraction {
 				if ( bp_is_group() or bp_is_group_forum_topic() ) {
 					if ( bp_is_group_forum_topic() ) {
 						$title .= $sep . bp_get_the_topic_title();
-						$sep = $oldSep;
+						$sep    = $oldSep;
 					}
 					$title .= $sep . bp_get_current_group_name();
 					$sep = $oldSep;
