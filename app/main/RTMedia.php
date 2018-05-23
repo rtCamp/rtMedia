@@ -989,10 +989,10 @@ class RTMedia {
 	}
 
 	function enqueue_scripts_styles() {
-		global $rtmedia, $bp;
+		global $rtmedia, $bp, $rtmedia_interaction;
 		
 		$bp_template = get_option( '_bp_theme_package_id' );
-
+		
 		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement-wp', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.min.css', '', RTMEDIA_VERSION );
@@ -1252,7 +1252,16 @@ class RTMedia {
 		if ( empty( $is_buddypress_activate ) ) {
 			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
 		}
-
+		
+		// Only Applay if BP Template Nouveau is activate.
+		if ( ! empty( $bp_template ) && 'nouveau' === $bp_template && ( 'group' === $rtmedia_interaction->context->type || 'profile' === $rtmedia_interaction->context->type ) ) {
+			$rtmedia_router = new RTMediaRouter();
+			if ( ! empty( $rtmedia_router->query_vars ) ) {
+				$wp_current_stylesheet = get_stylesheet();
+				wp_enqueue_style( 'bp-neavuaue-stylesheet-theme', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/'. $wp_current_stylesheet . ".min.css" );
+				wp_enqueue_style( 'bp-neavuaue-stylesheet-buddypress', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/buddypress.min.css', '' );
+			}
+		}
 	}
 
 	function set_bp_bar() {
