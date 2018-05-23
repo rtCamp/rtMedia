@@ -254,18 +254,19 @@ jQuery( 'document' ).ready( function( $ ) {
 	});
 	//Rtmedia_lightbox_enabled from setting
 	if ( typeof( rtmedia_lightbox_enabled ) != 'undefined' && rtmedia_lightbox_enabled == '1' ) {
-                // User Mutation Observer For BP Nouveoue
-                if ( bp_template_pack && bp_template_pack === 'nouveau' ) {
-                    var targetNode = document.getElementById('activity-stream');
-                    var config = { attributes: true, childList: true, subtree: true };
-                    var callback = function( mutationList ) {
-                        apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
-                    }
-                    var observer = new MutationObserver(callback);
-                    observer.observe(targetNode, config);
-                } else {
+            // User Mutation Observer For BP Nouveoue Template Only
+            var targetNode = document.getElementById('activity-stream');
+            if ( targetNode && bp_template_pack && bp_template_pack === 'nouveau' ) {
+                var config = { attributes: true, childList: true, subtree: true };
+                var callback = function( mutationList ) {
                     apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
                 }
+                var observer = new MutationObserver(callback);
+                observer.observe(targetNode, config);
+            }
+            else {
+                apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
+            }
 	}
 
 	jQuery.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
