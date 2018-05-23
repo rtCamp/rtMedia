@@ -1407,7 +1407,8 @@ jQuery( document ).ready( function( $ ) {
 
 				};
 				options.success = function( response ) {
-					if ( orignalSuccess ) {
+                                        // For BuddyPress Nouveau Template.
+					if ( orignalSuccess && 'function' === typeof orignalSuccess ) {
                                             orignalSuccess( response );
                                         }
 
@@ -2097,7 +2098,9 @@ function rtmedia_activity_comment_js_add_media_id(){
 				}
 			};
 			options.success = function( response ) {
-				orignalSuccess( response );
+                                if ( orignalSuccess && 'function' === typeof orignalSuccess ) {
+                                    orignalSuccess( response );
+                                }
 				if ( response[0] + response[1] == '-1' ) {
 					//Error
 
