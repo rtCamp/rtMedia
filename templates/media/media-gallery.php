@@ -14,7 +14,13 @@ $rand_id = rand( 0, 1000 );
 		?>
 		<div id="rtm-gallery-title-container" class="clearfix rtm-gallery-shortcode-title-container">
 			<h2 class="rtm-gallery-title">
-				<?php esc_html_e( 'Media Gallery', 'buddypress-media' ); ?>
+				<?php
+				if ( $title ) {
+					echo esc_html( $title );
+				} else {
+					esc_html_e( 'Media Gallery', 'buddypress-media' );
+				}
+				?>
 			</h2>
 
 			<?php do_action( 'rtmedia_gallery_after_title' ); ?>
