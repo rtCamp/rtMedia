@@ -4179,3 +4179,231 @@ function rtmedia_number_to_human_readable( $n ) {
 	}
 }
 
+
+/**
+ * Activity exporter with attachments for GDPR
+ *
+ * @param String $email_address to  make the request and then sends then a link to click to confirm their request.
+ * @param String $page  to avoid plugins potentially causing timeouts by attempting to erase all the personal data they’ve collected at once.
+ * @return Array Return the data to be export and status to tell core if we have more comments to work on still.
+ */
+function rtmedia_activity_exporter( $email_address, $page = 1 ) {
+	$number = 500; // Limit us to avoid timing out.
+	$page   = (int) $page;
+
+	$export_items = array();
+
+	global $wpdb;
+
+	if ( bp_has_activities( bp_ajax_querystring( 'activity' ) . '&user_id=' . get_user_by( 'email', $email_address )->ID ) ) {
+		while ( bp_activities() ) {
+			bp_the_activity();
+			$activity_content = wp_strip_all_tags( bp_get_activity_content_body() );
+			$activity_date    = bp_get_activity_date_recorded();
+			$activity_id      = bp_get_activity_id();
+			$item_id          = 'activity-' . $activity_id;
+			$group_id         = 'activity';
+			$group_label      = __( 'rtMedia Activities' );
+
+			$query       = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $activity_id );
+			$results     = $wpdb->get_results( $query );
+			$attachments = '';
+			foreach ( $results as $result ) {
+				$url          = wp_get_attachment_url( $result->media_id );
+				$attachments .= $result->media_title . " : <a href='$url'>$url</a><br />";
+			}
+
+			$data = array(
+				array(
+					'name'  => __( 'Activity Date' ),
+					'value' => $activity_date,
+				),
+				array(
+					'name'  => __( 'Activity Content' ),
+					'value' => $activity_content,
+				),
+				array(
+					'name'  => __( 'Attachments' ),
+					'value' => empty( $attachments ) ? 'No attachments' : $attachments,
+				),
+			);
+
+			$export_items[] = array(
+				'group_id'    => $group_id,
+				'group_label' => $group_label,
+				'item_id'     => $item_id,
+				'data'        => $data,
+			);
+		}
+	}
+	$done = bp_get_activity_count() < $number;
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}
+
+/**
+ * Activity Comment exporter with attachments for GDPR
+ *
+ * @param String $email_address to  make the request and then sends then a link to click to confirm their request.
+ * @param String $page  to avoid plugins potentially causing timeouts by attempting to erase all the personal data they’ve collected at once.
+ * @return Array Return the data to be export and status to tell core if we have more comments to work on still.
+ */
+function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
+	$number = 500; // Limit us to avoid timing out.
+	$page   = (int) $page;
+
+	$export_items = array();
+
+	global $wpdb;
+	$query         = $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='activity_comment'  LIMIT $number OFFSET %d", get_user_by( 'email', $email_address )->ID, $number * ( $page - 1 ) );
+	$comments      = $wpdb->get_results( $query );
+	$comment_count = $wpdb->num_rows;
+	foreach ( $comments as $comment ) {
+		$comment_content = wp_strip_all_tags( $comment->content );
+		$comment_date    = $comment->date_recorded;
+		$item_id         = 'activity-comment-' . $comment->id;
+		$group_id        = 'activity-comment';
+		$group_label     = __( 'rtMedia Activity Comments' );
+
+		$query       = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $comment->id );
+		$results     = $wpdb->get_results( $query );
+		$attachments = '';
+		foreach ( $results as $result ) {
+			$url          = wp_get_attachment_url( $result->media_id );
+			$attachments .= $result->media_title . " : <a href='$url'>$url</a><br />";
+		}
+
+		$data = array(
+			array(
+				'name'  => __( 'Comment Date' ),
+				'value' => $comment_date,
+			),
+			array(
+				'name'  => __( 'Comment Content' ),
+				'value' => $comment_content,
+			),
+			array(
+				'name'  => __( 'Attachments' ),
+				'value' => empty( $attachments ) ? 'No attachments' : $attachments,
+			),
+		);
+
+		$export_items[] = array(
+			'group_id'    => $group_id,
+			'group_label' => $group_label,
+			'item_id'     => $item_id,
+			'data'        => $data,
+		);
+	}
+	$done = $comment_count < $number;
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}
+
+/**
+ * Media view exporter for GDPR
+ *
+ * @param String $email_address to  make the request and then sends then a link to click to confirm their request.
+ * @param String $page  to avoid plugins potentially causing timeouts by attempting to erase all the personal data they’ve collected at once.
+ * @return Array Return the data to be export and status to tell core if we have more comments to work on still.
+ */
+function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
+	$number = 500; // Limit us to avoid timing out.
+	$page   = (int) $page;
+
+	$export_items = array();
+
+	global $wpdb;
+	$query = $wpdb->prepare( 'SELECT interaction.*,media.media_id FROM ' . $wpdb->prefix . 'rt_rtm_media_interaction as interaction, ' . $wpdb->prefix . "rt_rtm_media as media WHERE interaction.user_id=%d and interaction.action='view' and media.id = interaction.media_id LIMIT $number OFFSET %d", get_user_by( 'email', $email_address )->ID, $number * ( $page - 1 ) );
+	$views = $wpdb->get_results( $query );
+	foreach ( $views as $view ) {
+		$no_of_views     = $view->value;
+		$first_view_date = $view->action_date;
+		$item_id         = 'media-view' . $view->id;
+		$group_id        = 'media-view';
+		$media_url       = wp_get_attachment_url( $view->media_id );
+		$media_url       = "<a href='$media_url'>$media_url</a>";
+		$group_label     = __( 'rtMedia Media Views' );
+
+		$data = array(
+			array(
+				'name'  => __( 'Media URL' ),
+				'value' => $media_url,
+			),
+			array(
+				'name'  => __( 'Number of Views' ),
+				'value' => $no_of_views,
+			),
+			array(
+				'name'  => __( 'Date of First View' ),
+				'value' => $first_view_date,
+			),
+		);
+
+		$export_items[] = array(
+			'group_id'    => $group_id,
+			'group_label' => $group_label,
+			'item_id'     => $item_id,
+			'data'        => $data,
+		);
+	}
+	$done = $wpdb->num_rows < $number;
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}
+
+
+/**
+ * Media Like exporter with attachments for GDPR
+ *
+ * @param String $email_address to  make the request and then sends then a link to click to confirm their request.
+ * @param String $page  to avoid plugins potentially causing timeouts by attempting to erase all the personal data they’ve collected at once.
+ * @return Array Return the data to be export and status to tell core if we have more comments to work on still.
+ */
+function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
+	$number = 500; // Limit us to avoid timing out.
+	$page   = (int) $page;
+
+	$export_items = array();
+
+	global $wpdb;
+	$query = $wpdb->prepare( 'DELETE FROM ' . $wpdb->prefix . "rt_rtm_media_interaction WHERE user_id=%d and action='like'", get_user_by( 'email', $email_address )->ID );
+	$likes = $wpdb->get_results( $query );
+	foreach ( $likes as $like ) {
+		$like_date   = $like->action_date;
+		$item_id     = 'media-like' . $like->id;
+		$group_id    = 'media-like';
+		$media_url   = wp_get_attachment_url( $like->media_id );
+		$media_url   = "<a href='$media_url'>$media_url</a>";
+		$group_label = __( 'rtMedia Media Likes' );
+
+		$data = array(
+			array(
+				'name'  => __( 'Media URL' ),
+				'value' => $media_url,
+			),
+			array(
+				'name'  => __( 'Date' ),
+				'value' => $like_date,
+			),
+		);
+
+		$export_items[] = array(
+			'group_id'    => $group_id,
+			'group_label' => $group_label,
+			'item_id'     => $item_id,
+			'data'        => $data,
+		);
+	}
+	$done = $wpdb->num_rows < $number;
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}

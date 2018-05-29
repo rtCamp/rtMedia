@@ -853,3 +853,37 @@ if ( ! function_exists( 'rtmedia_gallery_shortcode_parameter_pre_filter_callback
 }
 add_filter( 'rtmedia_gallery_shortcode_parameter_pre_filter', 'rtmedia_gallery_shortcode_parameter_pre_filter_callback', 10, 1 );
 
+
+/**
+ * Add exporters to queue
+ *
+ * @param  array $exporters Exporter queue.
+ * @return array
+ */
+function register_rtmedia_exporter($exporters)
+{
+	$exporters['buddypress-media-activity'] = array(
+		'exporter_friendly_name' => __('rtMedia Activities'),
+		'callback' => 'rtmedia_activity_exporter',
+	);
+	$exporters['buddypress-media-comment'] = array(
+		'exporter_friendly_name' => __('rtMedia Comments'),
+		'callback' => 'rtmedia_activity_comments_exporter',
+	);
+	$exporters['buddypress-media-views'] = array(
+		'exporter_friendly_name' => __('rtMedia Media Views'),
+		'callback' => 'rtmedia_media_view_exporter',
+	);
+	$exporters['buddypress-media-likes'] = array(
+		'exporter_friendly_name' => __('rtMedia Media Likes'),
+		'callback' => 'rtmedia_media_like_exporter',
+	);
+
+	return $exporters;
+}
+
+add_filter(
+	'wp_privacy_personal_data_exporters',
+	'register_rtmedia_exporter',
+	10
+);
