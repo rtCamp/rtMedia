@@ -1026,6 +1026,7 @@ class RTMedia {
 				'jquery',
 				'rt-mediaelement-wp',
 			), RTMEDIA_VERSION );
+			// Locallzte for rtmedia js
 			wp_localize_script( 'rtmedia-main', 'bp_template_pack', $bp_template );
 		}
 
@@ -1093,6 +1094,9 @@ class RTMedia {
 		$rtmedia_backbone_strings = array(
 			'rtm_edit_file_name' => esc_html__( 'Edit File Name', 'buddypress-media' ),
 		);
+		
+		// Localise fot rtmedia-backcone js
+		wp_localize_script( 'rtmedia-backbone', 'bp_template_pack', $bp_template );
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_strings', $rtmedia_backbone_strings );
 
