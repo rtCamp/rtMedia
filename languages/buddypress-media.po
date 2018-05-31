@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.4.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2018-05-22 06:15:22+00:00\n"
+"POT-Creation-Date: 2018-05-31 06:48:37+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
-"X-Generator: grunt-wp-i18n1.0.1\n"
+"X-Generator: grunt-wp-i18n1.0.2\n"
 
 #: app/admin/RTMediaAdmin.php:147
 msgid ""
@@ -472,7 +472,7 @@ msgid "Need to specify atleast two radios, else use a checkbox instead"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:280 templates/media/album-gallery.php:67
-#: templates/media/media-gallery.php:95
+#: templates/media/media-gallery.php:101
 msgid "Load More"
 msgstr ""
 
@@ -1517,7 +1517,6 @@ msgid "New Feature"
 msgstr ""
 
 #: app/helper/RTMediaSupport.php:178
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:284
 msgid "Submit"
 msgstr ""
 
@@ -2345,7 +2344,7 @@ msgstr ""
 msgid "Description:"
 msgstr ""
 
-#: app/main/RTMedia.php:1087 templates/media/media-gallery.php:103
+#: app/main/RTMedia.php:1087 templates/media/media-gallery.php:109
 msgid "Oops !! There's no media found for the request !!"
 msgstr ""
 
@@ -3238,7 +3237,7 @@ msgstr ""
 msgid "Sorry !! You can not edit this album."
 msgstr ""
 
-#: templates/media/media-gallery.php:17 templates/media/media-gallery.php:48
+#: templates/media/media-gallery.php:21 templates/media/media-gallery.php:54
 msgid "Media Gallery"
 msgstr ""
 
@@ -3254,323 +3253,14 @@ msgstr ""
 msgid "under"
 msgstr ""
 
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/internationalized-plugin.php:11
-msgid "This is a dummy plugin"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:42
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:72
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:80
-msgid "There was an error when reading this WXR file"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:43
-msgid ""
-"Details are shown above. The importer will now try again with a different "
-"parser..."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:84
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:89
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:306
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:495
-msgid "This does not appear to be a WXR file, missing/invalid WXR version number"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:132
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:141
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:192
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:196
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:205
-msgid "Sorry, there has been an error."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:133
-msgid "The file does not exist, please try again."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:176
-msgid "All done."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:176
-msgid "Have fun!"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:177
-msgid "Remember to update the passwords and roles of imported users."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:197
-msgid ""
-"The export file could not be found at <code>%s</code>. It is likely that "
-"this was caused by a permissions problem."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:213
-msgid ""
-"This WXR file (version %s) may not be supported by this version of the "
-"importer. Please consider updating."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:238
-msgid ""
-"Failed to import author %s. Their posts will be attributed to the current "
-"user."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:264
-msgid "Assign Authors"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:265
-msgid ""
-"To make it easier for you to edit and save the imported content, you may "
-"want to reassign the author of the imported item to an existing user of "
-"this site. For example, you may want to import all the entries as "
-"<code>admin</code>s entries."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:267
-msgid ""
-"If a new user is created by WordPress, a new password will be randomly "
-"generated and the new user&#8217;s role will be set as %s. Manually "
-"changing the new user&#8217;s details will be necessary."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:277
-msgid "Import Attachments"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:280
-msgid "Download and import file attachments"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:297
-msgid "Import author:"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:308
-msgid "or create new user with login name:"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:311
-msgid "as a new user:"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:319
-msgid "assign posts to an existing user:"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:321
-msgid "or assign posts to an existing user:"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:322
-msgid "- Select -"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:372
-msgid ""
-"Failed to create new user for %s. Their posts will be attributed to the "
-"current user."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:424
-msgid "Failed to import category %s"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:467
-msgid "Failed to import post tag %s"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:516
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:738
-msgid "Failed to import %s %s"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:605
-msgid "Failed to import &#8220;%s&#8221;: Invalid post type %s"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:642
-msgid "%s &#8220;%s&#8221; already exists."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:704
-msgid "Failed to import %s &#8220;%s&#8221;"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:869
-msgid "Menu item skipped due to missing menu slug"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:876
-msgid "Menu item skipped due to invalid menu slug: %s"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:939
-msgid "Fetching attachments is not enabled"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:952
-msgid "Invalid file type"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:996
-msgid "Remote server did not respond"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1002
-msgid "Remote server returned error response %1$d %2$s"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1009
-msgid "Remote file is incorrect size"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1014
-msgid "Zero size file downloaded"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1020
-msgid "Remote file is too large, limit is %s"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1119
-msgid "Import WordPress"
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1126
-msgid ""
-"A new version of this importer is available. Please update to version %s to "
-"ensure compatibility with newer export files."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1141
-msgid ""
-"Howdy! Upload your WordPress eXtended RSS (WXR) file and we&#8217;ll import "
-"the posts, pages, comments, custom fields, categories, and tags into this "
-"site."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1142
-msgid "Choose a WXR (.xml) file to upload, then click Upload file and import."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/wordpress-importer.php:1216
-msgid ""
-"Import <strong>posts, pages, comments, custom fields, categories, and "
-"tags</strong> from a WordPress export file."
-msgstr ""
-
-#: tests/codeception/vendor/lucatume/wp-browser/src/data/themedir1/internationalized-theme/functions.php:7
-msgid "This is a dummy theme"
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/core-command/src/Core_Command.php:651
-msgid "Wildcard DNS may not be configured correctly."
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/cron-command/src/Cron_Event_Command.php:428
-msgid "%s year"
-msgid_plural "%s years"
-msgstr[0] ""
-msgstr[1] ""
-
-#: tests/codeception/vendor/wp-cli/cron-command/src/Cron_Event_Command.php:429
-msgid "%s month"
-msgid_plural "%s months"
-msgstr[0] ""
-msgstr[1] ""
-
-#: tests/codeception/vendor/wp-cli/cron-command/src/Cron_Event_Command.php:430
-msgid "%s week"
-msgid_plural "%s weeks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: tests/codeception/vendor/wp-cli/cron-command/src/Cron_Event_Command.php:431
-msgid "%s day"
-msgid_plural "%s days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: tests/codeception/vendor/wp-cli/cron-command/src/Cron_Event_Command.php:432
-msgid "%s hour"
-msgid_plural "%s hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: tests/codeception/vendor/wp-cli/cron-command/src/Cron_Event_Command.php:433
-msgid "%s minute"
-msgid_plural "%s minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: tests/codeception/vendor/wp-cli/cron-command/src/Cron_Event_Command.php:434
-msgid "%s second"
-msgid_plural "%s seconds"
-msgstr[0] ""
-msgstr[1] ""
-
-#: tests/codeception/vendor/wp-cli/entity-command/src/Site_Command.php:118
-msgid "Uncategorized"
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/export-command/src/Export_Command.php:339
-msgid "Invalid start ID: %d"
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/export-command/src/WP_Export_File_Writer.php:15
-#: tests/codeception/vendor/wp-cli/export-command/src/WP_Export_Split_Files_Writer.php:63
-msgid "WP Export: error opening %s for writing."
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/export-command/src/WP_Export_File_Writer.php:32
-#: tests/codeception/vendor/wp-cli/export-command/src/WP_Export_Split_Files_Writer.php:51
-msgid "WP Export: error writing to export file."
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/export-command/src/WP_Export_Query.php:348
-msgid "Term is missing a parent: %s (%d)"
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/export-command/src/WP_Export_XML_Over_HTTP.php:19
-#: tests/codeception/vendor/wp-cli/export-command/src/WP_Export_XML_Over_HTTP.php:23
-msgid "Export Error"
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/extension-command/src/WP_CLI/CommandWithUpgrade.php:607
-msgid " Try again"
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/extension-command/src/WP_CLI/CommandWithUpgrade.php:612
-msgid "API error. Try Again."
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/media-command/src/Media_Command.php:142
-msgid "image"
-msgid_plural "images"
-msgstr[0] ""
-msgstr[1] ""
-
-#: tests/codeception/vendor/wp-cli/wp-cli/php/utils-wp.php:192
-msgid "Inactive Widgets"
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/wp-cli/php/utils-wp.php:195
-msgid "Drag widgets here to remove them from the sidebar but keep their settings."
-msgstr ""
-
 #. Plugin Name of the plugin/theme
 msgid "rtMedia for WordPress, BuddyPress and bbPress"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
 msgid ""
-"https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign="
-"buddypress-media"
+"https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_"
+"campaign=buddypress-media"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -3582,8 +3272,8 @@ msgstr ""
 
 #. Author URI of the plugin/theme
 msgid ""
-"http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign="
-"buddypress-media"
+"http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_"
+"campaign=buddypress-media"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaAlbum.php:35
@@ -3594,16 +3284,4 @@ msgstr ""
 #: app/main/controllers/template/RTMediaNav.php:41
 msgctxt "My Account Privacy sub nav"
 msgid "Privacy"
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/core-command/src/Core_Command.php:429
-#: tests/codeception/vendor/wp-cli/core-command/src/Core_Command.php:502
-msgctxt "Default network name"
-msgid "%s Sites"
-msgstr ""
-
-#: tests/codeception/vendor/wp-cli/entity-command/src/Site_Command.php:121
-#. translators: Default category slug
-msgctxt "Default category slug"
-msgid "Uncategorized"
 msgstr ""
