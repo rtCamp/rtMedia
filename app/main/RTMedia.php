@@ -591,7 +591,7 @@ class RTMedia {
 			'general_showAdminMenu'       => ( isset( $bp_media_options['show_admin_menu'] ) ) ? $bp_media_options['show_admin_menu'] : 0,
 			'general_videothumbs'         => 2,
 			'general_jpeg_image_quality'  => 90,
-			'general_AllowUserData'       => 1,
+			'general_AllowUserData'       => 0,
 		);
 
 		foreach ( $this->allowed_types as $type ) {

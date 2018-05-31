@@ -92,9 +92,9 @@ module.exports = function ( grunt ) {
 			},
 			adminUploadTerms: {
 				src: [
-					'app/assets/admin/js/admin-upload-terms.js'
+					'app/assets/js/admin-upload-terms.js'
 				],
-				dest: 'app/assets/admin/js/admin-upload-terms.min.js'
+				dest: 'app/assets/js/admin-upload-terms.min.js'
 			},
 			backend: {
 				src: [
