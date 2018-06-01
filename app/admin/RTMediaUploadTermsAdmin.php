@@ -37,6 +37,7 @@ class RTMediaUploadTermsAdmin {
 	function add_admin_option_default_value( $defaults ) {
 
 		$defaults['general_enable_upload_terms'] = 0;
+		$defaults['general_upload_terms_show_pricacy_message'] = 0;
 		$defaults['activity_enable_upload_terms'] = 0;
 		$defaults['general_upload_terms_page_link'] = '';
 
@@ -133,6 +134,26 @@ class RTMediaUploadTermsAdmin {
 				'key' => 'general_upload_terms_error_message',
 				'value' => isset( $options['general_upload_terms_error_message'] ) ? $options['general_upload_terms_error_message'] : $this->upload_terms_error_message,
 				'desc' => __( 'Display Error Message When User Upload Media Without selecting checkbox .', 'buddypress-media' ),
+			),
+			'group' => 40,
+		);
+		$render_options['general_upload_terms_show_pricacy_message'] = array(
+			'title' => __( 'Show "Privacy Message" on website', 'buddypress-media' ),
+			'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+			'args' => array(
+				'key' => 'general_upload_terms_show_pricacy_message',
+				'value' => $options['general_upload_terms_show_pricacy_message'],
+				'desc' => __( 'User will see the privacy message on website.', 'buddypress-media' ),
+			),
+			'group' => 40,
+		);
+		$render_options['general_upload_terms_privacy_message'] = array(
+			'title' => __( 'Privacy Message', 'buddypress-media' ),
+			'callback' => array( 'RTMediaFormHandler', 'textarea' ),
+			'args' => array(
+				'key' => 'general_upload_terms_privacy_message',
+				'value' => isset( $options['general_upload_terms_privacy_message'] ) ? $options['general_upload_terms_privacy_message'] : '',
+				'desc' => __( 'Display privacy message on your website.', 'buddypress-media' ),
 			),
 			'group' => 40,
 		);

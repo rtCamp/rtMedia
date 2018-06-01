@@ -7,18 +7,20 @@
 /**
  * Add Validation For Extra New Field
  * Remove Functionality And Create Function For Decrease Code. :)
- * By: Yahil
+ * By: Yahil and Malav
  */
 jQuery( document ).ready( function ( $ ) {
     var error_count = 0;
-    var general_enable_upload_terms        = jQuery('input[name^="rtmedia-options[general_enable_upload_terms]"]');
-    var activity_enable_upload_terms       = jQuery('input[name^="rtmedia-options[activity_enable_upload_terms]"]');
-    var general_upload_terms_page_link     = jQuery('input[name^="rtmedia-options[general_upload_terms_page_link]"]');
-    var general_upload_terms_message       = jQuery('input[name^="rtmedia-options[general_upload_terms_message]"]');
-    var general_upload_terms_error_message = jQuery('input[name^="rtmedia-options[general_upload_terms_error_message]"]');
+    var general_enable_upload_terms               = jQuery('input[name^="rtmedia-options[general_enable_upload_terms]"]');
+    var activity_enable_upload_terms              = jQuery('input[name^="rtmedia-options[activity_enable_upload_terms]"]');
+    var general_upload_terms_page_link            = jQuery('input[name^="rtmedia-options[general_upload_terms_page_link]"]');
+    var general_upload_terms_message              = jQuery('input[name^="rtmedia-options[general_upload_terms_message]"]');
+    var general_upload_terms_error_message        = jQuery('input[name^="rtmedia-options[general_upload_terms_error_message]"]');
+    var general_upload_terms_show_pricacy_message = jQuery('input[name^="rtmedia-options[general_upload_terms_show_pricacy_message]"]');
+    var general_upload_terms_privacy_message      = jQuery('textarea[name^="rtmedia-options[general_upload_terms_privacy_message]"]');
 
     rtp_terms_option_toggle();
-    jQuery('input[name^="rtmedia-options[general_enable_upload_terms]"], input[name^="rtmedia-options[activity_enable_upload_terms]"]').change(function(){
+    jQuery('input[name^="rtmedia-options[general_enable_upload_terms]"], input[name^="rtmedia-options[activity_enable_upload_terms]"], input[name^="rtmedia-options[general_upload_terms_show_pricacy_message]"]').change(function(){
         rtp_terms_option_toggle();
     });
     jQuery('#bp-media-settings-boxes').on('submit', '#bp_media_settings_form, .rtmedia-settings-submit', function (e) {
@@ -50,6 +52,18 @@ jQuery( document ).ready( function ( $ ) {
                 }
             }
         }
+        if(return_code && general_upload_terms_show_pricacy_message.length > 0 && typeof general_upload_terms_show_pricacy_message != "undefined") {
+            var error_msg = "";
+            if ( general_upload_terms_show_pricacy_message.prop('checked') ) {
+                jQuery( '.error_msg' ).remove();
+
+                /* Check "Terms of Service Message" Emply Or Not */
+                if ( general_upload_terms_privacy_message.val().trim() == '') {
+                     error_msg += 'Please enter privacy message.';
+                    return rtp_show_error_message ( general_upload_terms_privacy_message, error_msg );
+                }
+            }
+        }
     });
 
     /* Show Error Message If Incorrect Validation  */
@@ -65,8 +79,8 @@ jQuery( document ).ready( function ( $ ) {
 
     /**
      * Show/Hide InputBox
-     * If Terms of Service Off For "U"pload Screen" And "Activity Screen" Then Hide InputBox
-     * By: Yahil
+     * If Terms of Service Off For "Upload Screen" And "Activity Screen" Then Hide InputBox
+     * By: Yahil And Malav
      */
     function rtp_terms_option_toggle() {
          if (general_enable_upload_terms.prop('checked') == true || activity_enable_upload_terms.prop('checked') == true) {
@@ -78,5 +92,13 @@ jQuery( document ).ready( function ( $ ) {
              general_upload_terms_message.parents('.form-table').slideUp();
              general_upload_terms_error_message.parents('.form-table').slideUp();
          }
+
+         // Show privacy message
+         if(general_upload_terms_show_pricacy_message.prop('checked') == true) {
+            general_upload_terms_privacy_message.parents('.form-table').slideDown();
+         } else {
+            general_upload_terms_privacy_message.parents('.form-table').slideUp();
+         }
     }
 });
+

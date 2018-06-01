@@ -473,7 +473,6 @@ class RTMediaFormHandler {
 				),
 				'group'         => 100,
 				'depends'       => 'rtmedia_add_linkback',
-				'after_content' => esc_html__( 'Signup for', 'buddypress-media' ) . ' rtMedia ' . esc_html__( 'affiliate program', 'buddypress-media' ) . ' <a href="https://rtmedia.io/affiliates/">' . esc_html__( 'here', 'buddypress-media' ) . '</a>',
 			), //
 			'rtmedia_enable_api'    => array(
 				'title'         => esc_html__( 'Enable JSON API', 'buddypress-media' ),

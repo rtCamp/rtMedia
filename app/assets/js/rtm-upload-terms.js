@@ -114,3 +114,21 @@ function rtp_display_terms_warning ( selector, rt_alert_msg ) {
 	   selector.after('<span class="rt_alert_msg" style="color:red; display:block; clear:both;"> ' + rt_alert_msg + ' </span>');
 	}
 }
+
+/**
+ * Show/Hide Privacy Message On Front End
+ * Handle privacy message on website
+ * By: Malav Vasita
+ */
+function handle_privacy_message() {
+	jQuery( '#close_rtm_privacy_message' ).on( 'click', function(c) {
+		jQuery( '.privacy_message_wrapper' ).fadeOut( 'slow', function(c) {
+			jQuery( '.privacy_message_wrapper' ).remove();
+			jQuery.cookie("rtm_show_privacy_message", "view", { expires : 1, path: "/" });
+		});
+	});
+}
+
+jQuery( document ).ready( function() {
+	handle_privacy_message();
+} );

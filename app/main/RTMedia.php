@@ -1480,6 +1480,40 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
 	return $return_val;
 }
 
+function rtm_privacy_message_on_website( ) {
+	global $rtmedia;
+	$options = $rtmedia->options;
+
+	if( "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
+		echo "<div class='privacy_message_wrapper'><p>" . $options['general_upload_terms_privacy_message'] . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
+	}
+}
+add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
+
+/**
+ * Function to add privacy policy information in WordPress policy section.
+ */
+function rtm_plugin_privacy_information() {
+    $policy = '';
+    if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
+        $policy .= 'We collect your information during the checkout process on your purchase. The information collected from you may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing.<br/><br/>';
+        $policy .= '<b>Handling this data will also allow us to:</b><br/>';
+        $policy .= '- Send you important service information.<br/>';
+        $policy .= '- Respond to your queries or complaints.<br/>';
+        $policy .= '- Set up and administer your account, provide technical and/or customer support, and to verify your identity.<br/><br/>';
+        $policy .= '<b>Additionally we may also collect the following information:</b><br/>';
+        $policy .= '- Your comments and product reviews if you choose to leave them on our website.<br/>';
+        $policy .= '- Account email/password to allow you to access your account, if you have one.<br/>';
+        $policy .= '- If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.<br/>';
+        wp_add_privacy_policy_content(
+            __( 'rtMedia', 'buddypress-media' ),
+            __( $policy, 'buddypress-media' ) // phpcs:ignore
+        );
+    }
+}
+
+add_action( 'admin_init', 'rtm_plugin_privacy_information' );
+
 /**
  * This wraps up the main rtMedia class. Three important notes:
  *
