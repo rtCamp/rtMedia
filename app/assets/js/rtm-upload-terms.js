@@ -7,18 +7,14 @@
  */
 if (typeof rtMediaHook == 'object') {
 	rtMediaHook.register('rtmedia_js_upload_file', function (args) {
-		if (args == false)
-		{
+		if ( false == args ) {
 			return args;
 		}
 
 		var rt_alert_msg = ( ( typeof rtmedia_upload_terms_check_terms_message ) == "string" ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
 
-		if (jQuery('#rtmedia_upload_terms_conditions').length > 0)
-		{
-			if (!jQuery('#rtmedia_upload_terms_conditions').is(':checked'))
-			{
-				//typeof rtmedia_gallery_action_alert_message != 'undefined' ? rtmedia_gallery_action_alert_message(rt_alert_msg, 'warning') : alert(rt_alert_msg);
+		if (jQuery('#rtmedia_upload_terms_conditions').length > 0) {
+			if (!jQuery('#rtmedia_upload_terms_conditions').is(':checked')) {
 				var selector = jQuery( '.rtmedia-upload-terms' );
 				rtp_display_terms_warning ( selector, rt_alert_msg );
 				return false;
@@ -30,11 +26,9 @@ if (typeof rtMediaHook == 'object') {
 
 	rtMediaHook.register('rtmedia_js_before_activity_added', function (args) {
 		if ( typeof event !== typeof undefined && typeof event.target !== typeof undefined ) {
-		  if ( jQuery(event.target).attr('id') == 'aw-whats-new-submit' )
-			{
-			   if (jQuery('#rtmedia_upload_terms_conditions').length > 0)
-			   {
-					if (args == false) {
+		  if ( jQuery(event.target).attr('id') == 'aw-whats-new-submit' ) {
+			   if (jQuery('#rtmedia_upload_terms_conditions').length > 0) {
+					if ( false == args ) {
 						return args;
 					}
 
@@ -50,12 +44,6 @@ if (typeof rtMediaHook == 'object') {
 		}
 		return true;
 	});
-
-	/*rtMediaHook.register('rtmedia_js_after_activity_added', function () {
-		if (jQuery('#rtmedia_upload_terms_conditions').length > 0) {
-			jQuery('#rtmedia_upload_terms_conditions').removeAttr('checked');
-		}
-	});*/
 
 	/**
 	 * When Select Attribute for media [ rtmedia-custom-attributes: Add-Ons ] Issue:8,
@@ -81,7 +69,7 @@ jQuery(document).ready(function () {
 		if($( '#rtmedia_upload_terms_conditions' ).length > 0){
 			$( '#rtmedia_upload_terms_conditions' ).change(function(){
 				if ( $( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ){
-						$( '#aw-whats-new-submit' ).attr( 'disabled', false );
+					$( '#aw-whats-new-submit' ).attr( 'disabled', false );
 				} else {
 					$('#aw-whats-new-submit').attr( 'disabled', true );
 				}
@@ -111,6 +99,7 @@ jQuery(document).ready(function () {
 
 function rtp_display_terms_warning ( selector, rt_alert_msg ) {
 	if ( ! jQuery( '.rt_alert_msg' ).length ) {
+		var invalid_error_msg = jQuery( "<span />" ).attr('style', 'color:red; display:block; clear:both;').addClass( 'rt_alert_msg' ).html( rt_alert_msg );
 	   selector.after('<span class="rt_alert_msg" style="color:red; display:block; clear:both;"> ' + rt_alert_msg + ' </span>');
 	}
 }

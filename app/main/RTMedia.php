@@ -1485,7 +1485,7 @@ function rtm_privacy_message_on_website( ) {
 	$options = $rtmedia->options;
 
 	if( "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
-		echo "<div class='privacy_message_wrapper'><p>" . $options['general_upload_terms_privacy_message'] . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
+		echo "<div class='privacy_message_wrapper'><p>" . wp_kses_post( $options['general_upload_terms_privacy_message'] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
 	}
 }
 add_action( 'wp_footer', 'rtm_privacy_message_on_website' );

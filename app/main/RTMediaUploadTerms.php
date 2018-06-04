@@ -37,12 +37,12 @@ class RTMediaUploadTerms {
 
 		$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
 
-		if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options['styles_enabled'] ) && $rtmedia->options['styles_enabled'] == 0 ) ) {
+		if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options['styles_enabled'] ) && 0 == $rtmedia->options['styles_enabled'] ) ) {
 			wp_enqueue_style( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/css/rtm-upload-terms' . $suffix . '.css', '', RTMEDIA_VERSION );
 		}
 		wp_enqueue_script( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/js/rtm-upload-terms' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
-		wp_localize_script( 'rtmedia-upload-terms-main', 'rtmedia_upload_terms_check_terms_message', apply_filters( 'rtmedia_upload_terms_check_terms_message', esc_html__( $rtmedia->options['general_upload_terms_error_message'], 'buddypress-media' ) ) );
-		wp_localize_script( 'rtmedia-upload-terms-main', 'rtmedia_upload_terms_check_terms_default_message', apply_filters( 'rtmedia_upload_terms_check_terms_default_message', esc_html__( 'Please check Terms of Service.', 'buddypress-media' ) ) );
+		wp_localize_script( 'rtmedia-upload-terms-main', 'rtmedia_upload_terms_check_terms_message', esc_js( apply_filters( 'rtmedia_upload_terms_check_terms_message', __( $rtmedia->options['general_upload_terms_error_message'], 'buddypress-media' ) ) ) );
+		wp_localize_script( 'rtmedia-upload-terms-main', 'rtmedia_upload_terms_check_terms_default_message', esc_js( apply_filters( 'rtmedia_upload_terms_check_terms_default_message', __( 'Please check Terms of Service.', 'buddypress-media' ) ) ) );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class RTMediaUploadTerms {
 		$options       = $rtmedia->options;
 		$terms_content = '';
 
-		if ( ( isset( $options['general_enable_upload_terms'] ) && '0' != $options['general_enable_upload_terms'] ) && ( isset( $options['general_upload_terms_page_link'] ) && '' != $options['general_upload_terms_page_link'] ) ) {
+		if ( ( ! empty( $options['general_enable_upload_terms'] ) && '0' != $options['general_enable_upload_terms'] ) && ( ! empty( $options['general_upload_terms_page_link'] ) && '' != $options['general_upload_terms_page_link'] ) ) {
 			$terms_content = $this->terms_and_service_checkbox_html( $options );
 		}
 
@@ -77,7 +77,7 @@ class RTMediaUploadTerms {
 		$options       = $rtmedia->options;
 		$terms_content = '';
 
-		if ( ( isset( $options['activity_enable_upload_terms'] ) && '0' != $options['activity_enable_upload_terms'] ) && ( isset( $options['general_upload_terms_page_link'] ) && '' != $options['general_upload_terms_page_link'] ) ) {
+		if ( ( ! empty( $options['activity_enable_upload_terms'] ) && '0' != $options['activity_enable_upload_terms'] ) && ( ! empty( $options['general_upload_terms_page_link'] ) && '' != $options['general_upload_terms_page_link'] ) ) {
 			$terms_content = $this->terms_and_service_checkbox_html( $options );
 		}
 
@@ -91,11 +91,11 @@ class RTMediaUploadTerms {
 		$content = '<div class="rtmedia-upload-terms"> '
 		           . '<input type="checkbox" name="rtmedia_upload_terms_conditions" id="rtmedia_upload_terms_conditions" /> '
 		           . '<label for="rtmedia_upload_terms_conditions">'
-		           . apply_filters( 'rtmedia_upload_terms_service_agree_label', esc_html__( 'I agree to', 'buddypress-media' ) )
+		           . esc_html( apply_filters( 'rtmedia_upload_terms_service_agree_label', __( 'I agree to', 'buddypress-media' ) ) )
 		           . '&nbsp;'
-		           . "<a href='" . $options['general_upload_terms_page_link'] . "' target='_blank'>"
+		           . "<a href='" . esc_url( $options['general_upload_terms_page_link'] ) . "' target='_blank'>"
 		           // . apply_filters( 'rtmedia_upload_terms_service_link_label', __( 'Terms of Service', 'rtmedia' ) )
-		           . apply_filters( 'rtmedia_upload_terms_service_link_label', esc_html__( $options['general_upload_terms_message'], 'buddypress-media' ) )
+		           . esc_html( apply_filters( 'rtmedia_upload_terms_service_link_label', __( $options['general_upload_terms_message'], 'buddypress-media' ) ) )
 		           . '</a>'
 		           . '</label>'
 		           . '</div>';
