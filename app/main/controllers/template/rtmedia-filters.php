@@ -887,3 +887,27 @@ add_filter(
 	'register_rtmedia_exporter',
 	10
 );
+
+/**
+ * Add eraser to queue
+ *
+ * @param array $erasers Exporter queue.
+ * @return array
+ */
+function register_rtmedia_eraser( $erasers ) {
+	$erasers['buddypress-media']       = array(
+		'eraser_friendly_name' => __( 'rtMedia Eraser' ),
+		'callback'             => 'rtmedia_eraser',
+	);
+	$erasers['buddypress-media-likes'] = array(
+		'eraser_friendly_name' => __( 'rtMedia Likes Eraser' ),
+		'callback'             => 'rtmedia_like_eraser',
+	);
+	return $erasers;
+}
+
+add_filter(
+	'wp_privacy_personal_data_erasers',
+	'register_rtmedia_eraser',
+	10
+);
