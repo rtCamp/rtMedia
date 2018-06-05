@@ -853,3 +853,61 @@ if ( ! function_exists( 'rtmedia_gallery_shortcode_parameter_pre_filter_callback
 }
 add_filter( 'rtmedia_gallery_shortcode_parameter_pre_filter', 'rtmedia_gallery_shortcode_parameter_pre_filter_callback', 10, 1 );
 
+
+/**
+ * Add exporters to queue
+ *
+ * @param  array $exporters Exporter queue.
+ * @return array
+ */
+function register_rtmedia_exporter($exporters)
+{
+	$exporters['buddypress-media-activity'] = array(
+		'exporter_friendly_name' => __('rtMedia Activities'),
+		'callback' => 'rtmedia_activity_exporter',
+	);
+	$exporters['buddypress-media-comment'] = array(
+		'exporter_friendly_name' => __('rtMedia Comments'),
+		'callback' => 'rtmedia_activity_comments_exporter',
+	);
+	$exporters['buddypress-media-views'] = array(
+		'exporter_friendly_name' => __('rtMedia Media Views'),
+		'callback' => 'rtmedia_media_view_exporter',
+	);
+	$exporters['buddypress-media-likes'] = array(
+		'exporter_friendly_name' => __('rtMedia Media Likes'),
+		'callback' => 'rtmedia_media_like_exporter',
+	);
+
+	return $exporters;
+}
+
+add_filter(
+	'wp_privacy_personal_data_exporters',
+	'register_rtmedia_exporter',
+	10
+);
+
+/**
+ * Add eraser to queue
+ *
+ * @param array $erasers Exporter queue.
+ * @return array
+ */
+function register_rtmedia_eraser( $erasers ) {
+	$erasers['buddypress-media']       = array(
+		'eraser_friendly_name' => __( 'rtMedia Eraser' ),
+		'callback'             => 'rtmedia_eraser',
+	);
+	$erasers['buddypress-media-likes'] = array(
+		'eraser_friendly_name' => __( 'rtMedia Likes Eraser' ),
+		'callback'             => 'rtmedia_like_eraser',
+	);
+	return $erasers;
+}
+
+add_filter(
+	'wp_privacy_personal_data_erasers',
+	'register_rtmedia_eraser',
+	10
+);
