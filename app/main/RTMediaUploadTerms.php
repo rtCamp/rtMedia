@@ -47,10 +47,12 @@ class RTMediaUploadTerms {
 		global $rtmedia;
 
 		$suffix                             = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
-		$general_upload_terms_error_message = $rtmedia->options['general_upload_terms_error_message'];
-		if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options['styles_enabled'] ) && 0 === $rtmedia->options['styles_enabled'] ) ) {
+		$general_upload_terms_error_message = $rtmedia->options[ 'general_upload_terms_error_message' ];
+
+		if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options[ 'styles_enabled' ] ) && 0 === $rtmedia->options[ 'styles_enabled' ] ) ) {
 			wp_enqueue_style( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/css/rtm-upload-terms' . $suffix . '.css', '', RTMEDIA_VERSION );
 		}
+
 		wp_enqueue_script( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/js/rtm-upload-terms' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
 		wp_localize_script( 'rtmedia-upload-terms-main', 'rtmedia_upload_terms_check_terms_message', esc_js( apply_filters( 'rtmedia_upload_terms_check_terms_message', $general_upload_terms_error_message ) ) );
 		wp_localize_script( 'rtmedia-upload-terms-main', 'rtmedia_upload_terms_check_terms_default_message', esc_js( apply_filters( 'rtmedia_upload_terms_check_terms_default_message', __( 'Please check Terms of Service.', 'buddypress-media' ) ) ) );
@@ -98,7 +100,7 @@ class RTMediaUploadTerms {
 	/**
 	 * Checkbox of agree terms and condition at front-end.
 	 *
-	 * @param  array $options Options set from rtMedia settings.
+	 * @param  array  $options Options set from rtMedia settings.
 	 * @return string
 	 */
 	public function terms_and_service_checkbox_html( $options ) {

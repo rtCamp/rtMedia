@@ -1480,12 +1480,12 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
 	return $return_val;
 }
 
-function rtm_privacy_message_on_website( ) {
+function rtm_privacy_message_on_website() {
 	global $rtmedia;
 	$options = $rtmedia->options;
 
 	if( "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
-		echo "<div class='privacy_message_wrapper'><p>" . wp_kses_post( $options['general_upload_terms_privacy_message'] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
+		echo "<div class='privacy_message_wrapper'><p>" . wp_kses_post( $options[ 'general_upload_terms_privacy_message' ] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
 	}
 }
 add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
@@ -1496,15 +1496,24 @@ add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
 function rtm_plugin_privacy_information() {
     $policy = '';
     if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
-        $policy .= 'We collect your information during the checkout process on your purchase. The information collected from you may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing.<br/><br/>';
-        $policy .= '<b>Handling this data will also allow us to:</b><br/>';
-        $policy .= '- Send you important service information.<br/>';
-        $policy .= '- Respond to your queries or complaints.<br/>';
-        $policy .= '- Set up and administer your account, provide technical and/or customer support, and to verify your identity.<br/><br/>';
-        $policy .= '<b>Additionally we may also collect the following information:</b><br/>';
-        $policy .= '- Your comments and product reviews if you choose to leave them on our website.<br/>';
-        $policy .= '- Account email/password to allow you to access your account, if you have one.<br/>';
-        $policy .= '- If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.<br/>';
+		$policy .= esc_html__( 'We collect your information during the checkout process on your purchase. The information collected from you may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing.' );
+		$policy .= '<br/><br/><b>';
+		$policy .= esc_html__( 'Handling this data will also allow us to:' );
+		$policy .= '</b><br/>';
+		$policy .= esc_html__( '- Send you important service information.' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- Respond to your queries or complaints.' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- Set up and administer your account, provide technical and/or customer support, and to verify your identity.' );
+		$policy .= '<br/><br/><b>';
+		$policy .= esc_html__( 'Additionally we may also collect the following information:' );
+		$policy .= '</b><br/>';
+		$policy .= esc_html__( '- Your comments and product reviews if you choose to leave them on our website.' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- Account email/password to allow you to access your account, if you have one.' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.' );
+		$policy .= '<br/>';
         wp_add_privacy_policy_content(
             __( 'rtMedia', 'buddypress-media' ),
             $policy

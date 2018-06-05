@@ -4,23 +4,24 @@
  * This file sets the admin settings and handle feature of Upload Terms at admin side.
  *
  * @package rtMedia
- * @author Malav Vasita <malav.vasita@rtcamp.com>
+ * @author  Malav Vasita <malav.vasita@rtcamp.com>
  */
 
 /**
  *  Class for Admin settings regarding Upload Terms
  */
 class RTMediaUploadTermsAdmin {
+
 	/**
 	 * Message for lable on front end side.
 	 *
-	 * @var $upload_terms_message Message for lable on front end side.
+	 * @var string
 	 */
 	public $upload_terms_message;
 	/**
 	 * Error message for lable on front end side.
 	 *
-	 * @var $upload_terms_error_message Error message for lable on front end side.
+	 * @var string
 	 */
 	public $upload_terms_error_message;
 
@@ -58,28 +59,33 @@ class RTMediaUploadTermsAdmin {
 	 */
 	public function add_admin_option_default_value( $defaults ) {
 
-		$defaults['general_enable_upload_terms']               = 0;
-		$defaults['general_upload_terms_show_pricacy_message'] = 0;
-		$defaults['activity_enable_upload_terms']              = 0;
-		$defaults['general_upload_terms_page_link']            = '';
+		$defaults[ 'general_enable_upload_terms' ]               = 0;
+		$defaults[ 'general_upload_terms_show_pricacy_message' ] = 0;
+		$defaults[ 'activity_enable_upload_terms' ]              = 0;
+		$defaults[ 'general_upload_terms_page_link' ]            = '';
 
 		/**
 		 * If `Terms of Service Message` and `Error Message` and not set from admin setting then set default value
 		 */
 		global $rtmedia;
+
 		if ( empty( $rtmedia->options ) ) {
 			$rtmedia->options = rtmedia_get_site_option( 'rtmedia-options' );
 		}
 
 		if ( ! empty( $rtmedia->options ) ) {
 			$update = 0;
-			if ( empty( $rtmedia->options['general_upload_terms_message'] ) ) {
-				$rtmedia->options['general_upload_terms_message'] = $this->upload_terms_message;
+
+			if ( empty( $rtmedia->options[ 'general_upload_terms_message' ] ) ) {
+
+				$rtmedia->options[ 'general_upload_terms_message' ] = $this->upload_terms_message;
 
 				$update = 1;
 			}
-			if ( empty( $rtmedia->options['general_upload_terms_error_message'] ) ) {
-				$rtmedia->options['general_upload_terms_error_message'] = $this->upload_terms_error_message;
+
+			if ( empty( $rtmedia->options[ 'general_upload_terms_error_message' ] ) ) {
+
+				$rtmedia->options[ 'general_upload_terms_error_message' ] = $this->upload_terms_error_message;
 
 				$update = 1;
 			}
@@ -106,17 +112,17 @@ class RTMediaUploadTermsAdmin {
 	/**
 	 * Configure admin options to render
 	 *
-	 * @param  array $render_options  rendering according to selected options.
-	 * @param  array $options Options selected in settings.
+	 * @param  array $render_options  Rendering according to selected options.
+	 * @param  array $options         Options selected in settings.
 	 * @return array $render_option
 	 */
 	public function admin_setting_add_terms_option( $render_options, $options ) {
-		$render_options['general_enable_upload_terms']    = array(
+		$render_options[ 'general_enable_upload_terms' ]    = array(
 			'title'    => __( 'Show "Terms of Service" checkbox on upload screen', 'buddypress-media' ),
 			'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 			'args'     => array(
 				'key'   => 'general_enable_upload_terms',
-				'value' => $options['general_enable_upload_terms'],
+				'value' => $options[ 'general_enable_upload_terms' ],
 				'desc'  => __( 'User have to check the terms and conditions before uploading the media.', 'buddypress-media' ),
 			),
 			'group'    => 40,
@@ -127,7 +133,7 @@ class RTMediaUploadTermsAdmin {
 			'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 			'args'     => array(
 				'key'   => 'activity_enable_upload_terms',
-				'value' => $options['activity_enable_upload_terms'],
+				'value' => $options[ 'activity_enable_upload_terms' ],
 				'desc'  => __( 'User have to check the terms and conditions before uploading the media.', 'buddypress-media' ),
 			),
 			'group'    => 40,
@@ -137,18 +143,18 @@ class RTMediaUploadTermsAdmin {
 			'callback' => array( 'RTMediaFormHandler', 'textbox' ),
 			'args'     => array(
 				'key'   => 'general_upload_terms_page_link',
-				'value' => $options['general_upload_terms_page_link'],
+				'value' => $options[ 'general_upload_terms_page_link' ],
 				'desc'  => __( 'Link to the terms and condition page where user can read terms and conditions.', 'buddypress-media' ),
 			),
 			'group'    => 40,
 		);
 		// add extra field for admin setting.
-		$render_options['general_upload_terms_message']              = array(
+		$render_options[ 'general_upload_terms_message' ]              = array(
 			'title'    => __( 'Terms of Service Message', 'buddypress-media' ),
 			'callback' => array( 'RTMediaFormHandler', 'textbox' ),
 			'args'     => array(
 				'key'   => 'general_upload_terms_message',
-				'value' => isset( $options['general_upload_terms_message'] ) ? $options['general_upload_terms_message'] : $this->upload_terms_message,
+				'value' => isset( $options[ 'general_upload_terms_message' ] ) ? $options[ 'general_upload_terms_message' ] : $this->upload_terms_message,
 				'desc'  => __( 'Add Terms of Service Message.', 'buddypress-media' ),
 			),
 			'group'    => 40,
@@ -158,7 +164,7 @@ class RTMediaUploadTermsAdmin {
 			'callback' => array( 'RTMediaFormHandler', 'textbox' ),
 			'args'     => array(
 				'key'   => 'general_upload_terms_error_message',
-				'value' => isset( $options['general_upload_terms_error_message'] ) ? $options['general_upload_terms_error_message'] : $this->upload_terms_error_message,
+				'value' => isset( $options[ 'general_upload_terms_error_message' ] ) ? $options[ 'general_upload_terms_error_message' ] : $this->upload_terms_error_message,
 				'desc'  => __( 'Display Error Message When User Upload Media Without selecting checkbox .', 'buddypress-media' ),
 			),
 			'group'    => 40,
@@ -168,7 +174,7 @@ class RTMediaUploadTermsAdmin {
 			'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 			'args'     => array(
 				'key'   => 'general_upload_terms_show_pricacy_message',
-				'value' => $options['general_upload_terms_show_pricacy_message'],
+				'value' => $options[ 'general_upload_terms_show_pricacy_message' ],
 				'desc'  => __( 'User will see the privacy message on website.', 'buddypress-media' ),
 			),
 			'group'    => 40,
@@ -178,7 +184,7 @@ class RTMediaUploadTermsAdmin {
 			'callback' => array( 'RTMediaFormHandler', 'textarea' ),
 			'args'     => array(
 				'key'   => 'general_upload_terms_privacy_message',
-				'value' => isset( $options['general_upload_terms_privacy_message'] ) ? $options['general_upload_terms_privacy_message'] : '',
+				'value' => isset( $options[ 'general_upload_terms_privacy_message' ] ) ? $options[ 'general_upload_terms_privacy_message' ] : '',
 				'desc'  => __( 'Display privacy message on your website.', 'buddypress-media' ),
 			),
 			'group'    => 40,
