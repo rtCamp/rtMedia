@@ -1583,6 +1583,9 @@ img.mfp-img {
   -ms-transform: translate(-50%, -50%);
   width: 200px;
 }
+#mobile-swipe-overlay .swipe-icon img {
+  width: 100%;
+}
 #mobile-swipe-overlay .swipe-tootlip {
   font-weight: 800;
   position: absolute;
