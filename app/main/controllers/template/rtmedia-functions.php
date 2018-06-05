@@ -4414,39 +4414,13 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
  * @return Array Return the message to be shown and status to tell core if we have more comments to work on still.
  */
 function rtmedia_eraser( $email_address, $page = 1 ) {
-	$number = 500; // Limit us to avoid timing out.
+	$number = 500; // Limit us to avoid timing out
 	$page   = (int) $page;
 
 	global $wpdb;
 	$user_id = get_user_by( 'email', $email_address )->ID;
-
-	// Get activity_id attached media.
-	$query      = $wpdb->prepare(
-		'SELECT DISTINCT activity_id 
-				FROM ' . $wpdb->prefix . 'rt_rtm_media 
-				WHERE  activity_id IS NOT NULL
-					AND media_author=%d', $user_id
-	);
-	$activities = $wpdb->get_col( $query );
-
-	// Set activity content [deleted].
-	 $query = 'UPDATE ' . $wpdb->prefix . "bp_activity
-	 	SET content='[deleted]'
-	 	WHERE `id` IN(" . implode( ', ', array_fill( 0, count( $activities ), '%s' ) ) . ')
-	';
-	$query  = call_user_func_array( array( $wpdb, 'prepare' ), array_merge( array( $query ), $activities ) );
-
-	$wpdb->query( $query );
-
-	// Set activity_id of media NULL so that dont delete activity.
-	$query = $wpdb->prepare(
-		'UPDATE ' . $wpdb->prefix . 'rt_rtm_media
-						SET activity_id=NULL
-						WHERE media_author=%d', $user_id
-	);
-	$wpdb->query( $query );
-
-	// Delete media.
+	$items_removed=false;
+	
 	$query = $wpdb->prepare(
 		'SELECT media_id 
 				FROM ' . $wpdb->prefix . 'rt_rtm_media 
@@ -4455,6 +4429,7 @@ function rtmedia_eraser( $email_address, $page = 1 ) {
 	$media_ids = $wpdb->get_col( $query );
 	foreach ( $media_ids as $media_id ) {
 		wp_delete_attachment( $media_id, true );
+		$items_removed=true;
 	}
 	return array(
 		'items_removed'  => $items_removed,
@@ -4463,6 +4438,7 @@ function rtmedia_eraser( $email_address, $page = 1 ) {
 		'done'           => true,
 	);
 }
+
 
 /**
  * Media like eraser for GDPR
