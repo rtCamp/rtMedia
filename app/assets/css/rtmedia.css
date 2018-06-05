@@ -567,7 +567,7 @@ input.imgedit-submit-btn {
 }
 
 .privacy_message_wrapper {
-  background: #3477bd;
+  background: rgba(0, 0, 0, 0.95);
   z-index: 999;
   color: #fff;
   display: block;
