@@ -1507,7 +1507,7 @@ function rtm_plugin_privacy_information() {
         $policy .= '- If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.<br/>';
         wp_add_privacy_policy_content(
             __( 'rtMedia', 'buddypress-media' ),
-            __( $policy, 'buddypress-media' ) // phpcs:ignore
+            $policy
         );
     }
 }

@@ -75,10 +75,12 @@ class RTMediaUploadTermsAdmin {
 			$update = 0;
 			if ( empty( $rtmedia->options['general_upload_terms_message'] ) ) {
 				$rtmedia->options['general_upload_terms_message'] = $this->upload_terms_message;
+
 				$update = 1;
 			}
 			if ( empty( $rtmedia->options['general_upload_terms_error_message'] ) ) {
 				$rtmedia->options['general_upload_terms_error_message'] = $this->upload_terms_error_message;
+
 				$update = 1;
 			}
 
@@ -92,7 +94,7 @@ class RTMediaUploadTermsAdmin {
 	/**
 	 * Add setting option in rtmedia settings
 	 *
-	 * @param array $general_group Add group message.
+	 * @param  array $general_group Add group message.
 	 * @return array $general_group
 	 */
 	public function admin_setting_add_terms_section( $general_group ) {

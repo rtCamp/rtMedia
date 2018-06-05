@@ -24,7 +24,7 @@ if (typeof rtMediaHook == 'object') {
 		return true;
 	});
 
-	rtMediaHook.register('rtmedia_js_before_activity_added', function (args) {
+	rtMediaHook.register( 'rtmedia_js_before_activity_added', function ( args ) {
 		if ( typeof event !== typeof undefined && typeof event.target !== typeof undefined ) {
 		  if ( jQuery(event.target).attr('id') == 'aw-whats-new-submit' ) {
 			   if (jQuery('#rtmedia_upload_terms_conditions').length > 0) {
