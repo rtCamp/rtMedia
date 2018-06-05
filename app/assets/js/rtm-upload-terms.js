@@ -34,7 +34,6 @@ if (typeof rtMediaHook == 'object') {
 
 					var rt_alert_msg = ( ( typeof rtmedia_upload_terms_check_terms_message ) == "string" ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
 					if (!jQuery('#rtmedia_upload_terms_conditions').is(':checked')) {
-						//typeof rtmedia_gallery_action_alert_message != 'undefined' ? rtmedia_gallery_action_alert_message(rt_alert_msg, 'warning') : alert(rt_alert_msg);
 						var selector = jQuery( '.rtmedia-upload-terms' );
 						rtp_display_terms_warning ( selector, rt_alert_msg );
 						return false;
