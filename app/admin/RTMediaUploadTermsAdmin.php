@@ -8,25 +8,25 @@
  */
 
 /**
- *  Class for Admin seetings regarding Upload Terms
- **/
+ *  Class for Admin settings regarding Upload Terms
+ */
 class RTMediaUploadTermsAdmin {
 	/**
 	 * Message for lable on front end side.
 	 *
 	 * @var $upload_terms_message Message for lable on front end side.
-	 **/
+	 */
 	public $upload_terms_message;
 	/**
 	 * Error message for lable on front end side.
 	 *
 	 * @var $upload_terms_error_message Error message for lable on front end side.
-	 **/
+	 */
 	public $upload_terms_error_message;
 
 	/**
 	 * Constructing settings for upload terms.
-	 **/
+	 */
 	public function __construct() {
 		$this->upload_terms_message       = esc_html__( 'terms of services.', 'buddypress-media' );
 		$this->upload_terms_error_message = esc_html__( 'Please check terms of service.', 'buddypress-media' );
@@ -40,7 +40,7 @@ class RTMediaUploadTermsAdmin {
 	/**
 	 * Loads styles and scripts
 	 *
-	 * @global type $rtmedia
+	 * @global object $rtmedia
 	 */
 	public function enqueue_scripts_styles() {
 		global $rtmedia;
@@ -53,7 +53,7 @@ class RTMediaUploadTermsAdmin {
 	/**
 	 * Default option value for admin settings
 	 *
-	 * @param type $defaults Default values of rtMedia admin settings.
+	 * @param  array $defaults Default values of rtMedia admin settings.
 	 * @return array defaults
 	 */
 	public function add_admin_option_default_value( $defaults ) {
@@ -104,8 +104,8 @@ class RTMediaUploadTermsAdmin {
 	/**
 	 * Configure admin options to render
 	 *
-	 * @param type $render_options rendering according to selected options.
-	 * @param type $options Options selected in settings.
+	 * @param  array $render_options  rendering according to selected options.
+	 * @param  array $options Options selected in settings.
 	 * @return array $render_option
 	 */
 	public function admin_setting_add_terms_option( $render_options, $options ) {

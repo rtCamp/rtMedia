@@ -3,12 +3,13 @@
  * This file applies the admin settings and handle feature of Upload Terms at front-end side.
  *
  * @package rtMedia
+ * @author  Malav Vasita <malav.vasita@rtcamp.com>
  */
 class RTMediaUploadTerms {
 
 	/**
 	 * Enquing scripts and styles along with data to be rendered in user side.
-	 **/
+	*/
 	public function __construct() {
 		$this->load_translation();
 		// Enqueue js and css files.
@@ -40,7 +41,7 @@ class RTMediaUploadTerms {
 	/**
 	 * Loads styles and scripts
 	 *
-	 * @global type $rtmedia
+	 * @global object $rtmedia
 	 */
 	public function enqueue_scripts_styles() {
 		global $rtmedia;
@@ -58,11 +59,9 @@ class RTMediaUploadTerms {
 	/**
 	 * Render terms and service checkbox in media upload tab.
 	 *
-	 * @global type $rtmedia
-	 *
-	 * @param type $content Content after I agree checkbox.
-	 *
-	 * @return type
+	 * @global object $rtmedia
+	 * @param  string $content Content after I agree checkbox.
+	 * @return string
 	 */
 	public function show_terms_and_service_checkbox( $content ) {
 		global $rtmedia;
@@ -80,7 +79,7 @@ class RTMediaUploadTerms {
 	/**
 	 * Adding checkbox on user activity screen.
 	 *
-	 * @param string $content Content for adding checkbox on user activity screen.
+	 * @param  string $content Content for adding checkbox on user activity screen.
 	 * @return string
 	 */
 	public function show_terms_and_service_checkbox_activity( $content ) {
@@ -99,7 +98,7 @@ class RTMediaUploadTerms {
 	/**
 	 * Checkbox of agree terms and condition at front-end.
 	 *
-	 * @param array $options Options set from rtMedia settings.
+	 * @param  array $options Options set from rtMedia settings.
 	 * @return string
 	 */
 	public function terms_and_service_checkbox_html( $options ) {
