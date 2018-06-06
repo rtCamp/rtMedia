@@ -58,7 +58,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				'general_jpeg_image_quality'        => 90,
 				'general_uniqueviewcount'           => 0,
 				'general_viewcount'                 => 0,
-				'general_AllowUserData'             => 1,
+				'general_AllowUserData'             => 0,
 				'rtmedia_add_linkback'              => 0,
 				'rtmedia_affiliate_id'              => '',
 				'rtmedia_enable_api'                => 0,

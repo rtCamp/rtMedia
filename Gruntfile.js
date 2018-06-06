@@ -49,6 +49,7 @@ module.exports = function ( grunt ) {
 					'app/assets/admin/css/admin.min.css': 'app/assets/admin/css/sass/admin.scss',
 					'app/assets/admin/css/widget.min.css': 'app/assets/admin/css/sass/widget.scss',
 					'app/assets/css/rtmedia.min.css': 'app/assets/css/sass/rtmedia.scss',
+					'app/assets/css/rtm-upload-terms.min.css': 'app/assets/css/rtm-upload-terms.css'
 				}
 			}
 		},
@@ -79,9 +80,21 @@ module.exports = function ( grunt ) {
 				src: [
 					'app/assets/js/vendors/magnific-popup.js',
 					'app/assets/admin/js/vendors/tabs.js',
-					'app/assets/js/rtMedia.js'
+					'app/assets/js/rtMedia.js',
 				],
 				dest: 'app/assets/js/rtmedia.min.js'
+			},
+			rtmUploadTerms: {
+				src: [
+					'app/assets/js/rtm-upload-terms.js',
+				],
+				dest: 'app/assets/js/rtm-upload-terms.min.js'
+			},
+			adminUploadTerms: {
+				src: [
+					'app/assets/js/admin-upload-terms.js'
+				],
+				dest: 'app/assets/js/admin-upload-terms.min.js'
 			},
 			backend: {
 				src: [

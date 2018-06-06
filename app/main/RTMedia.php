@@ -591,7 +591,7 @@ class RTMedia {
 			'general_showAdminMenu'       => ( isset( $bp_media_options['show_admin_menu'] ) ) ? $bp_media_options['show_admin_menu'] : 0,
 			'general_videothumbs'         => 2,
 			'general_jpeg_image_quality'  => 90,
-			'general_AllowUserData'       => 1,
+			'general_AllowUserData'       => 0,
 		);
 
 		foreach ( $this->allowed_types as $type ) {
@@ -1495,6 +1495,49 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
 
 	return $return_val;
 }
+
+function rtm_privacy_message_on_website() {
+	global $rtmedia;
+	$options = $rtmedia->options;
+
+	if( "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
+		echo "<div class='privacy_message_wrapper'><p>" . wp_kses_post( $options[ 'general_upload_terms_privacy_message' ] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
+	}
+}
+add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
+
+/**
+ * Function to add privacy policy information in WordPress policy section.
+ */
+function rtm_plugin_privacy_information() {
+    $policy = '';
+    if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
+		$policy .= esc_html__( 'We collect your information during the checkout process on your purchase. The information collected from you may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing.', 'buddypress-media' );
+		$policy .= '<br/><br/><b>';
+		$policy .= esc_html__( 'Handling this data will also allow us to:', 'buddypress-media' );
+		$policy .= '</b><br/>';
+		$policy .= esc_html__( '- Send you important service information.', 'buddypress-media' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- Respond to your queries or complaints.', 'buddypress-media' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- Set up and administer your account, provide technical and/or customer support, and to verify your identity.', 'buddypress-media' );
+		$policy .= '<br/><br/><b>';
+		$policy .= esc_html__( 'Additionally we may also collect the following information:', 'buddypress-media' );
+		$policy .= '</b><br/>';
+		$policy .= esc_html__( '- Your comments and product reviews if you choose to leave them on our website.', 'buddypress-media' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- Account email/password to allow you to access your account, if you have one.', 'buddypress-media' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.', 'buddypress-media' );
+		$policy .= '<br/>';
+        wp_add_privacy_policy_content(
+            __( 'rtMedia', 'buddypress-media' ),
+            $policy
+        );
+    }
+}
+
+add_action( 'admin_init', 'rtm_plugin_privacy_information' );
 
 /**
  * This wraps up the main rtMedia class. Three important notes:
