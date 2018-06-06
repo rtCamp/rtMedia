@@ -4182,20 +4182,42 @@ function rtmedia_number_to_human_readable( $n ) {
 /**
  * Activity exporter with attachments for GDPR
  *
- * @param String $email_address to  make the request and then sends then a link to click to confirm their request.
- * @param String $page  to avoid plugins potentially causing timeouts by attempting to erase all the personal data they’ve collected at once.
- * @return Array Return the data to be export and status to tell core if we have more comments to work on still.
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
  */
 function rtmedia_activity_exporter( $email_address, $page = 1 ) {
-	$number = 500; // Limit us to avoid timing out.
+
+	// Limit to avoid timing out.
+	$number = 200;
 	$page   = (int) $page;
 
+	// fetching user data.
+	$user_data    = get_user_by( 'email', $email_address );
 	$export_items = array();
 
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'data' => $export_items,
+			'done' => true,
+		);
+	}
+
 	global $wpdb;
-	$query      = $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='rtmedia_update'  LIMIT %d OFFSET %d", get_user_by( 'email', $email_address )->ID, $number, $number * ( $page - 1 ) );
+
+	$query      = $wpdb->prepare(
+		'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='rtmedia_update'  LIMIT %d OFFSET %d",
+		$user_data->ID,
+		$number,
+		$number * ( $page - 1 )
+	);
+
 	$activities = $wpdb->get_results( $query );
+
 	foreach ( $activities as $activity ) {
+
 		$activity_content = wp_strip_all_tags( $activity->content );
 		$activity_date    = $activity->date_recorded;
 		$activity_id      = $activity->id;
@@ -4207,6 +4229,7 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 		$results        = $wpdb->get_results( $query );
 		$activity_count = $wpdb->num_rows;
 		$attachments    = '';
+
 		foreach ( $results as $result ) {
 			$url          = wp_get_attachment_url( $result->media_id );
 			$attachments .= $result->media_title . " : <a href='$url'>$url</a><br />";
@@ -4234,6 +4257,7 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 			'data'        => $data,
 		);
 	}
+
 	$done = $activity_count < $number;
 	return array(
 		'data' => $export_items,
@@ -4244,21 +4268,43 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 /**
  * Activity Comment exporter with attachments for GDPR
  *
- * @param String $email_address to  make the request and then sends then a link to click to confirm their request.
- * @param String $page  to avoid plugins potentially causing timeouts by attempting to erase all the personal data they’ve collected at once.
- * @return Array Return the data to be export and status to tell core if we have more comments to work on still.
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
  */
 function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
-	$number = 500; // Limit us to avoid timing out.
+
+	// Limit to avoid timing out.
+	$number = 200;
 	$page   = (int) $page;
 
+	// fetching user data.
+	$user_data    = get_user_by( 'email', $email_address );
 	$export_items = array();
 
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'data' => $export_items,
+			'done' => true,
+		);
+	}
+
 	global $wpdb;
-	$query         = $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='activity_comment'  LIMIT %d OFFSET %d", get_user_by( 'email', $email_address )->ID, $number, $number * ( $page - 1 ) );
+
+	$query = $wpdb->prepare(
+		'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='activity_comment'  LIMIT %d OFFSET %d",
+		$user_data->ID,
+		$number,
+		$number * ( $page - 1 )
+	);
+
 	$comments      = $wpdb->get_results( $query );
 	$comment_count = $wpdb->num_rows;
+
 	foreach ( $comments as $comment ) {
+
 		$comment_content = wp_strip_all_tags( $comment->content );
 		$comment_date    = $comment->date_recorded;
 		$item_id         = 'activity-comment-' . $comment->id;
@@ -4266,8 +4312,10 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 		$group_label     = __( 'rtMedia Activity Comments' );
 
 		$query       = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $comment->id );
+
 		$results     = $wpdb->get_results( $query );
 		$attachments = '';
+
 		foreach ( $results as $result ) {
 			$url          = wp_get_attachment_url( $result->media_id );
 			$attachments .= $result->media_title . " : <a href='$url'>$url</a><br />";
@@ -4295,7 +4343,9 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 			'data'        => $data,
 		);
 	}
+
 	$done = $comment_count < $number;
+
 	return array(
 		'data' => $export_items,
 		'done' => $done,
@@ -4305,19 +4355,40 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 /**
  * Media view exporter for GDPR
  *
- * @param String $email_address to  make the request and then sends then a link to click to confirm their request.
- * @param String $page  to avoid plugins potentially causing timeouts by attempting to erase all the personal data they’ve collected at once.
- * @return Array Return the data to be export and status to tell core if we have more comments to work on still.
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
  */
 function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
-	$number = 500; // Limit us to avoid timing out.
+
+	// Limit to avoid timing out.
+	$number = 200;
 	$page   = (int) $page;
 
+	// fetching user data.
+	$user_data    = get_user_by( 'email', $email_address );
 	$export_items = array();
 
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'data' => $export_items,
+			'done' => true,
+		);
+	}
+
 	global $wpdb;
-	$query = $wpdb->prepare( 'SELECT interaction.*,media.media_id FROM ' . $wpdb->prefix . 'rt_rtm_media_interaction as interaction, ' . $wpdb->prefix . "rt_rtm_media as media WHERE interaction.user_id=%d and interaction.action='view' and media.id = interaction.media_id LIMIT %d OFFSET %d", get_user_by( 'email', $email_address )->ID, $number, $number * ( $page - 1 ) );
+
+	$query = $wpdb->prepare(
+		'SELECT interaction.*, media.media_id FROM ' . $wpdb->prefix . 'rt_rtm_media_interaction as interaction, ' . $wpdb->prefix . "rt_rtm_media as media WHERE interaction.user_id=%d and interaction.action='view' and media.id = interaction.media_id LIMIT %d OFFSET %d",
+		$user_data->ID,
+		$number,
+		$number * ( $page - 1 )
+	);
+
 	$views = $wpdb->get_results( $query );
+
 	foreach ( $views as $view ) {
 		$no_of_views     = $view->value;
 		$first_view_date = $view->action_date;
@@ -4349,7 +4420,9 @@ function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 			'data'        => $data,
 		);
 	}
+
 	$done = $wpdb->num_rows < $number;
+
 	return array(
 		'data' => $export_items,
 		'done' => $done,
@@ -4359,20 +4432,42 @@ function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 /**
  * Media Like exporter with attachments for GDPR
  *
- * @param String $email_address to  make the request and then sends then a link to click to confirm their request.
- * @param String $page  to avoid plugins potentially causing timeouts by attempting to erase all the personal data they’ve collected at once.
- * @return Array Return the data to be export and status to tell core if we have more comments to work on still.
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
  */
 function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
-	$number = 500; // Limit us to avoid timing out.
+
+	// Limit to avoid timing out.
+	$number = 200;
 	$page   = (int) $page;
 
+	// fetching user data.
+	$user_data    = get_user_by( 'email', $email_address );
 	$export_items = array();
 
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'data' => $export_items,
+			'done' => true,
+		);
+	}
+
 	global $wpdb;
-	$query = $wpdb->prepare( 'SELECT interaction.*,media.media_id FROM ' . $wpdb->prefix . 'rt_rtm_media_interaction as interaction, ' . $wpdb->prefix . "rt_rtm_media as media WHERE interaction.user_id=%d and interaction.action='like' and media.id = interaction.media_id LIMIT %d OFFSET %d", get_user_by( 'email', $email_address )->ID, $number, $number * ( $page - 1 ) );
+
+	$query = $wpdb->prepare(
+		'SELECT interaction.*, media.media_id FROM ' . $wpdb->prefix . 'rt_rtm_media_interaction as interaction, ' . $wpdb->prefix . "rt_rtm_media as media WHERE interaction.user_id=%d and interaction.action='like' and media.id = interaction.media_id LIMIT %d OFFSET %d",
+		$user_data->ID,
+		$number,
+		$number * ( $page - 1 )
+	);
+
 	$likes = $wpdb->get_results( $query );
+
 	foreach ( $likes as $like ) {
+
 		$like_date   = $like->action_date;
 		$item_id     = 'media-like' . $like->id;
 		$group_id    = 'media-like';
@@ -4398,7 +4493,9 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 			'data'        => $data,
 		);
 	}
+
 	$done = $wpdb->num_rows < $number;
+
 	return array(
 		'data' => $export_items,
 		'done' => $done,
@@ -4409,33 +4506,57 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 /**
  * Media eraser for GDPR
  *
- * @param String $email_address to  make the request and then sends then a link to click to confirm their request.
- * @param String $page  to avoid plugins potentially causing timeouts by attempting to erase all the personal data they’ve collected at once.
- * @return Array Return the message to be shown and status to tell core if we have more comments to work on still.
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
  */
 function rtmedia_eraser( $email_address, $page = 1 ) {
-	$number = 500; // Limit us to avoid timing out
+
+	// Limit to avoid timing out.
+	$number = 200;
 	$page   = (int) $page;
 
-	global $wpdb;
-	$user_id = get_user_by( 'email', $email_address )->ID;
-	$items_removed=false;
-	
-	$query = $wpdb->prepare(
-		'SELECT media_id 
-				FROM ' . $wpdb->prefix . 'rt_rtm_media 
-				WHERE media_author=%d ', $user_id
-	);
-	$media_ids = $wpdb->get_col( $query );
-	foreach ( $media_ids as $media_id ) {
-		wp_delete_attachment( $media_id, true );
-		$items_removed=true;
+	// fetching user data.
+	$user_data     = get_user_by( 'email', $email_address );
+	$items_removed = false;
+
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'items_removed'  => $items_removed,
+			'items_retained' => false,
+			'messages'       => array(),
+			'done'           => true,
+		);
 	}
+
+	global $wpdb;
+
+	$query = $wpdb->prepare(
+		'SELECT media_id FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE media_author=%d LIMIT %d OFFSET %d',
+		$user_data->ID,
+		$number,
+		$number * ( $page - 1 )
+	);
+
+	$media_ids = $wpdb->get_col( $query );
+
+	foreach ( $media_ids as $media_id ) {
+
+		// remove all attachment data.
+		wp_delete_attachment( $media_id, true );
+
+		$items_removed = true;
+	}
+
+	$done = count( $media_ids ) < $number;
+
 	return array(
 		'items_removed'  => $items_removed,
 		'items_retained' => false,
 		'messages'       => array(),
-		'done'           => true,
+		'done'           => $done,
 	);
 }
 
@@ -4443,25 +4564,50 @@ function rtmedia_eraser( $email_address, $page = 1 ) {
 /**
  * Media like eraser for GDPR
  *
- * @param String $email_address to  make the request and then sends then a link to click to confirm their request.
- * @param String $page  to avoid plugins potentially causing timeouts by attempting to erase all the personal data they’ve collected at once.
- * @return Array Return the message to be shown and status to tell core if we have more comments to work on still.
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ * @return array
  */
 function rtmedia_like_eraser( $email_address, $page = 1 ) {
-	$number = 500; // Limit us to avoid timing out.
+
+	// Limit to avoid timing out.
+	$number = 200;
 	$page   = (int) $page;
-	global $wpdb;
-	$query         = $wpdb->prepare(
-		'DELETE FROM ' . $wpdb->prefix . "bp_activity 
-						WHERE type='rtmedia_like_activity' 
-							AND user_id=%d", get_user_by( 'email', $email_address )->ID
-	);
-	$items_removed = $wpdb->query( $query );
+
+	// fetching user data.
+	$user_data     = get_user_by( 'email', $email_address );
+	$items_removed = false;
+
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'items_removed'  => $items_removed,
+			'items_retained' => false,
+			'messages'       => array(),
+			'done'           => true,
+		);
+	}
+
+	if ( false !== $user_data && ! empty( $user_data->ID ) ) {
+
+		global $wpdb;
+
+		$query = $wpdb->prepare(
+			'DELETE FROM ' . $wpdb->prefix . "bp_activity WHERE type='rtmedia_like_activity' AND user_id=%d LIMIT %d OFFSET %d",
+			$user_data->ID,
+			$number,
+			$number * ( $page - 1 )
+		);
+
+		$items_removed = $wpdb->query( $query );
+	}
+
+	$done = $items_removed < $number;
 
 	return array(
 		'items_removed'  => $items_removed,
 		'items_retained' => false,
 		'messages'       => array(),
-		'done'           => true,
+		'done'           => $done,
 	);
 }
