@@ -224,9 +224,9 @@ function rtm_modify_document_title_parts( $title = array() ) {
 		global $rtmedia_query;
 
 		if ( isset( $rtmedia_query->action_query->media_type ) ) {
-			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ), RTMEDIA_MEDIA_LABEL ) : array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ) );
+			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ), apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) ) : array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ) );
 		} else {
-			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, RTMEDIA_MEDIA_LABEL ) : '';
+			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) ) : '';
 		}
 	}
 

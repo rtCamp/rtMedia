@@ -692,7 +692,7 @@ function rtm_album_media_count() {
 
 	if ( isset( $rtmedia_album_count_status ) && $rtmedia_album_count_status['status'] ) {
 		?>
-		<div class="rtmedia-album-media-count" title="<?php echo rtmedia_album_mediacounter() . RTMEDIA_MEDIA_LABEL; ?>">
+		<div class="rtmedia-album-media-count" title="<?php echo esc_attr( rtmedia_album_mediacounter() . ' ' . RTMEDIA_MEDIA_LABEL ); ?>">
 			<?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . rtmedia_album_mediacounter() . esc_html( $rtmedia_album_count_status['after_string'] ) ?></div>
 		<?php
 	}
