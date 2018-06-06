@@ -4207,7 +4207,7 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 
 	global $wpdb;
 
-	$query      = $wpdb->prepare(
+	$query = $wpdb->prepare(
 		'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='rtmedia_update'  LIMIT %d OFFSET %d",
 		$user_data->ID,
 		$number,
@@ -4265,6 +4265,82 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 	);
 }
 
+
+/**
+ * Shortcode upload exporter with  for GDPR
+ *
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
+ */
+function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
+
+	// Limit to avoid timing out.
+	$number = 200;
+	$page   = (int) $page;
+
+	// fetching user data.
+	$user_data    = get_user_by( 'email', $email_address );
+	$export_items = array();
+
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'data' => $export_items,
+			'done' => true,
+		);
+	}
+
+	global $wpdb;
+
+	$query = $wpdb->prepare( 'SELECT media.media_id, media.media_title, media.upload_date, album.media_title AS album_title FROM ' . $wpdb->prefix . 'rt_rtm_media AS media, ' . $wpdb->prefix . 'rt_rtm_media AS album WHERE media.album_id=album.id AND media.activity_id=0 AND media.media_author=%d LIMIT %d OFFSET %d', $user_data->ID, $number, $number * ( $page - 1 ) );
+
+	$media       = $wpdb->get_results( $query );
+	$media_count = $wpdb->num_rows;
+	foreach ( $media as $media_data ) {
+		$item_id     = 'shortcode-upload-' . $media_data->media_id;
+		$group_id    = 'shortcode-upload';
+		$group_label = __( 'rtMedia Shortcode Uploads' );
+
+		$media_url   = wp_get_attachment_url( $media_data->media_id );
+		$media_title = $media_data->media_title;
+		$album_title = $media_data->album_title;
+		$upload_date = $media_data->upload_date;
+
+		$data = array(
+			array(
+				'name'  => __( 'Media Upload Date' ),
+				'value' => $upload_date,
+			),
+			array(
+				'name'  => __( 'Media Title' ),
+				'value' => $media_title,
+			),
+			array(
+				'name'  => __( 'Media URL' ),
+				'value' => $media_url,
+			),
+			array(
+				'name'  => __( 'Album Title' ),
+				'value' => $album_title,
+			),
+		);
+
+		$export_items[] = array(
+			'group_id'    => $group_id,
+			'group_label' => $group_label,
+			'item_id'     => $item_id,
+			'data'        => $data,
+		);
+	}
+	$done = $activity_count < $number;
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}
+
 /**
  * Activity Comment exporter with attachments for GDPR
  *
@@ -4311,7 +4387,7 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 		$group_id        = 'activity-comment';
 		$group_label     = __( 'rtMedia Activity Comments' );
 
-		$query       = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $comment->id );
+		$query = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $comment->id );
 
 		$results     = $wpdb->get_results( $query );
 		$attachments = '';
@@ -4560,6 +4636,61 @@ function rtmedia_eraser( $email_address, $page = 1 ) {
 	);
 }
 
+/**
+ * Media like eraser for GDPR
+ *
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ * @return array
+ */
+function rtmedia_album_eraser( $email_address, $page = 1 ) {
+
+	// Limit to avoid timing out.
+	$number = 200;
+	$page   = (int) $page;
+
+	// fetching user data.
+	$user_data     = get_user_by( 'email', $email_address );
+	$items_removed = false;
+
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'items_removed'  => $items_removed,
+			'items_retained' => false,
+			'messages'       => array(),
+			'done'           => true,
+		);
+	}
+
+	global $wpdb;
+
+	$query = $wpdb->prepare(
+		'DELETE FROM ' . $wpdb->prefix . "rt_rtm_media WHERE media_type='album' AND media_author=%d LIMIT %d",
+		$user_data->ID,
+		$number
+	);
+
+	$items_removed = $wpdb->query( $query );
+
+	$query = $wpdb->prepare(
+		'DELETE FROM ' . $wpdb->prefix . "posts WHERE post_type='rtmedia_album' AND post_author=%d LIMIT %d",
+		$user_data->ID,
+		$number
+	);
+
+	$items_removed = $wpdb->query( $query );
+
+	$done = $items_removed < $number;
+
+	return array(
+		'items_removed'  => $items_removed,
+		'items_retained' => false,
+		'messages'       => array(),
+		'done'           => $done,
+	);
+}
+
 
 /**
  * Media like eraser for GDPR
@@ -4588,19 +4719,15 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 		);
 	}
 
-	if ( false !== $user_data && ! empty( $user_data->ID ) ) {
+	global $wpdb;
 
-		global $wpdb;
+	$query = $wpdb->prepare(
+		'DELETE FROM ' . $wpdb->prefix . "bp_activity WHERE type='rtmedia_like_activity' AND user_id=%d LIMIT %d",
+		$user_data->ID,
+		$number
+	);
 
-		$query = $wpdb->prepare(
-			'DELETE FROM ' . $wpdb->prefix . "bp_activity WHERE type='rtmedia_like_activity' AND user_id=%d LIMIT %d OFFSET %d",
-			$user_data->ID,
-			$number,
-			$number * ( $page - 1 )
-		);
-
-		$items_removed = $wpdb->query( $query );
-	}
+	$items_removed = $wpdb->query( $query );
 
 	$done = $items_removed < $number;
 
