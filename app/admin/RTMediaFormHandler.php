@@ -619,7 +619,7 @@ class RTMediaFormHandler {
 		/**
 		 * Filter 'rtmedia_export_import_add_itmes' to modify controls in export/import settings tab
 		 *
-		 * @since 4.4.8
+		 * @since 4.4.9
 		 */
 		$render_options          = apply_filters( 'rtmedia_export_import_add_itmes', $render_options );
 		$export_import_group     = array();
@@ -628,7 +628,7 @@ class RTMediaFormHandler {
 		/**
 		 * Filter 'rtmedia_export_import_groups' to modify groups in export/import settings tab
 		 *
-		 * @since 4.4.8
+		 * @since 4.4.9
 		 */
 		$export_import_group = apply_filters( 'rtmedia_export_import_groups', $export_import_group );
 		ksort( $export_import_group );
