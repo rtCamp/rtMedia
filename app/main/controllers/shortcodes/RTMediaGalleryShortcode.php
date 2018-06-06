@@ -39,9 +39,21 @@ class RTMediaGalleryShortcode {
 	}
 
 	static function register_scripts() {
-		if ( ! wp_script_is( 'plupload-all' ) ) {
-			wp_enqueue_script( 'plupload-all' );
+		$options = get_option( 'rtmedia-options' );
+		/**
+		 * Check whether user is allowed to upload media without login
+		 */
+		if ( is_user_logged_in() || ( isset( $options['general_enable_anonymous_bbpress_reply'] ) && 1 === $options['general_enable_anonymous_bbpress_reply'] ) || ( isset( $options['general_enable_anonymous_comment'] ) && 1 === $options['general_enable_anonymous_comment'] ) ) {
+
+			/**
+			 * This script handles upload related operations, so load it only when necessary
+			 */
+			if ( ! wp_script_is( 'plupload-all' ) ) {
+				wp_enqueue_script( 'plupload-all' );
+			}
+
 		}
+
 		wp_enqueue_script( 'rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array(
 			'plupload-all',
 			'backbone',
