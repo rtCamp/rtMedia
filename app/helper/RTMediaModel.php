@@ -41,6 +41,7 @@ class RTMediaModel extends RTDBModel {
 	 */
 	function get( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ) {
 		global $wpdb;
+		global $rtmedia_interaction;
 		$select = 'SELECT ';
 		if ( $count_flag ) {
 			$select .= 'count(*) ';
@@ -106,9 +107,14 @@ class RTMediaModel extends RTDBModel {
 			$qorder_by = '';
 		}
 
-		$select    = apply_filters( 'rtmedia-model-select-query', $select, $this->table_name );
-		$join      = apply_filters( 'rtmedia-model-join-query', $join, $this->table_name );
-		$where     = apply_filters( 'rtmedia-model-where-query', $where, $this->table_name, $join );
+		$select      = apply_filters( 'rtmedia-model-select-query', $select, $this->table_name );
+		$bp_template = get_option( '_bp_theme_package_id' );
+
+		if ( empty( $bp_template ) && 'nouveau' !== $bp_template && "likes" === $rtmedia_interaction->routes['media']->query_vars[0] ) {
+			$join  = apply_filters( 'rtmedia-model-join-query', $join, $this->table_name );
+			$where = apply_filters( 'rtmedia-model-where-query', $where, $this->table_name , $join);
+		}
+
 		$qgroup_by = apply_filters( 'rtmedia-model-group-by-query', $qgroup_by, $this->table_name );
 		$qorder_by = apply_filters( 'rtmedia-model-order-by-query', $qorder_by, $this->table_name );
 

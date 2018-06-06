@@ -6,8 +6,8 @@ var uploaderObj;
 var objUploadView;
 var rtmedia_load_template_flag = true;
 
-jQuery( function( $ ) {
 
+jQuery( function( $ ) {
 	/**
 	 * Issue 1059 fixed: negative comment count
 	 */
@@ -574,6 +574,10 @@ jQuery( function( $ ) {
 				var upload_error = '';
 				var upload_error_sep = '';
 				var upload_remove_array = [ ];
+
+				var select_btn = jQuery( '.rtmedia-upload-input' );
+				var upload_start_btn = jQuery('.start-media-upload');
+
 				$.each( files, function( i, file ) {
 					//Set file title along with file
 					rtm_file_name_array = file.name.split( '.' );
@@ -587,11 +591,11 @@ jQuery( function( $ ) {
 						return true;
 					}
 
-					jQuery( '.rtmedia-upload-input' ).attr( 'value', rtmedia_add_more_files_msg );
+					select_btn.attr( 'value', rtmedia_add_more_files_msg );
 					if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-						jQuery( '.start-media-upload' ).hide();
+						upload_start_btn.hide();
 					} else {
-						jQuery( '.start-media-upload' ).show();
+						upload_start_btn.show();
 					}
 					if ( uploaderObj.uploader.settings.max_file_size < file.size ) {
 						return true;
@@ -720,6 +724,29 @@ jQuery( function( $ ) {
 					}
 					uploaderObj.uploadFiles();
 				}
+
+
+				/**
+				 *
+				 * Uploader improper enter behavior issue(124) fixed
+				 *
+				 */
+				var terms_conditions = $('#rtmedia_upload_terms_conditions');
+				if(terms_conditions.length > 0){
+
+					terms_conditions.unbind('click');
+
+					terms_conditions.click(function(){
+						upload_start_btn.focus();
+					});
+
+				}
+
+				upload_start_btn.focus();
+
+				/**
+				 * End of issue 124
+				 */
 
 			} );
 
@@ -927,6 +954,40 @@ jQuery( function( $ ) {
 /** Activity Update Js **/
 
 jQuery( document ).ready( function( $ ) {
+
+
+	/**
+	 * Uploader improper enter behavior issue(124) fixed
+	 *
+	 * @param e
+	 */
+	var submit_function = function (e) {
+		/**
+		 * Execute code only on enter key
+		 */
+		if (e.keyCode === 13) {
+			/**
+			 * Prevent default behavior and fire custom click
+			 */
+			e.preventDefault();
+			$(this).trigger('click');
+			/**
+			 * stop textarea from disabling
+			 * @type {*|jQuery|HTMLElement}
+			 */
+			var textarea = $('#whats-new');
+			textarea.removeAttr('disabled');
+			/**
+			 * set focus to textarea after buddypress timeout code
+			 */
+			setTimeout(function () {
+				textarea.focus();
+			}, 200);
+		}
+	};
+	/**
+	 * End of issue 124 fix
+	 */
 
 	/*
 	 * Fix for file selector does not open in Safari browser in IOS.
@@ -1189,6 +1250,17 @@ jQuery( document ).ready( function( $ ) {
 				}
 				objUploadView.uploadFiles();
 			}
+
+			/**
+			 * Uploader improper enter behavior issue(124) fixed
+			 */
+			$('#aw-whats-new-submit').focus();
+			$(document).off('keydown', '#aw-whats-new-submit', submit_function);
+			$(document).on('keydown', '#aw-whats-new-submit', submit_function);
+			/**
+			 * End issue 124
+			 */
+
 		} );
 
 		objUploadView.uploader.bind( 'FileUploaded', function( up, file, res ) {
@@ -1407,7 +1479,11 @@ jQuery( document ).ready( function( $ ) {
 
 				};
 				options.success = function( response ) {
-					orignalSuccess( response );
+                                        // For BuddyPress Nouveau Template.
+					if ( orignalSuccess && 'function' === typeof orignalSuccess ) {
+                                            orignalSuccess( response );
+                                        }
+
 					if ( response[0] + response[1] == '-1' ) {
 						//Error
 
@@ -1440,6 +1516,12 @@ jQuery( document ).ready( function( $ ) {
 							//videoHeight: 1
 						} );
 
+                                                // For BuddyPress New Template hacks
+                                                jQuery( '.plupload_filelist_content.rtm-plupload-list' ).html('');
+                                                var rtmedia_terms_conditions = $( '#rtmedia_upload_terms_conditions' );
+                                                if ( rtmedia_terms_conditions && rtmedia_terms_conditions.is(':checked') ) {
+                                                    rtmedia_terms_conditions.prop( 'checked', false );
+                                                }
 
 						rtMediaHook.call( 'rtmedia_js_after_activity_added', [ ] );
 					}
@@ -2088,7 +2170,9 @@ function rtmedia_activity_comment_js_add_media_id(){
 				}
 			};
 			options.success = function( response ) {
-				orignalSuccess( response );
+                                if ( orignalSuccess && 'function' === typeof orignalSuccess ) {
+                                    orignalSuccess( response );
+                                }
 				if ( response[0] + response[1] == '-1' ) {
 					//Error
 
@@ -2410,6 +2494,15 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 				/* when direct upload is enable */
 				jQuery( '.'+rtmedia_comment_media_submit+widget_id ).trigger( 'click' );
 			}
+
+			/**
+			 * Uploader improper enter behavior issue(124) fixed
+			 */
+			$('.rtmedia-comment-media-submit-'+widget_id).focus();
+			/**
+			 * End of issue 124
+			 */
+
         });
 
 
@@ -2551,11 +2644,28 @@ function rtmedia_comment_media_upload( upload_comment ){
 
 
 function rtmedia_activity_stream_comment_media(){
-    jQuery('#buddypress ul#activity-stream li.activity-item').each(function () {
-    	if( jQuery( this ).find( '.rt_upload_hf_upload_parent_id' ).length  && jQuery( this ).find( '.rt_upload_hf_upload_parent_id_type' ).length ){
+
+    // For Buddypress new template nouveau
+    if ( bp_template_pack && bp_template_pack === 'nouveau' ) {
+        jQuery('#buddypress div#activity-stream ul.activity-list li.activity-item').each(function () {
+            if( jQuery( this ).find( '.rt_upload_hf_upload_parent_id' ).length  && jQuery( this ).find( '.rt_upload_hf_upload_parent_id_type' ).length ){
+                if ( jQuery( this ).find( "input[type=file]" ).length == 0 ) {
+                    // Please remove this in future when buddypress's nouveau tmeplate add some hook into comment form. Currently there is no hook into comment form so this is pretty hook.
+                    var container = jQuery( this ).find( '.rtmedia-uploader-div' );
+                    jQuery( this ).find('.ac-form').append( container.html() );
+                    container.remove();
+                    rtmedia_comment_media_upload( this );
+                }
+            }
+        });
+    }
+    else {
+        jQuery('#buddypress ul#activity-stream li.activity-item').each(function () {
+            if( jQuery( this ).find( '.rt_upload_hf_upload_parent_id' ).length  && jQuery( this ).find( '.rt_upload_hf_upload_parent_id_type' ).length ){
 	        rtmedia_comment_media_upload( this );
-    	}
-    });
+            }
+        });
+    }
 }
 
 

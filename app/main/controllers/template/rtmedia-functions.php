@@ -356,7 +356,11 @@ function rtmedia_media_id( $id = false ) {
 		$media = $model->get_media( array(
 			'id' => $id,
 		), 0, 1 );
-		return $media[0]->media_id;
+
+		// update code to fix GL-21-rtmoderation.
+		if ( ! empty( $media ) && ! empty( $media[0] ) ) {
+			return $media[0]->media_id;
+		}
 	} else {
 		if ( is_object( $rtmedia_media ) ) {
 			return $rtmedia_media->media_id;

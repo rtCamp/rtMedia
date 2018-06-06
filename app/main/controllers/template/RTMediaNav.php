@@ -67,7 +67,7 @@ class RTMediaNav {
 			$tab_position = apply_filters( 'rtmedia_media_tab_position', 99 );
 			if ( 0 !== intval( $rtmedia->options['buddypress_enableOnProfile'] ) ) {
 				bp_core_new_nav_item( array(
-					'name'                => RTMEDIA_MEDIA_LABEL . ' <span>' . rtmedia_number_to_human_readable( $profile_counts['total']['all'] ) . '</span>',
+					'name'                => apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) . ' <span>' . rtmedia_number_to_human_readable( $profile_counts['total']['all'] ) . '</span>',
 					'slug'                => apply_filters( 'rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG ),
 					'screen_function'     => array( $this, 'media_screen' ),
 					'default_subnav_slug' => 'all',
@@ -105,7 +105,7 @@ class RTMediaNav {
 					 * for more details
 					 */
 					bp_core_new_subnav_item( array(
-						'name'                => RTMEDIA_MEDIA_LABEL . ' <span>' . rtmedia_number_to_human_readable( $group_counts['total']['all'] ) . '</span>',
+						'name'                => apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) . ' <span>' . rtmedia_number_to_human_readable( $group_counts['total']['all'] ) . '</span>',
 						'link'                => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ) . $slug,
 						'slug'                => $slug,
 						'parent_slug'         => bp_get_current_group_slug(),
@@ -119,7 +119,7 @@ class RTMediaNav {
 
 				} else {
 					$bp->bp_options_nav[ bp_get_current_group_slug() ]['media'] = array(
-						'name'                => RTMEDIA_MEDIA_LABEL . ' <span>' . rtmedia_number_to_human_readable( $group_counts['total']['all'] ) . '</span>',
+						'name'                => apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) . ' <span>' . rtmedia_number_to_human_readable( $group_counts['total']['all'] ) . '</span>',
 						'link'                => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ) . $slug,
 						'slug'                => $slug,
 						'user_has_access'     => true,
@@ -153,7 +153,7 @@ class RTMediaNav {
 			$wp_admin_bar->add_menu( array(
 				'parent' => 'my-account',
 				'id'     => 'my-account-' . RTMEDIA_MEDIA_SLUG,
-				'title'  => RTMEDIA_MEDIA_LABEL,
+				'title'  => apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ),
 				'href'   => trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . RTMEDIA_MEDIA_SLUG . '/',
 			) );
 

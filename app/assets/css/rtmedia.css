@@ -192,6 +192,7 @@ body.media.buddypress {
 }
 .rtmedia-list-item > a .rtmedia-item-thumbnail img {
   display: inline-block;
+  max-height: inherit;
 }
 
 #rtmedia-uploader-form .rtm-plupload-list,

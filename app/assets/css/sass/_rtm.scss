@@ -51,7 +51,7 @@
 	.rtmedia-item-thumbnail {
 		img {
 			display: inline-block;
-
+			max-height: inherit;
 			// Remove extra white space below image.
 
 		}
