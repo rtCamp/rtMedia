@@ -1479,7 +1479,11 @@ jQuery( document ).ready( function( $ ) {
 
 				};
 				options.success = function( response ) {
-					orignalSuccess( response );
+                                        // For BuddyPress Nouveau Template.
+					if ( orignalSuccess && 'function' === typeof orignalSuccess ) {
+                                            orignalSuccess( response );
+                                        }
+
 					if ( response[0] + response[1] == '-1' ) {
 						//Error
 
@@ -1512,6 +1516,12 @@ jQuery( document ).ready( function( $ ) {
 							//videoHeight: 1
 						} );
 
+                                                // For BuddyPress New Template hacks
+                                                jQuery( '.plupload_filelist_content.rtm-plupload-list' ).html('');
+                                                var rtmedia_terms_conditions = $( '#rtmedia_upload_terms_conditions' );
+                                                if ( rtmedia_terms_conditions && rtmedia_terms_conditions.is(':checked') ) {
+                                                    rtmedia_terms_conditions.prop( 'checked', false );
+                                                }
 
 						rtMediaHook.call( 'rtmedia_js_after_activity_added', [ ] );
 					}
@@ -2160,7 +2170,9 @@ function rtmedia_activity_comment_js_add_media_id(){
 				}
 			};
 			options.success = function( response ) {
-				orignalSuccess( response );
+                                if ( orignalSuccess && 'function' === typeof orignalSuccess ) {
+                                    orignalSuccess( response );
+                                }
 				if ( response[0] + response[1] == '-1' ) {
 					//Error
 
@@ -2632,11 +2644,28 @@ function rtmedia_comment_media_upload( upload_comment ){
 
 
 function rtmedia_activity_stream_comment_media(){
-    jQuery('#buddypress ul#activity-stream li.activity-item').each(function () {
-    	if( jQuery( this ).find( '.rt_upload_hf_upload_parent_id' ).length  && jQuery( this ).find( '.rt_upload_hf_upload_parent_id_type' ).length ){
+
+    // For Buddypress new template nouveau
+    if ( bp_template_pack && bp_template_pack === 'nouveau' ) {
+        jQuery('#buddypress div#activity-stream ul.activity-list li.activity-item').each(function () {
+            if( jQuery( this ).find( '.rt_upload_hf_upload_parent_id' ).length  && jQuery( this ).find( '.rt_upload_hf_upload_parent_id_type' ).length ){
+                if ( jQuery( this ).find( "input[type=file]" ).length == 0 ) {
+                    // Please remove this in future when buddypress's nouveau tmeplate add some hook into comment form. Currently there is no hook into comment form so this is pretty hook.
+                    var container = jQuery( this ).find( '.rtmedia-uploader-div' );
+                    jQuery( this ).find('.ac-form').append( container.html() );
+                    container.remove();
+                    rtmedia_comment_media_upload( this );
+                }
+            }
+        });
+    }
+    else {
+        jQuery('#buddypress ul#activity-stream li.activity-item').each(function () {
+            if( jQuery( this ).find( '.rt_upload_hf_upload_parent_id' ).length  && jQuery( this ).find( '.rt_upload_hf_upload_parent_id_type' ).length ){
 	        rtmedia_comment_media_upload( this );
-    	}
-    });
+            }
+        });
+    }
 }
 
 
