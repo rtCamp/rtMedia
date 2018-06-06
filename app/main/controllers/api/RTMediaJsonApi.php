@@ -1062,18 +1062,20 @@ class RTMediaJsonApi {
 		$media_type[]    = 'album';
 		$allowed_types[] = 'album';
 
-		$media_type_temp  = filter_input( INPUT_POST, 'media_type', FILTER_SANITIZE_STRING );
+		$media_type_temp  = sanitize_text_field( filter_input( INPUT_POST, 'media_type', FILTER_SANITIZE_STRING ) );
 		$media_type_array = filter_input( INPUT_POST, 'media_type', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
-		if ( ! empty( $media_type_temp ) || ! empty( $media_type_array ) ) {
-			if ( ! is_array( $media_type_array ) ) {
-				$media_type = explode( ',', $media_type_array );
-			} else {
-				$media_type = $media_type_temp;
-			}
-			//Check array for currently allowed media types
-			$media_type = array_intersect( $media_type, $allowed_types );
+		if ( ! empty( $media_type_temp ) ) {
+			// Explode by , when string found
+			$media_type = explode( ',', $media_type_temp );
+		} elseif ( ! empty( $media_type_array ) && is_array( $media_type_array ) ) {
+			// Set media_type to passed array
+			$media_type = $media_type_array;
 		}
+		// Check array for currently allowed media types
+		$media_type = array_intersect( $media_type, $allowed_types );
+
+
 		//Args for fetching media
 		$args = array(
 			'media_type' => $media_type,
@@ -1116,13 +1118,16 @@ class RTMediaJsonApi {
 				$args['media_author'] = (int) $media_author;
 			}
 		}
-		$page     = filter_input( INPUT_POST, 'page', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
-		$per_page = filter_input( INPUT_POST, 'per_page', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
-		$order_by = filter_input( INPUT_POST, 'order_by', FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+		
+		$page     = sanitize_text_field( filter_input( INPUT_POST, 'page', FILTER_SANITIZE_NUMBER_INT ) );
+		$per_page = sanitize_text_field( filter_input( INPUT_POST, 'per_page', FILTER_SANITIZE_NUMBER_INT ) );
+		$order_by = sanitize_text_field( filter_input( INPUT_POST, 'order_by', FILTER_SANITIZE_STRING ) );
 
-		$offset   = ! empty( $page ) ? (int) $page : 0;
-		$per_page = ( isset( $per_page ) && ! is_null( $per_page ) ) ? (int) $per_page : 10;
-		$order_by = ! empty( $order_by ) ? $order_by : 'media_id desc';
+		$offset   = ( ! empty( $page ) ) ? (int) $page : 0;
+
+		// Removed is_null check, because it won't be null.
+		$per_page = ( ! empty( $per_page ) ) ? (int) $per_page : 10;
+		$order_by = ( ! empty( $order_by ) ) ? $order_by : 'media_id desc';
 
 		$media_list   = $rtmediamodel->get( $args, $offset, $per_page, $order_by );
 		$media_result = array();
