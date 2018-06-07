@@ -10,7 +10,7 @@ rtMediaAdmin.templates = {
 };
 
 jQuery( document ).ready( function ( $ ) {
-	
+
 	if ( $( '#rtm-licenses' ).length ) {
 		$( '#rtm-licenses .license-inner:first input:first' ).focus();
 	}
@@ -961,6 +961,15 @@ jQuery( document ).ready( function ( $ ) {
 			downloadAnchorNode.remove();
 		} );
 	} );
+
+	jQuery( '#rtm-export-data-button' ).click( function(){
+		window.location = 'http://rt.media/wp-admin/tools.php?page=export_personal_data';
+	} );
+
+	jQuery( '#rtm-erase-data-button' ).click(function () {
+		window.location = 'http://rt.media/wp-admin/tools.php?page=remove_personal_data';
+	});
+
 } );
 
 function rtmedia_addon_do_not_show() {

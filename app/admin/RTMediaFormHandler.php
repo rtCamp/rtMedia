@@ -586,6 +586,31 @@ class RTMediaFormHandler {
 				'group'         => 10,
 				'after_content' => esc_html__( 'Importing invalid files/settings may break your site. Please import valid file exported from rtMedia plugin only.', 'buddypress-media' ),
 			),
+			'rtmedia_export_personal_data' => array(
+				'title'    => esc_html__( 'Export your personal data', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'button' ),
+				'args'     => array(
+					'id'    => 'rtm-export-data-button',
+					'key'   => 'rtm-export-data-button',
+					'value' => esc_html__( 'Export Data', 'buddypress-media' ),
+					'desc'  => esc_html__( 'This will export your personal data.', 'buddypress-media' ),
+					'class' => array( 'button', 'button-primary', 'button-small' ),
+				),
+				'group'    => 11,
+			),
+			'rtmedia_erase_personal_data' => array(
+				'title'    => esc_html__( 'Erase your personal data', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'button' ),
+				'args'     => array(
+					'id'    => 'rtm-erase-data-button',
+					'key'   => 'rtm-erase-data-button',
+					'value' => esc_html__( 'Erase Data', 'buddypress-media' ),
+					'desc'  => esc_html__( 'This will erase your personal data.', 'buddypress-media' ),
+					'class' => array( 'button', 'button-primary', 'button-small' ),
+				),
+				'group'    => 11,
+				'after_content' => esc_html__( 'Data will be expoted or erased along with wordpress user data.', 'buddypress-media' ),
+			),
 		);
 
 		return $render;
@@ -612,7 +637,7 @@ class RTMediaFormHandler {
 		$render_options          = apply_filters( 'rtmedia_export_import_add_itmes', $render_options );
 		$export_import_group     = array();
 		$export_import_group[10] = esc_html__( 'Export/Import Settings', 'buddypress-media' );
-
+		$export_import_group[11] = esc_html__( 'Export/Erase Personal Data', 'buddypress-media' );
 		/**
 		 * Filter 'rtmedia_export_import_groups' to modify groups in export/import settings tab
 		 *
@@ -1490,3 +1515,4 @@ class RTMediaFormHandler {
 		}
 	}
 }
+new RTMediaFormHandler();

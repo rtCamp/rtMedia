@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.4.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2018-06-06 08:41:21+00:00\n"
+"POT-Creation-Date: 2018-06-07 06:02:28+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -719,169 +719,201 @@ msgid ""
 "file exported from rtMedia plugin only."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:614
+#: app/admin/RTMediaFormHandler.php:590
+msgid "Export your personal data"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:595
+msgid "Export Data"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:596
+msgid "This will export your personal data."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:602
+msgid "Erase your personal data"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:607
+msgid "Erase Data"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:608
+msgid "This will erase your personal data."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:612
+msgid "Data will be expoted or erased along with wordpress user data."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:639
 msgid "Export/Import Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:700
-msgid "Media Types Settings"
-msgstr ""
-
-#: app/admin/RTMediaFormHandler.php:708 app/helper/RTMediaSettings.php:347
-msgid "Media Type"
-msgstr ""
-
-#: app/admin/RTMediaFormHandler.php:713
-msgid "Allow Upload"
-msgstr ""
-
-#: app/admin/RTMediaFormHandler.php:715
-msgid "Allows you to upload a particular media type on your post."
-msgstr ""
-
-#: app/admin/RTMediaFormHandler.php:723
-msgid "Set Featured"
+#: app/admin/RTMediaFormHandler.php:640
+msgid "Export/Erase Personal Data"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:725
+msgid "Media Types Settings"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:733 app/helper/RTMediaSettings.php:347
+msgid "Media Type"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:738
+msgid "Allow Upload"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:740
+msgid "Allows you to upload a particular media type on your post."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:748
+msgid "Set Featured"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:750
 msgid "Place a specific media as a featured content on the post."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:773
+#: app/admin/RTMediaFormHandler.php:798
 msgid "File Extensions"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:904
+#: app/admin/RTMediaFormHandler.php:929
 msgid "Media Size Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:909
+#: app/admin/RTMediaFormHandler.php:934
 msgid "Category"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:910
+#: app/admin/RTMediaFormHandler.php:935
 msgid "Entity"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:911
+#: app/admin/RTMediaFormHandler.php:936
 msgid "Width"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:912
+#: app/admin/RTMediaFormHandler.php:937
 msgid "Height"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:913
+#: app/admin/RTMediaFormHandler.php:938
 msgid "Crop"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:963
+#: app/admin/RTMediaFormHandler.php:988
 msgid "JPEG/JPG image quality (1-100)"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:969
+#: app/admin/RTMediaFormHandler.php:994
 msgid "Enter JPEG/JPG Image Quality. Minimum value is 1. 100 is original quality."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:977
+#: app/admin/RTMediaFormHandler.php:1002
 msgid "Image Quality"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:999
+#: app/admin/RTMediaFormHandler.php:1024
 msgid "Custom CSS settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1016
+#: app/admin/RTMediaFormHandler.php:1041
 msgid "rtMedia default styles"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1022
+#: app/admin/RTMediaFormHandler.php:1047
 msgid ""
 "Load default rtMedia styles. You need to write your own style for rtMedia "
 "if you disable it."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1027
+#: app/admin/RTMediaFormHandler.php:1052
 msgid "Paste your CSS code"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1033
+#: app/admin/RTMediaFormHandler.php:1058
 msgid "Custom rtMedia CSS container"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1056
+#: app/admin/RTMediaFormHandler.php:1081
 msgid "Enable privacy"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1062
+#: app/admin/RTMediaFormHandler.php:1087
 msgid "Enable privacy in rtMedia"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1067
+#: app/admin/RTMediaFormHandler.php:1092
 msgid "Default privacy"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1073
+#: app/admin/RTMediaFormHandler.php:1098
 msgid "Set default privacy for media"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1079
+#: app/admin/RTMediaFormHandler.php:1104
 msgid "Allow users to set privacy for their content"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1084
+#: app/admin/RTMediaFormHandler.php:1109
 msgid ""
 "If you choose this, users will be able to change privacy of their own "
 "uploads."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1088
+#: app/admin/RTMediaFormHandler.php:1113
 msgid "For group uploads, BuddyPress groups privacy is used."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1130
+#: app/admin/RTMediaFormHandler.php:1155
 msgid "Enable media in profile"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1135
+#: app/admin/RTMediaFormHandler.php:1160
 msgid "Enable Media on BuddyPress Profile"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1140
+#: app/admin/RTMediaFormHandler.php:1165
 msgid "Enable media in group"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1145
+#: app/admin/RTMediaFormHandler.php:1170
 msgid "Enable Media on BuddyPress Groups"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1151
+#: app/admin/RTMediaFormHandler.php:1176
 msgid "Allow upload from activity stream"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1156
+#: app/admin/RTMediaFormHandler.php:1181
 msgid "Allow upload using status update box present on activity stream page"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1162
+#: app/admin/RTMediaFormHandler.php:1187
 msgid "Enable media in comment"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1167
+#: app/admin/RTMediaFormHandler.php:1192
 msgid ""
 "This will allow users to upload media in comment section for originally "
 "uploaded media up to 1 level."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1172 app/admin/RTMediaFormHandler.php:1177
+#: app/admin/RTMediaFormHandler.php:1197 app/admin/RTMediaFormHandler.php:1202
 msgid "Disable upload in comment media"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1183
+#: app/admin/RTMediaFormHandler.php:1208
 msgid "Number of media items to show in activity stream"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1188
+#: app/admin/RTMediaFormHandler.php:1213
 msgid ""
 "With bulk uploads activity, the stream may get flooded. You can control the "
 "maximum number of media items or files per activity. This limit will not "
@@ -889,55 +921,55 @@ msgid ""
 "unlimited."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1196
+#: app/admin/RTMediaFormHandler.php:1221
 msgid "Enable media notification"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1201
+#: app/admin/RTMediaFormHandler.php:1226
 msgid ""
 "This will enable notifications to media authors for media likes and "
 "comments."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1207
+#: app/admin/RTMediaFormHandler.php:1232
 msgid "Create activity for media likes"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1212
+#: app/admin/RTMediaFormHandler.php:1237
 msgid "Enabling this setting will create BuddyPress activity for media likes."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1219
+#: app/admin/RTMediaFormHandler.php:1244
 msgid "Create activity for media comments"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1224
+#: app/admin/RTMediaFormHandler.php:1249
 msgid "Enabling this setting will create BuddyPress activity for media comments."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1231
+#: app/admin/RTMediaFormHandler.php:1256
 msgid "Organize media into albums"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1237
+#: app/admin/RTMediaFormHandler.php:1262
 msgid ""
 "This will add 'album' tab to BuddyPress profile and group depending on the "
 "^above^ settings."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1242
+#: app/admin/RTMediaFormHandler.php:1267
 msgid "Show album description"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1248
+#: app/admin/RTMediaFormHandler.php:1273
 msgid "This will show description of an album under album gallery page."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1283
+#: app/admin/RTMediaFormHandler.php:1308
 msgid "Please Enable BuddyPress Activity Streams to update option"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1289
+#: app/admin/RTMediaFormHandler.php:1314
 msgid "Please Enable BuddyPress User Groups to update option"
 msgstr ""
 
