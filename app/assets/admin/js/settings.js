@@ -963,11 +963,11 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	jQuery( '#rtm-export-data-button' ).click( function(){
-		window.location = 'http://rt.media/wp-admin/tools.php?page=export_personal_data';
+		window.location.href = '/wp-admin/tools.php?page=export_personal_data';
 	} );
 
 	jQuery( '#rtm-erase-data-button' ).click(function () {
-		window.location = 'http://rt.media/wp-admin/tools.php?page=remove_personal_data';
+		window.location.href = '/wp-admin/tools.php?page=remove_personal_data';
 	});
 
 } );
