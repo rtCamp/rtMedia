@@ -120,5 +120,15 @@ class RTMediaUploadTerms {
 		return $content;
 	}
 }
-// Instantiate object.
-new RTMediaUploadTerms();
+
+function rtm_check_upload_terms() {
+
+require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+// Check rtMedia upload terms plugin is exist and active.
+if ( ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
+		// Instantiate object.
+		new RTMediaUploadTerms();
+	}
+}
+rtm_check_upload_terms();
