@@ -196,7 +196,6 @@ class RTMediaUploadTermsAdmin {
 /**
  * Check if old plugin rtMedia upload terms is activate or not.
  */
-
 function rtm_check_admin_upload_terms() {
 
 	require_once ABSPATH . 'wp-admin/includes/plugin.php';
