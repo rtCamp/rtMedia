@@ -862,23 +862,23 @@ add_filter( 'rtmedia_gallery_shortcode_parameter_pre_filter', 'rtmedia_gallery_s
  */
 function register_rtmedia_exporter( $exporters ) {
 	$exporters['buddypress-media-shortcode-uploads'] = array(
-		'exporter_friendly_name' => __( 'rtMedia Shortcode Uploads' ),
+		'exporter_friendly_name' => esc_html__( 'rtMedia Shortcode Uploads', 'buddypress-media' ),
 		'callback'               => 'rtmedia_shortcode_upload_exporter',
 	);
 	$exporters['buddypress-media-activity']          = array(
-		'exporter_friendly_name' => __( 'rtMedia Activities' ),
+		'exporter_friendly_name' => esc_html__( 'rtMedia Activities', 'buddypress-media' ),
 		'callback'               => 'rtmedia_activity_exporter',
 	);
 	$exporters['buddypress-media-comment']           = array(
-		'exporter_friendly_name' => __( 'rtMedia Comments' ),
+		'exporter_friendly_name' => esc_html__( 'rtMedia Comments', 'buddypress-media' ),
 		'callback'               => 'rtmedia_activity_comments_exporter',
 	);
 	$exporters['buddypress-media-views']             = array(
-		'exporter_friendly_name' => __( 'rtMedia Media Views' ),
+		'exporter_friendly_name' => esc_html__( 'rtMedia Media Views', 'buddypress-media' ),
 		'callback'               => 'rtmedia_media_view_exporter',
 	);
 	$exporters['buddypress-media-likes']             = array(
-		'exporter_friendly_name' => __( 'rtMedia Media Likes' ),
+		'exporter_friendly_name' => esc_html__( 'rtMedia Media Likes', 'buddypress-media' ),
 		'callback'               => 'rtmedia_media_like_exporter',
 	);
 
@@ -899,15 +899,15 @@ add_filter(
  */
 function register_rtmedia_eraser( $erasers ) {
 	$erasers['buddypress-media']       = array(
-		'eraser_friendly_name' => __( 'rtMedia Eraser' ),
+		'eraser_friendly_name' => esc_html__( 'rtMedia Eraser', 'buddypress-media' ),
 		'callback'             => 'rtmedia_eraser',
 	);
 	$erasers['buddypress-media-likes'] = array(
-		'eraser_friendly_name' => __( 'rtMedia Likes Eraser' ),
+		'eraser_friendly_name' => esc_html__( 'rtMedia Likes Eraser', 'buddypress-media' ),
 		'callback'             => 'rtmedia_like_eraser',
 	);
 	$erasers['buddypress-media-album'] = array(
-		'eraser_friendly_name' => __( 'rtMedia Album Eraser' ),
+		'eraser_friendly_name' => esc_html__( 'rtMedia Album Eraser', 'buddypress-media' ),
 		'callback'             => 'rtmedia_album_eraser',
 	);
 	return $erasers;

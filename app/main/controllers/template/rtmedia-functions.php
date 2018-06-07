@@ -4190,7 +4190,7 @@ function rtmedia_number_to_human_readable( $n ) {
 function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 
 	// Limit to avoid timing out.
-	$number = 200;
+	$number = 100;
 	$page   = (int) $page;
 
 	// fetching user data.
@@ -4223,7 +4223,7 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 		$activity_id      = $activity->id;
 		$item_id          = 'activity-' . $activity_id;
 		$group_id         = 'activity';
-		$group_label      = __( 'rtMedia Activities' );
+		$group_label      = esc_html__( 'rtMedia Activities', 'buddypress-media' );
 
 		$query          = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $activity_id );
 		$results        = $wpdb->get_results( $query );
@@ -4232,20 +4232,20 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 
 		foreach ( $results as $result ) {
 			$url          = wp_get_attachment_url( $result->media_id );
-			$attachments .= $result->media_title . " : <a href='$url'>$url</a><br />";
+			$attachments .= $result->media_title . " : <a href='" . esc_url( $url ) . "'>" . esc_url( $url ) . "</a><br />";
 		}
 
 		$data = array(
 			array(
-				'name'  => __( 'Activity Date' ),
+				'name'  => esc_html__( 'Activity Date', 'buddypress-media'  ),
 				'value' => $activity_date,
 			),
 			array(
-				'name'  => __( 'Activity Content' ),
+				'name'  => esc_html__( 'Activity Content', 'buddypress-media' ),
 				'value' => $activity_content,
 			),
 			array(
-				'name'  => __( 'Attachments' ),
+				'name'  => esc_html__( 'Attachments' ),
 				'value' => empty( $attachments ) ? 'No attachments' : $attachments,
 			),
 		);
@@ -4277,7 +4277,7 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
 
 	// Limit to avoid timing out.
-	$number = 200;
+	$number = 100;
 	$page   = (int) $page;
 
 	// fetching user data.
@@ -4301,7 +4301,7 @@ function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
 	foreach ( $media as $media_data ) {
 		$item_id     = 'shortcode-upload-' . $media_data->media_id;
 		$group_id    = 'shortcode-upload';
-		$group_label = __( 'rtMedia Shortcode Uploads' );
+		$group_label = esc_html__( 'rtMedia Shortcode Uploads', 'buddypress-media' );
 
 		$media_url   = wp_get_attachment_url( $media_data->media_id );
 		$media_title = $media_data->media_title;
@@ -4310,19 +4310,19 @@ function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
 
 		$data = array(
 			array(
-				'name'  => __( 'Media Upload Date' ),
+				'name'  => esc_html__( 'Media Upload Date', 'buddypress-media' ),
 				'value' => $upload_date,
 			),
 			array(
-				'name'  => __( 'Media Title' ),
+				'name'  => esc_html__( 'Media Title', 'buddypress-media' ),
 				'value' => $media_title,
 			),
 			array(
-				'name'  => __( 'Media URL' ),
+				'name'  => __( 'Media URL', 'buddypress-media' ),
 				'value' => $media_url,
 			),
 			array(
-				'name'  => __( 'Album Title' ),
+				'name'  => esc_html__( 'Album Title', 'buddypress-media' ),
 				'value' => $album_title,
 			),
 		);
@@ -4352,7 +4352,7 @@ function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
 function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 
 	// Limit to avoid timing out.
-	$number = 200;
+	$number = 100;
 	$page   = (int) $page;
 
 	// fetching user data.
@@ -4385,7 +4385,7 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 		$comment_date    = $comment->date_recorded;
 		$item_id         = 'activity-comment-' . $comment->id;
 		$group_id        = 'activity-comment';
-		$group_label     = __( 'rtMedia Activity Comments' );
+		$group_label     = esc_html__( 'rtMedia Activity Comments', 'buddypress-media' );
 
 		$query = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $comment->id );
 
@@ -4399,15 +4399,15 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 
 		$data = array(
 			array(
-				'name'  => __( 'Comment Date' ),
+				'name'  => esc_html__( 'Comment Date', 'buddypress-media' ),
 				'value' => $comment_date,
 			),
 			array(
-				'name'  => __( 'Comment Content' ),
+				'name'  => esc_html__( 'Comment Content', 'buddypress-media' ),
 				'value' => $comment_content,
 			),
 			array(
-				'name'  => __( 'Attachments' ),
+				'name'  => esc_html__( 'Attachments', 'buddypress-media' ),
 				'value' => empty( $attachments ) ? 'No attachments' : $attachments,
 			),
 		);
@@ -4439,7 +4439,7 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 
 	// Limit to avoid timing out.
-	$number = 200;
+	$number = 100;
 	$page   = (int) $page;
 
 	// fetching user data.
@@ -4472,19 +4472,19 @@ function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 		$group_id        = 'media-view';
 		$media_url       = wp_get_attachment_url( $view->media_id );
 		$media_url       = "<a href='$media_url'>$media_url</a>";
-		$group_label     = __( 'rtMedia Media Views' );
+		$group_label     = esc_html__( 'rtMedia Media Views', 'buddypress-media' );
 
 		$data = array(
 			array(
-				'name'  => __( 'Media URL' ),
+				'name'  => esc_html__( 'Media URL', 'buddypress-media' ),
 				'value' => $media_url,
 			),
 			array(
-				'name'  => __( 'Number of Views' ),
+				'name'  => esc_html__( 'Number of Views', 'buddypress-media' ),
 				'value' => $no_of_views,
 			),
 			array(
-				'name'  => __( 'Date of First View' ),
+				'name'  => esc_html__( 'Date of First View', 'buddypress-media' ),
 				'value' => $first_view_date,
 			),
 		);
@@ -4516,7 +4516,7 @@ function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 
 	// Limit to avoid timing out.
-	$number = 200;
+	$number = 100;
 	$page   = (int) $page;
 
 	// fetching user data.
@@ -4549,15 +4549,15 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 		$group_id    = 'media-like';
 		$media_url   = wp_get_attachment_url( $like->media_id );
 		$media_url   = "<a href='$media_url'>$media_url</a>";
-		$group_label = __( 'rtMedia Media Likes' );
+		$group_label = esc_html__( 'rtMedia Media Likes', 'buddypress-media' );
 
 		$data = array(
 			array(
-				'name'  => __( 'Media URL' ),
+				'name'  => esc_html__( 'Media URL', 'buddypress-media' ),
 				'value' => $media_url,
 			),
 			array(
-				'name'  => __( 'Date' ),
+				'name'  => esc_html__( 'Date', 'buddypress-media' ),
 				'value' => $like_date,
 			),
 		);
@@ -4590,7 +4590,7 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 function rtmedia_eraser( $email_address, $page = 1 ) {
 
 	// Limit to avoid timing out.
-	$number = 200;
+	$number = 100;
 	$page   = (int) $page;
 
 	// fetching user data.
@@ -4646,7 +4646,7 @@ function rtmedia_eraser( $email_address, $page = 1 ) {
 function rtmedia_album_eraser( $email_address, $page = 1 ) {
 
 	// Limit to avoid timing out.
-	$number = 200;
+	$number = 100;
 	$page   = (int) $page;
 
 	// fetching user data.
@@ -4702,7 +4702,7 @@ function rtmedia_album_eraser( $email_address, $page = 1 ) {
 function rtmedia_like_eraser( $email_address, $page = 1 ) {
 
 	// Limit to avoid timing out.
-	$number = 200;
+	$number = 100;
 	$page   = (int) $page;
 
 	// fetching user data.
