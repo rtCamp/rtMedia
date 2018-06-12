@@ -4193,11 +4193,23 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 	$number = 100;
 	$page   = (int) $page;
 
+	// setting default values.
+	$activity_count = false;
+	$user_data      = false;
+
 	// fetching user data.
-	$user_data    = get_user_by( 'email', $email_address );
+	$user_cache_key = md5( 'email_' . $email_address );
+	$user_id        = wp_cache_get( $user_cache_key, 'activity_exporter' );
+
+	if ( false === $user_id ) {
+		$user_data = get_user_by( 'email', $email_address );
+		$user_id   = $user_data->ID;
+		wp_cache_set( $user_cache_key, $user_id, 'activity_exporter', 300 );
+	}
+
 	$export_items = array();
 
-	if ( false === $user_data || empty( $user_data->ID ) ) {
+	if ( false === $user_data || empty( $user_id ) ) {
 
 		return array(
 			'data' => $export_items,
@@ -4209,12 +4221,19 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 
 	$query = $wpdb->prepare(
 		'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='rtmedia_update'  LIMIT %d OFFSET %d",
-		$user_data->ID,
+		$user_id,
 		$number,
 		$number * ( $page - 1 )
 	);
 
-	$activities = $wpdb->get_results( $query );
+	$activities_args      = array( $user_id, $number, $page );
+	$activities_cache_key = md5( wp_json_encode( $activities_args ) );
+	$activities           = wp_cache_get( $activities_cache_key, 'activity_exporter' );
+
+	if ( false === $activities ) {
+		$activities = $wpdb->get_results( $query );
+		wp_cache_set( $activities_cache_key, $activities, 'activity_exporter', 300 );
+	}
 
 	foreach ( $activities as $activity ) {
 
@@ -4225,19 +4244,33 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 		$group_id         = 'activity';
 		$group_label      = esc_html__( 'rtMedia Activities', 'buddypress-media' );
 
-		$query          = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $activity_id );
-		$results        = $wpdb->get_results( $query );
-		$activity_count = $wpdb->num_rows;
-		$attachments    = '';
+		$query = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $activity_id );
 
-		foreach ( $results as $result ) {
+		$activity_args       = array( $user_id, $activity_id );
+		$activity_cache_key  = md5( wp_json_encode( $activity_args ) );
+		$activity_count_args = array( $user_id, $activity_id, 'count' );
+		$activity_count_key  = md5( wp_json_encode( $activity_count_args ) );
+		$activity_results    = wp_cache_get( $activity_cache_key, 'activity_exporter' );
+		$activity_count      = wp_cache_get( $activity_count_key, 'activity_exporter' );
+
+		if ( false === $activity_results || false === $activity_count ) {
+			$activity_results = $wpdb->get_results( $query );
+			$activity_count   = $wpdb->num_rows;
+
+			wp_cache_set( $activity_cache_key, $activity_results, 'activity_exporter', 300 );
+			wp_cache_set( $activity_count_key, $activity_count, 'activity_exporter', 300 );
+		}
+
+		$attachments = '';
+
+		foreach ( $activity_results as $result ) {
 			$url          = wp_get_attachment_url( $result->media_id );
-			$attachments .= $result->media_title . " : <a href='" . esc_url( $url ) . "'>" . esc_url( $url ) . "</a><br />";
+			$attachments .= $result->media_title . " : <a href='" . esc_url( $url ) . "'>" . esc_url( $url ) . '</a><br />';
 		}
 
 		$data = array(
 			array(
-				'name'  => esc_html__( 'Activity Date', 'buddypress-media'  ),
+				'name'  => esc_html__( 'Activity Date', 'buddypress-media' ),
 				'value' => $activity_date,
 			),
 			array(
@@ -4258,7 +4291,7 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 		);
 	}
 
-	$done = $activity_count < $number;
+	$done = ( $activity_count < $number );
 	return array(
 		'data' => $export_items,
 		'done' => $done,
@@ -4280,11 +4313,22 @@ function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
 	$number = 100;
 	$page   = (int) $page;
 
+	// setting default value.
+	$user_data = false;
+
 	// fetching user data.
-	$user_data    = get_user_by( 'email', $email_address );
+	$user_cache_key = md5( 'email_' . $email_address );
+	$user_id        = wp_cache_get( $user_cache_key, 'upload_exporter' );
+
+	if ( false === $user_id ) {
+		$user_data = get_user_by( 'email', $email_address );
+		$user_id   = $user_data->ID;
+		wp_cache_set( $user_cache_key, $user_id, 'upload_exporter', 300 );
+	}
+
 	$export_items = array();
 
-	if ( false === $user_data || empty( $user_data->ID ) ) {
+	if ( false === $user_data || empty( $user_id ) ) {
 
 		return array(
 			'data' => $export_items,
@@ -4294,10 +4338,27 @@ function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
 
 	global $wpdb;
 
-	$query = $wpdb->prepare( 'SELECT media.media_id, media.media_title, media.upload_date, album.media_title AS album_title FROM ' . $wpdb->prefix . 'rt_rtm_media AS media, ' . $wpdb->prefix . 'rt_rtm_media AS album WHERE media.album_id=album.id AND media.activity_id=0 AND media.media_author=%d LIMIT %d OFFSET %d', $user_data->ID, $number, $number * ( $page - 1 ) );
+	$query = $wpdb->prepare( 'SELECT media.media_id, media.media_title, media.upload_date, album.media_title AS album_title FROM ' . $wpdb->prefix . 'rt_rtm_media AS media, ' . $wpdb->prefix . 'rt_rtm_media AS album WHERE media.album_id=album.id AND media.activity_id=0 AND media.media_author=%d LIMIT %d OFFSET %d',
+		$user_id,
+		$number,
+		$number * ( $page - 1 )
+	);
 
-	$media       = $wpdb->get_results( $query );
-	$media_count = $wpdb->num_rows;
+	$upload_args      = array( $user_id, $number, $page );
+	$upload_cache_key = md5( wp_json_encode( $upload_args ) );
+	$media_count_args = array( $user_id, $number, $page, 'count' );
+	$media_count_key  = md5( wp_json_encode( $media_count_args ) );
+	$media            = wp_cache_get( $upload_cache_key, 'upload_exporter' );
+	$media_count      = wp_cache_get( $media_count_key, 'upload_exporter' );
+
+	if ( false === $media || false === $media_count ) {
+		$media       = $wpdb->get_results( $query );
+		$media_count = $wpdb->num_rows;
+
+		wp_cache_set( $upload_cache_key, $media, 'upload_exporter', 300 );
+		wp_cache_set( $media_count_key, $media_count, 'upload_exporter', 300 );
+	}
+
 	foreach ( $media as $media_data ) {
 		$item_id     = 'shortcode-upload-' . $media_data->media_id;
 		$group_id    = 'shortcode-upload';
@@ -4334,7 +4395,8 @@ function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
 			'data'        => $data,
 		);
 	}
-	$done = $activity_count < $number;
+
+	$done = ( $media_count < $number );
 	return array(
 		'data' => $export_items,
 		'done' => $done,
@@ -4355,11 +4417,22 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 	$number = 100;
 	$page   = (int) $page;
 
+	// setting default value.
+	$user_data = false;
+
 	// fetching user data.
-	$user_data    = get_user_by( 'email', $email_address );
+	$user_cache_key = md5( 'email_' . $email_address );
+	$user_id        = wp_cache_get( $user_cache_key, 'comments_exporter' );
+
+	if ( false === $user_id ) {
+		$user_data = get_user_by( 'email', $email_address );
+		$user_id   = $user_data->ID;
+		wp_cache_set( $user_cache_key, $user_id, 'comments_exporter', 300 );
+	}
+
 	$export_items = array();
 
-	if ( false === $user_data || empty( $user_data->ID ) ) {
+	if ( false === $user_data || empty( $user_id ) ) {
 
 		return array(
 			'data' => $export_items,
@@ -4371,30 +4444,51 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 
 	$query = $wpdb->prepare(
 		'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='activity_comment'  LIMIT %d OFFSET %d",
-		$user_data->ID,
+		$user_id,
 		$number,
 		$number * ( $page - 1 )
 	);
 
-	$comments      = $wpdb->get_results( $query );
-	$comment_count = $wpdb->num_rows;
+	$activity_comment_args      = array( $user_id, $number, $page );
+	$activity_comment_cache_key = md5( wp_json_encode( $activity_comment_args ) );
+	$comment_count_args         = array( $user_id, $number, $page, 'count' );
+	$comment_count_key          = md5( wp_json_encode( $comment_count_args ) );
+	$comment_count              = wp_cache_get( $comment_count_key, 'comments_exporter' );
+	$comments                   = wp_cache_get( $activity_comment_cache_key, 'comments_exporter' );
+
+	if ( false === $comments || false === $comment_count ) {
+		$comments      = $wpdb->get_results( $query );
+		$comment_count = $wpdb->num_rows;
+
+		wp_cache_set( $activity_comment_cache_key, $comments, 'comments_exporter', 300 );
+		wp_cache_set( $comment_count_key, $comment_count, 'comments_exporter', 300 );
+	}
 
 	foreach ( $comments as $comment ) {
 
 		$comment_content = wp_strip_all_tags( $comment->content );
 		$comment_date    = $comment->date_recorded;
-		$item_id         = 'activity-comment-' . $comment->id;
+		$comment_id      = $comment->id;
+		$item_id         = 'activity-comment-' . $comment_id;
 		$group_id        = 'activity-comment';
 		$group_label     = esc_html__( 'rtMedia Activity Comments', 'buddypress-media' );
 
-		$query = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $comment->id );
+		$query = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $comment_id );
 
-		$results     = $wpdb->get_results( $query );
+		$comment_args      = array( $user_id, $comment_id );
+		$comment_cache_key = md5( wp_json_encode( $comment_args ) );
+		$comment_results   = wp_cache_get( $comment_cache_key, 'comments_exporter' );
+
+		if ( false === $comment_results ) {
+			$comment_results = $wpdb->get_results( $query );
+			wp_cache_set( $comment_cache_key, $comment_results, 'comments_exporter', 300 );
+		}
+
 		$attachments = '';
 
-		foreach ( $results as $result ) {
+		foreach ( $comment_results as $result ) {
 			$url          = wp_get_attachment_url( $result->media_id );
-			$attachments .= $result->media_title . " : <a href='$url'>$url</a><br />";
+			$attachments .= $result->media_title . " : <a href='" . esc_url( $url ) . "'>" . esc_url( $url ) . '</a><br />';
 		}
 
 		$data = array(
@@ -4420,7 +4514,7 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 		);
 	}
 
-	$done = $comment_count < $number;
+	$done = ( $comment_count < $number );
 
 	return array(
 		'data' => $export_items,
@@ -4442,11 +4536,22 @@ function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 	$number = 100;
 	$page   = (int) $page;
 
+	// setting default value.
+	$user_data = false;
+
 	// fetching user data.
-	$user_data    = get_user_by( 'email', $email_address );
+	$user_cache_key = md5( 'email_' . $email_address );
+	$user_id        = wp_cache_get( $user_cache_key, 'view_exporter' );
+
+	if ( false === $user_id ) {
+		$user_data = get_user_by( 'email', $email_address );
+		$user_id   = $user_data->ID;
+		wp_cache_set( $user_cache_key, $user_id, 'view_exporter', 300 );
+	}
+
 	$export_items = array();
 
-	if ( false === $user_data || empty( $user_data->ID ) ) {
+	if ( false === $user_data || empty( $user_id ) ) {
 
 		return array(
 			'data' => $export_items,
@@ -4458,12 +4563,25 @@ function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 
 	$query = $wpdb->prepare(
 		'SELECT interaction.*, media.media_id FROM ' . $wpdb->prefix . 'rt_rtm_media_interaction as interaction, ' . $wpdb->prefix . "rt_rtm_media as media WHERE interaction.user_id=%d and interaction.action='view' and media.id = interaction.media_id LIMIT %d OFFSET %d",
-		$user_data->ID,
+		$user_id,
 		$number,
 		$number * ( $page - 1 )
 	);
 
-	$views = $wpdb->get_results( $query );
+	$view_args       = array( $user_id, $number, $page );
+	$view_cache_key  = md5( wp_json_encode( $view_args ) );
+	$view_count_args = array( $user_id, $number, $page, 'count' );
+	$view_count_key  = md5( wp_json_encode( $view_count_args ) );
+	$view_count      = wp_cache_get( $view_count_key, 'view_exporter' );
+	$views           = wp_cache_get( $view_cache_key, 'view_exporter' );
+
+	if ( false === $views || false === $view_count ) {
+		$views      = $wpdb->get_results( $query );
+		$view_count = $wpdb->num_rows;
+
+		wp_cache_set( $view_cache_key, $views, 'view_exporter', 300 );
+		wp_cache_set( $view_count_key, $view_count, 'view_exporter', 300 );
+	}
 
 	foreach ( $views as $view ) {
 		$no_of_views     = $view->value;
@@ -4471,7 +4589,7 @@ function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 		$item_id         = 'media-view' . $view->id;
 		$group_id        = 'media-view';
 		$media_url       = wp_get_attachment_url( $view->media_id );
-		$media_url       = "<a href='$media_url'>$media_url</a>";
+		$media_url       = "<a href='" . esc_url( $media_url ) . "'>" . esc_url( $media_url ) . '</a>';
 		$group_label     = esc_html__( 'rtMedia Media Views', 'buddypress-media' );
 
 		$data = array(
@@ -4497,7 +4615,7 @@ function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 		);
 	}
 
-	$done = $wpdb->num_rows < $number;
+	$done = ( $view_count < $number );
 
 	return array(
 		'data' => $export_items,
@@ -4519,11 +4637,22 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 	$number = 100;
 	$page   = (int) $page;
 
+	// setting default value.
+	$user_data = false;
+
 	// fetching user data.
-	$user_data    = get_user_by( 'email', $email_address );
+	$user_cache_key = md5( 'email_' . $email_address );
+	$user_id        = wp_cache_get( $user_cache_key, 'like_exporter' );
+
+	if ( false === $user_id ) {
+		$user_data = get_user_by( 'email', $email_address );
+		$user_id   = $user_data->ID;
+		wp_cache_set( $user_cache_key, $user_id, 'like_exporter', 300 );
+	}
+
 	$export_items = array();
 
-	if ( false === $user_data || empty( $user_data->ID ) ) {
+	if ( false === $user_data || empty( $user_id ) ) {
 
 		return array(
 			'data' => $export_items,
@@ -4535,12 +4664,25 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 
 	$query = $wpdb->prepare(
 		'SELECT interaction.*, media.media_id FROM ' . $wpdb->prefix . 'rt_rtm_media_interaction as interaction, ' . $wpdb->prefix . "rt_rtm_media as media WHERE interaction.user_id=%d and interaction.action='like' and media.id = interaction.media_id LIMIT %d OFFSET %d",
-		$user_data->ID,
+		$user_id,
 		$number,
 		$number * ( $page - 1 )
 	);
 
-	$likes = $wpdb->get_results( $query );
+	$likes_args      = array( $user_id, $number, $page );
+	$likes_cache_key = md5( wp_json_encode( $likes_args ) );
+	$like_count_args = array( $user_id, $number, $page, 'count' );
+	$like_count_key  = md5( wp_json_encode( $like_count_args ) );
+	$like_count      = wp_cache_get( $like_count_key, 'like_exporter' );
+	$likes           = wp_cache_get( $likes_cache_key, 'like_exporter' );
+
+	if ( false === $likes || false === $like_count ) {
+		$likes      = $wpdb->get_results( $query );
+		$like_count = $wpdb->num_rows;
+
+		wp_cache_set( $likes_cache_key, $likes, 'like_exporter', 300 );
+		wp_cache_set( $like_count_key, $like_count, 'like_exporter', 300 );
+	}
 
 	foreach ( $likes as $like ) {
 
@@ -4548,7 +4690,7 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 		$item_id     = 'media-like' . $like->id;
 		$group_id    = 'media-like';
 		$media_url   = wp_get_attachment_url( $like->media_id );
-		$media_url   = "<a href='$media_url'>$media_url</a>";
+		$media_url   = "<a href='" . esc_url( $media_url ) . "'>" . esc_url( $media_url ) . '</a>';
 		$group_label = esc_html__( 'rtMedia Media Likes', 'buddypress-media' );
 
 		$data = array(
@@ -4570,7 +4712,7 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 		);
 	}
 
-	$done = $wpdb->num_rows < $number;
+	$done = ( $like_count < $number );
 
 	return array(
 		'data' => $export_items,
@@ -4626,7 +4768,7 @@ function rtmedia_eraser( $email_address, $page = 1 ) {
 		$items_removed = true;
 	}
 
-	$done = count( $media_ids ) < $number;
+	$done = ( count( $media_ids ) < $number );
 
 	return array(
 		'items_removed'  => $items_removed,
@@ -4681,7 +4823,7 @@ function rtmedia_album_eraser( $email_address, $page = 1 ) {
 
 	$items_removed = $wpdb->query( $query );
 
-	$done = $items_removed < $number;
+	$done = ( $items_removed < $number );
 
 	return array(
 		'items_removed'  => $items_removed,
@@ -4729,7 +4871,7 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 
 	$items_removed = $wpdb->query( $query );
 
-	$done = $items_removed < $number;
+	$done = ( $items_removed < $number );
 
 	return array(
 		'items_removed'  => $items_removed,
