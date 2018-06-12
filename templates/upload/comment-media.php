@@ -4,6 +4,11 @@
 	}
 	?>
 	<div class="rtmedia-container rtmedia-uploader-div">
+	<?php
+	$bp_template = get_option( '_bp_theme_package_id' );
+	if( 'legacy' !== $bp_template ){ ?>
+	<div class="rtmedia-container rtmedia-uploader-div">
+	<?php } ?>
 		<?php
 		if ( isset( $attr['rtmedia_simple_file_upload'] ) && true === $attr['rtmedia_simple_file_upload'] ) {
 			if ( isset( $attr['rtmedia_upload_without_form'] ) && true === $attr['rtmedia_upload_without_form'] ) { ?>
@@ -102,5 +107,10 @@
 		}
 		?>
 	</div>
+	<?php
+	if( 'legacy' !== $bp_template ){ ?>
+		</div>
+	<?php } ?>
+
 	<?php
 }
