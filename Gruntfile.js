@@ -1,30 +1,30 @@
 'use strict';
-module.exports = function ( grunt ) {
+module.exports = function (grunt) {
 
 	// load all grunt tasks matching the `grunt-*` pattern
 	// Ref. https://npmjs.org/package/load-grunt-tasks
-	require( 'load-grunt-tasks' )( grunt );
+	require('load-grunt-tasks')(grunt);
 
-	grunt.initConfig( {
+	grunt.initConfig({
 		// watch for changes and trigger sass, jshint, uglify and livereload
 		watch: {
 			sass: {
-				files: [ 'app/assets/admin/css/sass/**/*.{scss,sass}', 'app/assets/css/sass/**/*.{scss,sass}' ],
-				tasks: [ 'sass' ]
+				files: ['app/assets/admin/css/sass/**/*.{scss,sass}', 'app/assets/css/sass/**/*.{scss,sass}'],
+				tasks: ['sass']
 			},
 			autoprefixer: {
-				files: [ 'app/assets/admin/css/*.css', 'app/assets/css/*css' ],
-				tasks: [ 'autoprefixer' ]
+				files: ['app/assets/admin/css/*.css', 'app/assets/css/*css'],
+				tasks: ['autoprefixer']
 			},
 			js: {
-				files: [ '<%= uglify.frontend.src %>', '<%= uglify.backend.src %>' ],
-				tasks: [ 'uglify' ]
+				files: ['<%= uglify.frontend.src %>', '<%= uglify.backend.src %>'],
+				tasks: ['uglify']
 			},
 			livereload: {
 				// Here we watch the files the sass task will compile to
 				// These files are sent to the live reload server after sass compiles to them
 				options: { livereload: true },
-				files: [ '*.php', '*.css' ]
+				files: ['*.php', '*.css']
 			}
 		},
 		// sass
@@ -49,7 +49,8 @@ module.exports = function ( grunt ) {
 					'app/assets/admin/css/admin.min.css': 'app/assets/admin/css/sass/admin.scss',
 					'app/assets/admin/css/widget.min.css': 'app/assets/admin/css/sass/widget.scss',
 					'app/assets/css/rtmedia.min.css': 'app/assets/css/sass/rtmedia.scss',
-					'app/assets/css/rtm-upload-terms.min.css': 'app/assets/css/rtm-upload-terms.css'
+					'app/assets/css/rtm-upload-terms.min.css': 'app/assets/css/rtm-upload-terms.css',
+					'app/assets/admin/css/rtm-upload-terms.min.css': 'app/assets/css/rtm-upload-terms.css',
 				}
 			}
 		},
@@ -57,7 +58,7 @@ module.exports = function ( grunt ) {
 		autoprefixer: {
 			dist: {
 				options: {
-					browsers: [ 'last 2 versions', 'ie 9', 'ios 6', 'android 4' ],
+					browsers: ['last 2 versions', 'ie 9', 'ios 6', 'android 4'],
 					expand: true,
 					flatten: true
 				},
@@ -126,15 +127,15 @@ module.exports = function ( grunt ) {
 				]
 			},
 			target: {
-				files: [ {
+				files: [{
 					src: [
-							'*.php',
-							'**/*.php',
-							'!node_modules/**',
-							'!tests/**'
-						], //all php
+						'*.php',
+						'**/*.php',
+						'!node_modules/**',
+						'!tests/**'
+					], //all php
 					expand: true
-				} ]
+				}]
 			}
 		},
 		makepot: {
@@ -142,7 +143,7 @@ module.exports = function ( grunt ) {
 				options: {
 					cwd: '.', // Directory of files to internationalize.
 					domainPath: 'languages/', // Where to save the POT file.
-					exclude: [ 'node_modules/*' ], // List of files or directories to ignore.
+					exclude: ['node_modules/*'], // List of files or directories to ignore.
 					mainFile: 'index.php', // Main project file.
 					potFilename: 'buddypress-media.po', // Name of the POT file.
 					potHeaders: { // Headers to add to the generated POT file.
@@ -158,7 +159,7 @@ module.exports = function ( grunt ) {
 			}
 		}
 
-	} );
+	});
 	// register task
-	grunt.registerTask( 'default', [ 'sass', 'autoprefixer', 'uglify', 'checktextdomain', 'makepot', 'watch' ] );
+	grunt.registerTask('default', ['sass', 'autoprefixer', 'uglify', 'checktextdomain', 'makepot', 'watch']);
 };
