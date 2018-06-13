@@ -247,6 +247,8 @@ class RTMediaFormHandler {
 	/**
 	 * Show rtmedia button in admin options.
 	 *
+	 * @since 4.5.0
+	 *
 	 * @access public
 	 *
 	 * @param  array $args arguments to create button.
@@ -273,11 +275,14 @@ class RTMediaFormHandler {
 	/**
 	 * Show rtmedia file input in admin options.
 	 *
+	 * @since 4.5.0
+	 *
 	 * @access public
 	 *
 	 * @param  array $args arguments to create file input control.
 	 *
 	 * @return void
+	 *
 	 */
 	public static function fileinput( $args ) {
 		$defaults = array(
@@ -570,6 +575,8 @@ class RTMediaFormHandler {
 	 *
 	 * @access public
 	 *
+	 * @since 4.5.0
+	 *
 	 * @return array $render
 	 */
 	static function render_export_import() {
@@ -607,6 +614,8 @@ class RTMediaFormHandler {
 	/**
 	 * Render content in export/import settings tab
 	 *
+	 * @since 4.5.0
+	 *
 	 * @access public
 	 *
 	 * @return void
@@ -619,7 +628,7 @@ class RTMediaFormHandler {
 		/**
 		 * Filter 'rtmedia_export_import_add_itmes' to modify controls in export/import settings tab
 		 *
-		 * @since 4.4.9
+		 * @since 4.5.0
 		 */
 		$render_options          = apply_filters( 'rtmedia_export_import_add_itmes', $render_options );
 		$export_import_group     = array();
@@ -628,7 +637,7 @@ class RTMediaFormHandler {
 		/**
 		 * Filter 'rtmedia_export_import_groups' to modify groups in export/import settings tab
 		 *
-		 * @since 4.4.9
+		 * @since 4.5.0
 		 */
 		$export_import_group = apply_filters( 'rtmedia_export_import_groups', $export_import_group );
 		ksort( $export_import_group );
