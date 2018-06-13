@@ -97,7 +97,8 @@ jQuery(document).ready(function () {
 });
 
 /**
- * Show Error Message On Admin Side Settings
+ * Show Error Message On Admin Side
+ * Handle error on rtMedia settings
  * By: Malav Vasita
  */
 function rtp_display_terms_warning ( selector, rt_alert_msg ) {

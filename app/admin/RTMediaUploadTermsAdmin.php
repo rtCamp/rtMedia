@@ -10,7 +10,7 @@
 /**
  *  Class for Admin settings regarding Upload Terms
  */
-if( !class_exists( 'RTMediaUploadTermsAdmin' ) ) {
+if( ! class_exists( 'RTMediaUploadTermsAdmin' ) ) {
 	class RTMediaUploadTermsAdmin {
 
 		/**

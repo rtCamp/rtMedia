@@ -5,7 +5,7 @@
  * @package rtMedia
  * @author  Malav Vasita <malav.vasita@rtcamp.com>
  */
-if( !class_exists( 'RTMediaUploadTerms' ) ) {
+if( ! class_exists( 'RTMediaUploadTerms' ) ) {
 	class RTMediaUploadTerms {
 
 		/**
