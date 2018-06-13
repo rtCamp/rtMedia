@@ -87,6 +87,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 			'rtTextarea' => 0,
 			'rtHidden'   => 0,
 			'rtWysiwyg'  => 0,
+			'rtLink'     => 0,
 		);
 		private static $default_classes = array(
 			'rtText'     => 'rtm-form-text',
@@ -98,6 +99,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 			'rtTextarea' => 'rtm-form-textarea',
 			'rtHidden'   => 'rtm-form-hidden',
 			'rtWysiwyg'  => 'rtm-form-wysiwyg',
+			'rtLink'     => 'rtm-form-link',
 		);
 
 		/**
@@ -251,6 +253,9 @@ if ( ! class_exists( 'rtForm' ) ) {
 				case 'rtCheckbox' : //checkbox
 				case 'rtRadio' : //radio
 					$html .= 'value = "' . esc_attr( $attributes['value'] ) . '">';
+					break;
+				case 'rtLink' : //radio
+					$html .= 'href = "' . esc_url( $attributes['href'] ) . '">';
 					break;
 			}
 
@@ -586,6 +591,70 @@ if ( ! class_exists( 'rtForm' ) ) {
 
 		public function display_textbox( $args = '' ) {
 			echo $this->get_textbox( $args );
+		}
+
+		/**
+		 * Generate rtMedia link in admin options.
+		 *
+		 * @access protected
+		 *
+		 * @param $attributes
+		 *
+		 * @return string
+		 * @throws rtFormInvalidArgumentsException
+		 */
+		protected function generate_link( $attributes ) {
+
+			$element = 'rtLink';
+			if ( is_array( $attributes ) ) {
+
+				// Starting a tag.
+				$html = '<a ';
+
+				// Generating attributes.
+				$html .= $this->processAttributes( $element, $attributes );
+
+				// Put text of link.
+				$html .= esc_html( ( isset( $attributes['text'] ) ) ? $attributes['text'] : '' );
+
+				// ending a tag.
+				$html .= '</a>';
+
+				if ( isset( $attributes['label'] ) ) {
+					if ( isset( $attributes['labelClass'] ) ) {
+						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+					} else {
+						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+					}
+				}
+
+				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ) {
+					$html .= $this->generate_element_desc( $attributes );
+				}
+
+				return $html;
+			} else {
+				throw new rtFormInvalidArgumentsException( 'attributes' );
+			}
+		}
+
+		/**
+		 * Get rtmedia html link or button in admin options.
+		 *
+		 * @access public
+		 *
+		 * @param string/array $attributes
+		 *
+		 * @return string
+		 * @throws rtFormInvalidArgumentsException
+		 */
+		public function get_link( $attributes = '' ) {
+
+			return $this->generate_link( $attributes );
+		}
+
+		public function display_link( $args = '' ) {
+			echo $this->get_link( $args );
 		}
 
 		/**
