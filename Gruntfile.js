@@ -48,7 +48,7 @@ module.exports = function ( grunt ) {
 				files: {
 					'app/assets/admin/css/admin.min.css': 'app/assets/admin/css/sass/admin.scss',
 					'app/assets/admin/css/widget.min.css': 'app/assets/admin/css/sass/widget.scss',
-					'app/assets/css/rtmedia.min.css': 'app/assets/css/sass/rtmedia.scss'
+					'app/assets/css/rtmedia.min.css': 'app/assets/css/sass/rtmedia.scss',
 				}
 			}
 		},
