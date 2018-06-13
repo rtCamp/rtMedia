@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.4.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2018-06-06 08:41:21+00:00\n"
+"POT-Creation-Date: 2018-06-13 09:37:42+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -941,70 +941,70 @@ msgstr ""
 msgid "Please Enable BuddyPress User Groups to update option"
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:32
+#: app/admin/RTMediaUploadTermsAdmin.php:33
 msgid "terms of services."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:33
+#: app/admin/RTMediaUploadTermsAdmin.php:34
 msgid "Please check terms of service."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:107
+#: app/admin/RTMediaUploadTermsAdmin.php:108
 msgid "Ask users to agree to your terms"
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:121
+#: app/admin/RTMediaUploadTermsAdmin.php:122
 msgid "Show \"Terms of Service\" checkbox on upload screen"
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:126
-#: app/admin/RTMediaUploadTermsAdmin.php:137
+#: app/admin/RTMediaUploadTermsAdmin.php:127
+#: app/admin/RTMediaUploadTermsAdmin.php:138
 msgid "User have to check the terms and conditions before uploading the media."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:132
+#: app/admin/RTMediaUploadTermsAdmin.php:133
 msgid "Show \"Terms of Service\" checkbox on activity screen"
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:142
+#: app/admin/RTMediaUploadTermsAdmin.php:143
 msgid "Link for \"Terms of Service\" page"
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:147
+#: app/admin/RTMediaUploadTermsAdmin.php:148
 msgid ""
 "Link to the terms and condition page where user can read terms and "
 "conditions."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:153
+#: app/admin/RTMediaUploadTermsAdmin.php:154
 msgid "Terms of Service Message"
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:158
+#: app/admin/RTMediaUploadTermsAdmin.php:159
 msgid "Add Terms of Service Message."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:163
+#: app/admin/RTMediaUploadTermsAdmin.php:164
 msgid "Error Message"
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:168
+#: app/admin/RTMediaUploadTermsAdmin.php:169
 msgid "Display Error Message When User Upload Media Without selecting checkbox ."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:173
+#: app/admin/RTMediaUploadTermsAdmin.php:174
 msgid "Show \"Privacy Message\" on website"
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:178
+#: app/admin/RTMediaUploadTermsAdmin.php:179
 msgid "User will see the privacy message on website."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:183
+#: app/admin/RTMediaUploadTermsAdmin.php:184
 msgid "Privacy Message"
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:188
+#: app/admin/RTMediaUploadTermsAdmin.php:189
 msgid "Display privacy message on your website."
 msgstr ""
 
@@ -2538,11 +2538,11 @@ msgid ""
 "address, which will be used to populate the checkout for future orders."
 msgstr ""
 
-#: app/main/RTMediaUploadTerms.php:58
+#: app/main/RTMediaUploadTerms.php:59
 msgid "Please check Terms of Service."
 msgstr ""
 
-#: app/main/RTMediaUploadTerms.php:112
+#: app/main/RTMediaUploadTerms.php:113
 msgid "I agree to"
 msgstr ""
 
