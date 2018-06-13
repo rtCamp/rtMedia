@@ -258,7 +258,6 @@ class RTMediaFormHandler {
 		$defaults = array(
 			'href' => '',
 			'text' => '',
-			'type' => 'link',
 			'target' => '',
 			'desc' => '',
 		);
@@ -277,9 +276,6 @@ class RTMediaFormHandler {
 			return;
 		}
 
-		if( isset( $type ) && 'button' === $type ) {
-			$args['class'] = array( 'button', 'button-primary' );
-		}
 		if( isset( $target ) && ! empty( $target ) ) {
 			$args['misc'] = array( 'target' => $target );
 		}
