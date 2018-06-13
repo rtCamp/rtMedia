@@ -96,6 +96,11 @@ jQuery(document).ready(function () {
 
 });
 
+/**
+ * Show Error Message On Admin Side
+ * Handle error on rtMedia settings
+ * By: Malav Vasita
+ */
 function rtp_display_terms_warning ( selector, rt_alert_msg ) {
 	if ( ! jQuery( '.rt_alert_msg' ).length ) {
 		var invalid_error_msg = jQuery( "<span />" ).attr( 'style', 'color:red; display:block; clear:both;' ).addClass( 'rt_alert_msg' ).html( rt_alert_msg );
