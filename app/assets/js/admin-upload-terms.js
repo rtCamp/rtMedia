@@ -33,19 +33,19 @@ jQuery( document ).ready( function ( $ ) {
                 jQuery( '.error_msg' ).remove();
                 jQuery( '.rtm-form-text' ).css( 'border-color', '#ddd' );
                 if ( !/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test( general_upload_terms_page_link.val() ) ) {
-                    error_msg += 'Please enter valid URL.';
+                    error_msg += rtm_upload_terms_error_msgs.valid_url;
                     return rtp_show_error_message ( general_upload_terms_page_link, error_msg );
                 }
 
                 /* Check "Terms of Service Message" Emply Or Not */
                 if ( general_upload_terms_message.val().trim() == '' ) {
-                    error_msg += 'Please enter terms message.';
+                    error_msg += rtm_upload_terms_error_msgs.terms_msg;
                     return rtp_show_error_message ( general_upload_terms_message, error_msg );
                 }
 
                 /* Check "Error Message" Emply Or Not */
                 if ( general_upload_terms_error_message.val().trim() == '') {
-                    error_msg += 'Please enter error message.';
+                    error_msg += rtm_upload_terms_error_msgs.error_msg;
                     return rtp_show_error_message ( general_upload_terms_error_message, error_msg );
                 }
             }
@@ -57,7 +57,7 @@ jQuery( document ).ready( function ( $ ) {
 
                 /* Check "Terms of Service Message" Emply Or Not */
                 if ( general_upload_terms_privacy_message.val().trim() == '' ) {
-                    error_msg += 'Please enter privacy message.';
+                    error_msg += rtm_upload_terms_error_msgs.privacy_msg;
                     return rtp_show_error_message ( general_upload_terms_privacy_message, error_msg );
                 }
             }

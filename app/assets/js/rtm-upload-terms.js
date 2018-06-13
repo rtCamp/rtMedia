@@ -102,8 +102,9 @@ jQuery(document).ready(function () {
  * By: Malav Vasita
  */
 function rtp_display_terms_warning ( selector, rt_alert_msg ) {
+	console.log(rt_alert_msg);
 	if ( ! jQuery( '.rt_alert_msg' ).length ) {
-		var invalid_error_msg = jQuery( "<span />" ).attr( 'style', 'color:red; display:block; clear:both;' ).addClass( 'rt_alert_msg' ).html( rt_alert_msg );
+		var invalid_error_msg = jQuery( "<span />" ).attr( 'style', 'color:red; display:block; clear:both;' ).addClass( 'rt_alert_msg' ).empty().append( rt_alert_msg );
 		selector.after( invalid_error_msg );
 	}
 }

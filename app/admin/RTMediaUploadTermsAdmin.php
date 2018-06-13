@@ -10,7 +10,7 @@
 /**
  *  Class for Admin settings regarding Upload Terms
  */
-if( ! class_exists( 'RTMediaUploadTermsAdmin' ) ) {
+if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) ) {
 	class RTMediaUploadTermsAdmin {
 
 		/**
@@ -48,6 +48,15 @@ if( ! class_exists( 'RTMediaUploadTermsAdmin' ) ) {
 			global $rtmedia;
 
 			$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
+
+			$translationData = array(
+				'valid_url'   => esc_html__( 'Please enter valid URL.', 'buddypress-media' ),
+				'terms_msg'   => esc_html__( 'Please enter terms message.', 'buddypress-media' ),
+				'error_msg'   => esc_html__( 'Please enter error message.', 'buddypress-media' ),
+				'privacy_msg' => esc_html__( 'Please enter privacy message.', 'buddypress-media' ),
+			);
+
+			wp_localize_script( 'rtmedia-upload-terms-main', 'rtm_upload_terms_error_msgs', $translationData );
 
 			wp_enqueue_script( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/js/admin-upload-terms' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
 		}
@@ -127,7 +136,6 @@ if( ! class_exists( 'RTMediaUploadTermsAdmin' ) ) {
 					'desc'  => __( 'User have to check the terms and conditions before uploading the media.', 'buddypress-media' ),
 				),
 				'group'    => 40,
-				'class'    => 'aaaa',
 			);
 			$render_options['activity_enable_upload_terms']   = array(
 				'title'    => __( 'Show "Terms of Service" checkbox on activity screen', 'buddypress-media' ),
