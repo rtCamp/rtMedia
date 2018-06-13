@@ -193,6 +193,19 @@ class RTMediaUploadTermsAdmin {
 		return $render_options;
 	}
 }
+/**
+ * Check if old plugin rtMedia upload terms is activate or not.
+ */
+function rtm_check_admin_upload_terms() {
 
-// Instantiate object.
-new RTMediaUploadTermsAdmin();
+	require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+	// Check rtMedia upload terms plugin is exist and active.
+	if ( ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
+		// Instantiate object.
+		new RTMediaUploadTermsAdmin();
+	}
+}
+
+// Call to instantiate object.
+rtm_check_admin_upload_terms();
