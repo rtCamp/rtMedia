@@ -49,17 +49,19 @@ class RTMediaBuddyPressActivity {
 		add_action( 'bp_activity_comment_posted', array( $this, 'rtm_check_privacy_for_comments' ), 10, 3 );
 	}
 
+	/**
+	 * Fires after the activity item has been deleted for media cleanup.
+	 *
+	 * @param array $activity_ids_deleted Array of affected activity item IDs.
+	 */
 	function bp_activity_deleted_activities( $activity_ids_deleted ) {
-		//Allo delete activity othe media only of request from activity ajax
-		if ( ( is_admin() && '1' == DOING_AJAX ) || ! is_admin() ) {
-			$rt_model  = new RTMediaModel();
-			$all_media = $rt_model->get( array( 'activity_id' => $activity_ids_deleted ) );
-			if ( $all_media ) {
-				$media = new RTMediaMedia();
-				remove_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
-				foreach ( $all_media as $single_media ) {
-					$media->delete( $single_media->id, false, false );
-				}
+		$rt_model  = new RTMediaModel();
+		$all_media = $rt_model->get( array( 'activity_id' => $activity_ids_deleted ) );
+		if ( $all_media ) {
+			$media = new RTMediaMedia();
+			remove_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
+			foreach ( $all_media as $single_media ) {
+				$media->delete( $single_media->id, false, false );
 			}
 		}
 	}
