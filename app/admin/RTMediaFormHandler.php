@@ -245,7 +245,53 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * Show rtmedia button in admin options.
+	 * Show rtMedia link in admin options.
+	 *
+	 * @access static
+	 *
+	 * @param  array $args
+	 *
+	 * @return void
+	 */
+	public static function link( $args, $echo = true ) {
+
+		$defaults = array(
+			'href'   => '',
+			'text'   => '',
+			'target' => '',
+			'desc'   => '',
+		);
+		$args     = wp_parse_args( $args, $defaults );
+		extract( $args );
+
+		if ( ! isset( $href ) ) {
+			trigger_error( esc_html__( 'Please provide a "href" in the argument.', 'buddypress-media' ) );
+
+			return;
+		}
+
+		if ( ! isset( $text ) ) {
+			trigger_error( esc_html__( 'Please provide a "text" in the argument.', 'buddypress-media' ) );
+
+			return;
+		}
+
+		if( isset( $target ) && ! empty( $target ) ) {
+			$args['misc'] = array( 'target' => $target, );
+		}
+
+		$linkObj = new rtForm();
+
+		if ( $echo ) {
+
+			$linkObj->display_link( $args );
+		} else {
+
+			return $linkObj->get_link( $args );
+		}
+	}
+
+	/* Show rtmedia button in admin options.
 	 *
 	 * @since 4.5.0
 	 *

@@ -4282,7 +4282,7 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 				'value' => $activity_content,
 			),
 			array(
-				'name'  => esc_html__( 'Attachments' ),
+				'name'  => esc_html__( 'Attachments', 'buddypress-media' ),
 				'value' => empty( $attachments ) ? 'No attachments' : $attachments,
 			),
 		);
