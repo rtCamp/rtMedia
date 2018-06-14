@@ -256,10 +256,10 @@ class RTMediaFormHandler {
 	public static function link( $args, $echo = true ) {
 
 		$defaults = array(
-			'href' => '',
-			'text' => '',
+			'href'   => '',
+			'text'   => '',
 			'target' => '',
-			'desc' => '',
+			'desc'   => '',
 		);
 		$args     = wp_parse_args( $args, $defaults );
 		extract( $args );
@@ -277,7 +277,7 @@ class RTMediaFormHandler {
 		}
 
 		if( isset( $target ) && ! empty( $target ) ) {
-			$args['misc'] = array( 'target' => $target );
+			$args['misc'] = array( 'target' => $target, );
 		}
 
 		$linkObj = new rtForm();
