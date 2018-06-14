@@ -1260,7 +1260,7 @@ function rtm_upload_terms_activity() {
 	}
 }
 
-jQuery(document).ready(function () {
+jQuery( document ).ready( function () {
 	// Call function when document loaded.
 	rtm_upload_terms_activity();
 });
