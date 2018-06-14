@@ -1247,14 +1247,14 @@ function get_parameter( parameter, data ) {
  */
 function rtm_upload_terms_activity() {
 	// Check if upload term checkbox is there.
-	if (jQuery('#rtmedia_upload_terms_conditions').length > 0) {
+	if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0) {
 		// Handle on click event.
-		jQuery('#whats-new').click('on', function () {
+		jQuery( '#whats-new' ).click( 'on', function () {
 			// By default prevent user to upload media.
-			jQuery('#aw-whats-new-submit').attr('disabled', 'disabled');
+			jQuery( '#aw-whats-new-submit' ).attr( 'disabled', 'disabled' );
 			// On click of upload terms checkbox enable post button.
-			jQuery('#rtmedia_upload_terms_conditions').click(function () {
-				jQuery('#aw-whats-new-submit').attr('disabled', !this.checked)
+			jQuery( '#rtmedia_upload_terms_conditions' ).click(function () {
+				jQuery( '#aw-whats-new-submit' ).attr( 'disabled', ! this.checked );
 			});
 		});
 	}
