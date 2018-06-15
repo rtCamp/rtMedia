@@ -5,12 +5,20 @@
  * @package rtMedia
  * @author  Malav Vasita <malav.vasita@rtcamp.com>
  */
-if ( ! class_exists( 'RTMediaUploadTerms' ) ) {
+/**
+ * We will first check if rtmedia-upload-terms plugin is activate before putting this code in action.
+ * RTMediaUploadTerms class would come in picture if and only if rtmedia-upload-terms plugin is deactivated.
+ */
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
+if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
+	/**
+	 * Class for Upload terms as per applied settings in rtMedia settings.
+	 */
 	class RTMediaUploadTerms {
 
 		/**
 		 * Enquing scripts and styles along with data to be rendered in user side.
-		*/
+		 */
 		public function __construct() {
 			$this->load_translation();
 			// Enqueue js and css files.
@@ -48,9 +56,9 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) ) {
 			global $rtmedia;
 
 			$suffix                             = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
-			$general_upload_terms_error_message = $rtmedia->options[ 'general_upload_terms_error_message' ];
+			$general_upload_terms_error_message = $rtmedia->options['general_upload_terms_error_message'];
 
-			if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options[ 'styles_enabled' ] ) && 0 === $rtmedia->options[ 'styles_enabled' ] ) ) {
+			if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options['styles_enabled'] ) && 0 === $rtmedia->options['styles_enabled'] ) ) {
 				wp_enqueue_style( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/css/rtm-upload-terms' . $suffix . '.css', '', RTMEDIA_VERSION );
 			}
 

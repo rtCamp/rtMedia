@@ -5,7 +5,7 @@
  * Add Warning Message Before Submit Button
  * By: Malav Vasita <malav.vasita@rtcamp.com>
  */
-if ( typeof rtMediaHook == 'object' ) {
+if ( 'object' === typeof rtMediaHook ) {
 	rtMediaHook.register( 'rtmedia_js_upload_file', function ( args ) {
 		if ( false == args ) {
 			return args;
@@ -102,7 +102,6 @@ jQuery(document).ready(function () {
  * By: Malav Vasita
  */
 function rtp_display_terms_warning ( selector, rt_alert_msg ) {
-	console.log(rt_alert_msg);
 	if ( ! jQuery( '.rt_alert_msg' ).length ) {
 		var invalid_error_msg = jQuery( "<span />" ).attr( 'style', 'color:red; display:block; clear:both;' ).addClass( 'rt_alert_msg' ).empty().append( rt_alert_msg );
 		selector.after( invalid_error_msg );

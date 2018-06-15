@@ -10,9 +10,10 @@ rtMediaAdmin.templates = {
 };
 
 jQuery( document ).ready( function ( $ ) {
-	
-	if ( $( '#rtm-licenses' ).length ) {
-		$( '#rtm-licenses .license-inner:first input:first' ).focus();
+
+	var rtm_licence = $( '#rtm-licenses' );
+	if ( rtm_licence.length > 0 ) {
+		rtm_licence.find( '.license-inner:first input:first' ).focus();
 	}
 
 	var support_form_loader_div = document.createElement('div');
@@ -961,6 +962,15 @@ jQuery( document ).ready( function ( $ ) {
 			downloadAnchorNode.remove();
 		} );
 	} );
+
+	jQuery( '#rtm-export-data-button' ).click( function(){
+		window.location.href = '/wp-admin/tools.php?page=export_personal_data';
+	} );
+
+	jQuery( '#rtm-erase-data-button' ).click(function () {
+		window.location.href = '/wp-admin/tools.php?page=remove_personal_data';
+	});
+
 } );
 
 function rtmedia_addon_do_not_show() {

@@ -8,19 +8,24 @@
  */
 
 /**
- *  Class for Admin settings regarding Upload Terms
+ * We will first check if rtmedia-upload-terms plugin is activate before putting this code in action.
+ * RTMediaUploadTermsAdmin class would come in picture if and only if rtmedia-upload-terms plugin is deactivated.
  */
-if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) ) {
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
+if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
+	/**
+	 * Class for Upload terms settings in rtMedia settings.
+	 */
 	class RTMediaUploadTermsAdmin {
 
 		/**
-		 * Message for lable on front end side.
+		 * Message for label on front end side.
 		 *
 		 * @var string
 		 */
 		public $upload_terms_message;
 		/**
-		 * Error message for lable on front end side.
+		 * Error message for label on front end side.
 		 *
 		 * @var string
 		 */
@@ -49,14 +54,14 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) ) {
 
 			$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
 
-			$translationData = array(
+			$translation_data = array(
 				'valid_url'   => esc_html__( 'Please enter valid URL.', 'buddypress-media' ),
 				'terms_msg'   => esc_html__( 'Please enter terms message.', 'buddypress-media' ),
 				'error_msg'   => esc_html__( 'Please enter error message.', 'buddypress-media' ),
 				'privacy_msg' => esc_html__( 'Please enter privacy message.', 'buddypress-media' ),
 			);
 
-			wp_localize_script( 'rtmedia-upload-terms-main', 'rtm_upload_terms_error_msgs', $translationData );
+			wp_localize_script( 'rtmedia-upload-terms-main', 'rtm_upload_terms_error_msgs', $translation_data );
 
 			wp_enqueue_script( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/js/admin-upload-terms' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
 		}
@@ -69,10 +74,10 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) ) {
 		 */
 		public function add_admin_option_default_value( $defaults ) {
 
-			$defaults[ 'general_enable_upload_terms' ]               = 0;
-			$defaults[ 'general_upload_terms_show_pricacy_message' ] = 0;
-			$defaults[ 'activity_enable_upload_terms' ]              = 0;
-			$defaults[ 'general_upload_terms_page_link' ]            = '';
+			$defaults['general_enable_upload_terms']               = 0;
+			$defaults['general_upload_terms_show_pricacy_message'] = 0;
+			$defaults['activity_enable_upload_terms']              = 0;
+			$defaults['general_upload_terms_page_link']            = '';
 
 			/**
 			 * If `Terms of Service Message` and `Error Message` and not set from admin setting then set default value
@@ -137,7 +142,7 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) ) {
 				),
 				'group'    => 40,
 			);
-			$render_options['activity_enable_upload_terms']   = array(
+			$render_options['activity_enable_upload_terms'] = array(
 				'title'    => __( 'Show "Terms of Service" checkbox on activity screen', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'     => array(
@@ -174,7 +179,7 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) ) {
 				'args'     => array(
 					'key'   => 'general_upload_terms_error_message',
 					'value' => isset( $options[ 'general_upload_terms_error_message' ] ) ? $options[ 'general_upload_terms_error_message' ] : $this->upload_terms_error_message,
-					'desc'  => __( 'Display Error Message When User Upload Media Without selecting checkbox .', 'buddypress-media' ),
+					'desc'  => __( 'Display Error Message When User Upload Media Without Selecting Checkbox .', 'buddypress-media' ),
 				),
 				'group'    => 40,
 			);
