@@ -1572,3 +1572,5 @@ class RTMediaFormHandler {
 		}
 	}
 }
+
+new RTMediaFormHandler();
