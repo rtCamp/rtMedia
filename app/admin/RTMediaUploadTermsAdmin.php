@@ -132,7 +132,7 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 		 * @return array $render_option
 		 */
 		public function admin_setting_add_terms_option( $render_options, $options ) {
-			$render_options[ 'general_enable_upload_terms' ]    = array(
+			$render_options[ 'general_enable_upload_terms' ] = array(
 				'title'    => __( 'Show "Terms of Service" checkbox on upload screen', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'     => array(

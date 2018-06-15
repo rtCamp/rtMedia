@@ -50,7 +50,7 @@ jQuery( document ).ready( function ( $ ) {
                 }
             }
         }
-        if ( return_code && general_upload_terms_show_pricacy_message.length > 0 && typeof general_upload_terms_show_pricacy_message != "undefined" ) {
+        if ( return_code && general_upload_terms_show_pricacy_message.length > 0 && 'undefined' !== typeof general_upload_terms_show_pricacy_message ) {
             var error_msg = "";
             if ( general_upload_terms_show_pricacy_message.prop( 'checked' ) ) {
                 jQuery( '.error_msg' ).remove();
