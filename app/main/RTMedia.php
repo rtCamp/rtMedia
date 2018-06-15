@@ -1513,8 +1513,8 @@ add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
  * Function to add privacy policy information in WordPress policy section.
  */
 function rtm_plugin_privacy_information() {
-    $policy = '';
-    if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
+	$policy = '';
+	if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
 		ob_start();
 		?>
 		<p>We collect your information during the checkout process on your purchase. The information collected from you may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing.</p>
