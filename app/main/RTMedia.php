@@ -1529,11 +1529,11 @@ function rtm_plugin_privacy_information() {
 		- If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.</p>
 		<?php
 		$policy = ob_get_clean();
-        wp_add_privacy_policy_content(
-            __( 'rtMedia', 'buddypress-media' ),
-            wp_kses_post( $policy )
-        );
-    }
+		wp_add_privacy_policy_content(
+			__( 'rtMedia', 'buddypress-media' ),
+			wp_kses_post( $policy )
+		);
+	}
 }
 
 add_action( 'admin_init', 'rtm_plugin_privacy_information' );
