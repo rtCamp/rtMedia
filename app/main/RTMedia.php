@@ -591,7 +591,7 @@ class RTMedia {
 			'general_showAdminMenu'       => ( isset( $bp_media_options['show_admin_menu'] ) ) ? $bp_media_options['show_admin_menu'] : 0,
 			'general_videothumbs'         => 2,
 			'general_jpeg_image_quality'  => 90,
-			'general_AllowUserData'       => 1,
+			'general_AllowUserData'       => 0,
 		);
 
 		foreach ( $this->allowed_types as $type ) {
@@ -990,9 +990,9 @@ class RTMedia {
 
 	function enqueue_scripts_styles() {
 		global $rtmedia, $bp, $rtmedia_interaction;
-		
+
 		$bp_template = get_option( '_bp_theme_package_id' );
-		
+
 		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement-wp', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.min.css', '', RTMEDIA_VERSION );
@@ -1094,7 +1094,7 @@ class RTMedia {
 		$rtmedia_backbone_strings = array(
 			'rtm_edit_file_name' => esc_html__( 'Edit File Name', 'buddypress-media' ),
 		);
-		
+
 		// Localise fot rtmedia-backcone js
 		wp_localize_script( 'rtmedia-backbone', 'bp_template_pack', $bp_template );
 
@@ -1256,7 +1256,7 @@ class RTMedia {
 		if ( empty( $is_buddypress_activate ) ) {
 			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
 		}
-		
+
 		// Only Applay if BP Template Nouveau is activate.
 		if ( ! empty( $bp_template ) && 'nouveau' === $bp_template && ( 'group' === $rtmedia_interaction->context->type || 'profile' === $rtmedia_interaction->context->type ) ) {
 			$rtmedia_router = new RTMediaRouter();
@@ -1495,6 +1495,52 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
 
 	return $return_val;
 }
+
+/**
+ * Function to show privacy message provided from rtMedia settings in front end.
+ */
+function rtm_privacy_message_on_website() {
+	global $rtmedia;
+	$options = $rtmedia->options;
+
+	if( "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
+		echo "<div class='privacy_message_wrapper'><p>" . wp_kses_post( $options[ 'general_upload_terms_privacy_message' ] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
+	}
+}
+add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
+
+/**
+ * Function to add privacy policy information in WordPress policy section.
+ */
+function rtm_plugin_privacy_information() {
+    $policy = '';
+    if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
+		$policy .= esc_html__( 'We collect your information during the checkout process on your purchase. The information collected from you may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing.', 'buddypress-media' );
+		$policy .= '<br/><br/><b>';
+		$policy .= esc_html__( 'Handling this data will also allow us to:', 'buddypress-media' );
+		$policy .= '</b><br/>';
+		$policy .= esc_html__( '- Send you important service information.', 'buddypress-media' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- Respond to your queries or complaints.', 'buddypress-media' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- Set up and administer your account, provide technical and/or customer support, and to verify your identity.', 'buddypress-media' );
+		$policy .= '<br/><br/><b>';
+		$policy .= esc_html__( 'Additionally we may also collect the following information:', 'buddypress-media' );
+		$policy .= '</b><br/>';
+		$policy .= esc_html__( '- Your comments and product reviews if you choose to leave them on our website.', 'buddypress-media' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- Account email/password to allow you to access your account, if you have one.', 'buddypress-media' );
+		$policy .= '<br/>';
+		$policy .= esc_html__( '- If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.', 'buddypress-media' );
+		$policy .= '<br/>';
+        wp_add_privacy_policy_content(
+            __( 'rtMedia', 'buddypress-media' ),
+            $policy
+        );
+    }
+}
+
+add_action( 'admin_init', 'rtm_plugin_privacy_information' );
 
 /**
  * This wraps up the main rtMedia class. Three important notes:

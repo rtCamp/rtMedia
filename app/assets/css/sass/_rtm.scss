@@ -480,3 +480,48 @@ input.imgedit-submit-btn {
 .rtmedia-no-media-found, .rtmedia-list-media {
 	min-height: 95px;
 }
+
+.privacy_message_wrapper {
+	background: rgba(0,0,0,0.95);
+	z-index: 999;
+	color: #fff;
+	display: block;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	padding: 5px;
+
+	p {
+		margin: 20px 25px;
+		width: calc( 100% - 100px );
+		max-width: 100%;
+		font-size: 85%;
+		text-align: justify;
+		word-wrap: break-word;
+		display: inline-block;
+
+		a {
+			color: #fff;
+			text-decoration: underline;
+
+			&:hover{
+				color: #000;
+			}
+		}
+	}
+
+	#close_rtm_privacy_message {
+		margin: 30px 15px 15px 15px;
+		float: right;
+		display: inline;
+		color: #fff;
+		font-size: 25px;
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}
+
+.hide_privacy_wrapper {
+	display: none;
+}
