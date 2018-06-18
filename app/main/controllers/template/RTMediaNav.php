@@ -92,8 +92,9 @@ class RTMediaNav {
 			$is_visible_to_current_user = bp_group_is_visible( $current_group );
 
 			if ( $media_enabled && $is_visible_to_current_user ) {
-				$group_counts	= $this->actual_counts( $bp->groups->current_group->id, 'group' );
-				$slug			= apply_filters( 'rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG );
+				$group_counts       = $this->actual_counts( $bp->groups->current_group->id, 'group' );
+				$slug               = apply_filters( 'rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG );
+				$media_tab_position = apply_filters( 'rtmedia_group_media_tab_position', 99 );
 
 				if ( isset( $bp->version ) && $bp->version > '2.5.3' ) {
 
@@ -112,7 +113,7 @@ class RTMediaNav {
 						'parent_url'          => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ),
 						'user_has_access'     => true,
 						'css_id'              => 'rtmedia-media-nav',
-						'position'            => 99,
+						'position'            => $media_tab_position,
 						'screen_function'     => array( $this, 'media_screen' ),
 						'default_subnav_slug' => 'all',
 					) );
@@ -124,7 +125,7 @@ class RTMediaNav {
 						'slug'                => $slug,
 						'user_has_access'     => true,
 						'css_id'              => 'rtmedia-media-nav',
-						'position'            => 99,
+						'position'            => $media_tab_position,
 						'screen_function'     => array( $this, 'media_screen' ),
 						'default_subnav_slug' => 'all',
 					);
