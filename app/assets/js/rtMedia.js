@@ -214,6 +214,11 @@ jQuery( 'document' ).ready( function( $ ) {
 					rtmedia_activity_masonry();
 					rtmedia_activity_stream_comment_media();
 				} , 1000 );
+			} else if ( ( 'activity_filter' === get_action || 'post_update' === get_action || 'get_single_activity_content' === get_action || 'activity_get_older_updates' === get_action ) ) {
+				setTimeout( function () {
+					apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
+					rtmedia_activity_stream_comment_media();
+				}, 1000);
 			}
 		}
 	} );
