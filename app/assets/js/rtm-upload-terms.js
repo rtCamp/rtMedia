@@ -7,11 +7,11 @@
  */
 if ( 'object' === typeof rtMediaHook ) {
 	rtMediaHook.register( 'rtmedia_js_upload_file', function ( args ) {
-		if ( false == args ) {
+		if ( false === args ) {
 			return args;
 		}
 
-		var rt_alert_msg = ( ( typeof rtmedia_upload_terms_check_terms_message ) == "string" ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
+		var rt_alert_msg = ( ( 'string' === typeof rtmedia_upload_terms_check_terms_message ) ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
 
 		if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0 ) {
 			if ( ! jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ) {
@@ -26,13 +26,13 @@ if ( 'object' === typeof rtMediaHook ) {
 
 	rtMediaHook.register( 'rtmedia_js_before_activity_added', function ( args ) {
 		if ( typeof event !== typeof undefined && typeof event.target !== typeof undefined ) {
-		  if ( jQuery( event.target ).attr( 'id' ) == 'aw-whats-new-submit' ) {
+			if ( 'aw-whats-new-submit' === jQuery( event.target ).attr( 'id' ) ) {
 			   if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0 ) {
 					if ( false == args ) {
 						return args;
 					}
 
-					var rt_alert_msg = ( ( typeof rtmedia_upload_terms_check_terms_message ) == "string" ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
+				   var rt_alert_msg = ( ( 'string' === typeof rtmedia_upload_terms_check_terms_message ) ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
 					if ( ! jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' )) {
 						var selector = jQuery( '.rtmedia-upload-terms' );
 						rtp_display_terms_warning ( selector, rt_alert_msg );
@@ -50,7 +50,7 @@ if ( 'object' === typeof rtMediaHook ) {
 	 * Added: 'return true;'
 	 * By: Yahil
 	 */
-	rtMediaHook.register( 'rtmedia_js_after_file_upload', function ( up, file, resp ) {
+	rtMediaHook.register( 'rtmedia_js_after_file_upload', function () {
 
 		if ( jQuery( '#rtmedia-upload-container #rtmedia_upload_terms_conditions' ).length > 0 ) {
 			jQuery( '#rtmedia_upload_terms_conditions' ).removeAttr( 'checked' );

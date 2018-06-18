@@ -10,7 +10,6 @@
  * By: Yahil and Malav
  */
 jQuery( document ).ready( function ( $ ) {
-    var error_count = 0;
     var general_enable_upload_terms               = jQuery( 'input[name^="rtmedia-options[general_enable_upload_terms]"]' );
     var activity_enable_upload_terms              = jQuery( 'input[name^="rtmedia-options[activity_enable_upload_terms]"]' );
     var general_upload_terms_page_link            = jQuery( 'input[name^="rtmedia-options[general_upload_terms_page_link]"]' );

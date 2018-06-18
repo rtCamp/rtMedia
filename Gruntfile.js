@@ -50,7 +50,7 @@ module.exports = function ( grunt ) {
 					'app/assets/admin/css/widget.min.css': 'app/assets/admin/css/sass/widget.scss',
 					'app/assets/css/rtmedia.min.css': 'app/assets/css/sass/rtmedia.scss',
 					'app/assets/css/rtm-upload-terms.min.css': 'app/assets/css/rtm-upload-terms.css',
-					'app/assets/admin/css/rtm-upload-terms.min.css': 'app/assets/css/rtm-upload-terms.css',
+					'app/assets/admin/css/rtm-upload-terms.min.css': 'app/assets/css/rtm-upload-terms.css'
 				}
 			}
 		},

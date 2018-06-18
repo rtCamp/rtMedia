@@ -11,6 +11,7 @@
  */
 include_once ABSPATH . 'wp-admin/includes/plugin.php';
 if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
+
 	/**
 	 * Class for Upload terms as per applied settings in rtMedia settings.
 	 */
@@ -109,23 +110,28 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 		/**
 		 * Checkbox of agree terms and condition at front-end.
 		 *
-		 * @param  array  $options Options set from rtMedia settings.
+		 * @param array $options Options set from rtMedia settings.
+		 *
 		 * @return string
 		 */
 		public function terms_and_service_checkbox_html( $options ) {
 			$general_upload_terms_page_link = $options['general_upload_terms_page_link'];
 			$general_upload_terms_message   = $options['general_upload_terms_message'];
-			$content                        = '<div class="rtmedia-upload-terms"> '
-					. '<input type="checkbox" name="rtmedia_upload_terms_conditions" id="rtmedia_upload_terms_conditions" /> '
-					. '<label for="rtmedia_upload_terms_conditions">'
-					. esc_html( apply_filters( 'rtmedia_upload_terms_service_agree_label', __( 'I agree to', 'buddypress-media' ) ) )
-					. '&nbsp;'
-					. "<a href='" . esc_url( $general_upload_terms_page_link ) . "' target='_blank'>"
-					. esc_html( apply_filters( 'rtmedia_upload_terms_service_link_label', $general_upload_terms_message ) )
-					. '</a>'
-					. '</label>'
-					. '</div>';
+			$content                        = '';
+			?>
+			<div class="rtmedia-upload-terms">
+				<input type="checkbox" name="rtmedia_upload_terms_conditions" id="rtmedia_upload_terms_conditions" />
+				<label for="rtmedia_upload_terms_conditions">
+				<?php esc_html_e( apply_filters( 'rtmedia_upload_terms_service_agree_label', __( 'I agree to', 'buddypress-media' ) ) ); ?>
+				&nbsp;
+				<a href='<?php esc_url_e( $general_upload_terms_page_link ); ?>' target='_blank'>
+				<?php esc_html_e( apply_filters( 'rtmedia_upload_terms_service_link_label', $general_upload_terms_message ), 'buddypress-media' ); ?>
+				</a>
+				</label>
+			</div>
+			<?php
 
+			$content = ob_get_clean();
 			return $content;
 		}
 	}
