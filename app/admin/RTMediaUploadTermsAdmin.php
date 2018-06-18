@@ -11,7 +11,7 @@
  * We will first check if rtmedia-upload-terms plugin is activate before putting this code in action.
  * RTMediaUploadTermsAdmin class would come in picture if and only if rtmedia-upload-terms plugin is deactivated.
  */
-include_once ABSPATH . 'wp-admin/includes/plugin.php';
+require_once ABSPATH . 'wp-admin/includes/plugin.php';
 if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
 
 	/**
@@ -133,7 +133,7 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 		 * @return array $render_option
 		 */
 		public function admin_setting_add_terms_option( $render_options, $options ) {
-			$render_options['general_enable_upload_terms']               = array(
+			$render_options['general_enable_upload_terms']    = array(
 				'title'    => __( 'Show "Terms of Service" checkbox on upload screen', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'     => array(
@@ -143,7 +143,7 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 				),
 				'group'    => 40,
 			);
-			$render_options['activity_enable_upload_terms']              = array(
+			$render_options['activity_enable_upload_terms']   = array(
 				'title'    => __( 'Show "Terms of Service" checkbox on activity screen', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'     => array(
@@ -153,7 +153,7 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 				),
 				'group'    => 40,
 			);
-			$render_options['general_upload_terms_page_link']            = array(
+			$render_options['general_upload_terms_page_link'] = array(
 				'title'    => __( 'Link for "Terms of Service" page', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'textbox' ),
 				'args'     => array(

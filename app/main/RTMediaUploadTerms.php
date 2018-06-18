@@ -5,11 +5,12 @@
  * @package rtMedia
  * @author  Malav Vasita <malav.vasita@rtcamp.com>
  */
+
 /**
  * We will first check if rtmedia-upload-terms plugin is activate before putting this code in action.
  * RTMediaUploadTerms class would come in picture if and only if rtmedia-upload-terms plugin is deactivated.
  */
-include_once ABSPATH . 'wp-admin/includes/plugin.php';
+require_once ABSPATH . 'wp-admin/includes/plugin.php';
 if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
 
 	/**
@@ -118,6 +119,7 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 			$general_upload_terms_page_link = $options['general_upload_terms_page_link'];
 			$general_upload_terms_message   = $options['general_upload_terms_message'];
 			$content                        = '';
+			ob_start();
 			?>
 			<div class="rtmedia-upload-terms">
 				<input type="checkbox" name="rtmedia_upload_terms_conditions" id="rtmedia_upload_terms_conditions" />
