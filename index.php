@@ -132,3 +132,9 @@ function rtmedia_plugin_deactivate() {
 	update_option( 'is_permalink_reset', 'no' );
 }
 register_deactivation_hook( __FILE__, 'rtmedia_plugin_deactivate' );
+
+// Call Admin file of upload terms to provide I agree button in uploader.
+require_once 'app/admin/RTMediaUploadTermsAdmin.php';
+
+// Call file of upload terms to provide I agree button in uploader.
+require_once 'app/main/RTMediaUploadTerms.php';
