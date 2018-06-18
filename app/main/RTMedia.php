@@ -1505,8 +1505,8 @@ function rtm_privacy_message_on_website() {
 
 	$rtm_privacy_message_options = array(
 		'background-color' => 'rgba(0,0,0,0.95)',
-		'color' => '#fff',
-		'position' => 'bottom'
+		'color'            => '#fff',
+		'position'         => 'bottom'
 	);
 
 	$rtm_privacy_message_options = apply_filters( 'rtm_privacy_bar_position', $rtm_privacy_message_options );
