@@ -1502,12 +1502,24 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
 function rtm_privacy_message_on_website() {
 	global $rtmedia;
 	$options = $rtmedia->options;
+	$rtm_privacy_message_options = '';
+	$rtm_privacy_message_options = apply_filters( 'rtm_privacy_bar_position', $rtm_privacy_message_options );
+
 	include_once ABSPATH . 'wp-admin/includes/plugin.php';
-	if ( ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
-		if ( "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
-			echo "<div class='privacy_message_wrapper'><p>" . wp_kses_post( $options[ 'general_upload_terms_privacy_message' ] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
-		}
-	}
+
+ 	if ( ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
+		if( "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
+
+			$rtm_privacy_allowed_postion  = array( 'top', 'bottom' );
+			$rtm_privacy_message_position = ! empty ( $rtm_privacy_message_options['position'] ) && ( in_array( $rtm_privacy_message_options['background-color'], $rtm_privacy_allowed_postion) )  ? $rtm_privacy_message_options['position'] . ':0' : 'bottom: 0';
+			$rtm_privacy_message_bgcolor  = ! empty ( $rtm_privacy_message_options['background-color'] )   ? 'background-color: ' . $rtm_privacy_message_options['background-color'] : 'background-color: rgba(0,0,0,0.95)';
+			$rtm_privacy_message_color    = ! empty ( $rtm_privacy_message_options['color'] ) ? 'color: ' . $rtm_privacy_message_options['color'] : 'color: #fff';
+
+			$rtm_privacy_style = $rtm_privacy_message_position . '; ' . $rtm_privacy_message_bgcolor . '; ' . $rtm_privacy_message_color . ';';
+
+			echo "<div class='privacy_message_wrapper' style='" . $rtm_privacy_style . "' ><p>" . wp_kses_post( $options[ 'general_upload_terms_privacy_message' ] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
+        }
+    }
 }
 add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
 

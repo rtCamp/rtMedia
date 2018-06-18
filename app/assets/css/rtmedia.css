@@ -573,7 +573,6 @@ input.imgedit-submit-btn {
   color: #fff;
   display: block;
   position: fixed;
-  bottom: 0;
   width: 100%;
   padding: 5px;
 }
@@ -595,10 +594,15 @@ input.imgedit-submit-btn {
   color: #000;
 }
 .privacy_message_wrapper #close_rtm_privacy_message {
-  margin: 30px 15px 15px 15px;
+  margin: 0px;
   float: right;
-  display: inline;
-  color: #fff;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  position: absolute;
+  display: inline-block;
+  color: inherit;
   font-size: 25px;
 }
 .privacy_message_wrapper #close_rtm_privacy_message:hover {

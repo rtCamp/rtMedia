@@ -124,10 +124,10 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 			<div class="rtmedia-upload-terms">
 				<input type="checkbox" name="rtmedia_upload_terms_conditions" id="rtmedia_upload_terms_conditions" />
 				<label for="rtmedia_upload_terms_conditions">
-				<?php esc_html_e( apply_filters( 'rtmedia_upload_terms_service_agree_label', __( 'I agree to', 'buddypress-media' ) ) ); ?>
+				<?php echo esc_html( apply_filters( 'rtmedia_upload_terms_service_agree_label', __( 'I agree to', 'buddypress-media' ) ) ); ?>
 				&nbsp;
-				<a href='<?php esc_url_e( $general_upload_terms_page_link ); ?>' target='_blank'>
-				<?php esc_html_e( apply_filters( 'rtmedia_upload_terms_service_link_label', $general_upload_terms_message ), 'buddypress-media' ); ?>
+				<a href='<?php echo esc_url( $general_upload_terms_page_link ); ?>' target='_blank'>
+				<?php echo esc_html( apply_filters( 'rtmedia_upload_terms_service_link_label', $general_upload_terms_message ) ); ?>
 				</a>
 				</label>
 			</div>
