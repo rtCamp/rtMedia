@@ -1502,7 +1502,13 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
 function rtm_privacy_message_on_website() {
 	global $rtmedia;
 	$options = $rtmedia->options;
-	$rtm_privacy_message_options = '';
+
+	$rtm_privacy_message_options = array(
+		'background-color' => 'rgba(0,0,0,0.95)',
+		'color' => '#fff',
+		'position' => 'bottom'
+	);
+
 	$rtm_privacy_message_options = apply_filters( 'rtm_privacy_bar_position', $rtm_privacy_message_options );
 
 	include_once ABSPATH . 'wp-admin/includes/plugin.php';
