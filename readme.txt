@@ -1,12 +1,12 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, ravatparmar, dharmin16, malavvasita
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 4.9.6
-Stable tag: 4.4.8
+Stable tag: 4.5.0
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -136,6 +136,29 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.5.0 [June 19, 2018] =
+
+* NEW
+
+ * Updated BuddyPress templates for [version 3.0.0](https://wordpress.org/plugins/buddypress/)
+ * Added functionality to Import/Export rtMedia admin settings
+ * Integrated with new personal data Erase/Export tools in WordPress 4.9.6 [Doc](https://rtmedia.io/docs/features/gdpr-export-erase-personal-data/)
+ * Added upload terms premium feature to rtMedia core with this version [Doc](https://rtmedia.io/docs/features/upload-terms/)
+ * Added admin setting to show optional privacy notice to users [Doc](https://rtmedia.io/docs/features/upload-terms/#show-privacy-message-on-the-website)
+ * Added rtMedia specific privacy information for a site’s privacy policy
+ * Added filter to change background color, text color and position of privacy message strip [Doc](https://rtmedia.io/docs/developers/hooks/rtm_privacy_bar_position/)
+
+* ENHANCEMENT
+
+ * Added filter to modify text of Media tab [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia_media_tab_name/)
+ * Improved performance by adding conditional check before enqueuing scripts and styles
+
+* FIXED
+
+ * PHP notice and warnings
+ * Fix issue while WordPress user deletion on multi-site setup
+ * Load more button issue under the Music tab
 
 = 4.4.8 [May 22, 2018] =
 
@@ -1485,8 +1508,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.4.8 =
-rtMedia 4.4.8, compatible with latest BuddyPress v3.0.0.
+= 4.5.0 =
+rtMedia 4.5.0, with updated templates for BuddyPress 3.0.0, New Import/Export for rtMedia settings, Integration with WordPress Erase/Export tools along with option to show privacy notice, Premium Upload Terms feature now in core, Enhanced script loading for better performance, New filter to modify Media tab text and Bug Fixes.
 
 == Sponsors ==
 
