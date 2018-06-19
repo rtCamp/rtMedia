@@ -224,9 +224,9 @@ function rtm_modify_document_title_parts( $title = array() ) {
 		global $rtmedia_query;
 
 		if ( isset( $rtmedia_query->action_query->media_type ) ) {
-			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ), RTMEDIA_MEDIA_LABEL ) : array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ) );
+			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ), apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) ) : array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ) );
 		} else {
-			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, RTMEDIA_MEDIA_LABEL ) : '';
+			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) ) : '';
 		}
 	}
 
@@ -853,3 +853,68 @@ if ( ! function_exists( 'rtmedia_gallery_shortcode_parameter_pre_filter_callback
 }
 add_filter( 'rtmedia_gallery_shortcode_parameter_pre_filter', 'rtmedia_gallery_shortcode_parameter_pre_filter_callback', 10, 1 );
 
+
+/**
+ * Add exporters to queue
+ *
+ * @param  array $exporters Exporter queue.
+ * @return array
+ */
+function register_rtmedia_exporter( $exporters ) {
+	$exporters['buddypress-media-shortcode-uploads'] = array(
+		'exporter_friendly_name' => esc_html__( 'rtMedia Shortcode Uploads', 'buddypress-media' ),
+		'callback'               => 'rtmedia_shortcode_upload_exporter',
+	);
+	$exporters['buddypress-media-activity']          = array(
+		'exporter_friendly_name' => esc_html__( 'rtMedia Activities', 'buddypress-media' ),
+		'callback'               => 'rtmedia_activity_exporter',
+	);
+	$exporters['buddypress-media-comment']           = array(
+		'exporter_friendly_name' => esc_html__( 'rtMedia Comments', 'buddypress-media' ),
+		'callback'               => 'rtmedia_activity_comments_exporter',
+	);
+	$exporters['buddypress-media-views']             = array(
+		'exporter_friendly_name' => esc_html__( 'rtMedia Media Views', 'buddypress-media' ),
+		'callback'               => 'rtmedia_media_view_exporter',
+	);
+	$exporters['buddypress-media-likes']             = array(
+		'exporter_friendly_name' => esc_html__( 'rtMedia Media Likes', 'buddypress-media' ),
+		'callback'               => 'rtmedia_media_like_exporter',
+	);
+
+	return $exporters;
+}
+
+add_filter(
+	'wp_privacy_personal_data_exporters',
+	'register_rtmedia_exporter',
+	10
+);
+
+/**
+ * Add eraser to queue
+ *
+ * @param array $erasers Exporter queue.
+ * @return array
+ */
+function register_rtmedia_eraser( $erasers ) {
+	$erasers['buddypress-media']       = array(
+		'eraser_friendly_name' => esc_html__( 'rtMedia Eraser', 'buddypress-media' ),
+		'callback'             => 'rtmedia_eraser',
+	);
+	$erasers['buddypress-media-likes'] = array(
+		'eraser_friendly_name' => esc_html__( 'rtMedia Likes Eraser', 'buddypress-media' ),
+		'callback'             => 'rtmedia_like_eraser',
+	);
+	$erasers['buddypress-media-album'] = array(
+		'eraser_friendly_name' => esc_html__( 'rtMedia Album Eraser', 'buddypress-media' ),
+		'callback'             => 'rtmedia_album_eraser',
+	);
+	return $erasers;
+}
+
+add_filter(
+	'wp_privacy_personal_data_erasers',
+	'register_rtmedia_eraser',
+	10
+);

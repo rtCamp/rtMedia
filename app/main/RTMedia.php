@@ -591,7 +591,7 @@ class RTMedia {
 			'general_showAdminMenu'       => ( isset( $bp_media_options['show_admin_menu'] ) ) ? $bp_media_options['show_admin_menu'] : 0,
 			'general_videothumbs'         => 2,
 			'general_jpeg_image_quality'  => 90,
-			'general_AllowUserData'       => 1,
+			'general_AllowUserData'       => 0,
 		);
 
 		foreach ( $this->allowed_types as $type ) {
@@ -989,7 +989,9 @@ class RTMedia {
 	}
 
 	function enqueue_scripts_styles() {
-		global $rtmedia;
+		global $rtmedia, $bp, $rtmedia_interaction;
+
+		$bp_template = get_option( '_bp_theme_package_id' );
 
 		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
@@ -1024,6 +1026,8 @@ class RTMedia {
 				'jquery',
 				'rt-mediaelement-wp',
 			), RTMEDIA_VERSION );
+			// Locallzte for rtmedia js
+			wp_localize_script( 'rtmedia-main', 'bp_template_pack', $bp_template );
 		}
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_ajax_url', admin_url( 'admin-ajax.php' ) );
@@ -1090,6 +1094,9 @@ class RTMedia {
 		$rtmedia_backbone_strings = array(
 			'rtm_edit_file_name' => esc_html__( 'Edit File Name', 'buddypress-media' ),
 		);
+
+		// Localise fot rtmedia-backcone js
+		wp_localize_script( 'rtmedia-backbone', 'bp_template_pack', $bp_template );
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_strings', $rtmedia_backbone_strings );
 
@@ -1250,6 +1257,15 @@ class RTMedia {
 			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
 		}
 
+		// Only Applay if BP Template Nouveau is activate.
+		if ( ! empty( $bp_template ) && 'nouveau' === $bp_template && ( 'group' === $rtmedia_interaction->context->type || 'profile' === $rtmedia_interaction->context->type ) ) {
+			$rtmedia_router = new RTMediaRouter();
+			if ( ! empty( $rtmedia_router->query_vars ) ) {
+				$wp_current_stylesheet = get_stylesheet();
+				wp_enqueue_style( 'bp-neavuaue-stylesheet-theme', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/'. $wp_current_stylesheet . ".min.css" );
+				wp_enqueue_style( 'bp-neavuaue-stylesheet-buddypress', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/buddypress.min.css', '' );
+			}
+		}
 	}
 
 	function set_bp_bar() {
@@ -1479,6 +1495,67 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
 
 	return $return_val;
 }
+
+/**
+ * Function to show privacy message provided from rtMedia settings in front end.
+ */
+function rtm_privacy_message_on_website() {
+	global $rtmedia;
+	$options = $rtmedia->options;
+
+	$rtm_privacy_message_options = array(
+		'background-color' => 'rgba(0,0,0,0.95)',
+		'color'            => '#fff',
+		'position'         => 'bottom'
+	);
+
+	$rtm_privacy_message_options = apply_filters( 'rtm_privacy_bar_position', $rtm_privacy_message_options );
+
+	include_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+ 	if ( ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
+		if( "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
+
+			$rtm_privacy_allowed_postion  = array( 'top', 'bottom' );
+			$rtm_privacy_message_position = ! empty ( $rtm_privacy_message_options['position'] ) && ( in_array( $rtm_privacy_message_options['background-color'], $rtm_privacy_allowed_postion) )  ? $rtm_privacy_message_options['position'] . ':0' : 'bottom: 0';
+			$rtm_privacy_message_bgcolor  = ! empty ( $rtm_privacy_message_options['background-color'] )   ? 'background-color: ' . $rtm_privacy_message_options['background-color'] : 'background-color: rgba(0,0,0,0.95)';
+			$rtm_privacy_message_color    = ! empty ( $rtm_privacy_message_options['color'] ) ? 'color: ' . $rtm_privacy_message_options['color'] : 'color: #fff';
+
+			$rtm_privacy_style = $rtm_privacy_message_position . '; ' . $rtm_privacy_message_bgcolor . '; ' . $rtm_privacy_message_color . ';';
+
+			echo "<div class='privacy_message_wrapper' style='" . $rtm_privacy_style . "' ><p>" . wp_kses_post( $options[ 'general_upload_terms_privacy_message' ] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
+        }
+    }
+}
+add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
+
+/**
+ * Function to add privacy policy information in WordPress policy section.
+ */
+function rtm_plugin_privacy_information() {
+	$policy = '';
+	if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
+		ob_start();
+		?>
+		<p>We collect your information during the checkout process on your purchase. The information collected from you may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing.</p>
+		<h2>Handling this data will also allow us to:</h2>
+		<p>- Send you important service information.<br/>
+		- Respond to your queries or complaints.<br/>
+		- Set up and administer your account, provide technical and/or customer support, and to verify your identity.</p>
+		<h2>Additionally we may also collect the following information:</h2>
+		<p>- Your comments and product reviews if you choose to leave them on our website.
+		- Account email/password to allow you to access your account, if you have one.
+		- If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.</p>
+		<?php
+		$policy = ob_get_clean();
+		wp_add_privacy_policy_content(
+			__( 'rtMedia', 'buddypress-media' ),
+			wp_kses_post( $policy )
+		);
+	}
+}
+
+add_action( 'admin_init', 'rtm_plugin_privacy_information' );
 
 /**
  * This wraps up the main rtMedia class. Three important notes:

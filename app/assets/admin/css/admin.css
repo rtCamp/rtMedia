@@ -294,6 +294,9 @@
 .rtm-option-wrapper .rtm-debug-info td {
   padding: 10px;
 }
+.rtm-option-wrapper .rtm-form-link {
+  line-height: 26px;
+}
 
 .rtm-option-title {
   border-bottom: 1px solid #EEEEEE;

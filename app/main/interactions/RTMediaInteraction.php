@@ -219,7 +219,7 @@ class RTMediaInteraction {
 			}
 		}
 
-		$title .= $sep . RTMEDIA_MEDIA_LABEL;
+		$title .= $sep . apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL );
 		$sep = $oldSep;
 		if ( isset( $this->context->type ) ) {
 			switch ( $this->context->type ) {

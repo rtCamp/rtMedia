@@ -204,6 +204,24 @@ function rtmedia_init_action_dropdown( parent ) {
 }
 
 jQuery( 'document' ).ready( function( $ ) {
+	// When Ajax completed attach media uploader to new activity, applay popup and attach media to comment uploader.
+	jQuery( document ).ajaxComplete( function( event, xhr, settings ) {
+		if ( 'legacy' !== bp_template_pack && bp_template_pack ) {
+			var get_action = get_parameter( 'action', settings.data );
+			if (('activity_filter' === get_action || 'post_update' === get_action || 'get_single_activity_content' === get_action || 'activity_get_older_updates' === get_action) && 'undefined' !== typeof rtmedia_masonry_layout && 'true' === rtmedia_masonry_layout && 'undefined' !== typeof rtmedia_masonry_layout_activity && 'true' === rtmedia_masonry_layout_activity ) {
+				setTimeout( function() {
+					apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
+					rtmedia_activity_masonry();
+					rtmedia_activity_stream_comment_media();
+				} , 1000 );
+			} else if ( ( 'activity_filter' === get_action || 'post_update' === get_action || 'get_single_activity_content' === get_action || 'activity_get_older_updates' === get_action ) ) {
+				setTimeout( function () {
+					apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
+					rtmedia_activity_stream_comment_media();
+				}, 1000);
+			}
+		}
+	} );
 
 	jQuery( '.rtmedia-uploader-div' ).css({
 		'opacity': '1',
@@ -254,7 +272,7 @@ jQuery( 'document' ).ready( function( $ ) {
 	});
 	//Rtmedia_lightbox_enabled from setting
 	if ( typeof( rtmedia_lightbox_enabled ) != 'undefined' && rtmedia_lightbox_enabled == '1' ) {
-		apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
+            apply_rtMagnificPopup( '.rtmedia-list-media.rtm-gallery-list, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container, ul.rtm-comment-container' );
 	}
 
 	jQuery.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
@@ -1227,3 +1245,28 @@ function get_parameter( parameter, data ) {
 		return false;
 	}
 }
+
+/**
+ * Prevent user to upload media without checking upload terms checkbox.
+ */
+function rtm_upload_terms_activity() {
+	// Check if upload term checkbox is there.
+	if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0) {
+		// Handle on click event.
+		jQuery( '#whats-new' ).click( 'on', function () {
+			if ( false === jQuery('#rtmedia_upload_terms_conditions').prop('checked') ){
+				// By default prevent user to upload media.
+				jQuery( '#aw-whats-new-submit' ).attr( 'disabled', 'disabled' );
+				// On click of upload terms checkbox enable post button.
+				jQuery( '#rtmedia_upload_terms_conditions' ).click(function () {
+					jQuery( '#aw-whats-new-submit' ).attr( 'disabled', ! this.checked );
+				});
+			}
+		});
+	}
+}
+
+jQuery( document ).ready( function () {
+	// Call function when document loaded.
+	rtm_upload_terms_activity();
+});

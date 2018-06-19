@@ -2,7 +2,6 @@
 // Avoid direct access to the file.
 $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require_once( $parse_uri[0] . 'wp-load.php' );
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -24,10 +23,29 @@ if ( ! empty( $_FILES ) ) {
 	}
 	$allowd_type = array( 'jpg', 'jpeg', 'png', 'gif', 'zip', 'doc', 'docx', 'pdf', 'txt' );
 	/* move file to target folder */
-	foreach ( $_FILES as $file ) {
+	/**
+	 * Code to check whether the uploaded file is settings json file
+	 */
+	$import_export         = false;
+	$import_export_control = sanitize_text_field( filter_input( INPUT_POST, 'import_export_control' ) );
+	if ( 'rtFileInput' === $import_export_control ) {
+		$import_export = true;
+	}
+
+	foreach ( $_FILES as $name => $file ) {
 		if ( $file['size'] <= 2000000 ) {
 			$ext = pathinfo( basename( $file['name'] ), PATHINFO_EXTENSION );
-			if ( in_array( strtolower( $ext ), $allowd_type ) && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
+
+			if ( $import_export ) {
+				if ( 'json' === strtolower( $ext ) && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
+					$uploaded_file = $uploaddir . $file['name'];
+
+					$rtadmin = new RTMediaAdmin();
+					$rtadmin->import_settings( $uploaded_file );
+				} else {
+					$error = true;
+				}
+			} elseif ( in_array( strtolower( $ext ), $allowd_type, true ) && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
 				$files[] = $uploaddir . $file['name'];
 			} else {
 				$error = true;
