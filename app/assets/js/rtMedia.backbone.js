@@ -115,7 +115,7 @@ jQuery( function( $ ) {
 
 				url += 'pg/' + nextpage + '/';
 			}
-			
+
 			return url;
 		},
 		getNext: function( page, el, element) {
@@ -374,7 +374,7 @@ jQuery( function( $ ) {
 
 				var page_base_url = $( '#' + current_gallery_id + ' .rtmedia-page-no .rtmedia-page-link' ).data( 'page-base-url' );
 				var href = page_base_url + nextpage;
-				
+
 				change_rtBrowserAddressUrl( href, '' );
 
 				galleryObj.getNext( nextpage, $( this ).parents( '.rtmedia_gallery_wrapper' ), $( this ).parents( '.rtm-pagination' ) );
@@ -1878,7 +1878,7 @@ function change_rtBrowserAddressUrl( url, page ) {
 
 /**
  * Get query string value
- * ref: http://stackoverflow.com/questions/9870512/how-to-obtaining-the-querystring-from-the-current-url-with-javascript 
+ * ref: http://stackoverflow.com/questions/9870512/how-to-obtaining-the-querystring-from-the-current-url-with-javascript
  * return string
  */
 function getQueryStringValue (key) {
@@ -2646,8 +2646,8 @@ function rtmedia_comment_media_upload( upload_comment ){
 function rtmedia_activity_stream_comment_media(){
 
     // For Buddypress new template nouveau
-    if ( bp_template_pack && bp_template_pack === 'nouveau' ) {
-        jQuery('#buddypress div#activity-stream ul.activity-list li.activity-item').each(function () {
+    if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+		jQuery('#buddypress div#activity-stream ul.activity-list li.activity-item, #buddypress ul#activity-stream ul.activity-list li.activity-item').each(function () {
             if( jQuery( this ).find( '.rt_upload_hf_upload_parent_id' ).length  && jQuery( this ).find( '.rt_upload_hf_upload_parent_id_type' ).length ){
                 if ( jQuery( this ).find( "input[type=file]" ).length == 0 ) {
                     // Please remove this in future when buddypress's nouveau tmeplate add some hook into comment form. Currently there is no hook into comment form so this is pretty hook.
