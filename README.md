@@ -160,15 +160,16 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 	 * Added admin setting to show optional privacy notice to users [Doc](https://rtmedia.io/docs/features/upload-terms/#show-privacy-message-on-the-website)
 	 * Added rtMedia specific privacy information for a site’s privacy policy
 	 * Added filter to change background color, text color and position of privacy message strip [Doc](https://rtmedia.io/docs/developers/hooks/rtm_privacy_bar_position/)
+	 * Removed affiliate support with this version
 
 * ENHANCEMENT
-    * Added filter to modify text of Media tab [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia_media_tab_name/)
-    * Improved performance by adding conditional check before enqueuing scripts and styles
+	 * Added filter to modify text of Media tab [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia_media_tab_name/)
+	 * Improved performance by adding conditional check before enqueuing scripts and styles
 
 * FIXED
-    * PHP notice and warnings
-    * Fix issue while WordPress user deletion on multi-site setup
-    * Load more button issue under the Music tab
+	 * PHP notice and warnings
+	 * Fix issue while WordPress user deletion on multi-site setup
+	 * Load more button issue under the Music tab
 
 
 ### 4.4.8 [May 22, 2018] ###

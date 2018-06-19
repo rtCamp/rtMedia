@@ -148,6 +148,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Added admin setting to show optional privacy notice to users [Doc](https://rtmedia.io/docs/features/upload-terms/#show-privacy-message-on-the-website)
  * Added rtMedia specific privacy information for a site’s privacy policy
  * Added filter to change background color, text color and position of privacy message strip [Doc](https://rtmedia.io/docs/developers/hooks/rtm_privacy_bar_position/)
+ * Removed affiliate support with this version
 
 * ENHANCEMENT
 
