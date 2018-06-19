@@ -162,10 +162,10 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 	 * Added rtMedia specific privacy information for a site’s privacy policy
 	 * Removed affiliate support with this version
 	 * Added filter to change position of group media tab [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia_group_media_tab_position/)
+	 * Added filter to modify text of Media tab [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia_media_tab_name/)
 
 * ENHANCEMENT
 
-	 * Added filter to modify text of Media tab [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia_media_tab_name/)
 	 * Improved performance by adding conditional check before enqueuing scripts and styles
 
 * FIXED
