@@ -158,8 +158,8 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 	 * Integrated with new personal data Erase/Export tools in WordPress 4.9.6 [Doc](https://rtmedia.io/docs/features/gdpr-export-erase-personal-data/)
 	 * Added upload terms premium feature to rtMedia core with this version [Doc](https://rtmedia.io/docs/features/upload-terms/)
 	 * Added admin setting to show optional privacy notice to users [Doc](https://rtmedia.io/docs/features/upload-terms/#show-privacy-message-on-the-website)
-	 * Added rtMedia specific privacy information for a site’s privacy policy[Doc](https://rtmedia.io/docs/features/upload-terms/#show-privacy-message-on-the-website)
 	 * Added filter to change background color, text color and position of privacy message strip [Doc](https://rtmedia.io/docs/developers/hooks/rtm_privacy_bar_position/)
+	 * Added rtMedia specific privacy information for a site’s privacy policy
 	 * Removed affiliate support with this version
 	 * Added filter to change position of group media tab [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia_group_media_tab_position/)
 
