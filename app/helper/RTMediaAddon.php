@@ -99,7 +99,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 * @return void
 		 */
 		public function plugins_content( $args = '' ) {
-			$rtcamp_upload_url = 'https://cdn.rtmedia.io/wp-content/uploads/';
+			$rtcamp_upload_url = 'https://rtmedia.io/wp-content/uploads/';
 			$rtmedia_demo_url  = 'http://demo.rtmedia.io/';
 			$addons            = array(
 				array(
@@ -431,17 +431,6 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					'buy_now'      => 'https://rtmedia.io/products/rtmedia-mycred/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'category'     => 'general',
 					'purchased'    => ( defined( 'RTMEDIA_MYCRED_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-mycred/index.php' ) ) ? true : false,
-				),
-				array(
-					'title'        => esc_html__( 'Upload Terms', 'buddypress-media' ),
-					'img_src'      => $rtcamp_upload_url . 'edd/2015/06/rtmedia-upload-terms.jpg',
-					'product_link' => 'https://rtmedia.io/products/rtmedia-upload-terms/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'desc'         => '<p>' . esc_html__( 'User must have to check the terms and conditions checkbox before uploading the media.', 'buddypress-media' ) . '</p>',
-					'price'        => '$49',
-					'demo_link'    => $rtmedia_demo_url . '?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'buy_now'      => 'https://rtmedia.io/products/rtmedia-upload-terms/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'category'     => 'general',
-					'purchased'    => ( defined( 'RTMEDIA_UPLOAD_TERMS_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-upload-terms/index.php' ) ) ? true : false,
 				),
 				array(
 					'title'        => esc_html__( 'CubePoints', 'buddypress-media' ),

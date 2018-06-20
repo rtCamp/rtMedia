@@ -37,13 +37,13 @@ jQuery( document ).ready( function ( $ ) {
                 }
 
                 /* Check "Terms of Service Message" Emply Or Not */
-                if ( general_upload_terms_message.prop('checked') && '' === general_upload_terms_message.val().trim() ) {
+                if ( '' === general_upload_terms_message.val().trim() ) {
                     error_msg += rtm_upload_terms_error_msgs.terms_msg;
                     return rtp_show_error_message ( general_upload_terms_message, error_msg );
                 }
 
                 /* Check "Error Message" Emply Or Not */
-                if ( general_upload_terms_error_message.prop( 'checked' ) && '' === general_upload_terms_error_message.val().trim() ) {
+                if (  '' === general_upload_terms_error_message.val().trim() ) {
                     error_msg += rtm_upload_terms_error_msgs.error_msg;
                     return rtp_show_error_message ( general_upload_terms_error_message, error_msg );
                 }
@@ -68,7 +68,7 @@ jQuery( document ).ready( function ( $ ) {
         var elm_selector = jQuery( selector );
         elm_selector.focus();
         elm_selector.css( 'border-color', 'red' );
-        if (elm_selector.next().length > 0 && 'error_msg' !== elm_selector.next().attr( 'class' ) ) {
+        if ( elm_selector.parent().length > 0 && 'error_msg' !== elm_selector.parent().attr( 'class' ) ) {
             var invalid_error_msg = jQuery( "<span />" ).attr( 'style', 'display:block' ).addClass( 'error_msg' ).html( error_msg );
             elm_selector.after( invalid_error_msg );
         }
