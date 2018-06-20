@@ -55,6 +55,8 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 
 			$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
 
+			wp_enqueue_script( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/js/admin-upload-terms' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+
 			$translation_data = array(
 				'valid_url'   => esc_html__( 'Please enter valid URL.', 'buddypress-media' ),
 				'terms_msg'   => esc_html__( 'Please enter terms message.', 'buddypress-media' ),
@@ -64,7 +66,6 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 
 			wp_localize_script( 'rtmedia-upload-terms-main', 'rtm_upload_terms_error_msgs', $translation_data );
 
-			wp_enqueue_script( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/js/admin-upload-terms' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
 		}
 
 		/**
