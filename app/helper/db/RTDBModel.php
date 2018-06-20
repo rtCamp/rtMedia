@@ -1,44 +1,62 @@
 <?php
-
 /**
  * Description of RTDBModel
  * Base class for any Database Model like Media, Album etc.
+ *
+ * @package    rtMedia
  *
  * @author udit
  */
 
 if ( ! class_exists( 'RTDBModel' ) ) {
+	/**
+	 * Class RTDBModel
+	 */
 	class RTDBModel {
 
 		/**
+		 * Database table linked to the model.
+		 * All the queries will be fired on that table or with the join in this table.
 		 *
-		 * @var type
-		 *
-		 * $table_name - database table linked to the model.
-		 *                All the queries will be fired on that table or with the join in this table.
-		 * $per_page - number of rows per page to be displayed
+		 * @var $table_name
 		 */
 		public $table_name;
+
+		/**
+		 * Number of rows per page to be displayed
+		 *
+		 * @var $per_page
+		 */
 		public $per_page;
+
+		/**
+		 * Var mu_single_table.
+		 *
+		 * @var $mu_single_table
+		 */
 		public $mu_single_table;
 
 		/**
+		 * RTDBModel constructor.
 		 *
-		 * @param string $table_name Table name for model
-		 * @param boolean $withprefix Set true if $tablename is with prefix otherwise it will prepend wordpress prefix with "rt_"
+		 * @param string  $table_name Table name for model.
+		 * @param boolean $withprefix Set true if $tablename is with prefix otherwise it will prepend WordPress prefix with "rt_".
+		 * @param int     $per_page Per Page.
+		 * @param bool    $mu_single_table single table.
 		 */
-		function __construct( $table_name, $withprefix = false, $per_page = 10, $mu_single_table = false ) {
+		public function __construct( $table_name, $withprefix = false, $per_page = 10, $mu_single_table = false ) {
 			$this->mu_single_table = $mu_single_table;
 			$this->set_table_name( $table_name, $withprefix );
 			$this->set_per_page( $per_page );
 		}
 
 		/**
+		 * Set table name.
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param string $table_name
-		 * @param mixed $withprefix
+		 * @param string $table_name Table name.
+		 * @param mixed  $withprefix With prefix or not.
 		 */
 		public function set_table_name( $table_name, $withprefix = false ) {
 			global $wpdb;
@@ -49,9 +67,9 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		}
 
 		/**
-		 * set number of rows per page for pagination
+		 * Set number of rows per page for pagination
 		 *
-		 * @param integer $per_page
+		 * @param integer $per_page Perpage.
 		 */
 		public function set_per_page( $per_page ) {
 			$this->per_page = $per_page;
@@ -63,12 +81,12 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param string $name - Added get_by_<coulmname>(value,pagging=true,page_no=1)
-		 * @param array $arguments
+		 * @param string $name Added get_by_<coulmname>(value,pagging=true,page_no=1).
+		 * @param array  $arguments Arguments.
 		 *
 		 * @return array  result array
 		 */
-		function __call( $name, $arguments ) {
+		public function __call( $name, $arguments ) {
 			$column_name = str_replace( 'get_by_', '', strtolower( $name ) );
 			$paging      = false;
 			$page        = 1;
@@ -112,7 +130,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 							return false;
 						}
 					}
-					//echo $wpdb->prepare("SELECT * FROM " . $this->table_name . " WHERE {$column_name} = %s {$other}", $arguments[0]);
+
 					$return_array[ 'result' ] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$this->table_name} WHERE {$column_name} = %s {$other}", $arguments[ 0 ] ), ARRAY_A ); // @codingStandardsIgnoreLine
 				}
 
@@ -123,14 +141,15 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		}
 
 		/**
+		 * Insert.
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param array $row
+		 * @param array $row Row array.
 		 *
 		 * @return integer
 		 */
-		function insert( $row ) {
+		public function insert( $row ) {
 			global $wpdb;
 			$insertdata = array();
 			foreach ( $row as $key => $val ) {
@@ -145,13 +164,14 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		}
 
 		/**
+		 * Update table.
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param array $data
-		 * @param array $where
+		 * @param array $data Data.
+		 * @param array $where Where clause.
 		 */
-		function update( $data, $where ) {
+		public function update( $data, $where ) {
 			global $wpdb;
 
 			return $wpdb->update( $this->table_name, $data, $where );
@@ -161,13 +181,16 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		 * Get all the rows according to the columns set in $columns parameter.
 		 * offset and rows per page can also be passed for pagination.
 		 *
-		 * @global object $wpdb
+		 * @global object  $wpdb
 		 *
-		 * @param array $columns
+		 * @param array    $columns Columns.
+		 * @param int|bool $offset Offset.
+		 * @param int|bool $per_page Per page.
+		 * @param string   $order_by Order by.
 		 *
 		 * @return array
 		 */
-		function get( $columns, $offset = false, $per_page = false, $order_by = 'id desc' ) {
+		public function get( $columns, $offset = false, $per_page = false, $order_by = 'id desc' ) {
 			global $wpdb;
 
 			$select = "SELECT * FROM {$this->table_name}";
@@ -183,7 +206,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 						$colvalue['value'] = esc_sql( $colvalue );
 					}
 					$col_val_comapare = ( is_array( $colvalue['value'] ) ) ? '(\'' . implode( "','", $colvalue['value'] ) . '\')' : '(\'' . $colvalue['value'] . '\')';
-					$where .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
+					$where           .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
 				} else {
 					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // @codingStandardsIgnoreLine
 				}
@@ -212,14 +235,15 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		}
 
 		/**
+		 * Delete row.
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param array $where
+		 * @param array $where Where clause.
 		 *
 		 * @return array
 		 */
-		function delete( $where ) {
+		public function delete( $where ) {
 			global $wpdb;
 
 			return $wpdb->delete( $this->table_name, $where );
