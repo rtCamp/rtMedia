@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.4.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2018-06-19 06:10:10+00:00\n"
+"POT-Creation-Date: 2018-06-20 05:50:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -989,19 +989,19 @@ msgstr ""
 msgid "Please check terms of service."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:59
+#: app/admin/RTMediaUploadTermsAdmin.php:61
 msgid "Please enter valid URL."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:60
+#: app/admin/RTMediaUploadTermsAdmin.php:62
 msgid "Please enter terms message."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:61
+#: app/admin/RTMediaUploadTermsAdmin.php:63
 msgid "Please enter error message."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:62
+#: app/admin/RTMediaUploadTermsAdmin.php:64
 msgid "Please enter privacy message."
 msgstr ""
 
@@ -1366,109 +1366,99 @@ msgid ""
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:436
-msgid "Upload Terms"
-msgstr ""
-
-#: app/helper/RTMediaAddon.php:439
-msgid ""
-"User must have to check the terms and conditions checkbox before uploading "
-"the media."
-msgstr ""
-
-#: app/helper/RTMediaAddon.php:447
 msgid "CubePoints"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:450
+#: app/helper/RTMediaAddon.php:439
 msgid ""
 "If you are using CubePoints plugin on your website than rtMedia CubePoint "
 "add-on can be integrate with that plugin to setup point management system "
 "for rtMedia related activities."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:458
+#: app/helper/RTMediaAddon.php:447
 msgid "Social Sync"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:461
+#: app/helper/RTMediaAddon.php:450
 msgid "rtMedia Social Sync allows you to import media from your Facebook account."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:469
+#: app/helper/RTMediaAddon.php:458
 msgid "Photo Watermark"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:472
+#: app/helper/RTMediaAddon.php:461
 msgid ""
 "rtMedia Photo Watermark let you add watermark on your images uploaded using "
 "rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:480
+#: app/helper/RTMediaAddon.php:469
 msgid "Photo Tagging"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:483
+#: app/helper/RTMediaAddon.php:472
 msgid ""
 "rtMedia Photo Tagging enable users to tag their friends on photos uploaded "
 "using rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:491
+#: app/helper/RTMediaAddon.php:480
 msgid "Photo Filters"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:494
+#: app/helper/RTMediaAddon.php:483
 msgid ""
 "rtMedia Photo Filters adds Instagram like filters to images uploaded with "
 "rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:502
+#: app/helper/RTMediaAddon.php:491
 msgid "Kaltura Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:505
+#: app/helper/RTMediaAddon.php:494
 msgid ""
 "Add support for more video formats using Kaltura video solution. It works "
 "with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:513
+#: app/helper/RTMediaAddon.php:502
 msgid "FFMPEG Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:516
+#: app/helper/RTMediaAddon.php:505
 msgid ""
 "Add supports for more audio & video formats using open-source media-node. "
 "Media node comes with automated setup script for Ubuntu/Debian."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:524
+#: app/helper/RTMediaAddon.php:513
 msgid "Membership Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:527
+#: app/helper/RTMediaAddon.php:516
 msgid ""
 "rtMedia Membership add-on provides membership functionality in your site in "
 "terms of media upload."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:554
+#: app/helper/RTMediaAddon.php:543
 msgid "Coming Soon !!"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:587
+#: app/helper/RTMediaAddon.php:576
 msgid "Purchased"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:589 app/helper/RTMediaThemes.php:157
+#: app/helper/RTMediaAddon.php:578 app/helper/RTMediaThemes.php:157
 #: app/helper/RTMediaThemes.php:201 app/helper/RTMediaThemes.php:310
 #: app/helper/RTMediaThemes.php:354 app/importers/BPMediaAlbumimporter.php:177
 msgid "Buy Now"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:621 app/helper/RTMediaThemes.php:155
+#: app/helper/RTMediaAddon.php:610 app/helper/RTMediaThemes.php:155
 #: app/helper/RTMediaThemes.php:199 app/helper/RTMediaThemes.php:308
 #: app/helper/RTMediaThemes.php:352 app/importers/BPMediaAlbumimporter.php:178
 msgid "Live Demo"
