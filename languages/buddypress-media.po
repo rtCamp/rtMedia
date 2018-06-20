@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.5.0\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2018-06-19 07:57:44+00:00\n"
+"POT-Creation-Date: 2018-06-20 06:01:25+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -147,7 +147,7 @@ msgstr ""
 #: app/admin/RTMediaAdmin.php:761 app/admin/RTMediaAdmin.php:1267
 #: app/admin/RTMediaAdmin.php:1268 app/importers/RTMediaActivityUpgrade.php:116
 #: app/importers/RTMediaMigration.php:68 app/main/RTMedia.php:988
-#: app/main/RTMedia.php:1553
+#: app/main/RTMedia.php:1552
 msgid "rtMedia"
 msgstr ""
 
@@ -989,19 +989,19 @@ msgstr ""
 msgid "Please check terms of service."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:59
+#: app/admin/RTMediaUploadTermsAdmin.php:61
 msgid "Please enter valid URL."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:60
+#: app/admin/RTMediaUploadTermsAdmin.php:62
 msgid "Please enter terms message."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:61
+#: app/admin/RTMediaUploadTermsAdmin.php:63
 msgid "Please enter error message."
 msgstr ""
 
-#: app/admin/RTMediaUploadTermsAdmin.php:62
+#: app/admin/RTMediaUploadTermsAdmin.php:64
 msgid "Please enter privacy message."
 msgstr ""
 
