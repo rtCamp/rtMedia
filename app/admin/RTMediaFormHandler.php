@@ -1,7 +1,10 @@
 <?php
-/*
+/**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
+ *
+ * @package    RTMedia
+ * @subpackage Admin
  */
 
 /**
@@ -11,6 +14,11 @@
  */
 class RTMediaFormHandler {
 
+	/**
+	 * Selectbox function.
+	 *
+	 * @param array $args Arguments.
+	 */
 	public static function selectBox( $args ) {
 		$defaults = array(
 			'key'       => '',
@@ -36,8 +44,8 @@ class RTMediaFormHandler {
 			}
 		}
 
-		$chkObj = new rtForm();
-		$chkObj->display_select( $args );
+		$chk_obj = new rtForm();
+		$chk_obj->display_select( $args );
 	}
 
 	/**
@@ -45,10 +53,10 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args
-	 * @param  bool $echo
+	 * @param  array $args arguments.
+	 * @param  bool  $echo Do echo or not.
 	 *
-	 * @return string $chkObj->get_textarea( $args )
+	 * @return string $chk_obj->get_textarea( $args )
 	 */
 	public static function textarea( $args, $echo = true ) {
 		$defaults = array(
@@ -60,25 +68,31 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
-			return;
+			return '';
 		}
 
 		if ( ! empty( $key ) ) {
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
-		$args['rtForm_options'] = array( array( '' => 1, 'checked' => $value ) );
+		$args['rtForm_options'] = array(
+			array(
+				''        => 1,
+				'checked' => $value,
+			),
+		);
 
-		$chkObj = new rtForm();
+		$chk_obj = new rtForm();
 
 		if ( $echo ) {
-			$chkObj->display_textarea( $args );
+			$chk_obj->display_textarea( $args );
 		} else {
-			return $chkObj->get_textarea( $args ); // @codingStandardsIgnoreLine
+			return $chk_obj->get_textarea( $args );
 		}
-		return;
+
+		return '';
 	}
 
 	/**
@@ -86,10 +100,10 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args
-	 * @param  bool $echo
+	 * @param  array $args arguments.
+	 * @param  bool  $echo Do echo or not.
 	 *
-	 * @return string $chkObj->get_switch( $args )
+	 * @return string $chk_obj->get_switch( $args )
 	 */
 	public static function checkbox( $args, $echo = true ) {
 		$defaults = array(
@@ -101,7 +115,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return;
 		}
@@ -112,12 +126,12 @@ class RTMediaFormHandler {
 
 		$args['rtForm_options'] = array( array( '' => 1, 'checked' => $value ) );
 
-		$chkObj = new rtForm();
+		$chk_obj = new rtForm();
 
 		if ( $echo ) {
-			$chkObj->display_switch( $args );
+			$chk_obj->display_switch( $args );
 		} else {
-			return $chkObj->get_switch( $args );
+			return $chk_obj->get_switch( $args );
 		}
 		return;
 	}
@@ -127,7 +141,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args
+	 * @param  array $args arguments.
 	 *
 	 * @return void
 	 */
@@ -142,7 +156,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( 2 > count( $radios ) ) {
-			trigger_error( esc_html__( 'Need to specify atleast two radios, else use a checkbox instead', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Need to specify atleast two radios, else use a checkbox instead', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return;
 		}
@@ -155,23 +169,26 @@ class RTMediaFormHandler {
 		foreach ( $radios as $value => $key ) {
 			$args['rtForm_options'][] = array(
 				$key      => $value,
-				'checked' => ( $default == $value ) ? true : false,
+				'checked' => ( $default === $value ) ? true : false,
 			);
 		}
 
-		$objRad = new rtForm();
-		$objRad->display_radio( $args );
+		$obj_rad = new rtForm();
+		$obj_rad->display_radio( $args );
 	}
 
 	/**
 	 * Show rtmedia dimensions in admin options.
 	 *
+	 * @param array $args Arguments.
+	 *
 	 * @access static
+	 *
 	 * @return void
 	 */
 	public static function dimensions( $args ) {
-		$dmnObj = new rtDimensions();
-		$dmnObj->display_dimensions( $args );
+		$dmn_obj = new rtDimensions();
+		$dmn_obj->display_dimensions( $args );
 	}
 
 	/**
@@ -179,7 +196,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args
+	 * @param  array $args arguments.
 	 *
 	 * @return void
 	 */
@@ -194,7 +211,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return;
 		}
@@ -205,8 +222,8 @@ class RTMediaFormHandler {
 
 		$args['value'] = $value;
 
-		$numObj = new rtForm();
-		$numObj->display_number( $args );
+		$num_obj = new rtForm();
+		$num_obj->display_number( $args );
 	}
 
 	/**
@@ -214,7 +231,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args
+	 * @param  array $args arguments.
 	 *
 	 * @return void
 	 */
@@ -229,7 +246,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return;
 		}
@@ -240,8 +257,8 @@ class RTMediaFormHandler {
 
 		$args['value'] = $value;
 
-		$numObj = new rtForm();
-		$numObj->display_textbox( $args );
+		$num_obj = new rtForm();
+		$num_obj->display_textbox( $args );
 	}
 
 	/**
@@ -249,9 +266,10 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args
+	 * @param array $args arguments.
+	 * @param bool  $echo Echo or not.
 	 *
-	 * @return void
+	 * @return string $link_obj
 	 */
 	public static function link( $args, $echo = true ) {
 
@@ -265,29 +283,29 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $href ) ) {
-			trigger_error( esc_html__( 'Please provide a "href" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "href" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
-			return;
+			return '';
 		}
 
 		if ( ! isset( $text ) ) {
-			trigger_error( esc_html__( 'Please provide a "text" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "text" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
-			return;
+			return '';
 		}
 
-		if( isset( $target ) && ! empty( $target ) ) {
-			$args['misc'] = array( 'target' => $target, );
+		if ( isset( $target ) && ! empty( $target ) ) {
+			$args['misc'] = array( 'target' => $target );
 		}
 
-		$linkObj = new rtForm();
+		$link_obj = new rtForm();
 
 		if ( $echo ) {
 
-			$linkObj->display_link( $args );
+			$link_obj->display_link( $args );
 		} else {
 
-			return $linkObj->get_link( $args );
+			return $link_obj->get_link( $args );
 		}
 	}
 
@@ -310,13 +328,13 @@ class RTMediaFormHandler {
 		$args     = wp_parse_args( $args, $defaults );
 
 		if ( empty( $args['value'] ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return;
 		}
 
-		$buttonObj = new rtForm();
-		$buttonObj->display_button( $args );
+		$button_obj = new rtForm();
+		$button_obj->display_button( $args );
 	}
 
 	/**
@@ -329,7 +347,6 @@ class RTMediaFormHandler {
 	 * @param  array $args arguments to create file input control.
 	 *
 	 * @return void
-	 *
 	 */
 	public static function fileinput( $args ) {
 		$defaults = array(
@@ -339,26 +356,26 @@ class RTMediaFormHandler {
 		$args     = wp_parse_args( $args, $defaults );
 
 		if ( empty( $args['value'] ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return;
 		}
 
-		$fileObj = new rtForm();
-		$fileObj->display_file_input( $args );
+		$file_obj = new rtForm();
+		$file_obj->display_file_input( $args );
 	}
 
 	/**
-	 * extract settings.
+	 * Extract settings.
 	 *
 	 * @access static
 	 *
-	 * @param  array $options
-	 * @param  string $section_name
+	 * @param  string $section_name Section name.
+	 * @param  array  $options Options.
 	 *
 	 * @return array  $section
 	 */
-	static function extract_settings( $section_name, $options ) {
+	public static function extract_settings( $section_name, $options ) {
 		$section = array();
 		foreach ( $options as $key => $value ) {
 			$compare = strncmp( $key, $section_name, strlen( $section_name ) );
@@ -371,15 +388,15 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * display render options.
+	 * Display render options.
 	 *
 	 * @access static
 	 *
-	 * @param  array $options
+	 * @param  array $options Options.
 	 *
 	 * @return array  $render
 	 */
-	static function display_render_options( $options ) {
+	public static function display_render_options( $options ) {
 		$radios               = array();
 		$radios['load_more']  = '<strong>' . esc_html__( 'Load More', 'buddypress-media' ) . '</strong>';
 		$radios['pagination'] = '<strong>' . esc_html__( 'Pagination', 'buddypress-media' ) . '</strong>';
@@ -393,7 +410,7 @@ class RTMediaFormHandler {
 		}
 
 		$render = array(
-			'general_enableComments' => array(
+			'general_enableComments'          => array(
 				'title'    => esc_html__( 'Allow user to comment on uploaded media', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'     => array(
@@ -403,27 +420,27 @@ class RTMediaFormHandler {
 				),
 				'group'    => '10',
 			),
-			'general_enableGallerysearch' => array(
-				'title' => esc_html__( 'Enable gallery media search', 'buddypress-media' ),
+			'general_enableGallerysearch'     => array(
+				'title'    => esc_html__( 'Enable gallery media search', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-				'args' => array(
-					'key' => 'general_enableGallerysearch',
+				'args'     => array(
+					'key'   => 'general_enableGallerysearch',
 					'value' => $options['general_enableGallerysearch'],
-					'desc' => esc_html__( 'This will enable the search box in gallery page.', 'buddypress-media' ),
+					'desc'  => esc_html__( 'This will enable the search box in gallery page.', 'buddypress-media' ),
 				),
-				'group' => '14',
+				'group'    => '14',
 			),
-			'general_enableLikes' => array(
+			'general_enableLikes'             => array(
 				'title'    => __( 'Enable likes for media', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-				'args' => array(
-					'key' => 'general_enableLikes',
+				'args'     => array(
+					'key'   => 'general_enableLikes',
 					'value' => $options['general_enableLikes'],
-					'desc' => __( 'Enabling this setting will add like feature for media.', 'buddypress-media' ),
+					'desc'  => __( 'Enabling this setting will add like feature for media.', 'buddypress-media' ),
 				),
-				'group' => '11',
+				'group'    => '11',
 			),
-			'general_enableLightbox' => array(
+			'general_enableLightbox'          => array(
 				'title'    => esc_html__( 'Use lightbox to display media', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'     => array(
@@ -433,7 +450,7 @@ class RTMediaFormHandler {
 				),
 				'group'    => '15',
 			),
-			'general_perPageMedia'   => array(
+			'general_perPageMedia'            => array(
 				'title'    => esc_html__( 'Number of media per page', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'number' ),
 				'args'     => array(
@@ -445,7 +462,7 @@ class RTMediaFormHandler {
 				),
 				'group'    => '15',
 			),
-			'general_display_media'  => array(
+			'general_display_media'           => array(
 				'title'    => esc_html__( 'Media display pagination option', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'radio' ),
 				'args'     => array(
@@ -457,7 +474,7 @@ class RTMediaFormHandler {
 				),
 				'group'    => '15',
 			),
-			'general_masonry_layout' => array(
+			'general_masonry_layout'          => array(
 				'title'         => esc_html__( 'Enable', 'buddypress-media' ) . ' <a href="http://masonry.desandro.com/" target="_blank">Masonry</a> ' . esc_html__( 'Cascading grid layout', 'buddypress-media' ),
 				'callback'      => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'          => array(
@@ -470,18 +487,18 @@ class RTMediaFormHandler {
 				'after_content' => esc_html__( 'You might need to', 'buddypress-media' ) . ' <a id="rtm-masonry-change-thumbnail-info" href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . esc_html__( 'change thumbnail size', 'buddypress-media' ) . '</a> ' . esc_html__( 'and uncheck the crop box for thumbnails.', 'buddypress-media' ) . '<br /><br />' . esc_html__( 'To set gallery for fixed width, set image height to 0 and width as per your requirement and vice-versa.', 'buddypress-media' ),
 			),
 			'general_masonry_layout_activity' => array(
-				'title'         => esc_html__( 'Enable Masonry Cascading grid layout for activity', 'buddypress-media' ),
-				'callback'      => array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'          => array(
+				'title'    => esc_html__( 'Enable Masonry Cascading grid layout for activity', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
 					'key'   => 'general_masonry_layout_activity',
 					'value' => $options['general_masonry_layout_activity'],
 					'desc'  => esc_html__( 'If you enable masonry view, it is advisable to', 'buddypress-media' ) . ' <a href="' . $regenerate_link . '">regenerate thumbnail</a> ' . esc_html__( 'for masonry view.', 'buddypress-media' ),
 					'class' => array( 'rtm_enable_masonry_view' ),
 				),
-				'depends'       => 'general_masonry_layout',
-				'group'         => '18',
+				'depends'  => 'general_masonry_layout',
+				'group'    => '18',
 			),
-			'general_direct_upload'  => array(
+			'general_direct_upload'           => array(
 				'title'    => esc_html__( 'Enable Direct Upload', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'     => array(
@@ -502,41 +519,39 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * display content.
+	 * Display content.
 	 *
 	 * @access static
-	 *
-	 * @param  void
 	 *
 	 * @return void
 	 */
 	public static function display_content() {
 		global $rtmedia;
-		$options			= $rtmedia->options;
-		$render_options		= self::display_render_options( $options );
-		$render_options		= apply_filters( 'rtmedia_display_content_add_itmes', $render_options, $options );
-		$general_group		= array();
-		$general_group[10]	= esc_html__( 'Single Media View', 'buddypress-media' );
-		$general_group[11]	= esc_html__( 'Media Likes', 'buddypress-media' );
-		$general_group[15]	= esc_html__( 'List Media View', 'buddypress-media' );
-		$general_group[18]	= esc_html__( 'Masonry View', 'buddypress-media' );
-		$general_group[19]	= esc_html__( 'Direct Upload', 'buddypress-media' );
-		$general_group[14]	= esc_html__( 'Gallery Media Search', 'buddypress-media' );
-		$general_group		= apply_filters( 'rtmedia_display_content_groups', $general_group );
+		$options           = $rtmedia->options;
+		$render_options    = self::display_render_options( $options );
+		$render_options    = apply_filters( 'rtmedia_display_content_add_itmes', $render_options, $options );
+		$general_group     = array();
+		$general_group[10] = esc_html__( 'Single Media View', 'buddypress-media' );
+		$general_group[11] = esc_html__( 'Media Likes', 'buddypress-media' );
+		$general_group[15] = esc_html__( 'List Media View', 'buddypress-media' );
+		$general_group[18] = esc_html__( 'Masonry View', 'buddypress-media' );
+		$general_group[19] = esc_html__( 'Direct Upload', 'buddypress-media' );
+		$general_group[14] = esc_html__( 'Gallery Media Search', 'buddypress-media' );
+		$general_group     = apply_filters( 'rtmedia_display_content_groups', $general_group );
 		ksort( $general_group );
 		self::render_tab_content( $render_options, $general_group, 20 );
 	}
 
 	/**
-	 * render general content.
+	 * Render general content.
 	 *
 	 * @access static
 	 *
-	 * @param  array $options
+	 * @param  array $options Options.
 	 *
 	 * @return array $render
 	 */
-	static function render_general_content( $options ) {
+	public static function render_general_content( $options ) {
 		$render = array(
 			'general_AllowUserData' => array(
 				'title'    => esc_html__( 'Allow usage data tracking', 'buddypress-media' ),
@@ -556,7 +571,7 @@ class RTMediaFormHandler {
 					'desc'  => esc_html__( 'Add rtMedia menu to WordPress admin bar for easy access to settings and moderation page (if enabled).', 'buddypress-media' ),
 				),
 				'group'    => 10,
-			), //
+			),
 			'rtmedia_add_linkback'  => array(
 				'title'    => esc_html__( 'Add a link to rtMedia in footer', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
@@ -566,7 +581,7 @@ class RTMediaFormHandler {
 					'desc'  => esc_html__( 'Help us promote rtMedia.', 'buddypress-media' ),
 				),
 				'group'    => 100,
-			), //
+			),
 			'rtmedia_enable_api'    => array(
 				'title'         => esc_html__( 'Enable JSON API', 'buddypress-media' ),
 				'callback'      => array( 'RTMediaFormHandler', 'checkbox' ),
@@ -577,7 +592,7 @@ class RTMediaFormHandler {
 				),
 				'group'         => 80,
 				'after_content' => esc_html__( 'You can refer to the API document from', 'buddypress-media' ) . ' <a href="https://rtmedia.io/docs/developers/json-api/">' . esc_html__( 'here', 'buddypress-media' ) . '</a>',
-			), //
+			),
 		);
 
 		return $render;
@@ -590,7 +605,7 @@ class RTMediaFormHandler {
 	 *
 	 * @return void
 	 */
-	static function general_content() {
+	public static function general_content() {
 		global $rtmedia;
 		$options            = $rtmedia->options;
 		$render_options     = self::render_general_content( $options );
@@ -606,7 +621,7 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * render export import.
+	 * Render export import.
 	 *
 	 * @access public
 	 *
@@ -614,9 +629,9 @@ class RTMediaFormHandler {
 	 *
 	 * @return array $render
 	 */
-	static function render_export_import() {
+	public static function render_export_import() {
 		$render = array(
-			'rtmedia_export_settings' => array(
+			'rtmedia_export_settings'      => array(
 				'title'    => esc_html__( 'Export rtMedia Settings', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'button' ),
 				'args'     => array(
@@ -628,7 +643,7 @@ class RTMediaFormHandler {
 				),
 				'group'    => 10,
 			),
-			'rtmedia_import_settings' => array(
+			'rtmedia_import_settings'      => array(
 				'title'         => esc_html__( 'Import rtMedia Settings', 'buddypress-media' ),
 				'callback'      => array( 'RTMediaFormHandler', 'fileinput' ),
 				'args'          => array(
@@ -652,17 +667,17 @@ class RTMediaFormHandler {
 				),
 				'group'    => 11,
 			),
-			'rtmedia_erase_personal_data' => array(
-				'title'    => esc_html__( 'Erase your personal data', 'buddypress-media' ),
-				'callback' => array( 'RTMediaFormHandler', 'button' ),
-				'args'     => array(
+			'rtmedia_erase_personal_data'  => array(
+				'title'         => esc_html__( 'Erase your personal data', 'buddypress-media' ),
+				'callback'      => array( 'RTMediaFormHandler', 'button' ),
+				'args'          => array(
 					'id'    => 'rtm-erase-data-button',
 					'key'   => 'rtm-erase-data-button',
 					'value' => esc_html__( 'Erase Data', 'buddypress-media' ),
 					'desc'  => esc_html__( 'This will erase your personal data.', 'buddypress-media' ),
 					'class' => array( 'button', 'button-primary', 'button-small' ),
 				),
-				'group'    => 11,
+				'group'         => 11,
 				'after_content' => esc_html__( 'Data will be expoted or erased along with wordpress user data.', 'buddypress-media' ),
 			),
 		);
@@ -680,7 +695,7 @@ class RTMediaFormHandler {
 	 *
 	 * @return void
 	 */
-	static function rtm_export_import() {
+	public static function rtm_export_import() {
 
 		global $rtmedia;
 		$render_options = self::render_export_import();
@@ -710,12 +725,12 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $allowed_types
-	 * @param  string $key
+	 * @param  array  $allowed_types allowed types.
+	 * @param  string $key Key.
 	 *
-	 * @return array  $data
+	 * @return array|bool $data
 	 */
-	static function get_type_details( $allowed_types, $key ) {
+	public static function get_type_details( $allowed_types, $key ) {
 		foreach ( $allowed_types as $type ) {
 			if ( $type['name'] === $key ) {
 				$data = array(
@@ -737,11 +752,11 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options
+	 * @param  array $options options.
 	 *
 	 * @return array  $render
 	 */
-	static function types_render_options( $options ) {
+	public static function types_render_options( $options ) {
 		$render             = array();
 		$allowed_media_type = rtmedia_get_allowed_types();
 
@@ -765,8 +780,6 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  void
-	 *
 	 * @return void
 	 */
 	public static function types_content() {
@@ -787,7 +800,9 @@ class RTMediaFormHandler {
 				<?php do_action( 'rtmedia_type_settings_before_heading' ); ?>
 
 				<tr>
-					<th><strong><?php esc_html_e( 'Media Type', 'buddypress-media' ) ?></strong></th>
+					<th>
+						<strong><?php esc_html_e( 'Media Type', 'buddypress-media' ); ?></strong>
+					</th>
 
 					<th>
 
@@ -809,7 +824,7 @@ class RTMediaFormHandler {
 						</span>
 					</th>
 
-					<?php do_action( 'rtmedia_type_setting_columns_title' ) ?>
+					<?php do_action( 'rtmedia_type_setting_columns_title' ); ?>
 				</tr>
 
 				<?php
@@ -819,7 +834,7 @@ class RTMediaFormHandler {
 					if ( isset( $section['settings_visibility'] ) && true === $section['settings_visibility'] ) {
 						do_action( 'rtmedia_type_settings_before_body' );
 
-						// allow upload
+						// allow upload.
 						$uplaod_args           = array(
 							'key'   => 'allowedTypes_' . $key . '_enabled',
 							'value' => $section['enabled'],
@@ -827,10 +842,10 @@ class RTMediaFormHandler {
 						$allow_upload_checkbox = self::checkbox( $uplaod_args, $echo = false );
 						$allow_upload_checkbox = apply_filters( 'rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox, $key, $uplaod_args );
 
-						// allow featured
+						// allow featured.
 						$featured_args     = array(
-							'key'	=> 'allowedTypes_' . $key . '_featured',
-							'value'	=> $section['featured'],
+							'key'   => 'allowedTypes_' . $key . '_featured',
+							'value' => $section['featured'],
 						);
 						$featured_checkbox = self::checkbox( $featured_args, $echo = false );
 						$featured_checkbox = apply_filters( 'rtmedia_filter_featured_checkbox', $featured_checkbox, $key );
@@ -839,7 +854,7 @@ class RTMediaFormHandler {
 							$section['extn'] = array();
 						}
 
-						$extensions	= implode( ', ', $section['extn'] );
+						$extensions = implode( ', ', $section['extn'] );
 						?>
 
 						<tr>
@@ -864,25 +879,25 @@ class RTMediaFormHandler {
 
 							<td>
 								<span class="rtm-field-wrap">
-									<?php //escaping done into inner function
-									// @codingStandardsIgnoreLine
+									<?php
+									// escaping done into inner function.
 									echo wp_kses( $allow_upload_checkbox, array(
-										'span' => array(
-											'class'		=> array(),
-											'data-on'	=> array(),
-											'data-off'	=> array(),
+										'span'  => array(
+											'class'    => array(),
+											'data-on'  => array(),
+											'data-off' => array(),
 										),
 										'label' => array(
-											'for'	=> array(),
-											'class'	=> array(),
+											'for'   => array(),
+											'class' => array(),
 										),
 										'input' => array(
-											'type'			=> array(),
-											'checked'		=> array(),
-											'data-toggle'	=> array(),
-											'id'			=> array(),
-											'name'			=> array(),
-											'value'			=> array(),
+											'type'        => array(),
+											'checked'     => array(),
+											'data-toggle' => array(),
+											'id'          => array(),
+											'name'        => array(),
+											'value'       => array(),
 										),
 									) );
 									?>
@@ -890,31 +905,31 @@ class RTMediaFormHandler {
 							</td>
 
 							<td>
-								<?php //escaping done into inner function
-								// @codingStandardsIgnoreLine
+								<?php
+								// escaping done into inner function.
 								echo wp_kses( $featured_checkbox, array(
-									'span' => array(
-										'class'		=> array(),
-										'data-on'	=> array(),
-										'data-off'	=> array(),
+									'span'  => array(
+										'class'    => array(),
+										'data-on'  => array(),
+										'data-off' => array(),
 									),
 									'label' => array(
-										'for'	=> array(),
-										'class'	=> array(),
+										'for'   => array(),
+										'class' => array(),
 									),
 									'input' => array(
-										'type'			=> array(),
-										'checked'		=> array(),
-										'data-toggle'	=> array(),
-										'id'			=> array(),
-										'name'			=> array(),
-										'value'			=> array(),
+										'type'        => array(),
+										'checked'     => array(),
+										'data-toggle' => array(),
+										'id'          => array(),
+										'name'        => array(),
+										'value'       => array(),
 									),
 								) );
 								?>
 							</td>
 
-							<?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ) ?>
+							<?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ); ?>
 						</tr>
 
 						<?php do_action( 'rtmedia_other_type_settings_textarea', $key ); ?>
@@ -943,11 +958,11 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options
+	 * @param  array $options options.
 	 *
 	 * @return array $render
 	 */
-	static function sizes_render_options( $options ) {
+	public static function sizes_render_options( $options ) {
 		$render = array();
 		foreach ( $options as $key => $value ) {
 			$data = explode( '_', $key );
@@ -971,8 +986,6 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  void
-	 *
 	 * @return void
 	 */
 	public static function sizes_content() {
@@ -988,7 +1001,7 @@ class RTMediaFormHandler {
 
 			<table class="form-table">
 				<tr>
-					<th><strong><?php esc_html_e( 'Category', 'buddypress-media' ) ?></strong></th>
+					<th><strong><?php esc_html_e( 'Category', 'buddypress-media' ); ?></strong></th>
 					<th><strong><?php esc_html_e( 'Entity', 'buddypress-media' ); ?></strong></th>
 					<th><strong><?php esc_html_e( 'Width', 'buddypress-media' ); ?></strong></th>
 					<th><strong><?php esc_html_e( 'Height', 'buddypress-media' ); ?></strong></th>
@@ -1000,7 +1013,7 @@ class RTMediaFormHandler {
 					$entities = $section;
 					unset( $entities['title'] );
 					$count    = 0;
-					$row_span = count( $entities ); // @codingStandardsIgnoreLine
+					$row_span = count( $entities );
 					foreach ( $entities as $entity ) {
 						?>
 						<tr>
@@ -1042,15 +1055,15 @@ class RTMediaFormHandler {
 		$options = $rtmedia->options;
 
 		$render_jpeg_image_quality = array(
-			'title'		=> esc_html__( 'JPEG/JPG image quality (1-100)', 'buddypress-media' ),
-			'callback'	=> array( 'RTMediaFormHandler', 'number' ),
-			'args'		=> array(
-				'key'	=> 'general_jpeg_image_quality',
-				'value'	=> $options['general_jpeg_image_quality'],
-				'class'	=> array( 'rtmedia-setting-text-box' ),
-				'desc'	=> esc_html__( 'Enter JPEG/JPG Image Quality. Minimum value is 1. 100 is original quality.', 'buddypress-media' ),
-				'min'	=> 1,
-				'max'	=> 100,
+			'title'    => esc_html__( 'JPEG/JPG image quality (1-100)', 'buddypress-media' ),
+			'callback' => array( 'RTMediaFormHandler', 'number' ),
+			'args'     => array(
+				'key'   => 'general_jpeg_image_quality',
+				'value' => $options['general_jpeg_image_quality'],
+				'class' => array( 'rtmedia-setting-text-box' ),
+				'desc'  => esc_html__( 'Enter JPEG/JPG Image Quality. Minimum value is 1. 100 is original quality.', 'buddypress-media' ),
+				'min'   => 1,
+				'max'   => 100,
 			),
 		);
 		?>
@@ -1067,8 +1080,6 @@ class RTMediaFormHandler {
 	 * Define custom css content.
 	 *
 	 * @access static
-	 *
-	 * @param  void
 	 *
 	 * @return void
 	 */
@@ -1088,31 +1099,31 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options
+	 * @param  array $options options.
 	 *
 	 * @return array $render
 	 */
-	static function custom_css_render_options( $options ) {
+	public static function custom_css_render_options( $options ) {
 		$render = array(
 			'disable_styles' => array(
-				'title'		=> esc_html__( 'rtMedia default styles', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'id'	=> 'rtmedia-disable-styles',
-					'key'	=> 'styles_enabled',
-					'value'	=> $options['styles_enabled'],
-					'desc'	=> esc_html__( 'Load default rtMedia styles. You need to write your own style for rtMedia if you disable it.', 'buddypress-media' ),
+				'title'    => esc_html__( 'rtMedia default styles', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'id'    => 'rtmedia-disable-styles',
+					'key'   => 'styles_enabled',
+					'value' => $options['styles_enabled'],
+					'desc'  => esc_html__( 'Load default rtMedia styles. You need to write your own style for rtMedia if you disable it.', 'buddypress-media' ),
 				),
 				'group'    => 10,
 			),
 			'custom_styles'  => array(
-				'title'		=> esc_html__( 'Paste your CSS code', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'textarea' ),
-				'args'		=> array(
-					'id'	=> 'rtmedia-custom-css',
-					'key'	=> 'styles_custom',
-					'value'	=> wp_filter_nohtml_kses( $options['styles_custom'] ),
-					'desc'	=> esc_html__( 'Custom rtMedia CSS container', 'buddypress-media' ),
+				'title'    => esc_html__( 'Paste your CSS code', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'textarea' ),
+				'args'     => array(
+					'id'    => 'rtmedia-custom-css',
+					'key'   => 'styles_custom',
+					'value' => wp_filter_nohtml_kses( $options['styles_custom'] ),
+					'desc'  => esc_html__( 'Custom rtMedia CSS container', 'buddypress-media' ),
 				),
 				'group'    => 10,
 			),
@@ -1126,48 +1137,48 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options
+	 * @param  array $options Options array.
 	 *
 	 * @return array $render
 	 */
-	static function privacy_render_options( $options ) {
+	public static function privacy_render_options( $options ) {
 		global $rtmedia;
 
 		$render = array(
 			'enable'        => array(
-				'title'		=> esc_html__( 'Enable privacy', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'id'	=> 'rtmedia-privacy-enable',
-					'key'	=> 'privacy_enabled',
-					'value'	=> $options['privacy_enabled'],
-					'desc'	=> esc_html__( 'Enable privacy in rtMedia', 'buddypress-media' ),
+				'title'    => esc_html__( 'Enable privacy', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'id'    => 'rtmedia-privacy-enable',
+					'key'   => 'privacy_enabled',
+					'value' => $options['privacy_enabled'],
+					'desc'  => esc_html__( 'Enable privacy in rtMedia', 'buddypress-media' ),
 				),
 				'group'    => 10,
 			),
 			'default'       => array(
-				'title'		=> esc_html__( 'Default privacy', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'radio' ),
-				'args'		=> array(
-					'key'		=> 'privacy_default',
-					'radios'	=> $rtmedia->privacy_settings['levels'],
-					'default'	=> $options['privacy_default'],
-					'desc'		=> esc_html__( 'Set default privacy for media', 'buddypress-media' ),
+				'title'    => esc_html__( 'Default privacy', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'radio' ),
+				'args'     => array(
+					'key'     => 'privacy_default',
+					'radios'  => $rtmedia->privacy_settings['levels'],
+					'default' => $options['privacy_default'],
+					'desc'    => esc_html__( 'Set default privacy for media', 'buddypress-media' ),
 				),
 				'group'    => 10,
 				'depends'  => 'privacy_enabled',
 			),
 			'user_override' => array(
-				'title'		=> esc_html__( 'Allow users to set privacy for their content', 'buddypress-media' ),
-				'callback'	=> array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'		=> array(
-					'key'	=> 'privacy_userOverride',
-					'value'	=> $options['privacy_userOverride'],
-					'desc'	=> esc_html__( 'If you choose this, users will be able to change privacy of their own uploads.', 'buddypress-media' ),
+				'title'         => esc_html__( 'Allow users to set privacy for their content', 'buddypress-media' ),
+				'callback'      => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'          => array(
+					'key'   => 'privacy_userOverride',
+					'value' => $options['privacy_userOverride'],
+					'desc'  => esc_html__( 'If you choose this, users will be able to change privacy of their own uploads.', 'buddypress-media' ),
 				),
-				'group'			=> 10,
-				'depends'		=> 'privacy_enabled',
-				'after_content'	=> esc_html__( 'For group uploads, BuddyPress groups privacy is used.', 'buddypress-media' ),
+				'group'         => 10,
+				'depends'       => 'privacy_enabled',
+				'after_content' => esc_html__( 'For group uploads, BuddyPress groups privacy is used.', 'buddypress-media' ),
 			),
 		);
 
@@ -1179,20 +1190,18 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  void
-	 *
 	 * @return void
 	 */
 	public static function privacy_content() {
 		global $rtmedia;
 
-		$general_group		= array();
-		$general_group[10]	= 'Privacy Settings';
-		$general_group		= apply_filters( 'rtmedia_privacy_settings_groups', $general_group );
+		$general_group     = array();
+		$general_group[10] = 'Privacy Settings';
+		$general_group     = apply_filters( 'rtmedia_privacy_settings_groups', $general_group );
 
-		$options			= self::extract_settings( 'privacy', $rtmedia->options );
-		$render_options		= self::privacy_render_options( $options );
-		$render_options		= apply_filters( 'rtmedia_privacy_settings_options', $render_options );
+		$options        = self::extract_settings( 'privacy', $rtmedia->options );
+		$render_options = self::privacy_render_options( $options );
+		$render_options = apply_filters( 'rtmedia_privacy_settings_options', $render_options );
 
 		self::render_tab_content( $render_options, $general_group, 10 );
 	}
@@ -1202,11 +1211,11 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options
+	 * @param  array $options Options.
 	 *
 	 * @return array $render
 	 */
-	static function buddypress_render_options( $options ) {
+	public static function buddypress_render_options( $options ) {
 		$render = array(
 			'rtmedia-enable-on-profile'                => array(
 				'title'    => esc_html__( 'Enable media in profile', 'buddypress-media' ),
@@ -1342,8 +1351,6 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  void
-	 *
 	 * @return void
 	 */
 	public static function buddypress_content() {
@@ -1410,12 +1417,12 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  string  $page
-	 * @param  array $sub_tabs
+	 * @param  string $page Page.
+	 * @param  array  $sub_tabs Subtabs.
 	 *
 	 * @return void
 	 */
-	public static function rtForm_settings_tabs_content( $page, $sub_tabs ) {
+	public static function rtForm_settings_tabs_content( $page, $sub_tabs ) { // @codingStandardsIgnoreLine
 		$args = array(
 			'wrapper_class' => array(
 				'rtm-settings-tab-container',
@@ -1429,12 +1436,12 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  string $page
-	 * @param  string $section
+	 * @param  string $page Page.
+	 * @param  string $section Section.
 	 *
 	 * @return void
 	 */
-	public static function rtForm_do_settings_fields( $page, $section ) {
+	public static function rtForm_do_settings_fields( $page, $section ) { // @codingStandardsIgnoreLine
 		global $wp_settings_fields;
 
 		if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
@@ -1459,14 +1466,13 @@ class RTMediaFormHandler {
 		}
 	}
 
-	/*
-	 * render each tab content
+	/**
+	 * Render each tab content
 	 *
-	 * @param array $option
-	 * @param array $groups
-	 * @param int $default_group
+	 * @param array $option Options.
+	 * @param array $groups Groups.
+	 * @param int   $default_group Default group.
 	 */
-
 	public static function render_tab_content( $options, $groups = array(), $default_group = 0 ) {
 		if ( ! empty( $groups ) ) {
 			foreach ( $groups as $key => $value ) {
@@ -1501,36 +1507,37 @@ class RTMediaFormHandler {
 		}
 	}
 
-	/*
-	 * render option group title inside single tab
+	/**
+	 * Render option group title inside single tab
 	 *
-	 * @param string $group
+	 * @param string $group Group.
 	 */
-
 	public static function render_option_group( $group ) {
 		?>
 		<h3 class="rtm-option-title"><?php echo esc_html( $group ); ?></h3>
 		<?php
 	}
 
-	/*
-	 * render options
-	 * @param array $option
+	/**
+	 * Render options
+	 *
+	 * @param array $option options.
 	 */
-
 	public static function render_option_content( $option ) {
 		?>
 
-		<table class="form-table" <?php if ( isset( $option['depends'] ) && '' !== $option['depends'] ) { echo 'data-depends="' . esc_attr( $option['depends'] ) . '"'; } ?> >
+		<table class="form-table" <?php echo ( isset( $option['depends'] ) && '' !== $option['depends'] ) ? 'data-depends="' . esc_attr( $option['depends'] ) . '"' : ''; ?> >
 			<tr>
 				<th>
-					<?php echo wp_kses( $option['title'], array(
+					<?php
+					echo wp_kses( $option['title'], array(
 						'a' => array(
-							'id'		=> array(),
-							'href'		=> array(),
-							'target'	=> array(),
+							'id'     => array(),
+							'href'   => array(),
+							'target' => array(),
 						),
-					) ); ?>
+					) );
+					?>
 				</th>
 				<td>
 					<fieldset>
@@ -1539,13 +1546,15 @@ class RTMediaFormHandler {
 						<span class="rtm-tooltip">
 							<i class="dashicons dashicons-info rtmicon"></i>
 							<span class="rtm-tip">
-								<?php echo wp_kses( ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA', array(
+								<?php
+								echo wp_kses( ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA', array(
 									'a' => array(
-										'id'		=> array(),
-										'href'		=> array(),
-										'target'	=> array(),
+										'id'     => array(),
+										'href'   => array(),
+										'target' => array(),
 									),
-								) ); ?>
+								) );
+								?>
 							</span>
 						</span>
 					</fieldset>
@@ -1560,9 +1569,9 @@ class RTMediaFormHandler {
 				<?php
 				echo wp_kses( wpautop( $option['after_content'] ), array(
 					'a' => array(
-						'id'		=> array(),
-						'href'		=> array(),
-						'target'	=> array(),
+						'id'     => array(),
+						'href'   => array(),
+						'target' => array(),
 					),
 					'p' => array(),
 				) );
