@@ -1706,17 +1706,21 @@ function rtmedia_get_pagination_values() {
 }
 
 /**
- * Checking if comments are enabled
+ * Returns current value of rtMedia `Allow user to comment on uploaded media` setting.
  *
- * @global      RTMedia         $rtmedia
+ * @global object $rtmedia rtMedia global variable.
  *
- * @return      bool
+ * @return bool
  */
 function rtmedia_comments_enabled() {
 
 	global $rtmedia;
 
-	return $rtmedia->options['general_enableComments'];
+	if ( isset( $rtmedia->options['general_enableComments'] ) ) {
+		return $rtmedia->options['general_enableComments'];
+	}
+
+	return false;
 
 }
 
