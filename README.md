@@ -46,7 +46,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
  8. **[Featured Media](https://rtmedia.io/docs/developers/featured-media/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
  9. **[rtMedia Uploader](https://rtmedia.io/docs/features/upload/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Uploader")** - Use `[rtmedia_uploader]` shortcode or `<?php rtmedia_uploader() ?>` template tag, to show drag-n-drop uploader in any WordPress area (post, page, custom-post, etc).
  10. **[rtMedia Gallery](https://rtmedia.io/docs/features/gallery/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Gallery")** - Display media gallery anywhere on your site using `[rtmedia_gallery]` shortcode or `<?php rtmedia_gallery ?>` template tag.
- 11. **[Upload Terms](https://rtmedia.io/docs/features/upload-terms/)** - Force user to check upload terms and condition checkbox before uploading any media or content.
+ 11. **[Upload Terms](https://rtmedia.io/docs/features/upload-terms/)** - This feature is useful to set terms of services page on website during user upload media on website.
 
 #### Audio/Video Conversion ####
 
@@ -148,6 +148,13 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 ## Changelog ##
+
+### 4.5.1 [June 20, 2018] ###
+
+* FIXED
+
+	 * Empty textbox validation under the terms settings
+	 * Minor bugs
 
 ### 4.5.0 [June 19, 2018] ###
 
