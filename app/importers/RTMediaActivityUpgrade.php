@@ -1,14 +1,22 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: ritz <ritesh.patel@rtcamp.com>
  * Date: 11/9/14
  * Time: 1:56 PM
+ *
+ * @package rtMedia
+ */
+
+/**
+ * Class RTMediaActivityUpgrade
  */
 class RTMediaActivityUpgrade {
 
-	function __construct() {
+	/**
+	 * RTMediaActivityUpgrade constructor.
+	 */
+	public function __construct() {
 		add_filter( 'rtmedia_filter_admin_pages_array', array( $this, 'rtmedia_add_admin_page_array' ), 11, 1 );
 		add_action( 'admin_init', array( $this, 'add_admin_notice' ) );
 		add_action( 'admin_menu', array( $this, 'menu' ), 10 );
@@ -16,25 +24,41 @@ class RTMediaActivityUpgrade {
 		add_action( 'wp_ajax_rtmedia_activity_done_upgrade', array( $this, 'rtmedia_activity_done_upgrade' ) );
 	}
 
-	function menu() {
+	/**
+	 * Menu.
+	 */
+	public function menu() {
 		add_submenu_page( 'rtmedia-setting', esc_html__( 'Media activity upgrade', 'buddypress-media' ), esc_html__( 'Media activity upgrade', 'buddypress-media' ), 'manage_options', 'rtmedia-activity-upgrade', array(
 			$this,
 			'init',
 		) );
 	}
 
-	function rtmedia_add_admin_page_array( $admin_pages ) {
+	/**
+	 * Add admin page array.
+	 *
+	 * @param array $admin_pages Admin pages array.
+	 *
+	 * @return array
+	 */
+	public function rtmedia_add_admin_page_array( $admin_pages ) {
 		$admin_pages[] = 'rtmedia_page_rtmedia-activity-upgrade';
 
 		return $admin_pages;
 	}
 
-	function rtmedia_activity_done_upgrade() {
+	/**
+	 * Activity upgrade.
+	 */
+	public function rtmedia_activity_done_upgrade() {
 		rtmedia_update_site_option( 'rtmedia_activity_done_upgrade', true );
 		die();
 	}
 
-	function add_admin_notice() {
+	/**
+	 * Add admin notice.
+	 */
+	public function add_admin_notice() {
 		$pending      = $this->get_pending_count();
 		$upgrade_done = rtmedia_get_site_option( 'rtmedia_activity_done_upgrade' );
 		if ( $upgrade_done ) {
@@ -58,7 +82,13 @@ class RTMediaActivityUpgrade {
 		}
 	}
 
-	function rtmedia_activity_upgrade( $lastid = 0, $limit = 1 ) {
+	/**
+	 * Activity upgrade.
+	 *
+	 * @param int $lastid Last id.
+	 * @param int $limit Limit.
+	 */
+	public function rtmedia_activity_upgrade( $lastid = 0, $limit = 1 ) {
 		global $wpdb;
 		if ( check_ajax_referer( 'rtmedia_media_activity_upgrade_nonce', 'nonce' ) ) {
 			$rtmedia_model          = new RTMediaModel();
@@ -85,7 +115,13 @@ class RTMediaActivityUpgrade {
 
 	}
 
-	function return_upgrade( $activity_data, $upgrade = true ) {
+	/**
+	 * Return upgrade.
+	 *
+	 * @param object $activity_data Activity data object.
+	 * @param bool   $upgrade Upgrade.
+	 */
+	public function return_upgrade( $activity_data, $upgrade = true ) {
 		$total   = $this->get_total_count();
 		$pending = $this->get_pending_count( $activity_data->activity_id );
 		$done    = $total - $pending;
@@ -109,13 +145,16 @@ class RTMediaActivityUpgrade {
 		die();
 	}
 
-	function add_rtmedia_media_activity_upgrade_notice() {
+	/**
+	 * Media activity upgrade notice.
+	 */
+	public function add_rtmedia_media_activity_upgrade_notice() {
 		if ( current_user_can( 'manage_options' ) ) {
 			?>
 			<div class='error rtmedia-activity-upgrade-notice'>
 				<p><strong><?php esc_html_e( 'rtMedia', 'buddypress-media' ); ?></strong>
 					<?php esc_html_e( ': Database table structure for rtMedia has been updated. Please ', 'buddypress-media' ); ?>
-					<a href='<?php echo esc_url( admin_url( 'admin.php?page=rtmedia-activity-upgrade' ) ); ?>'><?php esc_html_e( 'Click Here', 'buddypress-media' ) ?></a>
+					<a href='<?php echo esc_url( admin_url( 'admin.php?page=rtmedia-activity-upgrade' ) ); ?>'><?php esc_html_e( 'Click Here', 'buddypress-media' ); ?></a>
 					<?php esc_html_e( ' to upgrade rtMedia activities.', 'buddypress-media' ); ?>
 				</p>
 			</div>
@@ -123,7 +162,14 @@ class RTMediaActivityUpgrade {
 		}
 	}
 
-	function get_pending_count( $activity_id = false ) {
+	/**
+	 * Get pending count.
+	 *
+	 * @param bool|int $activity_id Activity id.
+	 *
+	 * @return int
+	 */
+	public function get_pending_count( $activity_id = false ) {
 		global $wpdb;
 		$rtmedia_activity_model = new RTMediaActivityModel();
 		$rtmedia_model          = new RTMediaModel();
@@ -140,7 +186,12 @@ class RTMediaActivityUpgrade {
 		return 0;
 	}
 
-	function get_total_count() {
+	/**
+	 * Get total count.
+	 *
+	 * @return int
+	 */
+	public function get_total_count() {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
 		$query_total   = $wpdb->prepare( " SELECT count( DISTINCT activity_id) as total FROM {$rtmedia_model->table_name} WHERE activity_id > %d ", 0 ); // @codingStandardsIgnoreLine
@@ -152,7 +203,12 @@ class RTMediaActivityUpgrade {
 		return 0;
 	}
 
-	function get_last_imported() {
+	/**
+	 * Get last imported.
+	 *
+	 * @return int
+	 */
+	public function get_last_imported() {
 		global $wpdb;
 		$rtmedia_activity_model = new RTMediaActivityModel();
 		$last_query             = $wpdb->prepare( " SELECT activity_id from {$rtmedia_activity_model->table_name} ORDER BY activity_id DESC limit %d ", 1 ); // @codingStandardsIgnoreLine
@@ -164,7 +220,10 @@ class RTMediaActivityUpgrade {
 		return 0;
 	}
 
-	function init() {
+	/**
+	 * Init.
+	 */
+	public function init() {
 		$prog       = new rtProgress();
 		$pending    = $this->get_pending_count();
 		$total      = $this->get_total_count();
@@ -176,6 +235,7 @@ class RTMediaActivityUpgrade {
 			<h2><?php esc_html_e( 'rtMedia: Upgrade rtMedia activity', 'buddypress-media' ); ?></h2>
 			<?php
 			wp_nonce_field( 'rtmedia_media_activity_upgrade_nonce', 'rtmedia_media_activity_upgrade_nonce' );
+			// translators: Estimated.
 			echo '<span class="pending">' . sprintf( esc_html__( '%s (estimated)', 'buddypress-media' ), esc_html( rtmedia_migrate_formatseconds( $total - $done ) ) ) . '</span><br />';
 			echo '<span class="finished">' . esc_html( $done ) . '</span>/<span class="total">' . esc_html( $total ) . '</span>';
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';

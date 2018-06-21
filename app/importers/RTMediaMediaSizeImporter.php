@@ -1,9 +1,10 @@
 <?php
-
-/*
+/**
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ *
+ * @package rtMedia
  */
 
 /**
@@ -13,31 +14,51 @@
  */
 class RTMediaMediaSizeImporter {
 
-	function __construct() {
+	/**
+	 * RTMediaMediaSizeImporter constructor.
+	 */
+	public function __construct() {
 		add_filter( 'rtmedia_filter_admin_pages_array', array( $this, 'rtmedia_add_admin_page_array' ), 11, 1 );
 		add_action( 'wp_ajax_rtmedia_media_size_import', array( $this, 'rtmedia_media_size_import' ) );
 		add_action( 'admin_init', array( $this, 'add_admin_notice' ) );
 		add_action( 'admin_menu', array( $this, 'menu' ), 10 );
-		add_action( 'wp_ajax_rtmedia_hide_media_size_import_notice', array(
-			$this,
-			'rtmedia_hide_media_size_import_notice',
-		) );
+		add_action(
+			'wp_ajax_rtmedia_hide_media_size_import_notice', array(
+				$this,
+				'rtmedia_hide_media_size_import_notice',
+			)
+		);
 	}
 
-	function menu() {
-		add_submenu_page( 'rtmedia-setting', esc_html__( 'Media Size Import', 'buddypress-media' ), esc_html__( 'Media Size Import', 'buddypress-media' ), 'manage_options', 'rtmedia-migration-media-size-import', array(
-			$this,
-			'init',
-		) );
+	/**
+	 * Menu.
+	 */
+	public function menu() {
+		add_submenu_page(
+			'rtmedia-setting', esc_html__( 'Media Size Import', 'buddypress-media' ), esc_html__( 'Media Size Import', 'buddypress-media' ), 'manage_options', 'rtmedia-migration-media-size-import', array(
+				$this,
+				'init',
+			)
+		);
 	}
 
-	function rtmedia_add_admin_page_array( $admin_pages ) {
+	/**
+	 * Add admin page array.
+	 *
+	 * @param array $admin_pages admin pages.
+	 *
+	 * @return array
+	 */
+	public function rtmedia_add_admin_page_array( $admin_pages ) {
 		$admin_pages[] = 'rtmedia_page_rtmedia-media-size-import';
 
 		return $admin_pages;
 	}
 
-	function rtmedia_hide_media_size_import_notice() {
+	/**
+	 * Hide media size import notice.
+	 */
+	public function rtmedia_hide_media_size_import_notice() {
 		if ( rtmedia_update_site_option( 'rtmedia_hide_media_size_import_notice', true ) ) {
 			echo '1';
 		} else {
@@ -46,7 +67,10 @@ class RTMediaMediaSizeImporter {
 		wp_die();
 	}
 
-	function add_admin_notice() {
+	/**
+	 * Add admin notice.
+	 */
+	public function add_admin_notice() {
 		$pending = $this->get_pending_count();
 		if ( $pending < 0 ) {
 			$pending = 0;
@@ -68,7 +92,10 @@ class RTMediaMediaSizeImporter {
 		}
 	}
 
-	function add_rtmedia_media_size_import_notice() {
+	/**
+	 * Media size import notice.
+	 */
+	public function add_rtmedia_media_size_import_notice() {
 		if ( current_user_can( 'manage_options' ) ) {
 			$this->create_notice( '<p><strong>rtMedia</strong>' . esc_html__( ': Database table structure for rtMedia has been updated. Please ', 'buddypress-media' ) . "<a href='" . esc_url( admin_url( 'admin.php?page=rtmedia-migration-media-size-import&force=true' ) ) . "'>" . esc_html__( 'Click Here', 'buddypress-media' ) . '</a>' . esc_html__( ' to import media sizes. ', 'buddypress-media' ) . "<a href='#' onclick='rtmedia_hide_media_size_import_notice()' style='float:right'>" . esc_html__( 'Hide', 'buddypress-media' ) . '</a>  </p>' );
 			?>
@@ -86,26 +113,42 @@ class RTMediaMediaSizeImporter {
 		}
 	}
 
-	function create_notice( $message, $type = 'error' ) {
+	/**
+	 * Create notice.
+	 *
+	 * @param string $message Message.
+	 * @param string $type Type.
+	 */
+	public function create_notice( $message, $type = 'error' ) {
 		echo '<div class="' . esc_attr( $type ) . ' rtmedia-media-size-import-error">'
-		     . wp_kses( $message, array(
-				'p' => array(),
-				'a' => array( 'href' => array(), 'onclick' => array(), 'style' => array() ),
-				'strong' => array()
-			   ) )
+			. wp_kses(
+				$message, array(
+					'p'      => array(),
+					'a'      => array(
+						'href'    => array(),
+						'onclick' => array(),
+						'style'   => array(),
+					),
+					'strong' => array(),
+				)
+			)
 		     . '</div>'; // @codingStandardsIgnoreLine
 	}
 
-	function init() {
+	/**
+	 * Init.
+	 */
+	public function init() {
 		$prog    = new rtProgress();
 		$pending = $this->get_pending_count();
 		$total   = $this->get_total_count();
 		$done    = $total - $pending;
 		?>
 		<div class="wrap">
-			<h2><?php esc_html_e( 'rtMedia: Import Media Size', 'buddypress-media' ) ?></h2>
+			<h2><?php esc_html_e( 'rtMedia: Import Media Size', 'buddypress-media' ); ?></h2>
 			<?php
 			wp_nonce_field( 'rtmedia_media_size_import_nonce', 'rtmedia_media_size_import_nonce' );
+			// translators: Estimated.
 			echo '<span class="pending">' . sprintf( esc_html__( '%s (estimated)', 'buddypress-media' ), esc_html( rtmedia_migrate_formatseconds( $total - $done ) ) ) . '</span><br />';
 			echo '<span class="finished">' . esc_html( $done ) . '</span>/<span class="total">' . esc_html( $total ) . '</span>';
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
@@ -198,7 +241,14 @@ class RTMediaMediaSizeImporter {
 		<?php
 	}
 
-	function get_pending_count( $media_id = false ) {
+	/**
+	 * Get pending count.
+	 *
+	 * @param bool $media_id Media id.
+	 *
+	 * @return int
+	 */
+	public function get_pending_count( $media_id = false ) {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
 		$query_pending = "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other')";
@@ -214,7 +264,12 @@ class RTMediaMediaSizeImporter {
 		return 0;
 	}
 
-	function get_total_count() {
+	/**
+	 * Get total count.
+	 *
+	 * @return int
+	 */
+	public function get_total_count() {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
 		$query_total   = "SELECT COUNT(*) as total from {$rtmedia_model->table_name} where media_type in ('photo','video','document','music','other') "; // @codingStandardsIgnoreLine
@@ -226,12 +281,18 @@ class RTMediaMediaSizeImporter {
 		return 0;
 	}
 
-	function rtmedia_media_size_import( $lastid = 0, $limit = 1 ) {
+	/**
+	 * Size import.
+	 *
+	 * @param int $lastid Last id.
+	 * @param int $limit Limit.
+	 */
+	public function rtmedia_media_size_import( $lastid = 0, $limit = 1 ) {
 		global $wpdb;
 		if ( check_ajax_referer( 'rtmedia_media_size_import_nonce', 'nonce' ) ) {
 			$rtmedia_model = new RTMediaModel();
 			$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $limit ); // @codingStandardsIgnoreLine
-			$lastid = filter_input( INPUT_POST, 'last_id', FILTER_SANITIZE_NUMBER_INT );
+			$lastid        = filter_input( INPUT_POST, 'last_id', FILTER_SANITIZE_NUMBER_INT );
 			if ( ! empty( $lastid ) ) {
 				$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where id > %d AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $lastid, $limit ); // @codingStandardsIgnoreLine
 			}
@@ -247,7 +308,14 @@ class RTMediaMediaSizeImporter {
 
 	}
 
-	function migrate_single_media( $result ) {
+	/**
+	 * Migrate single media.
+	 *
+	 * @param string $result Result.
+	 *
+	 * @return bool
+	 */
+	public function migrate_single_media( $result ) {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
 		$attached_file = get_attached_file( $result->media_id );
@@ -255,40 +323,55 @@ class RTMediaMediaSizeImporter {
 		if ( file_exists( $attached_file ) ) {
 			$file_size = filesize( $attached_file );
 		} else {
-			error_log( 'rtMedia size importer: file not exist. Media ID: ' . esc_html( $result->id ) . ', File: ' . esc_html( $attached_file ) );
+			error_log( 'rtMedia size importer: file not exist. Media ID: ' . esc_html( $result->id ) . ', File: ' . esc_html( $attached_file ) ); // @codingStandardsIgnoreLine
 			return false;
 		}
 		$post      = get_post( $result->media_id );
 		$post_date = $post->post_date;
-		$rtmedia_model->update( array(
-			'upload_date' => $post_date,
-			'file_size'   => $file_size,
-		), array( 'id' => $result->id ) );
+		$rtmedia_model->update(
+			array(
+				'upload_date' => $post_date,
+				'file_size'   => $file_size,
+			), array( 'id' => $result->id )
+		);
 
 		return $return;
 	}
 
-	function return_migration( $media = false, $migrate = true ) {
+	/**
+	 * Return migration.
+	 *
+	 * @param bool $media Media.
+	 * @param bool $migrate Migrate.
+	 */
+	public function return_migration( $media = false, $migrate = true ) {
+
 		$total   = $this->get_total_count();
 		$pending = $this->get_pending_count( $media->id );
 		$done    = $total - $pending;
+
 		if ( $pending < 0 ) {
 			$pending = 0;
 			$done    = $total;
 		}
+
 		if ( $done > $total ) {
 			$done = $total;
 		}
+
 		rtmedia_update_site_option( 'rtmedia_media_size_import_pending_count', $pending );
 		$pending_time = rtmedia_migrate_formatseconds( $pending ) . ' (estimated)';
-		echo wp_json_encode( array(
-			'status'   => true,
-			'done'     => $done,
-			'total'    => $total,
-			'pending'  => $pending_time,
-			'media_id' => $media->id,
-			'imported' => $migrate,
-		) );
+
+		echo wp_json_encode(
+			array(
+				'status'   => true,
+				'done'     => $done,
+				'total'    => $total,
+				'pending'  => $pending_time,
+				'media_id' => $media->id,
+				'imported' => $migrate,
+			)
+		);
 		die();
 	}
 }

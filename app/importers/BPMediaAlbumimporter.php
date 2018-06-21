@@ -1,8 +1,9 @@
 <?php
-
-/*
+/**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
+ *
+ * @package rtMedia
  */
 
 /**
@@ -12,7 +13,10 @@
  */
 class BPMediaAlbumimporter extends BPMediaImporter {
 
-	function __construct() {
+	/**
+	 * BPMediaAlbumimporter constructor.
+	 */
+	public function __construct() {
 		global $wpdb;
 		parent::__construct();
 		$table = "{$wpdb->base_prefix}bp_album";
@@ -21,40 +25,55 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		}
 	}
 
-	function update_table() {
+	/**
+	 * Update table.
+	 */
+	public function update_table() {
 		if ( $this->column_exists( 'import_status' ) ) {
 			return;
 		}
 		global $wpdb;
 
-		return $wpdb->query( "ALTER TABLE {$wpdb->base_prefix}bp_album
+		return $wpdb->query(
+			"ALTER TABLE {$wpdb->base_prefix}bp_album
                             ADD COLUMN import_status BIGINT (20) NOT NULL DEFAULT 0,
                             ADD COLUMN old_activity_id BIGINT (20) NOT NULL DEFAULT 0,
                             ADD COLUMN new_activity_id BIGINT (20) NOT NULL DEFAULT 0,
-                            ADD COLUMN favorites TINYINT (1) NOT NULL DEFAULT 0" );
+                            ADD COLUMN favorites TINYINT (1) NOT NULL DEFAULT 0"
+		);
 	}
 
-	function column_exists( $column ) {
+	/**
+	 * Column exists.
+	 *
+	 * @param string $column Column.
+	 *
+	 * @return mixed
+	 */
+	public function column_exists( $column ) {
 		global $wpdb;
 
 		return $wpdb->query( $wpdb->prepare( "SHOW COLUMNS FROM {$wpdb->base_prefix}bp_album LIKE %s limit 1", $column ) );
 	}
 
-	function ui() {
+	/**
+	 * UI.
+	 */
+	public function ui() {
 		global $wpdb;
 		$bp_album_active = BPMediaImporter::_active( 'bp-album/loader.php' );
 		$table           = "{$wpdb->base_prefix}bp_album";
 		if ( BPMediaImporter::table_exists( $table ) ) {
 
-			$this->progress = new rtProgress();
-			$total          = BPMediaAlbumimporter::get_total_count();
-			$remaining_comments = $this->get_remaining_comments();
-			$finished = BPMediaAlbumimporter::get_completed_media( $total );
-			$finished_users = BPMediaAlbumimporter::get_completed_users();
-			$finished_comments = $this->get_finished_comments();
-			$total_comments = (int) $finished_comments + (int) $remaining_comments;
+			$this->progress            = new rtProgress();
+			$total                     = BPMediaAlbumimporter::get_total_count();
+			$remaining_comments        = $this->get_remaining_comments();
+			$finished                  = BPMediaAlbumimporter::get_completed_media( $total );
+			$finished_users            = BPMediaAlbumimporter::get_completed_users();
+			$finished_comments         = $this->get_finished_comments();
+			$total_comments            = (int) $finished_comments + (int) $remaining_comments;
 			$completed_users_favorites = (int) get_site_option( 'bp_media_bp_album_favorite_import_status', 0 );
-			$users = count_users();
+			$users                     = count_users();
 
 			echo '<div id="bpmedia-bpalbumimporter">';
 			wp_nonce_field( 'bpmedia-bpalbumimporter', 'bpaimporter_wpnonce' );
@@ -136,6 +155,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 				if ( $corrupt_media ) {
 					echo '<div class="error below-h2">';
 					echo '<p><strong>' . esc_html__( 'Some of the media failed to import. The file might be corrupt or deleted.', 'buddypress-media' ) . '</strong></p>';
+					// translators: Media.
 					echo '<p>' . sprintf( esc_html__( 'The following %d BP Album Media id\'s could not be imported', 'buddypress-media' ), count( $corrupt_media ) ) . ': </p>';
 					$corrupt_prefix_path = str_replace( '/wp-content', '', WP_CONTENT_URL );
 					foreach ( $corrupt_media as $corrupt ) {
@@ -145,6 +165,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 				} else {
 					echo '<div class="bp-album-import-accept i-accept">';
 					echo '<p class="info">';
+					// translators: URL.
 					$message = sprintf( esc_html__( 'I just imported bp-album to @rtMediaWP http://rt.cx/rtmedia on %s', 'buddypress-media' ), home_url() );
 					echo '<strong>' . esc_html__( 'Congratulations!', 'buddypress-media' ) . '</strong> ' . esc_html__( 'All media from BP Album has been imported.', 'buddypress-media' );
 					echo ' <a href="http://twitter.com/home/?status=' . esc_url( $message ) . '" class="button button-import-tweet" target= "_blank">' . esc_html__( 'Tweet this', 'buddypress-media' ) . '</a>';
@@ -181,12 +202,20 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 			echo '</div>';
 		} else {
 			echo '<p>' . esc_html__( 'Looks like you don\'t use BP Album. Is there any other BuddyPress Plugin you want an importer for?', 'buddypress-media' ) . '</p>';
-			echo '<p>' . '<a href="https://github.com/rtCamp/rtMedia/issues/new">' . esc_html__( 'Create an issue', 'buddypress-media' ) . '</a>';
+			echo '<p><a href="https://github.com/rtCamp/rtMedia/issues/new">' . esc_html__( 'Create an issue', 'buddypress-media' ) . '</a>';
 			echo esc_html__( ' on GitHub requesting the same.', 'buddypress-media' ) . '</p>';
 		}
 	}
 
-	function create_album( $author_id, $album_name = 'Imported Media' ) {
+	/**
+	 * Create album.
+	 *
+	 * @param string $author_id Author id.
+	 * @param string $album_name Album name.
+	 *
+	 * @return mixed
+	 */
+	public function create_album( $author_id, $album_name = 'Imported Media' ) {
 		global $bp_media, $wpdb;
 
 		if ( array_key_exists( 'bp_album_import_name', $bp_media->options ) ) {
@@ -208,7 +237,12 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		return $album_id;
 	}
 
-	static function get_total_count() {
+	/**
+	 * Get total count.
+	 *
+	 * @return int
+	 */
+	public static function get_total_count() {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( BPMediaAlbumimporter::table_exists( $table ) ) {
@@ -218,7 +252,12 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		return 0;
 	}
 
-	function get_remaining_comments() {
+	/**
+	 * Get remaining comments.
+	 *
+	 * @return int
+	 */
+	public function get_remaining_comments() {
 		global $wpdb;
 		$bp_album_table = $wpdb->base_prefix . 'bp_album';
 		$activity_table = $wpdb->base_prefix . 'bp_activity';
@@ -244,7 +283,12 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		return 0;
 	}
 
-	function get_finished_comments() {
+	/**
+	 * Get finished comments.
+	 *
+	 * @return int
+	 */
+	public function get_finished_comments() {
 		global $wpdb;
 		$bp_album_table = $wpdb->base_prefix . 'bp_album';
 		$activity_table = $wpdb->base_prefix . 'bp_activity';
@@ -260,7 +304,12 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		return 0;
 	}
 
-	static function get_completed_users() {
+	/**
+	 * Get completed users.
+	 *
+	 * @return int
+	 */
+	public static function get_completed_users() {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( BPMediaAlbumimporter::table_exists( $table ) ) {
@@ -280,7 +329,12 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		return 0;
 	}
 
-	static function get_completed_media() {
+	/**
+	 * Get completed media.
+	 *
+	 * @return int
+	 */
+	public static function get_completed_media() {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( BPMediaAlbumimporter::table_exists( $table ) ) {
@@ -290,7 +344,12 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		return 0;
 	}
 
-	static function get_corrupt_media() {
+	/**
+	 * Get corrupt media.
+	 *
+	 * @return int
+	 */
+	public static function get_corrupt_media() {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( BPMediaAlbumimporter::table_exists( $table ) ) {
@@ -300,7 +359,14 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		return 0;
 	}
 
-	static function batch_import( $count = 5 ) {
+	/**
+	 * Batch import.
+	 *
+	 * @param int $count Count.
+	 *
+	 * @return mixed
+	 */
+	public static function batch_import( $count = 5 ) {
 		global $wpdb;
 		$table         = $wpdb->base_prefix . 'bp_album';
 		$bp_album_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$table} WHERE import_status = 0 ORDER BY owner_id LIMIT %d", $count ) ); // @codingStandardsIgnoreLine
@@ -308,12 +374,15 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		return $bp_album_data;
 	}
 
-	static function bpmedia_ajax_import_callback() {
+	/**
+	 * Ajax import callback function.
+	 */
+	public static function bpmedia_ajax_import_callback() {
 		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
 			wp_send_json( false );
 		}
-		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT );
-		$count = filter_input( INPUT_GET, 'count', FILTER_SANITIZE_NUMBER_INT );
+		$page          = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT );
+		$count         = filter_input( INPUT_GET, 'count', FILTER_SANITIZE_NUMBER_INT );
 		$page          = isset( $page ) ? $page : 1;
 		$count         = isset( $count ) ? $count : 5;
 		$bp_album_data = BPMediaAlbumimporter::batch_import( $count );
@@ -340,10 +409,12 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 				$wpdb->update( $table, array( 'old_activity_id' => $bp_album_media_id ), array( 'id' => $bp_album_item->id ), array( '%d' ), array( '%d' ) );
 				$bp_new_activity_id = $wpdb->get_var( "SELECT id from $activity_table WHERE item_id = $imported_media_id AND component = 'activity' AND type='activity_update' AND secondary_item_id=0" ); // @codingStandardsIgnoreLine
 				$wpdb->update( $table, array( 'new_activity_id' => $bp_new_activity_id ), array( 'id' => $bp_album_item->id ), array( '%d' ), array( '%d' ) );
-				if ( $wpdb->update( $activity_meta_table, array( 'activity_id' => $bp_new_activity_id ), array(
-					'activity_id' => $bp_album_media_id,
-					'meta_key'    => 'favorite_count',
-				), array( '%d' ), array( '%d' ) )
+				if ( $wpdb->update(
+					$activity_meta_table, array( 'activity_id' => $bp_new_activity_id ), array(
+						'activity_id' => $bp_album_media_id,
+						'meta_key'    => 'favorite_count',
+					), array( '%d' ), array( '%d' )
+				)
 				) {
 					$wpdb->update( $table, array( 'favorites' => 1 ), array( 'id' => $bp_album_item->id ), array( '%d' ), array( '%d' ) );
 				}
@@ -352,36 +423,56 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
 		$finished_users = BPMediaAlbumimporter::get_completed_users();
 
-		echo wp_json_encode( array( 'page' => $page, 'users' => $finished_users[0]->users, 'comments' => $comments ) );
+		echo wp_json_encode(
+			array(
+				'page'     => $page,
+				'users'    => $finished_users[0]->users,
+				'comments' => $comments,
+			)
+		);
 		die();
 	}
 
-	static function bpmedia_ajax_import_favorites() {
+	/**
+	 * Ajax import favorites callback.
+	 */
+	public static function bpmedia_ajax_import_favorites() {
 		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
 			wp_send_json( array( 'status' => false ) );
 		}
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		$users = count_users();
-		echo wp_json_encode( array(
+		echo wp_json_encode(
+			array(
 			'favorites' => $wpdb->get_var( "SELECT COUNT(id) from $table WHERE favorites != 0" ), // @codingStandardsIgnoreLine
-			'users'     => $users['total_users'],
-			'offset'    => (int) get_site_option( 'bp_media_bp_album_favorite_import_status', 0 ),
-		) );
+				'users'  => $users['total_users'],
+				'offset' => (int) get_site_option( 'bp_media_bp_album_favorite_import_status', 0 ),
+			)
+		);
 		die();
 	}
 
-	static function bpmedia_ajax_import_step_favorites() {
+	/**
+	 * Ajax import step favorites callback.
+	 */
+	public static function bpmedia_ajax_import_step_favorites() {
 		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
 			wp_send_json( array( 'status' => false ) );
 		}
-		$offset = filter_input( INPUT_GET, 'offset', FILTER_SANITIZE_NUMBER_INT );
+		$offset   = filter_input( INPUT_GET, 'offset', FILTER_SANITIZE_NUMBER_INT );
 		$redirect = filter_input( INPUT_GET, 'redirect', FILTER_SANITIZE_URL );
 		$offset   = isset( $offset ) ? $offset : 0;
 		$redirect = isset( $redirect ) ? $redirect : false;
 		global $wpdb;
 		$table     = $wpdb->base_prefix . 'bp_album';
-		$blogusers = get_users( array( 'meta_key' => 'bp_favorite_activities', 'offset' => $offset, 'number' => 1 ) );
+		$blogusers = get_users(
+			array(
+				'meta_key' => 'bp_favorite_activities',
+				'offset'   => $offset,
+				'number'   => 1,
+			)
+		);
 		if ( $blogusers ) {
 			foreach ( $blogusers as $user ) {
 				$favorite_activities = get_user_meta( $user->ID, 'bp_favorite_activities', true );
@@ -402,7 +493,10 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		die();
 	}
 
-	static function cleanup_after_install() {
+	/**
+	 * Cleanup after install.
+	 */
+	public static function cleanup_after_install() {
 		global $wpdb;
 		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
 			wp_send_json( array( 'status' => false ) );
@@ -413,7 +507,16 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		die();
 	}
 
-	static function update_recorded_time_and_comments( $media, $bp_album_id, $table ) {
+	/**
+	 * Update recorded time and comments.
+	 *
+	 * @param object $media Media.
+	 * @param int    $bp_album_id Album id.
+	 * @param string $table Table.
+	 *
+	 * @return bool|int
+	 */
+	public static function update_recorded_time_and_comments( $media, $bp_album_id, $table ) {
 		global $wpdb;
 		if ( function_exists( 'bp_activity_add' ) ) {
 			if ( ! is_object( $media ) ) {
@@ -424,6 +527,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 				}
 			}
 			$activity_id = get_post_meta( $media->get_id(), 'bp_media_child_activity', true );
+
 			if ( $activity_id ) {
 				$date_uploaded   = $wpdb->get_var( $wpdb->prepare( "SELECT date_uploaded from $table WHERE id = %d", $bp_album_id ) ); // @codingStandardsIgnoreLine
 				$old_activity_id = $wpdb->get_var( $wpdb->prepare( "SELECT id from {$wpdb->base_prefix}bp_activity WHERE component = 'album' AND type = 'bp_album_picture' AND item_id = %d", $bp_album_id ) );
@@ -447,7 +551,10 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		}
 	}
 
-	static function bp_album_deactivate() {
+	/**
+	 * Album deactivate.
+	 */
+	public static function bp_album_deactivate() {
 		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
 			deactivate_plugins( 'bp-album/loader.php' );
 		}
