@@ -1,8 +1,9 @@
 <?php
-
-/*
+/**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
+ *
+ * @package    rtMedia
  */
 
 /**
@@ -16,7 +17,6 @@ class RTMediaInteractionModel extends RTDBModel {
 	 * Constructor
 	 *
 	 * @access public
-	 * @return void
 	 */
 	public function __construct() {
 		parent::__construct( 'rtm_media_interaction', false, 10, true );
@@ -27,9 +27,9 @@ class RTMediaInteractionModel extends RTDBModel {
 	 *
 	 * @access public
 	 *
-	 * @param  int $user_id
-	 * @param  int $media_id
-	 * @param  type $action
+	 * @param  int|string $user_id user id.
+	 * @param  int|string $media_id media id.
+	 * @param  string     $action action.
 	 *
 	 * @return bool
 	 */
@@ -54,17 +54,17 @@ class RTMediaInteractionModel extends RTDBModel {
 	}
 
 	/**
-	 * get a array of media details.
+	 * Get a array of media details.
 	 *
 	 * @access public
 	 *
-	 * @param  int $user_id
-	 * @param  int $media_id
-	 * @param  type $action
+	 * @param  int|string $user_id user id.
+	 * @param  int|string $media_id media id.
+	 * @param  string     $action action.
 	 *
-	 * @return type $results
+	 * @return array|bool $results
 	 */
-	function get_row( $user_id = '', $media_id = '', $action = '' ) {
+	public function get_row( $user_id = '', $media_id = '', $action = '' ) {
 		if ( '' === $user_id && '' === $media_id && '' === $action ) {
 			return false;
 		}

@@ -1,23 +1,53 @@
 <?php
-
-/*
+/**
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ *
+ * @package    rtMedia
  */
 
 /**
+ * Notification class.
  *
  * @author Jignesh Nakrani <jignesh.nakrani@rtcamp.com>
  */
 class RTMediaNotification {
 
+	/**
+	 * Component ID.
+	 *
+	 * @var $component_id
+	 */
 	public $component_id;
+
+	/**
+	 * Component slug.
+	 *
+	 * @var string$component_slug
+	 */
 	public $component_slug;
+
+	/**
+	 * Component callback.
+	 *
+	 * @var string $component_callback
+	 */
 	public $component_callback;
+
+	/**
+	 * Component action.
+	 *
+	 * @var string $component_action
+	 */
 	public $component_action;
 
-	function __construct( $args ) {
+	/**
+	 * RTMediaNotification constructor.
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function __construct( $args ) {
 
 		foreach ( $args as $key => $val ) {
 			$this->{$key} = $val;
@@ -27,10 +57,11 @@ class RTMediaNotification {
 	}
 
 	/**
-	 * register a new component for notifications
-	 * @global type $bp
+	 * Register a new component for notifications
+	 *
+	 * @global object $bp
 	 */
-	function notifier_setup_globals() {
+	public function notifier_setup_globals() {
 		global $bp;
 		$component                                      = $this->component_id;
 		$bp->{$component}                               = new stdClass();
@@ -41,14 +72,15 @@ class RTMediaNotification {
 	}
 
 	/**
+	 * Add notification.
 	 *
-	 * @param int $post_id
-	 * @param int $post_author_id
-	 * @param int $user_id
+	 * @param int $post_id Post Id.
+	 * @param int $post_author_id Post author id.
+	 * @param int $user_id User id.
 	 *
 	 * @return int|bool  notification id on success or false
 	 */
-	function add_notification( $post_id, $post_author_id, $user_id ) {
+	public function add_notification( $post_id, $post_author_id, $user_id ) {
 		global $rtmedia;
 
 		$args_add_noification = array(
@@ -68,23 +100,23 @@ class RTMediaNotification {
 	}
 
 	/**
-	 * mark related notification as read once media is visit by user
+	 * Mark related notification as read once media is visit by user
 	 *
-	 * @param   int $media_id ID of media to mark notification as read
+	 * @param   int $media_id ID of media to mark notification as read.
 	 */
-	function mark_notification_unread( $media_id ) {
+	public function mark_notification_unread( $media_id ) {
 		$post_id = rtmedia_media_id( $media_id );
 		$user_id = get_current_user_id();
-		bp_notifications_mark_notifications_by_type( $user_id, $this->component_id, $this->component_action . $post_id, $is_new = false );
+		bp_notifications_mark_notifications_by_type( $user_id, $this->component_id, $this->component_action . $post_id, false );
 	}
 
 	/**
-	 * deletes existing media notification of a perticular user
+	 * Deletes existing media notification of a perticular user
 	 *
-	 * @param   int $post_author_id Author of post
-	 * @param   int $post_id ID of a post to delete related notification
+	 * @param   int $post_author_id Author of post.
+	 * @param   int $post_id ID of a post to delete related notification.
 	 */
-	function delete_notification_by_item_id( $post_author_id, $post_id ) {
+	public function delete_notification_by_item_id( $post_author_id, $post_id ) {
 		bp_notifications_delete_notifications_by_item_id( $post_author_id, $post_id, $this->component_id, $this->component_action . $post_id );
 	}
 }

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Media like notification.
+ *
+ * @package    rtMedia
+ */
 
 /**
  * Description of RTMediaLikeNotification
@@ -7,10 +12,24 @@
  */
 class RTMediaLikeNotification extends RTMediaNotification {
 
+	/**
+	 * Component id.
+	 *
+	 * @var string
+	 */
 	public $component_id = 'rt_like_notifier';
+
+	/**
+	 * Component action.
+	 *
+	 * @var string
+	 */
 	public $component_action = 'new_like_to_media';
 
-	function __construct() {
+	/**
+	 * RTMediaLikeNotification constructor.
+	 */
+	public function __construct() {
 
 		if ( class_exists( 'BuddyPress' ) ) {
 			$args = array(
@@ -29,7 +48,7 @@ class RTMediaLikeNotification extends RTMediaNotification {
 	/**
 	 *  Hooked to bp_init.
 	 */
-	function init() {
+	public function init() {
 		if ( bp_is_active( 'notifications' ) ) {
 			add_filter( 'rtmedia_like_notifications', array( $this, 'format_like_notifications' ) );
 			add_action( 'rtmedia_after_like_media', array( $this, 'add_like_notify' ) );
@@ -38,13 +57,12 @@ class RTMediaLikeNotification extends RTMediaNotification {
 	}
 
 	/**
-	 * add notification using  bp_notifications_add_notification function
+	 * Add notification using  bp_notifications_add_notification function
 	 * delete and merge likes if already same notification exist on a media
 	 *
-	 * @param RTMediaLike $likeargs RTMediaLike class object
-	 *
+	 * @param RTMediaLike $likeargs RTMediaLike class object.
 	 */
-	function add_like_notify( $likeargs ) {
+	public function add_like_notify( $likeargs ) {
 		$action         = $likeargs->increase;
 		$user_id        = $likeargs->interactor;
 		$post_author_id = $likeargs->owner;
@@ -65,11 +83,11 @@ class RTMediaLikeNotification extends RTMediaNotification {
 	/**
 	 * Format string and media url for notification
 	 *
-	 * @param   array $params array ('action', 'post_id', 'initiator_id', 'total_items', 'format' )
+	 * @param   array $params array ('action', 'post_id', 'initiator_id', 'total_items', 'format' ).
 	 *
-	 * @return string/array     format notification as $params['format'] request
+	 * @return string|array     format notification as $params['format'] request
 	 */
-	function format_like_notifications( $params ) {
+	public function format_like_notifications( $params ) {
 		$action  = $params['action'];
 		$post_id = intval( $params['post_id'] );
 
@@ -81,14 +99,16 @@ class RTMediaLikeNotification extends RTMediaNotification {
 
 			$rtmedia_id = rtmedia_id( $post_id );
 			$liked_list = $this->fetch_media_like_stats( $rtmedia_id );
-                        $liked_by   = '';
-                        if ( isset( $liked_list[0]->user_id ) ) {
-                            $liked_by   = bp_core_get_username( $liked_list[0]->user_id );
-                        }
+			$liked_by   = '';
+
+			if ( isset( $liked_list[0]->user_id ) ) {
+				$liked_by = bp_core_get_username( $liked_list[0]->user_id );
+			}
+
 			$like_count = get_rtmedia_like( $post_id );
 			$link       = esc_url( get_rtmedia_permalink( $rtmedia_id ) );
 			$media_type = rtmedia_type( $rtmedia_id );
-			$text = null;
+			$text       = null;
 
 			if ( 0 === intval( $like_count ) ) {
 				$this->delete_notification_by_item_id( $initiator_id, $post_id );
@@ -101,7 +121,8 @@ class RTMediaLikeNotification extends RTMediaNotification {
 				$text  = $liked_by . ' ' . __( 'and', 'buddypress-media' ) . ' ' . $count . ' ' . __( 'other friends liked your', 'buddypress-media' ) . ' ' . $media_type;
 			}
 
-			$return = apply_filters( 'rtmedia_before_like_notification',
+			$return = apply_filters(
+				'rtmedia_before_like_notification',
 				array(
 					'link' => $link,
 					'text' => $text,
@@ -120,14 +141,16 @@ class RTMediaLikeNotification extends RTMediaNotification {
 	/**
 	 * Get like count of a media
 	 *
-	 * @param   int $media_id MediaID to count likes
+	 * @param   int $media_id MediaID to count likes.
 	 *
-	 * @return  int                 Total like count on success or false
+	 * @return  array|int Total like count on success or false
 	 */
-	function fetch_media_like_stats( $media_id ) {
+	public function fetch_media_like_stats( $media_id ) {
+
 		if ( empty( $media_id ) ) {
 			return false;
 		}
+
 		$rtmediainteractionmodel = new RTMediaInteractionModel();
 		$media_like_cols         = array(
 			'media_id' => $media_id,
@@ -135,6 +158,7 @@ class RTMediaLikeNotification extends RTMediaNotification {
 			'value'    => 1,
 		);
 		$media_likes             = $rtmediainteractionmodel->get( $media_like_cols, false, false, 'action_date' );
+
 		if ( 0 === count( $media_likes ) ) {
 			return false;
 		}
@@ -144,13 +168,13 @@ class RTMediaLikeNotification extends RTMediaNotification {
 }
 
 /**
- * this is callback function for rt_like_notifier component dont call this callback method manually
+ * This is callback function for rt_like_notifier component dont call this callback method manually
  *
- * @param   int $action action of componamt for notification
- * @param   int $post_id ID of a post to notification
- * @param   int $initiator_id secondary_item_id used in 'bp_notifications_add_notification'
- * @param   int $total_items number of notification for same component
- * @param String $format string or array
+ * @param int    $action action of componamt for notification.
+ * @param int    $post_id ID of a post to notification.
+ * @param int    $initiator_id secondary_item_id used in 'bp_notifications_add_notification'.
+ * @param int    $total_items number of notification for same component.
+ * @param String $format string or array.
  *
  * @return  String/Array formatted notification
  */

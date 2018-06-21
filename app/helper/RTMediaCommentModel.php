@@ -1,8 +1,9 @@
 <?php
-
-/*
+/**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
+ *
+ * @package    rtMedia
  */
 
 /**
@@ -16,10 +17,9 @@ class RTMediaCommentModel {
 	 * Constructor
 	 *
 	 * @access public
-	 * @return void
 	 */
 	public function __construct() {
-		//initialization
+		// initialization.
 	}
 
 	/**
@@ -27,7 +27,7 @@ class RTMediaCommentModel {
 	 *
 	 * @access public
 	 *
-	 * @param  array $attr
+	 * @param  array $attr attributes.
 	 */
 	public function insert( $attr ) {
 
@@ -39,7 +39,7 @@ class RTMediaCommentModel {
 	 *
 	 * @access public
 	 *
-	 * @param  array $attr
+	 * @param  array $attr attributes.
 	 */
 	public function update( $attr ) {
 
@@ -51,7 +51,7 @@ class RTMediaCommentModel {
 	 *
 	 * @access public
 	 *
-	 * @param  string $where
+	 * @param  string $where where clause.
 	 */
 	public function get( $where ) {
 
@@ -63,7 +63,7 @@ class RTMediaCommentModel {
 	 *
 	 * @access public
 	 *
-	 * @param  int $id
+	 * @param  int $id id.
 	 */
 	public function get_by_id( $id ) {
 
@@ -75,7 +75,7 @@ class RTMediaCommentModel {
 	 *
 	 * @access public
 	 *
-	 * @param  int $id
+	 * @param  int $id id.
 	 */
 	public function delete( $id ) {
 

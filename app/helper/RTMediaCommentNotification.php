@@ -1,4 +1,9 @@
 <?php
+/**
+ * Media comment notification class.
+ *
+ * @package    rtMedia
+ */
 
 /**
  * Description of RTMediaCommentNotification
@@ -7,10 +12,24 @@
  */
 class RTMediaCommentNotification extends RTMediaNotification {
 
+	/**
+	 * Component id.
+	 *
+	 * @var string
+	 */
 	public $component_id = 'rt_comment_notifier';
+
+	/**
+	 * Component action.
+	 *
+	 * @var string
+	 */
 	public $component_action = 'new_comment_to_media';
 
-	function __construct() {
+	/**
+	 * RTMediaCommentNotification constructor.
+	 */
+	public function __construct() {
 
 		if ( class_exists( 'BuddyPress' ) ) {
 			$args = array(
@@ -29,7 +48,7 @@ class RTMediaCommentNotification extends RTMediaNotification {
 	/**
 	 *  Hooked to bp_init.
 	 */
-	function init() {
+	public function init() {
 		if ( bp_is_active( 'notifications' ) ) {
 			add_filter( 'rtmedia_comment_notifications', array( $this, 'format_comment_notifications' ) );
 			add_action( 'rtmedia_after_add_comment', array( $this, 'add_comment_notify' ) );
@@ -39,13 +58,13 @@ class RTMediaCommentNotification extends RTMediaNotification {
 	}
 
 	/**
-	 * format the new notification in String or array
+	 * Format the new notification in String or array
 	 *
-	 * @param array $params
+	 * @param array $params parameters.
 	 *
-	 * @return array/string  As per $format
+	 * @return array|string  As per $format
 	 */
-	function format_comment_notifications( $params ) {
+	public function format_comment_notifications( $params ) {
 		$action  = $params['action'];
 		$post_id = intval( $params['post_id'] );
 
@@ -65,7 +84,8 @@ class RTMediaCommentNotification extends RTMediaNotification {
 			}
 			$link = esc_url( $media_url );
 
-			$return = apply_filters( 'rtmedia_before_comment_notification',
+			$return = apply_filters(
+				'rtmedia_before_comment_notification',
 				array(
 					'link' => $link,
 					'text' => $text,
@@ -82,12 +102,13 @@ class RTMediaCommentNotification extends RTMediaNotification {
 	}
 
 	/**
-	 * add a notification for a author of media on new comment on media
-	 * @global type $bp
+	 * Add a notification for a author of media on new comment on media
 	 *
-	 * @param array $args contains comment descriptions
+	 * @global mixed $bp
+	 *
+	 * @param array $args contains comment descriptions.
 	 */
-	function add_comment_notify( $args ) {
+	public function add_comment_notify( $args ) {
 
 		$post_author_id = get_post( $args['comment_post_ID'] )->post_author;
 		$post_id        = $args['comment_post_ID'];
@@ -105,10 +126,11 @@ class RTMediaCommentNotification extends RTMediaNotification {
 	}
 
 	/**
-	 * delete notification of a comment perticular commnet
-	 * @param   int     $comment_id
+	 * Delete notification of a comment perticular commnet
+	 *
+	 * @param   int $comment_id Comment id.
 	 */
-	function remove_comment_notification( $comment_id ) {
+	public function remove_comment_notification( $comment_id ) {
 
 		$comment_notification_id = (int) get_comment_meta( $comment_id, 'comment_notification_id', true );
 
@@ -121,13 +143,13 @@ class RTMediaCommentNotification extends RTMediaNotification {
 }
 
 /**
- * this is callback function for rt_like_notifier component dont call this callback method manually
+ * This is callback function for rt_like_notifier component dont call this callback method manually
  *
- * @param   int $action action of componamt for notification
- * @param   int $post_id ID of a post to notification
- * @param   int $initiator_id secondary_item_id used in 'bp_notifications_add_notification'
- * @param   int $total_items number of notification for same component
- * @param String $format string or array
+ * @param int    $action action of componamt for notification.
+ * @param int    $post_id ID of a post to notification.
+ * @param int    $initiator_id secondary_item_id used in 'bp_notifications_add_notification'.
+ * @param int    $total_items number of notification for same component.
+ * @param String $format string or array.
  *
  * @return  String/Array formatted notification
  */

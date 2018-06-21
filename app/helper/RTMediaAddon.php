@@ -5,23 +5,34 @@
  * @package    rtMedia
  * @subpackage Admin
  *
- * @author     Gagandeep Singh <gagandeep.singh@rtcamp.com>
- * @author     Joshua Abenazer <joshua.abenazer@rtcamp.com>
+ * @author     Gagandeep Singh <gagandeep.singh@rtcamp.com>, Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
+
 if ( ! class_exists( 'RTMediaAddon' ) ) {
 
+	/**
+	 * Class RTMediaAddon
+	 */
 	class RTMediaAddon {
 
+		/**
+		 * Enquiry link.
+		 *
+		 * @var string
+		 */
 		public $enquiry_link = 'https://rtmedia.io/contact/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
-		// current page
+
+		/**
+		 * Current page.
+		 *
+		 * @var string $page
+		 */
 		public static $page;
 
 		/**
 		 * Show coming_soon_div.
 		 *
 		 * @access public
-		 *
-		 * @param  void
 		 *
 		 * @return string
 		 */
@@ -34,7 +45,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  type $page
+		 * @param  string $page Page.
 		 *
 		 * @return void
 		 */
@@ -68,8 +79,6 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  void
-		 *
 		 * @return void
 		 */
 		public function get_addons() {
@@ -94,7 +103,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  array $args
+		 * @param  array|string $args Arguments.
 		 *
 		 * @return void
 		 */
@@ -531,11 +540,11 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		}
 
 		/**
-		 * themes_content.
+		 * Themes_content.
 		 *
 		 * @access public
 		 *
-		 * @param  array $args
+		 * @param  array|string $args Arguments.
 		 *
 		 * @return void
 		 */
@@ -546,9 +555,9 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		/**
 		 * Define addon.
 		 *
-		 * @global type $rtmedia
+		 * @global mixed $rtmedia
 		 *
-		 * @param  array $args
+		 * @param  array $args Arguments.
 		 *
 		 * @return void
 		 */
@@ -583,15 +592,12 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			<div class="plugin-card clearfix rtm-plugin-card">
 
 				<div class="plugin-card-top">
-					<a class="rtm-logo" href="<?php echo esc_url( $product_link ); ?>"
-					   title="<?php echo esc_attr( $title ); ?>" target="_blank">
-						<img width="240" height="184" title="<?php echo esc_attr( $title ); ?>"
-						     alt="<?php echo esc_attr( $title ); ?>" src="<?php echo esc_url( $img_src ); ?>"/>
+					<a class="rtm-logo" href="<?php echo esc_url( $product_link ); ?>" title="<?php echo esc_attr( $title ); ?>" target="_blank">
+						<img width="240" height="184" title="<?php echo esc_attr( $title ); ?>" alt="<?php echo esc_attr( $title ); ?>" src="<?php echo esc_url( $img_src ); ?>"/>
 					</a>
 
 					<div class="name column-name">
-						<h4><a href="<?php echo esc_url( $product_link ); ?>" title="<?php echo esc_attr( $title ); ?>"
-						       target="_blank"><?php echo esc_html( $title ); ?></a></h4>
+						<h4><a href="<?php echo esc_url( $product_link ); ?>" title="<?php echo esc_attr( $title ); ?>" target="_blank"><?php echo esc_html( $title ); ?></a></h4>
 					</div>
 
 					<div class="desc column-description">

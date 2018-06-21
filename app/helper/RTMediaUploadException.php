@@ -1,4 +1,9 @@
 <?php
+/**
+ * Upload exception.
+ *
+ * @package    rtMedia
+ */
 
 /**
  * Description of RTMediaUploadException
@@ -6,19 +11,19 @@
  * @author joshua
  */
 class RTMediaUploadException extends Exception {
+
 	/**
-	 *
-	 * @var type
-	 *
 	 * Exception for Invalid context while uploading any media
+	 *
+	 * @var int
 	 */
-	var $upload_err_invalid_context = 9;
+	public $upload_err_invalid_context = 9;
 
 	/**
 	 * Constructs the class.
 	 *
-	 * @param type $code
-	 * @param type $msg
+	 * @param string      $code Code.
+	 * @param string|bool $msg Message.
 	 */
 	public function __construct( $code, $msg = false ) {
 		$message = $this->codeToMessage( $code, $msg );
@@ -29,10 +34,10 @@ class RTMediaUploadException extends Exception {
 	 * Error specific Message generated for the exception depending upon the code passed.
 	 * Native Error Codes defined in PHP core module are used for uploading a standard file
 	 *
-	 * @param type $code
-	 * @param type $msg
+	 * @param string $code Code.
+	 * @param string $msg Message.
 	 *
-	 * @return type
+	 * @return string
 	 */
 	private function codeToMessage( $code, $msg ) {
 		switch ( $code ) {

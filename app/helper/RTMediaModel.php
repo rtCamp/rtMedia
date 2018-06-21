@@ -1,4 +1,9 @@
 <?php
+/**
+ * Media model.
+ *
+ * @package rtMedia
+ */
 
 /**
  * Description of BPMediaModel
@@ -7,19 +12,23 @@
  */
 class RTMediaModel extends RTDBModel {
 
-	function __construct() {
+	/**
+	 * RTMediaModel constructor.
+	 */
+	public function __construct() {
 		parent::__construct( 'rtm_media', false, 10, true );
 		$this->meta_table_name = 'rt_rtm_media_meta';
 	}
 
 	/**
+	 * Call function.
 	 *
-	 * @param string $name
-	 * @param array $arguments
+	 * @param string $name Name.
+	 * @param array  $arguments Arguments.
 	 *
 	 * @return array
 	 */
-	function __call( $name, $arguments ) {
+	public function __call( $name, $arguments ) {
 		$result = parent::__call( $name, $arguments );
 		if ( ! $result['result'] ) {
 			$result['result'] = $this->populate_results_fallback( $name, $arguments );
@@ -29,17 +38,19 @@ class RTMediaModel extends RTDBModel {
 	}
 
 	/**
+	 * Get.
 	 *
 	 * @global object $wpdb
 	 *
-	 * @param array $columns
-	 * @param mixed $offset
-	 * @param mixed $per_page
-	 * @param string $order_by
+	 * @param array  $columns columns.
+	 * @param mixed  $offset Offset.
+	 * @param mixed  $per_page Per page.
+	 * @param string $order_by Order by condition.
+	 * @param bool   $count_flag Count flag.
 	 *
 	 * @return array
 	 */
-	function get( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ) {
+	public function get( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ) {
 		global $wpdb;
 		global $rtmedia_interaction;
 		$select = 'SELECT ';
@@ -87,21 +98,24 @@ class RTMediaModel extends RTDBModel {
 						$compare = $colvalue['compare'];
 					}
 
-					$tmpVal           = isset( $colvalue['value'] ) ? $colvalue['value'] : $colvalue;
-					$col_val_comapare = ( is_array( $tmpVal ) ) ? implode( "','", esc_sql( $tmpVal ) ) : esc_sql( $tmpVal );
+					$tmp_val          = isset( $colvalue['value'] ) ? $colvalue['value'] : $colvalue;
+					$col_val_comapare = ( is_array( $tmp_val ) ) ? implode( "','", esc_sql( $tmp_val ) ) : esc_sql( $tmp_val );
+
 					if ( 'IS NOT' === $compare ) {
 						$col_val_comapare = ! empty( $colvalue['value'] ) ? $colvalue['value'] : $col_val_comapare;
 					}
+
 					$compare = esc_sql( $compare );
-					$where .= " AND {$this->table_name}.{$colname} {$compare} ('{$col_val_comapare}')";
+					$where  .= " AND {$this->table_name}.{$colname} {$compare} ('{$col_val_comapare}')";
 				} else {
 					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // @codingStandardsIgnoreLine
 				}
 			}
 		}
 		$qgroup_by = ' ';
+
 		if ( $order_by ) {
-			$order_by = esc_sql( $order_by );
+			$order_by  = esc_sql( $order_by );
 			$qorder_by = " ORDER BY {$this->table_name}.{$order_by}";
 		} else {
 			$qorder_by = '';
@@ -110,9 +124,9 @@ class RTMediaModel extends RTDBModel {
 		$select      = apply_filters( 'rtmedia-model-select-query', $select, $this->table_name );
 		$bp_template = get_option( '_bp_theme_package_id' );
 
-		if ( empty( $bp_template ) && 'nouveau' !== $bp_template && "likes" === $rtmedia_interaction->routes['media']->query_vars[0] ) {
+		if ( empty( $bp_template ) && 'nouveau' !== $bp_template && 'likes' === $rtmedia_interaction->routes['media']->query_vars[0] ) {
 			$join  = apply_filters( 'rtmedia-model-join-query', $join, $this->table_name );
-			$where = apply_filters( 'rtmedia-model-where-query', $where, $this->table_name , $join);
+			$where = apply_filters( 'rtmedia-model-where-query', $where, $this->table_name, $join );
 		}
 
 		$qgroup_by = apply_filters( 'rtmedia-model-group-by-query', $qgroup_by, $this->table_name );
@@ -136,7 +150,7 @@ class RTMediaModel extends RTDBModel {
 				$per_page = 1;
 			}
 
-			//filter added to change the LIMIT
+			// filter added to change the LIMIT.
 			$limit = apply_filters( 'rtmedia-model-limit-query', ' LIMIT ' . $offset . ',' . $per_page, $offset, $per_page );
 
 			$sql .= $limit;
@@ -150,14 +164,16 @@ class RTMediaModel extends RTDBModel {
 	}
 
 	/**
+	 * Populate fallback results.
 	 *
-	 * @param string $name
-	 * @param array $arguments
+	 * @param string $name Name.
+	 * @param array  $arguments Arguments.
 	 *
-	 * @return array
+	 * @return array|bool
 	 */
-	function populate_results_fallback( $name, $arguments ) {
+	public function populate_results_fallback( $name, $arguments ) {
 		$result['result'] = false;
+
 		if ( 'get_by_media_id' === $name && isset( $arguments[0] ) && $arguments[0] ) {
 
 			$result['result'][0]->media_id = $arguments[0];
@@ -188,15 +204,17 @@ class RTMediaModel extends RTDBModel {
 	}
 
 	/**
+	 * Get media.
 	 *
-	 * @param array $columns
-	 * @param mixed $offset
-	 * @param mixed $per_page
-	 * @param string $order_by
+	 * @param array  $columns Columns.
+	 * @param mixed  $offset Offset.
+	 * @param mixed  $per_page Per page.
+	 * @param string $order_by Order by condition.
+	 * @param bool   $count_flag Count flag.
 	 *
 	 * @return array
 	 */
-	function get_media( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ) {
+	public function get_media( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ) {
 		if ( is_multisite() ) {
 			$order_by = 'blog_id' . ( ( $order_by ) ? ',' . $order_by : '' );
 		}
@@ -207,16 +225,18 @@ class RTMediaModel extends RTDBModel {
 	}
 
 	/**
+	 * Get user albums.
 	 *
-	 * @param  integer $author_id
-	 * @param  mixed $offset
-	 * @param  mixed $per_page
-	 * @param  string $order_by
+	 * @param  integer $author_id Author id.
+	 * @param  mixed   $offset Offset.
+	 * @param  mixed   $per_page Per page.
+	 * @param  string  $order_by Order by condition.
 	 *
 	 * @return array $results
 	 */
-	function get_user_albums( $author_id, $offset, $per_page, $order_by = 'media_id desc' ) {
+	public function get_user_albums( $author_id, $offset, $per_page, $order_by = 'media_id desc' ) {
 		global $wpdb;
+
 		if ( is_multisite() ) {
 			$order_by = 'blog_id' . ( ( $order_by ) ? ',' . $order_by : '' );
 		}
@@ -258,21 +278,22 @@ class RTMediaModel extends RTDBModel {
 			$sql .= ' LIMIT ' . $offset . ',' . $per_page;
 		}
 
-		$results = $wpdb->get_results( $sql ); // @codingStandardsIgnoreStart
+		$results = $wpdb->get_results( $sql ); // @codingStandardsIgnoreEnd
 
 		return $results;
 	}
 
 	/**
+	 * Get group Albumns.
 	 *
-	 * @param  integer $group_id
-	 * @param  mixed $offset
-	 * @param  mixed $per_page
-	 * @param  string $order_by
+	 * @param  integer $group_id Ignore id.
+	 * @param  mixed   $offset Offset.
+	 * @param  mixed   $per_page Per page.
+	 * @param  string  $order_by Order by condition.
 	 *
 	 * @return array $results
 	 */
-	function get_group_albums( $group_id, $offset, $per_page, $order_by = 'media_id desc' ) {
+	public function get_group_albums( $group_id, $offset, $per_page, $order_by = 'media_id desc' ) {
 		global $wpdb;
 		if ( is_multisite() ) {
 			$order_by = 'blog_id' . ( ( $order_by ) ? ',' . $order_by : '' );
@@ -289,7 +310,7 @@ class RTMediaModel extends RTDBModel {
 			$sql .= $wpdb->prepare( " AND  {$this->table_name}.blog_id = %d ", get_current_blog_id() );
 		}
 		$order_by = esc_sql( $order_by );
-		$sql .= " ORDER BY {$this->table_name}.$order_by";
+		$sql     .= " ORDER BY {$this->table_name}.$order_by";
 
 		if ( false !== $offset ) {
 			if ( ! is_integer( $offset ) ) {
@@ -308,19 +329,21 @@ class RTMediaModel extends RTDBModel {
 
 			$sql .= ' LIMIT ' . $offset . ',' . $per_page;
 		}
+
 		$results = $wpdb->get_results( $sql );
 
 		return $results;
 	}
 
 	/**
+	 * Get counts.
 	 *
-	 * @param  mixed $user_id
-	 * @param  mixed $where_query
+	 * @param  mixed $user_id User id.
+	 * @param  mixed $where_query Where query.
 	 *
 	 * @return string $result
 	 */
-	function get_counts( $user_id = false, $where_query = false ) {
+	public function get_counts( $user_id = false, $where_query = false ) {
 		if ( ! $user_id && ! $where_query ) {
 			return false;
 		}
@@ -329,7 +352,7 @@ class RTMediaModel extends RTDBModel {
 		$query = "SELECT {$this->table_name}.privacy, ";
 		foreach ( $rtmedia->allowed_types as $type ) {
 			$type['name'] = esc_sql( $type['name'] );
-			$query .= $wpdb->prepare( "SUM(CASE WHEN {$this->table_name}.media_type LIKE %s THEN 1 ELSE 0 END) as {$type['name']}, ", $type['name'] );
+			$query       .= $wpdb->prepare( "SUM(CASE WHEN {$this->table_name}.media_type LIKE %s THEN 1 ELSE 0 END) as {$type['name']}, ", $type['name'] );
 		}
 		$query .= "SUM(CASE WHEN {$this->table_name}.media_type LIKE 'album' THEN 1 ELSE 0 END) as album
 		FROM
@@ -352,7 +375,7 @@ class RTMediaModel extends RTDBModel {
 						if ( ! isset( $colvalue['value'] ) ) {
 							$colvalue['value'] = $colvalue;
 						}
-						$compare = esc_sql( $compare );
+						$compare          = esc_sql( $compare );
 						$where_query_sql .= " AND {$this->table_name}.{$colname} {$compare} ('" . implode( "','", esc_sql( $colvalue['value'] ) ) . "')";
 					} else {
 						$where_query_sql .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue );
@@ -371,25 +394,28 @@ class RTMediaModel extends RTDBModel {
 	}
 
 	/**
+	 * Get other album count.
 	 *
-	 * @param  integer $profile_id
-	 * @param  string $context
+	 * @param  integer $profile_id Profile id.
+	 * @param  string  $context Context.
 	 *
 	 * @return int
 	 */
-	function get_other_album_count( $profile_id, $context = 'profile' ) {
+	public function get_other_album_count( $profile_id, $context = 'profile' ) {
 		global $wpdb;
 		$global = RTMediaAlbum::get_globals();
 		$sql    = $wpdb->prepare( "select distinct album_id from {$this->table_name} where 2=2 AND context = %s ", $context );
+
 		if ( is_multisite() ) {
 			$sql .= $wpdb->prepare( " AND {$this->table_name}.blog_id = %d ", get_current_blog_id() );
 		}
+
 		if ( is_array( $global ) && count( $global ) > 0 ) {
 			$sql .= ' and album_id in (';
-			$sep = '';
+			$sep  = '';
 			foreach ( $global as $id ) {
 				$sql .= $sep . esc_sql( $id );
-				$sep = ',';
+				$sep  = ',';
 			}
 			$sql .= ')';
 		}
@@ -400,8 +426,9 @@ class RTMediaModel extends RTDBModel {
 				$sql .= $wpdb->prepare( ' AND context_id=%d ', $profile_id );
 			}
 		}
-		$sql .= 'limit 100';
+		$sql   .= 'limit 100';
 		$result = $wpdb->get_results( $sql );
+
 		if ( isset( $result ) ) {
 			return count( $result );
 		} else {

@@ -1,7 +1,13 @@
 <?php
+/**
+ * Upload attachment.
+ *
+ * @package    rtMedia
+ */
+
 // Avoid direct access to the file.
 $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-require_once( $parse_uri[0] . 'wp-load.php' );
+require_once $parse_uri[0] . 'wp-load.php';
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -52,7 +58,7 @@ if ( ! empty( $_FILES ) ) {
 			}
 		} else {
 			$size_error = array( 'exceed_size_msg' => esc_html__( 'You can not upload more than 2 MB.', 'buddypress-media' ) );
-			echo json_encode( $size_error );
+			echo wp_json_encode( $size_error );
 			exit();
 		}
 	}
@@ -60,8 +66,11 @@ if ( ! empty( $_FILES ) ) {
 	$data = ( $error ) ? array( 'error' => esc_html__( 'There was an error uploading your files', 'buddypress-media' ) ) : array( 'debug_attachmanet' => $files );
 
 } else {
-	$data = array( 'success' => esc_html__( 'Form was submitted', 'buddypress-media' ), 'formData' => $_POST );
+	$data = array(
+		'success'  => esc_html__( 'Form was submitted', 'buddypress-media' ),
+		'formData' => $_POST,
+	);
 }
 /* send response as json format */
-echo json_encode( $data );
+echo wp_json_encode( $data );
 exit();

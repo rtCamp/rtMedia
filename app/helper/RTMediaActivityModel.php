@@ -4,36 +4,76 @@
  * User: ritz <ritesh.patel@rtcamp.com>
  * Date: 11/9/14
  * Time: 2:32 PM
+ *
+ * @package    rtMedia
  */
 
 if ( ! class_exists( 'RTDBModel' ) ) {
 	return;
 }
 
+/**
+ * Class RTMediaActivityModel
+ */
 class RTMediaActivityModel extends RTDBModel {
 
-	function __construct() {
+	/**
+	 * RTMediaActivityModel constructor.
+	 */
+	public function __construct() {
 		parent::__construct( 'rtm_activity', false, 10, true );
 	}
 
-	function get( $columns, $offset = false, $per_page = false, $order_by = 'activity_id DESC' ) {
+	/**
+	 * Get columns.
+	 *
+	 * @param array    $columns Columns.
+	 * @param bool|int $offset Offset.
+	 * @param bool|int $per_page Per page.
+	 * @param string   $order_by Order by.
+	 *
+	 * @return array
+	 */
+	public function get( $columns, $offset = false, $per_page = false, $order_by = 'activity_id DESC' ) {
 		$columns['blog_id'] = get_current_blog_id();
 
 		return parent::get( $columns, $offset, $per_page, $order_by );
 	}
 
-	function insert( $row ) {
+	/**
+	 * Insert row.
+	 *
+	 * @param array $row Row data.
+	 *
+	 * @return int
+	 */
+	public function insert( $row ) {
 		$row['blog_id'] = get_current_blog_id();
 
 		return parent::insert( $row );
 	}
 
-	function update( $data, $where ) {
+	/**
+	 * Update data.
+	 *
+	 * @param array $data Data.
+	 * @param array $where Where condition.
+	 *
+	 * @return mixed
+	 */
+	public function update( $data, $where ) {
 		$where['blog_id'] = get_current_blog_id();
 
 		return parent::update( $data, $where );
 	}
 
+	/**
+	 * Check.
+	 *
+	 * @param string $activity_id activity id.
+	 *
+	 * @return bool
+	 */
 	public function check( $activity_id = '' ) {
 		if ( '' === $activity_id ) {
 			return false;
@@ -58,8 +98,9 @@ class RTMediaActivityModel extends RTDBModel {
 	 *
 	 * @since 4.3
 	 *
-	 * @param array $media_ids_of_activity List of all the Media Id that is being updated.
-	 * @param int $privacy Privacy to set.
+	 * @param array    $media_ids_of_activity List of all the Media Id that is being updated.
+	 * @param int      $privacy Privacy to set.
+	 * @param int|bool $parent_activity_id Parent activity id.
 	 */
 	public function profile_activity_update( $media_ids_of_activity = array(), $privacy, $parent_activity_id = false ) {
 
@@ -80,12 +121,12 @@ class RTMediaActivityModel extends RTDBModel {
 			}
 		}
 
-		if ( ! empty ( $parent_activity_id ) ) {
+		if ( ! empty( $parent_activity_id ) ) {
 			// Get all the activities from item_id.
 			$parent_activity_id = intval( $parent_activity_id );
-			$activity_parents = bp_activity_get(
+			$activity_parents   = bp_activity_get(
 				array(
-					'filter' => array( 'primary_id' => $parent_activity_id ),
+					'filter'           => array( 'primary_id' => $parent_activity_id ),
 					'display_comments' => true,
 				)
 			);
@@ -99,6 +140,13 @@ class RTMediaActivityModel extends RTDBModel {
 		}
 	}
 
+	/**
+	 * Set privacy.
+	 *
+	 * @param int    $activity_id activity id.
+	 * @param int    $user_id user id.
+	 * @param string $privacy privacy.
+	 */
 	public function set_privacy( $activity_id, $user_id, $privacy ) {
 		if ( function_exists( 'bp_activity_update_meta' ) ) {
 			bp_activity_update_meta( $activity_id, 'rtmedia_privacy', $privacy );
@@ -106,12 +154,24 @@ class RTMediaActivityModel extends RTDBModel {
 
 		/* check is value exits or not */
 		if ( ! $this->check( $activity_id ) ) {
-			$this->insert( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ) );
+			$this->insert(
+				array(
+					'activity_id' => $activity_id,
+					'user_id'     => $user_id,
+					'privacy'     => $privacy,
+				)
+			);
 		} else {
-			$this->update( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ), array( 'activity_id' => $activity_id ) );
+			$this->update(
+				array(
+					'activity_id' => $activity_id,
+					'user_id'     => $user_id,
+					'privacy'     => $privacy,
+				), array( 'activity_id' => $activity_id )
+			);
 		}
 
-		// update privacy of corresponding media
+		// update privacy of corresponding media.
 		$media_model    = new RTMediaModel();
 		$activity_media = $media_model->get( array( 'activity_id' => $activity_id ) );
 		if ( ! empty( $activity_media ) && is_array( $activity_media ) ) {
@@ -122,12 +182,19 @@ class RTMediaActivityModel extends RTDBModel {
 				$where   = array( 'id' => $single_media->id );
 				$columns = array( 'privacy' => $privacy );
 
-				// update media privacy
+				// update media privacy.
 				$media_model->update( $columns, $where );
 			}
 		}
 	}
 
+	/**
+	 * Set privacy for rtmedia activity.
+	 *
+	 * @param int $parent_activity_id parent activity id.
+	 * @param int $activity_id activity id.
+	 * @param int $user_id user id.
+	 */
 	public function set_privacy_for_rtmedia_activity( $parent_activity_id, $activity_id, $user_id ) {
 		/*  get default privacy*/
 		$privacy = get_rtmedia_default_privacy();

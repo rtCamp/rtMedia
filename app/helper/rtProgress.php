@@ -1,8 +1,9 @@
 <?php
-
-/*
+/**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
+ *
+ * @package    rtMedia
  */
 
 /**
@@ -16,9 +17,8 @@ class rtProgress {
 	 * Constructor
 	 *
 	 * @access public
-	 * @return void
 	 */
-	function __construct() {
+	public function __construct() {
 
 	}
 
@@ -27,8 +27,8 @@ class rtProgress {
 	 *
 	 * @access public
 	 *
-	 * @param  float $progress
-	 * @param  bool $echo
+	 * @param  float $progress Progress.
+	 * @param  bool  $echo Echo.
 	 *
 	 * @return string $progress_ui
 	 */
@@ -51,8 +51,8 @@ class rtProgress {
 	 *
 	 * @access public
 	 *
-	 * @param  float $progress
-	 * @param  float $total
+	 * @param  float $progress Progress.
+	 * @param  float $total Total.
 	 *
 	 * @return float
 	 */

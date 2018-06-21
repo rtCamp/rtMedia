@@ -2,16 +2,37 @@
 /**
  * Description of RTMediaSupport
  *
- * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
- * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
+ * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>, Joshua Abenazer <joshua.abenazer@rtcamp.com>
+ *
+ * @package    rtMedia
  */
+
 if ( ! class_exists( 'RTMediaSupport' ) ) {
 
+	/**
+	 * Class RTMediaSupport
+	 */
 	class RTMediaSupport {
 
-		var $debug_info;
-		var $curr_sub_tab;
-		// current page
+		/**
+		 * Debug info.
+		 *
+		 * @var $debug_info
+		 */
+		public $debug_info;
+
+		/**
+		 * Current sub tab.
+		 *
+		 * @var mixed
+		 */
+		public $curr_sub_tab;
+
+		/**
+		 * Current page
+		 *
+		 * @var string
+		 */
 		public static $page;
 
 		/**
@@ -19,9 +40,9 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  bool $init
+		 * @param  bool $init init.
 		 *
-		 * @return void
+		 * @return mixed
 		 */
 		public function __construct( $init = true ) {
 
@@ -30,24 +51,25 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			}
 
 			$this->curr_sub_tab = 'support';
-			$tab = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_STRING );
+			$tab                = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_STRING );
 			if ( isset( $tab ) ) {
 				$this->curr_sub_tab = $tab;
 			}
 
 			/* Check if download debug info request is made or not */
 			$nonce = filter_input( INPUT_POST, 'download_debuginfo_wpnonce', FILTER_SANITIZE_STRING );
-			if( isset( $_POST['download_debuginfo'] ) && '1' === $_POST['download_debuginfo'] && is_admin() ) {
+			$info  = filter_input( INPUT_POST, 'download_debuginfo', FILTER_SANITIZE_STRING );
+
+			if ( isset( $info ) && '1' === $info && is_admin() ) {
 				if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'rtmedia-download-debuginfo' ) ) {
 					wp_die(
-						'<h1>' . esc_html__( 'Cheatin\' uh?','buddypress-media' ) . '</h1>' .
-						'<p>' . esc_html__( 'Can not verify request source.','buddypress-media' ) . '</p>'
+						'<h1>' . esc_html__( 'Cheatin\' uh?', 'buddypress-media' ) . '</h1>' .
+						'<p>' . esc_html__( 'Can not verify request source.', 'buddypress-media' ) . '</p>'
 					);
 				} else {
 					/* download the debug info */
 					$this->download_debuginfo_as_text();
 				}
-
 			}
 		}
 
@@ -55,8 +77,6 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 * Get support content.
 		 *
 		 * @access public
-		 *
-		 * @param  void
 		 *
 		 * @return void
 		 */
@@ -78,7 +98,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				'callback' => array( $this, 'debug_info_html' ),
 			);
 
-			//if any un-migrated media is there
+			// if any un-migrated media is there.
 			if ( $this->is_migration_required() ) {
 				$tabs[] = array(
 					'title'    => esc_html__( 'Migration', 'buddypress-media' ),
@@ -94,13 +114,21 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			<?php
 		}
 
+		/**
+		 * Cancel request.
+		 */
 		public function rtmedia_cancel_request() {
-		    do_settings_sections( 'rtmedia-support' );
-		    die();
+			do_settings_sections( 'rtmedia-support' );
+			die();
 		}
 
+		/**
+		 * Mail content type.
+		 *
+		 * @return string
+		 */
 		public function rtmedia_mail_content_type() {
-		    return 'text/html';
+			return 'text/html';
 		}
 
 		/**
@@ -108,7 +136,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  type $page
+		 * @param  string $page Page.
 		 *
 		 * @return void
 		 */
@@ -143,40 +171,45 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  void
-		 *
 		 * @return void
 		 */
 		public function service_selector() {
-			//todo: nonce required
-			$form = filter_input( INPUT_POST, 'form', FILTER_SANITIZE_STRING ); ?>
+			// todo: nonce required.
+			$form = filter_input( INPUT_POST, 'form', FILTER_SANITIZE_STRING );
+			?>
 			<div>
 				<form name="rtmedia_service_select_form" method="post">
 					<p>
 						<label class="bp-media-label"
-						       for="select_support"><?php esc_html_e( 'Service', 'buddypress-media' ); ?>:</label>
+							for="select_support"><?php esc_html_e( 'Service', 'buddypress-media' ); ?>:</label>
 						<select name="rtmedia_service_select">
 							<option
-								value="premium_support" <?php
+								value="premium_support" 
+								<?php
 								if ( 'premium_support' === $form ) {
 									echo 'selected';
 								}
-							?>><?php esc_html_e( 'Premium Support', 'buddypress-media' ); ?></option>
+							?>
+							><?php esc_html_e( 'Premium Support', 'buddypress-media' ); ?></option>
 							<option
-								value="bug_report" <?php
+								value="bug_report" 
+								<?php
 								if ( 'bug_report' === $form ) {
 									echo 'selected';
 								}
-							?>><?php esc_html_e( 'Bug Report', 'buddypress-media' ); ?></option>
+							?>
+							><?php esc_html_e( 'Bug Report', 'buddypress-media' ); ?></option>
 							<option
-								value="new_feature" <?php
+								value="new_feature" 
+								<?php
 								if ( 'new_feature' === $form ) {
 									echo 'selected';
 								}
-							?>><?php esc_html_e( 'New Feature', 'buddypress-media' ); ?></option>
+							?>
+							><?php esc_html_e( 'New Feature', 'buddypress-media' ); ?></option>
 						</select>
 						<input name="support_submit" value="<?php esc_attr_e( 'Submit', 'buddypress-media' ); ?>"
-						       type="submit" class="button"/>
+							type="submit" class="button"/>
 					</p>
 				</form>
 			</div>
@@ -186,9 +219,9 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		/**
 		 * Call rtmedia admin support form.
 		 *
-		 * @access public
+		 * @param string $page Page.
 		 *
-		 * @param  void
+		 * @access public
 		 *
 		 * @return void
 		 */
@@ -208,12 +241,10 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  void
-		 *
-		 * @return array $rtmedia_plugins
+		 * @return array|bool $rtmedia_plugins
 		 */
 		public function get_plugin_info() {
-			include_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+			include_once ABSPATH . '/wp-admin/includes/plugin.php';
 			$active_plugins = (array) get_option( 'active_plugins', array() );
 			if ( is_multisite() ) {
 				$active_plugins = array_merge( $active_plugins, rtmedia_get_site_option( 'active_sitewide_plugins', array() ) );
@@ -238,7 +269,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  string $template_path
+		 * @param  string $template_path Template path.
 		 *
 		 * @return array  $result
 		 */
@@ -251,9 +282,9 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						if ( is_dir( $template_path . DIRECTORY_SEPARATOR . $value ) ) {
 							$sub_files = $this->rtmedia_scan_template_files( $template_path . DIRECTORY_SEPARATOR . $value );
 							foreach ( $sub_files as $sub_file ) {
-								$rt_to_dir_paths	= RTMediaTemplate::locate_template( substr( $sub_file, 0, ( count( $sub_file ) - 5 ) ) );
-								$rt_to_dir_path		= str_replace( '//', '/', $rt_to_dir_paths );
-								$result[]			= str_replace( ABSPATH . 'wp-content/', '', $rt_to_dir_path );
+								$rt_to_dir_paths = RTMediaTemplate::locate_template( substr( $sub_file, 0, ( count( $sub_file ) - 5 ) ) );
+								$rt_to_dir_path  = str_replace( '//', '/', $rt_to_dir_paths );
+								$result[]        = str_replace( ABSPATH . 'wp-content/', '', $rt_to_dir_path );
 							}
 						} else {
 							if ( 'main.php' !== $value ) {
@@ -271,8 +302,6 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 * Show debug_info.
 		 *
 		 * @access public
-		 *
-		 * @param  void
 		 *
 		 * @return void
 		 */
@@ -311,8 +340,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$debug_info['Template Overrides']            = implode( ', <br/>', $this->rtmedia_scan_template_files( RTMEDIA_PATH . '/templates/' ) );
 
 			global $wpdb;
-			$rtMedia_model = new RTMediaModel();
-			$results = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id = %d group by media_type limit 100", get_current_blog_id() ) ); // @codingStandardsIgnoreLine
+			$rtmedia_model = new RTMediaModel();
+			$results = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id = %d group by media_type limit 100", get_current_blog_id() ) ); // @codingStandardsIgnoreLine
 			if ( $results ) {
 				foreach ( $results as $media ) {
 					$debug_info[ 'Total ' . ucfirst( $media->media_type ) . 's' ] = $media->count;
@@ -335,18 +364,18 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  void
+		 * @param string $page Page.
 		 *
 		 * @return void
 		 */
 		public function debug_info_html( $page = '' ) {
 			$this->debug_info();
 			$allowed_html = array(
-				'a' => array(
+				'a'  => array(
 					'href' => array(),
-					),
+				),
 				'br' => array(),
-				);
+			);
 			?>
 			<div id="debug-info" class="rtm-option-wrapper">
 			<h3 class="rtm-option-title"><?php esc_html_e( 'Debug Info', 'buddypress-media' ); ?></h3>
@@ -359,28 +388,28 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						<tr>
 						<th scope="row"><?php echo esc_html( $configuration ); ?></th>
 						<td><?php echo wp_kses( $value, $allowed_html ); ?></td>
-						</tr><?php
+						</tr>
+						<?php
 					}
 				}
 				?>
 				</tbody>
 			</table>
 			<div class="rtm-download-debuginfo">
-				<form action="<?php echo admin_url( 'admin.php?page=rtmedia-support#debug' ); ?>" method="post">
-					<?php wp_nonce_field( 'rtmedia-download-debuginfo','download_debuginfo_wpnonce' ); ?>
+				<form action="<?php echo esc_url( admin_url( 'admin.php?page=rtmedia-support#debug' ) ); ?>" method="post">
+					<?php wp_nonce_field( 'rtmedia-download-debuginfo', 'download_debuginfo_wpnonce' ); ?>
 					<input type="hidden" name="download_debuginfo" id="download_debuginfo" value="1" />
 					<input type="submit" value="<?php esc_html_e( 'Download Debug Info', 'buddypress-media' ); ?>" class="button button-primary" />
 				</form>
 			</div>
-			</div><?php
+			</div>
+			<?php
 		}
 
 		/**
 		 * Check for migration_required.
 		 *
 		 * @access public
-		 *
-		 * @param  void
 		 *
 		 * @return bool
 		 */
@@ -398,9 +427,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  type $page
-		 *
-		 * @return bool
+		 * @param  string $page Page.
 		 */
 		public function migration_html( $page = '' ) {
 			$pending_rtmedia_migrate = rtmedia_get_site_option( 'rtMigration-pending-count' );
@@ -409,7 +436,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$flag    = true;
 			if ( ( false === $pending_rtmedia_migrate || 0 === intval( $pending_rtmedia_migrate ) ) ) {
 				$content .= esc_html__( 'There is no media found to migrate.', 'buddypress-media' );
-				$flag = false;
+				$flag     = false;
 			}
 			$content = apply_filters( 'rtmedia_migration_content_filter', $content );
 			if ( $flag ) {
@@ -427,14 +454,12 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		/**
 		 * Generate rtmedia admin form.
 		 *
-		 * @global type $current_user
-		 *
-		 * @param  string $form
+		 * @param  string $form From.
 		 *
 		 * @return void
 		 */
 		public function get_form( $form = '' ) {
-			//todo: nonce required
+			// todo: nonce required.
 			if ( empty( $form ) ) {
 				$form = filter_input( INPUT_POST, 'form' . FILTER_SANITIZE_STRING );
 				$form = isset( $form ) ? $form : 'premium_support';
@@ -454,9 +479,10 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			if ( 'premium_support' === $form ) {
 				if ( ! has_filter( 'rtmedia_license_tabs' ) && ! has_action( 'rtmedia_addon_license_details' ) ) {
-					$content = '<h3 class="rtm-option-title">' . esc_html( $meta_title ) . '</h3>';
+					$content  = '<h3 class="rtm-option-title">' . esc_html( $meta_title ) . '</h3>';
 					$content .= '<p>' .
 						sprintf(
+							// translators: link.
 							esc_html__( 'If your site has some issues due to rtMedia and you want support, feel free to create a support topic on %s', 'buddypress-media' ),
 							'<a target="_blank" href="http://community.rtcamp.com/c/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">' . esc_html__( 'Community Forum', 'buddypress-media' ) . '</a>.'
 						) .
@@ -464,6 +490,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 					$content .= '<p>' .
 						sprintf(
+							// translators: Github link.
 							esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on %s', 'buddypress-media' ),
 							'<a target="_blank" href="https://github.com/rtCamp/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.'
 						) .
@@ -471,11 +498,11 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 					echo $content; // @codingStandardsIgnoreLine
 				} else {
-					$website = filter_input( INPUT_POST, 'website', FILTER_SANITIZE_URL );
-					$subject = filter_input( INPUT_POST, 'subject', FILTER_SANITIZE_STRING );
-					$details = filter_input( INPUT_POST, 'details', FILTER_SANITIZE_STRING );
-					$server_addr = rtm_get_server_var( 'SERVER_ADDR', 'FILTER_VALIDATE_IP' );
-					$remote_addr = rtm_get_server_var( 'REMOTE_ADDR', 'FILTER_VALIDATE_IP' );
+					$website         = filter_input( INPUT_POST, 'website', FILTER_SANITIZE_URL );
+					$subject         = filter_input( INPUT_POST, 'subject', FILTER_SANITIZE_STRING );
+					$details         = filter_input( INPUT_POST, 'details', FILTER_SANITIZE_STRING );
+					$server_addr     = rtm_get_server_var( 'SERVER_ADDR', 'FILTER_VALIDATE_IP' );
+					$remote_addr     = rtm_get_server_var( 'REMOTE_ADDR', 'FILTER_VALIDATE_IP' );
 					$server_software = rtm_get_server_var( 'SERVER_SOFTWARE', 'FILTER_SANITIZE_STRING' );
 					$http_user_agent = rtm_get_server_var( 'HTTP_USER_AGENT', 'FILTER_SANITIZE_STRING' );
 					?>
@@ -484,7 +511,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 						<div class="rtm-form-filed clearfix">
 							<label class="bp-media-label"
-							       for="name"><?php esc_html_e( 'Name', 'buddypress-media' ); ?></label>
+								for="name"><?php esc_html_e( 'Name', 'buddypress-media' ); ?></label>
 							<input class="bp-media-input" id="name" type="text" name="name" value="" required/>
 							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info rtmicon"></i>
@@ -496,7 +523,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 						<div class="rtm-form-filed clearfix">
 							<label class="bp-media-label"
-							       for="email"><?php esc_html_e( 'Email', 'buddypress-media' ); ?></label>
+								for="email"><?php esc_html_e( 'Email', 'buddypress-media' ); ?></label>
 							<input id="email" class="bp-media-input" type="text" name="email" value="" required/>
 							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info rtmicon"></i>
@@ -508,29 +535,29 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 						<div class="rtm-form-filed clearfix">
 							<label class="bp-media-label"
-							       for="website"><?php esc_html_e( 'Website', 'buddypress-media' ); ?></label>
+								for="website"><?php esc_html_e( 'Website', 'buddypress-media' ); ?></label>
 							<input id="website" class="bp-media-input" type="text" name="website"
-							       value="<?php echo esc_url( isset( $website ) ? $website : get_bloginfo( 'url' ) ); ?>"
-							       required/>
+								value="<?php echo esc_url( isset( $website ) ? $website : get_bloginfo( 'url' ) ); ?>"
+								required/>
 						</div>
 
 						<div class="rtm-form-filed clearfix">
 							<label class="bp-media-label"
-							       for="subject"><?php esc_html_e( 'Subject', 'buddypress-media' ); ?></label>
+								for="subject"><?php esc_html_e( 'Subject', 'buddypress-media' ); ?></label>
 							<input id="subject" class="bp-media-input" type="text" name="subject"
-							       value="<?php echo esc_attr( isset( $subject ) ? esc_attr( $subject ) : '' ); ?>"
-							       required/>
+								value="<?php echo esc_attr( isset( $subject ) ? esc_attr( $subject ) : '' ); ?>"
+								required/>
 						</div>
 
 						<div class="rtm-form-filed clearfix">
 							<label class="bp-media-label"
-							       for="details"><?php esc_html_e( 'Details', 'buddypress-media' ); ?></label>
+								for="details"><?php esc_html_e( 'Details', 'buddypress-media' ); ?></label>
 							<textarea id="details" class="bp-media-textarea" name="details"
-							          required><?php echo esc_html( isset( $details ) ? esc_textarea( $details ) : '' ); ?></textarea>
+									required><?php echo esc_html( isset( $details ) ? esc_textarea( $details ) : '' ); ?></textarea>
 
 							<input type="hidden" name="request_type" value="<?php echo esc_attr( $form ); ?>"/>
 							<input type="hidden" name="request_id"
-							       value="<?php echo esc_attr( wp_create_nonce( date( 'YmdHis' ) ) ); ?>"/>
+								value="<?php echo esc_attr( wp_create_nonce( date( 'YmdHis' ) ) ); ?>"/>
 							<input type="hidden" name="server_address" value="<?php echo esc_attr( $server_addr ); ?>"/>
 							<input type="hidden" name="ip_address" value="<?php echo esc_attr( $remote_addr ); ?>"/>
 							<input type="hidden" name="server_type" value="<?php echo esc_attr( $server_software ); ?>"/>
@@ -540,7 +567,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 						<div class="rtm-form-filed clearfix">
 							<label class="bp-media-label"
-							       for="subject"><?php esc_html_e( 'Attachement', 'buddypress-media' ); ?></label>
+								for="subject"><?php esc_html_e( 'Attachement', 'buddypress-media' ); ?></label>
 							<input id="debuglog" class="bp-media-input" type="file" name="debuglog" />
 							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info rtmicon"></i>
@@ -552,7 +579,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					</div><!-- .submit-bug-box -->
 
 					<div class="rtm-form-filed rtm-button-wrapper clearfix">
-						<?php wp_nonce_field( 'rtmedia-support-request','support_wpnonce' ); ?>
+						<?php wp_nonce_field( 'rtmedia-support-request', 'support_wpnonce' ); ?>
 						<?php submit_button( 'Submit', 'primary', 'rtmedia-submit-request', false ); ?>
 						<?php submit_button( 'Cancel', 'secondary', 'cancel-request', false ); ?>
 					</div>
@@ -567,16 +594,14 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 *
 		 * @global type $rtmedia
 		 *
-		 * @param       void
-		 *
 		 * @return void
 		 */
 		public function submit_request() {
 			$nonce = filter_input( INPUT_POST, 'support_wpnonce', FILTER_SANITIZE_STRING );
 			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'rtmedia-support-request' ) ) {
 				wp_die(
-					'<h1>' . esc_html__( 'Cheatin\' uh?','buddypress-media' ) . '</h1>' .
-					'<p>' . esc_html__( 'Can not verify request source.','buddypress-media' ) . '</p>'
+					'<h1>' . esc_html__( 'Cheatin\' uh?', 'buddypress-media' ) . '</h1>' .
+					'<p>' . esc_html__( 'Can not verify request source.', 'buddypress-media' ) . '</p>'
 				);
 			}
 
@@ -592,10 +617,10 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			if ( 'premium_support' === sanitize_text_field( $form_data['request_type'] ) ) {
 				$mail_type = 'Premium Support';
 				$title     = esc_html__( 'rtMedia Premium Support Request from', 'buddypress-media' );
-			} else if ( 'new_feature' === sanitize_text_field( $form_data['request_type'] ) ) {
+			} elseif ( 'new_feature' === sanitize_text_field( $form_data['request_type'] ) ) {
 				$mail_type = 'New Feature Request';
 				$title     = esc_html__( 'rtMedia New Feature Request from', 'buddypress-media' );
-			} else if ( 'bug_report' === sanitize_text_field( $form_data['request_type'] ) ) {
+			} elseif ( 'bug_report' === sanitize_text_field( $form_data['request_type'] ) ) {
 				$mail_type = 'Bug Report';
 				$title     = esc_html__( 'rtMedia Bug Report from', 'buddypress-media' );
 			} else {
@@ -664,15 +689,19 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			$debuglog_temp_path = sanitize_text_field( $form_data['debuglog_temp_path'] );
 			/* set attachment path for sending into mail */
-			$attachment_file = ( ! empty( $debuglog_temp_path ) ) ? $debuglog_temp_path : '' ;
-			$attachments = array( $attachment_file );
+			$attachment_file = ( ! empty( $debuglog_temp_path ) ) ? $debuglog_temp_path : '';
+			$attachments     = array( $attachment_file );
 
 			$headers       = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
 			$support_email = 'support@rtcamp.com';
-			if ( wp_mail( $support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace( array(
-					'http://',
-					'https://',
-			), '', $form_data['website'] ), stripslashes( $message ), $headers, $attachments ) ) {
+			if ( wp_mail(
+				$support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace(
+					array(
+						'http://',
+						'https://',
+					), '', $form_data['website']
+				), stripslashes( $message ), $headers, $attachments
+			) ) {
 				/* delete file after sending it to mail. */
 				if ( ! empty( $attachment_file ) ) {
 					unlink( $attachment_file );
@@ -691,6 +720,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				echo '<p>' . esc_html__( 'Kindly contact your server support to fix this.', 'buddypress-media' ) . '</p>';
 				echo '<p>' .
 					sprintf(
+						// translators: rtmedia link.
 						esc_html__( 'You can alternatively create a support request %s', 'buddypress-media' ),
 						'<a target="_blank" href="https://rtmedia.io/premium-support/">' . esc_html__( 'here', 'buddypress-media' ) . '</a>.'
 					) .
@@ -703,24 +733,22 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		/**
 		 * Write debug info as a text file and download it.
 		 *
-		 * @param void
-		 *
 		 * @return void
 		 */
 		public function download_debuginfo_as_text() {
 
-			header('Content-disposition: attachment; filename=debuginfo.txt');
-			header('Content-type: text/plain');
+			header( 'Content-disposition: attachment; filename=debuginfo.txt' );
+			header( 'Content-type: text/plain' );
 			global $wpdb, $wp_version, $bp;
-			$debug_info = array();
-			$debug_info['Home URL'] = esc_url( home_url() );
-			$debug_info['Site URL'] = esc_url( site_url() );
-			$debug_info['PHP'] = esc_html( PHP_VERSION );
-			$debug_info['MYSQL'] = esc_html( $wpdb->db_version() );
-			$debug_info['WordPress'] = esc_html( $wp_version );
+			$debug_info               = array();
+			$debug_info['Home URL']   = esc_url( home_url() );
+			$debug_info['Site URL']   = esc_url( site_url() );
+			$debug_info['PHP']        = esc_html( PHP_VERSION );
+			$debug_info['MYSQL']      = esc_html( $wpdb->db_version() );
+			$debug_info['WordPress']  = esc_html( $wp_version );
 			$debug_info['BuddyPress'] = esc_html( ( isset( $bp->version ) ) ? $bp->version : '-NA-' );
-			$debug_info['rtMedia'] = esc_html( RTMEDIA_VERSION );
-			$debug_info['OS'] = esc_html( PHP_OS );
+			$debug_info['rtMedia']    = esc_html( RTMEDIA_VERSION );
+			$debug_info['OS']         = esc_html( PHP_OS );
 			if ( extension_loaded( 'imagick' ) ) {
 				$imagickobj = new Imagick();
 				$imagick    = $message = preg_replace( " #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#i", "'<a href=\"$1\" target=\"_blank\">$3</a>$4'", $imagickobj->getversion() );
@@ -733,30 +761,30 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			} else {
 				$gd['GD Version'] = 'Not Installed';
 			}
-			$debug_info['GD'] = esc_html( $gd['GD Version'] );
-			$debug_info['[php.ini] post_max_size'] = esc_html( ini_get( 'post_max_size' ) );
+			$debug_info['GD']                            = esc_html( $gd['GD Version'] );
+			$debug_info['[php.ini] post_max_size']       = esc_html( ini_get( 'post_max_size' ) );
 			$debug_info['[php.ini] upload_max_filesize'] = esc_html( ini_get( 'upload_max_filesize' ) );
-			$debug_info['[php.ini] memory_limit'] = esc_html( ini_get( 'memory_limit' ) );
-			$plugin_info = explode( ',', $this->get_plugin_info() );
-			$debug_info['Installed Plugins']      = implode( ', '. PHP_EOL . str_repeat( ' ', 49 ) , $plugin_info );
-			$active_theme = wp_get_theme();
-			$debug_info['Theme Name'] = esc_html( $active_theme->Name );
-			$debug_info['Theme Version'] = esc_html( $active_theme->Version );
-			$debug_info['Author URL'] = esc_url( $active_theme->{'Author URI'} );
-			$debug_info['Template Overrides'] = implode( ', '. PHP_EOL . str_repeat( ' ', 50 ) , $this->rtmedia_scan_template_files( RTMEDIA_PATH . '/templates/' ) );
-			$rtmedia_options = get_option( 'rtmedia-options' );
-			$rtmedia_options = array_merge( $debug_info, $rtmedia_options );
-			$i=0;
-			if( ! empty( $rtmedia_options ) ) {
+			$debug_info['[php.ini] memory_limit']        = esc_html( ini_get( 'memory_limit' ) );
+			$plugin_info                                 = explode( ',', $this->get_plugin_info() );
+			$debug_info['Installed Plugins']             = implode( ', ' . PHP_EOL . str_repeat( ' ', 49 ), $plugin_info );
+			$active_theme                                = wp_get_theme();
+			$debug_info['Theme Name']                    = esc_html( $active_theme->Name );
+			$debug_info['Theme Version']                 = esc_html( $active_theme->Version );
+			$debug_info['Author URL']                    = esc_url( $active_theme->{'Author URI'} );
+			$debug_info['Template Overrides']            = implode( ', ' . PHP_EOL . str_repeat( ' ', 50 ), $this->rtmedia_scan_template_files( RTMEDIA_PATH . '/templates/' ) );
+			$rtmedia_options                             = get_option( 'rtmedia-options' );
+			$rtmedia_options                             = array_merge( $debug_info, $rtmedia_options );
+			$i = 0;
+			if ( ! empty( $rtmedia_options ) ) {
 				echo '==============================================================================' . PHP_EOL;
 				echo '================================== Debug Info ================================' . PHP_EOL;
 				echo '==============================================================================' . PHP_EOL . PHP_EOL . PHP_EOL;
 
 				foreach ( $rtmedia_options as $option => $value ) {
-					echo ucwords( str_replace( '_', ' ', $option ) ) . str_repeat( ' ', 50 - strlen($option) ) . wp_strip_all_tags( $value ) . PHP_EOL;
+					echo ucwords( str_replace( '_', ' ', $option ) ) . str_repeat( ' ', 50 - strlen( $option ) ) . wp_strip_all_tags( $value ) . PHP_EOL;
 				}
 
-				readfile( "debuginfo.txt" );
+				readfile( 'debuginfo.txt' );
 				exit();
 			}
 

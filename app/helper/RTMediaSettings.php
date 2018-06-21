@@ -1,23 +1,26 @@
 <?php
-
 /**
  * Description of RTMediaSettings
  *
- * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
- * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
+ * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>, Joshua Abenazer <joshua.abenazer@rtcamp.com>
+ *
+ * @package    rtMedia
  */
+
 if ( ! class_exists( 'RTMediaSettings' ) ) {
 
+	/**
+	 * Class RTMediaSettings
+	 */
 	class RTMediaSettings {
 
 		/**
 		 * Constructor
 		 *
 		 * @access public
-		 * @return void
 		 */
 		public function __construct() {
-			//todo: nonce required
+			// todo: nonce required.
 			if ( ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				add_action( 'admin_init', array( $this, 'settings' ) );
 
@@ -34,8 +37,6 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 * @access public
 		 * @global string 'buddypress-media'
 		 *
-		 * @param  void
-		 *
 		 * @return array  $defaults
 		 */
 		public function get_default_options() {
@@ -43,28 +44,28 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$options = $rtmedia->options;
 
 			$defaults = array(
-				'general_enableAlbums'              => 1,
-				'general_enableAlbums_description'  => 0,
-				'general_enableComments'            => 0,
-				'general_enableGallerysearch'       => 0,
-				'general_enableLikes'               => 1,
-				'general_downloadButton'            => 0,
-				'general_enableLightbox'            => 1,
-				'general_perPageMedia'              => 10,
-				'general_display_media'             => 'load_more',
-				'general_enableMediaEndPoint'       => 0,
-				'general_showAdminMenu'             => 0,
-				'general_videothumbs'               => 2,
-				'general_jpeg_image_quality'        => 90,
-				'general_uniqueviewcount'           => 0,
-				'general_viewcount'                 => 0,
-				'general_AllowUserData'             => 0,
-				'rtmedia_add_linkback'              => 0,
-				'rtmedia_affiliate_id'              => '',
-				'rtmedia_enable_api'                => 0,
-				'general_masonry_layout'            => 0,
-				'general_masonry_layout_activity'   => 0,
-				'general_direct_upload'             => 0,
+				'general_enableAlbums'             => 1,
+				'general_enableAlbums_description' => 0,
+				'general_enableComments'           => 0,
+				'general_enableGallerysearch'      => 0,
+				'general_enableLikes'              => 1,
+				'general_downloadButton'           => 0,
+				'general_enableLightbox'           => 1,
+				'general_perPageMedia'             => 10,
+				'general_display_media'            => 'load_more',
+				'general_enableMediaEndPoint'      => 0,
+				'general_showAdminMenu'            => 0,
+				'general_videothumbs'              => 2,
+				'general_jpeg_image_quality'       => 90,
+				'general_uniqueviewcount'          => 0,
+				'general_viewcount'                => 0,
+				'general_AllowUserData'            => 0,
+				'rtmedia_add_linkback'             => 0,
+				'rtmedia_affiliate_id'             => '',
+				'rtmedia_enable_api'               => 0,
+				'general_masonry_layout'           => 0,
+				'general_masonry_layout_activity'  => 0,
+				'general_direct_upload'            => 0,
 			);
 
 			foreach ( $rtmedia->allowed_types as $type ) {
@@ -99,7 +100,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$defaults['styles_enabled']                  = 1;
 
 			/* default value for add media in comment media */
-			$defaults['rtmedia_disable_media_in_commented_media']      = 1;
+			$defaults['rtmedia_disable_media_in_commented_media'] = 1;
 
 			if ( isset( $options['general_videothumbs'] ) && is_numeric( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) > 10 ) {
 				$defaults['general_videothumbs'] = 10;
@@ -109,7 +110,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				if ( is_numeric( $options['general_jpeg_image_quality'] ) ) {
 					if ( $options['general_jpeg_image_quality'] > 100 ) {
 						$defaults['general_jpeg_image_quality'] = 100;
-					} else if ( $options['general_jpeg_image_quality'] < 1 ) {
+					} elseif ( $options['general_jpeg_image_quality'] < 1 ) {
 						$defaults['general_jpeg_image_quality'] = 90;
 					}
 				} else {
@@ -127,9 +128,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  type $options
+		 * @param  array $options Options.
 		 *
-		 * @return type $options
+		 * @return array $options
 		 */
 		public function sanitize_options( $options ) {
 			$defaults = $this->get_default_options();
@@ -143,9 +144,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  type $options
+		 * @param  array $options Options.
 		 *
-		 * @return type $options
+		 * @return array $options
 		 */
 		public function sanitize_before_save_options( $options ) {
 			$defaults = $this->get_default_options();
@@ -180,16 +181,16 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				$options['general_videothumbs'] = 10;
 			}
 
-			// Checking if video_thumbnails value is less then 0
+			// Checking if video_thumbnails value is less then 0.
 			if ( isset( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) <= 0 ) {
 				$options['general_videothumbs'] = 2;
 			}
 
-			// Checking if number of media perpage is integer or not
+			// Checking if number of media perpage is integer or not.
 			if ( isset( $options['general_perPageMedia'] ) ) {
 				if ( intval( $options['general_perPageMedia'] ) < 1 ) {
 					$options['general_perPageMedia'] = 10;
-				} else if ( ! is_int( $options['general_perPageMedia'] ) ) {
+				} elseif ( ! is_int( $options['general_perPageMedia'] ) ) {
 					$options['general_perPageMedia'] = round( $options['general_perPageMedia'] );
 				}
 			}
@@ -198,17 +199,16 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		}
 
 		/**
-		 * rtmedia settings.
+		 * The rtmedia settings.
 		 *
 		 * @access public
-		 * @global BPMediaAddon $rtmedia_addon
 		 *
-		 * @param               void
+		 * @global BPMediaAddon $rtmedia_addon
 		 *
 		 * @return void
 		 */
 		public function settings() {
-			//todo: nonce required
+			// todo: nonce required.
 			global $rtmedia, $rtmedia_addon, $rtmedia_save_setting_single;
 			$options          = rtmedia_get_site_option( 'rtmedia-options' );
 			$options          = $this->sanitize_options( $options );
@@ -226,7 +226,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 					flush_rewrite_rules( false );
 				}
 				$settings_saved = '';
-				$setting_save = filter_input( INPUT_GET, 'settings-saved', FILTER_SANITIZE_STRING );
+				$setting_save   = filter_input( INPUT_GET, 'settings-saved', FILTER_SANITIZE_STRING );
 				if ( ! isset( $setting_save ) ) {
 					$settings_saved = '&settings-saved=true';
 				}
@@ -234,6 +234,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				$http_referer = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
 				if ( isset( $http_referer ) ) {
 					wp_redirect( $http_referer . $settings_saved );
+					exit();
 				}
 				global $rtmedia;
 				$rtmedia->options = $options;
@@ -241,20 +242,26 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 			if ( function_exists( 'add_settings_section' ) ) {
 				$rtmedia_addon = new RTMediaAddon();
-				add_settings_section( 'rtm-addons', esc_html__( 'BuddyPress Media Addons for Photos', 'buddypress-media' ), array(
-					$rtmedia_addon,
-					'get_addons',
-				), 'rtmedia-addons' );
+				add_settings_section(
+					'rtm-addons', esc_html__( 'BuddyPress Media Addons for Photos', 'buddypress-media' ), array(
+						$rtmedia_addon,
+						'get_addons',
+					), 'rtmedia-addons'
+				);
 				$rtmedia_support = new RTMediaSupport( false );
-				add_settings_section( 'rtm-support', esc_html__( 'Support', 'buddypress-media' ), array(
-					$rtmedia_support,
-					'get_support_content',
-				), 'rtmedia-support' );
+				add_settings_section(
+					'rtm-support', esc_html__( 'Support', 'buddypress-media' ), array(
+						$rtmedia_support,
+						'get_support_content',
+					), 'rtmedia-support'
+				);
 				$rtmedia_themes = new RTMediaThemes();
-				add_settings_section( 'rtm-themes', esc_html__( 'rtMedia Themes', 'buddypress-media' ), array(
-					$rtmedia_themes,
-					'get_themes',
-				), 'rtmedia-themes' );
+				add_settings_section(
+					'rtm-themes', esc_html__( 'rtMedia Themes', 'buddypress-media' ), array(
+						$rtmedia_themes,
+						'get_themes',
+					), 'rtmedia-themes'
+				);
 			}
 
 			if ( ! isset( $rtmedia_save_setting_single ) ) {
@@ -266,8 +273,6 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 * Show network notices.
 		 *
 		 * @access public
-		 *
-		 * @param  void
 		 *
 		 * @return void
 		 */
@@ -311,8 +316,6 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  void
-		 *
 		 * @return void
 		 */
 		public function allowed_types() {
@@ -321,6 +324,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$allowed_types = implode( ', ', $allowed_types );
 			echo '<span class="description">' .
 				sprintf(
+					// translators: link.
 					esc_html__( 'Currently your network allows uploading of the following file types. You can change the settings %s', 'buddypress-media' ),
 					'<a href="' . esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ) . '">' . esc_html__( 'here', 'buddypress-media' ) . '</a><br /><code>' . esc_html( $allowed_types ) . '</code>'
 				) .
@@ -331,11 +335,10 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 * Sanitizes the settings
 		 *
 		 * @access public
-		 * @global type $rtmedia_admin
 		 *
-		 * @param  type $input
+		 * @param  array $input Input.
 		 *
-		 * @return type $input
+		 * @return array $input
 		 */
 		public function sanitize( $input ) {
 			$rtmedia_options = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
@@ -372,14 +375,12 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  void
-		 *
 		 * @return void
 		 */
 		public function image_settings_intro() {
 			if ( is_plugin_active( 'regenerate-thumbnails/regenerate-thumbnails.php' ) ) {
 				$regenerate_link = admin_url( '/tools.php?page=regenerate-thumbnails' );
-			} else if ( array_key_exists( 'regenerate-thumbnails/regenerate-thumbnails.php', get_plugins() ) ) {
+			} elseif ( array_key_exists( 'regenerate-thumbnails/regenerate-thumbnails.php', get_plugins() ) ) {
 				$regenerate_link = admin_url( '/plugins.php#regenerate-thumbnails' );
 			} else {
 				$regenerate_link = wp_nonce_url( admin_url( 'update.php?action=install-plugin&plugin=regenerate-thumbnails' ), 'install-plugin_regenerate-thumbnails' );
@@ -395,10 +396,6 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 * Output a checkbox for privacy_notice.
 		 *
 		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return string $notice
 		 */
 		public function privacy_notice() {
 			if ( current_user_can( 'create_users' ) ) {
@@ -418,8 +415,6 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 * Output rtmedia_support_intro.
 		 *
 		 * @access public
-		 *
-		 * @param  void
 		 *
 		 * @return void
 		 */
