@@ -1514,8 +1514,7 @@ function rtm_privacy_message_on_website() {
 	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 
  	if ( ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
-		if( "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
-
+		if( ! empty( $options['general_upload_terms_show_pricacy_message'] ) && "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
 			$rtm_privacy_allowed_postion  = array( 'top', 'bottom' );
 			$rtm_privacy_message_position = ! empty ( $rtm_privacy_message_options['position'] ) && ( in_array( $rtm_privacy_message_options['background-color'], $rtm_privacy_allowed_postion) )  ? $rtm_privacy_message_options['position'] . ':0' : 'bottom: 0';
 			$rtm_privacy_message_bgcolor  = ! empty ( $rtm_privacy_message_options['background-color'] )   ? 'background-color: ' . $rtm_privacy_message_options['background-color'] : 'background-color: rgba(0,0,0,0.95)';
