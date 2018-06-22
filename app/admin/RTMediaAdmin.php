@@ -330,7 +330,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							$message = sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page );
 							?>
 							<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
-							<?php echo $message; ?>
+							<?php
+							echo wp_kses( $message, array(
+								'a' => array(
+									'href' => array(),
+								),
+							) );
+							?>
 						</span>
 						<a href="#" onclick="rtmedia_hide_premium_addon_notice('<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>');" style="float:right">Dismiss</a>
 					</p>
@@ -1930,13 +1936,20 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function rtm_addon_license_notice() {
 
-			if ( ! empty( $_GET['page'] ) && 'rtmedia-license' === $_GET['page'] ) {
+			$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+			$args = array(
+				'a' => array(
+					'href' => array(),
+				),
+			);
+
+			if ( ! empty( $page ) && 'rtmedia-license' === $page ) {
 				$my_account  = 'https://rtmedia.io/my-account';
 				$license_doc = 'https://rtmedia.io/docs/license/';
 
 				// translators: Account page and link.
 				$message = sprintf( __( 'Your license keys can be found on <a href="%1$s">my-account</a> page. For more details, please refer to <a href="%2$s">License documentation</a> page.', 'buddypress-media' ), $my_account, $license_doc );
-				echo '<div class="notice"><p>' . $message . '</p></div>';
+				echo '<div class="notice"><p>' . wp_kses( $message, $args ) . '</p></div>';
 
 				return;
 			}
@@ -1955,7 +1968,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						__( 'We found an invalid or expired license key for an rtMedia add-on. Please go to the <a href="%s">Licenses page</a> to fix this issue.', 'buddypress-media' ),
 						admin_url( 'admin.php?page=rtmedia-license' )
 					);
-					echo '<div class="error"><p>' . $message . '</p></div>';
+					echo '<div class="error"><p>' . wp_kses( $message, $args ) . '</p></div>';
 					break;
 				}
 			}
