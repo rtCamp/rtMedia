@@ -64,22 +64,21 @@ class RTMediaFormHandler {
 			'show_desc' => false,
 		);
 		$args     = wp_parse_args( $args, $defaults );
-		extract( $args );
 
-		if ( ! isset( $value ) ) {
+		if ( ! isset( $args['value'] ) ) {
 			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return '';
 		}
 
-		if ( ! empty( $key ) ) {
-			$args['name'] = 'rtmedia-options[' . $key . ']';
+		if ( ! empty( $args['key'] ) ) {
+			$args['name'] = 'rtmedia-options[' . $args['key'] . ']';
 		}
 
 		$args['rtForm_options'] = array(
 			array(
 				''        => 1,
-				'checked' => $value,
+				'checked' => $args['value'],
 			),
 		);
 
