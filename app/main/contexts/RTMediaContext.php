@@ -1,8 +1,9 @@
 <?php
-
-/*
+/**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
+ *
+ * @package    rtMedia
  */
 
 /**
@@ -17,19 +18,26 @@
 class RTMediaContext {
 
 	/**
+	 * Context Type. It can be any type among these. (post, page, custom_post, home_page, archive etc.)
 	 *
-	 * @var type
-	 *
-	 * $type - Context Type. It can be any type among these. (post, page, custom_post, home_page, archive etc.)
-	 * $id - context id of the context
+	 * @var string
 	 */
-	public $type, $id;
+
+	public $type;
 
 	/**
+	 * Context id of the context
+	 *
+	 * @var int
+	 */
+	public $id;
+
+	/**
+	 * RTMediaContext constructor.
 	 *
 	 * @return \RTMediaContext
 	 */
-	function __construct() {
+	public function __construct() {
 		$this->set_context();
 
 		return $this;
@@ -38,7 +46,7 @@ class RTMediaContext {
 	/**
 	 * Set current request context
 	 */
-	function set_context() {
+	public function set_context() {
 		if ( class_exists( 'BuddyPress' ) ) {
 			$this->set_bp_context();
 		} else {
@@ -48,9 +56,10 @@ class RTMediaContext {
 
 	/**
 	 * Set WordPress context
-	 * @global type $post
+	 *
+	 * @global object $post
 	 */
-	function set_wp_context() {
+	public function set_wp_context() {
 		global $post;
 		global $bp;
 		if ( is_author() ) {
@@ -61,7 +70,8 @@ class RTMediaContext {
 			$this->id   = $post->ID;
 		} else {
 			$wp_default_context = array( 'page', 'post' );
-			if ( isset( $_REQUEST['context'] ) &&  in_array( $_REQUEST['context'], $wp_default_context ) ) {
+
+			if ( isset( $_REQUEST['context'] ) && in_array( $_REQUEST['context'], $wp_default_context ) ) {
 				$this->type = $_REQUEST['context'];
 				$this->id   = $_REQUEST['context_id'];
 			} else {
@@ -76,7 +86,7 @@ class RTMediaContext {
 	/**
 	 * Set BuddyPress context
 	 */
-	function set_bp_context() {
+	public function set_bp_context() {
 		if ( bp_is_blog_page() && ! is_home() ) {
 			$this->set_wp_context();
 		} else {
@@ -87,7 +97,7 @@ class RTMediaContext {
 	/**
 	 * Set BuddyPress component context
 	 */
-	function set_bp_component_context() {
+	public function set_bp_component_context() {
 		if ( bp_displayed_user_id() && ! bp_is_group() ) {
 			$this->type = 'profile';
 		} else {
@@ -106,9 +116,10 @@ class RTMediaContext {
 
 	/**
 	 * Get current bp component id
+	 *
 	 * @return int/null
 	 */
-	function get_current_bp_component_id() {
+	public function get_current_bp_component_id() {
 		switch ( bp_current_component() ) {
 			case 'groups':
 				if ( function_exists( 'bp_get_current_group_id' ) ) {
@@ -116,10 +127,8 @@ class RTMediaContext {
 				}
 
 				return null;
-				break;
 			default:
 				return bp_displayed_user_id();
-				break;
 		}
 	}
 }
