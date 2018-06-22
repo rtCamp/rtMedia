@@ -28,18 +28,17 @@ class RTMediaFormHandler {
 			'selects'   => array(),
 		);
 		$args     = wp_parse_args( $args, $defaults );
-		extract( $args );
 
-		if ( ! empty( $key ) ) {
-			$args['name'] = 'rtmedia-options[' . $key . ']';
+		if ( ! empty( $args['key'] ) ) {
+			$args['name'] = 'rtmedia-options[' . $args['key'] . ']';
 		}
 
 		$args['rtForm_options'] = array();
-		if ( ! empty( $selects ) ) {
-			foreach ( $selects as $value => $key ) {
+		if ( ! empty( $args['selects'] ) ) {
+			foreach ( $args['selects'] as $value => $key ) {
 				$args['rtForm_options'][] = array(
 					$key       => $value,
-					'selected' => ( $default === $value ) ? true : false,
+					'selected' => ( $args['default'] === $value ) ? true : false,
 				);
 			}
 		}
@@ -139,7 +138,7 @@ class RTMediaFormHandler {
 			return $chk_obj->get_switch( $args );
 		}
 
-		return;
+		return '';
 	}
 
 	/**
