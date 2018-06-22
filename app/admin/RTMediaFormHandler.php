@@ -156,23 +156,22 @@ class RTMediaFormHandler {
 			'show_desc' => false,
 		);
 		$args     = wp_parse_args( $args, $defaults );
-		extract( $args );
 
-		if ( 2 > count( $radios ) ) {
+		if ( 2 > count( $args['radios'] ) ) {
 			trigger_error( esc_html__( 'Need to specify atleast two radios, else use a checkbox instead', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return;
 		}
 
-		if ( ! empty( $key ) ) {
-			$args['name'] = 'rtmedia-options[' . $key . ']';
+		if ( ! empty( $args['key'] ) ) {
+			$args['name'] = 'rtmedia-options[' . $args['key'] . ']';
 		}
 
 		$args['rtForm_options'] = array();
-		foreach ( $radios as $value => $key ) {
+		foreach ( $args['radios'] as $value => $key ) {
 			$args['rtForm_options'][] = array(
 				$key      => $value,
-				'checked' => ( $default === $value ) ? true : false,
+				'checked' => ( $args['default'] === $value ) ? true : false,
 			);
 		}
 
