@@ -210,19 +210,16 @@ class RTMediaFormHandler {
 			'desc' => '',
 		);
 		$args     = wp_parse_args( $args, $defaults );
-		extract( $args );
 
-		if ( ! isset( $value ) ) {
+		if ( ! isset( $args['value'] ) ) {
 			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return;
 		}
 
-		if ( ! empty( $key ) ) {
-			$args['name'] = 'rtmedia-options[' . $key . ']';
+		if ( ! empty( $args['key'] ) ) {
+			$args['name'] = 'rtmedia-options[' . $args['key'] . ']';
 		}
-
-		$args['value'] = $value;
 
 		$num_obj = new rtForm();
 		$num_obj->display_number( $args );
@@ -245,19 +242,16 @@ class RTMediaFormHandler {
 			'desc' => '',
 		);
 		$args     = wp_parse_args( $args, $defaults );
-		extract( $args );
 
-		if ( ! isset( $value ) ) {
+		if ( ! isset( $args['value'] ) ) {
 			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return;
 		}
 
-		if ( ! empty( $key ) ) {
-			$args['name'] = 'rtmedia-options[' . $key . ']';
+		if ( ! empty( $args['key'] ) ) {
+			$args['name'] = 'rtmedia-options[' . $args['key'] . ']';
 		}
-
-		$args['value'] = $value;
 
 		$num_obj = new rtForm();
 		$num_obj->display_textbox( $args );
@@ -282,22 +276,21 @@ class RTMediaFormHandler {
 			'desc'   => '',
 		);
 		$args     = wp_parse_args( $args, $defaults );
-		extract( $args );
 
-		if ( ! isset( $href ) ) {
+		if ( ! isset( $args['href'] ) ) {
 			trigger_error( esc_html__( 'Please provide a "href" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return '';
 		}
 
-		if ( ! isset( $text ) ) {
+		if ( ! isset( $args['text'] ) ) {
 			trigger_error( esc_html__( 'Please provide a "text" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
 
 			return '';
 		}
 
-		if ( isset( $target ) && ! empty( $target ) ) {
-			$args['misc'] = array( 'target' => $target );
+		if ( isset( $args['target'] ) && ! empty( $args['target'] ) ) {
+			$args['misc'] = array( 'target' => $args['target'] );
 		}
 
 		$link_obj = new rtForm();
