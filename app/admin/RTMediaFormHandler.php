@@ -19,7 +19,7 @@ class RTMediaFormHandler {
 	 *
 	 * @param array $args Arguments.
 	 */
-	public static function selectBox( $args ) {
+	public static function selectBox( $args ) { // @codingStandardsIgnoreLine
 		$defaults = array(
 			'key'       => '',
 			'desc'      => '',
@@ -124,7 +124,12 @@ class RTMediaFormHandler {
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
-		$args['rtForm_options'] = array( array( '' => 1, 'checked' => $value ) );
+		$args['rtForm_options'] = array(
+			array(
+				''        => 1,
+				'checked' => $value,
+			),
+		);
 
 		$chk_obj = new rtForm();
 
@@ -133,6 +138,7 @@ class RTMediaFormHandler {
 		} else {
 			return $chk_obj->get_switch( $args );
 		}
+
 		return;
 	}
 
@@ -839,7 +845,7 @@ class RTMediaFormHandler {
 							'key'   => 'allowedTypes_' . $key . '_enabled',
 							'value' => $section['enabled'],
 						);
-						$allow_upload_checkbox = self::checkbox( $uplaod_args, $echo = false );
+						$allow_upload_checkbox = self::checkbox( $uplaod_args, false );
 						$allow_upload_checkbox = apply_filters( 'rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox, $key, $uplaod_args );
 
 						// allow featured.
@@ -847,7 +853,7 @@ class RTMediaFormHandler {
 							'key'   => 'allowedTypes_' . $key . '_featured',
 							'value' => $section['featured'],
 						);
-						$featured_checkbox = self::checkbox( $featured_args, $echo = false );
+						$featured_checkbox = self::checkbox( $featured_args, false );
 						$featured_checkbox = apply_filters( 'rtmedia_filter_featured_checkbox', $featured_checkbox, $key );
 
 						if ( ! isset( $section['extn'] ) || ! is_array( $section['extn'] ) ) {
@@ -881,7 +887,36 @@ class RTMediaFormHandler {
 								<span class="rtm-field-wrap">
 									<?php
 									// escaping done into inner function.
-									echo wp_kses( $allow_upload_checkbox, array(
+									echo wp_kses(
+										$allow_upload_checkbox, array(
+											'span'  => array(
+												'class'    => array(),
+												'data-on'  => array(),
+												'data-off' => array(),
+											),
+											'label' => array(
+												'for'   => array(),
+												'class' => array(),
+											),
+											'input' => array(
+												'type'    => array(),
+												'checked' => array(),
+												'data-toggle' => array(),
+												'id'      => array(),
+												'name'    => array(),
+												'value'   => array(),
+											),
+										)
+									);
+									?>
+								</span>
+							</td>
+
+							<td>
+								<?php
+								// escaping done into inner function.
+								echo wp_kses(
+									$featured_checkbox, array(
 										'span'  => array(
 											'class'    => array(),
 											'data-on'  => array(),
@@ -899,33 +934,8 @@ class RTMediaFormHandler {
 											'name'        => array(),
 											'value'       => array(),
 										),
-									) );
-									?>
-								</span>
-							</td>
-
-							<td>
-								<?php
-								// escaping done into inner function.
-								echo wp_kses( $featured_checkbox, array(
-									'span'  => array(
-										'class'    => array(),
-										'data-on'  => array(),
-										'data-off' => array(),
-									),
-									'label' => array(
-										'for'   => array(),
-										'class' => array(),
-									),
-									'input' => array(
-										'type'        => array(),
-										'checked'     => array(),
-										'data-toggle' => array(),
-										'id'          => array(),
-										'name'        => array(),
-										'value'       => array(),
-									),
-								) );
+									)
+								);
 								?>
 							</td>
 
@@ -1469,7 +1479,7 @@ class RTMediaFormHandler {
 	/**
 	 * Render each tab content
 	 *
-	 * @param array $option Options.
+	 * @param array $options Options.
 	 * @param array $groups Groups.
 	 * @param int   $default_group Default group.
 	 */
@@ -1530,13 +1540,15 @@ class RTMediaFormHandler {
 			<tr>
 				<th>
 					<?php
-					echo wp_kses( $option['title'], array(
-						'a' => array(
-							'id'     => array(),
-							'href'   => array(),
-							'target' => array(),
-						),
-					) );
+					echo wp_kses(
+						$option['title'], array(
+							'a' => array(
+								'id'     => array(),
+								'href'   => array(),
+								'target' => array(),
+							),
+						)
+					);
 					?>
 				</th>
 				<td>
@@ -1547,13 +1559,15 @@ class RTMediaFormHandler {
 							<i class="dashicons dashicons-info rtmicon"></i>
 							<span class="rtm-tip">
 								<?php
-								echo wp_kses( ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA', array(
-									'a' => array(
-										'id'     => array(),
-										'href'   => array(),
-										'target' => array(),
-									),
-								) );
+								echo wp_kses(
+									( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA', array(
+										'a' => array(
+											'id'     => array(),
+											'href'   => array(),
+											'target' => array(),
+										),
+									)
+								);
 								?>
 							</span>
 						</span>
@@ -1567,14 +1581,16 @@ class RTMediaFormHandler {
 			?>
 			<div class="rtm-message rtm-notice">
 				<?php
-				echo wp_kses( wpautop( $option['after_content'] ), array(
-					'a' => array(
-						'id'     => array(),
-						'href'   => array(),
-						'target' => array(),
-					),
-					'p' => array(),
-				) );
+				echo wp_kses(
+					wpautop( $option['after_content'] ), array(
+						'a' => array(
+							'id'     => array(),
+							'href'   => array(),
+							'target' => array(),
+						),
+						'p' => array(),
+					)
+				);
 				?>
 			</div>
 			<?php
