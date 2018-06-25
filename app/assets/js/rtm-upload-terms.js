@@ -61,18 +61,18 @@ if ( 'object' === typeof rtMediaHook ) {
 
 jQuery(document).ready(function () {
 	if( ( '#aw-whats-new-submit' ).length > 0 ) {
-		$( '#aw-whats-new-submit' ).attr( 'disabled', 'disabled' );
+		jQuery( '#aw-whats-new-submit' ).attr( 'disabled', 'disabled' );
 	}
 
 	jQuery( '#rtmedia_upload_terms_conditions' ).on( 'click', function () {
-		if($( '#rtmedia_upload_terms_conditions' ).length > 0){
-			$( '#rtmedia_upload_terms_conditions' ).change(function(){
-				if ( $( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ){
-					$( '#aw-whats-new-submit' ).attr( 'disabled', false );
+		if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0 ){
+			jQuery( '#rtmedia_upload_terms_conditions' ).change( function() {
+				if ( jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ) {
+					jQuery( '#aw-whats-new-submit' ).attr( 'disabled', false );
 				} else {
-					$( '#aw-whats-new-submit' ).attr( 'disabled', true );
+					jQuery( '#aw-whats-new-submit' ).attr( 'disabled', true );
 				}
-			});
+			} );
 		}
 
 		if ( jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ) {
