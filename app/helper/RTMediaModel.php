@@ -110,7 +110,7 @@ class RTMediaModel extends RTDBModel {
 		$select      = apply_filters( 'rtmedia-model-select-query', $select, $this->table_name );
 		$bp_template = get_option( '_bp_theme_package_id' );
 
-		if ( empty( $bp_template ) && 'nouveau' !== $bp_template && "likes" === $rtmedia_interaction->routes['media']->query_vars[0] ) {
+		if ( 'likes' !== $rtmedia_interaction->routes['media']->query_vars[0] ) {
 			$join  = apply_filters( 'rtmedia-model-join-query', $join, $this->table_name );
 			$where = apply_filters( 'rtmedia-model-where-query', $where, $this->table_name , $join);
 		}
@@ -221,7 +221,7 @@ class RTMediaModel extends RTDBModel {
 			$order_by = 'blog_id' . ( ( $order_by ) ? ',' . $order_by : '' );
 		}
 
-		$sql = "SELECT * FROM {$this->table_name}  ";
+		$sql = "SELECT * FROM {$this->table_name} INNER JOIN wp_posts AS post_table ON post_table.id = {$this->table_name}.media_id and post_table.post_type = 'rtmedia_album' ";
 
 		if ( is_multisite() ) {
 			$sub_sql = $wpdb->prepare( "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = %d AND album_id IS NOT NULL AND media_type <> 'album' AND context <> 'group' AND blog_id = %d", $author_id, get_current_blog_id() ); // @codingStandardsIgnoreLine
@@ -229,7 +229,7 @@ class RTMediaModel extends RTDBModel {
 			$sub_sql = $wpdb->prepare( "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = %d AND album_id IS NOT NULL AND media_type <> 'album' AND context <> 'group'", $author_id ); // @codingStandardsIgnoreLine
 		}
 		// @codingStandardsIgnoreStart
-		$where = $wpdb->prepare( " WHERE (id IN( $sub_sql ) OR (media_author = %d ))
+		$where = $wpdb->prepare( " WHERE ({$this->table_name}.media_id IN( $sub_sql ) OR (media_author = %d ))
 			    AND media_type = 'album'
 			    AND (context = 'profile' or context is NULL) ", $author_id ); // @codingStandardsIgnoreEnd
 		if ( is_multisite() ) {
@@ -283,8 +283,10 @@ class RTMediaModel extends RTDBModel {
 		} else {
 			$sub_sql = $wpdb->prepare( "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE context_id = %d AND album_id IS NOT NULL AND media_type != 'album' AND context = 'group'", $group_id );
 		}
-		$sql = $wpdb->prepare( "SELECT * FROM {$this->table_name} WHERE id IN( $sub_sql ) OR (media_type = 'album' AND context_id = %d AND context = 'group')", $group_id );
-
+		$where = $wpdb->prepare( "WHERE {$this->table_name}.media_id IN( $sub_sql ) OR (media_type = 'album' AND context_id = %d AND context = 'group')", $group_id );
+        $where = apply_filters( 'rtmedia-get-group-album-where-query', $where, $this->table_name );
+        $sql = "SELECT * FROM {$this->table_name} INNER JOIN wp_posts AS post_table ON post_table.id = {$this->table_name}.media_id and post_table.post_type = 'rtmedia_album' ";
+        $sql .= $where;
 		if ( is_multisite() ) {
 			$sql .= $wpdb->prepare( " AND  {$this->table_name}.blog_id = %d ", get_current_blog_id() );
 		}

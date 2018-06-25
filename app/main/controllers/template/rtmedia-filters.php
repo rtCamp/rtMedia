@@ -675,7 +675,7 @@ add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_mo
  * @param  string $join
  * @return string
  */
-function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
+function rtmedia_search_fillter_where_query( $where, $table_name ) {
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
 		$search                = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
 		$search_by             = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
@@ -757,7 +757,9 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	return $where;
 }
 
-add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 10, 3 );
+add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 10, 2 );
+add_filter( 'rtmedia-get-album-where-query', 'rtmedia_search_fillter_where_query', 10, 2 );
+add_filter( 'rtmedia-get-group-album-where-query', 'rtmedia_search_fillter_where_query', 10, 2 );
 
 /**
  * Update join query for media search
