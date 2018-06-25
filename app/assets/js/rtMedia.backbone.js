@@ -440,6 +440,7 @@ jQuery( function( $ ) {
 			var $media_search_input = $( '#media_search_input' ).val();
 			var $media_search       = $( '#media_search' );
 			var $media_fatch_loader = $( '#media_fatch_loader' );
+            var $media_type           = $( 'input[type="hidden"][name="media_type"]' );
 
 			if ( '' === $media_search_input ) {
 				return false;
@@ -458,6 +459,10 @@ jQuery( function( $ ) {
 			href += '?search=' + $media_search_input;
 			if ( $( '#search_by' ).length > 0 ) {
 				href += '&search_by=' + $( '#search_by' ).val();
+			}
+
+			if ( $media_type.length > 0 && 'album' === $media_type.val() ) {
+				href += '&media_type=' + $media_type.val();
 			}
 
 			change_rtBrowserAddressUrl( href, '' );
@@ -1871,6 +1876,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 function change_rtBrowserAddressUrl( url, page ) {
 	if ( typeof ( history.pushState ) != 'undefined' ) {
 		var obj = { Page: page, Url: url };
+		console.log( obj );
 		history.pushState( obj, obj.Page, obj.Url );
 	}
 }

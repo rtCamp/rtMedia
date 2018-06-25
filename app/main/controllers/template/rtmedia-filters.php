@@ -776,9 +776,16 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 		$term_taxonomy_table      = $wpdb->term_taxonomy;
 		$search                   = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
 		$search_by                = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
+		$media_type               = ( isset( $_REQUEST['media_type'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['media_type'] ) ) : '';
+
+		if ( 'album' === $media_type ) {
+			$media_type = 'rtmedia_album';
+		} else {
+			$media_type = 'attachment';
+		}
 
 		if ( '' !== $search ) {
-				$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
+			$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = '" . $media_type . "')";
 
 			$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 			$request_url = explode( '/', $request_uri );
