@@ -108,9 +108,8 @@ class RTMediaModel extends RTDBModel {
 		}
 
 		$select      = apply_filters( 'rtmedia-model-select-query', $select, $this->table_name );
-		$bp_template = get_option( '_bp_theme_package_id' );
 
-		if ( empty( $bp_template ) && 'nouveau' !== $bp_template && "likes" === $rtmedia_interaction->routes['media']->query_vars[0] ) {
+		if ( 'likes' !== $rtmedia_interaction->routes['media']->query_vars[0] ) {
 			$join  = apply_filters( 'rtmedia-model-join-query', $join, $this->table_name );
 			$where = apply_filters( 'rtmedia-model-where-query', $where, $this->table_name , $join);
 		}
