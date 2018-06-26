@@ -18,6 +18,8 @@ function apply_rtMagnificPopup( selector ) {
 			rtMagnificPopup = jQuery( selector ).magnificPopup( {
 				delegate: 'a:not(.no-popup, .mejs-time-slider, .mejs-volume-slider, .mejs-horizontal-volume-slider)',
 				type: 'ajax',
+				fixedContentPos: true,
+				fixedBgPos: true,
 				tLoading: rt_load_more + ' #%curr%...',
 				mainClass: 'mfp-img-mobile',
 				preload: [ 1, 3 ],
