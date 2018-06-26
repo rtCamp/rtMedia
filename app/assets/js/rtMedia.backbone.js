@@ -1876,7 +1876,6 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 function change_rtBrowserAddressUrl( url, page ) {
 	if ( typeof ( history.pushState ) != 'undefined' ) {
 		var obj = { Page: page, Url: url };
-		console.log( obj );
 		history.pushState( obj, obj.Page, obj.Url );
 	}
 }
