@@ -440,7 +440,7 @@ jQuery( function( $ ) {
 			var $media_search_input = $( '#media_search_input' ).val();
 			var $media_search       = $( '#media_search' );
 			var $media_fatch_loader = $( '#media_fatch_loader' );
-            var $media_type           = $( 'input[type="hidden"][name="media_type"]' );
+			var $media_type         = $( 'input[type="hidden"][name="media_type"]' );
 
 			if ( '' === $media_search_input ) {
 				return false;
