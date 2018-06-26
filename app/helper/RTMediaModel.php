@@ -290,7 +290,7 @@ class RTMediaModel extends RTDBModel {
 		$where          = apply_filters( 'rtmedia-get-group-album-where-query', $where, $this->table_name );
 		$sql            = "SELECT * FROM {$this->table_name} INNER JOIN {$rtm_post_table} AS post_table ON post_table.id = {$this->table_name}.media_id and post_table.post_type = 'rtmedia_album' ";
 
-        $sql .= $where;
+		$sql .= $where;
 
 		if ( is_multisite() ) {
 			$sql .= $wpdb->prepare( " AND  {$this->table_name}.blog_id = %d ", get_current_blog_id() );
