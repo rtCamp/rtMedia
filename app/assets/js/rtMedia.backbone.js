@@ -230,7 +230,7 @@ jQuery( function( $ ) {
 
 						if ( jQuery( 'li#rtm-url-upload' ).length === 0 ) {
 							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( 'opacity', '1' );
-							if ( rtMediaHook.register( 'rtmedia_js_uploader_slide_after_gallery_reload' ) ) {
+							if ( rtMediaHook.call( 'rtmedia_js_uploader_slide_after_gallery_reload' ) ) {
 								jQuery( '#rtm-media-gallery-uploader' ).slideUp();
 							}
 						}
