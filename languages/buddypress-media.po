@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.5.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2018-06-20 08:21:40+00:00\n"
+"POT-Creation-Date: 2018-07-06 08:38:19+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -147,7 +147,7 @@ msgstr ""
 #: app/admin/RTMediaAdmin.php:761 app/admin/RTMediaAdmin.php:1267
 #: app/admin/RTMediaAdmin.php:1268 app/importers/RTMediaActivityUpgrade.php:116
 #: app/importers/RTMediaMigration.php:68 app/main/RTMedia.php:988
-#: app/main/RTMedia.php:1552
+#: app/main/RTMedia.php:1551
 msgid "rtMedia"
 msgstr ""
 
@@ -2445,8 +2445,8 @@ msgstr ""
 #: app/main/RTMedia.php:1067
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:67
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
-#: app/main/controllers/template/rtmedia-functions.php:2083
-#: app/main/controllers/template/rtmedia-functions.php:2092
+#: app/main/controllers/template/rtmedia-functions.php:2087
+#: app/main/controllers/template/rtmedia-functions.php:2096
 #: templates/media/album-single-edit.php:78
 msgid "Delete"
 msgstr ""
@@ -2550,7 +2550,7 @@ msgstr ""
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:327
 #: app/main/controllers/media/RTMediaComment.php:175
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:102
-#: app/main/controllers/template/rtmedia-functions.php:2122
+#: app/main/controllers/template/rtmedia-functions.php:2126
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
@@ -3140,7 +3140,7 @@ msgid "Please swipe for more media."
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-ajax-actions.php:88
-#: app/main/controllers/template/rtmedia-functions.php:2022
+#: app/main/controllers/template/rtmedia-functions.php:2026
 msgid "Comment"
 msgstr ""
 
@@ -3157,12 +3157,12 @@ msgid "Delete Album"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:865
-#: app/main/controllers/template/rtmedia-functions.php:4369
+#: app/main/controllers/template/rtmedia-functions.php:4373
 msgid "rtMedia Shortcode Uploads"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:869
-#: app/main/controllers/template/rtmedia-functions.php:4249
+#: app/main/controllers/template/rtmedia-functions.php:4253
 msgid "rtMedia Activities"
 msgstr ""
 
@@ -3171,12 +3171,12 @@ msgid "rtMedia Comments"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:877
-#: app/main/controllers/template/rtmedia-functions.php:4597
+#: app/main/controllers/template/rtmedia-functions.php:4601
 msgid "rtMedia Media Views"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:881
-#: app/main/controllers/template/rtmedia-functions.php:4698
+#: app/main/controllers/template/rtmedia-functions.php:4702
 msgid "rtMedia Media Likes"
 msgstr ""
 
@@ -3212,141 +3212,141 @@ msgstr ""
 msgid "Go"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2020
+#: app/main/controllers/template/rtmedia-functions.php:2024
 msgid "Type Comment..."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2083
-#: app/main/controllers/template/rtmedia-functions.php:2092
+#: app/main/controllers/template/rtmedia-functions.php:2087
+#: app/main/controllers/template/rtmedia-functions.php:2096
 msgid "Delete Media"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2340
+#: app/main/controllers/template/rtmedia-functions.php:2344
 msgid "Profile Albums"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2344
-#: app/main/controllers/template/rtmedia-functions.php:2389
+#: app/main/controllers/template/rtmedia-functions.php:2348
+#: app/main/controllers/template/rtmedia-functions.php:2393
 msgid "Group Albums"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2568
+#: app/main/controllers/template/rtmedia-functions.php:2572
 msgid "Privacy : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2919
+#: app/main/controllers/template/rtmedia-functions.php:2923
 msgid "You like this"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2929
+#: app/main/controllers/template/rtmedia-functions.php:2933
 msgid "You and "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2948
+#: app/main/controllers/template/rtmedia-functions.php:2952
 msgid " person likes this"
 msgid_plural " people like this"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3053
+#: app/main/controllers/template/rtmedia-functions.php:3057
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3058
+#: app/main/controllers/template/rtmedia-functions.php:3062
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3063
+#: app/main/controllers/template/rtmedia-functions.php:3067
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3068
+#: app/main/controllers/template/rtmedia-functions.php:3072
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3073
+#: app/main/controllers/template/rtmedia-functions.php:3077
 msgid "Blocked temporarily"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3126
+#: app/main/controllers/template/rtmedia-functions.php:3130
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3140
+#: app/main/controllers/template/rtmedia-functions.php:3144
 msgid "1 second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3144
+#: app/main/controllers/template/rtmedia-functions.php:3148
 msgid "1 minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3148
+#: app/main/controllers/template/rtmedia-functions.php:3152
 msgid "1 hour"
 msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3748
+#: app/main/controllers/template/rtmedia-functions.php:3752
 #. translators: date format, see http:php.net/date
 msgid "View Conversation"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4277
+#: app/main/controllers/template/rtmedia-functions.php:4281
 msgid "Activity Date"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4281
+#: app/main/controllers/template/rtmedia-functions.php:4285
 msgid "Activity Content"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4285
-#: app/main/controllers/template/rtmedia-functions.php:4508
+#: app/main/controllers/template/rtmedia-functions.php:4289
+#: app/main/controllers/template/rtmedia-functions.php:4512
 msgid "Attachments"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4378
+#: app/main/controllers/template/rtmedia-functions.php:4382
 msgid "Media Upload Date"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4382
+#: app/main/controllers/template/rtmedia-functions.php:4386
 msgid "Media Title"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4386
-#: app/main/controllers/template/rtmedia-functions.php:4601
-#: app/main/controllers/template/rtmedia-functions.php:4702
+#: app/main/controllers/template/rtmedia-functions.php:4390
+#: app/main/controllers/template/rtmedia-functions.php:4605
+#: app/main/controllers/template/rtmedia-functions.php:4706
 msgid "Media URL"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4390
+#: app/main/controllers/template/rtmedia-functions.php:4394
 msgid "Album Title"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4478
+#: app/main/controllers/template/rtmedia-functions.php:4482
 msgid "rtMedia Activity Comments"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4500
+#: app/main/controllers/template/rtmedia-functions.php:4504
 msgid "Comment Date"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4504
+#: app/main/controllers/template/rtmedia-functions.php:4508
 msgid "Comment Content"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4605
+#: app/main/controllers/template/rtmedia-functions.php:4609
 msgid "Number of Views"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4609
+#: app/main/controllers/template/rtmedia-functions.php:4613
 msgid "Date of First View"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4706
+#: app/main/controllers/template/rtmedia-functions.php:4710
 msgid "Date"
 msgstr ""
 
