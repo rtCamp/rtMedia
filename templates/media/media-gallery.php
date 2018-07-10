@@ -22,10 +22,12 @@ $rand_id = wp_rand( 0, 1000 );
 			<h2 class="rtm-gallery-title">
 				<?php
 				if ( $album_title ) {
-					echo esc_html( $album_title );
+					$album_title = esc_html( $album_title );
 				} else {
-					esc_html_e( 'Media Gallery', 'buddypress-media' );
+					$album_title = esc_html__( 'Media Gallery', 'buddypress-media' );
 				}
+
+				echo apply_filters( 'rtmedia_gallery_shortcode_title', $album_title );
 				?>
 			</h2>
 
@@ -58,10 +60,12 @@ $rand_id = wp_rand( 0, 1000 );
 			<h2 class="rtm-gallery-title">
 				<?php
 				if ( $album_title ) {
-					echo esc_html( $album_title );
+					$album_title = esc_html( $album_title );
 				} else {
-					esc_html_e( 'Media Gallery', 'buddypress-media' );
+					$album_title = esc_html__( 'Media Gallery', 'buddypress-media' );
 				}
+
+				echo apply_filters( 'rtmedia_gallery_shortcode_title', $album_title );
 				?>
 			</h2>
 
