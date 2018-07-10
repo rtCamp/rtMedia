@@ -900,7 +900,7 @@ function add_search_filter( $attr = null ) {
 		$search_value = ( isset( $_GET['search'] ) ? sanitize_text_field( wp_unslash( $_GET['search'] ) ) : '' );
 
 		$html  = "<form method='post' id='media_search_form' class='media_search'>";
-		$html .= "<input type='text' id='media_search_input' value='" . esc_attr( $search_value ) . "' class='media_search_input' name='media_search' value='' placeholder='Search Media'>";
+		$html .= "<input type='text' id='media_search_input' value='" . esc_attr( $search_value ) . "' class='media_search_input' name='media_search' value='' placeholder='" . __( 'Search Media', 'buddypress-media' ) . "'>";
 		$html .= "<span id='media_fatch_loader'></span>";
 
 		$search_by = '';
