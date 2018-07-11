@@ -230,7 +230,9 @@ jQuery( function( $ ) {
 
 						if ( jQuery( 'li#rtm-url-upload' ).length === 0 ) {
 							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( 'opacity', '1' );
-							jQuery( '#rtm-media-gallery-uploader' ).slideUp();
+							if ( rtMediaHook.call( 'rtmedia_js_uploader_slide_after_gallery_reload' ) ) {
+								jQuery( '#rtm-media-gallery-uploader' ).slideUp();
+							}
 						}
 					}
 				} );
