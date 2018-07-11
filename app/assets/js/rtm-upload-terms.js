@@ -25,20 +25,16 @@ if ( 'object' === typeof rtMediaHook ) {
 	} );
 
 	rtMediaHook.register( 'rtmedia_js_before_activity_added', function ( args ) {
-		if ( typeof event !== typeof undefined && typeof event.target !== typeof undefined ) {
-			if ( 'aw-whats-new-submit' === jQuery( event.target ).attr( 'id' ) ) {
-			   if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0 ) {
-					if ( false == args ) {
-						return args;
-					}
+		if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0 ) {
+			if ( false == args ) {
+				return args;
+			}
 
-				   var rt_alert_msg = ( ( 'string' === typeof rtmedia_upload_terms_check_terms_message ) ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
-					if ( ! jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' )) {
-						var selector = jQuery( '.rtmedia-upload-terms' );
-						rtp_display_terms_warning ( selector, rt_alert_msg );
-						return false;
-					}
-				}
+			var rt_alert_msg = ( ( 'string' === typeof rtmedia_upload_terms_check_terms_message ) ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
+			if ( ! jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' )) {
+				var selector = jQuery( '.rtmedia-upload-terms' );
+				rtp_display_terms_warning ( selector, rt_alert_msg );
+				return false;
 			}
 		}
 		return true;
@@ -61,18 +57,18 @@ if ( 'object' === typeof rtMediaHook ) {
 
 jQuery(document).ready(function () {
 	if( ( '#aw-whats-new-submit' ).length > 0 ) {
-		$( '#aw-whats-new-submit' ).attr( 'disabled', 'disabled' );
+		jQuery( '#aw-whats-new-submit' ).attr( 'disabled', 'disabled' );
 	}
 
 	jQuery( '#rtmedia_upload_terms_conditions' ).on( 'click', function () {
-		if($( '#rtmedia_upload_terms_conditions' ).length > 0){
-			$( '#rtmedia_upload_terms_conditions' ).change(function(){
-				if ( $( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ){
-					$( '#aw-whats-new-submit' ).attr( 'disabled', false );
+		if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0 ){
+			jQuery( '#rtmedia_upload_terms_conditions' ).change( function() {
+				if ( jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ) {
+					jQuery( '#aw-whats-new-submit' ).attr( 'disabled', false );
 				} else {
-					$( '#aw-whats-new-submit' ).attr( 'disabled', true );
+					jQuery( '#aw-whats-new-submit' ).attr( 'disabled', true );
 				}
-			});
+			} );
 		}
 
 		if ( jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ) {
