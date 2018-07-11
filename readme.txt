@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 4.9.6
-Stable tag: 4.5.1
+Tested up to: 4.9.7
+Stable tag: 4.5.2
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -136,6 +136,23 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.5.2 [July 11, 2018] =
+
+* NEW
+
+ * Added JavaScript hook to handle uploader slide event [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-js-hooks/#rtmediajsuploaderslideaftergalleryreload)
+
+* ENHANCEMENT
+
+ * Added translation support for “Search Media” string
+
+* FIXED
+
+ * PHP notices
+ * JavaScript issue with Upload terms
+ * Issue with media privacy and search caused by conditional check for Nouveau template
+ * Nouveau template issue with the error message of Upload terms in BuddyPress Activity stream
 
 = 4.5.1 [June 20, 2018] =
 
@@ -1517,8 +1534,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.1 =
-rtMedia 4.5.1, with empty textbox validation under the terms settings and other minor bug fixes.
+= 4.5.2 =
+rtMedia 4.5.2, with a new JavaScript hook to handle uploader's slide event, new translation ready string - "Search Media", and fixes related to Nouveau template.
 
 == Sponsors ==
 
