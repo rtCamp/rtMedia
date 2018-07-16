@@ -65,6 +65,13 @@ jQuery(document).ready(function () {
 			jQuery( '#rtmedia_upload_terms_conditions' ).change( function() {
 				if ( jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ) {
 					jQuery( '#aw-whats-new-submit' ).attr( 'disabled', false );
+
+					// Enable all form fields disabled which are by BuddyPress on click event of 'Post Update' button
+					jQuery( '#whats-new-form' ).find( '*' ).each( function() {
+						if ( jQuery.nodeName( this, 'textarea' ) || jQuery.nodeName( this, 'input' ) ) {
+							jQuery(this).prop( 'disabled', false );
+						}
+					} );
 				} else {
 					jQuery( '#aw-whats-new-submit' ).attr( 'disabled', true );
 				}
