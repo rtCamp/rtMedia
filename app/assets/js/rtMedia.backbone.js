@@ -1367,9 +1367,10 @@ jQuery( document ).ready( function( $ ) {
 			/**
 			 * Issue 243 fixed: blank error display issue resolved
 			 */
-			if ( rtmedia_activity_text_with_attachment == 'disable' &&  jQuery.trim( jQuery( "#whats-new" ).val() ) == "" ) {
-				$( "#whats-new" ).css( 'color', 'transparent' );
-				$( "#whats-new" ).val( '&nbsp;' );
+			if ( 'disable' === rtmedia_activity_text_with_attachment &&  '' === jQuery.trim( jQuery( '#whats-new' ).val() ) ) {
+				let textarea = jQuery( '#whats-new' );
+				textarea.css( 'color', 'transparent' );
+				textarea.val( '&nbsp;' );
 			}
 
 			jQuery( '#whats-new-form' ).submit();
@@ -1802,13 +1803,15 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	/**
 	 * Issue 243 fixed: blank error display issue resolved
 	 */
-	if( bp_template_pack && bp_template_pack !== 'legacy' ) {
+	if( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
-		if (jQuery('#aw-whats-new-submit').length !== 0) {
+		let submit_button = jQuery( '#aw-whats-new-submit' );
 
-			jQuery('#aw-whats-new-submit').replaceWith('<input type="button" id="aw-whats-new-submit" class="button" name="aw-whats-new-submit" value="Post Update">');
+		if ( 0 < submit_button.length ) {
 
-			jQuery( '#aw-whats-new-submit' ).on( 'click', function ( e ) {
+			submit_button.replaceWith( '<input type="button" id="aw-whats-new-submit" class="button" name="aw-whats-new-submit" value="Post Update">' );
+
+			submit_button.on( 'click', function ( e ) {
 				objUploadView.uploadFiles( e );
 			} );
 		} else {
@@ -1817,9 +1820,9 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 
 				setTimeout(function () {
 
-					jQuery('#aw-whats-new-submit').replaceWith('<input type="button" id="aw-whats-new-submit" class="button" name="aw-whats-new-submit" value="Post Update">');
+					submit_button.replaceWith( '<input type="button" id="aw-whats-new-submit" class="button" name="aw-whats-new-submit" value="Post Update">' );
 
-					jQuery( '#aw-whats-new-submit' ).on( 'click', function ( e ) {
+					submit_button.on( 'click', function ( e ) {
 						objUploadView.uploadFiles( e );
 					} );
 				}, 2000);
