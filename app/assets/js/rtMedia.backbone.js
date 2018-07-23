@@ -1364,12 +1364,18 @@ jQuery( document ).ready( function( $ ) {
 		objUploadView.uploader.bind( 'UploadComplete', function( up, files ) {
 			media_uploading = true;
 
+			/**
+			 * Issue 243 fixed: blank error display issue resolved
+			 */
 			if ( rtmedia_activity_text_with_attachment == 'disable' &&  jQuery.trim( jQuery( "#whats-new" ).val() ) == "" ) {
 				$( "#whats-new" ).css( 'color', 'transparent' );
 				$( "#whats-new" ).val( '&nbsp;' );
 			}
 
 			jQuery( '#whats-new-form' ).submit();
+			/**
+			 * End of Issue 243
+			 */
 			$( '#whats-new-form #rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
 			//$("#aw-whats-new-submit").removeAttr('disabled');
 			window.onbeforeunload = null;
@@ -1793,6 +1799,9 @@ jQuery( document ).ready( function( $ ) {
 function rtmedia_selected_file_list( plupload, file, uploader, error, comment_media_id ) {
 	var icon = '', err_msg = '', upload_progress = '', title = '';
 
+	/**
+	 * Issue 243 fixed: blank error display issue resolved
+	 */
 	if( bp_template_pack && bp_template_pack !== 'legacy' ) {
 
 		if (jQuery('#aw-whats-new-submit').length !== 0) {
@@ -1817,6 +1826,9 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 			});
 		}
 	}
+	/**
+	 * End of Issue 243
+	 */
 
 	rtmedia_uploader_filelist = (typeof comment_media_id === "undefined") ? "#rtmedia_uploader_filelist" : "#rtmedia_uploader_filelist-"+comment_media_id;
 	plupload_delete = (typeof comment_media_id === "undefined") ? "plupload_delete" : "plupload_delete-"+comment_media_id;
