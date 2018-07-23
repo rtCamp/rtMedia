@@ -1363,7 +1363,13 @@ jQuery( document ).ready( function( $ ) {
 
 		objUploadView.uploader.bind( 'UploadComplete', function( up, files ) {
 			media_uploading = true;
-			$( '#aw-whats-new-submit' ).click();
+
+			if ( rtmedia_activity_text_with_attachment == 'disable' &&  jQuery.trim( jQuery( "#whats-new" ).val() ) == "" ) {
+				$( "#whats-new" ).css( 'color', 'transparent' );
+				$( "#whats-new" ).val( '&nbsp;' );
+			}
+
+			jQuery( '#whats-new-form' ).submit();
 			$( '#whats-new-form #rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
 			//$("#aw-whats-new-submit").removeAttr('disabled');
 			window.onbeforeunload = null;
@@ -1786,6 +1792,31 @@ jQuery( document ).ready( function( $ ) {
 
 function rtmedia_selected_file_list( plupload, file, uploader, error, comment_media_id ) {
 	var icon = '', err_msg = '', upload_progress = '', title = '';
+
+	if( bp_template_pack && bp_template_pack !== 'legacy' ) {
+
+		if (jQuery('#aw-whats-new-submit').length !== 0) {
+
+			jQuery('#aw-whats-new-submit').replaceWith('<input type="button" id="aw-whats-new-submit" class="button" name="aw-whats-new-submit" value="Post Update">');
+
+			jQuery( '#aw-whats-new-submit' ).on( 'click', function ( e ) {
+				objUploadView.uploadFiles( e );
+			} );
+		} else {
+
+			jQuery('#whats-new').on('focus', function () {
+
+				setTimeout(function () {
+
+					jQuery('#aw-whats-new-submit').replaceWith('<input type="button" id="aw-whats-new-submit" class="button" name="aw-whats-new-submit" value="Post Update">');
+
+					jQuery( '#aw-whats-new-submit' ).on( 'click', function ( e ) {
+						objUploadView.uploadFiles( e );
+					} );
+				}, 2000);
+			});
+		}
+	}
 
 	rtmedia_uploader_filelist = (typeof comment_media_id === "undefined") ? "#rtmedia_uploader_filelist" : "#rtmedia_uploader_filelist-"+comment_media_id;
 	plupload_delete = (typeof comment_media_id === "undefined") ? "plupload_delete" : "plupload_delete-"+comment_media_id;
