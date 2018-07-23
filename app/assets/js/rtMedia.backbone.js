@@ -1816,7 +1816,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 			} );
 		} else {
 
-			jQuery('#whats-new').on('focus', function () {
+			jQuery( '#whats-new' ).on( 'focus', function () {
 
 				setTimeout(function () {
 
