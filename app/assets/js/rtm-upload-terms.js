@@ -50,6 +50,7 @@ if ( 'object' === typeof rtMediaHook ) {
 
 		if ( jQuery( '#rtmedia-upload-container #rtmedia_upload_terms_conditions' ).length > 0 ) {
 			jQuery( '#rtmedia_upload_terms_conditions' ).removeAttr( 'checked' );
+			jQuery( '.rt_alert_msg' ).remove();
 		}
 		return true;
 	});
