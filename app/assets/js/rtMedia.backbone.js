@@ -560,7 +560,6 @@ jQuery( function( $ ) {
 			var rtnObj = '';
 
 			uploaderObj.uploader.bind( 'UploadComplete', function( up, files ) {
-				console.log(rtnObj);
 
 				if( '' !== rtnObj && 'undefined' !== typeof( rtnObj.redirect_url ) && null !== rtnObj.redirect_url ) {
 					if( uploaderObj.upload_count === up.files.length && 0 < jQuery( '#rt_upload_hf_redirect' ).length && jQuery.trim( 0 === rtnObj.redirect_url.indexOf( 'http' ) ) ) {
