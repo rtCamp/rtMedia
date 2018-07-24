@@ -6,6 +6,7 @@ php:
 branches:
   only:
     - develop
+    - pre-release
     # - codeception
 
 before_install:
