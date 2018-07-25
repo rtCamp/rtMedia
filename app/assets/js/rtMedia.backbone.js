@@ -991,6 +991,42 @@ jQuery( document ).ready( function( $ ) {
 	 * End of issue 124 fix
 	 */
 
+	/**
+	 * UI changes for buddypress nouveau theme on activity page
+	 * Issue 243
+	 */
+
+	if( bp_template_pack && 'legacy' !== bp_template_pack ) {
+
+		jQuery( '#whats-new' ).on( 'focus', function () {
+
+			let rt_uploader_div = jQuery( '#whats-new-form .rtmedia-uploader-div' );
+			let rt_uploader_filelist = jQuery( '#whats-new-form #rtmedia_uploader_filelist' );
+
+			rt_uploader_div.show();
+
+			rt_uploader_div.addClass( 'clearfix' );
+
+			jQuery( '#whats-new-form #rtmedia-action-update' ).removeClass( 'clearfix' );
+
+			rt_uploader_filelist.addClass( 'clear-both' );
+			rt_uploader_filelist.removeClass( 'clearfix' );
+		} );
+
+		jQuery( '#whats-new-form' ).bind( 'reset', function () {
+			jQuery( '#whats-new-form .rtmedia-uploader-div' ).hide();
+		} );
+
+		jQuery( '#whats-new-form' ).bind( 'submit', function () {
+			setTimeout( function () {
+				jQuery( '#whats-new-form .rtmedia-uploader-div' ).hide();
+			}, 2000 );
+		} );
+	}
+	/**
+	 * End of UI changes for Issue 243
+	 */
+
 	/*
 	 * Fix for file selector does not open in Safari browser in IOS.
 	 * In Safari in IOS, Plupload don't click on it's input(type=file), so file selector dialog won't open.
@@ -1066,9 +1102,23 @@ jQuery( document ).ready( function( $ ) {
 			}
 		}, 100 );
 
-		if ( $( '#whats-new-options' ).length > 0 && $( '#whats-new-form .rtmedia-uploader-div' ).length > 0 ) {
-			$( '#whats-new-options' ).append( $( '#whats-new-form .rtmedia-uploader-div' ) );
+		/**
+		 * Appends rtMedia Uploader option below form content section
+		 * Issue 243
+		 */
+		if( bp_template_pack && 'legacy' !== bp_template_pack ) {
+
+			let form_ref        = jQuery( '#whats-new-form' );
+			let rt_uploader_div = jQuery( '.rtmedia-uploader-div' );
+
+			if ( 0 < jQuery( '.activity-update-form' ).length && 0 < form_ref.length && 0 < rt_uploader_div.length ) {
+				$( form_ref ).append( rt_uploader_div );
+				rt_uploader_div.hide();
+			}
 		}
+		/**
+		 * End of Issue 243.
+		 */
 
 		$( '#whats-new-form' ).on( 'click', '#rtmedia-add-media-button-post-update', function( e ) {
 			objUploadView.uploader.refresh();
@@ -1805,28 +1855,18 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	 */
 	if( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
-		let submit_button = jQuery( '#aw-whats-new-submit' );
+		if ( 0 < jQuery( '#aw-whats-new-submit' ).length ) {
 
-		if ( 0 < submit_button.length ) {
+			jQuery( '#aw-whats-new-submit' ).replaceWith( '<input type="button" id="aw-whats-new-submit" class="button" name="aw-whats-new-submit" value="Post Update">' );
 
-			submit_button.replaceWith( '<input type="button" id="aw-whats-new-submit" class="button" name="aw-whats-new-submit" value="Post Update">' );
+			jQuery( '#aw-whats-new-submit' ).on( 'click', function ( e ) {
 
-			submit_button.on( 'click', function ( e ) {
-				objUploadView.uploadFiles( e );
+				var allowActivityPost = rtMediaHook.call( 'rtmedia_js_before_activity_added', true );
+
+				if( allowActivityPost ) {
+					objUploadView.uploadFiles(e);
+				}
 			} );
-		} else {
-
-			jQuery( '#whats-new' ).on( 'focus', function () {
-
-				setTimeout(function () {
-
-					submit_button.replaceWith( '<input type="button" id="aw-whats-new-submit" class="button" name="aw-whats-new-submit" value="Post Update">' );
-
-					submit_button.on( 'click', function ( e ) {
-						objUploadView.uploadFiles( e );
-					} );
-				}, 2000);
-			});
 		}
 	}
 	/**
