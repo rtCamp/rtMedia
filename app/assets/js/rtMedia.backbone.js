@@ -1115,6 +1115,13 @@ jQuery( document ).ready( function( $ ) {
 				$( form_ref ).append( rt_uploader_div );
 				rt_uploader_div.hide();
 			}
+
+		} else {
+
+			if ( $( '#whats-new-options' ).length > 0 && $( '#whats-new-form .rtmedia-uploader-div' ).length > 0 ) {
+
+				$( '#whats-new-options' ).append( $( '#whats-new-form .rtmedia-uploader-div' ) );
+			}
 		}
 		/**
 		 * End of Issue 243.
@@ -1417,13 +1424,18 @@ jQuery( document ).ready( function( $ ) {
 			/**
 			 * Issue 243 fixed: blank error display issue resolved
 			 */
-			if ( 'disable' === rtmedia_activity_text_with_attachment &&  '' === jQuery.trim( jQuery( '#whats-new' ).val() ) ) {
-				let textarea = jQuery( '#whats-new' );
-				textarea.css( 'color', 'transparent' );
-				textarea.val( '&nbsp;' );
-			}
+			if( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
-			jQuery( '#whats-new-form' ).submit();
+				if ( 'disable' === rtmedia_activity_text_with_attachment &&  '' === jQuery.trim( jQuery( '#whats-new' ).val() ) ) {
+					let textarea = jQuery( '#whats-new' );
+					textarea.css( 'color', 'transparent' );
+					textarea.val( '&nbsp;' );
+				}
+
+				jQuery( '#whats-new-form' ).submit();
+			} else {
+				$( '#aw-whats-new-submit' ).click();
+			}
 			/**
 			 * End of Issue 243
 			 */
