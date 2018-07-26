@@ -993,10 +993,11 @@ jQuery( document ).ready( function( $ ) {
 
 	/**
 	 * UI changes for buddypress nouveau theme on activity page
-	 * Issue 243
 	 */
 
 	if( bp_template_pack && 'legacy' !== bp_template_pack ) {
+
+		let whats_new_form = jQuery( '#whats-new-form' );
 
 		jQuery( '#whats-new' ).on( 'focus', function () {
 
@@ -1013,18 +1014,18 @@ jQuery( document ).ready( function( $ ) {
 			rt_uploader_filelist.removeClass( 'clearfix' );
 		} );
 
-		jQuery( '#whats-new-form' ).bind( 'reset', function () {
+		whats_new_form.bind( 'reset', function () {
 			jQuery( '#whats-new-form .rtmedia-uploader-div' ).hide();
 		} );
 
-		jQuery( '#whats-new-form' ).bind( 'submit', function () {
+		whats_new_form.bind( 'submit', function () {
 			setTimeout( function () {
 				jQuery( '#whats-new-form .rtmedia-uploader-div' ).hide();
 			}, 2000 );
 		} );
 	}
 	/**
-	 * End of UI changes for Issue 243
+	 * End of UI changes
 	 */
 
 	/*
@@ -1104,7 +1105,6 @@ jQuery( document ).ready( function( $ ) {
 
 		/**
 		 * Appends rtMedia Uploader option below form content section
-		 * Issue 243
 		 */
 		if( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
@@ -1112,20 +1112,19 @@ jQuery( document ).ready( function( $ ) {
 			let rt_uploader_div = jQuery( '.rtmedia-uploader-div' );
 
 			if ( 0 < jQuery( '.activity-update-form' ).length && 0 < form_ref.length && 0 < rt_uploader_div.length ) {
-				$( form_ref ).append( rt_uploader_div );
+				jQuery( form_ref ).append( rt_uploader_div );
 				rt_uploader_div.hide();
 			}
 
 		} else {
 
-			if ( $( '#whats-new-options' ).length > 0 && $( '#whats-new-form .rtmedia-uploader-div' ).length > 0 ) {
+			let new_options = jQuery( '#whats-new-options' );
+			let rt_uploader_div = jQuery( '#whats-new-form .rtmedia-uploader-div' );
 
-				$( '#whats-new-options' ).append( $( '#whats-new-form .rtmedia-uploader-div' ) );
+			if ( 0 < new_options.length && 0 < rt_uploader_div.length ) {
+				new_options.append( rt_uploader_div );
 			}
 		}
-		/**
-		 * End of Issue 243.
-		 */
 
 		$( '#whats-new-form' ).on( 'click', '#rtmedia-add-media-button-post-update', function( e ) {
 			objUploadView.uploader.refresh();
@@ -1422,7 +1421,7 @@ jQuery( document ).ready( function( $ ) {
 			media_uploading = true;
 
 			/**
-			 * Issue 243 fixed: blank error display issue resolved
+			 * Blank error display issue resolved
 			 */
 			if( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
@@ -1436,9 +1435,7 @@ jQuery( document ).ready( function( $ ) {
 			} else {
 				$( '#aw-whats-new-submit' ).click();
 			}
-			/**
-			 * End of Issue 243
-			 */
+
 			$( '#whats-new-form #rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
 			//$("#aw-whats-new-submit").removeAttr('disabled');
 			window.onbeforeunload = null;
@@ -1863,13 +1860,22 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	var icon = '', err_msg = '', upload_progress = '', title = '';
 
 	/**
-	 * Issue 243 fixed: blank error display issue resolved
+	 * Blank error display issue resolved
 	 */
 	if( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
-		if ( 0 < jQuery( '#aw-whats-new-submit' ).length ) {
+		let new_submit_btn = jQuery( '#aw-whats-new-submit' );
+		if ( 0 < new_submit_btn.length ) {
 
-			jQuery( '#aw-whats-new-submit' ).replaceWith( '<input type="button" id="aw-whats-new-submit" class="button" name="aw-whats-new-submit" value="Post Update">' );
+			let new_button = jQuery( '<input>', {
+				type  : 'button',
+				class : 'button',
+				name  : 'aw-whats-new-submit',
+				id    : 'aw-whats-new-submit',
+				value : 'Post Update'
+			} );
+
+			new_submit_btn.replaceWith( new_button );
 
 			jQuery( '#aw-whats-new-submit' ).on( 'click', function ( e ) {
 
@@ -1881,9 +1887,6 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 			} );
 		}
 	}
-	/**
-	 * End of Issue 243
-	 */
 
 	rtmedia_uploader_filelist = (typeof comment_media_id === "undefined") ? "#rtmedia_uploader_filelist" : "#rtmedia_uploader_filelist-"+comment_media_id;
 	plupload_delete = (typeof comment_media_id === "undefined") ? "plupload_delete" : "plupload_delete-"+comment_media_id;
