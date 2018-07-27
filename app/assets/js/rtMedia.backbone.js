@@ -563,7 +563,6 @@ jQuery( function( $ ) {
 			jQuery( document ).ajaxComplete(function() {
 				if( redirect_request ) {
 					redirect_request = false;
-					rtnObj = '';
 					window.location = rtnObj.redirect_url;
 				}
 			});
