@@ -1417,15 +1417,10 @@ jQuery( document ).ready( function( $ ) {
 
 				/**
 				 * Referred ID directly instead of giving reference of form.
-				 * Issue #237
 				 */
 				if ( 0 < privacy_element.length ) {
 					dynamic_privacy = privacy_element.val();
 				}
-
-				/**
-				 * End of Issue #237
-				 */
 
 				options.data += '&rtmedia-privacy=' + dynamic_privacy;
 				activity_attachemnt_ids = temp;
