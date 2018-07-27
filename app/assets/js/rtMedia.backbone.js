@@ -1879,9 +1879,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 
 			jQuery( '#aw-whats-new-submit' ).on( 'click', function ( e ) {
 
-				var allowActivityPost = rtMediaHook.call( 'rtmedia_js_before_activity_added', true );
-
-				if( allowActivityPost ) {
+				if( rtMediaHook.call( 'rtmedia_js_before_activity_added', true ) ) {
 					objUploadView.uploadFiles(e);
 				}
 			} );
