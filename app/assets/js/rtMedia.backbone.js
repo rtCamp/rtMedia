@@ -1413,11 +1413,13 @@ jQuery( document ).ready( function( $ ) {
 				}
 
 				var dynamic_privacy = '';
+				let privacy_element = jQuery( '#rtSelectPrivacy' );
 
-				if ( jQuery( '#whats-new-form select.privacy' ).not( '.rtm-activity-privacy-opt' ).length > 0 ) {
-					dynamic_privacy = jQuery( '#whats-new-form select.privacy' ).not( '.rtm-activity-privacy-opt' ).val();
-				} else if ( jQuery( '#whats-new-form input[name="privacy"]' ).length > 0 ) {
-					dynamic_privacy = jQuery( '#whats-new-form input[name="privacy"]' ).val();
+				/**
+				 * Referred ID directly instead of giving reference of form.
+				 */
+				if ( 0 < privacy_element.length ) {
+					dynamic_privacy = privacy_element.val();
 				}
 
 				options.data += '&rtmedia-privacy=' + dynamic_privacy;
