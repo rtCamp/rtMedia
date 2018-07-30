@@ -1001,26 +1001,26 @@ jQuery( document ).ready( function( $ ) {
 
 		jQuery( '#whats-new' ).on( 'focus', function () {
 
-			let rt_uploader_div = jQuery( '#whats-new-form .rtmedia-uploader-div' );
-			let rt_uploader_filelist = jQuery( '#whats-new-form #rtmedia_uploader_filelist' );
+			let rt_uploader_div = whats_new_form.find( '.rtmedia-uploader-div' );
+			let rt_uploader_filelist = whats_new_form.find( '#rtmedia_uploader_filelist' );
 
 			rt_uploader_div.show();
 
 			rt_uploader_div.addClass( 'clearfix' );
 
-			jQuery( '#whats-new-form #rtmedia-action-update' ).removeClass( 'clearfix' );
+			whats_new_form.find( '#rtmedia-action-update' ).removeClass( 'clearfix' );
 
 			rt_uploader_filelist.addClass( 'clear-both' );
 			rt_uploader_filelist.removeClass( 'clearfix' );
 		} );
 
 		whats_new_form.bind( 'reset', function () {
-			jQuery( '#whats-new-form .rtmedia-uploader-div' ).hide();
+			whats_new_form.find( '.rtmedia-uploader-div' ).hide();
 		} );
 
 		whats_new_form.bind( 'submit', function () {
 			setTimeout( function () {
-				jQuery( '#whats-new-form .rtmedia-uploader-div' ).hide();
+				whats_new_form.find( '.rtmedia-uploader-div' ).hide();
 			}, 2000 );
 		} );
 	}
@@ -1877,7 +1877,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 
 			new_submit_btn.replaceWith( new_button );
 
-			jQuery( '#aw-whats-new-submit' ).on( 'click', function ( e ) {
+			new_button.on( 'click', function ( e ) {
 
 				if( rtMediaHook.call( 'rtmedia_js_before_activity_added', true ) ) {
 					objUploadView.uploadFiles(e);
