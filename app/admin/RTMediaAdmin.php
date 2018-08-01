@@ -421,7 +421,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return void
 		 */
 		public function rtmedia_permalink_notice() {
-			echo '<div class="error rtmedia-permalink-change-notice">
+			echo '<div class="error notice is-dismissible rtmedia-permalink-change-notice">
 		    <p> <b>' . esc_html__( 'rtMedia:', 'buddypress-media' ) . '</b> ' . esc_html__( ' You must', 'buddypress-media' ) . ' <a href="' . esc_url( admin_url( 'options-permalink.php' ) ) . '">' . esc_html__( 'update permalink structure', 'buddypress-media' ) . '</a> ' . esc_html__( 'to something other than the default for it to work.', 'buddypress-media' ) . ' </p>
 		    </div>';
 		}
@@ -1722,7 +1722,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						jQuery('.update-network-settings-upload-filetypes').prop('disabled', true);
 						jQuery.post(ajaxurl, {action: 'rtmedia_correct_upload_filetypes', _rtm_nonce: jQuery('rtm-file-type-error').val()}, function (response) {
 							if (response) {
-								jQuery('.upload-filetype-network-settings-error:first').after('<div style="display: none;" class="updated rtmedia-network-settings-updated-successfully"><p><?php esc_html_e( 'Network settings updated successfully.', 'buddypress-media' ); ?></p></div>');
+								jQuery('.upload-filetype-network-settings-error:first').after('<div style="display: none;" class="updated notice is-dismissible rtmedia-network-settings-updated-successfully"><p><?php esc_html_e( 'Network settings updated successfully.', 'buddypress-media' ); ?></p></div>');
 								jQuery('.upload-filetype-network-settings-error').remove();
 								jQuery('.bp-media-network-settings-updated-successfully').show();
 							}
@@ -1935,7 +1935,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						__( 'We found an invalid or expired license key for an rtMedia add-on. Please go to the <a href="%s">Licenses page</a> to fix this issue.', 'buddypress-media' ),
 						admin_url( 'admin.php?page=rtmedia-license' )
 					);
-					echo '<div class="error"><p>' . $message . '</p></div>';
+					echo '<div class="error notice is-dismissible"><p>' . $message . '</p></div>';
 					break;
 				}
 			}
