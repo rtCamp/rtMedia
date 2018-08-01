@@ -9,9 +9,6 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $allowed = false;
-    $numOfMedia = 1;
-
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'Disable upload for video media types' );
 
@@ -36,10 +33,6 @@
 
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->addStatus( "Testing when Video Types are not allowed." );
-    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName, $numOfMedia, $allowed );
-
-    $I->reloadPage();
-
-    $I->dontSeeElementInDOM( ConstantsPage::$firstVideoElementOnActivity );
-    echo nl2br( "Video is not uploaded.. \n" );
+    $uploadmedia->uploadMediaFromActivityWhenMediaFormatNotSupported( ConstantsPage::$videoName );
+    
 ?>

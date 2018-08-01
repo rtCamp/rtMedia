@@ -43,5 +43,6 @@
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->createNewAlbum();
-    $buddypress->editAlbumDesc();
+    // $buddypress->editAlbumDesc();
+    $buddypress->checkAlbumDesc();
 ?>

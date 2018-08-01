@@ -55,6 +55,7 @@
     $logout->logout();
 
     $buddypress->gotoActivity();
-    $I->seeElementInDOM( ConstantsPage::$firstPhotoElementOnActivity );
+    $I->waitForElementVisible( ConstantsPage::$firstPhotoElementOnActivity, 60 );
+    // $I->seeElementInDOM( ConstantsPage::$firstPhotoElementOnActivity );
 
 ?>

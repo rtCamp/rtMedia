@@ -28,14 +28,19 @@ class UploadMedia {
 	}
 
 	//uploadMediaUsingStartUploadButton() -> Will the media when 'Direct Upload' is disabled
-	public function uploadMediaUsingStartUploadButton() {
+	public function uploadMediaUsingStartUploadButton( $clickonCheckbox = 'no' ) {
 
 		$I = $this->tester;
 
 		$I->waitForElementVisible( ConstantsPage::$uploadMediaButton, 20 );
 		$I->click( ConstantsPage::$uploadMediaButton );
 
-		$I->waitForElementNotVisible( ConstantsPage::$fileList, 20 );
+		if ( 'no' != $clickonCheckbox ) {
+			$I->waitForElementVisible( ConstantsPage::$alertMessageClass , 10);
+		} else {
+			$I->waitForElementNotVisible( ConstantsPage::$fileList, 20 );
+		}
+
 	}
 
 	// uploadMediaDirectly() -> Will upload the media when 'Direct Upload' is enabled
@@ -62,6 +67,17 @@ class UploadMedia {
 		$I->waitForElementVisible( ConstantsPage::$postUpdateButton, 10 );
 	}
 
+	// Tick the checkbox for upload terms services
+	public function checkUploadTerms(){
+
+		$I = $this->tester;
+
+		$I->seeElement( ConstantsPage::$uploadTermsCheckbox );
+	    $I->dontSeeCheckboxIsChecked( ConstantsPage::$uploadTermsCheckbox );
+		$I->checkOption( ConstantsPage::$uploadTermsCheckbox );
+
+	}
+
 	// uploadMediaFromActivity() -> Will upload the media from activity
 	public function uploadMediaFromActivity( $mediaFile, $numOfMedia, $allowed = 'no' ) {
 
@@ -75,12 +91,28 @@ class UploadMedia {
 
 		$I->waitForElement( ConstantsPage::$fileList, 20 );
 
+		$I->click( ConstantsPage::$postUpdateButton );
 		if( 'no' != $allowed ){
-			$I->waitForElementVisible( ConstantsPage::$fileNotSupportedSelector, 20 );
+			$I->waitForElementVisible('.rt_alert_msg', 5);
+			$I->see('Please check terms of service.');
+		}else{
+				$I->waitForElementNotVisible( ConstantsPage::$fileList, 20 );
 		}
 
-		$I->click( ConstantsPage::$postUpdateButton );
-		$I->waitForElementNotVisible( ConstantsPage::$fileList, 20 );
+	}
+
+	// uploadMediaFromActivityWhenMediaFormatNotSupported() -> will show the error when media is disabled from back end.
+	public function uploadMediaFromActivityWhenMediaFormatNotSupported( $mediaFile ){
+
+		$I = $this->tester;
+
+		$I->seeElement( ConstantsPage::$uploadButtonOnAtivityPage );
+		$I->attachFile( ConstantsPage::$uploadFromActivity, $mediaFile );
+		$I->waitForElement( ConstantsPage::$fileList, 20 );
+
+		$I->waitForElementVisible( ConstantsPage::$fileNotSupportedSelector, 20 );
+		echo nl2br( "Medi is not uploaded.. \n" );
+
 	}
 
 }

@@ -31,11 +31,10 @@
     $buddypress->gotoActivity();
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->addStatus( "Upload from activity to check mediz sizes." );
+    $uploadmedia->addStatus( "Upload from activity to check VIDEO media sizes." );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName, $numOfMedia );
 
-    $I->reloadPage();
-    $I->wait( 3 );
+    $I->waitForElementVisible( ConstantsPage::$videoSelectorActivity, 20 );
 
     $I->assertGreaterThanOrEqual( ConstantsPage::$activityVideoPlayerWidth, $I->grabAttributeFrom( ConstantsPage::$videoSelectorActivity, 'style' ), "Width and height is as expected!" );
 ?>
