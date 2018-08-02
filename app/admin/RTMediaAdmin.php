@@ -450,7 +450,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function rtmedia_addon_update_notice() {
 
 			$site_option = rtmedia_get_site_option( 'rtmedia-addon-update-notice-3_8' );
-
 			if ( is_rt_admin() && ( ! $site_option || 'hide' !== $site_option ) ) {
 
 				if ( ! $this->check_for_addon_update_notice() ) {
@@ -1791,11 +1790,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ! $site_option || 'hide' !== $site_option ) {
 				rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_9_4', 'show' );
 				if ( is_dir( get_template_directory() . '/rtmedia' ) ) {
-
-					wp_nonce_field( 'rtmedia_template_notice', 'rtmedia_template_notice' );
 					?>
 
 					<div class="error notice is-dismissible rtmedia-update-template-notice">
+						<?php wp_nonce_field( 'rtmedia_template_notice', 'rtmedia_template_notice' ); ?>
 						<p>
 							<?php esc_html_e( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.', 'buddypress-media' ); ?>
 						</p>
