@@ -2,7 +2,6 @@
     "require": {
     },
     "require-dev": {
-        "lucatume/wp-browser": "*",
-        "phpunit/phpunit": "6.*"
+        "lucatume/wp-browser": "*"
     }
 }
