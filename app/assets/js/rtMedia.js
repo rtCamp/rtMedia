@@ -1257,8 +1257,7 @@ function rtm_upload_terms_activity() {
 			if ( false === jQuery( '#rtmedia_upload_terms_conditions' ).prop( 'checked' ) && jQuery( '#whats-new-form #message' ).length === 0 ) {
 				event.preventDefault();
 				var selector = jQuery( '.rtmedia-upload-terms' );
-				var rt_alert_msg = ( ( typeof rtmedia_upload_terms_check_terms_message ) === 'string' ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
-				rtp_display_terms_warning( selector, rt_alert_msg );
+				rtp_display_terms_warning( selector, rtmedia_upload_terms_check_terms_message );
 			}
 		});
 	}

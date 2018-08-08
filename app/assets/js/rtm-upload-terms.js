@@ -11,12 +11,11 @@ if ( 'object' === typeof rtMediaHook ) {
 			return args;
 		}
 
-		var rt_alert_msg = ( ( 'string' === typeof rtmedia_upload_terms_check_terms_message ) ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
+		var terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
 
-		if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0 ) {
-			if ( ! jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ) {
-				var selector = jQuery( '.rtmedia-upload-terms' );
-				rtp_display_terms_warning ( selector, rt_alert_msg );
+		if ( terms_conditions_checkbox.length > 0 ) {
+			if ( ! terms_conditions_checkbox.is( ':checked' ) ) {
+				rtp_display_terms_warning ( jQuery( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
 				return false;
 			}
 		}
@@ -25,15 +24,16 @@ if ( 'object' === typeof rtMediaHook ) {
 	} );
 
 	rtMediaHook.register( 'rtmedia_js_before_activity_added', function ( args ) {
-		if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0 ) {
+		var terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
+		if ( terms_conditions_checkbox.length > 0 ) {
+			terms_conditions_checkbox.removeAttr( 'disabled' );
+
 			if ( false == args ) {
 				return args;
 			}
 
-			var rt_alert_msg = ( ( 'string' === typeof rtmedia_upload_terms_check_terms_message ) ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
-			if ( ! jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' )) {
-				var selector = jQuery( '.rtmedia-upload-terms' );
-				rtp_display_terms_warning ( selector, rt_alert_msg );
+			if ( ! terms_conditions_checkbox.is( ':checked' ) ) {
+				rtp_display_terms_warning ( jQuery( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
 				return false;
 			}
 		}
@@ -48,47 +48,45 @@ if ( 'object' === typeof rtMediaHook ) {
 	 */
 	rtMediaHook.register( 'rtmedia_js_after_file_upload', function () {
 
-		if ( jQuery( '#rtmedia-upload-container #rtmedia_upload_terms_conditions' ).length > 0 ) {
-			jQuery( '#rtmedia_upload_terms_conditions' ).removeAttr( 'checked' );
+		var terms_conditions_checkbox = jQuery( '#rtmedia-upload-container #rtmedia_upload_terms_conditions' );
+		if ( terms_conditions_checkbox.length > 0 ) {
+			terms_conditions_checkbox.removeAttr( 'checked' );
 		}
 		return true;
 	});
 }
 
 jQuery(document).ready(function () {
-	if( ( '#aw-whats-new-submit' ).length > 0 ) {
-		jQuery( '#aw-whats-new-submit' ).attr( 'disabled', 'disabled' );
-	}
+	var terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
 
-	jQuery( '#rtmedia_upload_terms_conditions' ).on( 'click', function () {
-		if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0 ){
-			jQuery( '#rtmedia_upload_terms_conditions' ).change( function() {
-				if ( jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ) {
-					jQuery( '#aw-whats-new-submit' ).attr( 'disabled', false );
-				} else {
-					jQuery( '#aw-whats-new-submit' ).attr( 'disabled', true );
-				}
-			} );
-		}
+	if ( terms_conditions_checkbox.length ) {
+		terms_conditions_checkbox.on( 'click', function () {
 
-		if ( jQuery( '#rtmedia_upload_terms_conditions' ).is( ':checked' ) ) {
-			jQuery( '.rt_alert_msg' ).remove();
-		} else {
-			var selector = jQuery( '.rtmedia-upload-terms' );
-			var rt_alert_msg = ( ( typeof rtmedia_upload_terms_check_terms_message ) == "string" ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
-			rtp_display_terms_warning ( selector, rt_alert_msg );
-		}
-
-		if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-			if ( jQuery( '#aw-whats-new-submit' ).length > 0 ) {
-				if ( jQuery( '#whats-new' ).val() != '' || jQuery( '#rtmedia_uploader_filelist' ).children( 'li' ).length > 0) {
-					jQuery( '#aw-whats-new-submit' ).trigger( 'click' );
-				}
-			} else {
-				jQuery( '.start-media-upload' ).trigger( 'click' );
+			// If start upload button exist, then focus to that button.
+			var upload_start_btn = jQuery('.start-media-upload');
+			if ( upload_start_btn.length ) {
+				upload_start_btn.focus();
 			}
-		}
-	});
+
+			// Show error message if terms-condition is not checked
+			if ( terms_conditions_checkbox.is( ':checked' ) ) {
+				jQuery( '.rt_alert_msg' ).remove();
+			} else {
+				rtp_display_terms_warning ( jQuery( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
+			}
+
+			if ( typeof rtmedia_direct_upload_enabled !== 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
+				var whats_new_submit = jQuery( '#aw-whats-new-submit' );
+				if ( whats_new_submit.length > 0 ) {
+					if ( jQuery( '#whats-new' ).val().trim() !== '' || jQuery( '#rtmedia_uploader_filelist' ).children( 'li' ).length > 0) {
+						whats_new_submit.trigger( 'click' );
+					}
+				} else {
+					jQuery( '.start-media-upload' ).trigger( 'click' );
+				}
+			}
+		});
+	}
 
 });
 
