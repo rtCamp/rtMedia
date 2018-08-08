@@ -1497,11 +1497,7 @@ jQuery( document ).ready( function( $ ) {
 						} );
 
 						// For BuddyPress New Template hacks
-						/*jQuery( '.plupload_filelist_content.rtm-plupload-list' ).html('');
-						var rtmedia_terms_conditions = $( '#rtmedia_upload_terms_conditions' );
-						if ( rtmedia_terms_conditions && rtmedia_terms_conditions.is(':checked') ) {
-							rtmedia_terms_conditions.prop( 'checked', false );
-						}*/
+						jQuery( '.plupload_filelist_content.rtm-plupload-list' ).html('');
 
 						rtMediaHook.call( 'rtmedia_js_after_activity_added', [ ] );
 					}

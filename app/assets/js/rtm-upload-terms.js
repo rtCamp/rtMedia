@@ -54,6 +54,13 @@ if ( 'object' === typeof rtMediaHook ) {
 		}
 		return true;
 	});
+
+	rtMediaHook.register( 'rtmedia_js_after_activity_added', function() {
+		var rtmedia_terms_conditions = $( '#rtmedia_upload_terms_conditions' );
+		if ( rtmedia_terms_conditions && rtmedia_terms_conditions.is(':checked') ) {
+			rtmedia_terms_conditions.prop( 'checked', false );
+		}
+	} );
 }
 
 jQuery(document).ready(function () {
