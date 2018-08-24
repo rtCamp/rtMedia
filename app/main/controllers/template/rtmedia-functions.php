@@ -4795,7 +4795,7 @@ function rtmedia_eraser( $email_address, $page = 1 ) {
 }
 
 /**
- * Media like eraser for GDPR
+ * Media album eraser for GDPR
  *
  * @param  string $email_address user email address.
  * @param  int    $page          page no to fetch data from.
@@ -4823,8 +4823,18 @@ function rtmedia_album_eraser( $email_address, $page = 1 ) {
 
 	global $wpdb;
 
+	$default_albums           = rtmedia_global_albums();
+	$default_album_str        = '';
+	$default_album_postid_str = '';
+	foreach ( $default_albums as $default_album ) {
+		$default_album_str        .= $default_album . ',';
+		$default_album_postid_str .= rtmedia_media_id( $default_album ) . ',';
+	}
+	$default_album_str        = rtrim( $default_album_str, ',' );
+	$default_album_postid_str = rtrim( $default_album_postid_str, ',' );
+
 	$query = $wpdb->prepare(
-		'DELETE FROM ' . $wpdb->prefix . "rt_rtm_media WHERE media_type='album' AND media_author=%d LIMIT %d",
+		'DELETE FROM ' . $wpdb->prefix . "rt_rtm_media WHERE media_type='album' AND media_author=%d AND id NOT IN (" . $default_album_str . ") LIMIT %d",
 		$user_data->ID,
 		$number
 	);
@@ -4832,12 +4842,12 @@ function rtmedia_album_eraser( $email_address, $page = 1 ) {
 	$items_removed = $wpdb->query( $query );
 
 	$query = $wpdb->prepare(
-		'DELETE FROM ' . $wpdb->prefix . "posts WHERE post_type='rtmedia_album' AND post_author=%d LIMIT %d",
+		'DELETE FROM ' . $wpdb->prefix . "posts WHERE post_type='rtmedia_album' AND post_author=%d AND ID NOT IN (" . $default_album_postid_str . ") LIMIT %d",
 		$user_data->ID,
 		$number
 	);
 
-	$items_removed = $wpdb->query( $query );
+	$items_removed += $wpdb->query( $query );
 
 	$done = ( $items_removed < $number );
 
