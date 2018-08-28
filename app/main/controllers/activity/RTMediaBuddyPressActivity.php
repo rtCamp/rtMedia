@@ -48,7 +48,7 @@ class RTMediaBuddyPressActivity {
 		add_filter( 'bp_activity_permalink_access', array( $this, 'rtm_bp_activity_permalink_access' ) );
 		add_action( 'bp_activity_comment_posted', array( $this, 'rtm_check_privacy_for_comments' ), 10, 3 );
 
-		// Added this condition to prevent these filters slowing site without multisite
+		// Added this condition to prevent these filters slowing site without multisite.
 		if ( is_multisite() ) {
 			add_filter( 'bp_ajax_querystring', array( $this, 'filter_activity_with_blog' ) );
 			add_filter( 'bp_after_has_activities_parse_args', array( $this, 'filter_activity_with_blog' ) );
@@ -56,10 +56,10 @@ class RTMediaBuddyPressActivity {
 	}
 
 	/**
-	 * To handle multisite media
-	 * Exclude activities which has media uploaded from different sites
+	 * To handle multisite media.
+	 * Exclude activities which has media uploaded from different sites.
 	 *
-	 * @param string|array $query_string Parameters to filter list of activities
+	 * @param string|array $query_string Parameters to filter list of activities.
 	 *
 	 * @return string
 	 */
@@ -68,7 +68,7 @@ class RTMediaBuddyPressActivity {
 		$prefix       = $wpdb->base_prefix;
 		$table_name   = 'rt_rtm_media';
 		$blog_id      = get_current_blog_id();
-		$activities   = $wpdb->get_col( sprintf( 'SELECT DISTINCT activity_id FROM ' . $prefix . $table_name . ' WHERE activity_id IS NOT null AND blog_id!=%d', $blog_id ) );
+		$activities   = $wpdb->get_col( $wpdb->prepare( 'SELECT DISTINCT activity_id FROM ' . $prefix . $table_name . ' WHERE activity_id IS NOT null AND blog_id!=%d', $blog_id ) );
 		$activity_ids = implode( ',', $activities );
 		if ( ! empty( $activity_ids ) ) {
 			if ( current_filter() === 'bp_ajax_querystring' ) {
