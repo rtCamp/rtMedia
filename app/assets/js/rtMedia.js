@@ -1254,15 +1254,12 @@ function get_parameter( parameter, data ) {
 function rtm_upload_terms_activity() {
 	// Check if upload term checkbox is there.
 	if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0) {
-		// Handle on click event.
-		jQuery( '#whats-new' ).click( 'on', function () {
-			if ( false === jQuery('#rtmedia_upload_terms_conditions').prop('checked') ){
-				// By default prevent user to upload media.
-				jQuery( '#aw-whats-new-submit' ).attr( 'disabled', 'disabled' );
-				// On click of upload terms checkbox enable post button.
-				jQuery( '#rtmedia_upload_terms_conditions' ).click(function () {
-					jQuery( '#aw-whats-new-submit' ).attr( 'disabled', ! this.checked );
-				});
+		// Handle error on click event.
+		jQuery( '#bp-nouveau-activity-form' ).on( 'click', '#aw-whats-new-submit', function ( event ) {
+			if ( false === jQuery( '#rtmedia_upload_terms_conditions' ).prop( 'checked' ) && jQuery( '#whats-new-form #message' ).length === 0 ) {
+				event.preventDefault();
+				var selector = jQuery( '.rtmedia-upload-terms' );
+				rtp_display_terms_warning( selector, rtmedia_upload_terms_check_terms_message );
 			}
 		});
 	}

@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.5.1\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.5.2\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2018-06-26 08:50:35+00:00\n"
+"POT-Creation-Date: 2018-08-31 10:49:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2535,11 +2535,7 @@ msgstr ""
 msgid "Adding media in Comments is not allowed"
 msgstr ""
 
-#: app/main/RTMediaUploadTerms.php:69
-msgid "Please check Terms of Service."
-msgstr ""
-
-#: app/main/RTMediaUploadTerms.php:127
+#: app/main/RTMediaUploadTerms.php:138
 msgid "I agree to"
 msgstr ""
 
@@ -3133,6 +3129,10 @@ msgstr ""
 
 #: app/main/controllers/template/rtmedia-actions.php:851
 msgid "rtMedia Updates"
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-actions.php:903
+msgid "Search Media"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-actions.php:1089

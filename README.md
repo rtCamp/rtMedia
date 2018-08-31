@@ -149,6 +149,24 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.5.2 [July 11, 2018] ###
+
+* NEW
+
+	 * Added JavaScript hook to handle uploader slide event [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-js-hooks/#rtmediajsuploaderslideaftergalleryreload)
+	 
+* ENHANCEMENT
+
+	 * Added translation support for “Search Media” string
+	 
+* FIXED
+
+	 * PHP notices
+	 * JavaScript issue with Upload terms
+	 * Issue with media privacy and search caused by conditional check for Nouveau template
+	 * Nouveau template issue with the error message of Upload terms in BuddyPress Activity stream
+
+
 ### 4.5.1 [June 20, 2018] ###
 
 * FIXED

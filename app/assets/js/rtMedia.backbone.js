@@ -230,7 +230,9 @@ jQuery( function( $ ) {
 
 						if ( jQuery( 'li#rtm-url-upload' ).length === 0 ) {
 							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( 'opacity', '1' );
-							jQuery( '#rtm-media-gallery-uploader' ).slideUp();
+							if ( rtMediaHook.call( 'rtmedia_js_uploader_slide_after_gallery_reload' ) ) {
+								jQuery( '#rtm-media-gallery-uploader' ).slideUp();
+							}
 						}
 					}
 				} );
@@ -725,28 +727,7 @@ jQuery( function( $ ) {
 					uploaderObj.uploadFiles();
 				}
 
-
-				/**
-				 *
-				 * Uploader improper enter behavior issue(124) fixed
-				 *
-				 */
-				var terms_conditions = $('#rtmedia_upload_terms_conditions');
-				if(terms_conditions.length > 0){
-
-					terms_conditions.unbind('click');
-
-					terms_conditions.click(function(){
-						upload_start_btn.focus();
-					});
-
-				}
-
 				upload_start_btn.focus();
-
-				/**
-				 * End of issue 124
-				 */
 
 			} );
 
@@ -1429,7 +1410,6 @@ jQuery( document ).ready( function( $ ) {
 					var allowActivityPost = rtMediaHook.call( 'rtmedia_js_before_activity_added', true );
 
 					if ( ! allowActivityPost ) {
-						$( '#whats-new-form #rtmedia_upload_terms_conditions' ).removeAttr( 'disabled' );
 						$( '#whats-new-form #rtmedia-whts-new-upload-container' ).find( 'input' ).removeAttr( 'disabled' );
 
 						/**
@@ -1516,12 +1496,8 @@ jQuery( document ).ready( function( $ ) {
 							//videoHeight: 1
 						} );
 
-                                                // For BuddyPress New Template hacks
-                                                jQuery( '.plupload_filelist_content.rtm-plupload-list' ).html('');
-                                                var rtmedia_terms_conditions = $( '#rtmedia_upload_terms_conditions' );
-                                                if ( rtmedia_terms_conditions && rtmedia_terms_conditions.is(':checked') ) {
-                                                    rtmedia_terms_conditions.prop( 'checked', false );
-                                                }
+						// For BuddyPress New Template hacks
+						jQuery( '.plupload_filelist_content.rtm-plupload-list' ).html('');
 
 						rtMediaHook.call( 'rtmedia_js_after_activity_added', [ ] );
 					}
