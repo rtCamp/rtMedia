@@ -1393,10 +1393,10 @@ jQuery( document ).ready( function( $ ) {
 
 				var dynamic_privacy = '';
 
-				if ( jQuery( '#whats-new-form select.privacy' ).not( '.rtm-activity-privacy-opt' ).length > 0 ) {
-					dynamic_privacy = jQuery( '#whats-new-form select.privacy' ).not( '.rtm-activity-privacy-opt' ).val();
-				} else if ( jQuery( '#whats-new-form input[name="privacy"]' ).length > 0 ) {
-					dynamic_privacy = jQuery( '#whats-new-form input[name="privacy"]' ).val();
+				var privacy_select = jQuery( '#rtSelectPrivacy' );
+				var whats_new_form = jQuery( '#whats-new-form' );
+				if ( whats_new_form.length > 0 && privacy_select.length > 0 ) {
+					dynamic_privacy = privacy_select.val();
 				}
 
 				options.data += '&rtmedia-privacy=' + dynamic_privacy;
