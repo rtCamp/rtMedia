@@ -48,10 +48,53 @@ class RTMediaBuddyPressActivity {
 		add_filter( 'bp_activity_permalink_access', array( $this, 'rtm_bp_activity_permalink_access' ) );
 		add_action( 'bp_activity_comment_posted', array( $this, 'rtm_check_privacy_for_comments' ), 10, 3 );
 
-		// Added this condition to prevent these filters slowing site without multisite.
+		// Apply these hooks only on multisite.
 		if ( is_multisite() ) {
 			add_filter( 'bp_ajax_querystring', array( $this, 'filter_activity_with_blog' ) );
 			add_filter( 'bp_after_has_activities_parse_args', array( $this, 'filter_activity_with_blog' ) );
+
+//			add_action( 'bp_activity_comment_posted', array( $this, 'bp_activity_comment_posted' ), 10, 3 );
+			add_action( 'bp_activity_add', array( $this, 'clear_blog_activity_transient' ) );
+			add_action( 'bp_activity_delete', array( $this, 'clear_blog_activity_transient' ) );
+		}
+	}
+
+
+	/*public function bp_activity_comment_posted( $content, $user_id, $activity_id ) {
+		$activity_model = new RTMediaActivityModel();
+		error_log('posting update: ' . $activity_id);
+		if ( ! $activity_model->check( $activity_id ) ) {
+			error_log('doesn\'t exist!');
+		}
+	}*/
+
+
+	/**
+	 * @param $activity
+	 */
+	public function clear_blog_activity_transient( $activity ) {
+		if ( current_filter() === 'bp_activity_delete' && ! empty( $activity['id'] ) ) {
+			$activity_model = new RTMediaActivityModel();
+			$activity_model->delete( array( 'activity_id' => $activity['id'] ) );
+		}
+
+		if ( current_filter() === 'bp_activity_add' ) {
+//			$activity_model = new RTMediaActivityModel();
+			ob_start();
+			print_r($activity);
+			error_log(ob_get_clean());
+		}
+
+		error_log('transient update');
+		$sites = get_sites( array( 'fields' => 'ids' ) );
+		foreach ( $sites as $site ) {
+			if ( $site === get_current_blog_id() ) {
+				error_log( 'ignoring - rtm_filter_blog_activity_' . $site );
+				continue;
+			}
+
+			error_log('deleting ' . $site);
+			delete_site_transient( 'rtm_filter_blog_activity_' . $site );
 		}
 	}
 
@@ -65,18 +108,27 @@ class RTMediaBuddyPressActivity {
 	 */
 	public function filter_activity_with_blog( $query_string ) {
 		global $wpdb;
-		$prefix       = $wpdb->base_prefix;
-		$table_name   = 'rt_rtm_media';
-		$blog_id      = get_current_blog_id();
-		$activities   = $wpdb->get_col( $wpdb->prepare( 'SELECT DISTINCT activity_id FROM ' . $prefix . $table_name . ' WHERE activity_id IS NOT null AND blog_id!=%d', $blog_id ) );
-		$activity_ids = implode( ',', $activities );
-		if ( ! empty( $activity_ids ) ) {
+		$prefix  = $wpdb->base_prefix;
+		$blog_id = get_current_blog_id();
+
+		$transient_name = 'rtm_filter_blog_activity_' . $blog_id;
+		$activity_ids   = get_site_transient( $transient_name );
+		error_log( 'from transient - ' . $transient_name . ': ' . $activity_ids );
+		if ( empty( $activity_ids ) ) {
+			$activities   = $wpdb->get_col( $wpdb->prepare( 'SELECT DISTINCT activity_id FROM ' . $prefix . 'rt_rtm_activity WHERE blog_id!=%d', $blog_id ) );
+			$activity_ids = implode( ',', $activities );
+			error_log('not from transient: ' . $activity_ids);
+
+			set_site_transient( $transient_name, $activity_ids );
+		}
+
+		/*if ( ! empty( $activity_ids ) ) {
 			if ( current_filter() === 'bp_ajax_querystring' ) {
 				$query_string .= '&exclude=' . $activity_ids;
 			} else {
 				$query_string['exclude'] = $activity_ids;
 			}
-		}
+		}*/
 
 		return $query_string;
 	}
@@ -139,6 +191,28 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function comment_sync( $comment_id, $param ) {
+		$activity_model = new RTMediaActivityModel();
+		if ( ! empty( $param['activity_id'] ) && ! $activity_model->check( $comment_id ) ) {
+			$activity = $activity_model->get( array( 'activity_id' => $param['activity_id'] ) );
+			if ( ! empty( $activity ) ) {
+				if ( is_array( $activity ) ) {
+					$activity = $activity[0];
+				}
+
+				$data = array(
+					'activity_id' => $comment_id,
+					'blog_id'     => get_current_blog_id(),
+					'user_id'     => $param['user_id']
+				);
+
+				if ( ! is_null( $activity->privacy ) ) {
+					$data['privacy'] = $activity->privacy;
+				}
+
+				$activity_model->insert( $data );
+			}
+		}
+
 		$default_args   = array( 'user_id' => '', 'comment_author' => '' );
 		$param          = wp_parse_args( $param, $default_args );
 		$user_id        = $param['user_id'];
@@ -569,12 +643,12 @@ class RTMediaBuddyPressActivity {
 
 					// generate activity arguments.
 					$activity_args = array(
-							'user_id'      => $user_id,
-							'action'       => $action,
-							'type'         => 'rtmedia_like_activity',
-							'primary_link' => $primary_link,
-							'item_id'      => $media_id,
-							'secondary_item_id'      => $media_id, // Used for when deleting media when it's enter in group not used when media is add in the main activity
+						'user_id'      => $user_id,
+						'action'       => $action,
+						'type'         => 'rtmedia_like_activity',
+						'primary_link' => $primary_link,
+						'item_id'      => $media_id,
+						'secondary_item_id'      => $media_id, // Used for when deleting media when it's enter in group not used when media is add in the main activity
 					);
 
 					// set activity component
@@ -666,52 +740,52 @@ class RTMediaBuddyPressActivity {
 					$comment_media_id = false;
 
 					/* if activity is add from comment media  */
-				    if( isset( $_REQUEST['comment_content'] ) || isset( $_REQUEST['action'] ) ){
-				    	if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'new_activity_comment' ){
+					if( isset( $_REQUEST['comment_content'] ) || isset( $_REQUEST['action'] ) ){
+						if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'new_activity_comment' ){
 
-				    		remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
-				    		/* comment content */
-					        $comment_content = $_REQUEST['content'];
-				    	}elseif ( isset( $_REQUEST['comment_content'] ) ) {
-					        /* comment content */
-					        $comment_content = $_REQUEST['comment_content'];
-				    	}
+							remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
+							/* comment content */
+							$comment_content = $_REQUEST['content'];
+						}elseif ( isset( $_REQUEST['comment_content'] ) ) {
+							/* comment content */
+							$comment_content = $_REQUEST['comment_content'];
+						}
 
-				        /* is comment is empty then add content content space */
-			            if( strstr($comment_content, 'nbsp') ){
-			                $comment_content = "&nbsp;";
-			            }
+						/* is comment is empty then add content content space */
+						if( strstr($comment_content, 'nbsp') ){
+							$comment_content = "&nbsp;";
+						}
 
 
-				        /* if comment has comment media then create new html for it */
-				        if ( isset( $_REQUEST['rtMedia_attached_files'] ) ) {
-				            $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+						/* if comment has comment media then create new html for it */
+						if ( isset( $_REQUEST['rtMedia_attached_files'] ) ) {
+							$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
-				            /* check media should be in array format and is not empty to */
-				            if( class_exists( 'RTMediaActivity' )  && is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files ) ){
-				            	$comment_media = true;
-				            	$comment_media_id = $rtMedia_attached_files[0];
-			                    $obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content );
-			                	$comment_content = $obj_comment->create_activity_html();
-				            }
-				        }
+							/* check media should be in array format and is not empty to */
+							if( class_exists( 'RTMediaActivity' )  && is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files ) ){
+								$comment_media = true;
+								$comment_media_id = $rtMedia_attached_files[0];
+								$obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content );
+								$comment_content = $obj_comment->create_activity_html();
+							}
+						}
 
-				        /* add the new content to the activity */
-				        $activity_content = $comment_content;
-				    }
+						/* add the new content to the activity */
+						$activity_content = $comment_content;
+					}
 
 
 					$wp_comment_id   = $params['comment_id'];
 
 					// prepare activity arguments
 					$activity_args = array(
-							'user_id'           => $user_id,
-							'action'            => $action,
-							'content'           => $activity_content,
-							'type'              => 'rtmedia_comment_activity',
-							'primary_link'      => $primary_link,
-							'item_id'           => $media_id,
-							'secondary_item_id' => $wp_comment_id,
+						'user_id'           => $user_id,
+						'action'            => $action,
+						'content'           => $activity_content,
+						'type'              => 'rtmedia_comment_activity',
+						'primary_link'      => $primary_link,
+						'item_id'           => $media_id,
+						'secondary_item_id' => $wp_comment_id,
 					);
 
 					// set activity component
@@ -731,10 +805,17 @@ class RTMediaBuddyPressActivity {
 						add_rtmedia_meta( $comment_media_id, 'rtmedia_comment_media_profile_id', $activity_id );
 					}
 
-					// add privacy for like activity
+					// add privacy for comment activity
+					$rtmedia_activity_model = new RTMediaActivityModel();
 					if( class_exists( 'RTMediaActivityModel' ) && is_rtmedia_privacy_enable() && isset( $media_obj->activity_id ) ){
-						$rtmedia_activity_model = new RTMediaActivityModel();
 						$rtmedia_activity_model->set_privacy_for_rtmedia_activity( $media_obj->activity_id, $activity_id , $user_id );
+					} elseif ( ! $rtmedia_activity_model->check( $activity_id ) ) {
+						$rtmedia_activity_model->insert(
+							array(
+								'activity_id' => $activity_id,
+								'user_id'     => $user_id,
+							)
+						);
 					}
 
 					// Store activity id into user meta for reference
