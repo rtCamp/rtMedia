@@ -78,6 +78,13 @@ class RTMediaBuddyPressActivity {
 			);
 		}
 
+		self::reset_multisite_transient();
+	}
+
+	/**
+	 * Reset transients for multisite.
+	 */
+	private static function reset_multisite_transient() {
 		$sites = get_sites( array( 'fields' => 'ids' ) );
 		foreach ( $sites as $site ) {
 			if ( $site === get_current_blog_id() ) {
@@ -105,14 +112,7 @@ class RTMediaBuddyPressActivity {
 		$activity_model = new RTMediaActivityModel();
 		$activity_model->delete( array( 'activity_id' => $activity->id ) );
 
-		$sites = get_sites( array( 'fields' => 'ids' ) );
-		foreach ( $sites as $site ) {
-			if ( $site === get_current_blog_id() ) {
-				continue;
-			}
-
-			delete_site_transient( 'rtm_filter_blog_activity_' . $site );
-		}
+		self::reset_multisite_transient();
 	}
 
 
