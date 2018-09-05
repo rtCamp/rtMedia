@@ -557,7 +557,18 @@ jQuery( function( $ ) {
 			uploaderObj = new UploadView( rtMedia_plupload_config );
 			uploaderObj.initUploader();
 
+			var rtnObj = '';
+			var redirect_request = false;
+
+			jQuery( document ).ajaxComplete(function() {
+				if( redirect_request ) {
+					redirect_request = false;
+					window.location = rtnObj.redirect_url;
+				}
+			});
+
 			uploaderObj.uploader.bind( 'UploadComplete', function( up, files ) {
+
 				activity_id = -1;
 				var hook_respo = rtMediaHook.call( 'rtmedia_js_after_files_uploaded' );
 				if ( typeof rtmedia_gallery_reload_on_upload != 'undefined' && rtmedia_gallery_reload_on_upload == '1' ) { //Reload gallery view when upload completes if enabled( by default enabled)
@@ -568,6 +579,13 @@ jQuery( function( $ ) {
 				jQuery( '#rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
 				jQuery( '.start-media-upload' ).hide();
 				apply_rtMagnificPopup( jQuery( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' ) );
+
+				if( '' !== rtnObj && 'undefined' !== typeof( rtnObj.redirect_url ) && null !== rtnObj.redirect_url ) {
+					if( uploaderObj.upload_count === up.files.length && 0 < jQuery( '#rt_upload_hf_redirect' ).length && jQuery.trim( 0 === rtnObj.redirect_url.indexOf( 'http' ) ) ) {
+						redirect_request = true;
+					}
+				}
+
 				window.onbeforeunload = null;
 			} );
 
@@ -843,7 +861,7 @@ jQuery( function( $ ) {
  						}
 					}
 				}
-				var rtnObj;
+
 				try {
 
 					rtnObj = JSON.parse( res.response );
@@ -863,10 +881,6 @@ jQuery( function( $ ) {
 						uploaderObj.upload_count = 1;
 					} else {
 						uploaderObj.upload_count++;
-					}
-
-					if ( uploaderObj.upload_count == up.files.length && jQuery( '#rt_upload_hf_redirect' ).length > 0 && jQuery.trim( rtnObj.redirect_url.indexOf( 'http' ) == 0 ) ) {
-						window.location = rtnObj.redirect_url;
 					}
 
 					rtMediaHook.call( 'rtmedia_js_after_file_upload', [ up, file, res.response ] );
