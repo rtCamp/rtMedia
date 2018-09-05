@@ -50,53 +50,71 @@ class RTMediaBuddyPressActivity {
 
 		// Apply these hooks only on multisite.
 		if ( is_multisite() ) {
+			// Filter activities in ajax and page reload.
 			add_filter( 'bp_ajax_querystring', array( $this, 'filter_activity_with_blog' ) );
 			add_filter( 'bp_after_has_activities_parse_args', array( $this, 'filter_activity_with_blog' ) );
 
-//			add_action( 'bp_activity_comment_posted', array( $this, 'bp_activity_comment_posted' ), 10, 3 );
-			add_action( 'bp_activity_add', array( $this, 'clear_blog_activity_transient' ) );
-			add_action( 'bp_activity_delete', array( $this, 'clear_blog_activity_transient' ) );
+			// Maintain activity list in rtm_activity table, reset transients.
+			add_action( 'bp_activity_after_save', array( $this, 'bp_activity_after_save' ) );
+			add_action( 'bp_activity_after_delete', array( $this, 'bp_activity_after_delete' ) );
 		}
 	}
-
-
-	/*public function bp_activity_comment_posted( $content, $user_id, $activity_id ) {
-		$activity_model = new RTMediaActivityModel();
-		error_log('posting update: ' . $activity_id);
-		if ( ! $activity_model->check( $activity_id ) ) {
-			error_log('doesn\'t exist!');
-		}
-	}*/
 
 
 	/**
-	 * @param $activity
+	 * To save all activities in rtm_activity table, reset transient.
+	 *
+	 * @param object $activity Saved activity object.
 	 */
-	public function clear_blog_activity_transient( $activity ) {
-		if ( current_filter() === 'bp_activity_delete' && ! empty( $activity['id'] ) ) {
-			$activity_model = new RTMediaActivityModel();
-			$activity_model->delete( array( 'activity_id' => $activity['id'] ) );
+	public function bp_activity_after_save( $activity ) {
+		$activity_model = new RTMediaActivityModel();
+		if ( ! $activity_model->check( $activity->id ) ) {
+			$activity_model->insert(
+				array(
+					'activity_id' => $activity->id,
+					'user_id'     => get_current_user_id(),
+					'blog_id'     => get_current_blog_id(),
+				)
+			);
 		}
 
-		if ( current_filter() === 'bp_activity_add' ) {
-//			$activity_model = new RTMediaActivityModel();
-			ob_start();
-			print_r($activity);
-			error_log(ob_get_clean());
-		}
-
-		error_log('transient update');
 		$sites = get_sites( array( 'fields' => 'ids' ) );
 		foreach ( $sites as $site ) {
 			if ( $site === get_current_blog_id() ) {
-				error_log( 'ignoring - rtm_filter_blog_activity_' . $site );
 				continue;
 			}
 
-			error_log('deleting ' . $site);
 			delete_site_transient( 'rtm_filter_blog_activity_' . $site );
 		}
 	}
+
+	/**
+	 * To delete activities from rtm_activity table, reset transient.
+	 *
+	 * @param object $activity Deleted activity object.
+	 */
+	public function bp_activity_after_delete( $activity ) {
+		if ( empty( $activity ) ) {
+			return;
+		}
+
+		if ( is_array( $activity ) ) {
+			$activity = $activity[0];
+		}
+
+		$activity_model = new RTMediaActivityModel();
+		$activity_model->delete( array( 'activity_id' => $activity->id ) );
+
+		$sites = get_sites( array( 'fields' => 'ids' ) );
+		foreach ( $sites as $site ) {
+			if ( $site === get_current_blog_id() ) {
+				continue;
+			}
+
+			delete_site_transient( 'rtm_filter_blog_activity_' . $site );
+		}
+	}
+
 
 	/**
 	 * To handle multisite media.
@@ -113,22 +131,20 @@ class RTMediaBuddyPressActivity {
 
 		$transient_name = 'rtm_filter_blog_activity_' . $blog_id;
 		$activity_ids   = get_site_transient( $transient_name );
-		error_log( 'from transient - ' . $transient_name . ': ' . $activity_ids );
 		if ( empty( $activity_ids ) ) {
 			$activities   = $wpdb->get_col( $wpdb->prepare( 'SELECT DISTINCT activity_id FROM ' . $prefix . 'rt_rtm_activity WHERE blog_id!=%d', $blog_id ) );
 			$activity_ids = implode( ',', $activities );
-			error_log('not from transient: ' . $activity_ids);
 
 			set_site_transient( $transient_name, $activity_ids );
 		}
 
-		/*if ( ! empty( $activity_ids ) ) {
+		if ( ! empty( $activity_ids ) ) {
 			if ( current_filter() === 'bp_ajax_querystring' ) {
 				$query_string .= '&exclude=' . $activity_ids;
 			} else {
 				$query_string['exclude'] = $activity_ids;
 			}
-		}*/
+		}
 
 		return $query_string;
 	}
@@ -191,28 +207,6 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function comment_sync( $comment_id, $param ) {
-		$activity_model = new RTMediaActivityModel();
-		if ( ! empty( $param['activity_id'] ) && ! $activity_model->check( $comment_id ) ) {
-			$activity = $activity_model->get( array( 'activity_id' => $param['activity_id'] ) );
-			if ( ! empty( $activity ) ) {
-				if ( is_array( $activity ) ) {
-					$activity = $activity[0];
-				}
-
-				$data = array(
-					'activity_id' => $comment_id,
-					'blog_id'     => get_current_blog_id(),
-					'user_id'     => $param['user_id']
-				);
-
-				if ( ! is_null( $activity->privacy ) ) {
-					$data['privacy'] = $activity->privacy;
-				}
-
-				$activity_model->insert( $data );
-			}
-		}
-
 		$default_args   = array( 'user_id' => '', 'comment_author' => '' );
 		$param          = wp_parse_args( $param, $default_args );
 		$user_id        = $param['user_id'];
@@ -806,16 +800,9 @@ class RTMediaBuddyPressActivity {
 					}
 
 					// add privacy for comment activity
-					$rtmedia_activity_model = new RTMediaActivityModel();
 					if( class_exists( 'RTMediaActivityModel' ) && is_rtmedia_privacy_enable() && isset( $media_obj->activity_id ) ){
+						$rtmedia_activity_model = new RTMediaActivityModel();
 						$rtmedia_activity_model->set_privacy_for_rtmedia_activity( $media_obj->activity_id, $activity_id , $user_id );
-					} elseif ( ! $rtmedia_activity_model->check( $activity_id ) ) {
-						$rtmedia_activity_model->insert(
-							array(
-								'activity_id' => $activity_id,
-								'user_id'     => $user_id,
-							)
-						);
 					}
 
 					// Store activity id into user meta for reference
