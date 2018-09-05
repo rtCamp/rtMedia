@@ -637,12 +637,12 @@ class RTMediaBuddyPressActivity {
 
 					// generate activity arguments.
 					$activity_args = array(
-						'user_id'      => $user_id,
-						'action'       => $action,
-						'type'         => 'rtmedia_like_activity',
-						'primary_link' => $primary_link,
-						'item_id'      => $media_id,
-						'secondary_item_id'      => $media_id, // Used for when deleting media when it's enter in group not used when media is add in the main activity
+							'user_id'      => $user_id,
+							'action'       => $action,
+							'type'         => 'rtmedia_like_activity',
+							'primary_link' => $primary_link,
+							'item_id'      => $media_id,
+							'secondary_item_id'      => $media_id, // Used for when deleting media when it's enter in group not used when media is add in the main activity
 					);
 
 					// set activity component
@@ -734,52 +734,52 @@ class RTMediaBuddyPressActivity {
 					$comment_media_id = false;
 
 					/* if activity is add from comment media  */
-					if( isset( $_REQUEST['comment_content'] ) || isset( $_REQUEST['action'] ) ){
-						if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'new_activity_comment' ){
+				    if( isset( $_REQUEST['comment_content'] ) || isset( $_REQUEST['action'] ) ){
+				    	if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'new_activity_comment' ){
 
-							remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
-							/* comment content */
-							$comment_content = $_REQUEST['content'];
-						}elseif ( isset( $_REQUEST['comment_content'] ) ) {
-							/* comment content */
-							$comment_content = $_REQUEST['comment_content'];
-						}
+				    		remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
+				    		/* comment content */
+					        $comment_content = $_REQUEST['content'];
+				    	}elseif ( isset( $_REQUEST['comment_content'] ) ) {
+					        /* comment content */
+					        $comment_content = $_REQUEST['comment_content'];
+				    	}
 
-						/* is comment is empty then add content content space */
-						if( strstr($comment_content, 'nbsp') ){
-							$comment_content = "&nbsp;";
-						}
+				        /* is comment is empty then add content content space */
+			            if( strstr($comment_content, 'nbsp') ){
+			                $comment_content = "&nbsp;";
+			            }
 
 
-						/* if comment has comment media then create new html for it */
-						if ( isset( $_REQUEST['rtMedia_attached_files'] ) ) {
-							$rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+				        /* if comment has comment media then create new html for it */
+				        if ( isset( $_REQUEST['rtMedia_attached_files'] ) ) {
+				            $rtMedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
-							/* check media should be in array format and is not empty to */
-							if( class_exists( 'RTMediaActivity' )  && is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files ) ){
-								$comment_media = true;
-								$comment_media_id = $rtMedia_attached_files[0];
-								$obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content );
-								$comment_content = $obj_comment->create_activity_html();
-							}
-						}
+				            /* check media should be in array format and is not empty to */
+				            if( class_exists( 'RTMediaActivity' )  && is_array( $rtMedia_attached_files ) && ! empty( $rtMedia_attached_files ) ){
+				            	$comment_media = true;
+				            	$comment_media_id = $rtMedia_attached_files[0];
+			                    $obj_comment = new RTMediaActivity( $rtMedia_attached_files[0], 0, $comment_content );
+			                	$comment_content = $obj_comment->create_activity_html();
+				            }
+				        }
 
-						/* add the new content to the activity */
-						$activity_content = $comment_content;
-					}
+				        /* add the new content to the activity */
+				        $activity_content = $comment_content;
+				    }
 
 
 					$wp_comment_id   = $params['comment_id'];
 
 					// prepare activity arguments
 					$activity_args = array(
-						'user_id'           => $user_id,
-						'action'            => $action,
-						'content'           => $activity_content,
-						'type'              => 'rtmedia_comment_activity',
-						'primary_link'      => $primary_link,
-						'item_id'           => $media_id,
-						'secondary_item_id' => $wp_comment_id,
+							'user_id'           => $user_id,
+							'action'            => $action,
+							'content'           => $activity_content,
+							'type'              => 'rtmedia_comment_activity',
+							'primary_link'      => $primary_link,
+							'item_id'           => $media_id,
+							'secondary_item_id' => $wp_comment_id,
 					);
 
 					// set activity component
