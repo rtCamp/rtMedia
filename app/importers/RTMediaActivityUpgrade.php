@@ -71,11 +71,23 @@ class RTMediaActivityUpgrade {
 			}
 			$activity_data = $wpdb->get_results( $activity_sql ); // @codingStandardsIgnoreLine
 			if ( is_array( $activity_data ) && ! empty( $activity_data ) ) {
-				$rtmedia_activity_model->insert( array(
-					'activity_id' => $activity_data[0]->activity_id,
-					'user_id'     => $activity_data[0]->media_author,
-					'privacy'     => $activity_data[0]->max_privacy,
-				) );
+				if ( $rtmedia_activity_model->check( $activity_data[0]->activity_id ) ) {
+					$rtmedia_activity_model->update(
+						array(
+							'activity_id' => $activity_data[0]->activity_id,
+							'user_id'     => $activity_data[0]->media_author,
+							'privacy'     => $activity_data[0]->max_privacy,
+						), array( 'activity_id' => $activity_data[0]->activity_id )
+					);
+				} else {
+					$rtmedia_activity_model->insert(
+						array(
+							'activity_id' => $activity_data[0]->activity_id,
+							'user_id'     => $activity_data[0]->media_author,
+							'privacy'     => $activity_data[0]->max_privacy,
+						)
+					);
+				}
 			}
 			$this->return_upgrade( $activity_data[0] );
 		} else {
