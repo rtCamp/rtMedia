@@ -799,7 +799,7 @@ class RTMediaBuddyPressActivity {
 						add_rtmedia_meta( $comment_media_id, 'rtmedia_comment_media_profile_id', $activity_id );
 					}
 
-					// add privacy for comment activity
+					// add privacy for like activity
 					if( class_exists( 'RTMediaActivityModel' ) && is_rtmedia_privacy_enable() && isset( $media_obj->activity_id ) ){
 						$rtmedia_activity_model = new RTMediaActivityModel();
 						$rtmedia_activity_model->set_privacy_for_rtmedia_activity( $media_obj->activity_id, $activity_id , $user_id );
