@@ -1818,9 +1818,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 									if ( '1' === response ) {
 										jQuery( '.rtmedia-update-template-notice' ).remove();
 									}
-								});
-							});
-						});
+								} );
+							} );
+						} );
 					</script>
 					<?php
 				}
