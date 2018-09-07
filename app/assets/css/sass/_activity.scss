@@ -230,3 +230,16 @@ a.rtmedia-comment-link{
 a.rtmedia-comment-link.rtmedia-comments-link{
 	display: initial;
 }
+
+.activity-list.bp-list {
+	li:first-child {
+    margin-top: 10px;
+	}
+}
+
+li.rtmedia-list-item.media-type-music.masonry-brick {
+    position: relative !important;
+    width: auto;
+	left: 0 !important;
+	top: 0 !important;
+}
