@@ -1803,6 +1803,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	rtmedia_plupload_file += '</li>';
 
 	jQuery( rtmedia_plupload_file ).appendTo( rtmedia_uploader_filelist );
+	jQuery( '#whats-new' ).focus();
 	var type = file.type;
 	var media_title = file.name;
 	var ext = media_title.substring( media_title.lastIndexOf( '.' ) + 1, media_title.length );
