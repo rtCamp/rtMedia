@@ -995,14 +995,14 @@ jQuery( document ).ready( function( $ ) {
 	 * UI changes for buddypress nouveau theme on activity page
 	 */
 
-	if( bp_template_pack && 'legacy' !== bp_template_pack ) {
+	if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
-		let whats_new_form = jQuery( '#whats-new-form' );
+		var whats_new_form = jQuery( '#whats-new-form' );
 
 		jQuery( '#whats-new' ).on( 'focus', function () {
 
-			let rt_uploader_div = whats_new_form.find( '.rtmedia-uploader-div' );
-			let rt_uploader_filelist = whats_new_form.find( '#rtmedia_uploader_filelist' );
+			var rt_uploader_div = whats_new_form.find( '.rtmedia-uploader-div' );
+			var rt_uploader_filelist = whats_new_form.find( '#rtmedia_uploader_filelist' );
 
 			rt_uploader_div.show();
 
@@ -1106,10 +1106,10 @@ jQuery( document ).ready( function( $ ) {
 		/**
 		 * Appends rtMedia Uploader option below form content section
 		 */
-		if( bp_template_pack && 'legacy' !== bp_template_pack ) {
+		if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
-			let form_ref        = jQuery( '#whats-new-form' );
-			let rt_uploader_div = jQuery( '.rtmedia-uploader-div' );
+			var form_ref        = jQuery( '#whats-new-form' );
+			var rt_uploader_div = jQuery( '.rtmedia-uploader-div' );
 
 			if ( 0 < jQuery( '.activity-update-form' ).length && 0 < form_ref.length && 0 < rt_uploader_div.length ) {
 				jQuery( form_ref ).append( rt_uploader_div );
@@ -1118,8 +1118,8 @@ jQuery( document ).ready( function( $ ) {
 
 		} else {
 
-			let new_options = jQuery( '#whats-new-options' );
-			let rt_uploader_div = jQuery( '#whats-new-form .rtmedia-uploader-div' );
+			var new_options = jQuery( '#whats-new-options' );
+			var rt_uploader_div = jQuery( '#whats-new-form .rtmedia-uploader-div' );
 
 			if ( 0 < new_options.length && 0 < rt_uploader_div.length ) {
 				new_options.append( rt_uploader_div );
@@ -1423,7 +1423,7 @@ jQuery( document ).ready( function( $ ) {
 			/**
 			 * Blank error display issue resolved
 			 */
-			if( bp_template_pack && 'legacy' !== bp_template_pack ) {
+			if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
 				if ( 'disable' === rtmedia_activity_text_with_attachment &&  '' === jQuery.trim( jQuery( '#whats-new' ).val() ) ) {
 					let textarea = jQuery( '#whats-new' );
@@ -1433,10 +1433,10 @@ jQuery( document ).ready( function( $ ) {
 
 				jQuery( '#whats-new-form' ).submit();
 			} else {
-				$( '#aw-whats-new-submit' ).click();
+				jQuery( '#aw-whats-new-submit' ).click();
 			}
 
-			$( '#whats-new-form #rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
+			jQuery( '#whats-new-form #rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
 			//$("#aw-whats-new-submit").removeAttr('disabled');
 			window.onbeforeunload = null;
 		} );
@@ -1862,12 +1862,12 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	/**
 	 * Blank error display issue resolved
 	 */
-	if( bp_template_pack && 'legacy' !== bp_template_pack ) {
+	if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
-		let new_submit_btn = jQuery( '#aw-whats-new-submit' );
+		var new_submit_btn = jQuery( '#aw-whats-new-submit' );
 		if ( 0 < new_submit_btn.length ) {
 
-			let new_button = jQuery( '<input>', {
+			var new_button = jQuery( '<input>', {
 				type  : 'button',
 				class : 'button',
 				name  : 'aw-whats-new-submit',
@@ -1879,8 +1879,8 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 
 			new_button.on( 'click', function ( e ) {
 
-				if( rtMediaHook.call( 'rtmedia_js_before_activity_added', true ) ) {
-					objUploadView.uploadFiles(e);
+				if ( rtMediaHook.call( 'rtmedia_js_before_activity_added', true ) ) {
+					objUploadView.uploadFiles( e );
 				}
 			} );
 		}
