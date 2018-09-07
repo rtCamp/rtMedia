@@ -276,16 +276,15 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					<?php wp_nonce_field( 'rtcamp_pro_split', 'rtcamp_pro_split' ); ?>
 					<p>
 						<?php
-							$product_page = 'https://rtmedia.io/products/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
+						$product_page = 'https://rtmedia.io/products/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
 
-							// translators: %s gets replaced by product page.
-							$message      = sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page );
-							$allowed_tags = array(
-								'a' => array(
-									'href' => array(),
-								),
-							);
-
+						// translators: %s gets replaced by product page.
+						$message      = sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page );
+						$allowed_tags = array(
+							'a' => array(
+								'href' => array(),
+							),
+						);
 						?>
 						<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
 						<?php echo wp_kses( $message, $allowed_tags ); ?>
@@ -294,19 +293,20 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				<script type="text/javascript">
 					jQuery( document ).ready( function () {
 
-						jQuery( '.rtmedia-pro-split-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
+						jQuery( '.rtmedia-pro-split-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function () {
 
 							var data = {
-								action: 'rtmedia_hide_premium_addon_notice',
-								_rtm_nonce: jQuery('#rtcamp_pro_split').val(),
-							}
+								action    : 'rtmedia_hide_premium_addon_notice',
+								_rtm_nonce: jQuery( '#rtcamp_pro_split' ).val(),
+							};
 
-							jQuery.post(ajaxurl, data, function (response) {
+							jQuery.post( ajaxurl, data, function ( response ) {
 								response = response.trim();
 
-								if (response === "1")
-									jQuery('.rtmedia-pro-split-notice').remove();
-							});
+								if ( "1" === response ) {
+									jQuery( '.rtmedia-pro-split-notice' ).remove();
+								}
+							} );
 						} )
 					} );
 				</script>
@@ -353,21 +353,22 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				<script type="text/javascript">
 					jQuery( document ).ready( function() {
 
-						jQuery( '.rtmedia-inspire-book-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
+						jQuery( '.rtmedia-inspire-book-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function () {
 
 							var data = {
-								action: 'rtmedia_hide_inspirebook_release_notice',
-								_rtm_nonce: jQuery('#rtmedia_hide_inspirebook_nonce').val()
-							}
+								action    : 'rtmedia_hide_inspirebook_release_notice',
+								_rtm_nonce: jQuery( '#rtmedia_hide_inspirebook_nonce' ).val()
+							};
 
-							jQuery.post(ajaxurl, data, function (response) {
+							jQuery.post( ajaxurl, data, function ( response ) {
 								response = response.trim();
 
-								if (response === "1")
-									jQuery('.rtmedia-inspire-book-notice').remove();
-							});
-						});
-					});
+								if ( "1" === response ) {
+									jQuery( '.rtmedia-inspire-book-notice' ).remove();
+								}
+							} );
+						} );
+					} );
 				</script>
 				<?php
 			}
@@ -466,23 +467,24 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					</p>
 				</div>
 				<script type="text/javascript">
-					jQuery( document ).ready( function() {
+					jQuery( document ).ready( function () {
 
-						jQuery( '.rtmedia-addon-update-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
+						jQuery( '.rtmedia-addon-update-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function () {
 
 							var data = {
-								action: 'rtmedia_hide_addon_update_notice',
-								_rtm_nonce: jQuery('#rtmedia-addon-notice').val(),
-							}
+								action    : 'rtmedia_hide_addon_update_notice',
+								_rtm_nonce: jQuery( '#rtmedia-addon-notice' ).val(),
+							};
 
-							jQuery.post(ajaxurl, data, function (response) {
+							jQuery.post( ajaxurl, data, function ( response ) {
 								response = response.trim();
 
-								if (response === "1")
-									jQuery('.rtmedia-addon-update-notice').remove();
-							});
-						});
-					});
+								if ( "1" === response ) {
+									jQuery( '.rtmedia-addon-update-notice' ).remove();
+								}
+							} );
+						} );
+					} );
 				</script>
 				<?php
 			}
@@ -1800,21 +1802,22 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					</div>
 
 					<script type="text/javascript">
-						jQuery( document ).ready( function() {
+						jQuery( document ).ready( function () {
 
-							jQuery( '.rtmedia-update-template-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
+							jQuery( '.rtmedia-update-template-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function () {
 
 								var data = {
-									action: 'rtmedia_hide_template_override_notice',
-									_rtm_nonce: jQuery('#rtmedia_template_notice').val()
-								}
+									action    : 'rtmedia_hide_template_override_notice',
+									_rtm_nonce: jQuery( '#rtmedia_template_notice' ).val()
+								};
 
-								jQuery.post(ajaxurl, data, function (response) {
+								jQuery.post( ajaxurl, data, function ( response ) {
 
 									response = response.trim();
 
-									if ('1' === response)
-										jQuery('.rtmedia-update-template-notice').remove();
+									if ( '1' === response ) {
+										jQuery( '.rtmedia-update-template-notice' ).remove();
+									}
 								});
 							});
 						});
