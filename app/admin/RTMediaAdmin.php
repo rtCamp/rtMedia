@@ -1966,11 +1966,16 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$message = '';
 			foreach ( $addons as $addon ) {
 				if ( empty( $addon['args']['status'] ) || 'valid' !== $addon['args']['status'] ) {
-					$message = sprintf(
+					$message      = sprintf(
 						__( 'We found an invalid or expired license key for an rtMedia add-on. Please go to the <a href="%s">Licenses page</a> to fix this issue.', 'buddypress-media' ),
 						admin_url( 'admin.php?page=rtmedia-license' )
 					);
-					echo '<div class="error notice is-dismissible"><p>' . $message . '</p></div>';
+					$allowed_tags = array(
+						'a' => array(
+							'href' => array(),
+						),
+					);
+					echo '<div class="error notice is-dismissible"><p>' . wp_kses( $message, $allowed_tags ) . '</p></div>';
 					break;
 				}
 			}
