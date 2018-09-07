@@ -610,8 +610,7 @@ class RTMediaQuery {
 		/**
 		 * Restrict User to access Media, if it is disabled for Profile/Group.
 		 */
-
-		if( ! $is_gallery_shortcode ) {
+		if ( ! $is_gallery_shortcode ) {
 
 			if ( isset( $this->media_query ) && isset( $this->media_query['context'] ) && 'profile' === $this->media_query['context'] ) {
 
