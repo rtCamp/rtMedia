@@ -994,7 +994,6 @@ jQuery( document ).ready( function( $ ) {
 	/**
 	 * UI changes for buddypress nouveau theme on activity page
 	 */
-
 	if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
 		var whats_new_form = jQuery( '#whats-new-form' );
