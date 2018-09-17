@@ -615,9 +615,9 @@ class RTMediaQuery {
 			if ( isset( $this->media_query ) && isset( $this->media_query['context'] ) && 'profile' === $this->media_query['context'] ) {
 
 				if ( isset( $rtmedia )
-				     && isset( $rtmedia->options )
-				     && isset( $rtmedia->options['buddypress_enableOnProfile'] )
-				     && 0 === intval( $rtmedia->options['buddypress_enableOnProfile'] ) ) {
+					&& isset( $rtmedia->options )
+					&& isset( $rtmedia->options['buddypress_enableOnProfile'] )
+					&& 0 === intval( $rtmedia->options['buddypress_enableOnProfile'] ) ) {
 
 					global $wp_query;
 					$wp_query->set_404();
@@ -628,9 +628,9 @@ class RTMediaQuery {
 			} elseif ( isset( $this->media_query ) && isset( $this->media_query['context'] ) && 'group' === $this->media_query['context'] ) {
 
 				if ( isset( $rtmedia )
-				     && isset( $rtmedia->options )
-				     && isset( $rtmedia->options['buddypress_enableOnGroup'] )
-				     && 0 === intval( $rtmedia->options['buddypress_enableOnGroup'] ) ) {
+					&& isset( $rtmedia->options )
+					&& isset( $rtmedia->options['buddypress_enableOnGroup'] )
+					&& 0 === intval( $rtmedia->options['buddypress_enableOnGroup'] ) ) {
 
 					global $wp_query;
 					$wp_query->set_404();
