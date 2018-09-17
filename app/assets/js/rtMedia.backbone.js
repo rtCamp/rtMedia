@@ -1436,7 +1436,6 @@ jQuery( document ).ready( function( $ ) {
 			}
 
 			jQuery( '#whats-new-form #rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
-			//$("#aw-whats-new-submit").removeAttr('disabled');
 			window.onbeforeunload = null;
 		} );
 
