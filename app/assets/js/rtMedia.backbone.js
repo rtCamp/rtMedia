@@ -984,6 +984,42 @@ jQuery( document ).ready( function( $ ) {
 	 * End of issue 124 fix
 	 */
 
+	/**
+	 * UI changes for buddypress nouveau theme on activity page
+	 */
+	if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+
+		var whats_new_form = jQuery( '#whats-new-form' );
+
+		jQuery( '#whats-new' ).on( 'focus', function () {
+
+			var rt_uploader_div = whats_new_form.find( '.rtmedia-uploader-div' );
+			var rt_uploader_filelist = whats_new_form.find( '#rtmedia_uploader_filelist' );
+
+			rt_uploader_div.show();
+
+			rt_uploader_div.addClass( 'clearfix' );
+
+			whats_new_form.find( '#rtmedia-action-update' ).removeClass( 'clearfix' );
+
+			rt_uploader_filelist.addClass( 'clear-both' );
+			rt_uploader_filelist.removeClass( 'clearfix' );
+		} );
+
+		whats_new_form.bind( 'reset', function () {
+			whats_new_form.find( '.rtmedia-uploader-div' ).hide();
+		} );
+
+		whats_new_form.bind( 'submit', function () {
+			setTimeout( function () {
+				whats_new_form.find( '.rtmedia-uploader-div' ).hide();
+			}, 2000 );
+		} );
+	}
+	/**
+	 * End of UI changes
+	 */
+
 	/*
 	 * Fix for file selector does not open in Safari browser in IOS.
 	 * In Safari in IOS, Plupload don't click on it's input(type=file), so file selector dialog won't open.
@@ -1059,8 +1095,27 @@ jQuery( document ).ready( function( $ ) {
 			}
 		}, 100 );
 
-		if ( $( '#whats-new-options' ).length > 0 && $( '#whats-new-form .rtmedia-uploader-div' ).length > 0 ) {
-			$( '#whats-new-options' ).append( $( '#whats-new-form .rtmedia-uploader-div' ) );
+		/**
+		 * Appends rtMedia Uploader option below form content section
+		 */
+		if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+
+			var form_ref        = jQuery( '#whats-new-form' );
+			var rt_uploader_div = jQuery( '.rtmedia-uploader-div' );
+
+			if ( 0 < jQuery( '.activity-update-form' ).length && 0 < form_ref.length && 0 < rt_uploader_div.length ) {
+				jQuery( form_ref ).append( rt_uploader_div );
+				rt_uploader_div.hide();
+			}
+
+		} else {
+
+			var new_options = jQuery( '#whats-new-options' );
+			var rt_uploader_div = jQuery( '#whats-new-form .rtmedia-uploader-div' );
+
+			if ( 0 < new_options.length && 0 < rt_uploader_div.length ) {
+				new_options.append( rt_uploader_div );
+			}
 		}
 
 		$( '#whats-new-form' ).on( 'click', '#rtmedia-add-media-button-post-update', function( e ) {
@@ -1356,9 +1411,24 @@ jQuery( document ).ready( function( $ ) {
 
 		objUploadView.uploader.bind( 'UploadComplete', function( up, files ) {
 			media_uploading = true;
-			$( '#aw-whats-new-submit' ).click();
-			$( '#whats-new-form #rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
-			//$("#aw-whats-new-submit").removeAttr('disabled');
+
+			/**
+			 * Blank error display issue resolved
+			 */
+			if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+
+				if ( 'disable' === rtmedia_activity_text_with_attachment &&  '' === jQuery.trim( jQuery( '#whats-new' ).val() ) ) {
+					let textarea = jQuery( '#whats-new' );
+					textarea.css( 'color', 'transparent' );
+					textarea.val( '&nbsp;' );
+				}
+
+				jQuery( '#whats-new-form' ).submit();
+			} else {
+				jQuery( '#aw-whats-new-submit' ).click();
+			}
+
+			jQuery( '#whats-new-form #rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
 			window.onbeforeunload = null;
 		} );
 
@@ -1775,6 +1845,33 @@ jQuery( document ).ready( function( $ ) {
 function rtmedia_selected_file_list( plupload, file, uploader, error, comment_media_id ) {
 	var icon = '', err_msg = '', upload_progress = '', title = '';
 
+	/**
+	 * Blank error display issue resolved
+	 */
+	if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+
+		var new_submit_btn = jQuery( '#aw-whats-new-submit' );
+		if ( 0 < new_submit_btn.length ) {
+
+			var new_button = jQuery( '<input>', {
+				type  : 'button',
+				class : 'button',
+				name  : 'aw-whats-new-submit',
+				id    : 'aw-whats-new-submit',
+				value : 'Post Update'
+			} );
+
+			new_submit_btn.replaceWith( new_button );
+
+			new_button.on( 'click', function ( e ) {
+
+				if ( rtMediaHook.call( 'rtmedia_js_before_activity_added', true ) ) {
+					objUploadView.uploadFiles( e );
+				}
+			} );
+		}
+	}
+
 	rtmedia_uploader_filelist = (typeof comment_media_id === "undefined") ? "#rtmedia_uploader_filelist" : "#rtmedia_uploader_filelist-"+comment_media_id;
 	plupload_delete = (typeof comment_media_id === "undefined") ? "plupload_delete" : "plupload_delete-"+comment_media_id;
 
@@ -1817,6 +1914,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	rtmedia_plupload_file += '</li>';
 
 	jQuery( rtmedia_plupload_file ).appendTo( rtmedia_uploader_filelist );
+	jQuery( '#whats-new' ).focus();
 	var type = file.type;
 	var media_title = file.name;
 	var ext = media_title.substring( media_title.lastIndexOf( '.' ) + 1, media_title.length );
