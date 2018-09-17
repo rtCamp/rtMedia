@@ -135,7 +135,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$show_notice = get_site_option( 'install_transcoder_admin_notice', 1 );
 			if ( '1' === $show_notice || 1 === $show_notice ) :
 		?>
-			<div class="notice notice-info install-transcoder-notice is-dismissible">
+			<div class="notice notice-info install-transcoder-notice is-dismissible" data-action="install_transcoder_hide_admin_notice" data-nonce="">
 				<?php wp_nonce_field( '_install_transcoder_hide_notice_', 'install_transcoder_hide_notice_nonce' ); ?>
 				<p>
 					<?php
@@ -261,6 +261,52 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					$this->rtmedia_premium_addon_notice();
 				}
 			}
+
+			$this->rtmedia_notice_js_handler();
+		}
+
+		/**
+		 * JS handler function to dismiss admin notices.
+		 */
+		public function rtmedia_notice_js_handler() {
+			?>
+			<script type="text/javascript">
+				jQuery( document ).ready( function () {
+
+					jQuery( document ).on( 'click', '.rtm-is-dismissible', function () {
+						var elem = jQuery( this );
+
+						var action = elem.attr( 'data-action' );
+						if ( typeof action === 'undefined' || action.trim() === '' ) {
+							return;
+						}
+
+						var nonce = elem.attr( 'data-nonce' );
+						if ( typeof nonce === 'undefined' || nonce.trim() === '' ) {
+							return;
+						}
+
+						nonce = jQuery( nonce ).val();
+						if ( typeof nonce === 'undefined' ) {
+							return;
+						}
+
+						var data = {
+							action    : action,
+							_rtm_nonce: nonce,
+						};
+
+						jQuery.post( ajaxurl, data, function ( response ) {
+							response = response.trim();
+
+							if ( "1" === response ) {
+								elem.remove();
+							}
+						} );
+					} )
+				} );
+			</script>
+			<?php
 		}
 
 		/*
@@ -272,7 +318,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ( ! $site_option || 'hide' !== $site_option ) ) {
 				rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
 				?>
-				<div class="updated notice is-dismissible rtmedia-pro-split-notice">
+				<div class="updated notice is-dismissible rtm-is-dismissible rtmedia-pro-split-notice" data-action="rtmedia_hide_premium_addon_notice" data-nonce="#rtcamp_pro_split">
 					<?php wp_nonce_field( 'rtcamp_pro_split', 'rtcamp_pro_split' ); ?>
 					<p>
 						<?php
@@ -290,26 +336,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						<?php echo wp_kses( $message, $allowed_tags ); ?>
 					</p>
 				</div>
-				<script type="text/javascript">
-					jQuery( document ).ready( function () {
-
-						jQuery( '.rtmedia-pro-split-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function () {
-
-							var data = {
-								action    : 'rtmedia_hide_premium_addon_notice',
-								_rtm_nonce: jQuery( '#rtcamp_pro_split' ).val(),
-							};
-
-							jQuery.post( ajaxurl, data, function ( response ) {
-								response = response.trim();
-
-								if ( "1" === response ) {
-									jQuery( '.rtmedia-pro-split-notice' ).remove();
-								}
-							} );
-						} )
-					} );
-				</script>
 				<?php
 			}
 		}
@@ -341,7 +367,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ( ! $site_option || 'hide' !== $site_option ) && ( 'inspirebook' !== get_stylesheet() ) ) {
 				rtmedia_update_site_option( 'rtmedia_inspirebook_release_notice', 'show' );
 				?>
-				<div class="updated notice is-dismissible rtmedia-inspire-book-notice">
+				<div class="updated notice is-dismissible rtm-is-dismissible rtmedia-inspire-book-notice" data-action="rtmedia_hide_inspirebook_release_notice" data-nonce="#rtmedia_hide_inspirebook_nonce">
 					<p>
 						<a href="https://rtmedia.io/products/inspirebook/" target="_blank">
 							<b><?php esc_html_e( 'Meet InspireBook', 'buddypress-media' ); ?></b>
@@ -350,26 +376,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						<?php wp_nonce_field( '_rtmedia_hide_inspirebook_notice_', 'rtmedia_hide_inspirebook_nonce' ); ?>
 					</p>
 				</div>
-				<script type="text/javascript">
-					jQuery( document ).ready( function() {
-
-						jQuery( '.rtmedia-inspire-book-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function () {
-
-							var data = {
-								action    : 'rtmedia_hide_inspirebook_release_notice',
-								_rtm_nonce: jQuery( '#rtmedia_hide_inspirebook_nonce' ).val()
-							};
-
-							jQuery.post( ajaxurl, data, function ( response ) {
-								response = response.trim();
-
-								if ( "1" === response ) {
-									jQuery( '.rtmedia-inspire-book-notice' ).remove();
-								}
-							} );
-						} );
-					} );
-				</script>
 				<?php
 			}
 		}
@@ -458,7 +464,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				}
 				rtmedia_update_site_option( 'rtmedia-addon-update-notice-3_8', 'show' );
 				?>
-				<div class="error notice is-dismissible rtmedia-addon-update-notice">
+				<div class="error notice is-dismissible rtm-is-dismissible rtmedia-addon-update-notice" data-action="rtmedia_hide_addon_update_notice" data-nonce="#rtmedia-addon-notice">
 					<p>
 						<strong><?php esc_html_e( 'rtMedia:', 'buddypress-media' ); ?></strong>
 						<?php esc_html_e( 'Please update all premium add-ons that you have purchased from', 'buddypress-media' ); ?>
@@ -466,26 +472,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						<?php wp_nonce_field( 'rtmedia-addon-update-notice-3_8', 'rtmedia-addon-notice' ); ?>
 					</p>
 				</div>
-				<script type="text/javascript">
-					jQuery( document ).ready( function () {
-
-						jQuery( '.rtmedia-addon-update-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function () {
-
-							var data = {
-								action    : 'rtmedia_hide_addon_update_notice',
-								_rtm_nonce: jQuery( '#rtmedia-addon-notice' ).val(),
-							};
-
-							jQuery.post( ajaxurl, data, function ( response ) {
-								response = response.trim();
-
-								if ( "1" === response ) {
-									jQuery( '.rtmedia-addon-update-notice' ).remove();
-								}
-							} );
-						} );
-					} );
-				</script>
 				<?php
 			}
 		}
@@ -1794,34 +1780,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( is_dir( get_template_directory() . '/rtmedia' ) ) {
 					?>
 
-					<div class="error notice is-dismissible rtmedia-update-template-notice">
+					<div class="error notice is-dismissible rtm-is-dismissible rtmedia-update-template-notice" data-action="rtmedia_hide_template_override_notice" data-nonce="#rtmedia_template_notice">
 						<?php wp_nonce_field( 'rtmedia_template_notice', 'rtmedia_template_notice' ); ?>
 						<p>
 							<?php esc_html_e( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.', 'buddypress-media' ); ?>
 						</p>
 					</div>
-
-					<script type="text/javascript">
-						jQuery( document ).ready( function () {
-
-							jQuery( '.rtmedia-update-template-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function () {
-
-								var data = {
-									action    : 'rtmedia_hide_template_override_notice',
-									_rtm_nonce: jQuery( '#rtmedia_template_notice' ).val()
-								};
-
-								jQuery.post( ajaxurl, data, function ( response ) {
-
-									response = response.trim();
-
-									if ( '1' === response ) {
-										jQuery( '.rtmedia-update-template-notice' ).remove();
-									}
-								} );
-							} );
-						} );
-					</script>
 					<?php
 				}
 			}
