@@ -66,12 +66,22 @@ class RTMediaUploadView {
 				global $wpdb;
 
 				// BP Groups tablename.
-				$table_name = $wpdb->prefix . "bp_groups";
+				$table_name = $wpdb->prefix . 'bp_groups';
 				// Will fetch ID of current group.
-				$group_id   = bp_get_current_group_id();
+				$group_id = bp_get_current_group_id();
 
-				// Query to fetch current group's privacy status.
-				$group_status = $wpdb->get_var( "SELECT `status` FROM ". $table_name ." WHERE id = " . $group_id );
+				// Use cached data for group status.
+				$group_status = wp_cache_get( 'group_status' );
+
+				if ( false === $group_status ) {
+
+					// Query to fetch current group's privacy status.
+					$group_status = $wpdb->get_var( 'SELECT `status` FROM ' . $table_name . ' WHERE id = ' . $group_id );
+
+					// Set data in cache for better performance.
+					wp_cache_set( 'group_status', $group_status );
+
+				}
 
 				$privacy_levels_array = array(
 					'public'  => 0,
