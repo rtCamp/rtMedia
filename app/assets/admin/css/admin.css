@@ -804,6 +804,10 @@ input[type=checkbox]:checked ~ .switch-handle {
   top: 1px;
 }
 
+input[type=file] {
+  width: 90px;
+}
+
 .rtm-plugin-card.plugin-card {
   margin: 1%;
   overflow: hidden;
