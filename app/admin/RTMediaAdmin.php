@@ -273,7 +273,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			<script type="text/javascript">
 				jQuery( document ).ready( function () {
 
-					jQuery( document ).on( 'click', '.rtm-is-dismissible', function () {
+					jQuery( document ).on( 'click', '.rtm-is-dismissible button.notice-dismiss', function () {
 						var elem = jQuery( this );
 
 						var action = elem.attr( 'data-action' );
