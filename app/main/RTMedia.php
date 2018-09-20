@@ -90,6 +90,10 @@ class RTMedia {
 		add_action( 'wp_enqueue_scripts', array( 'RTMediaGalleryShortcode', 'register_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts_styles' ), 999 );
 
+		// Reset group status cache.
+		add_action( 'groups_settings_updated', array( $this, 'group_status_reset_cache' ) );
+		add_action( 'groups_delete_group', array( $this, 'group_status_reset_cache' ) );
+
 		// Including core functions, actions & filters
 		include( RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-functions.php' );
 		include( RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-actions.php' );
@@ -100,6 +104,15 @@ class RTMedia {
 		add_filter( 'intermediate_image_sizes', array( $this, 'filter_image_sizes' ) );
 		add_filter( 'site_option_upload_filetypes', array( &$this, 'filter_allow_mime_type_mu' ), 1, 1 );
 		add_filter( 'image_size_names_choose', array( $this, 'rtmedia_custom_image_sizes_choose' ) );
+	}
+
+	/**
+	 * Delete group status cache.
+	 *
+	 * @param int $group_id Group ID.
+	 */
+	public function group_status_reset_cache( $group_id ) {
+		delete_transient( 'group_status_' . $group_id );
 	}
 
 	function filter_allow_mime_type_mu( $options ) {
