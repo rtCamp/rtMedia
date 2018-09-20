@@ -602,36 +602,10 @@ class RTMediaQuery {
 	}
 
 	function populate_media() {
-		global $rtmedia_query, $rtmedia;
+		global $rtmedia_query;
 
 		// Check if the page is gallery shortcode or not.
 		$is_gallery_shortcode = ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) ? true : false;
-
-		// Restrict User to access Media, if it is disabled for Profile/Group.
-		if ( ! $is_gallery_shortcode ) {
-
-			if ( isset( $this->media_query ) && isset( $this->media_query['context'] ) && 'profile' === $this->media_query['context'] ) {
-
-				if ( isset( $rtmedia ) && isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnProfile'] ) && 0 === intval( $rtmedia->options['buddypress_enableOnProfile'] ) ) {
-					global $wp_query;
-					$wp_query->set_404();
-					status_header( 404 );
-					get_template_part( 404 );
-					die;
-				}
-
-			} elseif ( isset( $this->media_query ) && isset( $this->media_query['context'] ) && 'group' === $this->media_query['context'] ) {
-
-				if ( isset( $rtmedia ) && isset( $rtmedia->options ) && isset( $rtmedia->options['buddypress_enableOnGroup'] ) && 0 === intval( $rtmedia->options['buddypress_enableOnGroup'] ) ) {
-					global $wp_query;
-					$wp_query->set_404();
-					status_header( 404 );
-					get_template_part( 404 );
-					die;
-				}
-
-			}
-		}
 
 		$this->set_privacy();
 		if ( $this->is_single() ) {
