@@ -3978,7 +3978,17 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 		global $rtmedia_backbone;
 
 		if ( $rtmedia_backbone['backbone'] ) {
-			echo '<%= media_class %>';
+
+			$media_title = filter_input( INPUT_POST, 'media_title', FILTER_SANITIZE_STRING );
+			if ( empty( $media_title ) ) {
+				$media_title = filter_input( INPUT_GET, 'media_title', FILTER_SANITIZE_STRING );
+			}
+			if ( empty( $media_title ) || 'false' === $media_title ) {
+				return 'hide';
+			}
+
+			return 'show';
+
 		} else {
 			global $rtmedia_media;
 			$media_class = 'hide';
