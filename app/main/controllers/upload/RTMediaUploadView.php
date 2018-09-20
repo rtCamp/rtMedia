@@ -71,16 +71,14 @@ class RTMediaUploadView {
 				$group_id = bp_get_current_group_id();
 
 				// Use cached data for group status.
-				$group_status = wp_cache_get( 'group_status' );
+				$group_status = get_transient( 'group_status_' . $group_id );
 
 				if ( false === $group_status ) {
-
 					// Query to fetch current group's privacy status.
 					$group_status = $wpdb->get_var( 'SELECT `status` FROM ' . $table_name . ' WHERE id = ' . $group_id );
 
-					// Set data in cache for better performance.
-					wp_cache_set( 'group_status', $group_status );
-
+					// Set data in transient for better performance.
+					set_transient( 'group_status_' . $group_id, $group_status );
 				}
 
 				$privacy_levels_array = array(
