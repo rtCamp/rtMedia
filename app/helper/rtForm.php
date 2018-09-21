@@ -79,7 +79,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 */
 		private static $id_counts = array(
 			'rtText'      => 0,
-			'rtFile'     => 0,
+			'rtFile'      => 0,
 			'rtNumber'    => 0,
 			'rtDate'      => 0,
 			'rtRadio'     => 0,
@@ -94,7 +94,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		);
 		private static $default_classes = array(
 			'rtText'      => 'rtm-form-text',
-			'rtFile'     => 'rtm-form-file',
+			'rtFile'      => 'rtm-form-file',
 			'rtNumber'    => 'rtm-form-number',
 			'rtDate'      => 'rtm-form-date',
 			'rtRadio'     => 'rtm-form-radio',
@@ -588,10 +588,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @access protected
 		 *
-		 * @param $attributes
+		 * @param array $attributes Arguments to create file input control for default thumbnail generator settings.
 		 *
 		 * @return string
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid argument exception.
 		 */
 		protected function generate_inputfile( $attributes ) {
 
@@ -632,11 +632,12 @@ if ( ! class_exists( 'rtForm' ) ) {
 				}
 
 				return $html;
-				
+
 			} else {
 				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
 		}
+
 
 		/**
 		 * Get rtmedia html textbox in admin options.
@@ -720,19 +721,28 @@ if ( ! class_exists( 'rtForm' ) ) {
 		public function display_link( $args = '' ) {
 			echo $this->get_link( $args );
 		}
+
 		/**
 		 * Get rtmedia html input file in admin options.
 		 *
 		 * @access public
 		 *
-		 * @param string/array $attributes
+		 * @param string|array $attributes Arguments to create file input control.
 		 *
 		 * @return string
 		 */
 		public function get_inputfile( $attributes = '' ) {
 			return $this->generate_inputfile( $attributes );
-		}		 
+		}
 
+
+		/**
+		 * Display file input settings for set custom thumbnail generator.
+		 *
+		 * @param string|array $args Arguments to create file input control.
+		 *
+		 * @throws rtFormInvalidArgumentsException Invalid argument exception.
+		 */
 		public function display_inputfile( $args = '' ) {
 			echo $this->get_inputfile( $args );
 		}

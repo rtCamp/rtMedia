@@ -326,7 +326,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access public
 	 *
-	 * @param  array $args arguments to create file input control.
+	 * @param  array $args Arguments to create file input control.
 	 *
 	 * @return void
 	 *
@@ -353,24 +353,28 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args
+	 * @param  array $args Arguments to create file input control for default thumbnail generator settings.
 	 *
 	 * @return void
 	 */
 	public static function inputfile( $args ) {
 		global $rtmedia;
-		$options  = $rtmedia->options;
+		$options = $rtmedia->options;
+
 		$defaults = array(
 			'key'  => '',
 			'desc' => '',
 		);
+
 		$args = wp_parse_args( $args, $defaults );
- 		extract( $args );
- 		if ( ! empty( $key ) ) {
-			$args['name'] = $key;
+
+		if ( ! empty( $args['key'] ) ) {
+			$args['name'] = $args['key'];
 		}
- 		$args['value'] = $value;
- 		$num_obj = new rtForm();
+
+		$args['value'] = $args['value'];
+
+		$num_obj = new rtForm();
 		$num_obj->display_inputfile( $args );
 	}
 
