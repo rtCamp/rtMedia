@@ -79,6 +79,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 */
 		private static $id_counts = array(
 			'rtText'      => 0,
+			'rtFile'     => 0,
 			'rtNumber'    => 0,
 			'rtDate'      => 0,
 			'rtRadio'     => 0,
@@ -93,6 +94,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		);
 		private static $default_classes = array(
 			'rtText'      => 'rtm-form-text',
+			'rtFile'     => 'rtm-form-file',
 			'rtNumber'    => 'rtm-form-number',
 			'rtDate'      => 'rtm-form-date',
 			'rtRadio'     => 'rtm-form-radio',
@@ -104,6 +106,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 			'rtButton'    => 'rtm-form-button',
 			'rtFileInput' => 'rtm-form-file-input',
 			'rtLink'      => 'rtm-form-link',
+
 		);
 
 		/**
@@ -243,20 +246,21 @@ if ( ! class_exists( 'rtForm' ) ) {
 				case 'rtNumber': //number
 				case 'rtText' : //text
 				case 'rtButton': //button
+				case 'rtFile': //file
 					$html .= 'value="';
 					$html .= ( isset( $attributes['value'] ) ) ? esc_attr( $attributes['value'] ) : '';
 					$html .= '" ';
 					break;
 
-				case 'rtTextarea' :
+				case 'rtTextarea':
 					/*					 * textarea
 					 * no process --- handled in between the start tab and end tag.
 					 * <textarea> value </textarea>
 					 */
 					break;
 
-				case 'rtCheckbox' : //checkbox
-				case 'rtRadio' : //radio
+				case 'rtCheckbox': //checkbox
+				case 'rtRadio': //radio
 					$html .= 'value = "' . esc_attr( $attributes['value'] ) . '">';
 					break;
 				case 'rtLink' : //radio
@@ -580,6 +584,61 @@ if ( ! class_exists( 'rtForm' ) ) {
 		}
 
 		/**
+		 * Generate rtmedia html inputfile in admin options.
+		 *
+		 * @access protected
+		 *
+		 * @param $attributes
+		 *
+		 * @return string
+		 * @throws rtFormInvalidArgumentsException
+		 */
+		protected function generate_inputfile( $attributes ) {
+
+			$element = 'rtFile';
+			if ( is_array( $attributes ) ) {
+
+				/* Starting the input tag */
+				$html = '<input type="file" ';
+
+				/* Generating attributes */
+				$html .= $this->processAttributes( $element, $attributes );
+
+				/* Ending the tag */
+				$html .= ' /><input type="hidden" name="rtmedia-options[' . esc_attr( $attributes['name'] ) . '_hid]" value="' . esc_attr( $attributes['value'] ) . '" />';
+				if ( ! empty( $attributes['value'] ) ) {
+					$img_src  = wp_get_attachment_image_src( $attributes['value'], 'thumbnail' );
+					$img_path = get_attached_file( $attributes['value'] );
+
+					if ( file_exists( $img_path ) && ! empty( $img_src[0] ) ) {
+						$html .= '<span class="rtm-file-preview">';
+						$html .= sprintf( '<img src="%s" width="100">', esc_url( $img_src[0] ) );
+						$html .= '<a href="#" class="no-popup rtm-delete-preview" title="' . esc_attr__( 'Delete this file', 'buddypress-media' ) . '" data-media_type="' . $attributes['name'] . '">';
+						$html .= '<i class="remove-from-queue dashicons dashicons-dismiss"></i>';
+						$html .= '</a></span>';
+					}
+				}
+
+				if ( isset( $attributes['label'] ) ) {
+					if ( isset( $attributes['labelClass'] ) ) {
+						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+					} else {
+						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+					}
+				}
+
+				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ) {
+					$html .= $this->generate_element_desc( $attributes );
+				}
+
+				return $html;
+				
+			} else {
+				throw new rtFormInvalidArgumentsException( 'attributes' );
+			}
+		}
+
+		/**
 		 * Get rtmedia html textbox in admin options.
 		 *
 		 * @access public
@@ -660,6 +719,22 @@ if ( ! class_exists( 'rtForm' ) ) {
 
 		public function display_link( $args = '' ) {
 			echo $this->get_link( $args );
+		}
+		/**
+		 * Get rtmedia html input file in admin options.
+		 *
+		 * @access public
+		 *
+		 * @param string/array $attributes
+		 *
+		 * @return string
+		 */
+		public function get_inputfile( $attributes = '' ) {
+			return $this->generate_inputfile( $attributes );
+		}		 
+
+		public function display_inputfile( $args = '' ) {
+			echo $this->get_inputfile( $args );
 		}
 
 		/**
