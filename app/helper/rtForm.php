@@ -242,11 +242,11 @@ if ( ! class_exists( 'rtForm' ) ) {
 
 			$html = '';
 			switch ( $element ) {
-				case 'rtHidden': //hidden
-				case 'rtNumber': //number
-				case 'rtText' : //text
-				case 'rtButton': //button
-				case 'rtFile': //file
+				case 'rtHidden':
+				case 'rtNumber':
+				case 'rtText':
+				case 'rtButton':
+				case 'rtFile':
 					$html .= 'value="';
 					$html .= ( isset( $attributes['value'] ) ) ? esc_attr( $attributes['value'] ) : '';
 					$html .= '" ';
@@ -605,7 +605,12 @@ if ( ! class_exists( 'rtForm' ) ) {
 				$html .= $this->processAttributes( $element, $attributes );
 
 				/* Ending the tag */
-				$html .= ' /><input type="hidden" name="rtmedia-options[' . esc_attr( $attributes['name'] ) . '_hid]" value="' . esc_attr( $attributes['value'] ) . '" />';
+				$html .= ' />';
+
+				if ( ! empty( $attributes['name'] ) && ! empty( $attributes['value'] ) ) {
+					$html .= '<input type="hidden" name="rtmedia-options[' . esc_attr( $attributes['name'] ) . '_hid]" value="' . esc_attr( $attributes['value'] ) . '" />';
+				}
+
 				if ( ! empty( $attributes['value'] ) ) {
 					$img_src  = wp_get_attachment_image_src( $attributes['value'], 'thumbnail' );
 					$img_path = get_attached_file( $attributes['value'] );
@@ -744,7 +749,8 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @throws rtFormInvalidArgumentsException Invalid argument exception.
 		 */
 		public function display_inputfile( $args = '' ) {
-			echo $this->get_inputfile( $args );
+			// Previously escaped and sanitized so not required here.
+			echo $this->get_inputfile( $args ); // WPCS: XSS ok.
 		}
 
 		/**
