@@ -1991,7 +1991,16 @@ a.rtmedia-comment-link.rtmedia-comments-link {
   margin: 0px;
 }
 .bp-legacy #buddypress #activity-stream .media-type-video .rtmedia-item-title {
-  margin: -20px;
+    margin: -20px;
+}
+
+li.rtmedia-list-item.media-type-music.masonry-brick {
+  width: auto;
+  float: none;
+}
+
+li.rtmedia-list-item.media-type-music.masonry-brick {
+  width: 49%;
 }
 
 .rtmedia-album-edit .rtm-checkbox-wrap {
