@@ -403,7 +403,7 @@ class RTMediaTemplate {
 
 	function media_update_success_error() {
 		$message = apply_filters( 'rtmedia_update_media_message', esc_html__( 'Error in updating Media', 'buddypress-media' ), true );
-		$html    = "<div class='rtmedia-error  media-edit-messge'>" . esc_html__( $message, 'buddypress-media' ) . '</div>';
+		$html    = "<div class='rtmedia-warning  media-edit-messge'>" . esc_html__( $message, 'buddypress-media' ) . '</div>';
 
 		echo apply_filters( 'rtmedia_update_media_message_html', $html, $message, true ); // @codingStandardsIgnoreLine
 	}
