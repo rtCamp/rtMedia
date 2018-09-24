@@ -805,7 +805,7 @@ input[type=checkbox]:checked ~ .switch-handle {
 }
 
 input[type=file] {
-  width: 90px;
+  width: 185px;
 }
 
 .rtm-plugin-card.plugin-card {
