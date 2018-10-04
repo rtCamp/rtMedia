@@ -31,7 +31,7 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 				'rtmedia_uploader_before_start_upload_button', array(
 					$this,
 					'show_terms_and_service_checkbox',
-				), 199, 1
+				), 199, 2
 			);
 			// Filter into activity uploader to show checkbox.
 			add_filter(
@@ -85,13 +85,18 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 		 *
 		 * @global object $rtmedia
 		 * @param  string $content Content after I agree checkbox.
+		 * @param  array  $args     Array of argument passed.
 		 * @return string
 		 */
-		public function show_terms_and_service_checkbox( $content ) {
+		public function show_terms_and_service_checkbox( $content, $args = null ) {
 			global $rtmedia;
 
 			$options       = $rtmedia->options;
 			$terms_content = '';
+
+			if ( ! empty( $args ) ) {
+				$options = array_merge( $options, $args );
+			}
 
 			if ( ( ! empty( $options['general_enable_upload_terms'] ) && '0' !== $options['general_enable_upload_terms'] ) && ( ! empty( $options['general_upload_terms_page_link'] ) && '' !== $options['general_upload_terms_page_link'] ) ) {
 				$terms_content = $this->terms_and_service_checkbox_html( $options );
@@ -131,10 +136,12 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 			$general_upload_terms_message   = $options['general_upload_terms_message'];
 			$content                        = '';
 			ob_start();
+			$widgetid = ! empty( $options['widgetid'] ) ? '-' . $options['widgetid'] : '';
+
 			?>
 			<div class="rtmedia-upload-terms">
-				<input type="checkbox" name="rtmedia_upload_terms_conditions" id="rtmedia_upload_terms_conditions" />
-				<label for="rtmedia_upload_terms_conditions">
+				<input type="checkbox" name="rtmedia_upload_terms_conditions<?php echo esc_attr( $widgetid ); ?>" id="rtmedia_upload_terms_conditions<?php echo esc_attr( $widgetid ); ?>" />
+				<label for="rtmedia_upload_terms_conditions<?php echo esc_attr( $widgetid ); ?>">
 				<?php echo esc_html( apply_filters( 'rtmedia_upload_terms_service_agree_label', __( 'I agree to', 'buddypress-media' ) ) ); ?>
 				<a href='<?php echo esc_url( $general_upload_terms_page_link ); ?>' target='_blank'>
 				<?php echo esc_html( apply_filters( 'rtmedia_upload_terms_service_link_label', $general_upload_terms_message ) ); ?>
