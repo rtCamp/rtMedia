@@ -69,5 +69,6 @@
 	}
 
     $buddypress->gotoActivity();
-    $I->seeElementInDOM( ConstantsPage::$activityMediaLikeSelector );
+    // $I->seeElementInDOM( ConstantsPage::$activityMediaLikeSelector );
+	$I->waitForElementVisible( ConstantsPage::$activityMediaLikeSelector, 10 );
 ?>

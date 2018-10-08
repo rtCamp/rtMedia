@@ -55,6 +55,6 @@
     $logout->logout();
 
     $buddypress->gotoActivity();
-    $I->dontSeeElementInDOM( ConstantsPage::$firstPhotoElementOnActivity );
+    $I->waitForElementNotVisible('#activity-stream ul li div.activity-inner ul li.rtmedia-list-item', 20 );
 
 ?>
