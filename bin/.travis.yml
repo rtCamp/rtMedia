@@ -35,7 +35,7 @@ before_script:
   - cd $PLUGIN_DIR
   - cp -Rf * /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
   - cd /var/www/automation.rtmedia.me/htdocs/
-  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.9.1.zip
+  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.3.2.0.zip
   - wp plugin activate --all
   - cd $PLUGIN_DIR
   - cd tests/codeception/tests/_data
@@ -63,7 +63,19 @@ script:
   ## PHP_CodeSniffer
   - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./tests/acceptance -name '*.php')
   - if find . -name "*.php" ! -path "./node_modules/*" ! -path "./vendor/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
-  - codecept run acceptance --steps
+  # - codecept run acceptance --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/01-Privacy/01-Positive/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/01-Privacy/02-Negative/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Positive/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/05-Types/01-Positive/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/05-Types/02-Negative/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/ --steps
+  - codecept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/ --steps
 
 after_script:
   - sudo cat /var/log/ee/ee.log
