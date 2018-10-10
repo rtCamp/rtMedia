@@ -29,7 +29,6 @@ class RTMediaPrivacy {
 			add_filter( 'bp_activity_get_user_join_filter', array( $this, 'activity_privacy_sql_field' ), 10, 6 );
 
 			add_filter( 'bp_use_legacy_activity_query', array( $this, 'enable_buddypress_privacy' ), 10, 3 );
-			add_filter( 'bp_activity_has_more_items', array( $this, 'enable_buddypress_load_more' ), 10, 1 );
 			add_action( 'bp_actions', array( $this, 'rt_privacy_settings_action' ) );
 
 			// show change privacy option in activity meta.
@@ -132,12 +131,6 @@ class RTMediaPrivacy {
 			echo esc_html( $status );
 			wp_die();
 		}
-	}
-
-	function enable_buddypress_load_more( $has_more_items ) {
-		global $activities_template;
-
-		return true;
 	}
 
 	function enable_buddypress_privacy( $flag, $method, $func_args ) {

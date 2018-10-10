@@ -29,8 +29,7 @@
     $uploadmedia->addStatus( "Testing for Video Media Types." );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName, $numOfMedia );
 
-    $I->reloadPage();
+    $I->waitForElementVisible( ConstantsPage::$firstVideoElementOnActivity, 20 );
 
-    $I->seeElementInDOM( ConstantsPage::$firstVideoElementOnActivity );
     echo nl2br( "Video is uploaded.. \n" );
 ?>

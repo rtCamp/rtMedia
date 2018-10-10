@@ -47,6 +47,106 @@ class RTMediaBuddyPressActivity {
 
 		add_filter( 'bp_activity_permalink_access', array( $this, 'rtm_bp_activity_permalink_access' ) );
 		add_action( 'bp_activity_comment_posted', array( $this, 'rtm_check_privacy_for_comments' ), 10, 3 );
+
+		// Apply these hooks only on multisite.
+		if ( is_multisite() ) {
+			// Filter activities in ajax and page reload.
+			add_filter( 'bp_ajax_querystring', array( $this, 'filter_activity_with_blog' ) );
+			add_filter( 'bp_after_has_activities_parse_args', array( $this, 'filter_activity_with_blog' ) );
+
+			// Maintain activity list in rtm_activity table, reset transients.
+			add_action( 'bp_activity_after_save', array( $this, 'bp_activity_after_save' ) );
+			add_action( 'bp_activity_after_delete', array( $this, 'bp_activity_after_delete' ) );
+		}
+	}
+
+
+	/**
+	 * To save all activities in rtm_activity table, reset transient.
+	 *
+	 * @param object $activity Saved activity object.
+	 */
+	public function bp_activity_after_save( $activity ) {
+		$activity_model = new RTMediaActivityModel();
+		if ( ! $activity_model->check( $activity->id ) ) {
+			$activity_model->insert(
+				array(
+					'activity_id' => $activity->id,
+					'user_id'     => get_current_user_id(),
+					'blog_id'     => get_current_blog_id(),
+				)
+			);
+		}
+
+		self::reset_multisite_transient();
+	}
+
+	/**
+	 * Reset transients for multisite.
+	 */
+	private static function reset_multisite_transient() {
+		$sites = get_sites( array( 'fields' => 'ids' ) );
+		foreach ( $sites as $site ) {
+			if ( $site === get_current_blog_id() ) {
+				continue;
+			}
+
+			delete_site_transient( 'rtm_filter_blog_activity_' . $site );
+		}
+	}
+
+	/**
+	 * To delete activities from rtm_activity table, reset transient.
+	 *
+	 * @param object $activity Deleted activity object.
+	 */
+	public function bp_activity_after_delete( $activity ) {
+		if ( empty( $activity ) ) {
+			return;
+		}
+
+		if ( is_array( $activity ) ) {
+			$activity = $activity[0];
+		}
+
+		$activity_model = new RTMediaActivityModel();
+		$activity_model->delete( array( 'activity_id' => $activity->id ) );
+
+		self::reset_multisite_transient();
+	}
+
+
+	/**
+	 * To handle multisite media.
+	 * Exclude activities which has media uploaded from different sites.
+	 *
+	 * @param string|array $query_string Parameters to filter list of activities.
+	 *
+	 * @return string
+	 */
+	public function filter_activity_with_blog( $query_string ) {
+		global $wpdb;
+		$prefix  = $wpdb->base_prefix;
+		$blog_id = get_current_blog_id();
+
+		$transient_name = 'rtm_filter_blog_activity_' . $blog_id;
+		$activity_ids   = get_site_transient( $transient_name );
+		if ( empty( $activity_ids ) ) {
+			$activities   = $wpdb->get_col( $wpdb->prepare( 'SELECT DISTINCT activity_id FROM ' . $prefix . 'rt_rtm_activity WHERE blog_id!=%d', $blog_id ) );
+			$activity_ids = implode( ',', $activities );
+
+			set_site_transient( $transient_name, $activity_ids );
+		}
+
+		if ( ! empty( $activity_ids ) ) {
+			if ( current_filter() === 'bp_ajax_querystring' ) {
+				$query_string .= '&exclude=' . $activity_ids;
+			} else {
+				$query_string['exclude'] = $activity_ids;
+			}
+		}
+
+		return $query_string;
 	}
 
 	/**

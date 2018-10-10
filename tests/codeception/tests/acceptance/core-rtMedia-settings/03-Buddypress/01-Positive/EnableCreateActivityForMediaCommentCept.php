@@ -67,6 +67,6 @@
     }
 
     $buddypress->gotoActivity();
-    $I->seeElementInDOM( ConstantsPage::$activityMediaCommentSelector );
+    $I->waitForElementVisible( ConstantsPage::$activityMediaCommentSelector, 10 );
 
 ?>
