@@ -1928,7 +1928,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 			img.onload = function() {
 				this.embed( jQuery( '#file_thumb_' + file.id ).get( 0 ), {
 					width: 100,
-					height: 60,
+					height: 107,
 					crop: true
 				} );
 			};
