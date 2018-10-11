@@ -1368,7 +1368,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * Refactored code and styling
 
 = 2.6.7 =
-* Fixes modular compatibility with friends component. Thanks to [Cat555](https://rtmedia.io/support/) for reporting this.
+* Fixes modular compatibility with friends component. Thanks to [Cat555](http://community.rtcamp.com/users/cat555/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) for reporting this.
 * Fixes modular compatibility with friends component.
 * Fixes default privacy levels.
 * Minor Admin UI revisions.
