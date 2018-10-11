@@ -18,6 +18,8 @@ function apply_rtMagnificPopup( selector ) {
 			rtMagnificPopup = jQuery( selector ).magnificPopup( {
 				delegate: 'a:not(.no-popup, .mejs-time-slider, .mejs-volume-slider, .mejs-horizontal-volume-slider)',
 				type: 'ajax',
+				fixedContentPos: true,
+				fixedBgPos: true,
 				tLoading: rt_load_more + ' #%curr%...',
 				mainClass: 'mfp-img-mobile',
 				preload: [ 1, 3 ],
@@ -288,7 +290,9 @@ jQuery( 'document' ).ready( function( $ ) {
 	    if ( originalOptions.data.action == 'activity_get_older_updates' ) {
 		    var orignalSuccess = originalOptions.success;
 		    options.success = function( response ) {
-				orignalSuccess( response );
+			    if( 'function' === typeof( orignalSuccess ) ) {
+			    	orignalSuccess( response );
+			    }
 				apply_rtMagnificPopup( '.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' );
 				rtMediaHook.call( 'rtmedia_js_after_activity_added', [] );
 		    };
@@ -296,7 +300,9 @@ jQuery( 'document' ).ready( function( $ ) {
 		    // Handle lightbox in BuddyPress single activity loadmore
 		    var orignalSuccess = originalOptions.success;
 		    options.success = function( response ) {
-			    orignalSuccess( response );
+			    if( 'function' === typeof( orignalSuccess ) ) {
+			    	orignalSuccess( response );
+			    }
 			    setTimeout( function() {
 				    apply_rtMagnificPopup( '.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' );
 				    jQuery( 'ul.activity-list li.rtmedia_update:first-child .wp-audio-shortcode, ul.activity-list li.rtmedia_update:first-child .wp-video-shortcode' ).mediaelementplayer( {
@@ -323,7 +329,9 @@ jQuery( 'document' ).ready( function( $ ) {
 		if ( originalOptions.data.action == 'activity_get_older_updates' ) {
 			var orignalSuccess = originalOptions.success;
 			options.success = function( response ) {
-				orignalSuccess( response );
+				if( 'function' === typeof( orignalSuccess ) ) {
+					orignalSuccess( response );
+				}
 				apply_rtMagnificPopup( '.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' );
 
 				jQuery( 'ul.activity-list li.rtmedia_update div.rtmedia-item-thumbnail > audio.wp-audio-shortcode, ul.activity-list li.rtmedia_update div.rtmedia-item-thumbnail > video.wp-video-shortcode' ).mediaelementplayer( {
@@ -1257,8 +1265,7 @@ function rtm_upload_terms_activity() {
 			if ( false === jQuery( '#rtmedia_upload_terms_conditions' ).prop( 'checked' ) && jQuery( '#whats-new-form #message' ).length === 0 ) {
 				event.preventDefault();
 				var selector = jQuery( '.rtmedia-upload-terms' );
-				var rt_alert_msg = ( ( typeof rtmedia_upload_terms_check_terms_message ) === 'string' ) ? rtmedia_upload_terms_check_terms_message : rtmedia_upload_terms_check_terms_default_message;
-				rtp_display_terms_warning( selector, rt_alert_msg );
+				rtp_display_terms_warning( selector, rtmedia_upload_terms_check_terms_message );
 			}
 		});
 	}

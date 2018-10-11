@@ -458,7 +458,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					$content .= '<p>' .
 						sprintf(
 							esc_html__( 'If your site has some issues due to rtMedia and you want support, feel free to create a support topic on %s', 'buddypress-media' ),
-							'<a target="_blank" href="http://community.rtcamp.com/c/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">' . esc_html__( 'Community Forum', 'buddypress-media' ) . '</a>.'
+							'<a target="_blank" href="https://rtmedia.io/support/">' . esc_html__( 'rtMedia Support Page', 'buddypress-media' ) . '</a>.'
 						) .
 						'</p>';
 

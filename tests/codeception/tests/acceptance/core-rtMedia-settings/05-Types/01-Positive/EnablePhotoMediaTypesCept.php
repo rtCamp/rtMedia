@@ -29,7 +29,7 @@
     $uploadmedia->addStatus( "Testing for Photo Media Types." );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName, $numOfMedia );
 
-    $I->reloadPage();
+    $I->waitForElementVisible( ConstantsPage::$firstPhotoElementOnActivity, 20 );
 
     $I->seeElementInDOM( ConstantsPage::$firstPhotoElementOnActivity );
     echo nl2br( "Photo is uploaded.. \n" );

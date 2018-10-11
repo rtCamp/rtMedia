@@ -141,11 +141,23 @@ function rtmedia_bp_activity_after_save_callback( $activity_data ) {
 				}
 
 				// Very first privacy entry for this activity
-				$status = $rtm_activity_model->insert( array(
-					'privacy'     => $privacy,
-					'activity_id' => $activity_data->id,
-					'user_id'     => get_current_user_id(),
-				) );
+				if ( $rtm_activity_model->check( $activity_data->id ) ) {
+					$status = $rtm_activity_model->update(
+						array(
+							'privacy'     => $privacy,
+							'activity_id' => $activity_data->id,
+							'user_id'     => get_current_user_id(),
+						), array( 'activity_id' => $activity_data->id )
+					);
+				} else {
+					$status = $rtm_activity_model->insert(
+						array(
+							'privacy'     => $privacy,
+							'activity_id' => $activity_data->id,
+							'user_id'     => get_current_user_id(),
+						)
+					);
+				}
 			}
 	    }
 	}
