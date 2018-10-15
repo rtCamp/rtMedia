@@ -598,8 +598,12 @@ if ( ! class_exists( 'rtForm' ) ) {
 			$element = 'rtFile';
 			if ( is_array( $attributes ) ) {
 
+				// Adding nonce for file upload.
+				$nonce = wp_create_nonce( 'rtmedia-admin-upload' );
+
 				/* Starting the input tag */
-				$html = '<input type="file" ';
+				$html  = '<input type="hidden" id="rtmedia_admin_upload_nonce" value="' . esc_attr( $nonce ) . '" />';
+				$html .= '<input type="file" ';
 
 				/* Generating attributes */
 				$html .= $this->processAttributes( $element, $attributes );
