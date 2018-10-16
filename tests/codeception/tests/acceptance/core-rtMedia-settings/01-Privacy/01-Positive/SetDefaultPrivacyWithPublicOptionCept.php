@@ -55,6 +55,9 @@
     $logout->logout();
 
     $buddypress->gotoActivity();
-    $I->waitForElementVisible( '#activity-stream ul li div.activity-inner ul li.rtmedia-list-item.media-type-photo', 20 );
+    $I->reloadPage();
+    $I->waitForElementVisible('#activity-stream div.activity-content > div.activity-inner', 60);
+    // $I->seeElementInDOM('#activity-stream ul li div.activity-inner ul li.rtmedia-list-item.media-type-photo');
+    // $I->waitForElementVisible( '#activity-stream ul li div.activity-inner ul li.rtmedia-list-item.media-type-photo', 20 );
 
 ?>
