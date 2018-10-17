@@ -149,6 +149,14 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.5.4 [October 17, 2018] ###
+
+* FIXED
+
+	* Load More button issue with BuddyPress activity feed.
+	* Non authorized pdf files on WordPress uploads directory.
+
+
 ### 4.5.3 [October 11, 2018] ###
 
 * FIXED

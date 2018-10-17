@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.5.3\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.5.4\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2018-10-11 12:07:49+00:00\n"
+"POT-Creation-Date: 2018-10-17 10:01:56+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -330,7 +330,7 @@ msgid "rtMedia Privacy"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1437
-#: app/main/controllers/privacy/RTMediaPrivacy.php:421
+#: app/main/controllers/privacy/RTMediaPrivacy.php:435
 msgid "Privacy"
 msgstr ""
 
@@ -2008,15 +2008,15 @@ msgstr ""
 msgid "The method expects an array in arguments for %s provided."
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:54
+#: app/helper/rtUploadAttachment.php:70
 msgid "You can not upload more than 2 MB."
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:60
+#: app/helper/rtUploadAttachment.php:76
 msgid "There was an error uploading your files"
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:63
+#: app/helper/rtUploadAttachment.php:80
 msgid "Form was submitted"
 msgstr ""
 
@@ -2822,7 +2822,7 @@ msgid "Group Admin only"
 msgstr ""
 
 #: app/main/controllers/group/RTMediaGroupExtension.php:130
-#: app/main/controllers/privacy/RTMediaPrivacy.php:413
+#: app/main/controllers/privacy/RTMediaPrivacy.php:427
 #: templates/media/album-single-edit.php:55
 msgid "Save Changes"
 msgstr ""
@@ -2977,15 +2977,15 @@ msgstr ""
 msgid "%1$s added %4$d %3$s"
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:375
+#: app/main/controllers/privacy/RTMediaPrivacy.php:389
 msgid "No changes were made to your account."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:378
+#: app/main/controllers/privacy/RTMediaPrivacy.php:392
 msgid "Your default privacy settings saved successfully."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:402
+#: app/main/controllers/privacy/RTMediaPrivacy.php:416
 msgid "Default Privacy"
 msgstr ""
 
