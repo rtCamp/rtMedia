@@ -47,7 +47,7 @@ class Login {
 		}
 
 		$I->reloadPage();
-//		$I->maximizeWindow();
+		$I->maximizeWindow();
 	}
 
 }

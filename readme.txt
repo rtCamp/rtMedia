@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 4.9.8
-Stable tag: 4.5.3
+Stable tag: 4.5.4
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -136,6 +136,13 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.5.4 [October 17, 2018] =
+
+* FIXED
+
+ * Load More button issue with BuddyPress activity feed.
+ * Non authorized pdf files on WordPress uploads directory.
 
 = 4.5.3 [October 11, 2018] =
 
@@ -1553,8 +1560,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.3 =
-rtMedia 4.5.3, with broken media URL fix with multisite, improved lightbox experience with mobile device, fixes for rtMedia shortcode attributes and more compatibility and fixes related to Nouveau template as well as with different BuddyPress modules.
+= 4.5.4 =
+rtMedia 4.5.4, with activity feed load more button fix and non authorized pdf files in uploads directory fix.
 
 == Sponsors ==
 
