@@ -12,8 +12,6 @@
 
 * **License:** [GPL v2 or later]( http://www.gnu.org/licenses/gpl-2.0.html)
 
-* **Donate Link:** http://rtcamp.com/donate/
-
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
 ## Description ##
@@ -182,11 +180,11 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * NEW
 
 	 * Added JavaScript hook to handle uploader slide event [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-js-hooks/#rtmediajsuploaderslideaftergalleryreload)
-	 
+
 * ENHANCEMENT
 
 	 * Added translation support for “Search Media” string
-	 
+
 * FIXED
 
 	 * PHP notices
