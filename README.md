@@ -12,8 +12,6 @@
 
 * **License:** [GPL v2 or later]( http://www.gnu.org/licenses/gpl-2.0.html)
 
-* **Donate Link:** http://rtcamp.com/donate/
-
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
 ## Description ##
