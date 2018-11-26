@@ -461,6 +461,7 @@ jQuery( function( $ ) {
 			if ( $( '#search_by' ).length > 0 ) {
 				href += '&search_by=' + $( '#search_by' ).val();
 			}
+			href = encodeURI( href );
 
 			change_rtBrowserAddressUrl( href, '' );
 			galleryObj.getNext( nextpage, $( this ).closest( '.rtmedia-container' ).parent() );
