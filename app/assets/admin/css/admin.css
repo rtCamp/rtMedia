@@ -396,6 +396,8 @@
   left: 0;
   top: 0;
   opacity: 0;
+  width: 75px;
+  height: 24px;
 }
 
 #rtmedia-types .form-table th {
