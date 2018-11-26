@@ -601,8 +601,11 @@ if ( ! class_exists( 'rtForm' ) ) {
 				// Adding nonce for file upload.
 				$nonce = wp_create_nonce( 'rtmedia-admin-upload' );
 
+				/* Keep customized button for file input */
+				$html = '<button class="rtm-form-button button button-primary button-small">Browse File</button>';
+
 				/* Starting the input tag */
-				$html  = '<input type="hidden" id="rtmedia_admin_upload_nonce" value="' . esc_attr( $nonce ) . '" />';
+				$html .= '<input type="hidden" id="rtmedia_admin_upload_nonce" value="' . esc_attr( $nonce ) . '" />';
 				$html .= '<input type="file" ';
 
 				/* Generating attributes */
