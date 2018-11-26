@@ -677,7 +677,7 @@ add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_mo
  */
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
-		$search                = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+		$search                = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( urldecode( wp_unslash( $_REQUEST['search'] ) ) ) : '';
 		$search_by             = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
 		$media_type            = ( isset( $_REQUEST['media_type'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['media_type'] ) ) : '';
 		$rtmedia_current_album = ( isset( $_REQUEST['rtmedia-current-album'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['rtmedia-current-album'] ) ) : '';
@@ -754,6 +754,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 			}
 		} // End if().
 	} // End if().
+	
 	return $where;
 }
 
