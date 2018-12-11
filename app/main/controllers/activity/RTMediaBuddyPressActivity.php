@@ -32,6 +32,8 @@ class RTMediaBuddyPressActivity {
 		// Filter bp_activity_prefetch_object_data for translatable activity actions
 		add_filter( 'bp_activity_prefetch_object_data', array( $this, 'bp_prefetch_activity_object_data' ), 10, 1 );
 
+		add_filter( 'bp_get_activity_action_pre_meta', array( $this, 'bp_get_activity_action_pre_meta' ), 11, 2 );
+
 		// BuddyPress activity for media like action
 		if ( isset( $rtmedia->options['buddypress_mediaLikeActivity'] ) && 0 !== intval( $rtmedia->options['buddypress_mediaLikeActivity'] ) ) {
 			add_action( 'rtmedia_after_like_media', array( $this, 'activity_after_media_like' ) );
@@ -60,6 +62,60 @@ class RTMediaBuddyPressActivity {
 		}
 	}
 
+	/**
+	 * For adding secondary avatar in the activity header.
+	 *
+	 * @param String $action   Has the markup for activity header.
+	 * @param array  $activity Contains values realated to the activity.
+	 *
+	 * @return String $action.
+	 */
+	function bp_get_activity_action_pre_meta( $action, $activity ) {
+
+		if ( 'rtmedia_update' === $activity->type && 'groups' === $activity->component ) {
+
+			switch ( $activity->component ) {
+				case 'groups':
+				case 'friends':
+					// Only insert avatar if one exists.
+					$secondary_avatar = bp_get_activity_secondary_avatar();
+					if ( ! empty( $secondary_avatar ) ) {
+
+						if ( false === strpos( $activity->action, $secondary_avatar ) ) {
+							$reverse_content = strrev( $activity->action );
+							$position        = strpos( $reverse_content, 'a<' );
+							$action          = substr_replace( $activity->action, $secondary_avatar, -$position - 2, 0 );
+						}
+					}
+					break;
+			}
+
+			return $action;
+
+		} else {
+
+			switch ( $activity->component ) {
+				case 'groups':
+				case 'friends':
+					$secondary_avatar = bp_get_activity_secondary_avatar( array( 'linked' => false ) );
+
+					// Only insert avatar if one exists.
+					if ( ! empty( $secondary_avatar ) ) {
+
+						if ( false === strpos( $activity->action, $secondary_avatar ) ) {
+
+							$link_close  = '">';
+							$first_link  = strpos( $activity->action, $link_close );
+							$second_link = strpos( $activity->action, $link_close, $first_link + strlen( $link_close ) );
+							$action      = substr_replace( $activity->action, $secondary_avatar, $second_link + 2, 0 );
+						}
+					}
+					break;
+			}
+
+			return $action;
+		}
+	}
 
 	/**
 	 * To save all activities in rtm_activity table, reset transient.
