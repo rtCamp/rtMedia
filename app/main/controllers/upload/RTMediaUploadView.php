@@ -61,7 +61,26 @@ class RTMediaUploadView {
 			|| ( isset( $rtmedia_query->is_upload_shortcode ) && ! isset( $this->attributes['privacy'] ) )
 		) {
 			if ( ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) || ( function_exists( 'bp_is_groups_component' ) && bp_is_groups_component() ) ) {
-				$group_status         = bp_get_group_status();
+				// bp_get_group_status() is always reurning NULL.
+				// So fetched data from DB and assigned to media.
+				global $wpdb;
+
+				// BP Groups tablename.
+				$table_name = $wpdb->prefix . 'bp_groups';
+				// Will fetch ID of current group.
+				$group_id = bp_get_current_group_id();
+
+				// Use cached data for group status.
+				$group_status = get_transient( 'group_status_' . $group_id );
+
+				if ( false === $group_status ) {
+					// Query to fetch current group's privacy status.
+					$group_status = $wpdb->get_var( 'SELECT `status` FROM ' . $table_name . ' WHERE id = ' . $group_id );
+
+					// Set data in transient for better performance.
+					set_transient( 'group_status_' . $group_id, $group_status );
+				}
+
 				$privacy_levels_array = array(
 					'public'  => 0,
 					'private' => 20,

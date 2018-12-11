@@ -58,15 +58,26 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 			global $rtmedia;
 
 			$suffix                             = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
-			$general_upload_terms_error_message = $rtmedia->options['general_upload_terms_error_message'];
+			$general_upload_terms_error_message = apply_filters( 'rtmedia_upload_terms_check_terms_message', $rtmedia->options['general_upload_terms_error_message'] );
 
 			if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options['styles_enabled'] ) && 0 === $rtmedia->options['styles_enabled'] ) ) {
 				wp_enqueue_style( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/css/rtm-upload-terms' . $suffix . '.css', '', RTMEDIA_VERSION );
 			}
 
-			wp_enqueue_script( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/js/rtm-upload-terms' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
-			wp_localize_script( 'rtmedia-upload-terms-main', 'rtmedia_upload_terms_check_terms_message', esc_js( apply_filters( 'rtmedia_upload_terms_check_terms_message', $general_upload_terms_error_message ) ) );
-			wp_localize_script( 'rtmedia-upload-terms-main', 'rtmedia_upload_terms_check_terms_default_message', esc_js( apply_filters( 'rtmedia_upload_terms_check_terms_default_message', __( 'Please check Terms of Service.', 'buddypress-media' ) ) ) );
+			if ( ! empty( $rtmedia->options['general_enable_upload_terms'] ) || ! empty( $rtmedia->options['activity_enable_upload_terms'] ) ) {
+				wp_enqueue_script( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/js/rtm-upload-terms' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+				wp_localize_script(
+					'rtmedia-upload-terms-main',
+					'rtmedia_upload_terms_data',
+					array(
+						'message'                => esc_js( $general_upload_terms_error_message ),
+						'activity_terms_enabled' => ( ! empty( $rtmedia->options['activity_enable_upload_terms'] ) ) ? esc_js( 'true' ) : esc_js( 'false' ),
+						'uploader_terms_enabled' => ( ! empty( $rtmedia->options['general_enable_upload_terms'] ) ) ? esc_js( 'true' ) : esc_js( 'false' ),
+					)
+				);
+
+				wp_localize_script( 'rtmedia-main', 'rtmedia_upload_terms_check_terms_message', esc_js( $general_upload_terms_error_message ) );
+			}
 		}
 
 		/**

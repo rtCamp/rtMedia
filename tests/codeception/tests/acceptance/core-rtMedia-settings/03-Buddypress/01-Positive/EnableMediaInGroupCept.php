@@ -17,7 +17,7 @@
 	$settings = new DashboardSettingsPage( $I );
 	$settings->enableBPGroupComponent();
 	$settings->gotoSettings( ConstantsPage::$buddypressSettingsUrl );
-	
+
 
 	$verifyEnableStatusOfMediaInGroupCheckbox = $settings->verifyStatus( ConstantsPage::$strEnableMediaInGrpLabel, ConstantsPage::$enableMediaInGrpCheckbox );
 	if ( $verifyEnableStatusOfMediaInGroupCheckbox ) {
@@ -27,11 +27,12 @@
         $settings->saveSettings();
     }
 
-
 	$buddypress = new BuddypressSettingsPage( $I );
 	$buddypress->gotoGroup();
 
-	$totalCount = $buddypress->countGroup( ConstantsPage::$groupListSelector );
+	$I->waitForElementVisible( 'div.entry-content', 10 );
+
+	$totalCount = $buddypress->countGroup( ConstantsPage::$groupListSelector ); 
 	echo "Total no. of groups = " . $totalCount;
 
 	if ( $totalCount > 0 ) {
@@ -42,6 +43,7 @@
 
 		$buddypress->createGroup();
 		echo "group is created!";
+		$I->waitForElementVisible( ConstantsPage::$groupNameLink, 10 );
 		$buddypress->checkMediaInGroup();
 		$I->seeElement( ConstantsPage::$mediaLinkOnGroup );
 	}

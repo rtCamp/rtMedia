@@ -29,8 +29,8 @@
     $uploadmedia->addStatus( "Testing for Music Media Types." );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName, $numOfMedia );
 
-    $I->reloadPage();
+    $I->waitForElementVisible( ConstantsPage::$firstMusicElementOnActivity, 20 );
 
-    $I->seeElementInDOM( ConstantsPage::$firstMusicElementOnActivity );
+    // $I->seeElementInDOM( ConstantsPage::$firstMusicElementOnActivity );
     echo nl2br( "Audio is uploaded.. \n" );
 ?>

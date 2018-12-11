@@ -64,7 +64,7 @@ class RTMediaActivity {
 		$count                     = 0;
 		foreach ( $media_details as $media ) {
 			$li_content .= '<li class="rtmedia-list-item media-type-' . esc_attr( $media->media_type ) . '">';
-			if ( 'photo' === $media->media_type ) {
+			if ( 'photo' === $media->media_type || 'document' === $media->media_type || 'other' === $media->media_type  ) {
 				$li_content .= '<a href ="' . esc_url( get_rtmedia_permalink( $media->id ) ) . '">';
 			}
 			$li_content .= '<div class="rtmedia-item-thumbnail">';
@@ -75,17 +75,17 @@ class RTMediaActivity {
 
 			$li_content .= '<div class="rtmedia-item-title">';
 			$li_content .= '<h4 title="' . esc_attr( $media->media_title ) . '">';
-			if ( 'photo' !== $media->media_type ) {
+			if ( 'photo' !== $media->media_type && 'document' !== $media->media_type && 'other' !== $media->media_type ) {
 				$li_content .= '<a href="' . esc_url( get_rtmedia_permalink( $media->id ) ) . '">';
 			}
 
 			$li_content .= $media->media_title;
-			if ( 'photo' !== $media->media_type ) {
+			if ( 'photo' !== $media->media_type && 'document' !== $media->media_type && 'other' !== $media->media_type ) {
 				$li_content .= '</a>';
 			}
 			$li_content .= '</h4>';
 			$li_content .= '</div>';
-			if ( 'photo' === $media->media_type ) {
+			if ( 'photo' !== $media->media_type && 'document' !== $media->media_type && 'other' !== $media->media_type ) {
 				$li_content .= '</a>';
 			}
 

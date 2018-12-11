@@ -3,7 +3,7 @@
   Plugin Name: rtMedia for WordPress, BuddyPress and bbPress
   Plugin URI: https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
   Description: This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!
-  Version: 4.5.1
+  Version: 4.5.4
   Author: rtCamp
   Text Domain: buddypress-media
   Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
@@ -22,7 +22,7 @@ if ( ! defined( 'RTMEDIA_VERSION' ) ) {
 	 * The version of the plugin
 	 *
 	 */
-	define( 'RTMEDIA_VERSION', '4.5.1' );
+	define( 'RTMEDIA_VERSION', '4.5.4' );
 }
 
 if ( ! defined( 'RTMEDIA_PATH' ) ) {
@@ -97,6 +97,7 @@ function rtmedia_autoloader( $class_name ) {
 		'app/log/' . $class_name . '.php',
 		'app/importers/' . $class_name . '.php',
 		'app/main/controllers/api/' . $class_name . '.php',
+		'app/helper/rtUploadAttachment.php',
 	);
 	foreach ( $rtlibpath as $path ) {
 		$path = RTMEDIA_PATH . $path;

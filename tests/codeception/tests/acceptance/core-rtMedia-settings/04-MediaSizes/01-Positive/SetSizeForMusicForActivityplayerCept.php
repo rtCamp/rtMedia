@@ -31,11 +31,10 @@
     $buddypress->gotoActivity();
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->addStatus( "Upload from activity to check mediz sizes." );
+    $uploadmedia->addStatus( "Upload from activity to check MUSIC media sizes." );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName, $numOfMedia );
 
-    $I->reloadPage();
-    $I->wait( 3 );
+    $I->waitForElementVisible( ConstantsPage::$audioSelector, 20 );
 
     $I->assertGreaterThanOrEqual( ConstantsPage::$activityMusicPlayerWidth, $I->grabAttributeFrom( ConstantsPage::$audioSelector, 'style' ), "Width and height is as expected!" );
 

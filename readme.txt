@@ -1,12 +1,12 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 4.9.6
-Stable tag: 4.5.1
+Tested up to: 4.9.8
+Stable tag: 4.5.4
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -96,7 +96,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 * [Roadmap](https://rtmedia.io/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Roadmap page")
 * [Documentation](https://rtmedia.io/docs/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Documentation page")
 * [FAQ](https://rtmedia.io/faq/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's FAQ page")
-* [Support](http://community.rtcamp.com/c/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's support page")
+* [Support](https://rtmedia.io/support/ "Visit rtMedia's support page")
 * [GitHub](https://github.com/rtmediawp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
 * [Translations](https://rtmedia.io/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) - Please do NOT use Github for translations. Instead Use [this GlotPress project](https://rtmedia.io/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 
@@ -136,6 +136,49 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.5.4 [October 17, 2018] =
+
+* FIXED
+
+ * Load More button issue with BuddyPress activity feed.
+ * Non authorized pdf files on WordPress uploads directory.
+
+= 4.5.3 [October 11, 2018] =
+
+* FIXED
+
+ * Default album deletion issue for personal data erase request
+ * Media privacy issue while editing media under moderation
+ * Broken media URL with multisite [Doc](https://rtmedia.io/docs/features/upload-media/#activity-stream-for-multisite)
+ * Lightbox scroll in mobile devices
+ * The issue with Load more button showing when there are no BuddyPress activities
+ * Media privacy issue with BuddyPress Nouveau template
+ * Compatibility of BuddyPress activity media upload section with Nouveau template
+ * "Read More" link issue on BuddyPress Activity post with the Nouveau template
+ * Upload terms error message visibility issue with rtMedia uploader using BuddyPress legacy template
+ * "media_title" attribute issue with uploader shortcode
+ * Updated correct support link on plugin's support tab
+ * Disabled Post Update button issue while adding BuddyPress Public Message post
+ * An issue for the "redirect" attribute used with uploader shortcode
+ * Warnings and Notices
+
+= 4.5.2 [July 11, 2018] =
+
+* NEW
+
+ * Added JavaScript hook to handle uploader slide event [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-js-hooks/#rtmediajsuploaderslideaftergalleryreload)
+
+* ENHANCEMENT
+
+ * Added translation support for “Search Media” string
+
+* FIXED
+
+ * PHP notices
+ * JavaScript issue with Upload terms
+ * Issue with media privacy and search caused by conditional check for Nouveau template
+ * Nouveau template issue with the error message of Upload terms in BuddyPress Activity stream
 
 = 4.5.1 [June 20, 2018] =
 
@@ -1517,8 +1560,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.1 =
-rtMedia 4.5.1, with empty textbox validation under the terms settings and other minor bug fixes.
+= 4.5.4 =
+rtMedia 4.5.4, with activity feed load more button fix and non authorized pdf files in uploads directory fix.
 
 == Sponsors ==
 

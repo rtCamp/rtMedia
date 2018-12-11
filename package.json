@@ -1,16 +1,14 @@
 {
   "name": "rtMedia",
-  "dependencies": {
-    "load-grunt-tasks": "~0.2.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "grunt": "~1.0.1",
+    "grunt": "^1.0.3",
     "grunt-autoprefixer": "~3.0.4",
     "grunt-checktextdomain": "~1.0.1",
     "grunt-contrib-sass": "~1.0.0",
     "grunt-contrib-uglify": "~2.2.0",
-    "grunt-contrib-watch": "~1.0.0",
+    "grunt-contrib-watch": "^1.1.0",
     "grunt-wp-i18n": "~1.0.0",
-    "load-grunt-tasks": "~0.2.1"
+    "load-grunt-tasks": "^4.0.0"
   }
 }
