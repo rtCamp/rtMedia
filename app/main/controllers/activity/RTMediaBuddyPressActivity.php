@@ -80,11 +80,10 @@ class RTMediaBuddyPressActivity {
 					// Only insert avatar if one exists.
 					$secondary_avatar = bp_get_activity_secondary_avatar();
 					if ( ! empty( $secondary_avatar ) ) {
-
 						if ( false === strpos( $activity->action, $secondary_avatar ) ) {
-							$reverse_content = strrev( $activity->action );
-							$position        = strpos( $reverse_content, 'a<' );
-							$action          = substr_replace( $activity->action, $secondary_avatar, -$position - 2, 0 );
+							$action = $activity->action;
+						} else {
+							$action = str_replace( $secondary_avatar, '', $activity->action );
 						}
 					}
 					break;
