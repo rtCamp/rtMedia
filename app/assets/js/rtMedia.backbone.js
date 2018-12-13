@@ -584,7 +584,7 @@ jQuery( function( $ ) {
 				var redirection = $( '#rt_upload_hf_redirect' );
 
 				if( '' !== rtnObj && 'undefined' !== typeof( rtnObj.redirect_url ) && null !== rtnObj.redirect_url ) {
-					if( uploaderObj.upload_count === up.files.length
+					if ( uploaderObj.upload_count === up.files.length
 						&& 0 < redirection.length
 						&& 'true' === redirection.val()
 						&& 0 === rtnObj.redirect_url.indexOf( 'http' ) ) {

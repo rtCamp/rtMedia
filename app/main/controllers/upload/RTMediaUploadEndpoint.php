@@ -39,7 +39,7 @@ class RTMediaUploadEndpoint {
 				$_activity_id = sanitize_text_field( $_REQUEST['activity_id'] );
 			}
 
-			if ( isset( $_REQUEST['activity_id'] ) ) {
+			if ( isset( $_REQUEST['redirection'] ) ) {
 				$_redirection = sanitize_text_field( $_REQUEST['redirection'] );
 			}
 
