@@ -401,6 +401,7 @@ class RTMediaBuddyPressActivity {
 				'multi_selection'     => true,
 				'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
 					'redirect'             => 'no',
+					'redirection'          => 'false',
 					'rtmedia_update'       => 'true',
 					'action'               => 'wp_handle_upload',
 					'_wp_http_referer'     => $request_uri,
