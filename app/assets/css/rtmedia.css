@@ -190,6 +190,10 @@ body.media.buddypress {
 .rtmedia-list-item > a + p {
   display: none;
 }
+.rtmedia-list-item > a .rtmedia-item-thumbnail {
+  width: 150px;
+  text-align: center;
+}
 .rtmedia-list-item > a .rtmedia-item-thumbnail img {
   display: inline-block;
   max-height: inherit;
