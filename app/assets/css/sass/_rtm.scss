@@ -474,6 +474,12 @@ table.rtmedia-edit-media-list {
 	}
 }
 
+.rtmedia-actions-before-description {
+	& > div {
+		margin-bottom: 5px;
+	}
+}
+
 input.imgedit-submit-btn {
 	display: none;
 }

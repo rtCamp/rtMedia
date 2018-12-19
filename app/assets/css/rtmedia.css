@@ -563,6 +563,10 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
   padding: 0 5px;
 }
 
+.rtmedia-actions-before-description > div {
+  margin-bottom: 5px;
+}
+
 input.imgedit-submit-btn {
   display: none;
 }
