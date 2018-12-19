@@ -190,6 +190,10 @@ body.media.buddypress {
 .rtmedia-list-item > a + p {
   display: none;
 }
+.rtmedia-list-item > a .rtmedia-item-thumbnail {
+  width: 150px;
+  text-align: center;
+}
 .rtmedia-list-item > a .rtmedia-item-thumbnail img {
   display: inline-block;
   max-height: inherit;
@@ -557,6 +561,10 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
   background-color: black;
   color: white;
   padding: 0 5px;
+}
+
+.rtmedia-actions-before-description > div {
+  margin-bottom: 5px;
 }
 
 input.imgedit-submit-btn {
