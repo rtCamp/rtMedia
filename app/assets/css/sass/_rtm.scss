@@ -49,6 +49,9 @@
 	}
 
 	.rtmedia-item-thumbnail {
+		width: 150px;
+		text-align: center;
+
 		img {
 			display: inline-block;
 			max-height: inherit;
