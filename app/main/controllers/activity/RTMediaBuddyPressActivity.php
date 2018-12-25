@@ -27,8 +27,8 @@ class RTMediaBuddyPressActivity {
 		add_action( 'bp_activity_delete_comment', array( $this, 'delete_comment_sync' ), 10, 2 );
 		add_filter( 'bp_activity_allowed_tags', array( &$this, 'override_allowed_tags' ) );
 		add_filter( 'bp_get_activity_parent_content', array( &$this, 'bp_get_activity_parent_content' ) );
-		add_filter( 'bp_activity_type_before_save', array( &$this, 'bp_activity_type_before_save' ) );
-		add_filter( 'bp_activity_content_before_save', array( &$this, 'bp_activity_content_before_save' ) );
+		add_filter( 'bp_activity_type_before_save', array( $this, 'bp_activity_type_before_save' ) );
+		add_filter( 'bp_activity_content_before_save', array( $this, 'bp_activity_content_before_save' ) );
 		add_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
 
 		// Filter bp_activity_prefetch_object_data for translatable activity actions
