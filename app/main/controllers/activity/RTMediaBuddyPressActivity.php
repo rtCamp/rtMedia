@@ -204,12 +204,13 @@ class RTMediaBuddyPressActivity {
 	 * This function will check for the media file attached to the actitvity and accordingly will set type.
 	 *
 	 * @param string $type Type of the Activity.
-	 * @return string      Filtered value of the activity type.
+	 *
+	 * @return string Filtered value of the activity type.
 	 */
 	public function bp_activity_type_before_save( $type ) {
 
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( is_array( $rtmedia_attached_files ) ) {
+		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
 			$type = 'rtmedia_update';
 		}
 		return $type;
@@ -219,12 +220,13 @@ class RTMediaBuddyPressActivity {
 	 * This function will check for the media file attached to the actitvity and accordingly will set content.
 	 *
 	 * @param string $content Content of the Activity.
-	 * @return string         Filtered value of the activity content.
+	 *
+	 * @return string Filtered value of the activity content.
 	 */
 	public function bp_activity_content_before_save( $content ) {
 
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( is_array( $rtmedia_attached_files ) ) {
+		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
 			$obj_activity = new RTMediaActivity( $rtmedia_attached_files, 0, $content );
 			$content      = $obj_activity->create_activity_html();
 		}
