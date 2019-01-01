@@ -85,7 +85,7 @@ class RTMediaActivity {
 			}
 			$li_content .= '</h4>';
 			$li_content .= '</div>';
-			if ( 'photo' !== $media->media_type && 'document' !== $media->media_type && 'other' !== $media->media_type ) {
+			if ( 'photo' === $media->media_type || 'document' === $media->media_type || 'other' === $media->media_type ) {
 				$li_content .= '</a>';
 			}
 
