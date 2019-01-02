@@ -243,6 +243,16 @@ body {
 
 	&.media {
 
+		.entry-title {
+			font-size: 34px;
+			font-weight: inherit;
+			margin-bottom: 0;
+
+			a {
+				color: #767676;
+			}
+		}
+
 		#buddypress {
 
 			#item-header-cover-image {
