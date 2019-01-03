@@ -81,13 +81,11 @@ class RTMediaBuddyPressActivity {
 				case 'friends':
 					// Only insert avatar if one exists.
 					$secondary_avatar = bp_get_activity_secondary_avatar();
-					if ( ! empty( $secondary_avatar ) ) {
+					if ( ! empty( $secondary_avatar ) && false === strpos( $activity->action, $secondary_avatar ) ) {
 
-						if ( false === strpos( $activity->action, $secondary_avatar ) ) {
-							$reverse_content = strrev( $activity->action );
-							$position        = strpos( $reverse_content, 'a<' );
-							$action          = substr_replace( $activity->action, $secondary_avatar, -$position - 2, 0 );
-						}
+						$reverse_content = strrev( $activity->action );
+						$position        = strpos( $reverse_content, 'a<' );
+						$action          = substr_replace( $activity->action, $secondary_avatar, -$position - 2, 0 );
 					}
 					break;
 			}
@@ -102,15 +100,12 @@ class RTMediaBuddyPressActivity {
 					$secondary_avatar = bp_get_activity_secondary_avatar( array( 'linked' => false ) );
 
 					// Only insert avatar if one exists.
-					if ( ! empty( $secondary_avatar ) ) {
+					if ( ! empty( $secondary_avatar ) && false === strpos( $activity->action, $secondary_avatar ) ) {
 
-						if ( false === strpos( $activity->action, $secondary_avatar ) ) {
-
-							$link_close  = '">';
-							$first_link  = strpos( $activity->action, $link_close );
-							$second_link = strpos( $activity->action, $link_close, $first_link + strlen( $link_close ) );
-							$action      = substr_replace( $activity->action, $secondary_avatar, $second_link + 2, 0 );
-						}
+						$link_close  = '">';
+						$first_link  = strpos( $activity->action, $link_close );
+						$second_link = strpos( $activity->action, $link_close, $first_link + strlen( $link_close ) );
+						$action      = substr_replace( $activity->action, $secondary_avatar, $second_link + 2, 0 );
 					}
 					break;
 			}
