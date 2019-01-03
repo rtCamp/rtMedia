@@ -189,7 +189,7 @@
 			<p class="rtmedia-no-media-found">
 				<?php
 				$message = apply_filters( 'rtmedia_no_media_found_message_filter', 'Sorry !! There\'s no media found for the request !!' );
-				echo esc_html( $message, 'buddypress-media' );
+				echo esc_html__( $message, 'buddypress-media' );
 				?>
 			</p>
 		<?php endif; ?>
