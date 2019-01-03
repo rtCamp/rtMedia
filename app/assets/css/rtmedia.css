@@ -2763,6 +2763,14 @@ body div.bp_members.bp_member .entry-content {
   outline: none;
 }
 
+.bp-nouveau.media .entry-title {
+  font-size: 34px;
+  font-weight: inherit;
+  margin-bottom: 0;
+}
+.bp-nouveau.media .entry-title a {
+  color: #767676;
+}
 .bp-nouveau.media #buddypress #item-header-cover-image .user-nicename {
   margin-top: 15px;
   margin-bottom: 30px;
