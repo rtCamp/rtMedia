@@ -190,6 +190,10 @@ body.media.buddypress {
 .rtmedia-list-item > a + p {
   display: none;
 }
+.rtmedia-list-item > a .rtmedia-item-thumbnail {
+  width: 150px;
+  text-align: center;
+}
 .rtmedia-list-item > a .rtmedia-item-thumbnail img {
   display: inline-block;
   max-height: inherit;
@@ -557,6 +561,10 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
   background-color: black;
   color: white;
   padding: 0 5px;
+}
+
+.rtmedia-actions-before-description > div {
+  margin-bottom: 5px;
 }
 
 input.imgedit-submit-btn {
@@ -2728,6 +2736,62 @@ body div.bp_members.bp_member .entry-content {
 
 #buddypress .media_search.media_search .search_by {
   margin-top: 3px;
+}
+
+.bp-legacy.media #buddypress #item-header-cover-image .user-nicename {
+  margin-bottom: 20px;
+}
+.bp-legacy.media #buddypress div#item-header div#item-header-content ul li, .bp-legacy.media #buddypress div#item-header div#item-header-content ul div {
+  float: left;
+  margin: 2px 10px;
+}
+.bp-legacy.media #buddypress div#item-header div#item-header-content button, .bp-legacy.media #buddypress div#item-header div#item-header-content a {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #767676;
+  font-size: small;
+  cursor: pointer;
+  outline: none;
+  padding: 4px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+.bp-legacy.media #buddypress div#item-header div#item-header-content button:hover, .bp-legacy.media #buddypress div#item-header div#item-header-content a:hover {
+  background: #ededed;
+  border: 1px solid #bbb;
+  color: #555;
+  outline: none;
+}
+
+.bp-nouveau.media #buddypress #item-header-cover-image .user-nicename {
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+.bp-nouveau.media #buddypress div#item-header div#item-header-content ul li, .bp-nouveau.media #buddypress div#item-header div#item-header-content ul div {
+  float: left;
+  margin: 2px 10px;
+}
+.bp-nouveau.media #buddypress div#item-header div#item-header-content button, .bp-nouveau.media #buddypress div#item-header div#item-header-content a {
+  background: #fff;
+  border-color: #ccc;
+  border-style: solid;
+  border-width: 1px;
+  color: #555;
+  cursor: pointer;
+  font-size: inherit;
+  font-weight: 400;
+  outline: none;
+  padding: 0.3em 0.5em;
+  text-align: center;
+  text-decoration: none;
+  width: auto;
+}
+.bp-nouveau.media #buddypress div#item-header div#item-header-content button:hover, .bp-nouveau.media #buddypress div#item-header div#item-header-content a:hover {
+  background: #ededed;
+  border-color: #999999;
+  color: #333;
+  outline: none;
+  text-decoration: none;
 }
 
 .media_search.media_search {
