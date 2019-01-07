@@ -48,18 +48,10 @@ class RTMediaUploadView {
 			} elseif ( is_rtmedia_album_enable() && $rtmedia_query && is_rtmedia_gallery() ) {
 
 				if ( isset( $rtmedia_query->query['context'] ) && 'profile' === $rtmedia_query->query['context'] ) {
-					$album_list_markup = rtmedia_user_album_list();
-
-					if ( ! empty( $album_list_markup ) ) {
-						$album = '<span> <label> <i class="dashicons dashicons-format-gallery rtmicon"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . $album_list_markup . '</select></span>';
-					}
+					$album = '<span><label><i class="dashicons dashicons-format-gallery rtmicon"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select></span>';
 				}
 				if ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
-					$album_list_markup = rtmedia_group_album_list();
-
-					if ( ! empty( $album_list_markup ) ) {
-						$album = '<span> <label> <i class="dashicons dashicons-format-gallery rtmicon"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . $album_list_markup . '</select></span>';
-					}
+					$album = '<span><label><i class="dashicons dashicons-format-gallery rtmicon"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list() . '</select></span>';
 				}
 			}
 		}
