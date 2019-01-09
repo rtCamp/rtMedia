@@ -190,6 +190,10 @@ body.media.buddypress {
 .rtmedia-list-item > a + p {
   display: none;
 }
+.rtmedia-list-item > a .rtmedia-item-thumbnail {
+  width: 150px;
+  text-align: center;
+}
 .rtmedia-list-item > a .rtmedia-item-thumbnail img {
   display: inline-block;
   max-height: inherit;
@@ -559,6 +563,10 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
   padding: 0 5px;
 }
 
+.rtmedia-actions-before-description > div {
+  margin-bottom: 5px;
+}
+
 input.imgedit-submit-btn {
   display: none;
 }
@@ -842,7 +850,7 @@ button::-moz-focus-inner {
   padding: 0;
   width: 90px;
   height: 110px;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
   opacity: 0;
   z-index: 10;
   -webkit-transition: all 300ms ease-out;
@@ -881,8 +889,8 @@ button::-moz-focus-inner {
   position: absolute;
   left: 0;
   top: 0;
-  margin-top: 35px;
-  margin-left: 35px;
+  margin-top: 40%;
+  margin-left: 40%;
   border: medium inset transparent;
 }
 
@@ -907,12 +915,12 @@ button::-moz-focus-inner {
 .mfp-arrow-left:after,
 .mfp-arrow-left .mfp-a {
   border-right: 17px solid #FFF;
-  margin-left: 31px;
+  margin-left: 32%;
 }
 
 .mfp-arrow-left:before,
 .mfp-arrow-left .mfp-b {
-  margin-left: 25px;
+  margin-left: 25%;
   border-right: 27px solid #3F3F3F;
 }
 
@@ -923,7 +931,7 @@ button::-moz-focus-inner {
 .mfp-arrow-right:after,
 .mfp-arrow-right .mfp-a {
   border-left: 17px solid #FFF;
-  margin-left: 39px;
+  margin-left: 44%;
 }
 
 .mfp-arrow-right:before,
@@ -2730,6 +2738,70 @@ body div.bp_members.bp_member .entry-content {
   margin-top: 3px;
 }
 
+.bp-legacy.media #buddypress #item-header-cover-image .user-nicename {
+  margin-bottom: 20px;
+}
+.bp-legacy.media #buddypress div#item-header div#item-header-content ul li, .bp-legacy.media #buddypress div#item-header div#item-header-content ul div {
+  float: left;
+  margin: 2px 10px;
+}
+.bp-legacy.media #buddypress div#item-header div#item-header-content button, .bp-legacy.media #buddypress div#item-header div#item-header-content a {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #767676;
+  font-size: small;
+  cursor: pointer;
+  outline: none;
+  padding: 4px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+.bp-legacy.media #buddypress div#item-header div#item-header-content button:hover, .bp-legacy.media #buddypress div#item-header div#item-header-content a:hover {
+  background: #ededed;
+  border: 1px solid #bbb;
+  color: #555;
+  outline: none;
+}
+
+.bp-nouveau.media .entry-title {
+  font-size: 34px;
+  font-weight: inherit;
+  margin-bottom: 0;
+}
+.bp-nouveau.media .entry-title a {
+  color: #767676;
+}
+.bp-nouveau.media #buddypress #item-header-cover-image .user-nicename {
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+.bp-nouveau.media #buddypress div#item-header div#item-header-content ul li, .bp-nouveau.media #buddypress div#item-header div#item-header-content ul div {
+  float: left;
+  margin: 2px 10px;
+}
+.bp-nouveau.media #buddypress div#item-header div#item-header-content button, .bp-nouveau.media #buddypress div#item-header div#item-header-content a {
+  background: #fff;
+  border-color: #ccc;
+  border-style: solid;
+  border-width: 1px;
+  color: #555;
+  cursor: pointer;
+  font-size: inherit;
+  font-weight: 400;
+  outline: none;
+  padding: 0.3em 0.5em;
+  text-align: center;
+  text-decoration: none;
+  width: auto;
+}
+.bp-nouveau.media #buddypress div#item-header div#item-header-content button:hover, .bp-nouveau.media #buddypress div#item-header div#item-header-content a:hover {
+  background: #ededed;
+  border-color: #999999;
+  color: #333;
+  outline: none;
+  text-decoration: none;
+}
+
 .media_search.media_search {
   float: right;
   border: 1px solid #ccc;
@@ -2852,7 +2924,7 @@ a.rtmedia-upload-media-link {
 #buddypress .mejs-controls button {
   padding: 4px 8px;
   border: none;
-  background: rgba(0, 0, 0, 0) url("../../../lib/media-element/mejs-controls.png") no-repeat;
+  background: transparent url("../../../lib/media-element/mejs-controls.png") no-repeat;
 }
 #buddypress .mejs-controls .mejs-play > button {
   background-position: 0 0;

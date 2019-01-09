@@ -25,14 +25,19 @@ if ( 'object' === typeof rtMediaHook ) {
 
 	rtMediaHook.register( 'rtmedia_js_before_activity_added', function ( args ) {
 		var terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
+		var whats_new_submit = jQuery( '#aw-whats-new-submit' );
 		if ( terms_conditions_checkbox.length > 0 ) {
 			terms_conditions_checkbox.removeAttr( 'disabled' );
 
 			if ( false == args ) {
+				whats_new_submit.removeAttr( 'disabled' );
+				whats_new_submit.removeClass( 'loading' );
 				return args;
 			}
 
 			if ( ! terms_conditions_checkbox.is( ':checked' ) ) {
+				whats_new_submit.removeAttr( 'disabled' );
+				whats_new_submit.removeClass( 'loading' );
 				rtp_display_terms_warning ( jQuery( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
 				return false;
 			}

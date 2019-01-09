@@ -383,6 +383,23 @@
   top: -5px;
 }
 
+.rtm-field-wrap {
+  max-width: 92%;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.rtm-field-wrap input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 75px;
+  height: 24px;
+}
+
 #rtmedia-types .form-table th {
   line-height: 26px;
   padding: 5px 0 20px;
