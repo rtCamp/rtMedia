@@ -15,7 +15,7 @@ if ( 'object' === typeof rtMediaHook ) {
 
 		if ( terms_conditions_checkbox.length > 0 ) {
 			if ( ! terms_conditions_checkbox.is( ':checked' ) ) {
-				rtp_display_terms_warning ( jQuery( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
+				rtp_display_terms_warning( terms_conditions_checkbox.parent( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
 				return false;
 			}
 		}
@@ -23,27 +23,42 @@ if ( 'object' === typeof rtMediaHook ) {
 		return true;
 	} );
 
-	rtMediaHook.register( 'rtmedia_js_before_activity_added', function ( args ) {
-		var terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
-		var whats_new_submit = jQuery( '#aw-whats-new-submit' );
-		if ( terms_conditions_checkbox.length > 0 ) {
-			terms_conditions_checkbox.removeAttr( 'disabled' );
+	rtMediaHook.register(
+		'rtmedia_js_before_activity_added',
+		function ( args ) {
+			var terms_conditions_checkbox, form;
+			var whats_new_submit = jQuery( '#aw-whats-new-submit' );
 
-			if ( false == args ) {
-				whats_new_submit.removeAttr( 'disabled' );
-				whats_new_submit.removeClass( 'loading' );
-				return args;
+			if ( undefined !== args && false !== args && undefined !== args.src && 'activity' === args.src ) {
+				form                      = jQuery( '#whats-new-form' );
+				terms_conditions_checkbox = form.find( '#rtmedia_upload_terms_conditions' );
+			} else {
+				terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
 			}
 
-			if ( ! terms_conditions_checkbox.is( ':checked' ) ) {
-				whats_new_submit.removeAttr( 'disabled' );
-				whats_new_submit.removeClass( 'loading' );
-				rtp_display_terms_warning ( jQuery( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
-				return false;
+			if ( terms_conditions_checkbox.length > 0 ) {
+				terms_conditions_checkbox.removeAttr( 'disabled' );
+
+				if ( false == args ) {
+					whats_new_submit.removeAttr( 'disabled' );
+					whats_new_submit.removeClass( 'loading' );
+					return args;
+				}
+
+				if ( ! terms_conditions_checkbox.is( ':checked' ) ) {
+					whats_new_submit.removeAttr( 'disabled' );
+					whats_new_submit.removeClass( 'loading' );
+					if ( undefined !== args && false !== args && undefined !== args.src && 'activity' === args.src ) {
+						rtp_display_terms_warning( form.find( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
+					} else {
+						rtp_display_terms_warning( terms_conditions_checkbox.parent( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
+					}
+					return false;
+				}
 			}
+			return true;
 		}
-		return true;
-	});
+	);
 
 	/**
 	 * When Select Attribute for media [ rtmedia-custom-attributes: Add-Ons ] Issue:8,
@@ -81,11 +96,17 @@ jQuery(document).ready(function () {
 				upload_start_btn.focus();
 			}
 
-			// Show error message if terms-condition is not checked
+			// Show error message if terms-condition is not checked.
 			if ( terms_conditions_checkbox.is( ':checked' ) ) {
-				jQuery( '.rt_alert_msg' ).remove();
+				var alter_msg_span = terms_conditions_checkbox.siblings( 'span.rt_alert_msg' );
+				if ( 0 < alter_msg_span.length ) {
+					alter_msg_span.remove();
+				} else {
+					terms_conditions_checkbox.parent().siblings( 'span.rt_alert_msg' ).remove();
+				}
+
 			} else {
-				rtp_display_terms_warning ( jQuery( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
+				rtp_display_terms_warning( terms_conditions_checkbox.parent( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
 			}
 
 			if ( typeof rtmedia_direct_upload_enabled !== 'undefined' && rtmedia_direct_upload_enabled == '1' ) {

@@ -1262,9 +1262,11 @@ function rtm_upload_terms_activity() {
 	if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0) {
 		// Handle error on click event.
 		jQuery( '#bp-nouveau-activity-form' ).on( 'click', '#aw-whats-new-submit', function ( event ) {
-			if ( false === jQuery( '#rtmedia_upload_terms_conditions' ).prop( 'checked' ) && jQuery( '#whats-new-form #message' ).length === 0 ) {
+			var form = jQuery( '#whats-new-form' );
+			var condition_checkbox = form.find( '#rtmedia_upload_terms_conditions' );
+			if ( 0 !== condition_checkbox.length && false === condition_checkbox.prop( 'checked' ) && form.find( '#message' ).length === 0 ) {
 				event.preventDefault();
-				var selector = jQuery( '.rtmedia-upload-terms' );
+				var selector = form.find( '.rtmedia-upload-terms' );
 				rtp_display_terms_warning( selector, rtmedia_upload_terms_check_terms_message );
 			}
 		});

@@ -1501,7 +1501,7 @@ jQuery( document ).ready( function( $ ) {
 					/**
 					 * This hook is added for rtMedia Upload Terms plugin to check if it is checked or not for activity
 					 */
-					var allowActivityPost = rtMediaHook.call( 'rtmedia_js_before_activity_added', true );
+					var allowActivityPost = rtMediaHook.call( 'rtmedia_js_before_activity_added', { src: 'activity' } );
 
 					if ( ! allowActivityPost ) {
 						$( '#whats-new-form #rtmedia-whts-new-upload-container' ).find( 'input' ).removeAttr( 'disabled' );
@@ -1875,7 +1875,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 
 			new_button.on( 'click', function ( e ) {
 
-				if ( rtMediaHook.call( 'rtmedia_js_before_activity_added', true ) ) {
+				if ( rtMediaHook.call( 'rtmedia_js_before_activity_added', { src: 'activity' } ) ) {
 					objUploadView.uploadFiles( e );
 				}
 			} );
