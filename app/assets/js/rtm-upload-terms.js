@@ -27,6 +27,7 @@ if ( 'object' === typeof rtMediaHook ) {
 		'rtmedia_js_before_activity_added',
 		function ( args ) {
 			var terms_conditions_checkbox, form;
+			var whats_new_submit = jQuery( '#aw-whats-new-submit' );
 
 			if ( undefined !== args && false !== args && undefined !== args.src && 'activity' === args.src ) {
 				form                      = jQuery( '#whats-new-form' );
@@ -39,10 +40,14 @@ if ( 'object' === typeof rtMediaHook ) {
 				terms_conditions_checkbox.removeAttr( 'disabled' );
 
 				if ( false == args ) {
+					whats_new_submit.removeAttr( 'disabled' );
+					whats_new_submit.removeClass( 'loading' );
 					return args;
 				}
 
 				if ( ! terms_conditions_checkbox.is( ':checked' ) ) {
+					whats_new_submit.removeAttr( 'disabled' );
+					whats_new_submit.removeClass( 'loading' );
 					if ( undefined !== args && false !== args && undefined !== args.src && 'activity' === args.src ) {
 						rtp_display_terms_warning( form.find( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
 					} else {
