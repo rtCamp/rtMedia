@@ -461,6 +461,7 @@ jQuery( function( $ ) {
 			if ( $( '#search_by' ).length > 0 ) {
 				href += '&search_by=' + $( '#search_by' ).val();
 			}
+			href = encodeURI( href );
 
 			change_rtBrowserAddressUrl( href, '' );
 			galleryObj.getNext( nextpage, $( this ).closest( '.rtmedia-container' ).parent() );
@@ -580,8 +581,13 @@ jQuery( function( $ ) {
 				jQuery( '.start-media-upload' ).hide();
 				apply_rtMagnificPopup( jQuery( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' ) );
 
+				var redirection = $( '#rt_upload_hf_redirect' );
+
 				if( '' !== rtnObj && 'undefined' !== typeof( rtnObj.redirect_url ) && null !== rtnObj.redirect_url ) {
-					if( uploaderObj.upload_count === up.files.length && 0 < jQuery( '#rt_upload_hf_redirect' ).length && jQuery.trim( 0 === rtnObj.redirect_url.indexOf( 'http' ) ) ) {
+					if ( uploaderObj.upload_count === up.files.length
+						&& 0 < redirection.length
+						&& 'true' === redirection.val()
+						&& 0 === rtnObj.redirect_url.indexOf( 'http' ) ) {
 						redirect_request = true;
 					}
 				}
@@ -835,8 +841,12 @@ jQuery( function( $ ) {
 				if ( privacy !== undefined ) {
 					up.settings.multipart_params.privacy = $( '#rtm-file_upload-ui select.privacy' ).val();
 				}
-				if ( jQuery( '#rt_upload_hf_redirect' ).length > 0 ) {
-					up.settings.multipart_params.redirect = up.files.length;
+
+				var redirection = $( '#rt_upload_hf_redirect' );
+
+				if ( 0 < redirection.length ) {
+					up.settings.multipart_params.redirect    = up.files.length;
+					up.settings.multipart_params.redirection = redirection.val();
 				}
 				jQuery( '#rtmedia-uploader-form input[type=hidden]' ).each( function() {
 					up.settings.multipart_params[$( this ).attr( 'name' )] = $( this ).val();
@@ -1491,7 +1501,7 @@ jQuery( document ).ready( function( $ ) {
 					/**
 					 * This hook is added for rtMedia Upload Terms plugin to check if it is checked or not for activity
 					 */
-					var allowActivityPost = rtMediaHook.call( 'rtmedia_js_before_activity_added', true );
+					var allowActivityPost = rtMediaHook.call( 'rtmedia_js_before_activity_added', { src: 'activity' } );
 
 					if ( ! allowActivityPost ) {
 						$( '#whats-new-form #rtmedia-whts-new-upload-container' ).find( 'input' ).removeAttr( 'disabled' );
@@ -1865,7 +1875,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 
 			new_button.on( 'click', function ( e ) {
 
-				if ( rtMediaHook.call( 'rtmedia_js_before_activity_added', true ) ) {
+				if ( rtMediaHook.call( 'rtmedia_js_before_activity_added', { src: 'activity' } ) ) {
 					objUploadView.uploadFiles( e );
 				}
 			} );

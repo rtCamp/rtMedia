@@ -225,8 +225,8 @@ button::-moz-focus-inner {
     position: absolute;
     left: 0;
     top: 0;
-    margin-top: 35px;
-    margin-left: 35px;
+    margin-top: 40%;
+    margin-left: 40%;
     border: medium inset transparent;
 }
 
@@ -251,12 +251,12 @@ button::-moz-focus-inner {
 .mfp-arrow-left:after,
 .mfp-arrow-left .mfp-a {
     border-right: 17px solid #FFF;
-    margin-left: 31px;
+    margin-left: 32%;
 }
 
 .mfp-arrow-left:before,
 .mfp-arrow-left .mfp-b {
-    margin-left: 25px;
+    margin-left: 25%;
     border-right: 27px solid #3F3F3F;
 }
 
@@ -267,7 +267,7 @@ button::-moz-focus-inner {
 .mfp-arrow-right:after,
 .mfp-arrow-right .mfp-a {
     border-left: 17px solid #FFF;
-    margin-left: 39px;
+    margin-left: 44%;
 }
 
 .mfp-arrow-right:before,

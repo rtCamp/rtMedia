@@ -38,6 +38,15 @@ class RTMediaUploadEndpoint {
 			if ( isset( $_REQUEST['activity_id'] ) ) {
 				$_activity_id = sanitize_text_field( $_REQUEST['activity_id'] );
 			}
+
+			if ( isset( $_REQUEST['redirection'] ) ) {
+				$_redirection = sanitize_text_field( $_REQUEST['redirection'] );
+			}
+
+			if ( isset( $_REQUEST['redirect'] ) ) {
+				$_redirect = sanitize_text_field( $_REQUEST['redirect'] );
+			}
+
 			$_redirect_url = filter_input( INPUT_POST, 'redirect', FILTER_SANITIZE_NUMBER_INT );
 			$rtupload      = false;
 			$activity_id   = - 1;
@@ -234,7 +243,8 @@ class RTMediaUploadEndpoint {
 				}
 				if ( isset( $this->upload['rtmedia_simple_file_upload'] ) && true == $this->upload['rtmedia_simple_file_upload'] ) {
 					if ( isset( $media ) && count( $media ) > 0 ) {
-						if ( isset( $_redirect_url ) ) {
+						if ( ( ( isset( $_redirection ) && 'true' === $_redirection ) || ( isset( $_redirect ) && 'no' !== $_redirect ) ) &&
+							isset( $_redirect_url ) )  {
 							if ( intval( $_redirect_url ) > 1 ) {
 								//bulkurl
 								if ( 'group' === $media[0]->context ) {
@@ -258,7 +268,9 @@ class RTMediaUploadEndpoint {
 			}
 
 			$redirect_url = '';
-			if ( isset( $_redirect_url ) && is_numeric( $_redirect_url ) ) {
+			if ( ( ( isset( $_redirection ) && 'true' === $_redirection ) || ( isset( $_redirect ) && 'no' !== $_redirect ) ) &&
+				isset( $_redirect_url ) && is_numeric( $_redirect_url ) ) {
+
 				if ( intval( $_redirect_url ) > 1 ) {
 					//bulkurl
 					if ( 'group' === $media[0]->context ) {

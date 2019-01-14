@@ -27,10 +27,14 @@ class RTMediaBuddyPressActivity {
 		add_action( 'bp_activity_delete_comment', array( $this, 'delete_comment_sync' ), 10, 2 );
 		add_filter( 'bp_activity_allowed_tags', array( &$this, 'override_allowed_tags' ) );
 		add_filter( 'bp_get_activity_parent_content', array( &$this, 'bp_get_activity_parent_content' ) );
+		add_filter( 'bp_activity_type_before_save', array( $this, 'bp_activity_type_before_save' ) );
+		add_filter( 'bp_activity_content_before_save', array( $this, 'bp_activity_content_before_save' ) );
 		add_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
 
 		// Filter bp_activity_prefetch_object_data for translatable activity actions
 		add_filter( 'bp_activity_prefetch_object_data', array( $this, 'bp_prefetch_activity_object_data' ), 10, 1 );
+
+		add_filter( 'bp_get_activity_action_pre_meta', array( $this, 'bp_get_activity_action_pre_meta' ), 11, 2 );
 
 		// BuddyPress activity for media like action
 		if ( isset( $rtmedia->options['buddypress_mediaLikeActivity'] ) && 0 !== intval( $rtmedia->options['buddypress_mediaLikeActivity'] ) ) {
@@ -60,6 +64,55 @@ class RTMediaBuddyPressActivity {
 		}
 	}
 
+	/**
+	 * For adding secondary avatar in the activity header.
+	 *
+	 * @param String $action   Has the markup for activity header.
+	 * @param array  $activity Contains values realated to the activity.
+	 *
+	 * @return String $action.
+	 */
+	function bp_get_activity_action_pre_meta( $action, $activity ) {
+
+		if ( 'rtmedia_update' === $activity->type && 'groups' === $activity->component ) {
+
+			switch ( $activity->component ) {
+				case 'groups':
+				case 'friends':
+					// Only insert avatar if one exists.
+					$secondary_avatar = bp_get_activity_secondary_avatar();
+					if ( ! empty( $secondary_avatar ) && false === strpos( $activity->action, $secondary_avatar ) ) {
+
+						$reverse_content = strrev( $activity->action );
+						$position        = strpos( $reverse_content, 'a<' );
+						$action          = substr_replace( $activity->action, $secondary_avatar, -$position - 2, 0 );
+					}
+					break;
+			}
+
+			return $action;
+
+		} else {
+
+			switch ( $activity->component ) {
+				case 'groups':
+				case 'friends':
+					$secondary_avatar = bp_get_activity_secondary_avatar( array( 'linked' => false ) );
+
+					// Only insert avatar if one exists.
+					if ( ! empty( $secondary_avatar ) && false === strpos( $activity->action, $secondary_avatar ) ) {
+
+						$link_close  = '">';
+						$first_link  = strpos( $activity->action, $link_close );
+						$second_link = strpos( $activity->action, $link_close, $first_link + strlen( $link_close ) );
+						$action      = substr_replace( $activity->action, $secondary_avatar, $second_link + 2, 0 );
+					}
+					break;
+			}
+
+			return $action;
+		}
+	}
 
 	/**
 	 * To save all activities in rtm_activity table, reset transient.
@@ -198,6 +251,39 @@ class RTMediaBuddyPressActivity {
 		return $content;
 	}
 
+	/**
+	 * This function will check for the media file attached to the actitvity and accordingly will set type.
+	 *
+	 * @param string $type Type of the Activity.
+	 *
+	 * @return string Filtered value of the activity type.
+	 */
+	public function bp_activity_type_before_save( $type ) {
+
+		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
+			$type = 'rtmedia_update';
+		}
+		return $type;
+	}
+
+	/**
+	 * This function will check for the media file attached to the actitvity and accordingly will set content.
+	 *
+	 * @param string $content Content of the Activity.
+	 *
+	 * @return string Filtered value of the activity content.
+	 */
+	public function bp_activity_content_before_save( $content ) {
+
+		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
+			$obj_activity = new RTMediaActivity( $rtmedia_attached_files, 0, $content );
+			$content      = $obj_activity->create_activity_html();
+		}
+		return $content;
+	}
+
 	function delete_comment_sync( $activity_id, $comment_id ) {
 		global $wpdb;
 		$comment_id = $wpdb->get_var( $wpdb->prepare( "select comment_id from {$wpdb->commentmeta} where meta_key = 'activity_id' and meta_value = %s", $comment_id ) );
@@ -266,16 +352,6 @@ class RTMediaBuddyPressActivity {
 
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 		if ( is_array( $rtmedia_attached_files ) ) {
-			$updated_content = $wpdb->get_var( "select content from  {$bp->activity->table_name} where  id= $activity_id limit 1" ); // @codingStandardsIgnoreLine
-
-			$obj_activity = new RTMediaActivity( $rtmedia_attached_files, 0, $updated_content );
-			$html_content = $obj_activity->create_activity_html();
-			bp_activity_update_meta( $activity_id, 'bp_old_activity_content', $html_content );
-			bp_activity_update_meta( $activity_id, 'bp_activity_text', $updated_content );
-			$wpdb->update( $bp->activity->table_name, array(
-				'type'    => 'rtmedia_update',
-				'content' => $html_content,
-			), array( 'id' => $activity_id ) );
 			$media_obj = new RTMediaModel();
 			//Credit faisal : https://gist.github.com/faishal/c4306ae7267fff976465
 			$in_str_arr = array_fill( 0, count( $rtmedia_attached_files ), '%d' );
@@ -401,6 +477,7 @@ class RTMediaBuddyPressActivity {
 				'multi_selection'     => true,
 				'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
 					'redirect'             => 'no',
+					'redirection'          => 'false',
 					'rtmedia_update'       => 'true',
 					'action'               => 'wp_handle_upload',
 					'_wp_http_referer'     => $request_uri,

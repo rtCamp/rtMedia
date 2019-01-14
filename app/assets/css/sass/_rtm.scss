@@ -49,6 +49,9 @@
 	}
 
 	.rtmedia-item-thumbnail {
+		width: 150px;
+		text-align: center;
+
 		img {
 			display: inline-block;
 			max-height: inherit;
@@ -468,6 +471,12 @@ table.rtmedia-edit-media-list {
 		background-color: black;
 		color: white;
 		padding: 0 5px;
+	}
+}
+
+.rtmedia-actions-before-description {
+	& > div {
+		margin-bottom: 5px;
 	}
 }
 
