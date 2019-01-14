@@ -1576,7 +1576,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.5.5 =
-rtMedia 4.5.5, with fixes of duplicate entries of `document and other` media, redirect attribute in uploader shortcode, posting activity updates with terms and conditions enabled and UI fixes.
+rtMedia 4.5.5, with fixes of redirect attribute in uploader shortcode, posting activity updates with terms and conditions enabled and UI fixes.
 
 == Sponsors ==
 
