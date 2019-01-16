@@ -149,7 +149,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
-### 4.5.5 [January 14, 2019] ###
+### 4.5.5 [January 16, 2019] ###
 
 * FIXED
 
