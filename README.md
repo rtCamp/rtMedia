@@ -149,7 +149,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
-### 4.5.5 [January 16, 2019] ###
+### 4.5.5 [January 17, 2019] ###
 
 * FIXED
 
@@ -163,7 +163,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
     * Issue with redirect attribute value in uploader shortcode.
     * Issue with redirect attribute value in uploader shortcode.
     * Issue with upload terms when sidebar widget is active on activity page.
-
+    * Issue with ‘rtmedia_no_media_found_message_filter’ functionality.
 
 ### 4.5.4 [October 17, 2018] ###
 
