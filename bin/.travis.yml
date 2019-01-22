@@ -2,7 +2,7 @@ dist: trusty
 language: php
 sudo: required
 php:
-  - 5.5
+  - 7.1
 branches:
   only:
     - develop
