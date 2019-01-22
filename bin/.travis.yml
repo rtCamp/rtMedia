@@ -49,10 +49,7 @@ before_script:
   - composer update
   - export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
     ## PHP_CodeSniffer
-  - git clone https://github.com/squizlabs/PHP_CodeSniffer.git
-  - cd PHP_CodeSniffer
-  - pear install package.xml
-  - cd ../
+  - pear install php_codesniffer
   - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
   - phpenv rehash
   - phpcs -i
