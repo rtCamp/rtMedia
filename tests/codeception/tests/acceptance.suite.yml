@@ -27,5 +27,5 @@ modules:
                 'browserstack.debug': 'true'
                 'browserstack.networkLogs': 'true'
                 'build': '%TRAVIS_BUILD_NUMBER%'
-                'project': 'Core-rtMedia Automation'
+                'project': 'rtMedia Automation'
                 'browserstack.local': 'true'
