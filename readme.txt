@@ -1,12 +1,12 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 4.9.8
-Stable tag: 4.5.4
+Tested up to: 5.0.2
+Stable tag: 4.5.5
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -136,6 +136,22 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.5.5 [January 22, 2019] =
+
+* FIXED
+
+ * Gallery Media search with space in media name.
+ * Add Friend button on media tab and UI fixes.
+ * Masonry UI disorder for media with thumbnail.
+ * UI issues in lightbox view of single media.
+ * Anchor tag issue for activity generated after adding media.
+ * Media upload issue on posting public messages.
+ * UI for Member name in media tab.
+ * Issue with redirect attribute value in uploader shortcode.
+ * Issue with posting activity updates when terms and conditions is enabled.
+ * Issue with upload terms when sidebar widget is active on activity page.
+ * Issue with ‘rtmedia_no_media_found_message_filter’ functionality.
 
 = 4.5.4 [October 17, 2018] =
 
@@ -1560,8 +1576,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.4 =
-rtMedia 4.5.4, with activity feed load more button fix and non authorized pdf files in uploads directory fix.
+= 4.5.5 =
+rtMedia 4.5.5, with fixes of redirect attribute in uploader shortcode, posting activity updates with terms and conditions enabled and UI fixes.
 
 == Sponsors ==
 
