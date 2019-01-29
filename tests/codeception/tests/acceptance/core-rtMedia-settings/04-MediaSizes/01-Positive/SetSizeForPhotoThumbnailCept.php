@@ -13,7 +13,7 @@
     $I->wantTo( 'To set photo thumbnail height and width.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$mediaSizeSettingsUrl );

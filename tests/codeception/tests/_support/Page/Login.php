@@ -3,6 +3,7 @@
 namespace Page;
 
 use Page\Constants as ConstantsPage;
+use \Codeception\Step\Argument\PasswordArgument;
 
 class Login {
 
@@ -12,7 +13,7 @@ class Login {
 		$this->tester = $I;
 	}
 
-	public function loginAsAdmin( $wpUserName, $wpPassword, $saveSession = true ) {
+	public function loginAsAdmin( $saveSession = true ) {
 
 		$I = $this->tester;
 
@@ -29,10 +30,11 @@ class Login {
 		}
 
 		$I->seeElement( ConstantsPage::$wpUserNameField );
-		$I->fillfield( ConstantsPage::$wpUserNameField, $wpUserName );
+		$I->fillfield( ConstantsPage::$wpUserNameField, ConstantsPage::$userName );
 
 		$I->seeElement( ConstantsPage::$wpPasswordField );
-		$I->fillfield( ConstantsPage::$wpPasswordField, $wpPassword );
+		// $I->fillfield( ConstantsPage::$wpPasswordField, $wpPassword );
+		$I->fillField( ConstantsPage::$wpPasswordField, new PasswordArgument(ConstantsPage::$password));
 
 		$I->click( ConstantsPage::$wpSubmitButton );
 		$I->waitForElement( ConstantsPage::$wpDashboard, 10 );
@@ -47,7 +49,7 @@ class Login {
 		}
 
 		$I->reloadPage();
-		$I->maximizeWindow();
+		// $I->maximizeWindow();
 	}
 
 }
