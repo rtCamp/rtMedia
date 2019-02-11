@@ -357,14 +357,30 @@ class RTMedia {
         	overflow: hidden;
         	}
 
+        	.rtmedia-activity-container li.media-type-photo{
+        	min-width: <?php echo esc_attr( $media_width ); ?>;
+        	min-height: <?php echo esc_attr( $media_height ); ?>;
+        	}
+
             	.rtmedia-activity-container li.media-type-video video{
             	min-height: <?php echo esc_attr( $video_height ); ?>px !important;
             	min-width: <?php echo esc_attr( $video_width ); ?>px !important;
             	}
 
+        	.rtmedia-activity-container li.media-type-video{
+        	min-height: <?php echo esc_attr( $video_height ); ?>px !important;
+        	min-width: <?php echo esc_attr( $video_width ); ?>px !important;
+        	}
+
                 .rtmedia-activity-container li.media-type-music audio{
                 min-width: <?php echo esc_attr( $music_width ); ?>px !important;
+                width: <?php echo esc_attr( $music_width ); ?>px !important;
                 }
+
+        	.rtmedia-activity-container li.media-type-music{
+        	min-width: <?php echo esc_attr( $music_width ); ?>px !important;
+        	width: <?php echo esc_attr( $music_width ); ?>px !important;
+        	}
 
         	.rtmedia-comment-media-container .mejs-container.mejs-video,
         	.rtmedia-activity-container .mejs-container.mejs-video{
