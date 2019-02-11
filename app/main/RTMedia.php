@@ -333,17 +333,30 @@ class RTMedia {
 		}
 
 		?>
-		.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail {
-		max-width: <?php echo esc_attr( $media_width ); ?>;
-		max-height: <?php echo esc_attr( $media_height ); ?>;
-		overflow: hidden;
-		}
+        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
+        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
+        	min-width: <?php echo esc_attr( $media_width ); ?>;
+        	min-height: <?php echo esc_attr( $media_height ); ?>;
+        	overflow: hidden;
+        	}
 
-		.rtmedia-comment-media-container .mejs-container.mejs-video,
-		.rtmedia-activity-container .mejs-container.mejs-video{
-		min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
-		min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
-		}
+        	.rtmedia-comment-media-container .mejs-container.mejs-video,
+        	.rtmedia-activity-container .mejs-container.mejs-video{
+        	min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px !important;
+        	min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px !important;
+        	}
+
+        	.rtmedia-comment-media-container .mejs-container .mejs-mediaelement video,
+        	.rtmedia-activity-container .mejs-container .mejs-mediaelement video{
+        	min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
+        	min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
+        	}
+
+        	.rtmedia-comment-media-container .mejs-container .mejs-layers .mejs-overlay-play,
+        	.rtmedia-activity-container .mejs-container .mejs-layers .mejs-overlay-play{
+        	min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
+        	min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
+        	}
 		<?php
 		global $rtmedia;
 		if ( rtmedia_check_comment_media_allow() && ! rtmedia_check_comment_in_commented_media_allow() ) { ?>
