@@ -343,6 +343,12 @@ class RTMedia {
 			$video_width = '320';
 		}
 
+		$music_width = ( isset( $this->options['defaultSizes_music_activityPlayer_width'] ) ? $this->options['defaultSizes_music_activityPlayer_width'] : '320' );
+
+		if ( '0' === $music_width ) {
+			$music_width = '320';
+		}
+
 		?>
         	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
         	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
@@ -350,6 +356,15 @@ class RTMedia {
         	min-height: <?php echo esc_attr( $media_height ); ?>;
         	overflow: hidden;
         	}
+
+            	.rtmedia-activity-container li.media-type-video video{
+            	min-height: <?php echo esc_attr( $video_height ); ?>px !important;
+            	min-width: <?php echo esc_attr( $video_width ); ?>px !important;
+            	}
+
+                .rtmedia-activity-container li.media-type-music audio{
+                min-width: <?php echo esc_attr( $music_width ); ?>px !important;
+                }
 
         	.rtmedia-comment-media-container .mejs-container.mejs-video,
         	.rtmedia-activity-container .mejs-container.mejs-video{
