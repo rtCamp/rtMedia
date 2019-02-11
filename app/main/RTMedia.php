@@ -332,6 +332,17 @@ class RTMedia {
 			$media_width = 'auto';
 		}
 
+		$video_height = ( isset( $this->options['defaultSizes_video_activityPlayer_height'] ) ? $this->options['defaultSizes_video_activityPlayer_height'] : '240' );
+		$video_width  = ( isset( $this->options['defaultSizes_video_activityPlayer_width'] ) ? $this->options['defaultSizes_video_activityPlayer_width'] : '320' );
+
+		if ( '0' === $video_height ) {
+			$video_height = '240';
+		}
+
+		if ( '0' === $video_width ) {
+			$video_width = '320';
+		}
+
 		?>
         	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
         	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
@@ -342,20 +353,20 @@ class RTMedia {
 
         	.rtmedia-comment-media-container .mejs-container.mejs-video,
         	.rtmedia-activity-container .mejs-container.mejs-video{
-        	min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px !important;
-        	min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px !important;
+        	min-height: <?php echo esc_attr( $video_height ); ?>px !important;
+        	min-width: <?php echo esc_attr( $video_width ); ?>px !important;
         	}
 
         	.rtmedia-comment-media-container .mejs-container .mejs-mediaelement video,
         	.rtmedia-activity-container .mejs-container .mejs-mediaelement video{
-        	min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
-        	min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
+        	min-height: <?php echo esc_attr( $video_height ); ?>px;
+        	min-width: <?php echo esc_attr( $video_width ); ?>px;
         	}
 
         	.rtmedia-comment-media-container .mejs-container .mejs-layers .mejs-overlay-play,
         	.rtmedia-activity-container .mejs-container .mejs-layers .mejs-overlay-play{
-        	min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
-        	min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
+        	min-height: <?php echo esc_attr( $video_height ); ?>px;
+        	min-width: <?php echo esc_attr( $video_width ); ?>px;
         	}
 		<?php
 		global $rtmedia;
