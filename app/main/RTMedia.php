@@ -332,18 +332,57 @@ class RTMedia {
 			$media_width = 'auto';
 		}
 
-		?>
-		.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail {
-		max-width: <?php echo esc_attr( $media_width ); ?>;
-		max-height: <?php echo esc_attr( $media_height ); ?>;
-		overflow: hidden;
+		$video_height = ( isset( $this->options['defaultSizes_video_activityPlayer_height'] ) ? $this->options['defaultSizes_video_activityPlayer_height'] : '240' );
+		$video_width  = ( isset( $this->options['defaultSizes_video_activityPlayer_width'] ) ? $this->options['defaultSizes_video_activityPlayer_width'] : '320' );
+
+		if ( '0' === $video_height ) {
+			$video_height = '240';
 		}
 
-		.rtmedia-comment-media-container .mejs-container.mejs-video,
-		.rtmedia-activity-container .mejs-container.mejs-video{
-		min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
-		min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
+		if ( '0' === $video_width ) {
+			$video_width = '320';
 		}
+
+		$music_width = ( isset( $this->options['defaultSizes_music_activityPlayer_width'] ) ? $this->options['defaultSizes_music_activityPlayer_width'] : '320' );
+
+		if ( '0' === $music_width ) {
+			$music_width = '320';
+		}
+
+		?>
+        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
+        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
+        	min-width: <?php echo esc_attr( $media_width ); ?>;
+        	min-height: <?php echo esc_attr( $media_height ); ?>;
+        	overflow: hidden;
+        	}
+
+            	.rtmedia-activity-container li.media-type-video video{
+            	min-height: <?php echo esc_attr( $video_height ); ?>px !important;
+            	min-width: <?php echo esc_attr( $video_width ); ?>px !important;
+            	}
+
+                .rtmedia-activity-container li.media-type-music audio{
+                min-width: <?php echo esc_attr( $music_width ); ?>px !important;
+                }
+
+        	.rtmedia-comment-media-container .mejs-container.mejs-video,
+        	.rtmedia-activity-container .mejs-container.mejs-video{
+        	min-height: <?php echo esc_attr( $video_height ); ?>px !important;
+        	min-width: <?php echo esc_attr( $video_width ); ?>px !important;
+        	}
+
+        	.rtmedia-comment-media-container .mejs-container .mejs-mediaelement video,
+        	.rtmedia-activity-container .mejs-container .mejs-mediaelement video{
+        	min-height: <?php echo esc_attr( $video_height ); ?>px;
+        	min-width: <?php echo esc_attr( $video_width ); ?>px;
+        	}
+
+        	.rtmedia-comment-media-container .mejs-container .mejs-layers .mejs-overlay-play,
+        	.rtmedia-activity-container .mejs-container .mejs-layers .mejs-overlay-play{
+        	min-height: <?php echo esc_attr( $video_height ); ?>px;
+        	min-width: <?php echo esc_attr( $video_width ); ?>px;
+        	}
 		<?php
 		global $rtmedia;
 		if ( rtmedia_check_comment_media_allow() && ! rtmedia_check_comment_in_commented_media_allow() ) { ?>
