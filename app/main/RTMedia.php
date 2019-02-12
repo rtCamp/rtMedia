@@ -350,7 +350,11 @@ class RTMedia {
 		}
 
 		?>
-        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
+            	.rtmedia-activity-container ul.rtm-activity-media-list{
+            	overflow: auto;
+            	}
+
+            	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
         	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
         	min-width: <?php echo esc_attr( $media_width ); ?>;
         	min-height: <?php echo esc_attr( $media_height ); ?>;
