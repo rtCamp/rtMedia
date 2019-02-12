@@ -354,54 +354,49 @@ class RTMedia {
             	overflow: auto;
             	}
 
-            	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
-        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
-        	min-width: <?php echo esc_attr( $media_width ); ?>;
-        	min-height: <?php echo esc_attr( $media_height ); ?>;
-        	overflow: hidden;
-        	}
-
-        	.rtmedia-activity-container li.media-type-photo{
-        	min-width: <?php echo esc_attr( $media_width ); ?>;
-        	min-height: <?php echo esc_attr( $media_height ); ?>;
-        	}
-
-            	.rtmedia-activity-container li.media-type-video video{
-            	min-height: <?php echo esc_attr( $video_height ); ?>px !important;
-            	min-width: <?php echo esc_attr( $video_width ); ?>px !important;
-            	}
-
         	.rtmedia-activity-container li.media-type-video{
-        	min-height: <?php echo esc_attr( $video_height ); ?>px !important;
-        	min-width: <?php echo esc_attr( $video_width ); ?>px !important;
+        	height: <?php echo esc_attr( $video_height ); ?>px !important;
+        	width: <?php echo esc_attr( $video_width ); ?>px !important;
         	}
 
-                .rtmedia-activity-container li.media-type-music audio{
-                min-width: <?php echo esc_attr( $music_width ); ?>px !important;
-                width: <?php echo esc_attr( $music_width ); ?>px !important;
-                }
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail,
+        	.rtmedia-activity-container li.media-type-photo a{
+        	width: 100%;
+        	height: 98%;
+        	}
+
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail video{
+        	width: 100%;
+        	height: 100%;
+        	}
+
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video,
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video video,
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video .mejs-overlay-play{
+        	width: 100% !important;
+        	height: 100% !important;
+        	}
 
         	.rtmedia-activity-container li.media-type-music{
-        	min-width: <?php echo esc_attr( $music_width ); ?>px !important;
         	width: <?php echo esc_attr( $music_width ); ?>px !important;
         	}
 
-        	.rtmedia-comment-media-container .mejs-container.mejs-video,
-        	.rtmedia-activity-container .mejs-container.mejs-video{
-        	min-height: <?php echo esc_attr( $video_height ); ?>px !important;
-        	min-width: <?php echo esc_attr( $video_width ); ?>px !important;
+        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail,
+        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail .mejs-audio,
+        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail audio{
+        	width: 100% !important;
         	}
 
-        	.rtmedia-comment-media-container .mejs-container .mejs-mediaelement video,
-        	.rtmedia-activity-container .mejs-container .mejs-mediaelement video{
-        	min-height: <?php echo esc_attr( $video_height ); ?>px;
-        	min-width: <?php echo esc_attr( $video_width ); ?>px;
+        	.rtmedia-activity-container li.media-type-photo{
+        	width: <?php echo esc_attr( $media_width ); ?> !important;
+        	height: <?php echo esc_attr( $media_height ); ?> !important;
         	}
 
-        	.rtmedia-comment-media-container .mejs-container .mejs-layers .mejs-overlay-play,
-        	.rtmedia-activity-container .mejs-container .mejs-layers .mejs-overlay-play{
-        	min-height: <?php echo esc_attr( $video_height ); ?>px;
-        	min-width: <?php echo esc_attr( $video_width ); ?>px;
+        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
+        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
+        	width: 100%;
+        	height: 100%;
+        	overflow: hidden;
         	}
 		<?php
 		global $rtmedia;
