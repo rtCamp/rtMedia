@@ -361,13 +361,13 @@ class RTMedia {
 
         	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail,
         	.rtmedia-activity-container li.media-type-photo a{
-        	width: 100%;
-        	height: 98%;
+        	width: 100% !important;
+        	height: 98% !important;
         	}
 
         	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail video{
-        	width: 100%;
-        	height: 100%;
+        	width: 100% !important;
+        	height: 100% !important;
         	}
 
         	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video,
@@ -394,8 +394,8 @@ class RTMedia {
 
         	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
         	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
-        	width: 100%;
-        	height: 100%;
+        	width: 100% !important;
+        	height: 100% !important;
         	overflow: hidden;
         	}
 		<?php
