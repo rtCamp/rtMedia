@@ -109,7 +109,7 @@ class RTMediaUploadEndpoint {
 							$media = $media_obj->model->get( array( 'activity_id' => $current_media_id ) );
 						}
 
-						if ( $media[0]->album_id ) {
+						if ( ! empty( $media[0] ) && $media[0]->album_id ) {
 							$album_id = $media[0]->album_id;
 							$privacy = $media[0]->privacy;
 							$context = $media[0]->context;

@@ -332,18 +332,77 @@ class RTMedia {
 			$media_width = 'auto';
 		}
 
-		?>
-		.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail {
-		max-width: <?php echo esc_attr( $media_width ); ?>;
-		max-height: <?php echo esc_attr( $media_height ); ?>;
-		overflow: hidden;
+		$video_height = ( isset( $this->options['defaultSizes_video_activityPlayer_height'] ) ? $this->options['defaultSizes_video_activityPlayer_height'] : '240' );
+		$video_width  = ( isset( $this->options['defaultSizes_video_activityPlayer_width'] ) ? $this->options['defaultSizes_video_activityPlayer_width'] : '320' );
+
+		if ( '0' === $video_height ) {
+			$video_height = '240';
 		}
 
-		.rtmedia-comment-media-container .mejs-container.mejs-video,
-		.rtmedia-activity-container .mejs-container.mejs-video{
-		min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
-		min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
+		if ( '0' === $video_width ) {
+			$video_width = '320';
 		}
+
+		$music_width = ( isset( $this->options['defaultSizes_music_activityPlayer_width'] ) ? $this->options['defaultSizes_music_activityPlayer_width'] : '320' );
+
+		if ( '0' === $music_width ) {
+			$music_width = '320';
+		}
+
+		?>
+            	.rtmedia-activity-container ul.rtm-activity-media-list{
+            	overflow: auto;
+            	}
+
+            	div.rtmedia-activity-container ul.rtm-activity-media-list li.media-type-document,
+            	div.rtmedia-activity-container ul.rtm-activity-media-list li.media-type-other{
+            	margin-left: 0.6em !important;
+            	}
+
+        	.rtmedia-activity-container li.media-type-video{
+        	height: <?php echo esc_attr( $video_height ); ?>px !important;
+        	width: <?php echo esc_attr( $video_width ); ?>px !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail,
+        	.rtmedia-activity-container li.media-type-photo a{
+        	width: 100% !important;
+        	height: 98% !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail video{
+        	width: 100% !important;
+        	height: 100% !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video,
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video video,
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video .mejs-overlay-play{
+        	width: 100% !important;
+        	height: 100% !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-music{
+        	width: <?php echo esc_attr( $music_width ); ?>px !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail,
+        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail .mejs-audio,
+        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail audio{
+        	width: 100% !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-photo{
+        	width: <?php echo esc_attr( $media_width ); ?> !important;
+        	height: <?php echo esc_attr( $media_height ); ?> !important;
+        	}
+
+        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
+        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
+        	width: 100% !important;
+        	height: 100% !important;
+        	overflow: hidden;
+        	}
 		<?php
 		global $rtmedia;
 		if ( rtmedia_check_comment_media_allow() && ! rtmedia_check_comment_in_commented_media_allow() ) { ?>
