@@ -354,6 +354,11 @@ class RTMedia {
             	overflow: auto;
             	}
 
+            	div.rtmedia-activity-container ul.rtm-activity-media-list li.media-type-document,
+            	div.rtmedia-activity-container ul.rtm-activity-media-list li.media-type-other{
+            	margin-left: 0.6em !important;
+            	}
+
         	.rtmedia-activity-container li.media-type-video{
         	height: <?php echo esc_attr( $video_height ); ?>px !important;
         	width: <?php echo esc_attr( $video_width ); ?>px !important;
