@@ -134,6 +134,14 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
+= 4.5.6 [February 14, 2019] =
+
+* FIXED
+
+ * Threaded comment and comment count issue with BuddyPress Profile and Group Activity feed.
+ * Duplicate activity feed comment issue.
+ * Edited Media size reflection issue in BuddyPress activity feed.
+
 = 4.5.5 [January 22, 2019] =
 
 * FIXED
@@ -1573,8 +1581,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.5 =
-rtMedia 4.5.5, with fixes of redirect attribute in uploader shortcode, posting activity updates with terms and conditions enabled and UI fixes.
+= 4.5.6 =
+rtMedia 4.5.6, with fixes of BuddyPress threaded activity comment, comment count, duplicate comments and media size reflection in activity feed.
 
 == Sponsors ==
 
