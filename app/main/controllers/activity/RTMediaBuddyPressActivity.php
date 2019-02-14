@@ -27,7 +27,6 @@ class RTMediaBuddyPressActivity {
 		add_action( 'bp_activity_delete_comment', array( $this, 'delete_comment_sync' ), 10, 2 );
 		add_filter( 'bp_activity_allowed_tags', array( &$this, 'override_allowed_tags' ) );
 		add_filter( 'bp_get_activity_parent_content', array( &$this, 'bp_get_activity_parent_content' ) );
-		add_filter( 'bp_activity_type_before_save', array( $this, 'bp_activity_type_before_save' ) );
 		add_filter( 'bp_activity_content_before_save', array( $this, 'bp_activity_content_before_save' ) );
 		add_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
 
@@ -252,23 +251,7 @@ class RTMediaBuddyPressActivity {
 	}
 
 	/**
-	 * This function will check for the media file attached to the actitvity and accordingly will set type.
-	 *
-	 * @param string $type Type of the Activity.
-	 *
-	 * @return string Filtered value of the activity type.
-	 */
-	public function bp_activity_type_before_save( $type ) {
-
-		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
-			$type = 'rtmedia_update';
-		}
-		return $type;
-	}
-
-	/**
-	 * This function will check for the media file attached to the actitvity and accordingly will set content.
+	 * This function will check for the media file attached to the activity and accordingly will set content.
 	 *
 	 * @param string $content Content of the Activity.
 	 *
@@ -279,7 +262,11 @@ class RTMediaBuddyPressActivity {
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
 			$obj_activity = new RTMediaActivity( $rtmedia_attached_files, 0, $content );
-			$content      = $obj_activity->create_activity_html();
+
+			// Remove action to fix duplication issue of comment content.
+			remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
+
+			$content = $obj_activity->create_activity_html();
 		}
 		return $content;
 	}

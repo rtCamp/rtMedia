@@ -465,7 +465,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					$content .= '<p>' .
 						sprintf(
 							esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on %s', 'buddypress-media' ),
-							'<a target="_blank" href="https://github.com/rtCamp/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.'
+							'<a target="_blank" href="https://github.com/rtMediaWP/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.'
 						) .
 						'</p>';
 
