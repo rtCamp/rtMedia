@@ -1275,7 +1275,8 @@ function rtm_upload_terms_activity() {
 
 		// Re-enable hidden inputs disabled in the activity post form.
 		if ( bp_legacy_form.length > 0 ) {
-			bp_legacy_form.on( 'click', function ( event ) {
+			// Add upload terms element selector to work when direct upload is enabled.
+			jQuery( '#whats-new-form, #rtmedia_upload_terms_conditions' ).on( 'click', function ( event ) {
 				var hidden_fields = bp_legacy_form.find( 'input:hidden' );
 				hidden_fields.each( function() {
 					jQuery(this).prop( 'disabled', false );
