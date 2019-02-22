@@ -1270,6 +1270,18 @@ function rtm_upload_terms_activity() {
 				rtp_display_terms_warning( selector, rtmedia_upload_terms_check_terms_message );
 			}
 		});
+
+		var bp_legacy_form = jQuery( '#whats-new-form' );
+
+		// Re-enable hidden inputs disabled in the activity post form.
+		if ( bp_legacy_form.length > 0 ) {
+			bp_legacy_form.on( 'click', function ( event ) {
+				var hidden_fields = bp_legacy_form.find( 'input:hidden' );
+				hidden_fields.each( function() {
+					jQuery(this).prop( 'disabled', false );
+				} );
+			} );
+		}
 	}
 }
 
