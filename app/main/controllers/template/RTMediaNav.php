@@ -258,7 +258,10 @@ class RTMediaNav {
 			if ( ! $rtmedia->options[ 'allowedTypes_' . $type['name'] . '_enabled' ] ) {
 				continue;
 			}
-
+			// Skip to add likes tab here on attribute allowedTypes_likes_enabled because likes tab come from rtmedia-like addons.
+			if ( ! $rtmedia->options['general_enable_user_likes'] && 'likes' === $type['name'] ) {
+				continue;
+			}
 			$selected = '';
 
 			if ( isset( $rtmedia_query->action_query->media_type ) && $type['name'] === $rtmedia_query->action_query->media_type ) {
