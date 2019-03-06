@@ -1312,7 +1312,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 	$html .= '<div class="rtmedia-comment-extra">' . apply_filters( 'rtmedia_comment_extra', '', $comment ) . '</div>';
 
 	if ( is_rt_admin() || ( isset( $comment['user_id'] ) && ( get_current_user_id() === intval( $comment['user_id'] ) || intval( $rtmedia_media->media_author ) === get_current_user_id() ) ) || apply_filters( 'rtmedia_allow_comment_delete', false ) ) { // show delete button for comment author and admins
-		$html .= '<i data-id="' . esc_attr( $comment['comment_ID'] ) . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt rtmicon" title="' . esc_attr__( 'Delete Comment', 'buddypress-media' ) . '"></i>';
+		$html .= '<i data-id="' . esc_attr( $comment['comment_ID'] ) . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt" title="' . esc_attr__( 'Delete Comment', 'buddypress-media' ) . '"></i>';
 	}
 
 	$html .= '<div class="clear"></div></div></div></li>';
@@ -2880,7 +2880,7 @@ function show_rtmedia_like_counts() {
 		}
 		?>
 		<div class='rtmedia-like-info <?php echo $class; ?>'>
-			<i class="rtmicon-thumbs-up rtmicon-fw"></i>
+			<i></i>
 			<span class="rtmedia-like-counter-wrap">
 				<?php
 				if ( class_exists( 'RTMediaLike' ) && function_exists( 'rtmedia_who_like_html' ) ) {
@@ -3063,27 +3063,27 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 		switch ( $actions[0]->privacy ) {
 			case 0: // public
 				$title = esc_html__( 'Public', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-admin-site rtmicon';
+				$icon  = 'dashicons dashicons-admin-site';
 
 				break;
 			case 20: // users
 				$title = esc_html__( 'All members', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-groups rtmicon';
+				$icon  = 'dashicons dashicons-groups';
 
 				break;
 			case 40: // friends
 				$title = esc_html__( 'Your friends', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-networking rtmicon';
+				$icon  = 'dashicons dashicons-networking';
 
 				break;
 			case 60: // private
 				$title = esc_html__( 'Only you', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-lock rtmicon';
+				$icon  = 'dashicons dashicons-lock';
 
 				break;
 			case 80: // private
 				$title = esc_html__( 'Blocked temporarily', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-dismiss rtmicon';
+				$icon  = 'dashicons dashicons-dismiss';
 
 				break;
 		}

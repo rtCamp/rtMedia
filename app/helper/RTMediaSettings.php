@@ -428,7 +428,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				'<a target="_blank" href="https://rtmedia.io/support/">' . esc_html__( 'rtMedia Support Page', 'buddypress-media' ) . '</a>.' .
 				'</p>';
 			echo '<p>' . esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on ', 'buddypress-media' ) .
-				'<a target="_blank" href="https://github.com/rtCamp/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.' .
+				'<a target="_blank" href="https://github.com/rtMediaWP/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.' .
 				'</p>';
 		}
 	}

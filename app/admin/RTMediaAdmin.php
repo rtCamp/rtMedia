@@ -1840,7 +1840,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						// tab icon
 						$icon = '';
 						if ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) {
-							$icon = '<i class="' . esc_attr( $tab['icon'] ) . ' dashicons rtmicon"></i>';
+							$icon = '<i class="' . esc_attr( $tab['icon'] ) . ' dashicons"></i>';
 						}
 						?>
 						<li class="<?php echo esc_attr( $active_class ) ?> <?php echo esc_attr( $error_class ) ?>">

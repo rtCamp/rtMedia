@@ -684,7 +684,7 @@ jQuery( function( $ ) {
 
 						// Show/create text box to edit media title
 						if ( jQuery( rtm_file_title_input ).length === 0 ) {
-							jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<div id="' + rtm_file_title_wrapper_id + '" class="rtm-upload-edit-title-wrapper"><label>' + rtmedia_edit_media_info_upload.title + '</label><input type="text" class="rtm-upload-edit-title" id="' + rtm_file_title_id + '" value="' + file.title + '" style="width: 75%;" /></div><div id="' + rtm_file_desc_wrapper_id + '" class="rtm-upload-edit-desc-wrapper"><label>' + rtmedia_edit_media_info_upload.description + '</label><textarea class="rtm-upload-edit-desc" id="' + rtm_file_desc_id + '"></textarea></div><span id="' + rtm_file_save_id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
+							jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<div id="' + rtm_file_title_wrapper_id + '" class="rtm-upload-edit-title-wrapper"><label>' + rtmedia_edit_media_info_upload.title + '</label><input type="text" class="rtm-upload-edit-title" id="' + rtm_file_title_id + '" value="' + file.title + '" style="width: 75%;" /></div><div id="' + rtm_file_desc_wrapper_id + '" class="rtm-upload-edit-desc-wrapper"><label>' + rtmedia_edit_media_info_upload.description + '</label><textarea class="rtm-upload-edit-desc" id="' + rtm_file_desc_id + '"></textarea></div><span id="' + rtm_file_save_id + '" title="Save Change" class="dashicons dashicons-yes"></span>' );
 						} else {
 							jQuery( rtm_file_title_wrapper ).show();
 							jQuery( rtm_file_desc_wrapper ).show();
@@ -879,7 +879,7 @@ jQuery( function( $ ) {
 					activity_id = rtnObj.activity_id;
 					if ( rtnObj.permalink != '' ) {
 						$( "#" + file.id + " .plupload_file_name" ).html( "<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.title.substring( 0, 40 ).replace( /(<([^>]+)>)/ig, "" ) + "</a>" );
-						$( "#" + file.id + " .plupload_media_edit" ).html( "<a href='" + rtnObj.permalink + "edit' target='_blank'><span title='" + rtmedia_edit_media + "'><i class='dashicons dashicons-edit rtmicon'></i> " + rtmedia_edit + "</span></a>" );
+						$( "#" + file.id + " .plupload_media_edit" ).html( "<a href='" + rtnObj.permalink + "edit' target='_blank'><span title='" + rtmedia_edit_media + "'><i class='dashicons dashicons-edit'></i> " + rtmedia_edit + "</span></a>" );
 						$( "#" + file.id + " .plupload_delete" ).html( "<span id='" + rtnObj.media_id + "' class='rtmedia-delete-uploaded-media dashicons dashicons-dismiss' title='" + rtmedia_delete + "'></span>" );
 					}
 
@@ -1227,7 +1227,7 @@ jQuery( document ).ready( function( $ ) {
 
 					// Show/create text box to edit media title
 					if ( jQuery( rtm_file_title_input ).length === 0 ) {
-						jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<div id="' + rtm_file_title_wrapper_id + '" class="rtm-upload-edit-title-wrapper"><label>' + rtmedia_edit_media_info_upload.title + '</label><input type="text" class="rtm-upload-edit-title" id="' + rtm_file_title_id + '" value="' + file.title + '" style="width: 75%;" /></div><div id="' + rtm_file_desc_wrapper_id + '" class="rtm-upload-edit-desc-wrapper"><label>' + rtmedia_edit_media_info_upload.description + '</label><textarea class="rtm-upload-edit-desc" id="' + rtm_file_desc_id + '"></textarea></div><span id="' + rtm_file_save_id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
+						jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<div id="' + rtm_file_title_wrapper_id + '" class="rtm-upload-edit-title-wrapper"><label>' + rtmedia_edit_media_info_upload.title + '</label><input type="text" class="rtm-upload-edit-title" id="' + rtm_file_title_id + '" value="' + file.title + '" style="width: 75%;" /></div><div id="' + rtm_file_desc_wrapper_id + '" class="rtm-upload-edit-desc-wrapper"><label>' + rtmedia_edit_media_info_upload.description + '</label><textarea class="rtm-upload-edit-desc" id="' + rtm_file_desc_id + '"></textarea></div><span id="' + rtm_file_save_id + '" title="Save Change" class="dashicons dashicons-yes"></span>' );
 					} else {
 						jQuery( rtm_file_title_wrapper ).show();
 						jQuery( rtm_file_desc_wrapper ).show();
@@ -1888,15 +1888,15 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	if ( error == '' ) {
 		upload_progress = '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
 		upload_progress += '</div>';
-		icon = '<span id="label_' + file.id + '" class="dashicons dashicons-edit rtmicon" title="' + rtmedia_backbone_strings.rtm_edit_file_name + '"></span>';
+		icon = '<span id="label_' + file.id + '" class="dashicons dashicons-edit" title="' + rtmedia_backbone_strings.rtm_edit_file_name + '"></span>';
 	} else if ( error.code == -600 ) {
 		err_msg = ( uploader != '' ) ? rtmedia_max_file_msg + uploader.settings.max_file_size :  window.file_size_info;
 		title = 'title=\'' + err_msg + '\'';
-		icon = '<i class="dashicons dashicons-info rtmicon" ' + title + '></i>';
+		icon = '<i class="dashicons dashicons-info" ' + title + '></i>';
 	} else if ( error.code == -601 ) {
 		err_msg = error.message + '. ' + window.file_extn_info;
 		title = 'title=\'' + err_msg + '\'';
-		icon = '<i class="dashicons dashicons-info rtmicon" ' + title + '></i>';
+		icon = '<i class="dashicons dashicons-info" ' + title + '></i>';
 	}
 
 	var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_queue_li" id="' + file.id + '" ' + title + '>';
@@ -2523,7 +2523,7 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 
 					// Show/create text box to edit media title
 					if ( jQuery( rtm_file_title_input ).length === 0 ) {
-						jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<div id="' + rtm_file_title_wrapper_id + '" class="rtm-upload-edit-title-wrapper"><label>' + rtmedia_edit_media_info_upload.title + '</label><input type="text" class="rtm-upload-edit-title" id="' + rtm_file_title_id + '" value="' + file.title + '" style="width: 75%;" /></div><div id="' + rtm_file_desc_wrapper_id + '" class="rtm-upload-edit-desc-wrapper"><label>' + rtmedia_edit_media_info_upload.description + '</label><textarea class="rtm-upload-edit-desc" id="' + rtm_file_desc_id + '"></textarea></div><span id="' + rtm_file_save_id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
+						jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<div id="' + rtm_file_title_wrapper_id + '" class="rtm-upload-edit-title-wrapper"><label>' + rtmedia_edit_media_info_upload.title + '</label><input type="text" class="rtm-upload-edit-title" id="' + rtm_file_title_id + '" value="' + file.title + '" style="width: 75%;" /></div><div id="' + rtm_file_desc_wrapper_id + '" class="rtm-upload-edit-desc-wrapper"><label>' + rtmedia_edit_media_info_upload.description + '</label><textarea class="rtm-upload-edit-desc" id="' + rtm_file_desc_id + '"></textarea></div><span id="' + rtm_file_save_id + '" title="Save Change" class="dashicons dashicons-yes"></span>' );
 					} else {
 						jQuery( rtm_file_title_wrapper ).show();
 						jQuery( rtm_file_desc_wrapper ).show();
