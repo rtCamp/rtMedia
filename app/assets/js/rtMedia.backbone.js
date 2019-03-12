@@ -1783,6 +1783,7 @@ jQuery( document ).ready( function( $ ) {
 				}
 
 				$( '.rtmedia-like span' ).html( data.next );
+				$( '.rtmedia-like' ).attr( 'title', data.next );
 				$( '.rtmedia-like-counter-wrap' ).html( data.person_text );
 				$( '.rtm-like-loading' ).remove();
 				$( that ).removeAttr( 'disabled' );
