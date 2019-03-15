@@ -1689,7 +1689,11 @@ jQuery( document ).ready( function( $ ) {
 		$( this ).attr( 'disabled', 'disabled' );
 
 		// Sanitize comment content and escape html tags
-		comment_content_el.val( jQuery( '<span/>' ).text( jQuery.trim( comment_content_el.val() ) ).html() );
+		if( '' !== comment_content_el.val().replace(/\&nbsp;/g, '') ) {
+			comment_content_el.val( jQuery( '<span/>' ).text( jQuery.trim( comment_content_el.val() ) ).html() );
+		} else {
+			comment_content_el.val( '' );
+		}
 
 		$.ajax( {
 			url: comment_form_el.attr( 'action' ),
