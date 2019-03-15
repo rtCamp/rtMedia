@@ -358,6 +358,7 @@ button#rtmedia-add-media-button-post-update .dashicons {
 .rtm-page-number .rtm-go-to-num,
 .rtm-page-number .rtmedia-page-link {
   float: left;
+  line-height: 1.5;
 }
 
 .rtm-pagination {

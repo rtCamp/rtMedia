@@ -17,7 +17,7 @@
     $I->wantTo( 'To set default privacy as Private' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, ConstantsPage::$saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$privacySettingsUrl );
