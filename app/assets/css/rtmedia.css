@@ -360,6 +360,9 @@ button#rtmedia-add-media-button-post-update .dashicons {
   float: left;
   line-height: 1.5;
 }
+.rtm-page-number a.rtmedia-page-link.button {
+  padding: 5px 10px !important;
+}
 
 .rtm-pagination {
   background: transparent;
