@@ -203,6 +203,11 @@ button#rtmedia-add-media-button-post-update {
 		a.rtm-button-back{
 			padding: 3px 10px;
 		}
+		div.rtmedia-page-no.rtm-page-number {
+        a.rtmedia-page-link.button {
+            padding: 5px 10px;
+        }
+    }
 }
 
 // Pagination
@@ -225,9 +230,6 @@ button#rtmedia-add-media-button-post-update {
 	.rtm-go-to-num,
 	.rtmedia-page-link {
 		line-height: 1.5;
-	}
-	a.rtmedia-page-link.button {
-		padding: 5px 10px !important;
 	}
 }
 
@@ -271,6 +273,7 @@ button#rtmedia-add-media-button-post-update {
 		padding: 0;
 		width: auto;
 	}
+
 }
 
 #rtmedia_go_to_num {
