@@ -13,7 +13,7 @@
 	$I->wantTo( 'To set the number media on Activity page while bulk upload.' );
 
 	$loginPage = new LoginPage( $I );
-	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$loginPage->loginAsAdmin();
 
 	$settings = new DashboardSettingsPage( $I );
 

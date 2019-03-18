@@ -13,7 +13,7 @@
 	$I->wantTo( 'To check if the likes for media is enabled' );
 
 	$loginPage = new LoginPage( $I );
-	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$loginPage->loginAsAdmin();
 
 	$settings = new DashboardSettingsPage( $I );
 	$settings->gotoSettings( ConstantsPage::$displaySettingsUrl );
@@ -44,7 +44,7 @@
 		$settings->disableDirectUpload();
 
 		$buddypress->gotoMedia();
-		
+
 		$uploadmedia = new UploadMediaPage( $I );
 		$uploadmedia->uploadMedia( ConstantsPage::$imageName );
 		$uploadmedia->uploadMediaUsingStartUploadButton();
