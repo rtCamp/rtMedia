@@ -221,7 +221,13 @@ button#rtmedia-add-media-button-post-update {
 	.rtm-go-to-num,
 	.rtmedia-page-link {
 		float: left;
+	}
+	.rtm-go-to-num,
+	.rtmedia-page-link {
 		line-height: 1.5;
+	}
+	a.rtmedia-page-link.button {
+		padding: 5px 10px !important;
 	}
 }
 
