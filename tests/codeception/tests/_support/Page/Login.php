@@ -3,6 +3,7 @@
 namespace Page;
 
 use Page\Constants as ConstantsPage;
+use \Codeception\Step\Argument\PasswordArgument;
 
 class Login {
 
@@ -12,11 +13,12 @@ class Login {
 		$this->tester = $I;
 	}
 
-	public function loginAsAdmin( $wpUserName, $wpPassword, $saveSession = true ) {
+	public function loginAsAdmin( $saveSession = true ) {
 
 		$I = $this->tester;
 
 		$I->amOnPage( '/wp-admin' );
+		$I->wait(5);
 
 		// Will load the session saved in saveSessionSnapshot().
 		if ( $I->loadSessionSnapshot( 'login' ) ) {
@@ -29,14 +31,16 @@ class Login {
 		}
 
 		$I->seeElement( ConstantsPage::$wpUserNameField );
-		$I->fillfield( ConstantsPage::$wpUserNameField, $wpUserName );
+		$I->fillfield( ConstantsPage::$wpUserNameField, ConstantsPage::$userName );
 
 		$I->seeElement( ConstantsPage::$wpPasswordField );
-		$I->fillfield( ConstantsPage::$wpPasswordField, $wpPassword );
+		// $I->fillfield( ConstantsPage::$wpPasswordField, $wpPassword );
+		$I->fillField( ConstantsPage::$wpPasswordField, new PasswordArgument(ConstantsPage::$password));
 
 		$I->click( ConstantsPage::$wpSubmitButton );
-		$I->waitForElement( ConstantsPage::$wpDashboard, 10 );
-		$I->waitForElement( ConstantsPage::$dashBoardMenu, 10 );
+		// $I->wait(5);
+		// // $I->waitForElement( ConstantsPage::$wpDashboard, 20 );
+		// $I->waitForElement( ConstantsPage::$dashBoardMenu, 20 );
 
 		// Will Save the Session
 		if ( $saveSession ) {
@@ -47,7 +51,7 @@ class Login {
 		}
 
 		$I->reloadPage();
-		$I->maximizeWindow();
+		// $I->maximizeWindow();
 	}
 
 }

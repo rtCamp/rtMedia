@@ -17,11 +17,11 @@ $rtmedia_media = $media[0];
 		<div class="rtmedia-edit-media-tabs rtmedia-editor-main">
 			<ul class="rtm-tabs clearfix">
 				<li class="active"><a href="#details-tab"><i
-							class='dashicons dashicons-edit rtmicon'></i><?php esc_html_e( 'Details', 'buddypress-media' ); ?>
+							class='dashicons dashicons-edit'></i><?php esc_html_e( 'Details', 'buddypress-media' ); ?>
 					</a></li>
 				<?php if ( ! is_rtmedia_group_album() ) { ?>
 					<li class=""><a href="#manage-media-tab"><i
-								class='dashicons dashicons-list-view rtmicon'></i><?php esc_html_e( 'Manage Media', 'buddypress-media' ); ?>
+								class='dashicons dashicons-list-view'></i><?php esc_html_e( 'Manage Media', 'buddypress-media' ); ?>
 						</a></li>
 				<?php } ?>
 				<!-- use this hook to add title of a new tab-->
