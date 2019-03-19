@@ -1293,7 +1293,12 @@ jQuery( document ).ready( function( $ ) {
 				 * By: Yahil
 				 */
 				if ( '' === jQuery( '#whats-new' ).val().trim() ) {
-					if ( 'disable' !== rtmedia_activity_text_with_attachment ) {
+					if ( rtmedia_activity_text_with_attachment == 'disable' ) {
+						if ( 0 === jQuery( '#rtmedia_upload_terms_conditions' ).length ) {
+							$( '#whats-new' ).css( 'color', 'transparent' );
+							$( '#whats-new' ).val( '&nbsp;' );
+						}
+					} else {
 						jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
 						jQuery( '#whats-new' ).removeAttr( 'disabled' );
 						return false;
@@ -1684,12 +1689,10 @@ jQuery( document ).ready( function( $ ) {
 
 
 		$( this ).attr( 'disabled', 'disabled' );
-
-		// Sanitize comment content and escape html tags
+		//If string has only &nbsp; then set value as empty.
 		if ( '' === comment_content_el.val().replace(/\&nbsp;/g, '' ) ) {
 			comment_content_el.val( '' );
 		}
-
 		$.ajax( {
 			url: comment_form_el.attr( 'action' ),
 			type: 'post',
