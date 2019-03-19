@@ -1289,4 +1289,12 @@ function rtm_upload_terms_activity() {
 jQuery( document ).ready( function () {
 	// Call function when document loaded.
 	rtm_upload_terms_activity();
+
+	// Avoid Lightbox conflict due to class has-sidebar in theme 2017 v2.1.
+	if( jQuery( 'body' ).hasClass( 'has-sidebar' ) && 0 === jQuery( '#secondary' ).length ) {
+		if ( jQuery( '.rtmedia-single-container' ).length || jQuery( '.rtmedia-container' ).length ) {
+			jQuery( 'body' ).removeClass( 'has-sidebar' );
+		}
+	}
 });
+
