@@ -1292,11 +1292,8 @@ jQuery( document ).ready( function( $ ) {
 				 * if user want media and activity_text both require
 				 * By: Yahil
 				 */
-				if ( jQuery.trim( jQuery( "#whats-new" ).val() ) == "" ) {
-					if ( rtmedia_activity_text_with_attachment == 'disable') {
-						$( "#whats-new" ).css( 'color', 'transparent' );
-						$( "#whats-new" ).val( '&nbsp;' );
-					} else {
+				if ( '' === jQuery( '#whats-new' ).val().trim() ) {
+					if ( 'disable' !== rtmedia_activity_text_with_attachment ) {
 						jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
 						jQuery( '#whats-new' ).removeAttr( 'disabled' );
 						return false;
