@@ -691,10 +691,13 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 
 	$src = apply_filters( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
 
+	//Added timestamp because conflict with cache image.
+	$src = $src . '?' . time();
+
 	if ( true === $recho ) {
-		echo set_url_scheme( $src ) . '?' . time();
+		echo set_url_scheme( $src );
 	} else {
-		return $src . '?' . time();
+		return $src.
 	}
 
 }
