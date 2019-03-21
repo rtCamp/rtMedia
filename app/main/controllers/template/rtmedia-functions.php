@@ -697,7 +697,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 	if ( true === $recho ) {
 		echo set_url_scheme( $src );
 	} else {
-		return $src.
+		return $src;
 	}
 
 }
