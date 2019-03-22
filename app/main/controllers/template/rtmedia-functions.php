@@ -544,8 +544,8 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			$src  = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
 
 			//Addtime stamp to resolve conflict with cache image.
-			
 			$src[0] = $src[0] . '?' . time();
+			
 			/**
 			 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
 			 * Added by checking the code from "wp-admin/includes/media.php:2740".
