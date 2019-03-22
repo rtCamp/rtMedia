@@ -283,7 +283,7 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 	}
 
 	//Add timestamp to resolve conflict with cache media.
-	return preg_replace( '/src=["]([^"]+)["]/', 'src="'.$final_file_url.'?'.time().'"', $html );
+	return preg_replace( '/src=["]([^"]+)["]/', 'src="' . $final_file_url . '?' . time() . '"', $html );
 
 }
 
