@@ -40,7 +40,7 @@ class RTMediaActivity {
 
 		$html .= '<div class="rtmedia-'.$type.'-container">';
 
-		if ( ! empty( $this->activity_text ) ) {
+		if ( ! empty( $this->activity_text ) && '&nbsp;' !== $this->activity_text ) {
 			$html .= '<div class="rtmedia-'.$type.'-text"><span>';
 			$html .= $this->activity_text;
 			$html .= '</span></div>';

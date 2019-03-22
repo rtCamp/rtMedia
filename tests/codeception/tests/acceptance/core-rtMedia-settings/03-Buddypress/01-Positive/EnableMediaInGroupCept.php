@@ -12,7 +12,7 @@
 	$I->wantTo( 'To check if media tab is enabled for group' );
 
 	$loginPage = new LoginPage( $I );
-	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$loginPage->loginAsAdmin();
 
 	$settings = new DashboardSettingsPage( $I );
 	$settings->enableBPGroupComponent();

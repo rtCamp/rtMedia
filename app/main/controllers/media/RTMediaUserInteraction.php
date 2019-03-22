@@ -215,8 +215,9 @@ class RTMediaUserInteraction {
 				$icon = "<i class='" . esc_attr( $this->icon_class ) . "'></i>";
 			}
 			$button_start = '<form action="' . esc_url( $link ) . '">';
+			$button_label = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 			$button       = '<button type="submit" id="rtmedia-' . esc_attr( $this->action ) . '-button-' . esc_attr( $this->media->id ) . '" class="rtmedia-' . esc_attr( $this->action )
-			                . ' rtmedia-action-buttons button' . esc_attr( $disabled ) . '">' . $icon . '<span>' . apply_filters( 'rtmedia_' . $this->action . '_label_text', esc_html( $this->label ) ) . '</span></button>';
+			. ' rtmedia-action-buttons button' . esc_attr( $disabled ) . '" title="' . esc_attr( $button_label ) . '">' . $icon . '<span>' . esc_html( $button_label ) . '</span></button>';
 
 			//filter the button as required
 			$button = apply_filters( 'rtmedia_' . $this->action . '_button_filter', $button );

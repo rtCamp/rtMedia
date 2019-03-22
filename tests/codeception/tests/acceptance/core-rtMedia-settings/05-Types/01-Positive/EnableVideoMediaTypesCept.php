@@ -8,6 +8,7 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
+    use \Codeception\Step\Argument\PasswordArgument;
 
     $numOfMedia = 1;
 
@@ -15,7 +16,7 @@
     $I->wantTo( 'Allow upload for video media types' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, new PasswordArgument(ConstantsPage::$password) );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->enableRequestedMediaTypes( ConstantsPage::$videoLabel, ConstantsPage::$videoCheckbox );
