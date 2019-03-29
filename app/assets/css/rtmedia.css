@@ -1268,7 +1268,7 @@ img.mfp-img {
 }
 
 #buddypress #rtm-media-options-list .rtm-options form button {
-  font-size: small;
+  font-size: 14px;
 }
 
 #buddypress #rtm-media-options-list .rtm-options .button {
@@ -1281,7 +1281,6 @@ img.mfp-img {
   font-weight: normal;
   line-height: 24px;
   padding: 0 6px;
-  text-shadow: 0 0 0;
   text-transform: none;
 }
 #buddypress #rtm-media-options-list .rtm-options .rtmedia-delete-favlist {
