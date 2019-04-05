@@ -11,7 +11,7 @@ action "tag" {
 
 action "WordPress Plugin Deploy" {
   needs = ["tag"]
-  uses = "rtcamp/github-actions-library/wp-plugin-deploy@master"
+  uses = "rtCamp/action-wp-org-plugin-deploy@master"
   secrets = ["WORDPRESS_USERNAME", "WORDPRESS_PASSWORD"]
   env = {
     SLUG = "buddypress-media"
