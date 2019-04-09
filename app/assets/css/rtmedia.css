@@ -1267,10 +1267,6 @@ img.mfp-img {
   padding: 0 4px 0 0;
 }
 
-#buddypress #rtm-media-options-list .rtm-options form button {
-  font-size: 14px;
-}
-
 #buddypress #rtm-media-options-list .rtm-options .button {
   background: transparent;
   border: 0 none;
@@ -1286,6 +1282,12 @@ img.mfp-img {
 #buddypress #rtm-media-options-list .rtm-options .rtmedia-delete-favlist {
   color: #FFFFFF;
   padding: 0;
+}
+#buddypress #rtm-media-options-list .rtm-options form button {
+  font-size: 14px;
+}
+#buddypress #rtm-media-options-list .rtm-options i {
+  line-height: 1.7;
 }
 
 .rtm-options.rtm-options {
