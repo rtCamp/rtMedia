@@ -1047,7 +1047,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * Admin UI bug fixes
 
 #### 3.5.2 ####
-* Updated dutch translation, thanks to [carry2web] (http://profiles.wordpress.org/carry2web)
+* Updated dutch translation, thanks to [carry2web](http://profiles.wordpress.org/carry2web)
 * Enable / disable media per group
 * User can specify media type to be upload in uploader shortcode
 * Show content of single album using gallery shortcode
@@ -1609,7 +1609,7 @@ Now upload media in comment & fixed rtMedia shortcode pagination along with seve
 
 rtMedia includes [full translation support](https://rtmedia.io/docs/translations/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media). Head over to the [translation project](https://rtmedia.io/translate/projects/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
 
-* [Dutch](https://rtmedia.io/translate/projects/rtmedia/nl/default) translation by [carry2web] (http://profiles.wordpress.org/carry2web)
+* [Dutch](https://rtmedia.io/translate/projects/rtmedia/nl/default) translation by [carry2web](http://profiles.wordpress.org/carry2web)
 * [Italian](https://rtmedia.io/translate/projects/rtmedia/it/default) translation by [Paolo]
 * [Dutch](https://rtmedia.io/translate/projects/rtmedia/nl/default) translation by [rjpj](http://profiles.wordpress.org/rjpj)
 * [Polish](https://rtmedia.io/translate/projects/rtmedia/pl/default) translation by [Polski_Ziom](http://profiles.wordpress.org/polski_ziom)
