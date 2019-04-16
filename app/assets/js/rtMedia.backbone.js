@@ -1394,11 +1394,15 @@ jQuery( document ).ready( function( $ ) {
  				}
 			} );
 
-			var object = '';
-			var item_id = jQuery( '#whats-new-post-in' ).val();
-			if ( item_id == undefined ) {
-				item_id = 0;
- 			}
+			var object  = '';
+			var item_id = 0;
+
+			if ( jQuery( '#whats-new-post-in' ).length ) {
+				item_id = jQuery( '#whats-new-post-in' ).val();
+			} else if ( jQuery( '.groups-header' ).length ) {
+				item_id = jQuery( '.groups-header' ).attr( 'data-bp-item-id' );
+			}
+
 			if ( item_id > 0 ) {
 				object = 'group';
 			} else {
