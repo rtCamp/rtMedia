@@ -164,7 +164,7 @@ function apply_rtMagnificPopup( selector ) {
 							nextpage          = current_page;
 							more_media_loaded = false;
 
-							if( nextpage > 1 ) {
+							if ( nextpage > 1 ) {
 								jQuery( '#rtMedia-galary-next' ).show();
 							}
 						}
