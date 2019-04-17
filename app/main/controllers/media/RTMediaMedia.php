@@ -712,7 +712,7 @@ class RTMediaMedia {
 		$activity_content = $activity->create_activity_html();
 		$user             = get_userdata( $media->media_author );
 		$username         = '<a href="' . esc_url( get_rtmedia_user_link( $media->media_author ) ) . '">' . esc_html( $user->display_name ) . '</a>';
-		$count            = count( $id );
+		$count            = is_array( $id ) ? count( $id ) : 1 ;
 		$media_const      = 'RTMEDIA_' . strtoupper( $media->media_type );
 		if ( $count > 1 ) {
 			$media_const .= '_PLURAL';
