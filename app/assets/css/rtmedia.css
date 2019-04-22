@@ -406,7 +406,7 @@ button#rtmedia-add-media-button-post-update .dashicons {
 #rtmedia_go_to_num {
   font-size: 16px;
   margin: 0 5px;
-  padding: 4px 5px;
+  padding: 3px 5px;
   width: 80px;
 }
 
@@ -1268,10 +1268,6 @@ img.mfp-img {
   padding: 0 4px 0 0;
 }
 
-#buddypress #rtm-media-options-list .rtm-options form button {
-  font-size: small;
-}
-
 #buddypress #rtm-media-options-list .rtm-options .button {
   background: transparent;
   border: 0 none;
@@ -1282,12 +1278,17 @@ img.mfp-img {
   font-weight: normal;
   line-height: 24px;
   padding: 0 6px;
-  text-shadow: 0 0 0;
   text-transform: none;
 }
 #buddypress #rtm-media-options-list .rtm-options .rtmedia-delete-favlist {
   color: #FFFFFF;
   padding: 0;
+}
+#buddypress #rtm-media-options-list .rtm-options form button {
+  font-size: 14px;
+}
+#buddypress #rtm-media-options-list .rtm-options i {
+  line-height: 1.7;
 }
 
 .rtm-options.rtm-options {

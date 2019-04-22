@@ -1293,7 +1293,12 @@ jQuery( document ).ready( function( $ ) {
 				 * By: Yahil
 				 */
 				if ( '' === jQuery( '#whats-new' ).val().trim() ) {
-					if ( 'disable' !== rtmedia_activity_text_with_attachment ) {
+					if ( rtmedia_activity_text_with_attachment == 'disable' ) {
+						if ( 0 === jQuery( '#rtmedia_upload_terms_conditions' ).length ) {
+							$( '#whats-new' ).css( 'color', 'transparent' );
+							$( '#whats-new' ).val( '&nbsp;' );
+						}
+					} else {
 						jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
 						jQuery( '#whats-new' ).removeAttr( 'disabled' );
 						return false;
@@ -1389,11 +1394,15 @@ jQuery( document ).ready( function( $ ) {
  				}
 			} );
 
-			var object = '';
-			var item_id = jQuery( '#whats-new-post-in' ).val();
-			if ( item_id == undefined ) {
-				item_id = 0;
- 			}
+			var object  = '';
+			var item_id = 0;
+
+			if ( jQuery( '#whats-new-post-in' ).length ) {
+				item_id = jQuery( '#whats-new-post-in' ).val();
+			} else if ( jQuery( '.groups-header' ).length ) {
+				item_id = jQuery( '.groups-header' ).attr( 'data-bp-item-id' );
+			}
+
 			if ( item_id > 0 ) {
 				object = 'group';
 			} else {
@@ -1684,12 +1693,10 @@ jQuery( document ).ready( function( $ ) {
 
 
 		$( this ).attr( 'disabled', 'disabled' );
-
-		// Sanitize comment content and escape html tags
+		//If string has only &nbsp; then set value as empty.
 		if ( '' === comment_content_el.val().replace(/\&nbsp;/g, '' ) ) {
 			comment_content_el.val( '' );
 		}
-
 		$.ajax( {
 			url: comment_form_el.attr( 'action' ),
 			type: 'post',
@@ -2407,6 +2414,7 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 				jQuery( input_file_el ).click();
 				file_dialog_open = false;
 			}
+			$(this).blur();
 		} );
 
 		var form_html = jQuery( "."+comment_media_wrapper+widget_id );

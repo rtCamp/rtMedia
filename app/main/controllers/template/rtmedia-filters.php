@@ -282,7 +282,8 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 		$final_file_url = wp_get_attachment_url( $attachment_id );
 	}
 
-	return preg_replace( '/src=["]([^"]+)["]/', "src=\"$final_file_url\"", $html );
+	//Add timestamp to resolve conflict with cache media.
+	return preg_replace( '/src=["]([^"]+)["]/', 'src="' . $final_file_url . '?' . time() . '"', $html );
 
 }
 

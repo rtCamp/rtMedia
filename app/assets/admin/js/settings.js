@@ -965,6 +965,7 @@ jQuery( document ).ready( function ( $ ) {
 			var downloadAnchorNode = document.createElement( 'a' );
 			downloadAnchorNode.setAttribute( 'href', dataStr );
 			downloadAnchorNode.setAttribute( 'download', 'rtm-settings.json' );
+			jQuery( 'body' ).append( downloadAnchorNode );
 			downloadAnchorNode.click();
 			downloadAnchorNode.remove();
 		} );

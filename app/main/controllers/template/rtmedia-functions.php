@@ -547,8 +547,11 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
 			 * Added by checking the code from "wp-admin/includes/media.php:2740".
 			 * Because in media library, it was not breaking.
+			 * 
+			 * Add timestamp to resolve conflict with cache image.
 			 */
-			$html = "<img src='" . set_url_scheme( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+			$html = "<img src='" . set_url_scheme( $src[0]. '?' . time() ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+
 		} elseif ( 'video' === $rtmedia_media->media_type ) {
 			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 			$height = $rtmedia->options['defaultSizes_video_singlePlayer_height'];
@@ -690,6 +693,9 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 	}
 
 	$src = apply_filters( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
+
+	//Added timestamp because conflict with cache image.
+	$src = $src . '?' . time();
 
 	if ( true === $recho ) {
 		echo set_url_scheme( $src );
