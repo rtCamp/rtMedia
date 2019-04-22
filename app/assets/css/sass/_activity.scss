@@ -220,7 +220,7 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 		}
 
 		.rtmedia-plupload-container {
-			width: 25%;
+			display: flex;
 		}
 
 		.rtmedia-upload-terms #rtmedia_upload_terms_conditions {
