@@ -243,9 +243,6 @@
   padding: 0 0 5px;
   vertical-align: top;
 }
-.rtm-option-wrapper .form-table td fieldset label {
-  margin: 0 6px 0 0;
-}
 .rtm-option-wrapper .form-table .rtm-form-radio label {
   margin-top: 5px !important;
 }
