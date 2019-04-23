@@ -72,7 +72,7 @@
 			vertical-align: top;
 
 			fieldset label {
-				margin: 0 6px 0 0 !important;
+				margin: 0 6px 0 0;
 			}
 		}
 
@@ -81,6 +81,10 @@
 				margin-top: 5px !important;
 			}
 		}
+	}
+
+	#rtm-wm-color-selector {
+		margin: 0 6px 0 0;
 	}
 
 	textarea,
