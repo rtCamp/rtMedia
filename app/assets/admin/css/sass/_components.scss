@@ -70,6 +70,10 @@
 			font-size: 13px;
 			padding: 0 0 5px;
 			vertical-align: top;
+
+			fieldset label {
+				margin: 0;
+			}
 		}
 
 		.rtm-form-radio {
