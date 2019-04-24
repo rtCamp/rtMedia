@@ -197,6 +197,15 @@ button#rtmedia-add-media-button-post-update {
 	.rtm-field-wrap {
 		margin-bottom: 20px;
 	}
+
+	.rtmedia-editor-buttons {
+		height: 25px;
+
+		input[type= submit] {
+			height: 26px;
+			margin-top: -1px;
+		}
+	}
 }
 
 #buddypress {
