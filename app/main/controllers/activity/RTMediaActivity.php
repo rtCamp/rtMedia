@@ -34,16 +34,21 @@ class RTMediaActivity {
 		$this->privacy       = $privacy;
 	}
 
+	/**
+	 * Create html of activity/comments using text and media.
+	 * 
+	 * @param string $type Type of activity (activity/comment).
+	 */
 	function create_activity_html( $type = 'activity' ) {
 
-		$html = '';
+		$activity_container_start = '<div class="rtmedia-'. esc_attr( $type ) .'-container">';
+		$activity_container_end   = '</div>';
 
-		$html .= '<div class="rtmedia-'.$type.'-container">';
-
+		$activity_text = '';
 		if ( ! empty( $this->activity_text ) && '&nbsp;' !== $this->activity_text ) {
-			$html .= '<div class="rtmedia-'.$type.'-text"><span>';
-			$html .= $this->activity_text;
-			$html .= '</span></div>';
+			$activity_text .= '<div class="rtmedia-' . esc_attr( $type ) . '-text"><span>';
+			$activity_text .= $this->activity_text;
+			$activity_text .= '</span></div>';
 		}
 
 		global $rtmedia;
@@ -53,57 +58,72 @@ class RTMediaActivity {
 			$limit_activity_feed = 0;
 		}
 
-		$mediaObj      = new RTMediaModel();
-		$media_details = $mediaObj->get( array( 'id' => $this->media ) );
+		$rtmedia_model = new RTMediaModel();
+		$media_details = $rtmedia_model->get( array( 'id' => $this->media ) );
 
 		if ( intval( $limit_activity_feed ) > 0 ) {
 			$media_details = array_slice( $media_details, 0, $limit_activity_feed, true );
 		}
-		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_'.$type.'_ul_class', 'rtm-activity-media-list' );
-		$li_content                = '';
-		$count                     = 0;
+		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_' . $type . '_ul_class', 'rtm-activity-media-list' );
+
+		$media_content = '';
+		$count         = 0;
 		foreach ( $media_details as $media ) {
-			$li_content .= '<li class="rtmedia-list-item media-type-' . esc_attr( $media->media_type ) . '">';
-			if ( 'photo' === $media->media_type || 'document' === $media->media_type || 'other' === $media->media_type  ) {
-				$li_content .= '<a href ="' . esc_url( get_rtmedia_permalink( $media->id ) ) . '">';
-			}
-			$li_content .= '<div class="rtmedia-item-thumbnail">';
-
-			$li_content .= $this->media( $media );
-
-			$li_content .= '</div>';
-
-			$li_content .= '<div class="rtmedia-item-title">';
-			$li_content .= '<h4 title="' . esc_attr( $media->media_title ) . '">';
-			if ( 'photo' !== $media->media_type && 'document' !== $media->media_type && 'other' !== $media->media_type ) {
-				$li_content .= '<a href="' . esc_url( get_rtmedia_permalink( $media->id ) ) . '">';
-			}
-
-			$li_content .= $media->media_title;
-			if ( 'photo' !== $media->media_type && 'document' !== $media->media_type && 'other' !== $media->media_type ) {
-				$li_content .= '</a>';
-			}
-			$li_content .= '</h4>';
-			$li_content .= '</div>';
+			$media_content .= '<li class="rtmedia-list-item media-type-' . esc_attr( $media->media_type ) . '">';
 			if ( 'photo' === $media->media_type || 'document' === $media->media_type || 'other' === $media->media_type ) {
-				$li_content .= '</a>';
+				$media_content .= '<a href ="' . esc_url( get_rtmedia_permalink( $media->id ) ) . '">';
+			}
+			$media_content .= '<div class="rtmedia-item-thumbnail">';
+
+			$media_content .= $this->media( $media );
+
+			$media_content .= '</div>';
+
+			$media_content .= '<div class="rtmedia-item-title">';
+			$media_content .= '<h4 title="' . esc_attr( $media->media_title ) . '">';
+			if ( 'photo' !== $media->media_type && 'document' !== $media->media_type && 'other' !== $media->media_type ) {
+				$media_content .= '<a href="' . esc_url( get_rtmedia_permalink( $media->id ) ) . '">';
 			}
 
-			$li_content .= '</li>';
+			$media_content .= $media->media_title;
+			if ( 'photo' !== $media->media_type && 'document' !== $media->media_type && 'other' !== $media->media_type ) {
+				$media_content .= '</a>';
+			}
+			$media_content .= '</h4>';
+			$media_content .= '</div>';
+			if ( 'photo' === $media->media_type || 'document' === $media->media_type || 'other' === $media->media_type ) {
+				$media_content .= '</a>';
+			}
+
+			$media_content .= '</li>';
 			$count ++;
 		}
-
-		if( 'activity' == $type ){
-			$html .= '<ul class="rtmedia-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
-		}else{
-			$html .= '<ul class="rtmedia-'.$type.'-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
+		$media_container_start = '';
+		if ( 'activity' === $type ) {
+			$media_container_start .= '<ul class="rtmedia-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
+		} else {
+			$media_container_start .= '<ul class="rtmedia-' . esc_attr( $type ) . '-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
 		}
+		$media_container_end = '</ul>';
 
-		$html .= $li_content;
-		$html .= '</ul>';
-		$html .= '</div>';
+		$media_list  = $media_container_start;
+		$media_list .= $media_content;
+		$media_list .= $media_container_end;
 
-		return bp_activity_filter_kses( $html );
+		/**
+		 * Filters the output of the activity contents before save.
+		 *
+		 * @param string $activity_content Concatination of $activity_text and $media_list.
+		 * @param string $activity_text    HTML markup of activity text.
+		 * @param string $media_list       HTML markup of media in ul.
+		 */
+		$activity_content = apply_filters( 'rtmedia_activity_content', $activity_text . $media_list, $activity_text, $media_list );
+
+		$activity  = $activity_container_start;
+		$activity .= $activity_content;
+		$activity .= $activity_container_end;
+
+		return bp_activity_filter_kses( $activity );
 	}
 
 	/**
