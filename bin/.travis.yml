@@ -7,7 +7,7 @@ branches:
   only:
     - develop
     - pre-release-travis-test
-    - pre-release
+    # - pre-release
     # - codeception
 
 before_install:
