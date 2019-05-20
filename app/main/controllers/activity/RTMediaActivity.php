@@ -105,7 +105,7 @@ class RTMediaActivity {
 
 		// Bypass comment links limit.
 		add_filter(
-			'pre_option_comment_max_links',
+			'option_comment_max_links',
 			function ( $values ) {
 				$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 				// Check  if files available.
