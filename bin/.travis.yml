@@ -1,4 +1,4 @@
-dist: trusty
+dist: xenial
 language: php
 sudo: required
 php:
@@ -24,7 +24,13 @@ before_script:
 
   - export PLUGIN_DIR=$(pwd)
   - sudo rm -rf /etc/mysql/
-  - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
+  - sudo rm -rf /var/lib/mysql/
+  - sudo apt-get -qq purge mysql* graphviz*
+  - sudo apt-get --purge remove mysql-server
+  - sudo apt-get --purge remove mysql-client
+  - sudo apt-get --purge remove mysql-common
+  - sudo apt-get autoremove
+  - sudo apt-get autoclean
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
   - wget -qO ee rt.cx/ee && sudo bash ee
   - sudo ee stack install
@@ -68,18 +74,6 @@ script:
   - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./tests/acceptance -name '*.php')
   - if find . -name "*.php" ! -path "./node_modules/*" ! -path "./vendor/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
   - codecept run acceptance --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/01-Privacy/01-Positive/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/01-Privacy/02-Negative/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Positive/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/05-Types/01-Positive/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/05-Types/02-Negative/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/ --steps
-  # - codecept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/ --steps
 
 after_script:
   - sudo cat /var/log/ee/ee.log
