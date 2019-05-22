@@ -20,8 +20,12 @@ addons:
     access_key:
        secure: UZ/nVtvmVlZJfNH1MXXy7/JKx+wnNO5OFoXMF4B54/W9B1Hca4LcShBHIudRNyY1w4n6nEvKBUU9Bo6QLNRo+GQt/Qvb4Jm/unOPMha4sqMTfqUHd0ZM+4a/7Q0LErBijjc2Bn5EN8XgYS/BbM7w/8/ffqvDAlW1Io7GMHEbgF0=
 
+matrix:
+  fast_finish: true
+
 before_script:
 
+  - phpenv config-rm xdebug.ini
   - export PLUGIN_DIR=$(pwd)
   - sudo rm -rf /etc/mysql/
   - sudo rm -rf /var/lib/mysql/
