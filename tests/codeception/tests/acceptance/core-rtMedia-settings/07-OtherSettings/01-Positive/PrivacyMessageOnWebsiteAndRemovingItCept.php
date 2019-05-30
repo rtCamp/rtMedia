@@ -46,11 +46,11 @@
      * Below code is to check if the user clicks on close button in one window and oprning new window should display the privacy message.
      */
 
-    $nick = $I->haveFriend('New Test Window');
-    $nick->does(function(AcceptanceTester $I) {
-         $I->amOnPage('/');
-         $I->waitForElementVisible( ConstantsPage::$siteWidePrivacyNoticeSelector, 10 );
-    });
+    // $nick = $I->haveFriend('New Test Window');
+    // $nick->does(function(AcceptanceTester $I) {
+    //      $I->amOnPage('/');
+    //      $I->waitForElementVisible( ConstantsPage::$siteWidePrivacyNoticeSelector, 10 );
+    // });
 
 
 ?>
