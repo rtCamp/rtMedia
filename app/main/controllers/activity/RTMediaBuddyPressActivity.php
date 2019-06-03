@@ -259,6 +259,12 @@ class RTMediaBuddyPressActivity {
 	 */
 	public function bp_activity_content_before_save( $content ) {
 
+		// Fix duplication issue of comment media on activity by returning contents when activity type is comment.
+		$rtmedia_comment_nonce = filter_input( INPUT_POST, 'rtmedia_comment_nonce', FILTER_SANITIZE_STRING );
+		if ( ! empty( $rtmedia_comment_nonce ) ) {
+			return $content;
+		}
+
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
 			$obj_activity = new RTMediaActivity( $rtmedia_attached_files, 0, $content );
