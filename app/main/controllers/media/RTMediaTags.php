@@ -77,11 +77,14 @@ class RTMediaTags {
 
 		$tagwriter->tag_data = $this->data;
 
-		// write tags
-		if ( $tagwriter->WriteTags() ) {
-			return true;
-		} else {
+		// write tags.
+		try {
+			if ( $tagwriter->WriteTags() ) {
+				return true;
+			}
 			throw new Exception( implode( ' : ', $tagwriter->errors ) );
+		} catch ( Exception $e ) {
+			return new WP_Error( 'tag_write_error', $e->getMessage() );
 		}
 	}
 
@@ -145,7 +148,10 @@ class RTMediaTags {
 			if ( isset( $this->duration_info[ $key ] ) ) {
 				return $this->duration_info[ $key ];
 			} else {
-				return isset( $this->data[ $key ] ) ? $this->data[ $key ][0] : null;
+				if ( ! empty( $this->data[ $key ] ) && ! empty( $this->data[ $key ][0] ) ) {
+					return $this->data[ $key ][0];
+				}
+				return null;
 			}
 		}
 	}

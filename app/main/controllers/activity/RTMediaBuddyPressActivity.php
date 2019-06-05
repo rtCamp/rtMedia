@@ -339,6 +339,7 @@ class RTMediaBuddyPressActivity {
 
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 		if ( is_array( $rtmedia_attached_files ) ) {
+			bp_activity_update_meta( $activity_id, 'bp_activity_text', bp_activity_filter_kses( $content ) );
 			$media_obj = new RTMediaModel();
 			//Credit faisal : https://gist.github.com/faishal/c4306ae7267fff976465
 			$in_str_arr = array_fill( 0, count( $rtmedia_attached_files ), '%d' );

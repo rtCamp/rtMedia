@@ -816,20 +816,6 @@ function rtmedia_model_query_columns( $columns ) {
 
 add_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns', 10, 1 );
 
-function rtmedia_comment_max_links_callback( $values, $option = '' ) {
-	$new_values = $values;
-	if ( apply_filters( 'rtmedia_comment_max_links', true ) && 'comment_max_links' == $option ) {
-		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) ) {
-			if ( $new_values < 5 ) {
-				$new_values = 5;
-			}
-		}
-	}
-	return $new_values;
-}
-add_filter( 'option_comment_max_links', 'rtmedia_comment_max_links_callback', 10, 2 );
-
 /**
  * add link for @mentions of the username in the comment or the activity section after the media delete or media is trancoder
  */
