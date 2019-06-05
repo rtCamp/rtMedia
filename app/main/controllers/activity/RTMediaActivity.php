@@ -103,6 +103,20 @@ class RTMediaActivity {
 		$html .= '</ul>';
 		$html .= '</div>';
 
+		// Bypass comment links limit.
+		add_filter(
+			'option_comment_max_links',
+			function ( $values ) {
+				$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+				// Check  if files available.
+				if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) ) {
+					// One url of image and other for anchor tag.
+					$values = count( $rtmedia_attached_files ) * 2;
+				}
+				return $values;
+			}
+		);
+
 		return bp_activity_filter_kses( $html );
 	}
 
