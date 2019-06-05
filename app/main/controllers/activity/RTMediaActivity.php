@@ -35,20 +35,30 @@ class RTMediaActivity {
 	}
 
 	/**
-	 * Create html of activity/comments using text and media.
-	 * 
+	 * Function is used to generate HTML of activity/comments.
+	 * It combines the the rtMedia text and media in the activity content.
+	 *
+	 * Note: Use the `rtmedia_activity_content_html` filter to modify the output of the activity content.
+	 *
 	 * @param string $type Type of activity (activity/comment).
+	 *
+	 * @return string
 	 */
-	function create_activity_html( $type = 'activity' ) {
-
-		$activity_container_start = '<div class="rtmedia-'. esc_attr( $type ) .'-container">';
+	public function create_activity_html( $type = 'activity' ) {
+		$activity_container_start = sprintf( '<div class="rtmedia-%s-container">', esc_attr( $type ) );
 		$activity_container_end   = '</div>';
 
 		$activity_text = '';
+
+		// Activity text content markup.
 		if ( ! empty( $this->activity_text ) && '&nbsp;' !== $this->activity_text ) {
-			$activity_text .= '<div class="rtmedia-' . esc_attr( $type ) . '-text"><span>';
-			$activity_text .= $this->activity_text;
-			$activity_text .= '</span></div>';
+			$activity_text .= sprintf(
+				'<div class="rtmedia-%1$s-text">
+					<span>%2$s</span>
+				</div>',
+				esc_attr( $type ),
+				$this->activity_text
+			);
 		}
 
 		global $rtmedia;
@@ -69,30 +79,59 @@ class RTMediaActivity {
 		$media_content = '';
 		$count         = 0;
 		foreach ( $media_details as $media ) {
-			$media_content .= '<li class="rtmedia-list-item media-type-' . esc_attr( $media->media_type ) . '">';
-			if ( 'photo' === $media->media_type || 'document' === $media->media_type || 'other' === $media->media_type ) {
-				$media_content .= '<a href ="' . esc_url( get_rtmedia_permalink( $media->id ) ) . '">';
-			}
-			$media_content .= '<div class="rtmedia-item-thumbnail">';
+			$media_content .= sprintf( '<li class="rtmedia-list-item media-type-$s">', esc_attr( $media->media_type ) );
 
-			$media_content .= $this->media( $media );
-
-			$media_content .= '</div>';
-
-			$media_content .= '<div class="rtmedia-item-title">';
-			$media_content .= '<h4 title="' . esc_attr( $media->media_title ) . '">';
-			if ( 'photo' !== $media->media_type && 'document' !== $media->media_type && 'other' !== $media->media_type ) {
-				$media_content .= '<a href="' . esc_url( get_rtmedia_permalink( $media->id ) ) . '">';
-			}
-
-			$media_content .= $media->media_title;
-			if ( 'photo' !== $media->media_type && 'document' !== $media->media_type && 'other' !== $media->media_type ) {
-				$media_content .= '</a>';
-			}
-			$media_content .= '</h4>';
-			$media_content .= '</div>';
-			if ( 'photo' === $media->media_type || 'document' === $media->media_type || 'other' === $media->media_type ) {
-				$media_content .= '</a>';
+			if ( 'photo' === $media->media_type ) {
+				// Markup for photo media type with anchor tag only on image.
+				$media_content .= sprintf(
+					'<a href ="%1$s">
+						<div class="rtmedia-item-thumbnail">
+							%2$s
+						</div>
+						<div class="rtmedia-item-title">
+							<h4 title="%3$s">
+								%4$s
+							</h4>
+						</div>
+					</a>',
+					esc_url( get_rtmedia_permalink( $media->id ) ),
+					$this->media( $media ),
+					esc_attr( $media->media_title ),
+					$media->media_title
+				);
+			} elseif ( 'audio' === $media->media_type || 'video' === $media->media_type ) {
+				// Markup for audio and video media type with link only on media (title).
+				$media_content .= sprintf(
+					'<div class="rtmedia-item-thumbnail">
+						%1$s
+					</div>
+					<div class="rtmedia-item-title">
+						<h4 title="%2$s">
+							<a href="%3$s">
+								%4$s
+							</a>
+						</h4>
+					</div>',
+					$this->media( $media ),
+					esc_attr( $media->media_title ),
+					esc_url( get_rtmedia_permalink( $media->id ) ),
+					$media->media_title
+				);
+			} else {
+				// Markup for all the other media linke docs and other files where anchor tag the markup is comming from add-on itself.
+				$media_content .= sprintf(
+					'<div class="rtmedia-item-thumbnail">
+							%1$s
+					</div>
+					<div class="rtmedia-item-title">
+							<h4 title="%2$s">
+								%3$s
+							</h4>
+					</div>',
+					$this->media( $media ),
+					esc_attr( $media->media_title ),
+					$media->media_title
+				);
 			}
 
 			$media_content .= '</li>';
@@ -100,9 +139,18 @@ class RTMediaActivity {
 		}
 		$media_container_start = '';
 		if ( 'activity' === $type ) {
-			$media_container_start .= '<ul class="rtmedia-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
+			$media_container_start .= sprintf(
+				'<ul class="rtmedia-list %1$s rtmedia-activity-media-length-%2$s">',
+				esc_attr( $rtmedia_activity_ul_class ),
+				esc_attr( $count )
+			);
 		} else {
-			$media_container_start .= '<ul class="rtmedia-' . esc_attr( $type ) . '-list ' . esc_attr( $rtmedia_activity_ul_class ) . ' rtmedia-activity-media-length-' . esc_attr( $count ) . '">';
+			$media_container_start .= sprintf(
+				'<ul class="rtmedia-%1$s-list %2$s rtmedia-activity-media-length-%3$s">',
+				esc_attr( $type ),
+				esc_attr( $rtmedia_activity_ul_class ),
+				esc_attr( $count )
+			);
 		}
 		$media_container_end = '</ul>';
 
