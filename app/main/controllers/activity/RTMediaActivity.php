@@ -117,7 +117,7 @@ class RTMediaActivity {
 		 * @param string $activity_text    HTML markup of activity text.
 		 * @param string $media_list       HTML markup of media in ul.
 		 */
-		$activity_content = apply_filters( 'rtmedia_activity_content', $activity_text . $media_list, $activity_text, $media_list );
+		$activity_content = apply_filters( 'rtmedia_activity_content_html', $activity_text . $media_list, $activity_text, $media_list );
 
 		$activity  = $activity_container_start;
 		$activity .= $activity_content;
