@@ -438,6 +438,15 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function bp_after_activity_post_form() {
+
+		/**
+		 * Filter to remove media upload button from the activity.
+		 *
+		 * @param bool True to remove the button and false to show the button.
+		 */
+		if ( apply_filters( 'rtmedia_activity_media_remove_upload_button', false ) ) {
+			return;
+		}
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ) {
