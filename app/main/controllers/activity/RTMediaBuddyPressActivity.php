@@ -260,8 +260,8 @@ class RTMediaBuddyPressActivity {
 	public function bp_activity_content_before_save( $content ) {
 
 		// Fix duplication issue of comment media on activity by returning contents when activity type is comment.
-		$rtmedia_comment_nonce = filter_input( INPUT_POST, 'rtmedia_comment_nonce', FILTER_SANITIZE_STRING );
-		if ( ! empty( $rtmedia_comment_nonce ) ) {
+		$rtmedia_comment = filter_input( INPUT_POST, 'comment', FILTER_SANITIZE_STRING );
+		if ( ! empty( $rtmedia_comment ) ) {
 			return $content;
 		}
 
