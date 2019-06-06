@@ -79,7 +79,7 @@ class RTMediaActivity {
 		$media_content = '';
 		$count         = 0;
 		foreach ( $media_details as $media ) {
-			$media_content .= sprintf( '<li class="rtmedia-list-item media-type-$s">', esc_attr( $media->media_type ) );
+			$media_content .= sprintf( '<li class="rtmedia-list-item media-type-%s">', esc_attr( $media->media_type ) );
 
 			if ( 'photo' === $media->media_type ) {
 				// Markup for photo media type with anchor tag only on image.
@@ -99,7 +99,7 @@ class RTMediaActivity {
 					esc_attr( $media->media_title ),
 					$media->media_title
 				);
-			} elseif ( 'audio' === $media->media_type || 'video' === $media->media_type ) {
+			} elseif ( 'music' === $media->media_type || 'video' === $media->media_type ) {
 				// Markup for audio and video media type with link only on media (title).
 				$media_content .= sprintf(
 					'<div class="rtmedia-item-thumbnail">
@@ -137,21 +137,18 @@ class RTMediaActivity {
 			$media_content .= '</li>';
 			$count ++;
 		}
-		$media_container_start = '';
-		if ( 'activity' === $type ) {
-			$media_container_start .= sprintf(
-				'<ul class="rtmedia-list %1$s rtmedia-activity-media-length-%2$s">',
-				esc_attr( $rtmedia_activity_ul_class ),
-				esc_attr( $count )
-			);
-		} else {
-			$media_container_start .= sprintf(
-				'<ul class="rtmedia-%1$s-list %2$s rtmedia-activity-media-length-%3$s">',
-				esc_attr( $type ),
-				esc_attr( $rtmedia_activity_ul_class ),
-				esc_attr( $count )
-			);
+
+		$media_container_start_class = 'rtmedia-list';
+		if ( 'activity' !== $type ) {
+			$media_container_start_class = sprintf( 'rtmedia-%s-list', $type );
 		}
+
+		$media_container_start = sprintf(
+			'<ul class="%1$s %2$s rtmedia-activity-media-length-%3$s">',
+			esc_attr( $media_container_start_class ),
+			esc_attr( $rtmedia_activity_ul_class ),
+			esc_attr( $count )
+		);
 		$media_container_end = '</ul>';
 
 		$media_list  = $media_container_start;
