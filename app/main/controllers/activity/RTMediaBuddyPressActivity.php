@@ -444,6 +444,15 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function bp_after_activity_post_form() {
+
+		/**
+		 * Filter to enable/disable media upload from the activity.
+		 *
+		 * @param bool Default true to enable activity media upload false to disable activity media upload.
+		 */
+		if ( ! apply_filters( 'rtmedia_enable_activity_media_upload', true ) ) {
+			return;
+		}
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ) {
