@@ -36,7 +36,7 @@ class RTMediaActivity {
 
 	/**
 	 * Function is used to generate HTML of activity/comments.
-	 * It combines the the rtMedia text and media in the activity content.
+	 * It combines the rtMedia text and media in the activity content.
 	 *
 	 * Note: Use the `rtmedia_activity_content_html` filter to modify the output of the activity content.
 	 *
@@ -53,8 +53,8 @@ class RTMediaActivity {
 		// Activity text content markup.
 		if ( ! empty( $this->activity_text ) && '&nbsp;' !== $this->activity_text ) {
 			$activity_text .= sprintf(
-				'<div class="rtmedia-%1$s-text">
-					<span>%2$s</span>
+				'<div class="rtmedia-%s-text">
+					<span>%s</span>
 				</div>',
 				esc_attr( $type ),
 				$this->activity_text
@@ -84,13 +84,13 @@ class RTMediaActivity {
 			if ( 'photo' === $media->media_type ) {
 				// Markup for photo media type with anchor tag only on image.
 				$media_content .= sprintf(
-					'<a href ="%1$s">
+					'<a href ="%s">
 						<div class="rtmedia-item-thumbnail">
-							%2$s
+							%s
 						</div>
 						<div class="rtmedia-item-title">
-							<h4 title="%3$s">
-								%4$s
+							<h4 title="%s">
+								%s
 							</h4>
 						</div>
 					</a>',
@@ -103,34 +103,34 @@ class RTMediaActivity {
 				// Markup for audio and video media type with link only on media (title).
 				$media_content .= sprintf(
 					'<div class="rtmedia-item-thumbnail">
-						%1$s
+						%s
 					</div>
 					<div class="rtmedia-item-title">
-						<h4 title="%2$s">
-							<a href="%3$s">
-								%4$s
+						<h4 title="%s">
+							<a href="%s">
+								%s
 							</a>
 						</h4>
 					</div>',
 					$this->media( $media ),
 					esc_attr( $media->media_title ),
 					esc_url( get_rtmedia_permalink( $media->id ) ),
-					$media->media_title
+					esc_html( $media->media_title )
 				);
 			} else {
 				// Markup for all the other media linke docs and other files where anchor tag the markup is comming from add-on itself.
 				$media_content .= sprintf(
 					'<div class="rtmedia-item-thumbnail">
-							%1$s
+							%s
 					</div>
 					<div class="rtmedia-item-title">
-							<h4 title="%2$s">
-								%3$s
+							<h4 title="%s">
+								%s
 							</h4>
 					</div>',
 					$this->media( $media ),
 					esc_attr( $media->media_title ),
-					$media->media_title
+					esc_html( $media->media_title )
 				);
 			}
 
@@ -144,11 +144,12 @@ class RTMediaActivity {
 		}
 
 		$media_container_start = sprintf(
-			'<ul class="%1$s %2$s rtmedia-activity-media-length-%3$s">',
+			'<ul class="%s %s rtmedia-activity-media-length-%s">',
 			esc_attr( $media_container_start_class ),
 			esc_attr( $rtmedia_activity_ul_class ),
 			esc_attr( $count )
 		);
+
 		$media_container_end = '</ul>';
 
 		$media_list  = $media_container_start;
