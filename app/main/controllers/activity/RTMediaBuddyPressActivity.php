@@ -444,7 +444,7 @@ class RTMediaBuddyPressActivity {
 		 *
 		 * @param bool True to remove the button and false to show the button.
 		 */
-		if ( apply_filters( 'rtmedia_activity_media_remove_upload_button', false ) ) {
+		if ( ! apply_filters( 'rtmedia_enable_activity_media_upload', true ) ) {
 			return;
 		}
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
