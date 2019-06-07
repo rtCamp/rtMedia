@@ -440,9 +440,9 @@ class RTMediaBuddyPressActivity {
 	function bp_after_activity_post_form() {
 
 		/**
-		 * Filter to remove media upload button from the activity.
+		 * Filter to enable/disable media upload from the activity.
 		 *
-		 * @param bool True to remove the button and false to show the button.
+		 * @param bool Default true to enable activity media upload false to disable activity media upload.
 		 */
 		if ( ! apply_filters( 'rtmedia_enable_activity_media_upload', true ) ) {
 			return;
