@@ -1605,7 +1605,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.5.7 =
-rtMedia 4.5.7, with fixes, duplicate media made from the lightbox, multiple media upload for non-admin roles, some UI fixes along with introduced new filters.
+rtMedia 4.5.7, with fixes for, media duplication in the lightbox, multiple media upload for non-admin roles, some UI fixes along with introduced new filters.
 
 == Sponsors ==
 
