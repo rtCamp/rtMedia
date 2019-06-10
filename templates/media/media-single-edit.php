@@ -15,7 +15,7 @@
 					<ul class="rtm-tabs clearfix">
 						<li class="active">
 							<a href="#panel1">
-								<i class='dashicons dashicons-edit rtmicon'></i>
+								<i class='dashicons dashicons-edit'></i>
 								<?php esc_html_e( 'Details', 'buddypress-media' ); ?>
 							</a>
 						</li>

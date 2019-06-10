@@ -259,6 +259,12 @@ class RTMediaBuddyPressActivity {
 	 */
 	public function bp_activity_content_before_save( $content ) {
 
+		// Fix duplication issue of comment media on activity by returning contents when activity type is comment.
+		$rtmedia_comment = filter_input( INPUT_POST, 'comment', FILTER_SANITIZE_STRING );
+		if ( ! empty( $rtmedia_comment ) ) {
+			return $content;
+		}
+
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
 			$obj_activity = new RTMediaActivity( $rtmedia_attached_files, 0, $content );
@@ -339,6 +345,7 @@ class RTMediaBuddyPressActivity {
 
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 		if ( is_array( $rtmedia_attached_files ) ) {
+			bp_activity_update_meta( $activity_id, 'bp_activity_text', bp_activity_filter_kses( $content ) );
 			$media_obj = new RTMediaModel();
 			//Credit faisal : https://gist.github.com/faishal/c4306ae7267fff976465
 			$in_str_arr = array_fill( 0, count( $rtmedia_attached_files ), '%d' );
@@ -437,6 +444,15 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function bp_after_activity_post_form() {
+
+		/**
+		 * Filter to enable/disable media upload from the activity.
+		 *
+		 * @param bool Default true to enable activity media upload false to disable activity media upload.
+		 */
+		if ( ! apply_filters( 'rtmedia_enable_activity_media_upload', true ) ) {
+			return;
+		}
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ) {
