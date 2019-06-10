@@ -1605,7 +1605,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.5.7 =
-rtMedia 4.5.7, Fix multiple upload for non admin role, warning and notices along with newly added filter to remove upload button from activity and change the order of media and text from activity and fix some UI issues.
+rtMedia 4.5.7, with fixes, duplicate media made from the lightbox, multiple media upload for non-admin roles, some UI fixes along with introduced new filters.
 
 == Sponsors ==
 
