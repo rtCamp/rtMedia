@@ -7,7 +7,7 @@
 # rtMedia for WordPress, BuddyPress and bbPress #
 
 
-* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty), [milindmore22](https://profiles.wordpress.org/milindmore22), [thrijith](https://profiles.wordpress.org/thrijith), [abhijitrakas](https://profiles.wordpress.org/abhijitrakas), [sid177](https://profiles.wordpress.org/sid177), [montu3366](https://profiles.wordpress.org/montu3366), [jashwini](https://profiles.wordpress.org/jashwini), [juhise](https://profiles.wordpress.org/juhise), [ravatparmar](https://profiles.wordpress.org/ravatparmar), [dharmin16](https://profiles.wordpress.org/dharmin16), [malavvasita](https://profiles.wordpress.org/malavvasita), [pooja1210](https://profiles.wordpress.org/pooja1210), [krupajnanda](https://profiles.wordpress.org/krupajnanda)
+* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty), [milindmore22](https://profiles.wordpress.org/milindmore22), [thrijith](https://profiles.wordpress.org/thrijith), [abhijitrakas](https://profiles.wordpress.org/abhijitrakas), [sid177](https://profiles.wordpress.org/sid177), [montu3366](https://profiles.wordpress.org/montu3366), [jashwini](https://profiles.wordpress.org/jashwini), [juhise](https://profiles.wordpress.org/juhise), [ravatparmar](https://profiles.wordpress.org/ravatparmar), [dharmin16](https://profiles.wordpress.org/dharmin16), [malavvasita](https://profiles.wordpress.org/malavvasita), [pooja1210](https://profiles.wordpress.org/pooja1210), [krupajnanda](https://profiles.wordpress.org/krupajnanda), [kanumalivad](https://profiles.wordpress.org/kanumalivad), [surajkumarsingh](https://profiles.wordpress.org/surajkumarsingh)
 
 
 * **License:** [GPL v2 or later]( http://www.gnu.org/licenses/gpl-2.0.html)
@@ -146,6 +146,27 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 ## Changelog ##
+
+### 4.5.7 [June 10, 2019] ###
+
+* NEW
+    * Add new filter to remove the media upload button from the activity [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-enable-activity-media-upload/)
+    * Add new filter to change the order of the media and text on the activity page [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-activity-content-html/)
+
+* FIXED
+    * Add title attribute for Media Likes
+    * Improve UI of Media Page title
+    * Issue of entering text in text area when Direct Upload and Upload terms enabled together
+    * UI of pagination button height and text field
+    * Export/Import button issue in Firefox browser
+    * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1 
+    * Empty space issue for generated activity when media is uploaded without adding text 
+    * Error while deleting media from WordPress upload.php page
+    * Other Errors, Warnings and notices
+    * Group Activity media are not shown in Group Media tab with BuddyPress Nouveau Template
+    * User’s name autosuggestion
+    * Issue with multiple file upload from activity with non admin user account
+    * Notification issue when the user is tagged in a comment on uploaded media of forum toic/reply
 
 ### 4.5.6 [February 18, 2019] ###
 

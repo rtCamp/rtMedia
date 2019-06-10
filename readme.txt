@@ -1,11 +1,11 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 5.0.3
-Stable tag: 4.5.6
+Tested up to: 5.2.1
+Stable tag: 4.5.7
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -133,6 +133,29 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.5.7 [June 10, 2019] =
+
+* NEW
+
+ * Add new filter to remove the media upload button from the activity [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-enable-activity-media-upload/)
+ * Add new filter to change the order of the media and text on the activity page [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-activity-content-html/)
+
+* FIXED
+
+ * Add title attribute for Media Likes
+ * Improve UI of Media Page title
+ * Issue of entering text in text area when Direct Upload and Upload terms enabled together
+ * UI of pagination button height and text field
+ * Export/Import button issue in Firefox browser
+ * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1 
+ * Empty space issue for generated activity when media is uploaded without adding text 
+ * Error while deleting media from WordPress upload.php page
+ * Other Errors, Warnings and notices
+ * Group Activity media are not shown in Group Media tab with BuddyPress Nouveau Template
+ * User’s name autosuggestion
+ * Issue with multiple file upload from activity with non admin user account
+ * Notification issue when the user is tagged in a comment on uploaded media of forum toic/reply
 
 = 4.5.6 [February 18, 2019] =
 
@@ -1581,8 +1604,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.6 =
-rtMedia 4.5.6, with fixes of BuddyPress threaded activity comment, comment count, duplicate comments and media size reflection in activity feed.
+= 4.5.7 =
+rtMedia 4.5.7, Fix multiple upload for non admin role, warning and notices along with newly added filter to remove upload button from activity and change the order of media and text from activity and fix some UI issues.
 
 == Sponsors ==
 
