@@ -134,7 +134,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.5.7 [June 10, 2019] =
+= 4.5.7 [June 12, 2019] =
 
 * NEW
 

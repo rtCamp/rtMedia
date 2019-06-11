@@ -147,7 +147,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
-### 4.5.7 [June 10, 2019] ###
+### 4.5.7 [June 12, 2019] ###
 
 * NEW
     * Add new filter to remove the media upload button from the activity [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-enable-activity-media-upload/)
