@@ -177,7 +177,7 @@ class RTMediaActivity {
 				// Check  if files available.
 				if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) ) {
 					// One url of image and other for anchor tag.
-					$values = count( $rtmedia_attached_files ) * 2;
+					$values = count( $rtmedia_attached_files ) * 3;
 				}
 				return $values;
 			}
