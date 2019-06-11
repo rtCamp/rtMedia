@@ -439,7 +439,7 @@ class RTMediaMedia {
 					}
 				}
 			}
-			if ( ! $core && ! is_admin() ) {
+			if ( ! $core ) {
 				wp_delete_attachment( $media[0]->media_id, true );
 			}
 			$status = $this->model->delete( array( 'id' => $id ) );
