@@ -143,6 +143,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * FIXED
 
+ * Duplicate media comment issue on Activity page
  * Add title attribute for Media Likes
  * Improve UI of Media Page title
  * Issue of entering text in text area when Direct Upload and Upload terms enabled together
@@ -150,12 +151,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Export/Import button issue in Firefox browser
  * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1 
  * Empty space issue for generated activity when media is uploaded without adding text 
- * Error while deleting media from WordPress upload.php page
  * Other Errors, Warnings and notices
  * Group Activity media are not shown in Group Media tab with BuddyPress Nouveau Template
  * User’s name autosuggestion
  * Issue with multiple file upload from activity with non admin user account
- * Notification issue when the user is tagged in a comment on uploaded media of forum toic/reply
 
 = 4.5.6 [February 18, 2019] =
 
