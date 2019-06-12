@@ -487,7 +487,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							       for="name"><?php esc_html_e( 'Name', 'buddypress-media' ); ?></label>
 							<input class="bp-media-input" id="name" type="text" name="name" value="" required/>
 							<span class="rtm-tooltip">
-								<i class="dashicons dashicons-info"></i>
+								<i class="dashicons dashicons-info rtmicon"></i>
 								<span class="rtm-tip">
 									<?php esc_html_e( 'Use actual user name which used during purchased.', 'buddypress-media' ); ?>
 								</span>
@@ -499,7 +499,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							       for="email"><?php esc_html_e( 'Email', 'buddypress-media' ); ?></label>
 							<input id="email" class="bp-media-input" type="text" name="email" value="" required/>
 							<span class="rtm-tooltip">
-								<i class="dashicons dashicons-info"></i>
+								<i class="dashicons dashicons-info rtmicon"></i>
 								<span class="rtm-tip">
 									<?php esc_html_e( 'Use email id which used during purchased', 'buddypress-media' ); ?>
 								</span>
@@ -543,7 +543,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							       for="subject"><?php esc_html_e( 'Attachement', 'buddypress-media' ); ?></label>
 							<input id="debuglog" class="bp-media-input" type="file" name="debuglog" />
 							<span class="rtm-tooltip">
-								<i class="dashicons dashicons-info"></i>
+								<i class="dashicons dashicons-info rtmicon"></i>
 								<span class="rtm-tip">
 									<?php esc_html_e( 'Allowed file types are : images, documents and texts.', 'buddypress-media' ); ?>
 								</span>

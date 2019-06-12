@@ -48,10 +48,10 @@ class RTMediaUploadView {
 			} elseif ( is_rtmedia_album_enable() && $rtmedia_query && is_rtmedia_gallery() ) {
 
 				if ( isset( $rtmedia_query->query['context'] ) && 'profile' === $rtmedia_query->query['context'] ) {
-					$album = '<span> <label> <i class="dashicons dashicons-format-gallery"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select></span>';
+					$album = '<span> <label> <i class="dashicons dashicons-format-gallery rtmicon"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select></span>';
 				}
 				if ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
-					$album = '<span> <label> <i class="dashicons dashicons-format-gallery"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list() . '</select></span>';
+					$album = '<span> <label> <i class="dashicons dashicons-format-gallery rtmicon"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list() . '</select></span>';
 				}
 			}
 		}
@@ -94,7 +94,7 @@ class RTMediaUploadView {
 				$up_privacy = new RTMediaPrivacy( false );
 				$up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy' );
 				if ( $up_privacy ) {
-					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility'></i>" . esc_html__( 'Privacy:', 'buddypress-media' ) . '</label>' . $up_privacy . '</span>';
+					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility rtmicon'></i>" . esc_html__( 'Privacy:', 'buddypress-media' ) . '</label>' . $up_privacy . '</span>';
 				}
 			}
 		}
@@ -106,7 +106,7 @@ class RTMediaUploadView {
 				'content' => '<div class="rtm-upload-tab-content" data-id="rtm-upload-tab">'
 					. apply_filters( 'rtmedia_uploader_before_select_files', '' )
 					. '<div class="rtm-select-files"><input id="' . apply_filters( 'rtmedia_upload_button_id', 'rtMedia-upload-button' ) . '" value="' . esc_attr__( 'Select your files', 'buddypress-media' ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
-					. '<span class="rtm-seperator">' . esc_html__( 'or', 'buddypress-media' ) . '</span><span class="drag-drop-info">' . esc_html__( 'Drop your files here', 'buddypress-media' ) . '</span> <i class="rtm-file-size-limit"></i></div>'
+					. '<span class="rtm-seperator">' . esc_html__( 'or', 'buddypress-media' ) . '</span><span class="drag-drop-info">' . esc_html__( 'Drop your files here', 'buddypress-media' ) . '</span> <i class="rtm-file-size-limit rtmicon-info-circle rtmicon-fw"></i></div>'
 					. apply_filters( 'rtmedia_uploader_after_select_files', '' )
 					. '</div>',
 			),

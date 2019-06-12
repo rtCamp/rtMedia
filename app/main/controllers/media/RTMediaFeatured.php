@@ -30,7 +30,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 			'single'     => true,
 			'repeatable' => false,
 			'undoable'   => true,
-			'icon_class' => 'dashicons dashicons-star-filled',
+			'icon_class' => 'dashicons dashicons-star-filled rtmicon',
 		);
 
 		$this->user_id = $user_id;

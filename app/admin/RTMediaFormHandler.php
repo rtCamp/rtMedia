@@ -881,7 +881,7 @@ class RTMediaFormHandler {
 								if ( 'other' !== $key ) {
 									?>
 									<span class="rtm-tooltip rtm-extensions">
-										<i class="dashicons dashicons-info"></i>
+										<i class="dashicons dashicons-info rtmicon"></i>
 										<span class="rtm-tip">
 											<strong><?php echo esc_html__( 'File Extensions', 'buddypress-media' ); ?></strong><br/>
 											<hr/>
@@ -1568,7 +1568,7 @@ class RTMediaFormHandler {
 						<span
 							class="rtm-field-wrap"><?php call_user_func( $option['callback'], $option['args'] ); ?></span>
 						<span class="rtm-tooltip">
-							<i class="dashicons dashicons-info"></i>
+							<i class="dashicons dashicons-info rtmicon"></i>
 							<span class="rtm-tip">
 								<?php echo wp_kses( ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA', array(
 									'a' => array(
