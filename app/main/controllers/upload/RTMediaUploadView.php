@@ -106,7 +106,7 @@ class RTMediaUploadView {
 				'content' => '<div class="rtm-upload-tab-content" data-id="rtm-upload-tab">'
 					. apply_filters( 'rtmedia_uploader_before_select_files', '' )
 					. '<div class="rtm-select-files"><input id="' . apply_filters( 'rtmedia_upload_button_id', 'rtMedia-upload-button' ) . '" value="' . esc_attr__( 'Select your files', 'buddypress-media' ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
-					. '<span class="rtm-seperator">' . esc_html__( 'or', 'buddypress-media' ) . '</span><span class="drag-drop-info">' . esc_html__( 'Drop your files here', 'buddypress-media' ) . '</span> <i class="rtm-file-size-limit"></i></div>'
+					. '<span class="rtm-seperator">' . esc_html__( 'or', 'buddypress-media' ) . '</span><span class="drag-drop-info">' . esc_html__( 'Drop your files here', 'buddypress-media' ) . '</span> <i class="rtm-file-size-limit dashicons dashicons-info"></i></div>'
 					. apply_filters( 'rtmedia_uploader_after_select_files', '' )
 					. '</div>',
 			),
