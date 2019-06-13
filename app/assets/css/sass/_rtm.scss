@@ -548,23 +548,33 @@ input.imgedit-submit-btn {
 	display: none;
 }
 
-#item-header-avatar .avatar {
-	display: block;
-	height: auto;
-	min-height: inherit;
-	width: auto;
+#buddypress {
+
+	#item-header-cover-image {
+
+		#item-header-avatar {
+			.avatar {
+				display: block;
+				height: auto;
+				min-height: inherit;
+				width: auto;
+			}
+		}
+
+		#item-header-content {
+
+			padding-left: 37px;
+
+			h2:before {
+				height: 0;
+				margin: 0;
+				width: 0;
+			}
+
+			.user-nicename {
+				margin: 0 0 5px;
+			}
+		}
+	}
 }
 
-#item-header-content h2:before {
-	height: 0;
-	margin: 0;
-	width: 0;
-}
-
-#buddypress div#item-header-cover-image .user-nicename {
-	margin: 0 0 5px;
-}
-
-#buddypress #item-header-content {
-	padding-left: 37px;
-}

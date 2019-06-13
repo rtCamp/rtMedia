@@ -628,25 +628,22 @@ input.imgedit-submit-btn {
   display: none;
 }
 
-#item-header-avatar .avatar {
+#buddypress #item-header-cover-image #item-header-avatar .avatar {
   display: block;
   height: auto;
   min-height: inherit;
   width: auto;
 }
-
-#item-header-content h2:before {
+#buddypress #item-header-cover-image #item-header-content {
+  padding-left: 37px;
+}
+#buddypress #item-header-cover-image #item-header-content h2:before {
   height: 0;
   margin: 0;
   width: 0;
 }
-
-#buddypress div#item-header-cover-image .user-nicename {
+#buddypress #item-header-cover-image #item-header-content .user-nicename {
   margin: 0 0 5px;
-}
-
-#buddypress #item-header-content {
-  padding-left: 37px;
 }
 
 .rtm-tabs.rtm-tabs {
