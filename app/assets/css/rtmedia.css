@@ -628,6 +628,27 @@ input.imgedit-submit-btn {
   display: none;
 }
 
+.avatar {
+  display: block;
+  height: auto;
+  min-height: inherit;
+  width: auto;
+}
+
+h2:before {
+  height: 0;
+  margin: 0;
+  width: 0;
+}
+
+#buddypress div#item-header-cover-image .user-nicename {
+  margin: 0 0 5px;
+}
+
+#buddypress #item-header-content {
+  padding-left: 37px;
+}
+
 .rtm-tabs.rtm-tabs {
   border-bottom: 1px solid #EEEEEE;
   list-style: none;
