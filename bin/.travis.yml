@@ -42,7 +42,7 @@ before_script:
   - cd $PLUGIN_DIR
   - cp -Rf * /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
   - cd /var/www/automation.rtmedia.me/htdocs/
-  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.4.2.0.zip
+  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.4.3.0.zip
   - wp plugin activate --all
   - cd $PLUGIN_DIR
   - cd tests/codeception/tests/_data
@@ -52,7 +52,8 @@ before_script:
   - unzip BrowserStackLocal-linux-x64.zip
   - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
   - cd $PLUGIN_DIR/tests/codeception/
-  - composer update
+  # - composer update
+  - composer install
   - export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
     ## PHP_CodeSniffer
   - git clone https://github.com/squizlabs/PHP_CodeSniffer.git
