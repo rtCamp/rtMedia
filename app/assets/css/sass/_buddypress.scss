@@ -86,3 +86,7 @@ body.media.buddypress {
 	display: flex;
 	align-items: center;
 }
+
+#buddypress ul.activity-list li {
+	overflow: unset;
+}
