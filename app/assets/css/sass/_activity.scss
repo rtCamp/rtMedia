@@ -97,6 +97,11 @@
 			white-space: nowrap;
 		}
 	}
+	.media-type-video {
+		.mejs-controls {
+			bottom: -20px;
+		}
+	}
 }
 
 // Uploader Button
