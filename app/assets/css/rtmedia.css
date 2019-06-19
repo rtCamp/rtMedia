@@ -1726,9 +1726,8 @@ img.mfp-img {
 .rtmedia-activity-container .rtmedia-item-title, .rtmedia-activity-container .rtmedia-item-title a {
   border: 0;
   color: #666666;
-  font-size: 13px;
+  font-size: 10px;
   margin: 5px 0 0;
-  overflow: hidden;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
