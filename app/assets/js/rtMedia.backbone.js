@@ -2593,7 +2593,7 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 
 			if ( 'undefined' != typeof rtmedia_direct_upload_enabled && '1' == rtmedia_direct_upload_enabled ) {
 
-				$('.rtmedia-comment-media-submit-'+widget_id).focus();
+				$( '.rtmedia-comment-media-submit-' + widget_id ).focus();
 				/* when direct upload is enable */
 				jQuery( '.'+rtmedia_comment_media_submit+widget_id ).trigger( 'click' );
 			}
