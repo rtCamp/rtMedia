@@ -1963,17 +1963,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	} else {
 		jQuery.each( rtmedia_exteansions, function( key, value ) {
 			if ( value.indexOf( ext ) >= 0 ) {
-
-				var media_thumbnail = '';
-
-				// Below condition is to show docs and files addon thumbnail.
-				if ( rtmedia_media_thumbs[ ext ] ) {
-					media_thumbnail = rtmedia_media_thumbs[ ext ];
-				} else {
-					media_thumbnail = rtmedia_media_thumbs[ key ];
-				}
-
-				jQuery( '<img />', { src: media_thumbnail } ).appendTo( '#file_thumb_' + file.id );
+				jQuery( '<img src="' + rtmedia_media_thumbs[ key ] + '" />' ).appendTo( '#file_thumb_' + file.id );
 
 				return false;
 			}
