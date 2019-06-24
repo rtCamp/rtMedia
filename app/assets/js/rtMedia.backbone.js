@@ -1966,6 +1966,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 
 				var media_thumbnail = '';
 
+				// Below condition is to show docs and files addon thumbnail.
 				if ( rtmedia_media_thumbs[ ext ] ) {
 					media_thumbnail = rtmedia_media_thumbs[ ext ];
 				} else {

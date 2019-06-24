@@ -1154,7 +1154,7 @@ class RTMedia {
 			$rtmedia_media_thumbs[ $key_type ] = $value_type['thumbnail'];
 		}
 
-		// Filter to add files icon.
+		// Filter to add docs and files addon thumbnail.
 		$rtmedia_media_thumbs = apply_filters( 'rtmedia_add_docs_thumbs', $rtmedia_media_thumbs );
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
