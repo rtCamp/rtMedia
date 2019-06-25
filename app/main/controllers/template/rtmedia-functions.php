@@ -672,7 +672,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 		global $rtmedia;
 
 		// Getting the extension of the uploaded file
-		$extension = rtmedia_get_extension();
+		$extension = rtmedia_get_extension( $media_object->media_id );
 
 		// Checking if custom thumbnail for this file extension is set or not
 		if ( isset( $rtmedia->allowed_types[ $media_object->media_type ] ) && isset( $rtmedia->allowed_types[ $media_object->media_type ]['ext_thumb'] ) && isset( $rtmedia->allowed_types[ $media_object->media_type ]['ext_thumb'][ $extension ] ) ) {
