@@ -1154,6 +1154,9 @@ jQuery( document ).ready( function( $ ) {
 		objUploadView.uploader.bind( 'FilesAdded', function( upl, rfiles ) {
 			//$("#aw-whats-new-submit").attr('disabled', 'disabled');
 
+			//Remove focusout when media is added in activity post.
+			jQuery( '#whats-new-form' ).unbind( 'focusout' );
+
 			$.each( rfiles, function( i, file ) {
 
 				//Set file title along with file
