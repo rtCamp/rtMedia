@@ -2602,11 +2602,8 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 			rtMediaHook.call( 'rtmedia_js_after_files_added', [ upl, rfiles ] );
 
 			if ( 'undefined' != typeof rtmedia_direct_upload_enabled && '1' == rtmedia_direct_upload_enabled ) {
-				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
-				if ( false == allow_upload ) {
-					return false;
-				}
 
+				$( '.rtmedia-comment-media-submit-' + widget_id ).focus();
 				/* when direct upload is enable */
 				jQuery( '.'+rtmedia_comment_media_submit+widget_id ).trigger( 'click' );
 			}
