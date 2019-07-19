@@ -1153,6 +1153,14 @@ class RTMedia {
 		foreach ( $this->allowed_types as $key_type => $value_type ) {
 			$rtmedia_media_thumbs[ $key_type ] = $value_type['thumbnail'];
 		}
+
+		/**
+		 * Filter to add docs and files thumbnails.
+		 *
+		 * This filter is used by only rtmedia-docs-files addon.
+		 * */
+		$rtmedia_media_thumbs = apply_filters( 'rtmedia_add_docs_thumbs', $rtmedia_media_thumbs );
+
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_set_featured_image_msg', esc_html__( 'Featured media set successfully.', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_unset_featured_image_msg', esc_html__( 'Featured media removed successfully.', 'buddypress-media' ) );
