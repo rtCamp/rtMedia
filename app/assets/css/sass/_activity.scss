@@ -73,10 +73,20 @@
 
 }
 
-// remove border and padding
-#buddypress ul.rtmedia-list li {
-	border-bottom: 0;
-	padding-bottom: 0;
+#buddypress {
+    // Remove border and padding.
+    ul.rtmedia-list {
+        li {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+    }
+    // Media title fix on legacy .
+    ul.activity-list {
+        li {
+            overflow: unset!important;
+        }
+    }
 }
 
 // hide unnecessory div
@@ -251,4 +261,9 @@ a.rtmedia-comment-link{
 
 a.rtmedia-comment-link.rtmedia-comments-link{
 	display: initial;
+}
+
+// MediaElement.js poster size fix.
+.mejs-poster.mejs-layer {
+    height: 0!important;
 }
