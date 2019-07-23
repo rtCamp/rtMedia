@@ -1727,9 +1727,6 @@ img.mfp-img {
   border-bottom: 0;
   padding-bottom: 0;
 }
-#buddypress ul.activity-list li {
-  overflow: unset !important;
-}
 
 .rtmedia-activity-container .rtmedia-item-actions {
   display: none;
