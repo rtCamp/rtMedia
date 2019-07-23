@@ -1874,6 +1874,16 @@ a.rtmedia-comment-link.rtmedia-comments-link {
   height: 0 !important;
 }
 
+.bp-legacy #buddypress #activity-stream .rtmedia-item-title {
+  margin: 0px;
+}
+.bp-legacy #buddypress #activity-stream .rtmedia-item-title p {
+  margin: 0px;
+}
+.bp-legacy #buddypress #activity-stream .media-type-video .rtmedia-item-title {
+  margin: -20px;
+}
+
 .rtmedia-album-edit .rtm-checkbox-wrap {
   background: rgba(255, 255, 255, 0.9);
   height: 30px;
