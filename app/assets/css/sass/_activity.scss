@@ -86,7 +86,22 @@
         li {
             overflow: unset!important;
         }
-    }
+	}
+	// Fix UI for media pl-upload preview.
+	.activity {
+		#activity-stream {
+			li.plupload_queue_li {
+				padding: 5px;
+				.plupload_file_name {
+					.rtm-upload-edit-desc-wrapper{
+						textarea {
+							width: 100px;
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 // hide unnecessory div
