@@ -1934,7 +1934,13 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	rtmedia_plupload_file += '</li>';
 
 	jQuery( rtmedia_plupload_file ).appendTo( rtmedia_uploader_filelist );
-	jQuery( '#whats-new' ).focus();
+
+	if ( comment_media_id ) {
+		jQuery( '#rtmedia-comment-media-upload-' + comment_media_id ).focus();
+	} else {
+		jQuery( '#whats-new' ).focus();
+	}
+
 	var type = file.type;
 	var media_title = file.name;
 	var ext = media_title.substring( media_title.lastIndexOf( '.' ) + 1, media_title.length );
@@ -2462,7 +2468,6 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
         	while (upl.files.length > 1) {
 		        upl.removeFile(upl.files[0]);
 		    }
-
 			/* remove the last file that has being added to the comment media */
 			commentObj[ widget_id ].upload_remove_array = [ ];
 			jQuery( '#rtmedia_uploader_filelist-'+widget_id+' li.plupload_queue_li' ).remove();
@@ -2665,7 +2670,7 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 
 					ext = tmp_array[tmp_array.length - 1];
 					if ( ! ( typeof ( up.settings.upload_size ) != 'undefined' && typeof ( up.settings.upload_size[ext] ) != 'undefined' && ( up.settings.upload_size[ext]['size'] < 1 || ( up.settings.upload_size[ext]['size'] * 1024 * 1024 ) >= err.file.size ) ) ) {
-						rtmedia_selected_file_list( plupload, err.file, up, err );
+						rtmedia_selected_file_list( plupload, err.file, up, err, widget_id );
 					}
 				}
 			} else {
@@ -2675,7 +2680,6 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 
 				rtmedia_selected_file_list( plupload, err.file, '', err, widget_id );
 			}
-
 			jQuery( '.plupload_delete-'+widget_id ).on( 'click', function( e ) {
 				e.preventDefault();
 
