@@ -1196,6 +1196,7 @@ img.mfp-img {
 .mfp-content .rtm-lightbox-container .rtm-plupload-list .rtm-upload-edit-desc {
   background: #fff;
   min-height: 70px;
+  width: 100px;
 }
 .mfp-content .rtm-single-meta {
   background: #FFFFFF;
@@ -1726,6 +1727,12 @@ img.mfp-img {
 #buddypress ul.rtmedia-list li {
   border-bottom: 0;
   padding-bottom: 0;
+}
+#buddypress .activity #activity-stream li.plupload_queue_li {
+  padding: 5px;
+}
+#buddypress .activity #activity-stream li.plupload_queue_li .plupload_file_name .rtm-upload-edit-desc-wrapper textarea {
+  width: 100px;
 }
 
 .rtmedia-activity-container .rtmedia-item-actions {
