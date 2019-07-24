@@ -81,12 +81,7 @@
             padding-bottom: 0;
         }
     }
-    // Media title fix on legacy .
-    ul.activity-list {
-        li {
-            overflow: unset!important;
-        }
-	}
+
 	// Fix UI for media pl-upload preview.
 	.activity {
 		#activity-stream {
@@ -103,6 +98,7 @@
 		}
 	}
 }
+
 
 // hide unnecessory div
 .rtmedia-activity-container {
@@ -281,4 +277,24 @@ a.rtmedia-comment-link.rtmedia-comments-link{
 // MediaElement.js poster size fix.
 .mejs-poster.mejs-layer {
     height: 0!important;
+}
+
+// Media title fix on legacy.
+.bp-legacy {
+	#buddypress {
+		#activity-stream {
+			.rtmedia-item-title{
+				margin: 0px;
+				p {
+					margin : 0px;
+				}
+			}
+
+			.media-type-video {
+				.rtmedia-item-title{
+					margin: -20px;
+				}
+			}
+		}
+	}
 }

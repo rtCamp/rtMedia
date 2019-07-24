@@ -1728,9 +1728,6 @@ img.mfp-img {
   border-bottom: 0;
   padding-bottom: 0;
 }
-#buddypress ul.activity-list li {
-  overflow: unset !important;
-}
 #buddypress .activity #activity-stream li.plupload_queue_li {
   padding: 5px;
 }
@@ -1882,6 +1879,16 @@ a.rtmedia-comment-link.rtmedia-comments-link {
 
 .mejs-poster.mejs-layer {
   height: 0 !important;
+}
+
+.bp-legacy #buddypress #activity-stream .rtmedia-item-title {
+  margin: 0px;
+}
+.bp-legacy #buddypress #activity-stream .rtmedia-item-title p {
+  margin: 0px;
+}
+.bp-legacy #buddypress #activity-stream .media-type-video .rtmedia-item-title {
+  margin: -20px;
 }
 
 .rtmedia-album-edit .rtm-checkbox-wrap {
