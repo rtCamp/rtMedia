@@ -672,7 +672,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 		global $rtmedia;
 
 		// Getting the extension of the uploaded file
-		$extension = rtmedia_get_extension();
+		$extension = rtmedia_get_extension( $media_object->media_id );
 
 		// Checking if custom thumbnail for this file extension is set or not
 		if ( isset( $rtmedia->allowed_types[ $media_object->media_type ] ) && isset( $rtmedia->allowed_types[ $media_object->media_type ]['ext_thumb'] ) && isset( $rtmedia->allowed_types[ $media_object->media_type ]['ext_thumb'][ $extension ] ) ) {
@@ -2886,7 +2886,7 @@ function show_rtmedia_like_counts() {
 		}
 		?>
 		<div class='rtmedia-like-info <?php echo $class; ?>'>
-			<i></i>
+			<i class="dashicons dashicons-thumbs-up"></i>
 			<span class="rtmedia-like-counter-wrap">
 				<?php
 				if ( class_exists( 'RTMediaLike' ) && function_exists( 'rtmedia_who_like_html' ) ) {

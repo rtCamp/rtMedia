@@ -152,6 +152,13 @@ body.media.buddypress {
   margin-left: 50px;
   padding-left: 15px;
 }
+#buddypress ul.activity-list li.activity-item .activity-comments .rtmedia-uploader-div .rtm-plupload-list .plupload_queue_li {
+  padding: 5px;
+}
+#buddypress ul.activity-list li.activity-item .activity-comments .rtmedia-uploader-div .rtm-plupload-list .rtm-upload-edit-desc {
+  background: #fff;
+  border: solid 1px #ccc;
+}
 
 #buddypress form#whats-new-form #whats-new-content.active #whats-new-options[style] #whats-new-post-in-box {
   margin-top: 0;
@@ -260,6 +267,7 @@ form .rtmedia-container .rtm-plupload-list .rtm-upload-edit-desc-wrapper input.r
 #rtmedia_uploader_filelist .rtm-upload-edit-desc-wrapper input.rtm-upload-edit-title {
   min-width: 100%;
   margin-top: 1px;
+  display: block;
 }
 
 .rtm-plupload-list:empty {
@@ -857,7 +865,7 @@ button::-moz-focus-inner {
   padding: 0;
   width: 90px;
   height: 110px;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   opacity: 0;
   z-index: 10;
   -webkit-transition: all 300ms ease-out;
@@ -1184,6 +1192,11 @@ img.mfp-img {
 .mfp-content .rtm-lightbox-container .rtmedia-comment-media-list .mejs-container.mejs-video {
   min-height: 200px;
   min-width: 200px;
+}
+.mfp-content .rtm-lightbox-container .rtm-plupload-list .rtm-upload-edit-desc {
+  background: #fff;
+  min-height: 70px;
+  width: 100px;
 }
 .mfp-content .rtm-single-meta {
   background: #FFFFFF;
@@ -1715,6 +1728,12 @@ img.mfp-img {
   border-bottom: 0;
   padding-bottom: 0;
 }
+#buddypress .activity #activity-stream li.plupload_queue_li {
+  padding: 5px;
+}
+#buddypress .activity #activity-stream li.plupload_queue_li .plupload_file_name .rtm-upload-edit-desc-wrapper textarea {
+  width: 100px;
+}
 
 .rtmedia-activity-container .rtmedia-item-actions {
   display: none;
@@ -1856,6 +1875,20 @@ a.rtmedia-comment-link {
 
 a.rtmedia-comment-link.rtmedia-comments-link {
   display: initial;
+}
+
+.mejs-poster.mejs-layer {
+  height: 0 !important;
+}
+
+.bp-legacy #buddypress #activity-stream .rtmedia-item-title {
+  margin: 0px;
+}
+.bp-legacy #buddypress #activity-stream .rtmedia-item-title p {
+  margin: 0px;
+}
+.bp-legacy #buddypress #activity-stream .media-type-video .rtmedia-item-title {
+  margin: -20px;
 }
 
 .rtmedia-album-edit .rtm-checkbox-wrap {
@@ -2936,7 +2969,7 @@ a.rtmedia-upload-media-link {
 #buddypress .mejs-controls button {
   padding: 4px 8px;
   border: none;
-  background: transparent url("../../../lib/media-element/mejs-controls.png") no-repeat;
+  background: rgba(0, 0, 0, 0) url("../../../lib/media-element/mejs-controls.png") no-repeat;
 }
 #buddypress .mejs-controls .mejs-play > button {
   background-position: 0 0;
