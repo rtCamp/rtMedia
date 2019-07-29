@@ -120,6 +120,8 @@
   font-size: 12px;
   line-height: 18px;
   padding: 4px 6px;
+  display: inline;
+  width: auto;
 }
 
 #whats-new-post-in-box {
@@ -164,13 +166,21 @@ body.media.buddypress {
   margin-top: 0;
 }
 
-#whats-new-post-in-box {
+.bp-nouveau #bp-nouveau-activity-form #whats-new-post-in-box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 100%;
+}
+.bp-nouveau #bp-nouveau-activity-form #rtSelectPrivacy {
+  max-width: 150px;
+}
+.bp-nouveau #bp-nouveau-activity-form #whats-new-form textarea {
+  width: 98%;
+  margin-left: 5px;
 }
 
 .rtmedia-container {
@@ -1849,7 +1859,9 @@ form.rt_media_comment_form .rtmedia-plupload-container {
   margin-left: 8.5%;
 }
 .bp-nouveau .activity-update-form .rtmedia-plupload-container {
-  width: 25%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 .bp-nouveau .activity-update-form .rtmedia-upload-terms #rtmedia_upload_terms_conditions {
   margin-left: 20px;

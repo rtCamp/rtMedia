@@ -9,6 +9,7 @@
 	width: 100%;
 }
 
+
 #buddypress #whats-new-form {
 	.rtmedia-uploader-div {
 		display: none;
@@ -40,6 +41,8 @@
 	font-size: 12px;
 	line-height: 18px;
 	padding: 4px 6px;
+	display: inline;
+	width: auto;
 }
 
 #whats-new-post-in-box {
@@ -92,7 +95,23 @@ body.media.buddypress {
 	margin-top: 0;
 }
 
-#whats-new-post-in-box {
-	display: flex;
-	align-items: center;
+.bp-nouveau {
+	#bp-nouveau-activity-form{
+		#whats-new-post-in-box {
+			display: flex;
+			align-items: center;
+			width: 100%;
+		}
+
+		#rtSelectPrivacy{
+			max-width: 150px;
+		}
+		
+		#whats-new-form{
+			textarea{
+				width: 98%;
+	   		    margin-left:5px;
+			}
+		}
+	}
 }
