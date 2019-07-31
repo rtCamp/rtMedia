@@ -73,11 +73,32 @@
 
 }
 
-// remove border and padding
-#buddypress ul.rtmedia-list li {
-	border-bottom: 0;
-	padding-bottom: 0;
+#buddypress {
+    // Remove border and padding.
+    ul.rtmedia-list {
+        li {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+    }
+
+	// Fix UI for media pl-upload preview.
+	.activity {
+		#activity-stream {
+			li.plupload_queue_li {
+				padding: 5px;
+				.plupload_file_name {
+					.rtm-upload-edit-desc-wrapper{
+						textarea {
+							width: 100px;
+						}
+					}
+				}
+			}
+		}
+	}
 }
+
 
 // hide unnecessory div
 .rtmedia-activity-container {
@@ -251,4 +272,29 @@ a.rtmedia-comment-link{
 
 a.rtmedia-comment-link.rtmedia-comments-link{
 	display: initial;
+}
+
+// MediaElement.js poster size fix.
+.mejs-poster.mejs-layer {
+    height: 0!important;
+}
+
+// Media title fix on legacy.
+.bp-legacy {
+	#buddypress {
+		#activity-stream {
+			.rtmedia-item-title{
+				margin: 0px;
+				p {
+					margin : 0px;
+				}
+			}
+
+			.media-type-video {
+				.rtmedia-item-title{
+					margin: -20px;
+				}
+			}
+		}
+	}
 }
