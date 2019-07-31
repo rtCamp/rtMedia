@@ -145,6 +145,16 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.5.8 [July 31, 2019] ###
+
+* FIXED
+    * Duplicate media creation when posted from lightbox and activity creation for media comments kept off from settings
+    * Upload terms and direct upload compatibility while commenting from activity
+    * Overlapped media file name in BuddyPress Legacy template
+    * Issue with uploader container which gets hidden after media upload on activity page
+    * Fix default theme css enqueue for BuddyPress templates.
+    * Minor UI bug Fixes
+
 ### 4.5.7 [June 12, 2019] ###
 
 * NEW

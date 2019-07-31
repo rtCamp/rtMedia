@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 5.2.1
-Stable tag: 4.5.7
+Stable tag: 4.5.8
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -133,6 +133,17 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.5.8 [July 31, 2019] =
+
+* FIXED
+
+ * Duplicate media creation when posted from lightbox and activity creation for media comments kept off from settings
+ * Upload terms and direct upload compatibility while commenting from activity
+ * Overlapped media file name in BuddyPress Legacy template
+ * Issue with uploader container which gets hidden after media upload on activity page
+ * Fix default theme css enqueue for BuddyPress templates.
+ * Minor UI bug Fixes
 
 = 4.5.7 [June 12, 2019] =
 
@@ -1603,8 +1614,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.7 =
-rtMedia 4.5.7, with fixes for, media duplication in the lightbox, multiple media upload for non-admin roles, some UI fixes along with introduced new filters.
+= 4.5.8 =
+rtMedia 4.5.8, with fixes for, media duplication when posted from the lightbox, upload terms and direct media upload compability on activity comment and media caption overlapping issue on Legacy template with some UI fixes.
 
 == Sponsors ==
 
