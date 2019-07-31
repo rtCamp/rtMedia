@@ -1015,51 +1015,22 @@ class RTMediaBuddyPressActivity {
 	}
 
 	/**
-	 * Makes the comments hidden (private) if the parent comment's
-	 * privacy is set to private.
+	 * Set the privacy for comment activity.
 	 *
 	 * @param string $comment_id Activity id of the comment.
 	 * @param array  $r          Array of arguments.
 	 */
 	public function rtm_check_privacy_for_comments( $comment_id, $r ) {
-		global $wpdb;
 
 		if ( empty( $r ) || empty( $comment_id ) || ( ! is_array( $r ) ) ) {
 			return;
 		}
 
-		$db_prefix   = $wpdb->get_blog_prefix();
-		$table_name  = 'rt_rtm_activity';
 		$activity_id = $r['activity_id'];
 		$user_id     = $r['user_id'];
 		$privacy_id  = bp_activity_get_meta( $activity_id, 'rtmedia_privacy' );
-		$blog_id     = get_current_blog_id();
 
-		if ( '60' === $privacy_id ) {
-			$row_values_rtm_media = array(
-				'activity_id' => $comment_id,
-				'user_id'     => $user_id,
-				'privacy'     => $privacy_id,
-				'blog_id'     => $blog_id,
-			);
-
-			$wpdb->insert(
-				$db_prefix . $table_name,
-				$row_values_rtm_media
-			);
-
-			$table_name = 'bp_activity_meta';
-			$row_values_activity_meta = array(
-				'id'          => '',
-				'activity_id' => $comment_id,
-				'meta_key'    => 'rtmedia_privacy',
-				'meta_value'  => 60,
-			);
-
-			$wpdb->insert(
-				$db_prefix . $table_name,
-				$row_values_activity_meta
-			);
-		}
+		$rtm_activity_model = new RTMediaActivityModel();
+		$rtm_activity_model->set_privacy( $comment_id, $user_id, $privacy_id );
 	}
 }
