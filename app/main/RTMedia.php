@@ -1153,6 +1153,14 @@ class RTMedia {
 		foreach ( $this->allowed_types as $key_type => $value_type ) {
 			$rtmedia_media_thumbs[ $key_type ] = $value_type['thumbnail'];
 		}
+
+		/**
+		 * Filter to add docs and files thumbnails.
+		 *
+		 * This filter is used by only rtmedia-docs-files addon.
+		 * */
+		$rtmedia_media_thumbs = apply_filters( 'rtmedia_add_docs_thumbs', $rtmedia_media_thumbs );
+
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_set_featured_image_msg', esc_html__( 'Featured media set successfully.', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_unset_featured_image_msg', esc_html__( 'Featured media removed successfully.', 'buddypress-media' ) );
@@ -1335,8 +1343,13 @@ class RTMedia {
 			$rtmedia_router = new RTMediaRouter();
 			if ( ! empty( $rtmedia_router->query_vars ) ) {
 				$wp_current_stylesheet = get_stylesheet();
-				wp_enqueue_style( 'bp-neavuaue-stylesheet-theme', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/'. $wp_current_stylesheet . ".min.css" );
-				wp_enqueue_style( 'bp-neavuaue-stylesheet-buddypress', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/buddypress.min.css', '' );
+
+				// If file is already exists in buddypress then enqueue it.
+				if ( file_exists( sprintf( '%sbp-templates/bp-legacy/css/%s.min.css', BP_PLUGIN_DIR, $wp_current_stylesheet ) ) ) {
+					wp_enqueue_style( 'bp-nouveau-stylesheet-theme', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/' . $wp_current_stylesheet . '.min.css' );
+				}
+
+				wp_enqueue_style( 'bp-nouveau-stylesheet-buddypress', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/buddypress.min.css', '' );
 			}
 		}
 	}
