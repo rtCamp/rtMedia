@@ -134,7 +134,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.5.8 [July 31, 2019] =
+= 4.5.8 [Augest 6, 2019] =
 
 * FIXED
 
