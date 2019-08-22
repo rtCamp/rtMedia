@@ -169,15 +169,17 @@ class RTMediaActivity {
 		$activity .= $activity_content;
 		$activity .= $activity_container_end;
 
+		$current_max_links = absint( get_option( 'comment_max_links' ) ); // get current number of allowed links.
+
 		// Bypass comment links limit.
 		add_filter(
 			'option_comment_max_links',
-			function ( $values ) {
+			function ( $values ) use ( $current_max_links ) {
 				$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 				// Check  if files available.
 				if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) ) {
 					// One url of image and other for anchor tag.
-					$values = count( $rtmedia_attached_files ) * 3;
+					$values = ( count( $rtmedia_attached_files ) * 3 ) + $current_max_links;
 				}
 				return $values;
 			}
