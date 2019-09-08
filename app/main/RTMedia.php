@@ -1216,7 +1216,7 @@ class RTMedia {
 			wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', 'load_more' );
 		}
 
-		if ( isset( $rtmedia->options['buddypress_enableOnActivity'] ) ) {
+		if ( !empty( $rtmedia->options['buddypress_enableOnActivity'] ) ) {
 			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', (string) $rtmedia->options['buddypress_enableOnActivity'] );
 		} else {
 			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', '0' );
