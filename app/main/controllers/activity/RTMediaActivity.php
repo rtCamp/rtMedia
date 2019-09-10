@@ -76,6 +76,25 @@ class RTMediaActivity {
 		}
 		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_' . $type . '_ul_class', 'rtm-activity-media-list' );
 
+		$uploaded_media_types           = [];
+		$rtmedia_activity_ul_list_class = 'rtm-activity-mixed-list';
+
+		// Loop through each media and check media type.
+		$uploaded_media_types = array_map( function ( $current_media ) {
+			return is_object( $current_media ) ? $current_media->media_type : '';
+		}, $media_details );
+
+		// Remove empty values from media type list.
+		$media_type_list = array_filter( $uploaded_media_types, 'strlen' );
+
+		// Update activity class based on media type.
+		if ( ! empty( $media_type_list ) ) {
+			if ( count( array_unique( $uploaded_media_types ) ) === 1 ) {
+				$current_media_type             = end( $uploaded_media_types );
+				$rtmedia_activity_ul_list_class = "rtm-activity-{$current_media_type}-list";
+			}
+		}
+
 		$media_content = '';
 		$count         = 0;
 		foreach ( $media_details as $media ) {
@@ -144,10 +163,11 @@ class RTMediaActivity {
 		}
 
 		$media_container_start = sprintf(
-			'<ul class="%s %s rtmedia-activity-media-length-%s">',
+			'<ul class="%s %s rtmedia-activity-media-length-%s %s">',
 			esc_attr( $media_container_start_class ),
 			esc_attr( $rtmedia_activity_ul_class ),
-			esc_attr( $count )
+			esc_attr( $count ),
+			esc_attr( $rtmedia_activity_ul_list_class )
 		);
 
 		$media_container_end = '</ul>';
