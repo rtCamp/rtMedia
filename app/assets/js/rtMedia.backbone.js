@@ -1008,11 +1008,14 @@ jQuery( document ).ready( function( $ ) {
 			var whats_new_option = whats_new_form.find( '#whats-new-options' );
 
 			rt_uploader_div.show();
-			whats_new_option.show();
 
-			whats_new_option.css( {
-				'opacity': '1'
-			} );
+			if ( 0 !== whats_new_option.length ) {
+				whats_new_option.show();
+
+				whats_new_option.css( {
+					'opacity': '1'
+				} );
+			}
 
 			rt_uploader_div.addClass( 'clearfix' );
 
