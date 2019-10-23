@@ -1005,8 +1005,17 @@ jQuery( document ).ready( function( $ ) {
 
 			var rt_uploader_div = whats_new_form.find( '.rtmedia-uploader-div' );
 			var rt_uploader_filelist = whats_new_form.find( '#rtmedia_uploader_filelist' );
+			var whats_new_option = whats_new_form.find( '#whats-new-options' );
 
 			rt_uploader_div.show();
+
+			if ( 0 !== whats_new_option.length ) {
+				whats_new_option.show();
+
+				whats_new_option.css( {
+					'opacity': '1'
+				} );
+			}
 
 			rt_uploader_div.addClass( 'clearfix' );
 
