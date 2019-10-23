@@ -4,8 +4,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 5.2.2
-Stable tag: 4.5.8
+Tested up to: 5.2.4
+Stable tag: 4.5.9
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -133,6 +133,17 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.5.9 [October 23, 2019] =
+
+* Enhancement
+
+ * Add new class on activity page based on the uploaded media type
+
+* FIXED
+
+ * Post Update button issue with BuddyPress Nouveau template 
+ * Issue when user uploads the media with link in comment on buddypress activity 
 
 = 4.5.8 [August 6, 2019] =
 
@@ -1614,8 +1625,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.8 =
-rtMedia 4.5.8, with fixes for, media duplication when posted from the lightbox, upload terms and direct media upload compability on activity comment and media caption overlapping issue on Legacy template with some UI fixes.
+= 4.5.9 =
+rtMedia 4.5.9, with enhancement of new class on activity page based on the uploaded media type and fixed some issues like Post Update button issue with BuddyPress Nouveau template and Issue when user uploads the media with link in comment on buddypress activity.
 
 == Sponsors ==
 

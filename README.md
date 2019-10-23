@@ -147,6 +147,15 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.5.9 [October 23, 2019] ###
+
+* Enhancement
+	* Add new class on activity page based on the uploaded media type
+
+* FIXED
+	* Post Update button issue with BuddyPress Nouveau template 
+	* Issue when user uploads the media with link in comment on buddypress activity 
+
 ### 4.5.8 [August 6, 2019] ###
 
 * FIXED
