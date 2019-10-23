@@ -1626,7 +1626,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.5.9 =
-rtMedia 4.5.9, with enhancement of new class on activity page based on the uploaded media type and fixed some issues like Post Update button issue with BuddyPress Nouveau template and Issue when user uploads the media with link in comment on buddypress activity.
+rtMedia 4.5.9, with an addition of new classes in BuddPress Activity based on the uploaded media type, and other minor fixes around BuddPress Activity.
 
 == Sponsors ==
 
