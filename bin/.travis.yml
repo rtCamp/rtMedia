@@ -33,7 +33,8 @@ before_script:
   - sudo apt-get autoclean
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
   - wget -qO ee rt.cx/ee && sudo bash ee
-  - sudo ee stack install
+  - sudo ee stack install --nginx
+  - sudo ee stack install --web
   - sudo wp --yes --allow-root cli update --nightly
   - sudo ee site create automation.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
   - sudo sed -i '/^127.0.0.1/ s/$/ automation.rtmedia.me/' /etc/hosts
@@ -42,7 +43,7 @@ before_script:
   - cd $PLUGIN_DIR
   - cp -Rf * /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
   - cd /var/www/automation.rtmedia.me/htdocs/
-  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.4.4.0.zip
+  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.5.0.0.zip
   - wp plugin activate --all
   - cd $PLUGIN_DIR
   - cd tests/codeception/tests/_data
