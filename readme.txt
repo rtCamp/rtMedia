@@ -134,7 +134,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.5.9 [October 24, 2019] =
+= 4.5.9 [October 29, 2019] =
 
 * Enhancement
 
