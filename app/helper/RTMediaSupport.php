@@ -251,7 +251,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						if ( is_dir( $template_path . DIRECTORY_SEPARATOR . $value ) ) {
 							$sub_files = $this->rtmedia_scan_template_files( $template_path . DIRECTORY_SEPARATOR . $value );
 							foreach ( $sub_files as $sub_file ) {
-								$rt_to_dir_paths	= RTMediaTemplate::locate_template( substr( $sub_file, 0, ( count( $sub_file ) - 5 ) ) );
+								$rt_to_dir_paths	= RTMediaTemplate::locate_template( str_replace( '.php', '', $sub_file ) );
 								$rt_to_dir_path		= str_replace( '//', '/', $rt_to_dir_paths );
 								$result[]			= str_replace( ABSPATH . 'wp-content/', '', $rt_to_dir_path );
 							}
