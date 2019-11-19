@@ -3,7 +3,6 @@
 # Suite for WordPress acceptance tests.
 # Perform tests using or simulating a browser.
 
-
 class_name: AcceptanceTester
 modules:
     enabled:
@@ -23,12 +22,12 @@ modules:
                 'browserstack.user': 'rtcamp3'
                 'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
                 'os': 'OS X'
-                'os_version': 'mojave'
-                'browser_version': '70'
+                # 'os_version': 'mojave'
+                # 'browser_version': '70'
                 'browserstack.debug': 'true'
                 'browserstack.networkLogs': 'true'
                 'build': '%TRAVIS_BUILD_NUMBER%'
-                'project': 'rtMedia Automation Local'
+                'project': 'rtMedia Automation - theme 2020'
                 'browserstack.local': 'true'
                 'browserstack.use_w3c': 'true'
-                'browserstack.selenium_version': '2.53.0'
+                # 'browserstack.selenium_version': '2.53.0'
