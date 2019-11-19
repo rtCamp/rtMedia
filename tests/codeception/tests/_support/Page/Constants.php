@@ -259,7 +259,8 @@ class Constants {
 	// public static $firstVideoElementOnActivity = 'ul#activity-stream > li:first-child li.rtmedia-list-item.media-type-video';
 	public static $firstVideoElementOnActivity = 'ul > li:first-child li.rtmedia-list-item.media-type-video';
 	// public static $activityMediaCommentSelector = 'ul#activity-stream > li:first-child.rtmedia_comment_activity';
-	public static $activityMediaCommentSelector = 'li:first-child.rtmedia_comment_activity';
+	// public static $activityMediaCommentSelector = 'li:first-child.rtmedia_comment_activity';
+	public static $activityMediaCommentSelector = 'li.rtmedia_comment_activity';
 	// public static $activityMediaLikeSelector = 'ul#activity-stream > li:first-child.rtmedia_like_activity';
 	public static $activityMediaLikeSelector = 'li:first-child.rtmedia_like_activity';
 	// public static $groupNameLink = '#groups-dir-list ul#groups-list > li:first-child  a img';
