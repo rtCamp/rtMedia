@@ -1278,6 +1278,7 @@ class RTMediaFormHandler {
 					'key'   => 'buddypress_enableOnComment',
 					'value' => $options['buddypress_enableOnComment'],
 					'desc'  => esc_html__( 'This will allow users to upload media in comment section for originally uploaded media up to 1 level.', 'buddypress-media' ),
+					'id'    => 'buddypress_enableOnComment'
 				),
 				'group'    => 660,
 			),
@@ -1396,6 +1397,24 @@ class RTMediaFormHandler {
 				esc_html__( 'Please Enable BuddyPress Activity Streams to update option', 'buddypress-media' );
 		}
 
+		// Adding `Enable media in comment` dependency on `Allow user to comment on uploaded media` option.
+		if ( empty( $rtmedia->options['general_enableComments'] ) ) {
+
+			$rtmedia_options = $rtmedia->options;
+
+			/**
+			 * Updating settings.
+			 * If `Allow user to comment on uploaded media` is disabled
+			 * Then `Enable media in comment` should also be disabled.
+			 */
+			$rtmedia_options['buddypress_enableOnComment'] = $rtmedia->options['general_enableComments'];
+			rtmedia_update_site_option( 'rtmedia-options', $rtmedia_options );
+
+			// Updating render option arguments.
+			$render_options['buddypress_enableOnComment']['args']['value'] = $rtmedia->options['general_enableComments'];
+			$render_options['buddypress_enableOnComment']['args']['desc']  = esc_html__( 'Please enable \'Allow user to comment on uploaded media\' option in Display tab.', 'buddypress-media' );
+		}
+
 		// Change option description when 'User Groups' component is disabled.
 		if ( ! bp_is_active( 'groups' ) ) {
 			$render_options['rtmedia-enable-on-group']['args']['desc'] =
@@ -1422,6 +1441,16 @@ class RTMediaFormHandler {
 			</script>
 			<?php
 		}
+
+		// Disable `Enable media in comment` if `Allow user to comment on uploaded media` option is not active.
+		if ( empty( $rtmedia->options['general_enableComments'] ) ) {
+			?>
+			<script>
+				jQuery( '#buddypress_enableOnComment' ).prop( "disabled", true );
+			</script>
+			<?php
+		}
+
 		/**
 		 * Disable inputs and change background color to differentiate disabled inputs,
 		 * if 'User Groups' component is disabled in BuddyPress Settings.
