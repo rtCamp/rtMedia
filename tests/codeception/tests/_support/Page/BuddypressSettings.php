@@ -202,6 +202,7 @@ class BuddypressSettings {
 		$I->amOnPage( $url );
 		$I->waitForElement( ConstantsPage::$mediaPageScrollPos, 10 );
 		$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+		$I->wait(2);
 	}
 
 	// firstThumbnailMedia() -> Will click on the first element(media thumbnail) from the list
