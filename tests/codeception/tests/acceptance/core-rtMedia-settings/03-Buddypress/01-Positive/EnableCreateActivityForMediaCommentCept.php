@@ -15,7 +15,7 @@
     $I->wantTo( 'Check if the activity is created for media comments.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$buddypressSettingsUrl );
@@ -67,6 +67,6 @@
     }
 
     $buddypress->gotoActivity();
-    $I->seeElementInDOM( ConstantsPage::$activityMediaCommentSelector );
+    $I->waitForElementVisible( ConstantsPage::$activityMediaCommentSelector, 10 );
 
 ?>

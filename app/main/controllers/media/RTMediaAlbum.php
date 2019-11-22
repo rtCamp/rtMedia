@@ -26,7 +26,7 @@ class RTMediaAlbum {
 	 */
 	public function __construct() {
 		add_action( 'init', array( &$this, 'register_post_types' ), 12 );
-		add_action( 'init', array( &$this, 'rtmedia_album_custom_post_status', 13 ) );
+		add_action( 'init', array( &$this, 'rtmedia_album_custom_post_status' ), 13 );
 		$this->media = new RTMediaMedia();
 	}
 

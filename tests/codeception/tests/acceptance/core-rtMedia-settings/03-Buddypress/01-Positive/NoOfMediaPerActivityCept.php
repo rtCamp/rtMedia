@@ -13,7 +13,7 @@
 	$I->wantTo( 'To set the number media on Activity page while bulk upload.' );
 
 	$loginPage = new LoginPage( $I );
-	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$loginPage->loginAsAdmin();
 
 	$settings = new DashboardSettingsPage( $I );
 
@@ -22,6 +22,8 @@
 	$settings->setValue( ConstantsPage::$numOfMediaLabelActivity, ConstantsPage::$numOfMediaTextboxActivity, ConstantsPage::$numOfMediaPerPageOnActivity );
 
 	$settings->disableDirectUpload();
+
+	$settings->saveSettings();
 
 	$buddypress = new BuddypressSettingsPage( $I );
 	$buddypress->gotoActivity();
@@ -32,11 +34,11 @@
 	$uploadmedia->addStatus( "Bulk Upload from activity" );
 	$uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName, ConstantsPage::$numOfMediaPerPageOnActivity );
 
-	$I->reloadPage();
+	$I->waitForElementNotVisible( ConstantsPage::$postUpdateButton, 10 );
 
 	if ( ConstantsPage::$numOfMediaPerPageOnActivity > 0 ) {
-		$I->waitForElementVisible( ConstantsPage::$mediaPerPageActivitySelector, 10 );
-		$I->seeNumberOfElements( ConstantsPage::$mediaPerPageActivitySelector, ConstantsPage::$numOfMediaPerPageOnActivity );
+		$I->waitForElementVisible( 'div.activity ul.activity-list li div.activity-content ul.rtmedia-list.rtm-activity-media-list.rtmedia-activity-media-length-4 li', 10 );
+		$I->seeNumberOfElements( 'div.activity ul.activity-list li div.activity-content ul.rtmedia-list.rtm-activity-media-list.rtmedia-activity-media-length-4 li', ConstantsPage::$numOfMediaPerPageOnActivity );
 	} else {
 		$temp = 5;
 		$I->seeNumberOfElements( ConstantsPage::$mediaPerPageActivitySelector, $temp );

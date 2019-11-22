@@ -80,6 +80,7 @@ class RTMediaGalleryShortcode {
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
 
+		$upload_max_size = ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M';
 		$params = array(
 			'url'                 => $url,
 			'runtimes'            => 'html5,flash,html4',
@@ -92,7 +93,7 @@ class RTMediaGalleryShortcode {
 					'extensions' => get_rtmedia_allowed_upload_type(),
 				),
 			) ),
-			'max_file_size'       => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
+			'max_file_size'       => $upload_max_size,
 			'multipart'           => true,
 			'urlstream_upload'    => true,
 			'flash_swf_url'       => includes_url( 'js/plupload/plupload.flash.swf' ),
@@ -101,15 +102,13 @@ class RTMediaGalleryShortcode {
 			'multi_selection'     => true,
 			'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
 				'redirect'             => 'no',
+				'redirection'          => 'false',
 				'action'               => 'wp_handle_upload',
 				'_wp_http_referer'     => $request_uri,
 				'mode'                 => 'file_upload',
 				'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ),
 			) ),
-			'max_file_size_msg'   => apply_filters( 'rtmedia_plupload_file_size_msg', min( array(
-				ini_get( 'upload_max_filesize' ),
-				ini_get( 'post_max_size' ),
-			) ) ),
+			'max_file_size_msg'   => apply_filters( 'rtmedia_plupload_file_size_msg', $upload_max_size ),
 		);
 
 		$params = apply_filters( 'rtmedia_modify_upload_params', $params );

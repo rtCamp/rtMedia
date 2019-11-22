@@ -29,11 +29,13 @@ class RTMediaPrivacy {
 			add_filter( 'bp_activity_get_user_join_filter', array( $this, 'activity_privacy_sql_field' ), 10, 6 );
 
 			add_filter( 'bp_use_legacy_activity_query', array( $this, 'enable_buddypress_privacy' ), 10, 3 );
-			add_filter( 'bp_activity_has_more_items', array( $this, 'enable_buddypress_load_more' ), 10, 1 );
 			add_action( 'bp_actions', array( $this, 'rt_privacy_settings_action' ) );
 
 			// show change privacy option in activity meta.
 			add_action( 'bp_activity_entry_meta', array( $this, 'update_activity_privacy_option' ) );
+
+			// To show load more button all the time.
+			add_filter( 'bp_activity_has_more_items', array( $this, 'rtm_bp_activity_has_more_items' ) );
 
 			// Add nonce field to change activity privacy option
 			add_action( 'template_notices', array( $this, 'add_activity_privacy_nonce' ) );
@@ -44,6 +46,17 @@ class RTMediaPrivacy {
 		}
 		add_action( 'friends_friendship_accepted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
 		add_action( 'friends_friendship_deleted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
+	}
+
+	/**
+	 * Show load more all the time.
+	 *
+	 * @param bool $has_more_items Flag for whether to show load more button or not.
+	 *
+	 * @return bool
+	 */
+	public function rtm_bp_activity_has_more_items( $has_more_items ) {
+		return true;
 	}
 
 	/**
@@ -132,12 +145,6 @@ class RTMediaPrivacy {
 			echo esc_html( $status );
 			wp_die();
 		}
-	}
-
-	function enable_buddypress_load_more( $has_more_items ) {
-		global $activities_template;
-
-		return true;
 	}
 
 	function enable_buddypress_privacy( $flag, $method, $func_args ) {

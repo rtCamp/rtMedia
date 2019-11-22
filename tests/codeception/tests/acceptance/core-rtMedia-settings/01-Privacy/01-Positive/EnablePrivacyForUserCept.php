@@ -15,7 +15,8 @@
     $I->wantTo( 'To enable privacy for user.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, ConstantsPage::$saveSession );
+    // $loginPage->loginAsAdmin( ConstantsPage::$userName, new PasswordArgument(ConstantsPage::$password), ConstantsPage::$saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$privacySettingsUrl );

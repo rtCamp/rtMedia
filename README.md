@@ -1,20 +1,20 @@
+# rtMedia for WordPress, BuddyPress and bbPress #
+
+Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
+
+<a href="https://rtcamp.com/?utm_source=github&utm_medium=readme" rel="nofollow"><img src="https://rtcamp.com/wp-content/uploads/2019/04/github-banner@2x.png" alt="Handcrafted Enterprise WordPress Solutions by rtCamp" /></a>
+
+![banner-772x250](https://cloud.githubusercontent.com/assets/8191145/26444356/bb47f150-4159-11e7-997e-b960bca0293d.jpg)
+
 [![Browserstacklogo](https://cloud.githubusercontent.com/assets/8191145/26444146/c166a1b8-4158-11e7-8d8e-78e5f862bbaa.png)](https://browserstack.com)
 
 ![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=MU1JamdmRnppK0hhQy9QMU8wdDJ2MUEyb1ZuS0ljVFQvSHZ6anFvNzUxTT0tLXhUNnliTnZGcE5CcW93N0I1eXdnM3c9PQ==--8c124e667dd0c317618efde1bed2b260000916b6)
 
-![banner-772x250](https://cloud.githubusercontent.com/assets/8191145/26444356/bb47f150-4159-11e7-997e-b960bca0293d.jpg)
 
-# rtMedia for WordPress, BuddyPress and bbPress #
-
-
-* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty), [milindmore22](https://profiles.wordpress.org/milindmore22), [thrijith](https://profiles.wordpress.org/thrijith), [abhijitrakas](https://profiles.wordpress.org/abhijitrakas), [sid177](https://profiles.wordpress.org/sid177), [montu3366](https://profiles.wordpress.org/montu3366), [jashwini](https://profiles.wordpress.org/jashwini), [juhise](https://profiles.wordpress.org/juhise), [ravatparmar](https://profiles.wordpress.org/ravatparmar), [dharmin16](https://profiles.wordpress.org/dharmin16), [malavvasita](https://profiles.wordpress.org/malavvasita)
+* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty), [milindmore22](https://profiles.wordpress.org/milindmore22), [thrijith](https://profiles.wordpress.org/thrijith), [abhijitrakas](https://profiles.wordpress.org/abhijitrakas), [sid177](https://profiles.wordpress.org/sid177), [montu3366](https://profiles.wordpress.org/montu3366), [jashwini](https://profiles.wordpress.org/jashwini), [juhise](https://profiles.wordpress.org/juhise), [ravatparmar](https://profiles.wordpress.org/ravatparmar), [dharmin16](https://profiles.wordpress.org/dharmin16), [malavvasita](https://profiles.wordpress.org/malavvasita), [pooja1210](https://profiles.wordpress.org/pooja1210), [krupajnanda](https://profiles.wordpress.org/krupajnanda), [kanumalivad](https://profiles.wordpress.org/kanumalivad), [surajkumarsingh](https://profiles.wordpress.org/surajkumarsingh), [dishitpala](https://profiles.wordpress.org/dishitpala)
 
 
 * **License:** [GPL v2 or later]( http://www.gnu.org/licenses/gpl-2.0.html)
-
-* **Donate Link:** http://rtcamp.com/donate/
-
-Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
 ## Description ##
 
@@ -46,15 +46,13 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
  8. **[Featured Media](https://rtmedia.io/docs/developers/featured-media/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
  9. **[rtMedia Uploader](https://rtmedia.io/docs/features/upload/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Uploader")** - Use `[rtmedia_uploader]` shortcode or `<?php rtmedia_uploader() ?>` template tag, to show drag-n-drop uploader in any WordPress area (post, page, custom-post, etc).
  10. **[rtMedia Gallery](https://rtmedia.io/docs/features/gallery/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Gallery")** - Display media gallery anywhere on your site using `[rtmedia_gallery]` shortcode or `<?php rtmedia_gallery ?>` template tag.
- 11. **[Upload Terms](https://rtmedia.io/docs/features/upload-terms/)** - Force user to check upload terms and condition checkbox before uploading any media or content.
+ 11. **[Upload Terms](https://rtmedia.io/docs/features/upload-terms/)** - This feature is useful to set terms of services page on website during user upload media on website.
 
 #### Audio/Video Conversion ####
 
 rtMedia has 3 premium solutions to take care of audio/video conversion.
 
- 1. **[Audio/Video Transcoding Service](https://wordpress.org/plugins/transcoder/ "Audio/Video Transcoding Service")** - If free plan is not enough for you, there is monthly subscription service also. Easiest to setup.
- 2. **[FFMPEG-Addon](https://rtmedia.io/products/rtmedia-ffmpeg-addon/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia FFMPEG Addon")** - Requires FFMPEG & Media-Node installed on a VPS/Dedicated server.
- 3. **[Kaltura-Addon](https://rtmedia.io/products/rtmedia-kaltura-add-on/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version")** - Requires a Kaltura.com account or Kaltura-CE or Kaltura-on-Prem server.
+ - **[Audio/Video Transcoding Service](https://wordpress.org/plugins/transcoder/ "Audio/Video Transcoding Service")** - If free plan is not enough for you, there is monthly subscription service also. Easiest to setup.
 
 #### rtMedia Premium Addons ####
 
@@ -102,7 +100,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 * [Roadmap](https://rtmedia.io/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Roadmap page")
 * [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Documentation page")
 * [FAQ](https://rtmedia.io/faq/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's FAQ page")
-* [Support](http://community.rtcamp.com/c/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's support page")
+* [Support](https://rtmedia.io/support/ "Visit rtMedia's support page")
 * [GitHub](https://github.com/rtmediawp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
 * [Translations](https://rtmedia.io/translate/projects/rtmedia?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media) - Please do NOT use Github for translations. Instead Use [this GlotPress project](https://rtmedia.io/translate/projects/rtmedia?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)
 
@@ -148,6 +146,122 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 ## Changelog ##
+
+### 4.5.9 [October 29, 2019] ###
+
+* Enhancement
+	* Add new class on activity page based on the uploaded media type
+
+* FIXED
+	* Post Update button issue with BuddyPress Nouveau template 
+	* Issue when user uploads the media with link in comment on buddypress activity 
+
+### 4.5.8 [August 6, 2019] ###
+
+* FIXED
+    * Duplicate media creation when posted from lightbox and activity creation for media comments kept off from settings
+    * Upload terms and direct upload compatibility while commenting from activity
+    * Overlapped media file name in BuddyPress Legacy template
+    * Issue with uploader container which gets hidden after media upload on activity page
+    * Fix default theme css enqueue for BuddyPress templates.
+    * Minor UI bug Fixes
+
+### 4.5.7 [June 12, 2019] ###
+
+* NEW
+    * Add new filter to remove the media upload button from the activity [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-enable-activity-media-upload/)
+    * Add new filter to change the order of the media and text on the activity page [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-activity-content-html/)
+
+* FIXED
+    * Duplicate media comment issue on Activity page
+    * Add title attribute for Media Likes
+    * Improve UI of Media Page title
+    * Issue of entering text in text area when Direct Upload and Upload terms enabled together
+    * UI of pagination button height and text field
+    * Export/Import button issue in Firefox browser
+    * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1 
+    * Empty space issue for generated activity when media is uploaded without adding text 
+    * Other Errors, Warnings and notices
+    * Group Activity media are not shown in Group Media tab with BuddyPress Nouveau Template
+    * User’s name autosuggestion
+    * Issue with multiple file upload from activity with non admin user account
+
+### 4.5.6 [February 18, 2019] ###
+
+* FIXED
+
+    * Threaded comment and comment count issue with BuddyPress Profile and Group Activity feed.
+    * Duplicate activity feed comment issue.
+    * Edited Media size reflection issue in BuddyPress activity feed.
+
+### 4.5.5 [January 22, 2019] ###
+
+* FIXED
+
+    * Gallery Media search with space in media name.
+    * Add Friend button on media tab and UI fixes.
+    * Masonry UI disorder for media with thumbnail.
+    * UI issues in lightbox view of single media.
+    * Anchor tag issue for activity generated after adding media.
+    * Media upload issue on posting public messages.
+    * UI for Member name in media tab.
+    * Issue with redirect attribute value in uploader shortcode.
+    * Issue with redirect attribute value in uploader shortcode.
+    * Issue with upload terms when sidebar widget is active on activity page.
+    * Issue with ‘rtmedia_no_media_found_message_filter’ functionality.
+
+### 4.5.4 [October 17, 2018] ###
+
+* FIXED
+
+	* Load More button issue with BuddyPress activity feed.
+	* Non authorized pdf files on WordPress uploads directory.
+
+
+### 4.5.3 [October 11, 2018] ###
+
+* FIXED
+
+	 * Default album deletion issue for personal data erase request
+	 * Media privacy issue while editing media under moderation
+	 * Broken media URL with multisite [Doc](https://rtmedia.io/docs/features/upload-media/#activity-stream-for-multisite)
+	 * Lightbox scroll in mobile devices
+	 * The issue with Load more button showing when there are no BuddyPress activities
+	 * Media privacy issue with BuddyPress Nouveau template
+	 * Compatibility of BuddyPress activity media upload section with Nouveau template
+	 * "Read More" link issue on BuddyPress Activity post with the Nouveau template
+	 * Upload terms error message visibility issue with rtMedia uploader using BuddyPress legacy template
+	 * "media_title" attribute issue with uploader shortcode
+	 * Updated correct support link on plugin's support tab
+	 * Disabled Post Update button issue while adding BuddyPress Public Message post
+	 * An issue for the "redirect" attribute used with uploader shortcode
+	 * Warnings and Notices
+
+
+### 4.5.2 [July 11, 2018] ###
+
+* NEW
+
+	 * Added JavaScript hook to handle uploader slide event [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-js-hooks/#rtmediajsuploaderslideaftergalleryreload)
+	 
+* ENHANCEMENT
+
+	 * Added translation support for “Search Media” string
+	 
+* FIXED
+
+	 * PHP notices
+	 * JavaScript issue with Upload terms
+	 * Issue with media privacy and search caused by conditional check for Nouveau template
+	 * Nouveau template issue with the error message of Upload terms in BuddyPress Activity stream
+
+
+### 4.5.1 [June 20, 2018] ###
+
+* FIXED
+
+	 * Empty textbox validation under the terms settings
+	 * Minor bugs
 
 ### 4.5.0 [June 19, 2018] ###
 
@@ -972,7 +1086,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * Admin UI bug fixes
 
 #### 3.5.2 ####
-* Updated dutch translation, thanks to [carry2web] (http://profiles.wordpress.org/carry2web)
+* Updated dutch translation, thanks to [carry2web](http://profiles.wordpress.org/carry2web)
 * Enable / disable media per group
 * User can specify media type to be upload in uploader shortcode
 * Show content of single album using gallery shortcode
@@ -1534,7 +1648,7 @@ Now upload media in comment & fixed rtMedia shortcode pagination along with seve
 
 rtMedia includes [full translation support](https://rtmedia.io/docs/translations/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media). Head over to the [translation project](https://rtmedia.io/translate/projects/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
 
-* [Dutch](https://rtmedia.io/translate/projects/rtmedia/nl/default) translation by [carry2web] (http://profiles.wordpress.org/carry2web)
+* [Dutch](https://rtmedia.io/translate/projects/rtmedia/nl/default) translation by [carry2web](http://profiles.wordpress.org/carry2web)
 * [Italian](https://rtmedia.io/translate/projects/rtmedia/it/default) translation by [Paolo]
 * [Dutch](https://rtmedia.io/translate/projects/rtmedia/nl/default) translation by [rjpj](http://profiles.wordpress.org/rjpj)
 * [Polish](https://rtmedia.io/translate/projects/rtmedia/pl/default) translation by [Polski_Ziom](http://profiles.wordpress.org/polski_ziom)
