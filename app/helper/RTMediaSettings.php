@@ -425,10 +425,10 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 */
 		public function rtmedia_support_intro() {
 			echo '<p>' . esc_html__( 'If your site has some issues due to rtMedia and you want one on one support then you can create a support topic on the ', 'buddypress-media' ) .
-				'<a target="_blank" href="http://community.rtcamp.com/c/rtmedia?utm_source=dashboard&utm_medium=plugin&utm_campaign=rtmedia">' . esc_html__( 'rtMedia Support Forum', 'buddypress-media' ) . '</a>.' .
+				'<a target="_blank" href="https://rtmedia.io/support/">' . esc_html__( 'rtMedia Support Page', 'buddypress-media' ) . '</a>.' .
 				'</p>';
 			echo '<p>' . esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on ', 'buddypress-media' ) .
-				'<a target="_blank" href="https://github.com/rtCamp/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.' .
+				'<a target="_blank" href="https://github.com/rtMediaWP/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.' .
 				'</p>';
 		}
 	}

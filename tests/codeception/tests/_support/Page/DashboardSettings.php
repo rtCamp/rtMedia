@@ -200,4 +200,31 @@ class DashboardSettings {
 			$I->waitForElement( ConstantsPage::$saveMsgSelector, 20 );
 		}
 	}
+
+	// verifyInvalidUrl() -> Will check if the Urls are invalid
+	public function verifyInvalidUrl(){
+
+		$I = $this->tester;
+
+		$linkArray = array( '123', 'http://', 'http://', 'xyz', 'xyz.com', '' );
+
+		$count = count( $linkArray );
+
+		for( $i = 0; $i < $count; $i++ ){
+			self::setValue( ConstantsPage::$termsOfServicePageLinkLabel, ConstantsPage::$termsOfServicePageLinkTextbox, $linkArray[$i] );
+			self::saveSettings( ConstantsPage::$errorMsgSelector );
+		}
+
+	}
+
+	// assertTextboxNotEmpty() -> Will check that 'Link for "Terms of Service" page', 'Terms of Service Message' and 'Error Message' textboxes are not empty
+	public function assertTextboxNotEmpty(){
+
+		$I = $this->tester;
+
+		$I->assertNotEmpty( ConstantsPage::$termsOfServicePageLinkTextbox, $I->grabValueFrom( ConstantsPage::$termsOfServicePageLinkTextbox ) );
+		$I->assertNotEmpty( ConstantsPage::$uploadTermsMsgTextbox, $I->grabValueFrom( ConstantsPage::$uploadTermsMsgTextbox ) );
+	    $I->assertNotEmpty( ConstantsPage::$uploadTermsErrorMsgTextbox, $I->grabValueFrom( ConstantsPage::$uploadTermsErrorMsgTextbox ) );
+
+	}
 }

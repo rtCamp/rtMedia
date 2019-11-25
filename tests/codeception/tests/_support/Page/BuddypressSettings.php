@@ -35,6 +35,8 @@ class BuddypressSettings {
 
 		$I = $this->tester;
 
+		echo ".......before clicking on grp name link.....";
+
 		$I->seeElement( ConstantsPage::$groupNameLink );
 		$I->click( ConstantsPage::$groupNameLink );
 		$I->waitForElement( ConstantsPage::$manageGrpLink, 10 );
@@ -128,6 +130,13 @@ class BuddypressSettings {
 		$I->waitForElementVisible( ConstantsPage::$createAlbumPopup, 10 );
 		$I->seeElement( ConstantsPage::$albumNameTextbox );
 		$I->fillField( ConstantsPage::$albumNameTextbox, $albumName );
+
+		/**
+		 * Testing by addng the album desc from pop up only
+		 */
+		 $I->seeElement( 'textarea#rtmedia_album_description' );
+		 $I->fillField( 'textarea#rtmedia_album_description', 'test album desc123.' );
+
 		$I->seeElement( ConstantsPage::$createAlbumButton );
 		$I->click( ConstantsPage::$createAlbumButton );
 		$I->waitForText( $albumCreationMsg, 20 );
@@ -138,6 +147,20 @@ class BuddypressSettings {
 
 		$I->reloadPage();
 		$I->waitForElement( ConstantsPage::$profilePicture, 10 );
+	}
+
+	// checkAlbumDesc() -> this function is to verify if the album description appears or not.
+	public function checkAlbumDesc() {
+
+		$I = $this->tester;
+		echo "Inside edit album function";
+
+		$I->seeElement( ConstantsPage::$firstAlbum );
+		$I->click( ConstantsPage::$firstAlbum );
+
+		$I->waitForElement( ConstantsPage::$albumDescSelector, 10);
+		// $I->seeElementInDOM( ConstantsPage::$albumDescSelector );
+
 	}
 
 	// editAlbumDesc() -> Will edit the desc for created new album
@@ -157,26 +180,15 @@ class BuddypressSettings {
 		$t = $tempUri . 'edit/';
 		echo $t;
 		$I->amOnPage( $t );
-		$I->waitForElement( ConstantsPage::$profilePicture, 10 );
 
-		$I->waitForElementVisible( ConstantsPage::$scrollSelector, 20 );
-		$I->scrollTo( ConstantsPage::$scrollSelector );
-
-		$I->seeElement( ConstantsPage::$albumDescTeaxtarea );
-		$I->fillField( ConstantsPage::$albumDescTeaxtarea, $albumDesc );
+		$I->seeElementInDOM( ConstantsPage::$albumDescTeaxtarea );
+		$I->executeJS("$('textarea.rtmedia-desc-textarea').append('this text is for album description.');");
 		$I->seeElement( ConstantsPage::$saveAlbumButton );
-		$I->click( ConstantsPage::$saveAlbumButton );
+		$I->executeJS( "jQuery('input.rtmedia-save-album').click();" );
 
-		$I->wait( 5 );
 		$I->reloadPage();
-		$I->scrollTo( ConstantsPage::$scrollSelector );
 
 		$I->amOnPage( $tempUri );
-		$I->wait( 5 );
-		$I->scrollTo( ConstantsPage::$scrollSelector );
-
-		echo "After scroll";
-
 		$I->seeElementInDOM( ConstantsPage::$albumDescSelector );
 	}
 
@@ -185,10 +197,12 @@ class BuddypressSettings {
 
 		$I = $this->tester;
 
-		$url = 'members/' . ConstantsPage::$userName;
+		// $url = 'members/' . ConstantsPage::$userName;
+		$url = 'members/' . ConstantsPage::$userName. '/activity';
 		$I->amOnPage( $url );
 		$I->waitForElement( ConstantsPage::$mediaPageScrollPos, 10 );
 		$I->scrollTo( ConstantsPage::$mediaPageScrollPos );
+		$I->wait(2);
 	}
 
 	// firstThumbnailMedia() -> Will click on the first element(media thumbnail) from the list

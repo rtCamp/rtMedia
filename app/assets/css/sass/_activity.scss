@@ -73,11 +73,32 @@
 
 }
 
-// remove border and padding
-#buddypress ul.rtmedia-list li {
-	border-bottom: 0;
-	padding-bottom: 0;
+#buddypress {
+    // Remove border and padding.
+    ul.rtmedia-list {
+        li {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+    }
+
+	// Fix UI for media pl-upload preview.
+	.activity {
+		#activity-stream {
+			li.plupload_queue_li {
+				padding: 5px;
+				.plupload_file_name {
+					.rtm-upload-edit-desc-wrapper{
+						textarea {
+							width: 100px;
+						}
+					}
+				}
+			}
+		}
+	}
 }
+
 
 // hide unnecessory div
 .rtmedia-activity-container {
@@ -211,6 +232,28 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 
 }
 
+.bp-nouveau {
+
+	.activity-update-form {
+
+		.rtmedia-uploader-div {
+			margin-left: 8.5%;
+		}
+
+		.rtmedia-plupload-container {
+			width: 25%;
+		}
+
+		.rtmedia-upload-terms #rtmedia_upload_terms_conditions {
+			margin-left: 20px;
+		}
+
+		#aw-whats-new-submit {
+			margin-top: 15px;
+		}
+	}
+}
+
 .ac-form .rtmedia-uploader-div, .rt_media_comment_form .rtmedia-uploader-div {
   opacity: 1;
   display: block;
@@ -229,4 +272,29 @@ a.rtmedia-comment-link{
 
 a.rtmedia-comment-link.rtmedia-comments-link{
 	display: initial;
+}
+
+// MediaElement.js poster size fix.
+.mejs-poster.mejs-layer {
+    height: 0!important;
+}
+
+// Media title fix on legacy.
+.bp-legacy {
+	#buddypress {
+		#activity-stream {
+			.rtmedia-item-title{
+				margin: 0px;
+				p {
+					margin : 0px;
+				}
+			}
+
+			.media-type-video {
+				.rtmedia-item-title{
+					margin: -20px;
+				}
+			}
+		}
+	}
 }

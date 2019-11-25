@@ -15,7 +15,7 @@
 					<ul class="rtm-tabs clearfix">
 						<li class="active">
 							<a href="#panel1">
-								<i class='dashicons dashicons-edit rtmicon'></i>
+								<i class='dashicons dashicons-edit'></i>
 								<?php esc_html_e( 'Details', 'buddypress-media' ); ?>
 							</a>
 						</li>
@@ -62,7 +62,8 @@
 		?>
 		<p class="rtmedia-no-media-found">
 			<?php
-			apply_filters( 'rtmedia_no_media_found_message_filter', esc_html_e( 'Sorry !! There\'s no media found for the request !!','buddypress-media'  ) );
+			$message = apply_filters( 'rtmedia_no_media_found_message_filter', 'Sorry !! There\'s no media found for the request !!' );
+			echo esc_html__( $message, 'buddypress-media' );
 			?>
 		</p>
 		<?php

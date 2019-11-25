@@ -251,7 +251,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						if ( is_dir( $template_path . DIRECTORY_SEPARATOR . $value ) ) {
 							$sub_files = $this->rtmedia_scan_template_files( $template_path . DIRECTORY_SEPARATOR . $value );
 							foreach ( $sub_files as $sub_file ) {
-								$rt_to_dir_paths	= RTMediaTemplate::locate_template( substr( $sub_file, 0, ( count( $sub_file ) - 5 ) ) );
+								$rt_to_dir_paths	= RTMediaTemplate::locate_template( str_replace( '.php', '', $sub_file ) );
 								$rt_to_dir_path		= str_replace( '//', '/', $rt_to_dir_paths );
 								$result[]			= str_replace( ABSPATH . 'wp-content/', '', $rt_to_dir_path );
 							}
@@ -458,14 +458,14 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					$content .= '<p>' .
 						sprintf(
 							esc_html__( 'If your site has some issues due to rtMedia and you want support, feel free to create a support topic on %s', 'buddypress-media' ),
-							'<a target="_blank" href="http://community.rtcamp.com/c/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">' . esc_html__( 'Community Forum', 'buddypress-media' ) . '</a>.'
+							'<a target="_blank" href="https://rtmedia.io/support/">' . esc_html__( 'rtMedia Support Page', 'buddypress-media' ) . '</a>.'
 						) .
 						'</p>';
 
 					$content .= '<p>' .
 						sprintf(
 							esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on %s', 'buddypress-media' ),
-							'<a target="_blank" href="https://github.com/rtCamp/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.'
+							'<a target="_blank" href="https://github.com/rtMediaWP/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.'
 						) .
 						'</p>';
 
@@ -487,7 +487,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							       for="name"><?php esc_html_e( 'Name', 'buddypress-media' ); ?></label>
 							<input class="bp-media-input" id="name" type="text" name="name" value="" required/>
 							<span class="rtm-tooltip">
-								<i class="dashicons dashicons-info rtmicon"></i>
+								<i class="dashicons dashicons-info"></i>
 								<span class="rtm-tip">
 									<?php esc_html_e( 'Use actual user name which used during purchased.', 'buddypress-media' ); ?>
 								</span>
@@ -499,7 +499,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							       for="email"><?php esc_html_e( 'Email', 'buddypress-media' ); ?></label>
 							<input id="email" class="bp-media-input" type="text" name="email" value="" required/>
 							<span class="rtm-tooltip">
-								<i class="dashicons dashicons-info rtmicon"></i>
+								<i class="dashicons dashicons-info"></i>
 								<span class="rtm-tip">
 									<?php esc_html_e( 'Use email id which used during purchased', 'buddypress-media' ); ?>
 								</span>
@@ -543,7 +543,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							       for="subject"><?php esc_html_e( 'Attachement', 'buddypress-media' ); ?></label>
 							<input id="debuglog" class="bp-media-input" type="file" name="debuglog" />
 							<span class="rtm-tooltip">
-								<i class="dashicons dashicons-info rtmicon"></i>
+								<i class="dashicons dashicons-info"></i>
 								<span class="rtm-tip">
 									<?php esc_html_e( 'Allowed file types are : images, documents and texts.', 'buddypress-media' ); ?>
 								</span>

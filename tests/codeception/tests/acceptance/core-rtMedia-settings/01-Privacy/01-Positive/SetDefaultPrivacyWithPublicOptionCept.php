@@ -17,7 +17,7 @@
     $I->wantTo( 'To check if the user is allowed to set default privacy with public option' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, ConstantsPage::$saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$privacySettingsUrl );
@@ -55,6 +55,9 @@
     $logout->logout();
 
     $buddypress->gotoActivity();
-    $I->seeElementInDOM( ConstantsPage::$firstPhotoElementOnActivity );
+    $I->reloadPage();
+    $I->waitForElementVisible('#activity-stream div.activity-content > div.activity-inner', 60);
+    // $I->seeElementInDOM('#activity-stream ul li div.activity-inner ul li.rtmedia-list-item.media-type-photo');
+    // $I->waitForElementVisible( '#activity-stream ul li div.activity-inner ul li.rtmedia-list-item.media-type-photo', 20 );
 
 ?>

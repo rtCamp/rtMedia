@@ -326,7 +326,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access public
 	 *
-	 * @param  array $args arguments to create file input control.
+	 * @param  array $args Arguments to create file input control.
 	 *
 	 * @return void
 	 *
@@ -347,6 +347,37 @@ class RTMediaFormHandler {
 		$fileObj = new rtForm();
 		$fileObj->display_file_input( $args );
 	}
+
+	/**
+	 * Show rtmedia input file in admin options.
+	 *
+	 * @access static
+	 *
+	 * @param  array $args Arguments to create file input control for default thumbnail generator settings.
+	 *
+	 * @return void
+	 */
+	public static function inputfile( $args ) {
+		global $rtmedia;
+		$options = $rtmedia->options;
+
+		$defaults = array(
+			'key'  => '',
+			'desc' => '',
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		if ( ! empty( $args['key'] ) ) {
+			$args['name'] = $args['key'];
+		}
+
+		$args['value'] = $args['value'];
+
+		$num_obj = new rtForm();
+		$num_obj->display_inputfile( $args );
+	}
+
 
 	/**
 	 * extract settings.
@@ -850,7 +881,7 @@ class RTMediaFormHandler {
 								if ( 'other' !== $key ) {
 									?>
 									<span class="rtm-tooltip rtm-extensions">
-										<i class="dashicons dashicons-info rtmicon"></i>
+										<i class="dashicons dashicons-info"></i>
 										<span class="rtm-tip">
 											<strong><?php echo esc_html__( 'File Extensions', 'buddypress-media' ); ?></strong><br/>
 											<hr/>
@@ -1537,7 +1568,7 @@ class RTMediaFormHandler {
 						<span
 							class="rtm-field-wrap"><?php call_user_func( $option['callback'], $option['args'] ); ?></span>
 						<span class="rtm-tooltip">
-							<i class="dashicons dashicons-info rtmicon"></i>
+							<i class="dashicons dashicons-info"></i>
 							<span class="rtm-tip">
 								<?php echo wp_kses( ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA', array(
 									'a' => array(

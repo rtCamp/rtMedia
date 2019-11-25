@@ -9,14 +9,15 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
-    $allowed = false;
-    $numOfMedia = 1;
+    // $isMediaSupported = false;
+    // $allowed = true;
+    // $numOfMedia = 1;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'Disable upload for music media types' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$typesSettingsUrl );
@@ -36,10 +37,7 @@
 
     $uploadmedia = new UploadMediaPage( $I );
     $uploadmedia->addStatus( "Testing when Music Media Types are not allowed." );
-    $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName, $numOfMedia, $allowed );
 
-    $I->reloadPage();
+    $uploadmedia->uploadMediaFromActivityWhenMediaFormatNotSupported( ConstantsPage::$audioName );
 
-    $I->dontSeeElementInDOM( ConstantsPage::$firstMusicElementOnActivity );
-    echo nl2br( "Audio is not uploaded.. \n" );
 ?>
