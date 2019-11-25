@@ -150,7 +150,7 @@ module.exports = function ( grunt ) {
 						poedit: true, // Includes common Poedit headers.
 						'Last-Translator': 'rtMedia <rtmedia@rtcamp.com>',
 						'Language-Team': 'rtMedia <rtmedia@rtcamp.com>',
-						'report-msgid-bugs-to': 'http://community.rtcamp.com/c/rtmedia/',
+						'report-msgid-bugs-to': 'https://rtmedia.io/support/',
 						'x-poedit-keywordslist': true // Include a list of all possible gettext functions.
 					},
 					type: 'wp-plugin', // Type of project (wp-plugin or wp-theme).

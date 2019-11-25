@@ -882,16 +882,23 @@ jQuery( document ).ready( function ( $ ) {
 			data.append( key, value );
 		});
 
-		jQuery.ajax ({
-			url: rtmedia_fileupload_url,
+		// Append nonce.
+		var rtmedia_admin_upload_nonce = jQuery( '#rtmedia_admin_upload_nonce' ).val();
+		if ( 'undefined' !== typeof rtmedia_admin_upload_nonce && '' !== rtmedia_admin_upload_nonce ) {
+			data.append( 'rtmedia_admin_upload_nonce', rtmedia_admin_upload_nonce );
+		}
+
+		// Add upload action.
+		data.append( 'action', 'rtmedia_admin_upload' );
+
+		jQuery.ajax({
+			url: rtmedia_admin_ajax,
 			type: 'POST',
 			data: data,
 			cache: false,
-			dataType: 'json',
 			processData: false,
 			contentType: false,
 			success: function( data ) {
-
 				if ( data.hasOwnProperty('rtm_response') && data.hasOwnProperty('rtm_response_msg') ) {
 					jQuery('#rtm-setting-msg').remove();
 					var setting_message = jQuery( '<div/>', {
@@ -958,6 +965,7 @@ jQuery( document ).ready( function ( $ ) {
 			var downloadAnchorNode = document.createElement( 'a' );
 			downloadAnchorNode.setAttribute( 'href', dataStr );
 			downloadAnchorNode.setAttribute( 'download', 'rtm-settings.json' );
+			jQuery( 'body' ).append( downloadAnchorNode );
 			downloadAnchorNode.click();
 			downloadAnchorNode.remove();
 		} );

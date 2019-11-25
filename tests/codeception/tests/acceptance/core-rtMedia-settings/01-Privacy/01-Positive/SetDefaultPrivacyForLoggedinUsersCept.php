@@ -17,7 +17,7 @@
     $I->wantTo( 'To set default privacy for logged in user.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password, ConstantsPage::$saveSession );
+    $loginPage->loginAsAdmin( ConstantsPage::$saveSession );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$privacySettingsUrl );
@@ -51,10 +51,12 @@
     $uploadmedia->addStatus( "Upload from activity to test privacy for Logged-in users." );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName, $numOfMedia );
 
+    $I->reloadPage();
+
     $logout = new LogoutPage( $I );
     $logout->logout();
 
     $buddypress->gotoActivity();
-    $I->dontSeeElementInDOM( ConstantsPage::$firstPhotoElementOnActivity );
+    $I->waitForElementNotVisible('#activity-stream ul li div.activity-inner ul li.rtmedia-list-item', 20 );
 
 ?>

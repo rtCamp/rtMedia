@@ -82,7 +82,19 @@
 				margin-top: 5px !important;
 			}
 		}
+
+		.wp-picker-input-wrap {
+			label {
+				display: inline;
+			}
+		}
+
+		.wp-picker-clear {
+			margin-left : 5px;
+		}
+
 	}
+
 
 	textarea,
 	select,
@@ -248,6 +260,23 @@
 	position: absolute;
 	top: -5px;
 }
+
+.rtm-field-wrap {
+	max-width: 92%;
+	position: relative;
+	overflow: hidden;
+	display: inline-block;
+  }
+
+ .rtm-field-wrap input[type=file] {
+	font-size: 100px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0;
+	width: 75px;
+	height: 24px;
+  }
 
 // Types table needs different styles
 #rtmedia-types {

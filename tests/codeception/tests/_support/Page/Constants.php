@@ -18,7 +18,7 @@ class Constants {
 	public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
 	public static $customCssEmptyValue = '';
 	public static $numOfMediaPerPage = '2';
-	public static $numOfMediaPerPageOnActivity = '2';
+	public static $numOfMediaPerPageOnActivity = '4';
 	public static $minValue = '1';
 	public static $thumbnailWidth = '150';
 	public static $thumbnailHeight = '150';
@@ -33,6 +33,8 @@ class Constants {
 	public static $activityMusicPlayerWidth = '350';
 	public static $singleMusicPlayerWidth = '600';
 	public static $imgQualityValue = '80';
+	public static $termsOfServicePageLinkValue = 'https://www.google.co.in/';
+	public static $privacyMessageValue = 'This privacy message note';
 
 	// URLs to target setting tabs
 	public static $rtMediaSettingsUrl = '/wp-admin/admin.php?page=rtmedia-settings';
@@ -83,6 +85,11 @@ class Constants {
 	public static $strEnableUsageDataTrackingLabel = 'Allow usage data tracking';
 	public static $adminbarMenuLabel = 'Admin bar menu integration';
 	public static $footerLinkLabel = 'Add a link to rtMedia in footer';
+	public static $activityUploadTermsLabel = 'Show "Terms of Service" checkbox on activity screen';
+    public static $mediaUploadTermsLabel = 'Show "Terms of Service" checkbox on upload screen';
+    public static $termsOfServicePageLinkLabel = 'Link for "Terms of Service" page';
+	public static $showPrivacyMessageOnWebsiteLabel = 'Show "Privacy Message" on website';
+	public static $privacyMesLabel = 'Privacy Message';
 
 	// Checkbox, Textbox and Radio buttons selectors
 	public static $commentCheckbox = 'input[name="rtmedia-options[general_enableComments]"]';
@@ -153,6 +160,14 @@ class Constants {
 	public static $privacyTab = 'a#tab-rtmedia-privacy';
 	public static $customCssTab = 'a#tab-rtmedia-custom-css-settings';
 	public static $otherSettingsTab = 'a#tab-rtmedia-general';
+	public static $activityUploadTermsCheckbox = 'input[name="rtmedia-options[activity_enable_upload_terms]"]';
+	public static $mediaUploadTermsCheckbox = 'input[name="rtmedia-options[general_enable_upload_terms]"]';
+	public static $termsOfServicePageLinkTextbox = 'input[name="rtmedia-options[general_upload_terms_page_link]"]';
+	public static $scrollPosForOtherSettingsTab = 'a#tab-rtmedia-display';
+	public static $uploadTermsMsgTextbox = 'input[name="rtmedia-options[general_upload_terms_message]"]';
+	public static $uploadTermsErrorMsgTextbox = 'input[name="rtmedia-options[general_upload_terms_error_message]"]';
+	public static $privacyMessageCheckbox = 'input[name="rtmedia-options[general_upload_terms_show_pricacy_message]"]';
+	public static $privacyMessageTextarea = 'textarea[name="rtmedia-options[general_upload_terms_privacy_message]"]';
 
 	// Frontend selectors
 	public static $photoLink = 'a#rtmedia-nav-item-photo';
@@ -180,9 +195,9 @@ class Constants {
 	public static $privacyDropdown = 'select#rtSelectPrivacy';
 	public static $mediaPerPageActivitySelector = 'ul#activity-stream > li:first-child ul li';
 	public static $mediaPerPageOnMediaSelector = 'ul.rtm-gallery-list li';
-	public static $groupListSelector = 'div#groups-dir-list > ul#groups-list li';
-	public static $createGroupLink = 'ul li#group-create-nav';
-	public static $createGroupTabs = 'div#group-create-tabs';
+	public static $groupListSelector = 'ul#groups-list li';
+	public static $createGroupLink = '.group-create';
+	public static $createGroupTabs = '#group-create-tabs';
 	public static $groupNameTextbox = 'input#group-name';
 	public static $groupDescTextarea = 'textarea#group-desc';
 	public static $createGroupButton = 'input#group-creation-create';
@@ -223,7 +238,8 @@ class Constants {
 	public static $mediaLikeCheckboxLabel = 'Enable likes for media';
 	public static $mediaLikeCheckbox = 'input[name="rtmedia-options[general_enableLikes]"]';
 	public static $likeButton = '.rtmedia-like';
-	public static $uploadFromActivity = 'div#whats-new-options div input[type="file"]';
+	// public static $uploadFromActivity = 'div#whats-new-options div input[type="file"]';
+	public static $uploadFromActivity = '#rtmedia-whts-new-upload-container div input[type="file"]';
 	public static $whatIsNewTextarea = '#whats-new';
 	public static $postUpdateButton = 'input#aw-whats-new-submit';
 	public static $fileNotSupportedSelector = '.dashicons-info';
@@ -236,12 +252,25 @@ class Constants {
 	public static $commentTextArea = '#comment_content';
 	public static $commentSubmitButton = '.rt_media_comment_submit';
 	public static $likeInfoSelector = '.rtm-like-comments-info';
-	public static $firstMusicElementOnActivity = 'ul#activity-stream > li:first-child li.rtmedia-list-item.media-type-music';
-	public static $firstPhotoElementOnActivity = 'ul#activity-stream > li:first-child li.rtmedia-list-item.media-type-photo';
-	public static $firstVideoElementOnActivity = 'ul#activity-stream > li:first-child li.rtmedia-list-item.media-type-video';
-	public static $activityMediaCommentSelector = 'ul#activity-stream > li:first-child.rtmedia_comment_activity';
-	public static $activityMediaLikeSelector = 'ul#activity-stream > li:first-child.rtmedia_like_activity';
-	public static $groupNameLink = '#groups-dir-list ul#groups-list > li:first-child  a img';
+	// public static $firstMusicElementOnActivity = 'ul#activity-stream > li:first-child li.rtmedia-list-item.media-type-music';
+	public static $firstMusicElementOnActivity = 'ul > li:first-child li.rtmedia-list-item.media-type-music';
+	// public static $firstPhotoElementOnActivity = 'ul#activity-stream > li:first-child li.rtmedia-list-item.media-type-photo';
+	public static $firstPhotoElementOnActivity = 'ul > li:first-child li.rtmedia-list-item.media-type-photo';
+	// public static $firstVideoElementOnActivity = 'ul#activity-stream > li:first-child li.rtmedia-list-item.media-type-video';
+	public static $firstVideoElementOnActivity = 'ul > li:first-child li.rtmedia-list-item.media-type-video';
+	// public static $activityMediaCommentSelector = 'ul#activity-stream > li:first-child.rtmedia_comment_activity';
+	public static $activityMediaCommentSelector = 'li:first-child.rtmedia_comment_activity';
+	// public static $activityMediaCommentSelector = 'li.rtmedia_comment_activity';
+	// public static $activityMediaLikeSelector = 'ul#activity-stream > li:first-child.rtmedia_like_activity';
+	public static $activityMediaLikeSelector = 'li:first-child.rtmedia_like_activity';
+	// public static $groupNameLink = '#groups-dir-list ul#groups-list > li:first-child  a img';
+	public static $groupNameLink = 'ul#groups-list > li:first-child a';
+	public static $numOfMedia = 1;
+    public static $uploadTermsCheckbox = 'input[name="rtmedia_upload_terms_conditions"]';
+    public static $alertMessageClass = '.rt_alert_msg';
+	public static $errorMsgSelector = '.error_msg';
+	public static $siteWidePrivacyNoticeSelector = 'div.privacy_message_wrapper';
+	public static $closePrivacyNoticeSelector = '#close_rtm_privacy_message';
 
 	// Custom Messages
 	public static $enabledSettingMsg = "Setting is already enabled.";

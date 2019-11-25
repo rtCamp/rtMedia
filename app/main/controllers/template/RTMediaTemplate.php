@@ -733,6 +733,9 @@ class RTMediaTemplate {
 						'comment_sync',
 					), 10, 2 );
 
+					// Remove duplicate media from activity.
+					remove_filter( 'bp_activity_content_before_save', array( $rtmedia_buddypress_activity, 'bp_activity_content_before_save' ) );
+
 					if ( function_exists( 'bp_activity_new_comment' ) ) {
 						/* comment content add to new */
 					  	$activity_content = $comment_content_old;

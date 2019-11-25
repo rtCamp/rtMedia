@@ -48,10 +48,10 @@ class RTMediaUploadView {
 			} elseif ( is_rtmedia_album_enable() && $rtmedia_query && is_rtmedia_gallery() ) {
 
 				if ( isset( $rtmedia_query->query['context'] ) && 'profile' === $rtmedia_query->query['context'] ) {
-					$album = '<span> <label> <i class="dashicons dashicons-format-gallery rtmicon"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select></span>';
+					$album = '<span> <label> <i class="dashicons dashicons-format-gallery"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select></span>';
 				}
 				if ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
-					$album = '<span> <label> <i class="dashicons dashicons-format-gallery rtmicon"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list() . '</select></span>';
+					$album = '<span> <label> <i class="dashicons dashicons-format-gallery"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list() . '</select></span>';
 				}
 			}
 		}
@@ -61,7 +61,26 @@ class RTMediaUploadView {
 			|| ( isset( $rtmedia_query->is_upload_shortcode ) && ! isset( $this->attributes['privacy'] ) )
 		) {
 			if ( ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) || ( function_exists( 'bp_is_groups_component' ) && bp_is_groups_component() ) ) {
-				$group_status         = bp_get_group_status();
+				// bp_get_group_status() is always reurning NULL.
+				// So fetched data from DB and assigned to media.
+				global $wpdb;
+
+				// BP Groups tablename.
+				$table_name = $wpdb->prefix . 'bp_groups';
+				// Will fetch ID of current group.
+				$group_id = bp_get_current_group_id();
+
+				// Use cached data for group status.
+				$group_status = get_transient( 'group_status_' . $group_id );
+
+				if ( false === $group_status ) {
+					// Query to fetch current group's privacy status.
+					$group_status = $wpdb->get_var( 'SELECT `status` FROM ' . $table_name . ' WHERE id = ' . $group_id );
+
+					// Set data in transient for better performance.
+					set_transient( 'group_status_' . $group_id, $group_status );
+				}
+
 				$privacy_levels_array = array(
 					'public'  => 0,
 					'private' => 20,
@@ -75,7 +94,7 @@ class RTMediaUploadView {
 				$up_privacy = new RTMediaPrivacy( false );
 				$up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy' );
 				if ( $up_privacy ) {
-					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility rtmicon'></i>" . esc_html__( 'Privacy:', 'buddypress-media' ) . '</label>' . $up_privacy . '</span>';
+					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility'></i>" . esc_html__( 'Privacy:', 'buddypress-media' ) . '</label>' . $up_privacy . '</span>';
 				}
 			}
 		}
@@ -87,7 +106,7 @@ class RTMediaUploadView {
 				'content' => '<div class="rtm-upload-tab-content" data-id="rtm-upload-tab">'
 					. apply_filters( 'rtmedia_uploader_before_select_files', '' )
 					. '<div class="rtm-select-files"><input id="' . apply_filters( 'rtmedia_upload_button_id', 'rtMedia-upload-button' ) . '" value="' . esc_attr__( 'Select your files', 'buddypress-media' ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
-					. '<span class="rtm-seperator">' . esc_html__( 'or', 'buddypress-media' ) . '</span><span class="drag-drop-info">' . esc_html__( 'Drop your files here', 'buddypress-media' ) . '</span> <i class="rtm-file-size-limit rtmicon-info-circle rtmicon-fw"></i></div>'
+					. '<span class="rtm-seperator">' . esc_html__( 'or', 'buddypress-media' ) . '</span><span class="drag-drop-info">' . esc_html__( 'Drop your files here', 'buddypress-media' ) . '</span> <i class="rtm-file-size-limit dashicons dashicons-info"></i></div>'
 					. apply_filters( 'rtmedia_uploader_after_select_files', '' )
 					. '</div>',
 			),

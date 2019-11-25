@@ -37,7 +37,7 @@ if ( ! $rt_ajax_request ) {
 			//if it is a buddypress member profile
 			?>
 			<?php do_action( 'bp_before_member_home_content' ); ?>
-		<div id="item-header" role="complementary">
+		<div id="item-header" role="complementary" data-bp-item-id="<?php echo esc_attr( bp_displayed_user_id() ); ?>" data-bp-item-component="members" class="users-header single-headers">
 
 		<?php
 		/**
@@ -96,7 +96,7 @@ if ( ! $rt_ajax_request ) {
 	 */
 	do_action( 'bp_before_group_home_content' ); ?>
 
-	<div id="item-header" role="complementary">
+	<div id="item-header" role="complementary" data-bp-item-id="<?php bp_group_id(); ?>" data-bp-item-component="groups" class="groups-header single-headers">
 
 		<?php
 		/**

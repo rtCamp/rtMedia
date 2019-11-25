@@ -547,8 +547,11 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
 			 * Added by checking the code from "wp-admin/includes/media.php:2740".
 			 * Because in media library, it was not breaking.
+			 * 
+			 * Add timestamp to resolve conflict with cache image.
 			 */
-			$html = "<img src='" . set_url_scheme( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+			$html = "<img src='" . set_url_scheme( $src[0]. '?' . time() ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+
 		} elseif ( 'video' === $rtmedia_media->media_type ) {
 			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 			$height = $rtmedia->options['defaultSizes_video_singlePlayer_height'];
@@ -669,7 +672,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 		global $rtmedia;
 
 		// Getting the extension of the uploaded file
-		$extension = rtmedia_get_extension();
+		$extension = rtmedia_get_extension( $media_object->media_id );
 
 		// Checking if custom thumbnail for this file extension is set or not
 		if ( isset( $rtmedia->allowed_types[ $media_object->media_type ] ) && isset( $rtmedia->allowed_types[ $media_object->media_type ]['ext_thumb'] ) && isset( $rtmedia->allowed_types[ $media_object->media_type ]['ext_thumb'][ $extension ] ) ) {
@@ -690,6 +693,9 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 	}
 
 	$src = apply_filters( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
+
+	//Added timestamp because conflict with cache image.
+	$src = $src . '?' . time();
 
 	if ( true === $recho ) {
 		echo set_url_scheme( $src );
@@ -1312,7 +1318,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 	$html .= '<div class="rtmedia-comment-extra">' . apply_filters( 'rtmedia_comment_extra', '', $comment ) . '</div>';
 
 	if ( is_rt_admin() || ( isset( $comment['user_id'] ) && ( get_current_user_id() === intval( $comment['user_id'] ) || intval( $rtmedia_media->media_author ) === get_current_user_id() ) ) || apply_filters( 'rtmedia_allow_comment_delete', false ) ) { // show delete button for comment author and admins
-		$html .= '<i data-id="' . esc_attr( $comment['comment_ID'] ) . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt rtmicon" title="' . esc_attr__( 'Delete Comment', 'buddypress-media' ) . '"></i>';
+		$html .= '<i data-id="' . esc_attr( $comment['comment_ID'] ) . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt" title="' . esc_attr__( 'Delete Comment', 'buddypress-media' ) . '"></i>';
 	}
 
 	$html .= '<div class="clear"></div></div></div></li>';
@@ -2566,9 +2572,10 @@ function rtmedia_edit_media_privacy_ui() {
 	$privacymodel = new RTMediaPrivacy( false );
 	$privacy      = $privacymodel->select_privacy_ui( $echo = false );
 
+	// @todo: strict standard error
 	if ( isset( $rtmedia_query->media ) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media['0'] ) ) {
 		if ( isset( $rtmedia_query->media['0']->privacy ) && $rtmedia_query->media['0']->privacy != '80' ) {
-			if ( $privacy  && empty( $comment_media ) ) {
+			if ( $privacy && empty( $comment_media ) ) {
 				return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . esc_html__( 'Privacy : ', 'buddypress-media' ) . '</label>' . $privacy . '</div>';
 			}
 		}
@@ -2879,7 +2886,7 @@ function show_rtmedia_like_counts() {
 		}
 		?>
 		<div class='rtmedia-like-info <?php echo $class; ?>'>
-			<i class="rtmicon-thumbs-up rtmicon-fw"></i>
+			<i class="dashicons dashicons-thumbs-up"></i>
 			<span class="rtmedia-like-counter-wrap">
 				<?php
 				if ( class_exists( 'RTMediaLike' ) && function_exists( 'rtmedia_who_like_html' ) ) {
@@ -2897,69 +2904,76 @@ function show_rtmedia_like_counts() {
 }
 
 
-
 /**
  * Print rtmedia who like html
  *
- * @param       int          $like_count ( Total like Count )
- * @param      bool|string  $user_like_it ( login user like it or not )
+ * @param       int        $like_count   ( Total like Count )
+ * @param      bool|string $user_like_it ( login user like it or not )
  *
  * @return      string  HTML
  */
 if ( ! function_exists( 'rtmedia_who_like_html' ) ) {
-	function rtmedia_who_like_html( $like_count, $user_like_it ) {
-		$like_count = ( $like_count ) ? $like_count : false;
-		$user_like_it = ( $user_like_it ) ? true : false;
+	function rtmedia_who_like_html( $like_count = false, $user_like_it = false ) {
 		$like_count_new = $like_count;
-		$html = '';
+		$html           = '';
 		if ( $like_count == 1 && $user_like_it ) {
 			/**
-			 * rtmedia you like text
-			 * @param $html TEXT
-			 * @param int $like_count Total Like
+			 * Rtmedia you like text
+			 *
+			 * @param     $html         TEXT
+			 * @param int $like_count   Total Like
 			 * @param int $user_like_it User Like it or Not
+			 *
 			 * @return html TEXT to  display
-			*/
+			 */
 			$html = apply_filters( 'rtmedia_like_html_you_only_like', esc_html__( 'You like this', 'buddypress-media' ), $like_count, $user_like_it );
 		} elseif ( $like_count ) {
 			if ( $like_count > 1 && $user_like_it ) {
 				/**
-				* rtmedia you and
-				 * @param $html TEXT
-				 * @param int $like_count Total Like
+				 * Rtmedia you and
+				 *
+				 * @param     $html         TEXT
+				 * @param int $like_count   Total Like
 				 * @param int $user_like_it User Like it or Not
+				 *
 				 * @return html TEXT to  display
-				*/
+				 */
 				$html .= apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html__( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
 				$like_count_new--;
 			}
 
 			/**
-			 * rtmedia Disaply count
-			 * @param int $like_count Total Like
+			 * Rtmedia Disaply count
+			 *
+			 * @param int $like_count   Total Like
 			 * @param int $user_like_it User Like it or Not
+			 *
 			 * @return INT Count to  display
-			*/
+			 */
 			$html .= apply_filters( 'rtmedia_like_html_you_and_more_like', $like_count, $user_like_it );
 
 			/**
-			 * rtmedia person or people likes it
-			 * @param $html TEXT
-			 * @param int $like_count Total Like
+			 * Rtmedia person or people likes it
+			 *
+			 * @param     $html         TEXT
+			 * @param int $like_count   Total Like
 			 * @param int $user_like_it User Like it or Not
+			 *
 			 * @return html TEXT to  display
-			*/
-			$html .= apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count_new, 'buddypress-media' ) ,$like_count, $user_like_it );
+			 */
+			$html .= apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count_new, 'buddypress-media' ), $like_count, $user_like_it );
 		}
 
 		/**
-		 * rtmedia return whole HTML
-		 * @param $html TEXT
-		 * @param int $like_count Total Like
+		 * Rtmedia return whole HTML
+		 *
+		 * @param     $html         TEXT
+		 * @param int $like_count   Total Like
 		 * @param int $user_like_it User Like it or Not
+		 *
 		 * @return html TEXT to  display
-		*/
-		$html = apply_filters( 'rtmedia_who_like_html', $html ,$like_count, $user_like_it );
+		 */
+		$html = apply_filters( 'rtmedia_who_like_html', $html, $like_count, $user_like_it );
 		return $html;
 	}
 }
@@ -3055,27 +3069,27 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 		switch ( $actions[0]->privacy ) {
 			case 0: // public
 				$title = esc_html__( 'Public', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-admin-site rtmicon';
+				$icon  = 'dashicons dashicons-admin-site';
 
 				break;
 			case 20: // users
 				$title = esc_html__( 'All members', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-groups rtmicon';
+				$icon  = 'dashicons dashicons-groups';
 
 				break;
 			case 40: // friends
 				$title = esc_html__( 'Your friends', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-networking rtmicon';
+				$icon  = 'dashicons dashicons-networking';
 
 				break;
 			case 60: // private
 				$title = esc_html__( 'Only you', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-lock rtmicon';
+				$icon  = 'dashicons dashicons-lock';
 
 				break;
 			case 80: // private
 				$title = esc_html__( 'Blocked temporarily', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-dismiss rtmicon';
+				$icon  = 'dashicons dashicons-dismiss';
 
 				break;
 		}
@@ -3970,7 +3984,17 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 		global $rtmedia_backbone;
 
 		if ( $rtmedia_backbone['backbone'] ) {
-			echo '<%= media_class %>';
+
+			$media_title = filter_input( INPUT_POST, 'media_title', FILTER_SANITIZE_STRING );
+			if ( empty( $media_title ) ) {
+				$media_title = filter_input( INPUT_GET, 'media_title', FILTER_SANITIZE_STRING );
+			}
+			if ( empty( $media_title ) || 'false' === $media_title ) {
+				return 'hide';
+			}
+
+			return 'show';
+
 		} else {
 			global $rtmedia_media;
 			$media_class = 'hide';
@@ -4787,7 +4811,7 @@ function rtmedia_eraser( $email_address, $page = 1 ) {
 }
 
 /**
- * Media like eraser for GDPR
+ * Media album eraser for GDPR
  *
  * @param  string $email_address user email address.
  * @param  int    $page          page no to fetch data from.
@@ -4815,8 +4839,18 @@ function rtmedia_album_eraser( $email_address, $page = 1 ) {
 
 	global $wpdb;
 
+	$default_albums           = rtmedia_global_albums();
+	$default_album_str        = '';
+	$default_album_postid_str = '';
+	foreach ( $default_albums as $default_album ) {
+		$default_album_str        .= $default_album . ',';
+		$default_album_postid_str .= rtmedia_media_id( $default_album ) . ',';
+	}
+	$default_album_str        = rtrim( $default_album_str, ',' );
+	$default_album_postid_str = rtrim( $default_album_postid_str, ',' );
+
 	$query = $wpdb->prepare(
-		'DELETE FROM ' . $wpdb->prefix . "rt_rtm_media WHERE media_type='album' AND media_author=%d LIMIT %d",
+		'DELETE FROM ' . $wpdb->prefix . "rt_rtm_media WHERE media_type='album' AND media_author=%d AND id NOT IN (" . $default_album_str . ") LIMIT %d",
 		$user_data->ID,
 		$number
 	);
@@ -4824,12 +4858,12 @@ function rtmedia_album_eraser( $email_address, $page = 1 ) {
 	$items_removed = $wpdb->query( $query );
 
 	$query = $wpdb->prepare(
-		'DELETE FROM ' . $wpdb->prefix . "posts WHERE post_type='rtmedia_album' AND post_author=%d LIMIT %d",
+		'DELETE FROM ' . $wpdb->prefix . "posts WHERE post_type='rtmedia_album' AND post_author=%d AND ID NOT IN (" . $default_album_postid_str . ") LIMIT %d",
 		$user_data->ID,
 		$number
 	);
 
-	$items_removed = $wpdb->query( $query );
+	$items_removed += $wpdb->query( $query );
 
 	$done = ( $items_removed < $number );
 
