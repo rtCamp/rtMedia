@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -60,8 +60,10 @@ class RTMediaContext {
 	 * @global object $post
 	 */
 	public function set_wp_context() {
+
 		global $post;
 		global $bp;
+
 		if ( is_author() ) {
 			$this->type = 'profile';
 			$this->id   = get_query_var( 'author' );
@@ -70,10 +72,11 @@ class RTMediaContext {
 			$this->id   = $post->ID;
 		} else {
 			$wp_default_context = array( 'page', 'post' );
-
-			if ( isset( $_REQUEST['context'] ) && in_array( $_REQUEST['context'], $wp_default_context ) ) {
+			// phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification
+			if ( isset( $_REQUEST['context'] ) && in_array( $_REQUEST['context'], $wp_default_context, true ) ) {
 				$this->type = $_REQUEST['context'];
 				$this->id   = $_REQUEST['context_id'];
+				// phpcs:enable WordPress.Security.NonceVerification.NoNonceVerification
 			} else {
 				$this->type = 'profile';
 				$this->id   = get_current_user_id();

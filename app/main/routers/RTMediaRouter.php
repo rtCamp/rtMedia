@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package rtMedia
  * @subpackage URL Manipulation
