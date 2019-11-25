@@ -7,12 +7,13 @@
     use Page\Constants as ConstantsPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
+    use \Codeception\Step\Argument\PasswordArgument;
 
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( ' Use default rtMedia style when custom code is not provided.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$customCssSettingsUrl );
@@ -29,7 +30,7 @@
     echo "value of textarea is = \n" . $value;
     $settings->setValue( ConstantsPage::$customCssLabel, ConstantsPage::$cssTextarea, ConstantsPage::$customCssEmptyValue );
     $settings->saveSettings();
-    
+
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivity();
 

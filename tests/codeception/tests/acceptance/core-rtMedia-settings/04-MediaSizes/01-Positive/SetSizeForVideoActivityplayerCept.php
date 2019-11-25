@@ -15,7 +15,7 @@
     $I->wantTo( 'To set height and width of video player for activity page' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$mediaSizeSettingsUrl );
@@ -31,11 +31,10 @@
     $buddypress->gotoActivity();
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->addStatus( "Upload from activity to check mediz sizes." );
+    $uploadmedia->addStatus( "Upload from activity to check VIDEO media sizes." );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$videoName, $numOfMedia );
 
-    $I->reloadPage();
-    $I->wait( 3 );
+    $I->waitForElementVisible( ConstantsPage::$videoSelectorActivity, 20 );
 
     $I->assertGreaterThanOrEqual( ConstantsPage::$activityVideoPlayerWidth, $I->grabAttributeFrom( ConstantsPage::$videoSelectorActivity, 'style' ), "Width and height is as expected!" );
 ?>

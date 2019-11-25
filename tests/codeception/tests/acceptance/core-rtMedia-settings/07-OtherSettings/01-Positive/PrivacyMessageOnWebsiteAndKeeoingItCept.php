@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Scenario : To check if the privacy Message is seen on website.
+ */
+    use Page\Login as LoginPage;
+    use Page\Constants as ConstantsPage;
+    use Page\DashboardSettings as DashboardSettingsPage;
+
+    $scrollPos = ConstantsPage::$displayTab;
+
+    $I = new AcceptanceTester( $scenario );
+    $I->wantTo( 'To check if the privacy Message is seen on website.' );
+
+    $loginPage = new LoginPage( $I );
+    $loginPage->loginAsAdmin();
+
+    $settings = new DashboardSettingsPage( $I );
+    $settings->gotoSettings( ConstantsPage::$otherSettingsUrl );
+    $verifyEnableStatusOfPrivacyMessageCheckbox = $settings->verifyStatus( ConstantsPage::$showPrivacyMessageOnWebsiteLabel, ConstantsPage::$privacyMessageCheckbox, $scrollPos );
+
+    if ( $verifyEnableStatusOfPrivacyMessageCheckbox ) {
+        echo nl2br( ConstantsPage::$enabledSettingMsg . "\n" );
+    } else {
+        $settings->enableSetting( ConstantsPage::$privacyMessageCheckbox );
+        $I->waitForElement( ConstantsPage::$privacyMessageTextarea, 5 );
+        $I->fillField( ConstantsPage::$privacyMessageTextarea, ConstantsPage::$privacyMessageValue );
+        $settings->saveSettings();
+    }
+
+    $I->amOnPage( '/' );
+    $I->waitForElementVisible( ConstantsPage::$siteWidePrivacyNoticeSelector, 10 );
+    $I->openNewTab();
+    $I->amOnPage( '/' );
+    $I->waitForElementVisible( ConstantsPage::$siteWidePrivacyNoticeSelector, 10 );
+
+?>

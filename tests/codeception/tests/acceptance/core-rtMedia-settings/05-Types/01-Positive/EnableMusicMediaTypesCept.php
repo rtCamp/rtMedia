@@ -8,6 +8,7 @@
     use Page\UploadMedia as UploadMediaPage;
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
+    use \Codeception\Step\Argument\PasswordArgument;
 
     $numOfMedia = 1;
 
@@ -15,7 +16,7 @@
     $I->wantTo( 'Allow upload for music media types' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin( ConstantsPage::$userName, new PasswordArgument(ConstantsPage::$password) );
 
     $settings = new DashboardSettingsPage( $I );
     $settings->enableRequestedMediaTypes( ConstantsPage::$musicLabel, ConstantsPage::$musicCheckbox );
@@ -29,8 +30,8 @@
     $uploadmedia->addStatus( "Testing for Music Media Types." );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$audioName, $numOfMedia );
 
-    $I->reloadPage();
+    $I->waitForElementVisible( ConstantsPage::$firstMusicElementOnActivity, 20 );
 
-    $I->seeElementInDOM( ConstantsPage::$firstMusicElementOnActivity );
+    // $I->seeElementInDOM( ConstantsPage::$firstMusicElementOnActivity );
     echo nl2br( "Audio is uploaded.. \n" );
 ?>

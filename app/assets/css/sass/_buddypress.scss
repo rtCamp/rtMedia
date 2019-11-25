@@ -74,6 +74,16 @@ body.media.buddypress {
 			color: #767676;
 			margin-left: 50px;
 			padding-left: 15px;
+
+			.rtm-plupload-list {
+				.plupload_queue_li {
+					padding: 5px;
+				}
+				.rtm-upload-edit-desc {
+					background: #fff;
+					border : solid 1px #ccc;
+				}
+			}
 		}
 	}
 }

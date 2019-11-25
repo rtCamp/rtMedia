@@ -12,7 +12,7 @@
     $I->wantTo( 'Enable Show Album description.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$buddypressSettingsUrl );
@@ -43,5 +43,6 @@
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->createNewAlbum();
-    $buddypress->editAlbumDesc();
+    // $buddypress->editAlbumDesc();
+    $buddypress->checkAlbumDesc();
 ?>

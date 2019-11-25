@@ -49,6 +49,9 @@
 	}
 
 	.rtmedia-item-thumbnail {
+		width: 150px;
+		text-align: center;
+
 		img {
 			display: inline-block;
 			max-height: inherit;
@@ -108,6 +111,7 @@ form .rtmedia-container .rtm-plupload-list,
 		input.rtm-upload-edit-title {
 			min-width: 100%;
 			margin-top: 1px;
+			display: block;
 		}
 	}
 }
@@ -197,9 +201,14 @@ button#rtmedia-add-media-button-post-update {
 }
 
 #buddypress {
-		a.rtm-button-back{
-			padding: 3px 10px;
+	a.rtm-button-back{
+		padding: 3px 10px;
+	}
+	div.rtmedia-page-no.rtm-page-number {
+		a.rtmedia-page-link.button {
+			padding: 5px 10px;
 		}
+	}
 }
 
 // Pagination
@@ -218,6 +227,10 @@ button#rtmedia-add-media-button-post-update {
 	.rtm-go-to-num,
 	.rtmedia-page-link {
 		float: left;
+	}
+	.rtm-go-to-num,
+	.rtmedia-page-link {
+		line-height: 1.5;
 	}
 }
 
@@ -261,12 +274,13 @@ button#rtmedia-add-media-button-post-update {
 		padding: 0;
 		width: auto;
 	}
+
 }
 
 #rtmedia_go_to_num {
 	font-size: 16px;
 	margin: 0 5px;
-	padding: 4px 5px;
+	padding: 3px 5px;
 	width: 80px;
 }
 
@@ -468,6 +482,12 @@ table.rtmedia-edit-media-list {
 		background-color: black;
 		color: white;
 		padding: 0 5px;
+	}
+}
+
+.rtmedia-actions-before-description {
+	& > div {
+		margin-bottom: 5px;
 	}
 }
 

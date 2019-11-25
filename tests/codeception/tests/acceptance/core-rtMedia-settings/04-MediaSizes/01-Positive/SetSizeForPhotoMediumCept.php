@@ -15,7 +15,7 @@
     $I->wantTo( 'To set photo medium height and width.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$mediaSizeSettingsUrl );
@@ -31,10 +31,10 @@
     $buddypress->gotoActivity();
 
     $uploadmedia = new UploadMediaPage( $I );
-    $uploadmedia->addStatus( "Upload from activity to check mediz sizes." );
+    $uploadmedia->addStatus( "Upload from activity to check PHOTO media sizes." );
     $uploadmedia->uploadMediaFromActivity( ConstantsPage::$imageName, $numOfMedia );
 
-    $I->reloadPage();
+    $I->waitForElementVisible( ConstantsPage::$mediumImgSelector, 20 );
 
     $I->assertLessThanOrEqual( ConstantsPage::$mediumWidth, $I->grabAttributeFrom( ConstantsPage::$mediumImgSelector, 'width' ), "Width is as expected!" );
     $I->assertLessThanOrEqual( ConstantsPage::$mediumHeight, $I->grabAttributeFrom( ConstantsPage::$mediumImgSelector, 'height' ), "Height is as expected!" );
