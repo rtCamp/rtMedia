@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * This file applies the admin settings and handle feature of Upload Terms at front-end side.
  *

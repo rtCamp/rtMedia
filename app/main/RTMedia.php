@@ -1,4 +1,12 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+/**
+ * The main rtMedia Class file.
+ *
+ * @package rtMedia
+ * @subpackage Main
+ *
+ * @author Faishal <faishal.saiyed@rtcamp.com>
+ */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -7,11 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * rtMedia
  *
  * The main rtMedia Class. This is where everything starts.
- *
- * @package rtMedia
- * @subpackage Main
- *
- * @author Faishal <faishal.saiyed@rtcamp.com>
  */
 class RTMedia {
 
@@ -95,10 +98,10 @@ class RTMedia {
 		add_action( 'groups_delete_group', array( $this, 'group_status_reset_cache' ) );
 
 		// Including core functions, actions & filters
-		include( RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-functions.php' );
-		include( RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-actions.php' );
-		include( RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-ajax-actions.php' );
-		include( RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-filters.php' );
+		include RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-functions.php';
+		include RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-actions.php';
+		include RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-ajax-actions.php';
+		include RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-filters.php';
 
 		add_filter( 'intermediate_image_sizes_advanced', array( $this, 'filter_image_sizes_details' ) );
 		add_filter( 'intermediate_image_sizes', array( $this, 'filter_image_sizes' ) );
@@ -125,12 +128,15 @@ class RTMedia {
 				}
 			}
 		}
-		$ext     = apply_filters( 'rtmedia_plupload_files_filter', array(
+		$ext     = apply_filters(
+			'rtmedia_plupload_files_filter',
 			array(
-				'title'      => 'Media Files',
-				'extensions' => implode( ',', $allowed_types ),
-			),
-		) );
+				array(
+					'title'      => 'Media Files',
+					'extensions' => implode( ',', $allowed_types ),
+				),
+			)
+		);
 		$ext_arr = explode( ',', $ext[0]['extensions'] );
 		$options = trim( $options );
 		foreach ( $ext_arr as $f_ext ) {
@@ -182,7 +188,7 @@ class RTMedia {
 	 */
 
 	function fix_group_media_privacy() {
-		//if buddypress is active and groups are enabled
+		// if buddypress is active and groups are enabled
 		global $wpdb;
 		$table_exist = false;
 		if ( $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}bp_groups'" ) ) {
@@ -238,8 +244,8 @@ class RTMedia {
 	/**
 	 * Always set to true when call on any of the Buddypress Pages
 	 *
-	 * @param       bool       $load_mentions
-	 * @param       bool       $$mentions_enabled
+	 * @param       bool $load_mentions
+	 * @param       bool $$mentions_enabled
 	 *
 	 * @return      bool     true
 	 */
@@ -316,7 +322,7 @@ class RTMedia {
 	function custom_style_for_activity_image_size() {
 
 		// Get width from rtMedia settings.
-		$width  = ( isset( $this->options['defaultSizes_photo_medium_width'] ) ) ? $this->options['defaultSizes_photo_medium_width'] : '0';
+		$width = ( isset( $this->options['defaultSizes_photo_medium_width'] ) ) ? $this->options['defaultSizes_photo_medium_width'] : '0';
 		// Get height from rtMedia settings.
 		$height = ( isset( $this->options['defaultSizes_photo_medium_height'] ) ) ? $this->options['defaultSizes_photo_medium_height'] : '0';
 
@@ -350,64 +356,65 @@ class RTMedia {
 		}
 
 		?>
-            	.rtmedia-activity-container ul.rtm-activity-media-list{
-            	overflow: auto;
-            	}
+				.rtmedia-activity-container ul.rtm-activity-media-list{
+				overflow: auto;
+				}
 
-            	div.rtmedia-activity-container ul.rtm-activity-media-list li.media-type-document,
-            	div.rtmedia-activity-container ul.rtm-activity-media-list li.media-type-other{
-            	margin-left: 0.6em !important;
-            	}
+				div.rtmedia-activity-container ul.rtm-activity-media-list li.media-type-document,
+				div.rtmedia-activity-container ul.rtm-activity-media-list li.media-type-other{
+				margin-left: 0.6em !important;
+				}
 
-        	.rtmedia-activity-container li.media-type-video{
-        	height: <?php echo esc_attr( $video_height ); ?>px !important;
-        	width: <?php echo esc_attr( $video_width ); ?>px !important;
-        	}
+			.rtmedia-activity-container li.media-type-video{
+			height: <?php echo esc_attr( $video_height ); ?>px !important;
+			width: <?php echo esc_attr( $video_width ); ?>px !important;
+			}
 
-        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail,
-        	.rtmedia-activity-container li.media-type-photo a{
-        	width: 100% !important;
-        	height: 98% !important;
-        	}
+			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail,
+			.rtmedia-activity-container li.media-type-photo a{
+			width: 100% !important;
+			height: 98% !important;
+			}
 
-        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail video{
-        	width: 100% !important;
-        	height: 100% !important;
-        	}
+			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail video{
+			width: 100% !important;
+			height: 100% !important;
+			}
 
-        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video,
-        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video video,
-        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video .mejs-overlay-play{
-        	width: 100% !important;
-        	height: 100% !important;
-        	}
+			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video,
+			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video video,
+			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video .mejs-overlay-play{
+			width: 100% !important;
+			height: 100% !important;
+			}
 
-        	.rtmedia-activity-container li.media-type-music{
-        	width: <?php echo esc_attr( $music_width ); ?>px !important;
-        	}
+			.rtmedia-activity-container li.media-type-music{
+			width: <?php echo esc_attr( $music_width ); ?>px !important;
+			}
 
-        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail,
-        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail .mejs-audio,
-        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail audio{
-        	width: 100% !important;
-        	}
+			.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail,
+			.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail .mejs-audio,
+			.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail audio{
+			width: 100% !important;
+			}
 
-        	.rtmedia-activity-container li.media-type-photo{
-        	width: <?php echo esc_attr( $media_width ); ?> !important;
-        	height: <?php echo esc_attr( $media_height ); ?> !important;
-        	}
+			.rtmedia-activity-container li.media-type-photo{
+			width: <?php echo esc_attr( $media_width ); ?> !important;
+			height: <?php echo esc_attr( $media_height ); ?> !important;
+			}
 
-        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
-        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
-        	width: 100% !important;
-        	height: 100% !important;
-        	overflow: hidden;
-        	}
+			.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
+			.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
+			width: 100% !important;
+			height: 100% !important;
+			overflow: hidden;
+			}
 		<?php
 		global $rtmedia;
-		if ( rtmedia_check_comment_media_allow() && ! rtmedia_check_comment_in_commented_media_allow() ) { ?>
+		if ( rtmedia_check_comment_media_allow() && ! rtmedia_check_comment_in_commented_media_allow() ) {
+			?>
 				#buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-comment-media-upload,#buddypress ul.activity-list li.activity-item .activity-comments ul li form.ac-form .rtmedia-container {
-				    display: none !important
+					display: none !important
 				}
 			<?php
 		}
@@ -415,7 +422,7 @@ class RTMedia {
 
 	function custom_style_for_gallery_image_size() {
 		// Get width from rtMedia settings.
-		$width  = ( isset( $this->options['defaultSizes_photo_thumbnail_width'] ) ) ? $this->options['defaultSizes_photo_thumbnail_width'] : '0';
+		$width = ( isset( $this->options['defaultSizes_photo_thumbnail_width'] ) ) ? $this->options['defaultSizes_photo_thumbnail_width'] : '0';
 		// Get height from rtMedia settings.
 		$height = ( isset( $this->options['defaultSizes_photo_thumbnail_height'] ) ) ? $this->options['defaultSizes_photo_thumbnail_height'] : '0';
 
@@ -520,13 +527,13 @@ class RTMedia {
 			return;
 		}
 
-		//loop through each type
+		// loop through each type
 		foreach ( $allowed_types as $key => &$type ) {
 
 			if ( ! isset( $type['name'] ) || // check if a name is set
 				empty( $type['name'] ) ||
-				//commented this section for playlist // !isset($type['extn']) || // check if file extensions are set
-				//commented this section for playlist  // empty($type['extn']) ||
+				// commented this section for playlist // !isset($type['extn']) || // check if file extensions are set
+				// commented this section for playlist  // empty($type['extn']) ||
 				strstr( $type['name'], ' ' ) || strstr( $type['name'], '_' )
 			) {
 				unset( $allowed_types[ $key ] ); // if not unset this type
@@ -554,20 +561,42 @@ class RTMedia {
 	function set_default_sizes() {
 		$this->default_sizes = array(
 			'photo'    => array(
-				'thumbnail' => array( 'width' => 150, 'height' => 150, 'crop' => 1 ),
-				'medium'    => array( 'width' => 320, 'height' => 240, 'crop' => 1 ),
-				'large'     => array( 'width' => 800, 'height' => 0, 'crop' => 1 ),
+				'thumbnail' => array(
+					'width'  => 150,
+					'height' => 150,
+					'crop'   => 1,
+				),
+				'medium'    => array(
+					'width'  => 320,
+					'height' => 240,
+					'crop'   => 1,
+				),
+				'large'     => array(
+					'width'  => 800,
+					'height' => 0,
+					'crop'   => 1,
+				),
 			),
 			'video'    => array(
-				'activityPlayer' => array( 'width' => 320, 'height' => 240 ),
-				'singlePlayer'   => array( 'width' => 640, 'height' => 480 ),
+				'activityPlayer' => array(
+					'width'  => 320,
+					'height' => 240,
+				),
+				'singlePlayer'   => array(
+					'width'  => 640,
+					'height' => 480,
+				),
 			),
 			'music'    => array(
 				'activityPlayer' => array( 'width' => 320 ),
 				'singlePlayer'   => array( 'width' => 640 ),
 			),
 			'featured' => array(
-				'default' => array( 'width' => 100, 'height' => 100, 'crop' => 1 ),
+				'default' => array(
+					'width'  => 100,
+					'height' => 100,
+					'crop'   => 1,
+				),
 			),
 		);
 
@@ -628,7 +657,7 @@ class RTMedia {
 		$group = 0;
 		if ( isset( $bp_media_options['enable_on_group'] ) && ! empty( $bp_media_options['enable_on_group'] ) ) {
 			$group = $bp_media_options['enable_on_group'];
-		} else if ( function_exists( 'bp_is_active' ) ) {
+		} elseif ( function_exists( 'bp_is_active' ) ) {
 			$group = bp_is_active( 'groups' );
 		}
 		$this->options['buddypress_enableOnGroup'] = $group;
@@ -636,7 +665,7 @@ class RTMedia {
 		$activity = 0;
 		if ( isset( $bp_media_options['activity_upload'] ) && ! empty( $bp_media_options['activity_upload'] ) ) {
 			$activity = $bp_media_options['activity_upload'];
-		} else if ( function_exists( 'bp_is_active' ) ) {
+		} elseif ( function_exists( 'bp_is_active' ) ) {
 			$activity = bp_is_active( 'activity' );
 		}
 		$this->options['buddypress_enableOnActivity'] = $activity;
@@ -650,8 +679,6 @@ class RTMedia {
 	public function init_site_options() {
 
 		$bp_media_options = rtmedia_get_site_option( 'bp_media_options' );
-
-
 
 		$defaults = array(
 			'general_enableAlbums'        => 1,
@@ -872,7 +899,6 @@ class RTMedia {
 
 		/**
 		 * BuddyPress - Media Navigation Tab Inject
-		 *
 		 */
 		/**
 		 * Load accessory functions
@@ -944,11 +970,11 @@ class RTMedia {
 
 		global $rtmedia_ajax;
 		$rtmedia_ajax = new RTMediaAJAX();
-		//API Classes
+		// API Classes
 		global $rtmediajsonapi;
 		$rtmediajsonapi = new RTMediaJsonApi();
 
-		if( function_exists( 'rtmedia_enable_comment_media_uplaod' ) ){
+		if ( function_exists( 'rtmedia_enable_comment_media_uplaod' ) ) {
 			rtmedia_enable_comment_media_uplaod();
 		}
 
@@ -983,13 +1009,12 @@ class RTMedia {
 	/**
 	 * Loads translations
 	 */
-	static
-	function load_translation() {
+	static function load_translation() {
 		load_plugin_textdomain( 'buddypress-media', false, basename( RTMEDIA_PATH ) . '/languages/' );
 	}
 
 	function check_global_album() {
-		//todo: Nonce required
+		// todo: Nonce required
 		$album        = new RTMediaAlbum();
 		$global_album = $album->get_default();
 		// @codingStandardsIgnoreStart
@@ -998,7 +1023,7 @@ class RTMedia {
 			unset( $_POST['name'] );
 		}
 		// @codingStandardsIgnoreEnd
-		//**
+		// **
 		global $rtmedia_error;
 		if ( isset( $rtmedia_error ) && true === $rtmedia_error ) {
 			return false;
@@ -1030,7 +1055,7 @@ class RTMedia {
 	}
 
 	static function plugin_get_version( $path = null ) {
-		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		$path           = ( $path ) ? $path : RTMEDIA_PATH . 'index.php';
 		$plugin_data    = get_plugin_data( $path );
 		$plugin_version = $plugin_data['Version'];
@@ -1081,23 +1106,43 @@ class RTMedia {
 		}
 
 		if ( '' === $suffix ) {
-			wp_enqueue_script( 'rtmedia-magnific-popup', RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js', array(
-				'jquery',
-				'rt-mediaelement-wp',
-			), RTMEDIA_VERSION );
-			wp_enqueue_script( 'rtmedia-admin-tabs', RTMEDIA_URL . 'app/assets/admin/js/vendors/tabs.js', array(
-				'jquery',
-				'rt-mediaelement-wp',
-			), RTMEDIA_VERSION );
-			wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array(
-				'jquery',
-				'rt-mediaelement-wp',
-			), RTMEDIA_VERSION );
+			wp_enqueue_script(
+				'rtmedia-magnific-popup',
+				RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js',
+				array(
+					'jquery',
+					'rt-mediaelement-wp',
+				),
+				RTMEDIA_VERSION
+			);
+			wp_enqueue_script(
+				'rtmedia-admin-tabs',
+				RTMEDIA_URL . 'app/assets/admin/js/vendors/tabs.js',
+				array(
+					'jquery',
+					'rt-mediaelement-wp',
+				),
+				RTMEDIA_VERSION
+			);
+			wp_enqueue_script(
+				'rtmedia-main',
+				RTMEDIA_URL . 'app/assets/js/rtMedia.js',
+				array(
+					'jquery',
+					'rt-mediaelement-wp',
+				),
+				RTMEDIA_VERSION
+			);
 		} else {
-			wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtmedia.min.js', array(
-				'jquery',
-				'rt-mediaelement-wp',
-			), RTMEDIA_VERSION );
+			wp_enqueue_script(
+				'rtmedia-main',
+				RTMEDIA_URL . 'app/assets/js/rtmedia.min.js',
+				array(
+					'jquery',
+					'rt-mediaelement-wp',
+				),
+				RTMEDIA_VERSION
+			);
 			// Locallzte for rtmedia js
 			wp_localize_script( 'rtmedia-main', 'bp_template_pack', $bp_template );
 		}
@@ -1109,10 +1154,10 @@ class RTMedia {
 		$direct_upload = ( isset( $this->options['general_direct_upload'] ) ? $this->options['general_direct_upload'] : '0' );
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_direct_upload_enabled', $direct_upload );
-		//gallery reload after media upload, by default true
+		// gallery reload after media upload, by default true
 		wp_localize_script( 'rtmedia-main', 'rtmedia_gallery_reload_on_upload', '1' );
 
-		//javascript messages
+		// javascript messages
 		wp_localize_script( 'rtmedia-magnific', 'rtmedia_load_more', esc_html__( 'Loading media', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_activity_msg', esc_html__( 'Please enter some content to post.', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_comment_msg', esc_html__( 'Empty comment is not allowed.', 'buddypress-media' ) );
@@ -1164,10 +1209,14 @@ class RTMedia {
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_set_featured_image_msg', esc_html__( 'Featured media set successfully.', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_unset_featured_image_msg', esc_html__( 'Featured media removed successfully.', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_edit_media_info_upload', array(
-			'title'       => esc_html__( 'Title:', 'buddypress-media' ),
-			'description' => esc_html__( 'Description:', 'buddypress-media' ),
-		) );
+		wp_localize_script(
+			'rtmedia-backbone',
+			'rtmedia_edit_media_info_upload',
+			array(
+				'title'       => esc_html__( 'Title:', 'buddypress-media' ),
+				'description' => esc_html__( 'Description:', 'buddypress-media' ),
+			)
+		);
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_no_media_found', esc_html__( 'Oops !! There\'s no media found for the request !!', 'buddypress-media' ) );
 
 		// Localizing strings for rtMedia.backbone.js
@@ -1182,10 +1231,10 @@ class RTMedia {
 
 		// Localizing strings for rtMedia.js
 		$rtmedia_main_js_strings = array(
-			'rtmedia_albums' => esc_html__( 'Albums', 'buddypress-media' ),
+			'rtmedia_albums'         => esc_html__( 'Albums', 'buddypress-media' ),
 			'privacy_update_success' => esc_html__( 'Privacy updated successfully.', 'buddypress-media' ),
-			'privacy_update_error' => esc_html__( 'Couldn\'t change privacy, please try again.', 'buddypress-media' ),
-			'file_delete_success' => esc_html__( 'file deleted successfully.', 'buddypress-media' ),
+			'privacy_update_error'   => esc_html__( 'Couldn\'t change privacy, please try again.', 'buddypress-media' ),
+			'file_delete_success'    => esc_html__( 'file deleted successfully.', 'buddypress-media' ),
 		);
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_main_js_strings', $rtmedia_main_js_strings );
@@ -1273,7 +1322,6 @@ class RTMedia {
 		);
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_size_config', $media_size_config );
 
-
 		/* rtMedia fot comment media script localize*/
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
@@ -1283,12 +1331,15 @@ class RTMedia {
 			'runtimes'            => 'html5,flash,html4',
 			'browse_button'       => 'rtmedia-comment-media-upload',
 			'container'           => 'rtmedia-comment-media-upload-container',
-			'filters'             => apply_filters( 'rtmedia_plupload_files_filter', array(
+			'filters'             => apply_filters(
+				'rtmedia_plupload_files_filter',
 				array(
-					'title'      => 'Media Files',
-					'extensions' => get_rtmedia_allowed_upload_type(),
-				),
-			) ),
+					array(
+						'title'      => 'Media Files',
+						'extensions' => get_rtmedia_allowed_upload_type(),
+					),
+				)
+			),
 			'max_file_size'       => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
 			'multipart'           => true,
 			'urlstream_upload'    => true,
@@ -1296,22 +1347,29 @@ class RTMedia {
 			'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
 			'file_data_name'      => 'rtmedia_file', // key passed to $_FILE.
 			'multi_selection'     => false,
-			'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
-				'redirect'             => 'no',
-				'redirection'          => 'false',
-				'action'               => 'wp_handle_upload',
-				'_wp_http_referer'     => $request_uri,
-				'mode'                 => 'file_upload',
-				'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ),
-			) ),
-			'max_file_size_msg'   => apply_filters( 'rtmedia_plupload_file_size_msg', min( array(
-				ini_get( 'upload_max_filesize' ),
-				ini_get( 'post_max_size' ),
-			) ) ),
+			'multipart_params'    => apply_filters(
+				'rtmedia-multi-params',
+				array(
+					'redirect'             => 'no',
+					'redirection'          => 'false',
+					'action'               => 'wp_handle_upload',
+					'_wp_http_referer'     => $request_uri,
+					'mode'                 => 'file_upload',
+					'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ),
+				)
+			),
+			'max_file_size_msg'   => apply_filters(
+				'rtmedia_plupload_file_size_msg',
+				min(
+					array(
+						ini_get( 'upload_max_filesize' ),
+						ini_get( 'post_max_size' ),
+					)
+				)
+			),
 		);
 
 		$params = apply_filters( 'rtmedia_modify_upload_params', $params );
-
 
 		global $rtmedia;
 		$rtmedia_extns = array();
@@ -1319,9 +1377,9 @@ class RTMedia {
 			$rtmedia_extns[ $allowed_types_key ] = $allowed_types_value['extn'];
 		}
 
-		$rtmedia_disable_media = "1";
+		$rtmedia_disable_media = '1';
 		/* if the  rtmedia option does have value pick from there*/
-		if( isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) ){
+		if ( isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) ) {
 			$rtmedia_disable_media = $rtmedia->options['rtmedia_disable_media_in_commented_media'];
 		}
 		wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media', $rtmedia_disable_media );
@@ -1358,7 +1416,7 @@ class RTMedia {
 		remove_action( 'bp_adminbar_menus', 'bp_adminbar_account_menu', 4 );
 	}
 
-	//todo: This function should return value or pass argument
+	// todo: This function should return value or pass argument
 	function set_friends_object() {
 		if ( is_user_logged_in() ) {
 			$user    = get_current_user_id();
@@ -1371,7 +1429,7 @@ class RTMedia {
 	function filter_image_sizes_details( $sizes ) {
 		if ( isset( $_REQUEST['post_id'] ) ) {
 			$sizes = $this->unset_bp_media_image_sizes_details( $sizes );
-		} elseif ( isset( $_REQUEST['id'] ) ) { //For Regenerate Thumbnails Plugin
+		} elseif ( isset( $_REQUEST['id'] ) ) { // For Regenerate Thumbnails Plugin
 			$model  = new RTMediaModel();
 			$result = $model->get( array( 'media_id' => intval( wp_unslash( $_REQUEST['id'] ) ) ) );
 			if ( ! empty( $result ) ) {
@@ -1402,7 +1460,7 @@ class RTMedia {
 	}
 
 	function filter_image_sizes( $sizes ) {
-		if ( isset( $_REQUEST['postid'] ) ) { //For Regenerate Thumbnails Plugin
+		if ( isset( $_REQUEST['postid'] ) ) { // For Regenerate Thumbnails Plugin
 			if ( $parent_id = get_post_field( 'post_parent', intval( wp_unslash( $_REQUEST['postid'] ) ) ) ) {
 				$post_type = get_post_field( 'post_type', $parent_id );
 				if ( 'rtmedia_album' === $post_type ) {
@@ -1482,7 +1540,7 @@ function parentlink_global_album( $id ) {
 
 function get_rtmedia_permalink( $id ) {
 	$media_model = new RTMediaModel();
-	$media      = $media_model->get( array( 'id' => intval( $id ) ) );
+	$media       = $media_model->get( array( 'id' => intval( $id ) ) );
 	global $rtmedia_query;
 
 	// Adding filter to get permalink for current blog
@@ -1499,13 +1557,13 @@ function get_rtmedia_permalink( $id ) {
 			}
 		}
 	} else {
-		if ( isset( $media[0]->context )  &&  function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
+		if ( isset( $media[0]->context ) && function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
 			$parent_link = get_rtmedia_group_link( $media[0]->context_id );
 		} else {
 			// check for global album
 			$parent_link = parentlink_global_album( $id );
 			if ( '' === $parent_link && isset( $media[0]->media_author ) ) {
-                            $parent_link = get_rtmedia_user_link( $media[0]->media_author );
+							$parent_link = get_rtmedia_user_link( $media[0]->media_author );
 			}
 		}
 	}
@@ -1524,7 +1582,7 @@ function get_rtmedia_permalink( $id ) {
 	 *
 	 * @param string  $permalink The rtmedia's permalink.
 	 * @param object  $media     The media in question.
-	 * @param int     $id 		 ID of the media.
+	 * @param int     $id        ID of the media.
 	 */
 
 	return apply_filters( 'get_rtmedia_permalink', $permalink, $media, $id );
@@ -1592,25 +1650,25 @@ function rtm_privacy_message_on_website() {
 	$rtm_privacy_message_options = array(
 		'background-color' => 'rgba(0,0,0,0.95)',
 		'color'            => '#fff',
-		'position'         => 'bottom'
+		'position'         => 'bottom',
 	);
 
 	$rtm_privacy_message_options = apply_filters( 'rtm_privacy_bar_position', $rtm_privacy_message_options );
 
 	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 
- 	if ( ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
-		if( ! empty( $options['general_upload_terms_show_pricacy_message'] ) && "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
+	if ( ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
+		if ( ! empty( $options['general_upload_terms_show_pricacy_message'] ) && '1' === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE['rtm_show_privacy_message'] ) ) {
 			$rtm_privacy_allowed_postion  = array( 'top', 'bottom' );
-			$rtm_privacy_message_position = ! empty ( $rtm_privacy_message_options['position'] ) && ( in_array( $rtm_privacy_message_options['background-color'], $rtm_privacy_allowed_postion) )  ? $rtm_privacy_message_options['position'] . ':0' : 'bottom: 0';
-			$rtm_privacy_message_bgcolor  = ! empty ( $rtm_privacy_message_options['background-color'] )   ? 'background-color: ' . $rtm_privacy_message_options['background-color'] : 'background-color: rgba(0,0,0,0.95)';
-			$rtm_privacy_message_color    = ! empty ( $rtm_privacy_message_options['color'] ) ? 'color: ' . $rtm_privacy_message_options['color'] : 'color: #fff';
+			$rtm_privacy_message_position = ! empty( $rtm_privacy_message_options['position'] ) && ( in_array( $rtm_privacy_message_options['background-color'], $rtm_privacy_allowed_postion ) ) ? $rtm_privacy_message_options['position'] . ':0' : 'bottom: 0';
+			$rtm_privacy_message_bgcolor  = ! empty( $rtm_privacy_message_options['background-color'] ) ? 'background-color: ' . $rtm_privacy_message_options['background-color'] : 'background-color: rgba(0,0,0,0.95)';
+			$rtm_privacy_message_color    = ! empty( $rtm_privacy_message_options['color'] ) ? 'color: ' . $rtm_privacy_message_options['color'] : 'color: #fff';
 
 			$rtm_privacy_style = $rtm_privacy_message_position . '; ' . $rtm_privacy_message_bgcolor . '; ' . $rtm_privacy_message_color . ';';
 
-			echo "<div class='privacy_message_wrapper' style='" . $rtm_privacy_style . "' ><p>" . wp_kses_post( $options[ 'general_upload_terms_privacy_message' ] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
-        }
-    }
+			echo "<div class='privacy_message_wrapper' style='" . $rtm_privacy_style . "' ><p>" . wp_kses_post( $options['general_upload_terms_privacy_message'] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
+		}
+	}
 }
 add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
 
@@ -1651,5 +1709,4 @@ add_action( 'admin_init', 'rtm_plugin_privacy_information' );
  *    using 'bpmedia_media_sizes' hook
  * 3. The excerpts and string sizes can be filtered
  *    using 'bpmedia_excerpt_lengths' hook
- *
  */
