@@ -1,6 +1,5 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * Description of RTDBModel
  * Base class for any Database Model like Media, Album etc.
  *
  * @package    rtMedia
@@ -10,7 +9,7 @@
 
 if ( ! class_exists( 'RTDBModel' ) ) {
 	/**
-	 * Class RTDBModel
+	 * Base class for any Database Model like Media, Album etc.
 	 */
 	class RTDBModel {
 
@@ -18,26 +17,26 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		 * Database table linked to the model.
 		 * All the queries will be fired on that table or with the join in this table.
 		 *
-		 * @var $table_name
+		 * @var string $table_name
 		 */
 		public $table_name;
 
 		/**
 		 * Number of rows per page to be displayed
 		 *
-		 * @var $per_page
+		 * @var int $per_page
 		 */
 		public $per_page;
 
 		/**
 		 * Var mu_single_table.
 		 *
-		 * @var $mu_single_table
+		 * @var string $mu_single_table
 		 */
 		public $mu_single_table;
 
 		/**
-		 * RTDBModel constructor.
+		 * RTDBModel class constructor.
 		 *
 		 * @param string  $table_name Table name for model.
 		 * @param boolean $withprefix Set true if $tablename is with prefix otherwise it will prepend WordPress prefix with "rt_".
@@ -69,7 +68,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		/**
 		 * Set number of rows per page for pagination
 		 *
-		 * @param integer $per_page Perpage.
+		 * @param integer $per_page Rows per page.
 		 */
 		public function set_per_page( $per_page ) {
 			$this->per_page = $per_page;
@@ -84,7 +83,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		 * @param string $name Added get_by_<coulmname>(value,pagging=true,page_no=1).
 		 * @param array  $arguments Arguments.
 		 *
-		 * @return array  result array
+		 * @return bool|array  result array
 		 */
 		public function __call( $name, $arguments ) {
 			$column_name = str_replace( 'get_by_', '', strtolower( $name ) );
@@ -170,6 +169,8 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		 *
 		 * @param array $data Data.
 		 * @param array $where Where clause.
+		 *
+		 * @return false|int
 		 */
 		public function update( $data, $where ) {
 			global $wpdb;
@@ -241,7 +242,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		 *
 		 * @param array $where Where clause.
 		 *
-		 * @return array
+		 * @return false|int
 		 */
 		public function delete( $where ) {
 			global $wpdb;

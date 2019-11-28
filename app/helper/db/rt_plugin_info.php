@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of rt_plugin_info
+ * Class to store rtMedia plugin info.
  *
  * @package    rtMedia
  *
@@ -9,49 +9,49 @@
 
 if ( ! class_exists( 'rt_plugin_info' ) ) {
 	/**
-	 * Class rt_plugin_info
+	 * Class to store rtMedia plugin info.
 	 */
 	class rt_plugin_info {
 
 		/**
 		 * Plugin path.
 		 *
-		 * @var $plugin_path
+		 * @var string $plugin_path
 		 */
 		public $plugin_path;
 
 		/**
 		 * 'Name' - Name of the plugin, must be unique.
 		 *
-		 * @var $name
+		 * @var string $name
 		 */
 		public $name;
 
 		/**
 		 * 'Title' - Title of the plugin and the link to the plugin's web site.
 		 *
-		 * @var $title
+		 * @var string $title
 		 */
 		public $title;
 
 		/**
 		 * 'Description' - Description of what the plugin does and/or notes from the author.
 		 *
-		 * @var $desctipriton
+		 * @var string $desctipriton
 		 */
-		public $desctipriton;
+		public $desctipriton; // TODO : Correct spelling error.
 
 		/**
 		 * 'Author' - The author's name
 		 *
-		 * @var $authro
+		 * @var $author
 		 */
-		public $authro;
+		public $author;
 
 		/**
 		 * 'AuthorURI' - The authors web site address.
 		 *
-		 * @var $authoruri
+		 * @var string $authoruri
 		 */
 		public $authoruri;
 
@@ -65,28 +65,28 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		/**
 		 * 'PluginURI' - Plugin web site address.
 		 *
-		 * @var $pluginuri
+		 * @var string $pluginuri
 		 */
 		public $pluginuri;
 
 		/**
 		 * 'TextDomain' - Plugin's text domain for localization.
 		 *
-		 * @var $textdomain
+		 * @var string $textdomain
 		 */
 		public $textdomain;
 
 		/**
 		 * 'DomainPath' - Plugin's relative directory path to .mo files.
 		 *
-		 * @var $domain_path
+		 * @var string $domain_path
 		 */
 		public $domain_path;
 
 		/**
-		 * 'Network' - Boolean. Whether the plugin can only be activated network wide.
+		 * 'Network' - Whether the plugin can only be activated network wide.
 		 *
-		 * @var $network
+		 * @var bool $network
 		 */
 		public $network;
 
@@ -110,7 +110,7 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		}
 
 		/**
-		 * Function get_plugin_data.
+		 * Function to get plugin data.
 		 *
 		 * @access public
 		 *
@@ -123,7 +123,7 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		}
 
 		/**
-		 * Function set_plugin_data.
+		 * Function to set plugin data.
 		 *
 		 * @access public
 		 */
@@ -142,11 +142,11 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		}
 
 		/**
-		 * Function set_current_plugin_path.
+		 * Function to set current plugin path.
 		 *
 		 * @access public
 		 *
-		 * @param  string $path Path.
+		 * @param string $path Path.
 		 */
 		public function set_current_plugin_path( $path ) {
 			if ( null !== $path ) {

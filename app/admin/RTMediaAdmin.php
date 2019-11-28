@@ -2,17 +2,14 @@
 /**
  * File contents Admin class.
  *
- * @package    RTMedia
+ * @package    rtMedia
  * @subpackage Admin
  */
 
-/**
- * Description of RTMediaAdmin
- */
 if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 	/**
-	 * RTMediaAdmin class.
+	 * Class for RTMedia admin functionality.
 	 */
 	class RTMediaAdmin {
 
@@ -243,7 +240,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Function modify_medialibrary_permalink.
+		 * Function to modify media library permalink.
 		 *
 		 * @param string $action Action.
 		 * @param object $post Post Object.
@@ -272,7 +269,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Addon License save hook.
+		 * Add-on License save hook.
 		 */
 		public function rtmedia_addon_license_save_hook() {
 			do_action( 'rtmedia_addon_license_save_hook' );
@@ -292,7 +289,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Show rtmedia admin notices.
+		 * Show rtMedia admin notices.
 		 *
 		 * @access public
 		 *
@@ -369,7 +366,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Show rtmedia inspirebook release notice.
+		 * Show rtMedia inspirebook release notice.
 		 *
 		 * @access public
 		 *
@@ -510,66 +507,66 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Show rtmedia addon update notice.
+		 * Show rtMedia addon update notice.
 		 *
 		 * @access public
 		 *
-		 * @return bool $return_falg
+		 * @return bool $return_flag
 		 */
 		public function check_for_addon_update_notice() {
-			$return_falg = false;
+			$return_flag = false;
 
 			// check for rtMedia Instagram version.
 			if ( defined( 'RTMEDIA_INSTAGRAM_PATH' ) ) {
 				$plugin_info = get_plugin_data( RTMEDIA_INSTAGRAM_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.14' ) ) ) {
-					$return_falg = true;
+					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_PHOTO_TAGGING_PATH' ) ) {
 				// check for rtMedia Photo Tagging version.
 				$plugin_info = get_plugin_data( RTMEDIA_PHOTO_TAGGING_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.2.14' ) ) ) {
-					$return_falg = true;
+					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_FFMPEG_PATH' ) ) {
 				// check for rtMedia FFPMEG version.
 				$plugin_info = get_plugin_data( RTMEDIA_FFMPEG_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.14' ) ) ) {
-					$return_falg = true;
+					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_KALTURA_PATH' ) ) {
 				// check for rtMedia Kaltura version.
 				$plugin_info = get_plugin_data( RTMEDIA_KALTURA_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '3.0.16' ) ) ) {
-					$return_falg = true;
+					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_PRO_PATH' ) ) {
 				// check for rtMedia Pro version.
 				$plugin_info = get_plugin_data( RTMEDIA_PRO_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.6' ) ) ) {
-					$return_falg = true;
+					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_SOCIAL_SYNC_PATH' ) ) {
 				// check for rtMedia Social Sync version.
 				$plugin_info = get_plugin_data( RTMEDIA_SOCIAL_SYNC_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '1.3.1' ) ) ) {
-					$return_falg = true;
+					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_MEMBERSHIP_PATH' ) ) {
 				// check for rtMedia Membership version.
 				$plugin_info = get_plugin_data( RTMEDIA_MEMBERSHIP_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.5' ) ) ) {
-					$return_falg = true;
+					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_WATERMARK_PATH' ) ) {
 				// check for rtMedia Photo Watermak version.
 				$plugin_info = get_plugin_data( RTMEDIA_WATERMARK_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '1.1.8' ) ) ) {
-					$return_falg = true;
+					$return_flag = true;
 				}
 			}
 
-			return $return_falg;
+			return $return_flag;
 		}
 
 		/**
@@ -586,7 +583,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Show rtmedia advertisement.
+		 * Show rtMedia advertisement.
 		 *
 		 * @access public
 		 *
@@ -959,6 +956,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$this,
 				'settings_page',
 			), RTMEDIA_URL . 'app/assets/admin/img/rtmedia-logo.png', '40.1111' );
+
 			add_submenu_page( 'rtmedia-settings', esc_html__( 'Settings', 'buddypress-media' ), esc_html__( 'Settings', 'buddypress-media' ), 'manage_options', 'rtmedia-settings', array(
 				$this,
 				'settings_page',
@@ -998,7 +996,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Hide rtmedia addon update notice.
+		 * Hide rtMedia addon update notice.
 		 *
 		 * @access public
 		 *
@@ -1012,7 +1010,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 			die();
 		}
-
 
 		/**
 		 * Render the BuddyPress Media Settings page.
@@ -1245,7 +1242,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function tab() {
 
-			$tabs_html    = '';
 			$idle_class   = 'nav-tab';
 			$active_class = 'nav-tab nav-tab-active';
 			$tabs         = array();
@@ -1519,7 +1515,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Function to linkback.
+		 * Function to save linkback.
 		 *
 		 * @return mixed
 		 */
@@ -1568,6 +1564,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			ob_start();
 			include $file_path;
+
 			$settings_data_json = ob_get_clean();
 			wp_delete_file( $file_path );
 
@@ -1606,11 +1603,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					$response['rtm_response_msg'] = esc_html__( 'Could not update rtMedia Settings', 'buddypress-media' );
 				}
 			}
+
 			wp_send_json( $response );
 		}
 
 		/**
-		 * Convert videos.
+		 * Ajax callback function Convert videos mailchimp.
 		 */
 		public function convert_videos_mailchimp_send() {
 			// todo: nonce required.
@@ -1629,12 +1627,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			} else {
 				rtmedia_update_site_option( 'rtmedia-survey', 0 );
 			}
+
 			esc_html_e( 'Thank you for your time.', 'buddypress-media' );
 			wp_die();
 		}
 
 		/**
-		 * Video transcoding survey response.
+		 * Function to save Video transcoding survey response.
 		 */
 		public function video_transcoding_survey_response() {
 			$survey_done = filter_input( INPUT_GET, 'survey-done', FILTER_SANITIZE_STRING );
@@ -1660,13 +1659,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Upload filetypes error.
+		 * Show upload file types error.
 		 */
 		public function upload_filetypes_error() {
 			global $rtmedia;
 			$upload_filetypes = rtmedia_get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
 			$upload_filetypes = explode( ' ', $upload_filetypes );
 			$flag             = false;
+
 			if ( isset( $rtmedia->options['images_enabled'] ) && $rtmedia->options['images_enabled'] ) {
 				$not_supported_image = array_diff( array( 'jpg', 'jpeg', 'png', 'gif' ), $upload_filetypes );
 				if ( ! empty( $not_supported_image ) ) {
@@ -1749,9 +1749,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ! check_ajax_referer( '_rtm_file_type_error_', '_rtm_nonce' ) ) {
 				wp_send_json( false );
 			}
+
 			global $rtmedia;
 			$upload_filetypes_orig = $upload_filetypes = rtmedia_get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
 			$upload_filetypes      = explode( ' ', $upload_filetypes );
+
 			if ( isset( $rtmedia->options['images_enabled'] ) && $rtmedia->options['images_enabled'] ) {
 				$not_supported_image = array_diff( array( 'jpg', 'jpeg', 'png', 'gif' ), $upload_filetypes );
 				if ( ! empty( $not_supported_image ) ) {

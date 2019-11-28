@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of RTDBUpdate
+ * Class to update DB for rtMedia.
  * Required : rt_plugin_info.php
  *
  * @package    rtMedia
@@ -11,7 +11,7 @@
 
 if ( ! class_exists( 'RTDBUpdate' ) ) {
 	/**
-	 * Class RTDBUpdate
+	 * Class to update DB for rtMedia.
 	 */
 	class RTDBUpdate {
 
@@ -53,7 +53,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 		/**
 		 * Plugin info.
 		 *
-		 * @var $rt_plugin_info
+		 * @var object $rt_plugin_info
 		 */
 		public $rt_plugin_info;
 
@@ -208,7 +208,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 		}
 
 		/**
-		 * Genrate sql query.
+		 * Generate sql query.
 		 *
 		 * @access public
 		 *
@@ -218,11 +218,12 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 		 * @return string sql query
 		 */
 		public function genrate_sql( $file_name, $file_content ) {
+			// TODO: change Function name.
 			return sprintf( $file_content, $this->genrate_table_name( $file_name ) );
 		}
 
 		/**
-		 * Genrate table_name.
+		 * Generate table_name.
 		 *
 		 * @access public
 		 *

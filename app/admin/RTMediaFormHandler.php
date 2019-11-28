@@ -3,19 +3,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  *
- * @package    RTMedia
+ * @package    rtMedia
  * @subpackage Admin
  */
 
 /**
- * Description of RTMediaFormHandler
+ * Class for different form elements.
  *
  * @author udit
  */
 class RTMediaFormHandler {
 
 	/**
-	 * Selectbox function.
+	 * Function to show Select box.
 	 *
 	 * @param array $args Arguments.
 	 */
@@ -48,7 +48,7 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * Show rtmedia textarea in admin options.
+	 * Show rtMedia textarea in admin options.
 	 *
 	 * @access static
 	 *
@@ -94,7 +94,7 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * Show rtmedia checkbox in admin options.
+	 * Show rtMedia checkbox in admin options.
 	 *
 	 * @access static
 	 *
@@ -140,7 +140,7 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * Show rtmedia radio in admin options.
+	 * Show rtMedia radio in admin options.
 	 *
 	 * @access static
 	 *
@@ -180,7 +180,7 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * Show rtmedia dimensions in admin options.
+	 * Show rtMedia dimensions in admin options.
 	 *
 	 * @param array $args Arguments.
 	 *
@@ -203,7 +203,9 @@ class RTMediaFormHandler {
 	 * @return void
 	 */
 	public static function number( $args ) {
+
 		global $rtmedia;
+
 		$options  = $rtmedia->options;
 		$defaults = array(
 			'key'  => '',
@@ -266,6 +268,8 @@ class RTMediaFormHandler {
 	 * @param bool  $echo Echo or not.
 	 *
 	 * @return string $link_obj
+	 *
+	 * @throws rtFormInvalidArgumentsException
 	 */
 	public static function link( $args, $echo = true ) {
 
@@ -314,6 +318,8 @@ class RTMediaFormHandler {
 	 * @param  array $args arguments to create button.
 	 *
 	 * @return void
+	 *
+	 * @throws rtFormInvalidArgumentsException
 	 */
 	public static function button( $args ) {
 		$defaults = array(
@@ -342,6 +348,8 @@ class RTMediaFormHandler {
 	 * @param  array $args Arguments to create file input control.
 	 *
 	 * @return void
+	 *
+	 * @throws rtFormInvalidArgumentsException
 	 */
 	public static function fileinput( $args ) {
 		$defaults = array(
@@ -368,6 +376,8 @@ class RTMediaFormHandler {
 	 * @param  array $args Arguments to create file input control for default thumbnail generator settings.
 	 *
 	 * @return void
+	 *
+	 * @throws rtFormInvalidArgumentsException
 	 */
 	public static function inputfile( $args ) {
 		global $rtmedia;
@@ -383,8 +393,6 @@ class RTMediaFormHandler {
 		if ( ! empty( $args['key'] ) ) {
 			$args['name'] = $args['key'];
 		}
-
-		$args['value'] = $args['value'];
 
 		$num_obj = new rtForm();
 		$num_obj->display_inputfile( $args );
