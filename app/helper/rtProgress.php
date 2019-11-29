@@ -6,7 +6,7 @@
  */
 
 /**
- * class to show progress-bar.
+ * Class to show progress-bar.
  *
  * @author saurabh
  */

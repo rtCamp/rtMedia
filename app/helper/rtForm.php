@@ -766,7 +766,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @param string|array $args Arguments.
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_link( $args = '' ) {
 			echo $this->get_link( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -793,7 +793,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @param string|array $args Arguments to create file input control.
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_inputfile( $args = '' ) {
 			// Previously escaped and sanitized so not required here.
@@ -861,7 +861,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @return string
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function get_number( $attributes = '' ) {
 
@@ -873,7 +873,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @param string|array $args Arguments.
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_number( $args = '' ) {
 			echo $this->get_number( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -926,7 +926,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @return string
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function get_date( $attributes ) {
 			return $this->generate_date( $attributes );
@@ -982,7 +982,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param  string|array $attributes Attributes.
 		 *
 		 * @return string
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function get_hidden( $attributes = '' ) {
 
@@ -1038,7 +1038,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param  string|array $attributes Attributes.
 		 *
 		 * @return string
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function get_textarea( $attributes = '' ) {
 
@@ -1050,7 +1050,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @param string|array $args Arguments.
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_textarea( $args = '' ) {
 			echo $this->get_textarea( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -1065,7 +1065,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @return string $container
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		protected function generate_radio( $attributes ) {
 
@@ -1103,7 +1103,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @return string
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function get_radio( $attributes = '' ) {
 
@@ -1115,7 +1115,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @param array|string $args Arguments.
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_radio( $args = '' ) {
 			echo $this->get_radio( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -1130,7 +1130,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @return string $container
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		protected function generate_checkbox( $attributes ) {
 
@@ -1284,7 +1284,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @return string
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function get_select( $attributes = '' ) {
 
@@ -1296,7 +1296,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @param string|array $args Arguments.
 		 *
-		 * @throws rtFormInvalidArgumentsException
+		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_select( $args = '' ) {
 			echo $this->get_select( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
