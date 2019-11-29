@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Media feed.
  *
@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of RTMediaFeed
+ * Class for rtMedia feed operations.
  *
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
@@ -21,7 +21,7 @@ class RTMediaFeed {
 	public $feed_url = '';
 
 	/**
-	 * Constructor
+	 * RTMediaFeed Constructor
 	 *
 	 * @access public
 	 *

@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -13,7 +13,7 @@ if ( ! class_exists( 'rtFormsInvalidArgumentsException' ) ) {
 	 *
 	 * @author udit
 	 */
-	class rtFormInvalidArgumentsException extends Exception {
+	class rtFormInvalidArgumentsException extends Exception { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
 
 		/**
 		 * The rtFormInvalidArgumentsException constructor.

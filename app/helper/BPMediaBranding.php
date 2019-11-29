@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * BPMediaBranding Class file.
  *
@@ -6,15 +6,12 @@
  * @subpackage Admin
  */
 
-/**
- * Description of BPMediaBranding
- *
- * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>, Joshua Abenazer <joshua.abenazer@rtcamp.com>
- */
 if ( ! class_exists( 'BPMediaBranding' ) ) {
 
 	/**
-	 * Class BPMediaBranding.
+	 * Class for BuddyPress Media Branding
+	 *
+	 * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>, Joshua Abenazer <joshua.abenazer@rtcamp.com>
 	 */
 	class BPMediaBranding {
 

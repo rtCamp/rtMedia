@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Plugin update checker.
  *
@@ -8,7 +8,7 @@
 /**
  * Class rtPluginUpdateChecker
  */
-class rtPluginUpdateChecker {
+class rtPluginUpdateChecker { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
 	/**
 	 * A rtPluginUpdateChecker constructor.
 	 *

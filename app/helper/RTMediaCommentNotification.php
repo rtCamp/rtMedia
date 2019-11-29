@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Media comment notification class.
  *
@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of RTMediaCommentNotification
+ * Class to handle Media comment notifications
  *
  * @author  Jignesh Nakrani <jignesh.nakrani@rtcamp.com>
  */
@@ -126,7 +126,7 @@ class RTMediaCommentNotification extends RTMediaNotification {
 	}
 
 	/**
-	 * Delete notification of a comment perticular commnet
+	 * Delete notification of a comment particular comment
 	 *
 	 * @param   int $comment_id Comment id.
 	 */
@@ -145,7 +145,7 @@ class RTMediaCommentNotification extends RTMediaNotification {
 /**
  * This is callback function for rt_like_notifier component dont call this callback method manually
  *
- * @param int    $action action of componamt for notification.
+ * @param int    $action action of component for notification.
  * @param int    $post_id ID of a post to notification.
  * @param int    $initiator_id secondary_item_id used in 'bp_notifications_add_notification'.
  * @param int    $total_items number of notification for same component.

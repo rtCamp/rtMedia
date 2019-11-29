@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -70,7 +70,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 	 *
 	 * @author udit
 	 */
-	class rtForm {
+	class rtForm { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
 
 		/**
 		 * Element ID.
@@ -323,7 +323,6 @@ if ( ! class_exists( 'rtForm' ) ) {
 
 			if ( ! is_array( $misc ) ) {
 				throw new rtFormInvalidArgumentsException( 'attributes : misc' );
-				return;
 			}
 
 			$html = '';
@@ -346,7 +345,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @return string $html
 		 */
-		private function processAttributes( $element, $attributes, $container = false ) {
+		private function process_attributes( $element, $attributes, $container = false ) {
 
 			/* generating the id on its own if not provided otherwise taken from the parameter provided */
 			if ( isset( $attributes['id'] ) ) {
@@ -454,7 +453,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 				}
 
 				if ( 'rtSelect' !== $element ) {
-					$data .= $this->processAttributes( $element, $attrib, true );
+					$data .= $this->process_attributes( $element, $attrib, true );
 
 					// span elements for checkbox on/off switch.
 					if ( 'rtCheckbox' === $element ) {
@@ -585,7 +584,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 				$html = '<input type="text" ';
 
 				/* generating attributes */
-				$html .= $this->processAttributes( $element, $attributes );
+				$html .= $this->process_attributes( $element, $attributes );
 
 				/* ending the tag */
 				$html .= ' />';
@@ -634,7 +633,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 				$html .= '<input type="file" ';
 
 				/* Generating attributes */
-				$html .= $this->processAttributes( $element, $attributes );
+				$html .= $this->process_attributes( $element, $attributes );
 
 				/* Ending the tag */
 				$html .= ' />';
@@ -698,7 +697,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param string|array $args Arguments.
 		 */
 		public function display_textbox( $args = '' ) {
-			echo $this->get_textbox( $args );
+			echo $this->get_textbox( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -721,7 +720,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 				$html = '<a ';
 
 				// Generating attributes.
-				$html .= $this->processAttributes( $element, $attributes );
+				$html .= $this->process_attributes( $element, $attributes );
 
 				// Put text of link.
 				$html .= esc_html( ( isset( $attributes['text'] ) ) ? $attributes['text'] : '' );
@@ -769,7 +768,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param string|array $args Arguments.
 		 */
 		public function display_link( $args = '' ) {
-			echo $this->get_link( $args );
+			echo $this->get_link( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -818,7 +817,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 				$html = '<input type="number" ';
 
 				/* generating attributes */
-				$html .= $this->processAttributes( $element, $attributes );
+				$html .= $this->process_attributes( $element, $attributes );
 				if ( isset( $attributes['min'] ) ) {
 					$html .= " min='" . esc_attr( $attributes['min'] ) . "' ";
 				}
@@ -870,7 +869,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param string|array $args Arguments.
 		 */
 		public function display_number( $args = '' ) {
-			echo $this->get_number( $args );
+			echo $this->get_number( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -889,7 +888,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 			if ( is_array( $attributes ) ) {
 				$html = '<input type="date" ';
 
-				$html .= $this->processAttributes( $element, $attributes );
+				$html .= $this->process_attributes( $element, $attributes );
 
 				$html .= ' />';
 
@@ -943,7 +942,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 				$html = '<input type="hidden" ';
 
 				/* generating attributes */
-				$html .= $this->processAttributes( $element, $attributes );
+				$html .= $this->process_attributes( $element, $attributes );
 
 				/* ending the tag */
 				$html .= ' />';
@@ -996,7 +995,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 			if ( is_array( $attributes ) ) {
 
 				$html  = '<textarea ';
-				$html .= $this->processAttributes( $element, $attributes );
+				$html .= $this->process_attributes( $element, $attributes );
 				$html .= '>';
 
 				$html .= esc_html( ( isset( $attributes['value'] ) ) ? $attributes['value'] : '' );
@@ -1041,7 +1040,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param string|array $args Arguments.
 		 */
 		public function display_textarea( $args = '' ) {
-			echo $this->get_textarea( $args );
+			echo $this->get_textarea( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -1100,7 +1099,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param array|string $args Arguments.
 		 */
 		public function display_radio( $args = '' ) {
-			echo $this->get_radio( $args );
+			echo $this->get_radio( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -1175,7 +1174,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param string $args Arguments.
 		 */
 		public function display_switch( $args = '' ) {
-			echo $this->get_switch( $args );
+			echo $this->get_switch( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -1275,7 +1274,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param string|array $args Arguments.
 		 */
 		public function display_select( $args = '' ) {
-			echo $this->get_select( $args );
+			echo $this->get_select( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -1300,7 +1299,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 			$html = '<input type="button" ';
 
 			/* generating attributes */
-			$html .= $this->processAttributes( $element, $attributes );
+			$html .= $this->process_attributes( $element, $attributes );
 
 			/* ending the tag */
 			$html .= ' />';
@@ -1369,14 +1368,14 @@ if ( ! class_exists( 'rtForm' ) ) {
 			$nonce = wp_create_nonce( 'rtmedia-admin-upload' );
 
 			/* Keep customized button for file input */
- 			$html = '<button class="rtm-form-button button button-primary button-small">Browse File</button>';
+			$html = '<button class="rtm-form-button button button-primary button-small">Browse File</button>';
 
 			/* Starting the input tag */
 			$html .= '<input type="hidden" id="rtmedia_admin_upload_nonce" value="' . esc_attr( $nonce ) . '" />';
 			$html .= '<input type="file" ';
 
 			/* generating attributes */
-			$html .= $this->processAttributes( $element, $attributes );
+			$html .= $this->process_attributes( $element, $attributes );
 
 			/* ending the tag */
 			$html .= ' />';

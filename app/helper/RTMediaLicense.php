@@ -1,6 +1,6 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * Created by PhpStorm.
+ * File for RTMediaLicense
  * User: ritz
  * Date: 18/9/14
  * Time: 5:05 PM
@@ -9,7 +9,7 @@
  */
 
 /**
- * Class RTMediaLicense
+ * Class to show rtMedia license details.
  */
 class RTMediaLicense {
 	/**
@@ -170,7 +170,11 @@ class RTMediaLicense {
 						$class      = 'alert';
 						$messages[] = sprintf(
 							// translators: Account page link.
-							__( 'Invalid license. Please <a href="%s" target="_blank">visit your account page</a> and verify it.', 'buddypress-media' ), 'https://rtmedia.io/my-account/'
+							__(
+								'Invalid license. Please <a href="%s" target="_blank">visit your account page</a> and verify it.',
+								'buddypress-media'
+							),
+							'https://rtmedia.io/my-account/'
 						);
 
 						$license_status = 'license-' . $class . '-notice';
@@ -293,6 +297,6 @@ class RTMediaLicense {
 			}
 		}
 
-		echo $html; // phpcs:ignore
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

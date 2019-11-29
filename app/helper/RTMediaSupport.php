@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Description of RTMediaSupport
  *
@@ -189,7 +189,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 								if ( 'premium_support' === $form ) {
 									echo 'selected';
 								}
-							?>
+								?>
 							><?php esc_html_e( 'Premium Support', 'buddypress-media' ); ?></option>
 							<option
 								value="bug_report"
@@ -197,7 +197,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 								if ( 'bug_report' === $form ) {
 									echo 'selected';
 								}
-							?>
+								?>
 							><?php esc_html_e( 'Bug Report', 'buddypress-media' ); ?></option>
 							<option
 								value="new_feature"
@@ -205,7 +205,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 								if ( 'new_feature' === $form ) {
 									echo 'selected';
 								}
-							?>
+								?>
 							><?php esc_html_e( 'New Feature', 'buddypress-media' ); ?></option>
 						</select>
 						<input name="support_submit" value="<?php esc_attr_e( 'Submit', 'buddypress-media' ); ?>"
@@ -318,7 +318,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$debug_info['OS']         = esc_html( PHP_OS );
 			if ( extension_loaded( 'imagick' ) ) {
 				$imagickobj = new Imagick();
-				$imagick    = $message = preg_replace( " #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#i", "'<a href=\"$1\" target=\"_blank\">$3</a>$4'", $imagickobj->getversion() );
+				$imagick    = preg_replace( " #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#i", "'<a href=\"$1\" target=\"_blank\">$3</a>$4'", $imagickobj->getversion() );
+				$message    = $imagick;
 			} else {
 				$imagick['versionString'] = 'Not Installed';
 			}
@@ -334,8 +335,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$debug_info['[php.ini] memory_limit']        = esc_html( ini_get( 'memory_limit' ) );
 			$debug_info['Installed Plugins']             = $this->get_plugin_info();
 			$active_theme                                = wp_get_theme();
-			$debug_info['Theme Name']                    = esc_html( $active_theme->Name );
-			$debug_info['Theme Version']                 = esc_html( $active_theme->Version );
+			$debug_info['Theme Name']                    = esc_html( $active_theme->Name ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$debug_info['Theme Version']                 = esc_html( $active_theme->Version ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 			$debug_info['Author URL']                    = esc_url( $active_theme->{'Author URI'} );
 			$debug_info['Template Overrides']            = implode( ', <br/>', $this->rtmedia_scan_template_files( RTMEDIA_PATH . '/templates/' ) );
 
@@ -629,55 +630,55 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			}
 			$message = '<html>
 				<head>
-					<title>' . strip_tags( $title . get_bloginfo( 'name' ) ) . '</title>
+					<title>' . wp_strip_all_tags( $title . get_bloginfo( 'name' ) ) . '</title>
 				</head>
 				<body>
 					<table>
 						<tr>
-							<td>Name</td><td>' . strip_tags( $form_data['name'] ) . '</td>
+							<td>Name</td><td>' . wp_strip_all_tags( $form_data['name'] ) . '</td>
 						</tr>
 						<tr>
-							<td>Email</td><td>' . strip_tags( $form_data['email'] ) . '</td>
+							<td>Email</td><td>' . wp_strip_all_tags( $form_data['email'] ) . '</td>
 						</tr>
 						<tr>
-							<td>Website</td><td>' . strip_tags( $form_data['website'] ) . '</td>
+							<td>Website</td><td>' . wp_strip_all_tags( $form_data['website'] ) . '</td>
 						</tr>
 						<tr>
-							<td>Subject</td><td>' . strip_tags( $form_data['subject'] ) . '</td>
+							<td>Subject</td><td>' . wp_strip_all_tags( $form_data['subject'] ) . '</td>
 						</tr>
 						<tr>
-							<td>Details</td><td>' . strip_tags( $form_data['details'] ) . '</td>
+							<td>Details</td><td>' . wp_strip_all_tags( $form_data['details'] ) . '</td>
 						</tr>
 						<tr>
-							<td>Request ID</td><td>' . strip_tags( $form_data['request_id'] ) . '</td>
+							<td>Request ID</td><td>' . wp_strip_all_tags( $form_data['request_id'] ) . '</td>
 						</tr>
 						<tr>
-							<td>Server Address</td><td>' . strip_tags( $form_data['server_address'] ) . '</td>
+							<td>Server Address</td><td>' . wp_strip_all_tags( $form_data['server_address'] ) . '</td>
 						</tr>
 						<tr>
-							<td>IP Address</td><td>' . strip_tags( $form_data['ip_address'] ) . '</td>
+							<td>IP Address</td><td>' . wp_strip_all_tags( $form_data['ip_address'] ) . '</td>
 						</tr>
 						<tr>
-							<td>Server Type</td><td>' . strip_tags( $form_data['server_type'] ) . '</td>
+							<td>Server Type</td><td>' . wp_strip_all_tags( $form_data['server_type'] ) . '</td>
 						</tr>
 						<tr>
-							<td>User Agent</td><td>' . strip_tags( $form_data['user_agent'] ) . '</td>
+							<td>User Agent</td><td>' . wp_strip_all_tags( $form_data['user_agent'] ) . '</td>
 						</tr>';
 			if ( 'bug_report' === sanitize_text_field( $form_data['request_type'] ) ) {
 				$message .= '<tr>
-									<td>WordPress Admin Username</td><td>' . strip_tags( $form_data['wp_admin_username'] ) . '</td>
+									<td>WordPress Admin Username</td><td>' . wp_strip_all_tags( $form_data['wp_admin_username'] ) . '</td>
 								</tr>
 								<tr>
-									<td>WordPress Admin Password</td><td>' . strip_tags( $form_data['wp_admin_pwd'] ) . '</td>
+									<td>WordPress Admin Password</td><td>' . wp_strip_all_tags( $form_data['wp_admin_pwd'] ) . '</td>
 								</tr>
 								<tr>
-									<td>SSH FTP Host</td><td>' . strip_tags( $form_data['ssh_ftp_host'] ) . '</td>
+									<td>SSH FTP Host</td><td>' . wp_strip_all_tags( $form_data['ssh_ftp_host'] ) . '</td>
 								</tr>
 								<tr>
-									<td>SSH FTP Username</td><td>' . strip_tags( $form_data['ssh_ftp_username'] ) . '</td>
+									<td>SSH FTP Username</td><td>' . wp_strip_all_tags( $form_data['ssh_ftp_username'] ) . '</td>
 								</tr>
 								<tr>
-									<td>SSH FTP Password</td><td>' . strip_tags( $form_data['ssh_ftp_pwd'] ) . '</td>
+									<td>SSH FTP Password</td><td>' . wp_strip_all_tags( $form_data['ssh_ftp_pwd'] ) . '</td>
 								</tr>
 									';
 			}
@@ -695,12 +696,18 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$headers       = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
 			$support_email = 'support@rtcamp.com';
 			if ( wp_mail(
-				$support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace(
+				$support_email,
+				'[rtmedia] ' . $mail_type . ' from ' . str_replace(
 					array(
 						'http://',
 						'https://',
-					), '', $form_data['website']
-				), stripslashes( $message ), $headers, $attachments
+					),
+					'',
+					$form_data['website']
+				),
+				stripslashes( $message ),
+				$headers,
+				$attachments
 			) ) {
 				/* delete file after sending it to mail. */
 				if ( ! empty( $attachment_file ) ) {
@@ -751,7 +758,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$debug_info['OS']         = esc_html( PHP_OS );
 			if ( extension_loaded( 'imagick' ) ) {
 				$imagickobj = new Imagick();
-				$imagick    = $message = preg_replace( " #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#i", "'<a href=\"$1\" target=\"_blank\">$3</a>$4'", $imagickobj->getversion() );
+				$imagick    = preg_replace( " #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#i", "'<a href=\"$1\" target=\"_blank\">$3</a>$4'", $imagickobj->getversion() );
+				$message    = $imagick;
 			} else {
 				$imagick['versionString'] = 'Not Installed';
 			}
@@ -768,23 +776,23 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$plugin_info                                 = explode( ',', $this->get_plugin_info() );
 			$debug_info['Installed Plugins']             = implode( ', ' . PHP_EOL . str_repeat( ' ', 49 ), $plugin_info );
 			$active_theme                                = wp_get_theme();
-			$debug_info['Theme Name']                    = esc_html( $active_theme->Name );
-			$debug_info['Theme Version']                 = esc_html( $active_theme->Version );
+			$debug_info['Theme Name']                    = esc_html( $active_theme->Name ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$debug_info['Theme Version']                 = esc_html( $active_theme->Version ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 			$debug_info['Author URL']                    = esc_url( $active_theme->{'Author URI'} );
 			$debug_info['Template Overrides']            = implode( ', ' . PHP_EOL . str_repeat( ' ', 50 ), $this->rtmedia_scan_template_files( RTMEDIA_PATH . '/templates/' ) );
 			$rtmedia_options                             = get_option( 'rtmedia-options' );
 			$rtmedia_options                             = array_merge( $debug_info, $rtmedia_options );
 			$i = 0;
 			if ( ! empty( $rtmedia_options ) ) {
-				echo '==============================================================================' . PHP_EOL;
-				echo '================================== Debug Info ================================' . PHP_EOL;
-				echo '==============================================================================' . PHP_EOL . PHP_EOL . PHP_EOL;
+				echo esc_html( '==============================================================================' . PHP_EOL );
+				echo esc_html( '================================== Debug Info ================================' . PHP_EOL );
+				echo esc_html( '==============================================================================' . PHP_EOL . PHP_EOL . PHP_EOL );
 
 				foreach ( $rtmedia_options as $option => $value ) {
-					echo ucwords( str_replace( '_', ' ', $option ) ) . str_repeat( ' ', 50 - strlen( $option ) ) . wp_strip_all_tags( $value ) . PHP_EOL;
+					echo wp_kses_post( ucwords( str_replace( '_', ' ', $option ) ) . str_repeat( ' ', 50 - strlen( $option ) ) . wp_strip_all_tags( $value ) . PHP_EOL );
 				}
 
-				readfile( 'debuginfo.txt' );
+				readfile( 'debuginfo.txt' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
 				exit();
 			}
 

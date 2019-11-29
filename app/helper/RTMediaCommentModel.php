@@ -1,13 +1,12 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * File includes RTMediaCommentModel class
  *
  * @package    rtMedia
  */
 
 /**
- * Description of RTMediaCommentModel
+ * Class to perform actions on comments.
  *
  * @author Udit Desai <udit.desai@rtcamp.com>
  */
@@ -23,11 +22,13 @@ class RTMediaCommentModel {
 	}
 
 	/**
-	 * Insert attr
+	 * Insert comment
 	 *
 	 * @access public
 	 *
 	 * @param  array $attr attributes.
+	 *
+	 * @return false|int
 	 */
 	public function insert( $attr ) {
 
@@ -40,6 +41,8 @@ class RTMediaCommentModel {
 	 * @access public
 	 *
 	 * @param  array $attr attributes.
+	 *
+	 * @return int
 	 */
 	public function update( $attr ) {
 
@@ -52,6 +55,8 @@ class RTMediaCommentModel {
 	 * @access public
 	 *
 	 * @param  string $where where clause.
+	 *
+	 * @return array|int
 	 */
 	public function get( $where ) {
 
@@ -64,6 +69,8 @@ class RTMediaCommentModel {
 	 * @access public
 	 *
 	 * @param  int $id id.
+	 *
+	 * @return array|WP_Comment|null
 	 */
 	public function get_by_id( $id ) {
 
@@ -76,6 +83,8 @@ class RTMediaCommentModel {
 	 * @access public
 	 *
 	 * @param  int $id id.
+	 *
+	 * @return bool
 	 */
 	public function delete( $id ) {
 

@@ -1,6 +1,6 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * Description of RTMediaAddon
+ * Contains class RTMediaAddon
  *
  * @package    rtMedia
  * @subpackage Admin
@@ -11,7 +11,7 @@
 if ( ! class_exists( 'RTMediaAddon' ) ) {
 
 	/**
-	 * Class RTMediaAddon
+	 * Class to display rtMedia addons.
 	 */
 	class RTMediaAddon {
 
@@ -41,7 +41,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		}
 
 		/**
-		 * Render addons.
+		 * Render add-ons.
 		 *
 		 * @access public
 		 *
@@ -518,7 +518,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		}
 
 		/**
-		 * Themes_content.
+		 * Show themes content.
 		 *
 		 * @access public
 		 *
@@ -555,43 +555,40 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 				'purchased'    => false,
 			);
 			$args     = wp_parse_args( $args, $defaults );
-			extract( $args );
 
-			$coming_soon ? ' coming-soon' : '';
-
-			if ( $purchased ) {
+			if ( $args['purchased'] ) {
 				$purchase_link = '<span class="rtm-addon-purchased button-primary disabled alignright product_type_simple">' . esc_html__( 'Purchased', 'buddypress-media' ) . '</span>';
 			} else {
-				$purchase_link = '<a class="button-primary alignright product_type_simple"  href="' . esc_url( $buy_now ) . '" target="_blank">' . esc_html__( 'Buy Now', 'buddypress-media' ) . '</a>';
+				$purchase_link = '<a class="button-primary alignright product_type_simple"  href="' . esc_url( $args['buy_now'] ) . '" target="_blank">' . esc_html__( 'Buy Now', 'buddypress-media' ) . '</a>';
 			}
 
-			$coming_soon_div = ( $coming_soon ) ? $this->coming_soon_div() : '';
+			$coming_soon_div = ( ! empty( $args['coming_soon'] ) ) ? $this->coming_soon_div() : '';
 			?>
 			<div class="plugin-card clearfix rtm-plugin-card">
 
 				<div class="plugin-card-top">
-					<a class="rtm-logo" href="<?php echo esc_url( $product_link ); ?>" title="<?php echo esc_attr( $title ); ?>" target="_blank">
-						<img width="240" height="184" title="<?php echo esc_attr( $title ); ?>" alt="<?php echo esc_attr( $title ); ?>" src="<?php echo esc_url( $img_src ); ?>"/>
+					<a class="rtm-logo" href="<?php echo esc_url( $args['product_link'] ); ?>" title="<?php echo esc_attr( $args['title'] ); ?>" target="_blank">
+						<img width="240" height="184" title="<?php echo esc_attr( $args['title'] ); ?>" alt="<?php echo esc_attr( $args['title'] ); ?>" src="<?php echo esc_url( $args['img_src'] ); ?>"/>
 					</a>
 
 					<div class="name column-name">
-						<h4><a href="<?php echo esc_url( $product_link ); ?>" title="<?php echo esc_attr( $title ); ?>" target="_blank"><?php echo esc_html( $title ); ?></a></h4>
+						<h4><a href="<?php echo esc_url( $args['product_link'] ); ?>" title="<?php echo esc_attr( $args['title'] ); ?>" target="_blank"><?php echo esc_html( $args['title'] ); ?></a></h4>
 					</div>
 
 					<div class="desc column-description">
-						<?php echo wp_kses_post( $desc ); ?>
+						<?php echo wp_kses_post( $args['desc'] ); ?>
 					</div>
 				</div>
 
 				<div class="plugin-card-bottom">
 					<span class="price alignleft">
-						<span class="amount"><?php echo esc_html( $price ); ?></span>
+						<span class="amount"><?php echo esc_html( $args['price'] ); ?></span>
 					</span>
 					<?php
 					echo $purchase_link; // @codingStandardsIgnoreLine
 
-					if ( '' !== $demo_link ) {
-						echo '<a class="alignright rtm-live-demo button"  href="' . esc_url( $demo_link ) . '" title="' . esc_attr( $title ) . '" target="_blank">' . esc_html__( 'Live Demo', 'buddypress-media' ) . '</a>';
+					if ( '' !== $args['demo_link'] ) {
+						echo '<a class="alignright rtm-live-demo button"  href="' . esc_url( $args['demo_link'] ) . '" title="' . esc_attr( $args['title'] ) . '" target="_blank">' . esc_html__( 'Live Demo', 'buddypress-media' ) . '</a>';
 					}
 					?>
 				</div>

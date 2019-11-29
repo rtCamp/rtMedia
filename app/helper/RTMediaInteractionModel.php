@@ -1,13 +1,12 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * File for class RTMediaInteractionModel
  *
  * @package    rtMedia
  */
 
 /**
- * Description of RTMediaInteractionModel
+ * Class to manage rtMedia interactions.
  *
  * @author ritz
  */

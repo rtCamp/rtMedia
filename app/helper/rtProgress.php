@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -11,7 +11,7 @@
  *
  * @author saurabh
  */
-class rtProgress {
+class rtProgress { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
 
 	/**
 	 * Constructor

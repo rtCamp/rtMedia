@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -11,7 +11,7 @@
  *
  * @author udit
  */
-class rtDimensions extends rtForm {
+class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
 
 	/**
 	 * Element ID.
@@ -113,17 +113,16 @@ class rtDimensions extends rtForm {
 		);
 
 		$attributes = wp_parse_args( $attributes, $defaults );
-		extract( $attributes );
 
 		$html = '';
 
 		$html .= '<td>' .
 				parent::get_number(
 					array(
-						'name'      => "rtmedia-options[{$key}_width]",
-						'value'     => $width,
+						'name'      => "rtmedia-options[{$attributes['key']}_width]",
+						'value'     => $attributes['width'],
 						'class'     => array( 'small-text large-offset-1' ),
-						'show_desc' => $show_desc,
+						'show_desc' => $attributes['show_desc'],
 					)
 				) .
 				'</td>';
@@ -132,10 +131,10 @@ class rtDimensions extends rtForm {
 			$html .= '<td>' .
 					parent::get_number(
 						array(
-							'name'      => "rtmedia-options[{$key}_height]",
-							'value'     => $height,
+							'name'      => "rtmedia-options[{{$attributes['key']}_height]",
+							'value'     => $attributes['height'],
 							'class'     => array( 'small-text large-offset-1' ),
-							'show_desc' => $show_desc,
+							'show_desc' => $attributes['show_desc'],
 						)
 					) .
 					'</td>';
@@ -145,22 +144,22 @@ class rtDimensions extends rtForm {
 			$html .= '<td>' .
 					parent::get_switch(
 						array(
-							'name'           => "rtmedia-options[{$key}_crop]",
+							'name'           => "rtmedia-options[{$attributes['key']}_crop]",
 							'rtForm_options' => array(
 								array(
 									''        => 1, // label would be blank.
-									'checked' => $crop,
+									'checked' => $attributes['crop'],
 								),
 							),
-							'value'          => ( isset( $options[ "rtmedia-options[{$key}_crop]" ] ) ) ? $options[ "rtmedia-options[{$key}_crop]" ] : '0',
-							'show_desc'      => $show_desc,
+							'value'          => ( isset( $options[ "rtmedia-options[{$attributes['key']}_crop]" ] ) ) ? $options[ "rtmedia-options[{$attributes['key']}_crop]" ] : '0',
+							'show_desc'      => $attributes['show_desc'],
 						)
 					) .
 					'</td>';
 		}
 
-		if ( $desc && $show_desc ) {
-			$html .= '<span class="clearfix large-offset-3 description">' . esc_html( $desc ) . '</span>';
+		if ( $attributes['desc'] && $attributes['show_desc'] ) {
+			$html .= '<span class="clearfix large-offset-3 description">' . esc_html( $attributes['desc'] ) . '</span>';
 		}
 
 		if ( isset( $attributes['label'] ) ) {
@@ -189,7 +188,7 @@ class rtDimensions extends rtForm {
 	 * @param string $args Arguments.
 	 */
 	public function display_dimensions( $args = '' ) {
-		echo $this->get_dimensions( $args );
+		echo $this->get_dimensions( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 }

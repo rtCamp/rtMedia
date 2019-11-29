@@ -1,6 +1,6 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * Created by PhpStorm.
+ * Class RTMediaActivityModel file.
  * User: ritz <ritesh.patel@rtcamp.com>
  * Date: 11/9/14
  * Time: 2:32 PM
@@ -13,7 +13,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 }
 
 /**
- * Class RTMediaActivityModel
+ * Class to monitor media activity.
  */
 class RTMediaActivityModel extends RTDBModel {
 
@@ -68,7 +68,7 @@ class RTMediaActivityModel extends RTDBModel {
 	}
 
 	/**
-	 * Check.
+	 * Check if activity exists.
 	 *
 	 * @param string $activity_id activity id.
 	 *
@@ -102,7 +102,7 @@ class RTMediaActivityModel extends RTDBModel {
 	 * @param int      $privacy Privacy to set.
 	 * @param int|bool $parent_activity_id Parent activity id.
 	 */
-	public function profile_activity_update( $media_ids_of_activity = array(), $privacy, $parent_activity_id = false ) {
+	public function profile_activity_update( $media_ids_of_activity = array(), $privacy = 0, $parent_activity_id = false ) {
 
 		// Check if activity stream is active or not.
 		if ( ! function_exists( 'bp_activity_get' ) ) {
@@ -141,7 +141,7 @@ class RTMediaActivityModel extends RTDBModel {
 	}
 
 	/**
-	 * Set privacy.
+	 * Set privacy for activity.
 	 *
 	 * @param int    $activity_id activity id.
 	 * @param int    $user_id user id.
@@ -167,7 +167,10 @@ class RTMediaActivityModel extends RTDBModel {
 					'activity_id' => $activity_id,
 					'user_id'     => $user_id,
 					'privacy'     => $privacy,
-				), array( 'activity_id' => $activity_id )
+				),
+				array(
+					'activity_id' => $activity_id,
+				)
 			);
 		}
 
@@ -189,23 +192,23 @@ class RTMediaActivityModel extends RTDBModel {
 	}
 
 	/**
-	 * Set privacy for rtmedia activity.
+	 * Set privacy for rtMedia activity.
 	 *
 	 * @param int $parent_activity_id parent activity id.
 	 * @param int $activity_id activity id.
 	 * @param int $user_id user id.
 	 */
 	public function set_privacy_for_rtmedia_activity( $parent_activity_id, $activity_id, $user_id ) {
-		/*  get default privacy*/
+		// get default privacy.
 		$privacy = get_rtmedia_default_privacy();
 
-		/* get parent privacy  */
+		// get parent privacy.
 		$activity_privacy = $this->get( array( 'activity_id' => $parent_activity_id ) );
 		if ( isset( $activity_privacy[0] ) && isset( $activity_privacy[0]->privacy ) ) {
 			$privacy = $activity_privacy[0]->privacy;
 		}
 
-		/* add the privacy */
+		// add the privacy.
 		$this->set_privacy( $activity_id, $user_id, $privacy );
 	}
 }

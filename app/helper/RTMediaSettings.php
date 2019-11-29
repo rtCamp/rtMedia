@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Description of RTMediaSettings
  *
@@ -233,7 +233,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 				$http_referer = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
 				if ( isset( $http_referer ) ) {
-					wp_redirect( $http_referer . $settings_saved );
+					wp_safe_redirect( $http_referer . $settings_saved );
 					exit();
 				}
 				global $rtmedia;
@@ -243,24 +243,33 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			if ( function_exists( 'add_settings_section' ) ) {
 				$rtmedia_addon = new RTMediaAddon();
 				add_settings_section(
-					'rtm-addons', esc_html__( 'BuddyPress Media Addons for Photos', 'buddypress-media' ), array(
+					'rtm-addons',
+					esc_html__( 'BuddyPress Media Addons for Photos', 'buddypress-media' ),
+					array(
 						$rtmedia_addon,
 						'get_addons',
-					), 'rtmedia-addons'
+					),
+					'rtmedia-addons'
 				);
 				$rtmedia_support = new RTMediaSupport( false );
 				add_settings_section(
-					'rtm-support', esc_html__( 'Support', 'buddypress-media' ), array(
+					'rtm-support',
+					esc_html__( 'Support', 'buddypress-media' ),
+					array(
 						$rtmedia_support,
 						'get_support_content',
-					), 'rtmedia-support'
+					),
+					'rtmedia-support'
 				);
 				$rtmedia_themes = new RTMediaThemes();
 				add_settings_section(
-					'rtm-themes', esc_html__( 'rtMedia Themes', 'buddypress-media' ), array(
+					'rtm-themes',
+					esc_html__( 'rtMedia Themes', 'buddypress-media' ),
+					array(
 						$rtmedia_themes,
 						'get_themes',
-					), 'rtmedia-themes'
+					),
+					'rtmedia-themes'
 				);
 			}
 

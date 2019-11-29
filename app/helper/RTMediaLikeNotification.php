@@ -1,12 +1,12 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * Media like notification.
+ * File for RTMediaLikeNotification class.
  *
  * @package    rtMedia
  */
 
 /**
- * Description of RTMediaLikeNotification
+ * Class to handle media liked notification
  *
  * @author Jignesh Nakrani <jignesh.nakrani@rtcamp.com>
  */
@@ -60,13 +60,13 @@ class RTMediaLikeNotification extends RTMediaNotification {
 	 * Add notification using  bp_notifications_add_notification function
 	 * delete and merge likes if already same notification exist on a media
 	 *
-	 * @param RTMediaLike $likeargs RTMediaLike class object.
+	 * @param RTMediaLike $like_args RTMediaLike class object.
 	 */
-	public function add_like_notify( $likeargs ) {
-		$action         = $likeargs->increase;
-		$user_id        = $likeargs->interactor;
-		$post_author_id = $likeargs->owner;
-		$post_id        = $likeargs->media->media_id;
+	public function add_like_notify( $like_args ) {
+		$action         = $like_args->increase;
+		$user_id        = $like_args->interactor;
+		$post_author_id = $like_args->owner;
+		$post_id        = $like_args->media->media_id;
 		$like_count     = intval( get_rtmedia_like( $post_id ) );
 
 		if ( intval( $post_author_id ) === intval( $user_id ) ) {
@@ -151,13 +151,14 @@ class RTMediaLikeNotification extends RTMediaNotification {
 			return false;
 		}
 
-		$rtmediainteractionmodel = new RTMediaInteractionModel();
-		$media_like_cols         = array(
+		$rtmedia_interaction_model = new RTMediaInteractionModel();
+
+		$media_like_cols = array(
 			'media_id' => $media_id,
 			'action'   => 'like',
 			'value'    => 1,
 		);
-		$media_likes             = $rtmediainteractionmodel->get( $media_like_cols, false, false, 'action_date' );
+		$media_likes     = $rtmedia_interaction_model->get( $media_like_cols, false, false, 'action_date' );
 
 		if ( 0 === count( $media_likes ) ) {
 			return false;
@@ -170,7 +171,7 @@ class RTMediaLikeNotification extends RTMediaNotification {
 /**
  * This is callback function for rt_like_notifier component dont call this callback method manually
  *
- * @param int    $action action of componamt for notification.
+ * @param int    $action action of component for notification.
  * @param int    $post_id ID of a post to notification.
  * @param int    $initiator_id secondary_item_id used in 'bp_notifications_add_notification'.
  * @param int    $total_items number of notification for same component.

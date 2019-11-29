@@ -1,14 +1,12 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * File for RTMediaNotification class.
  *
  * @package    rtMedia
  */
 
 /**
- * Notification class.
+ * Media Notification class.
  *
  * @author Jignesh Nakrani <jignesh.nakrani@rtcamp.com>
  */
@@ -111,7 +109,7 @@ class RTMediaNotification {
 	}
 
 	/**
-	 * Deletes existing media notification of a perticular user
+	 * Deletes existing media notification of a particular user
 	 *
 	 * @param   int $post_author_id Author of post.
 	 * @param   int $post_id ID of a post to delete related notification.
