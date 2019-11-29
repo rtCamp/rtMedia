@@ -1,7 +1,6 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * File to include rtFormInvalidArgumentsException class.
  *
  * @package    rtMedia
  */
@@ -9,7 +8,7 @@
 if ( ! class_exists( 'rtFormsInvalidArgumentsException' ) ) {
 
 	/**
-	 * Description of rtException
+	 * Class to throw invalid argument exception.
 	 *
 	 * @author udit
 	 */
@@ -21,6 +20,8 @@ if ( ! class_exists( 'rtFormsInvalidArgumentsException' ) ) {
 		 * @param string $msg Message.
 		 */
 		public function __construct( $msg ) {
+
+			parent::__construct( $msg );
 
 			// Error Message.
 			// translators: Line number and file.

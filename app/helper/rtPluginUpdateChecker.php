@@ -6,7 +6,7 @@
  */
 
 /**
- * Class rtPluginUpdateChecker
+ * Class to check rtMedia plugin update
  */
 class rtPluginUpdateChecker { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
 	/**

@@ -1,6 +1,6 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * Description of RTMediaSupport
+ * File to include RTMediaSupport class
  *
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>, Joshua Abenazer <joshua.abenazer@rtcamp.com>
  *
@@ -10,7 +10,7 @@
 if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 	/**
-	 * Class RTMediaSupport
+	 * Class to handle rtMedia support.
 	 */
 	class RTMediaSupport {
 
@@ -36,7 +36,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		public static $page;
 
 		/**
-		 * Constructor
+		 * RTMediaSupport Constructor
 		 *
 		 * @access public
 		 *
@@ -299,7 +299,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		}
 
 		/**
-		 * Show debug_info.
+		 * Show debug info.
 		 *
 		 * @access public
 		 *
@@ -568,7 +568,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 						<div class="rtm-form-filed clearfix">
 							<label class="bp-media-label"
-								for="subject"><?php esc_html_e( 'Attachement', 'buddypress-media' ); ?></label>
+								for="subject"><?php esc_html_e( 'Attachment', 'buddypress-media' ); ?></label>
 							<input id="debuglog" class="bp-media-input" type="file" name="debuglog" />
 							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info"></i>
@@ -592,8 +592,6 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 		/**
 		 * Now submit request.
-		 *
-		 * @global type $rtmedia
 		 *
 		 * @return void
 		 */

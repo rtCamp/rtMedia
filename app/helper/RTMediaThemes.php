@@ -1,12 +1,12 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * Themes.
+ * Class file for RTMediaThemes.
  *
  * @package    rtMedia
  */
 
 /**
- * Description of RTMediaThemes
+ * Class to show rtMedia themes.
  *
  * @author ritz
  */
@@ -81,7 +81,7 @@ class RTMediaThemes {
 	}
 
 	/**
-	 * Show rtmedia_themes_content.
+	 * Show rtMedia details.
 	 *
 	 * @access public
 	 *
@@ -216,7 +216,7 @@ class RTMediaThemes {
 	}
 
 	/**
-	 * Show rtmedia_3rd_party_themes_content.
+	 * Show rtMMedia 3rd party themes details.
 	 *
 	 * @access public
 	 *

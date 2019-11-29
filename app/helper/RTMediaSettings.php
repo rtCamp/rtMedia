@@ -1,6 +1,6 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * Description of RTMediaSettings
+ * File for RTMediaSettings class.
  *
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>, Joshua Abenazer <joshua.abenazer@rtcamp.com>
  *
@@ -10,7 +10,7 @@
 if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 	/**
-	 * Class RTMediaSettings
+	 * Class for rtMedia setting/options operations.
 	 */
 	class RTMediaSettings {
 
@@ -421,7 +421,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		}
 
 		/**
-		 * Output rtmedia_support_intro.
+		 * Output rtMedia support.
 		 *
 		 * @access public
 		 *

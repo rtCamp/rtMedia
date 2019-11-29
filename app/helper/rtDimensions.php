@@ -1,13 +1,12 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * File to include class rtDimensions
  *
  * @package rtMedia
  */
 
 /**
- * Description of rtDimension
+ * Class to handle rtMedia dimensions
  *
  * @author udit
  */
@@ -67,7 +66,7 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 
 
 	/**
-	 * Embedd html class to html output.
+	 * Embed html class to html output.
 	 *
 	 * @access private
 	 *
@@ -183,7 +182,7 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 	}
 
 	/**
-	 * Display dimentions.
+	 * Display dimensions.
 	 *
 	 * @param string $args Arguments.
 	 */

@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of RTMediaUploadException
+ * Class to handle media upload exceptions.
  *
  * @author joshua
  */

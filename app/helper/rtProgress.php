@@ -1,13 +1,12 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * File to add rtProgress class.
  *
  * @package    rtMedia
  */
 
 /**
- * Description of rtProgress
+ * class to show progress-bar.
  *
  * @author saurabh
  */
@@ -23,7 +22,7 @@ class rtProgress { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWi
 	}
 
 	/**
-	 * Show progress_ui.
+	 * Show progress-bar ui.
 	 *
 	 * @access public
 	 *
