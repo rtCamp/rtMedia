@@ -1,6 +1,6 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * Created by PhpStorm.
+ * File to include RTMediaActivityUpgrade class.
  * User: ritz <ritesh.patel@rtcamp.com>
  * Date: 11/9/14
  * Time: 1:56 PM
@@ -9,7 +9,7 @@
  */
 
 /**
- * Class RTMediaActivityUpgrade
+ * Class to update rtMedia activities
  */
 class RTMediaActivityUpgrade {
 
@@ -25,13 +25,20 @@ class RTMediaActivityUpgrade {
 	}
 
 	/**
-	 * Menu.
+	 * Add Media activity upgrade Menu.
 	 */
 	public function menu() {
-		add_submenu_page( 'rtmedia-setting', esc_html__( 'Media activity upgrade', 'buddypress-media' ), esc_html__( 'Media activity upgrade', 'buddypress-media' ), 'manage_options', 'rtmedia-activity-upgrade', array(
-			$this,
-			'init',
-		) );
+		add_submenu_page(
+			'rtmedia-setting',
+			esc_html__( 'Media activity upgrade', 'buddypress-media' ),
+			esc_html__( 'Media activity upgrade', 'buddypress-media' ),
+			'manage_options',
+			'rtmedia-activity-upgrade',
+			array(
+				$this,
+				'init',
+			)
+		);
 	}
 
 	/**
@@ -48,7 +55,7 @@ class RTMediaActivityUpgrade {
 	}
 
 	/**
-	 * Activity upgrade.
+	 * Function to update option after activity upgrade is done.
 	 */
 	public function rtmedia_activity_done_upgrade() {
 		rtmedia_update_site_option( 'rtmedia_activity_done_upgrade', true );
@@ -56,19 +63,23 @@ class RTMediaActivityUpgrade {
 	}
 
 	/**
-	 * Add admin notice.
+	 * Add admin notice for activity upgrade.
 	 */
 	public function add_admin_notice() {
 		$pending      = $this->get_pending_count();
 		$upgrade_done = rtmedia_get_site_option( 'rtmedia_activity_done_upgrade' );
+
 		if ( $upgrade_done ) {
 			return;
 		}
+
 		if ( $pending < 0 ) {
 			$pending = 0;
 		}
+
 		rtmedia_update_site_option( 'rtmedia_media_activity_upgrade_pending', $pending );
 		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+
 		if ( $pending > 0 ) {
 			if ( ! ( isset( $page ) && 'rtmedia-activity-upgrade' === $page ) ) {
 				$site_option = get_site_option( 'rtmedia_activity_upgrade_notice' );
@@ -83,7 +94,7 @@ class RTMediaActivityUpgrade {
 	}
 
 	/**
-	 * Activity upgrade.
+	 * ajax callback for activity upgrade.
 	 *
 	 * @param int $lastid Last id.
 	 * @param int $limit Limit.
@@ -96,10 +107,13 @@ class RTMediaActivityUpgrade {
 			$activity_sql           = $wpdb->prepare( " SELECT *, max(privacy) as max_privacy FROM {$rtmedia_model->table_name} WHERE activity_id is NOT NULL GROUP BY activity_id ORDER BY id limit %d", $limit ); // @codingStandardsIgnoreLine
 
 			$lastid = filter_input( INPUT_POST, 'last_id', FILTER_SANITIZE_NUMBER_INT );
+
 			if ( ! empty( $lastid ) ) {
 				$activity_sql = $wpdb->prepare( " SELECT *, max(privacy) as max_privacy FROM {$rtmedia_model->table_name} WHERE activity_id > %d AND activity_id is NOT NULL GROUP BY activity_id ORDER BY id limit %d", $lastid, $limit ); // @codingStandardsIgnoreLine
 			}
+
 			$activity_data = $wpdb->get_results( $activity_sql ); // @codingStandardsIgnoreLine
+
 			if ( is_array( $activity_data ) && ! empty( $activity_data ) ) {
 				if ( $rtmedia_activity_model->check( $activity_data[0]->activity_id ) ) {
 					$rtmedia_activity_model->update(
@@ -107,7 +121,8 @@ class RTMediaActivityUpgrade {
 							'activity_id' => $activity_data[0]->activity_id,
 							'user_id'     => $activity_data[0]->media_author,
 							'privacy'     => $activity_data[0]->max_privacy,
-						), array( 'activity_id' => $activity_data[0]->activity_id )
+						),
+						array( 'activity_id' => $activity_data[0]->activity_id )
 					);
 				} else {
 					$rtmedia_activity_model->insert(
@@ -128,7 +143,7 @@ class RTMediaActivityUpgrade {
 	}
 
 	/**
-	 * Return upgrade.
+	 * Function to get upgraded activity details.
 	 *
 	 * @param object $activity_data Activity data object.
 	 * @param bool   $upgrade Upgrade.
@@ -137,23 +152,29 @@ class RTMediaActivityUpgrade {
 		$total   = $this->get_total_count();
 		$pending = $this->get_pending_count( $activity_data->activity_id );
 		$done    = $total - $pending;
+
 		if ( $pending < 0 ) {
 			$pending = 0;
 			$done    = $total;
 		}
+
 		if ( $done > $total ) {
 			$done = $total;
 		}
+
 		rtmedia_update_site_option( 'rtmedia_media_activity_upgrade_pending', $pending );
 		$pending_time = rtmedia_migrate_formatseconds( $pending ) . ' (estimated)';
-		echo wp_json_encode( array(
-			'status'      => true,
-			'done'        => $done,
-			'total'       => $total,
-			'pending'     => $pending_time,
-			'activity_id' => $activity_data->activity_id,
-			'imported'    => $upgrade,
-		) );
+
+		echo wp_json_encode(
+			array(
+				'status'      => true,
+				'done'        => $done,
+				'total'       => $total,
+				'pending'     => $pending_time,
+				'activity_id' => $activity_data->activity_id,
+				'imported'    => $upgrade,
+			)
+		);
 		die();
 	}
 
@@ -187,10 +208,13 @@ class RTMediaActivityUpgrade {
 		$rtmedia_model          = new RTMediaModel();
 		$query_pending          = $wpdb->prepare( " SELECT count( DISTINCT activity_id) as pending from {$rtmedia_model->table_name} where activity_id NOT IN( SELECT activity_id from {$rtmedia_activity_model->table_name} ) AND activity_id > %d  ", 0 ); // @codingStandardsIgnoreLine
 		$last_imported          = $this->get_last_imported();
+
 		if ( $last_imported ) {
 			$query_pending .= $wpdb->prepare( ' AND activity_id > %d', intval( $last_imported ) );
 		}
+
 		$pending_count = $wpdb->get_results( $query_pending ); // @codingStandardsIgnoreLine
+
 		if ( $pending_count && count( $pending_count ) > 0 ) {
 			return $pending_count[0]->pending;
 		}
@@ -208,6 +232,7 @@ class RTMediaActivityUpgrade {
 		$rtmedia_model = new RTMediaModel();
 		$query_total   = $wpdb->prepare( " SELECT count( DISTINCT activity_id) as total FROM {$rtmedia_model->table_name} WHERE activity_id > %d ", 0 ); // @codingStandardsIgnoreLine
 		$total_count   = $wpdb->get_results( $query_total ); // @codingStandardsIgnoreLine
+
 		if ( $total_count && count( $total_count ) > 0 ) {
 			return $total_count[0]->total;
 		}
@@ -225,6 +250,7 @@ class RTMediaActivityUpgrade {
 		$rtmedia_activity_model = new RTMediaActivityModel();
 		$last_query             = $wpdb->prepare( " SELECT activity_id from {$rtmedia_activity_model->table_name} ORDER BY activity_id DESC limit %d ", 1 ); // @codingStandardsIgnoreLine
 		$last_imported          = $wpdb->get_results( $last_query ); // @codingStandardsIgnoreLine
+
 		if ( $last_imported && count( $last_imported ) > 0 && isset( $last_imported[0] ) && isset( $last_imported[0]->activity_id ) ) {
 			return $last_imported[0]->activity_id;
 		}

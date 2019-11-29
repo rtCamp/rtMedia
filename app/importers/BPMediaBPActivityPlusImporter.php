@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -7,7 +7,7 @@
  */
 
 /**
- * Description of BPMediaBPActivityPlusImporter
+ * class for BPMedia import
  *
  * @author saurabh
  */
@@ -16,7 +16,7 @@ class BPMediaBPActivityPlusImporter extends BPMediaImporter {
 	/**
 	 * BPMediaBPActivityPlusImporter constructor.
 	 */
-	public function __construct() {
+	public function __construct() { // phpcs:ignore Generic.CodeAnalysis.UselessOverridingMethod.Found
 		parent::__construct();
 	}
 }

@@ -1,14 +1,12 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * File to include RTMediaMediaSizeImporter class.
  *
  * @package rtMedia
  */
 
 /**
- * Description of RTMediaMediaSizeImporter
+ * Class for Media size importer functions
  *
  * @author ritz
  */
@@ -23,7 +21,8 @@ class RTMediaMediaSizeImporter {
 		add_action( 'admin_init', array( $this, 'add_admin_notice' ) );
 		add_action( 'admin_menu', array( $this, 'menu' ), 10 );
 		add_action(
-			'wp_ajax_rtmedia_hide_media_size_import_notice', array(
+			'wp_ajax_rtmedia_hide_media_size_import_notice',
+			array(
 				$this,
 				'rtmedia_hide_media_size_import_notice',
 			)
@@ -31,11 +30,16 @@ class RTMediaMediaSizeImporter {
 	}
 
 	/**
-	 * Menu.
+	 * Register MMedia size import Menu.
 	 */
 	public function menu() {
 		add_submenu_page(
-			'rtmedia-setting', esc_html__( 'Media Size Import', 'buddypress-media' ), esc_html__( 'Media Size Import', 'buddypress-media' ), 'manage_options', 'rtmedia-migration-media-size-import', array(
+			'rtmedia-setting',
+			esc_html__( 'Media Size Import', 'buddypress-media' ),
+			esc_html__( 'Media Size Import', 'buddypress-media' ),
+			'manage_options',
+			'rtmedia-migration-media-size-import',
+			array(
 				$this,
 				'init',
 			)
@@ -122,7 +126,8 @@ class RTMediaMediaSizeImporter {
 	public function create_notice( $message, $type = 'error' ) {
 		echo '<div class="' . esc_attr( $type ) . ' rtmedia-media-size-import-error">'
 			. wp_kses(
-				$message, array(
+				$message,
+				array(
 					'p'      => array(),
 					'a'      => array(
 						'href'    => array(),
@@ -242,7 +247,7 @@ class RTMediaMediaSizeImporter {
 	}
 
 	/**
-	 * Get pending count.
+	 * Get pending import count.
 	 *
 	 * @param bool $media_id Media id.
 	 *
@@ -252,10 +257,12 @@ class RTMediaMediaSizeImporter {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
 		$query_pending = "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other')";
+
 		if ( $media_id ) {
 			$media_id      = intval( $media_id );
 			$query_pending = $wpdb->prepare( "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other') AND id > %d", $media_id ); // @codingStandardsIgnoreLine
 		}
+
 		$pending_count = $wpdb->get_results( $query_pending ); // @codingStandardsIgnoreLine
 		if ( $pending_count && count( $pending_count ) > 0 ) {
 			return $pending_count[0]->pending;
@@ -274,6 +281,7 @@ class RTMediaMediaSizeImporter {
 		$rtmedia_model = new RTMediaModel();
 		$query_total   = "SELECT COUNT(*) as total from {$rtmedia_model->table_name} where media_type in ('photo','video','document','music','other') "; // @codingStandardsIgnoreLine
 		$total_count   = $wpdb->get_results( $query_total ); // @codingStandardsIgnoreLine
+
 		if ( $total_count && count( $total_count ) > 0 ) {
 			return $total_count[0]->total;
 		}
@@ -282,7 +290,7 @@ class RTMediaMediaSizeImporter {
 	}
 
 	/**
-	 * Size import.
+	 * Media size import.
 	 *
 	 * @param int $lastid Last id.
 	 * @param int $limit Limit.
@@ -332,14 +340,15 @@ class RTMediaMediaSizeImporter {
 			array(
 				'upload_date' => $post_date,
 				'file_size'   => $file_size,
-			), array( 'id' => $result->id )
+			),
+			array( 'id' => $result->id )
 		);
 
 		return $return;
 	}
 
 	/**
-	 * Return migration.
+	 * Return migration data.
 	 *
 	 * @param bool $media Media.
 	 * @param bool $migrate Migrate.

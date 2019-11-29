@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Media migration.
  *
@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of BuddyPress_Migration
+ * Class for rtMedia Media migration functions
  *
  * @author faishal
  */
@@ -31,6 +31,7 @@ class RTMediaMigration {
 
 		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
 		$hide = filter_input( INPUT_GET, 'hide', FILTER_SANITIZE_STRING );
+
 		if ( isset( $page ) && 'rtmedia-migration' === $page && isset( $hide ) && 'true' === $hide ) {
 			$this->hide_migration_notice();
 			$http_referer = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
@@ -102,7 +103,7 @@ class RTMediaMigration {
 	}
 
 	/**
-	 * Table exists.
+	 * Check if table exists.
 	 *
 	 * @param string $table Table.
 	 *
@@ -119,11 +120,16 @@ class RTMediaMigration {
 	}
 
 	/**
-	 * Menu.
+	 * Add Menu page for migration.
 	 */
 	public function menu() {
 		add_submenu_page(
-			'rtmedia-setting', esc_html__( 'Migration', 'buddypress-media' ), esc_html__( 'Migration', 'buddypress-media' ), 'manage_options', 'rtmedia-migration', array(
+			'rtmedia-setting',
+			esc_html__( 'Migration', 'buddypress-media' ),
+			esc_html__( 'Migration', 'buddypress-media' ),
+			'manage_options',
+			'rtmedia-migration',
+			array(
 				$this,
 				'test',
 			)
@@ -198,7 +204,7 @@ class RTMediaMigration {
 	}
 
 	/**
-	 * Get last imported.
+	 * Get last imported media id.
 	 *
 	 * @return bool
 	 */
@@ -224,7 +230,7 @@ class RTMediaMigration {
 	}
 
 	/**
-	 * Get count.
+	 * Get count for migrated media.
 	 *
 	 * @param bool $flag Flag.
 	 *
@@ -256,7 +262,7 @@ class RTMediaMigration {
 
 		$state = intval( rtmedia_get_site_option( 'rtmedia-migration', '0' ) );
 
-		if ( 5 == $state ) {
+		if ( 5 === $state ) {
 			$album_count  = intval( $_SESSION['migration_user_album'] );
 			$album_count += ( isset( $_SESSION['migration_group_album'] ) ) ? intval( $_SESSION['migration_group_album'] ) : 0;
 		} else {
@@ -281,7 +287,7 @@ class RTMediaMigration {
 			}
 		}
 
-		if ( isset( $_SESSION['migration_activity'] ) && intval( $_SESSION['migration_media'] ) == intval( $media_count ) ) {
+		if ( isset( $_SESSION['migration_activity'] ) && intval( $_SESSION['migration_media'] ) === intval( $media_count ) ) {
 			$comment_sql = $_SESSION['migration_activity'];
 		} else {
 			// @codingStandardsIgnoreStart
@@ -296,7 +302,7 @@ class RTMediaMigration {
 	}
 
 	/**
-	 * return migration.
+	 * Return migration data.
 	 */
 	public function return_migration() {
 		$total   = $this->get_total_count();
@@ -306,9 +312,11 @@ class RTMediaMigration {
 			$pending = 0;
 			$done    = $total;
 		}
+
 		if ( $done > $total ) {
 			$done = $total;
 		}
+
 		if ( $done === $total ) {
 			global $wp_rewrite;
 			// Call flush_rules() as a method of the $wp_rewrite object.
@@ -359,9 +367,9 @@ class RTMediaMigration {
 				$bp_prefix = '';
 			}
 			$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;", '<ul class="bp-media-list-media">', '<div class="rtmedia-activity-container"><ul class="rtmedia-list large-block-grid-3">' ); // @codingStandardsIgnoreLine
-			$wpdb->get_row( $sql );
+			$wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;", '</ul>', '</ul></div>' ); // @codingStandardsIgnoreLine
-			$wpdb->get_row( $sql );
+			$wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 			$sql_group = "update $wpdb->posts set post_parent='{$album_id}' where post_parent in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
 			if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
@@ -435,7 +443,7 @@ class RTMediaMigration {
 	}
 
 	/**
-	 * Test.
+	 * Test migration.
 	 */
 	public function test() {
 		if ( ! $this->table_exists( $this->bmp_table ) ) {
@@ -443,7 +451,9 @@ class RTMediaMigration {
 			$obj->install_db_version = '0';
 			$obj->do_upgrade( true );
 		}
+
 		global $rtmedia_error;
+
 		if ( isset( $rtmedia_error ) && true === $rtmedia_error ) {
 			?>
 			<div class="error"><p><?php echo esc_html__( 'Please Resolve create database error before migration.', 'buddypress-media' ); ?></p></div>
@@ -485,7 +495,7 @@ class RTMediaMigration {
 				echo esc_html( $_SESSION['migration_group_album'] );
 				?>
 				<br/>
-			<?php
+				<?php
 			}
 			esc_html_e( 'Media : ', 'buddypress-media' );
 			echo esc_html( $_SESSION['migration_media'] );
@@ -585,12 +595,12 @@ class RTMediaMigration {
 	}
 
 	/**
-	 * Migrate to new DB.
+	 * Migrate media to new DB.
 	 *
 	 * @param int $lastid Last id.
 	 * @param int $limit Limit.
 	 */
-	function migrate_to_new_db( $lastid = 0, $limit = 1 ) {
+	public function migrate_to_new_db( $lastid = 0, $limit = 1 ) {
 
 		if ( ! isset( $_SESSION['migration_media'] ) ) {
 			$this->get_total_count();
@@ -661,10 +671,10 @@ class RTMediaMigration {
 	}
 
 	/**
-	 * Migrate encoding options.
+	 * Update migrate encoding options.
 	 */
 	public function migrate_encoding_options() {
-		$encoding_mnigration_array = array(
+		$encoding_migration_array = array(
 			'bp-media-encoding-api-key'          => 'rtmedia-encoding-api-key',
 			'bp-media-encoding-usage-limit-mail' => 'rtmedia-encoding-usage-limit-mail',
 			'bp-media-encoding-usage'            => 'rtmedia-encoding-usage',
@@ -673,8 +683,11 @@ class RTMediaMigration {
 			'bp_media_ffmpeg_options'            => 'rtmedia-ffmpeg-options',
 			'bp_media_kaltura_options'           => 'rtmedia-kaltura-options',
 		);
-		foreach ( $encoding_mnigration_array as $key => $ma ) {
-			if ( false !== ( $value = rtmedia_get_site_option( $key ) ) ) {
+
+		foreach ( $encoding_migration_array as $key => $ma ) {
+			$value = rtmedia_get_site_option( $key );
+
+			if ( false !== $value ) {
 				rtmedia_update_site_option( $ma, $value );
 			}
 		}
@@ -691,6 +704,7 @@ class RTMediaMigration {
 	public function migrate_single_media( $result, $album = false ) {
 		$blog_id = get_current_blog_id();
 		$old     = $result;
+
 		if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 			$bp_prefix = bp_core_get_table_prefix();
 		} else {
@@ -700,7 +714,7 @@ class RTMediaMigration {
 
 		if ( false !== $album && ! ( is_object( $result ) ) ) {
 			$id = $wpdb->get_var( $wpdb->prepare( "select ID from {$this->bmp_table} where media_id = %d", $result ) ); // @codingStandardsIgnoreLine
-			if ( null == $id ) {
+			if ( null === $id ) {
 				$sql    = "select
                         a.post_id as 'post_id',
                         a.meta_value as 'privacy',
@@ -814,7 +828,8 @@ class RTMediaMigration {
 		}
 
 		$wpdb->insert(
-			$this->bmp_table, array(
+			$this->bmp_table,
+			array(
 				'blog_id'      => $blog_id,
 				'media_id'     => $media_id,
 				'media_type'   => $media_type,
@@ -826,8 +841,10 @@ class RTMediaMigration {
 				'media_title'  => $result->media_title,
 				'album_id'     => $album_id,
 				'likes'        => $likes,
-			), array( '%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d', '%d' )
+			),
+			array( '%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d', '%d' )
 		);
+
 		$last_id = $wpdb->insert_id;
 
 		if ( 'album' !== $media_type && function_exists( 'bp_core_get_user_domain' ) && $activity_data ) {
@@ -851,14 +868,16 @@ class RTMediaMigration {
 			}
 			global $wpdb;
 			$wpdb->update(
-				$bp_prefix . 'bp_activity', array(
+				$bp_prefix . 'bp_activity',
+				array(
 					'primary_link' => $activity_data->primary_link,
 					'action'       => $activity_data->action,
 					'content'      => $activity_data->content,
-				), array( 'id' => $activity_data->id )
+				),
+				array( 'id' => $activity_data->id )
 			);
 		} else {
-			if ( 'group' == $media_context ) {
+			if ( 'group' === $media_context ) {
 				$activity_data->old_primary_link = $activity_data->primary_link;
 				$parent_link                     = get_rtmedia_group_link( abs( intval( $result->context_id ) ) );
 				$parent_link                     = trailingslashit( $parent_link );
@@ -913,8 +932,10 @@ class RTMediaMigration {
 			$dir = $upload_path;
 		}
 
-		if ( ! $url = get_option( 'upload_url_path' ) ) {
-			if ( empty( $upload_path ) || ( 'wp-content/uploads' === $upload_path ) || ( $upload_path == $dir ) ) {
+		$url = get_option( 'upload_url_path' );
+
+		if ( ! empty( $url ) ) {
+			if ( empty( $upload_path ) || ( 'wp-content/uploads' === $upload_path ) || ( $upload_path === $dir ) ) {
 				$url = WP_CONTENT_URL . '/uploads';
 			} else {
 				$url = trailingslashit( $siteurl ) . $upload_path;

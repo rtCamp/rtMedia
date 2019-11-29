@@ -1,13 +1,12 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * File to include BPMediaImporter class.
  *
  * @package    rtMedia
  */
 
 /**
- * Description of BPMediaImporter
+ * Class for BuddyPress media import
  *
  * @author saurabh
  */
@@ -35,9 +34,9 @@ class BPMediaImporter {
 	}
 
 	/**
-	 * Table exists.
+	 * Check if table exists.
 	 *
-	 * @param string $table Table.
+	 * @param string $table Table name.
 	 *
 	 * @return bool
 	 */
@@ -52,13 +51,13 @@ class BPMediaImporter {
 	}
 
 	/**
-	 * Active.
+	 * Function to check if plugin is active.
 	 *
 	 * @param string $path Path.
 	 *
 	 * @return int
 	 */
-	public static function _active( $path ) {
+	public static function _active( $path ) { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 		if ( ! function_exists( 'is_plugin_inactive' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
@@ -74,7 +73,7 @@ class BPMediaImporter {
 	}
 
 	/**
-	 * File array.
+	 * Function get file information.
 	 *
 	 * @param string $filepath Filepath.
 	 *
@@ -94,23 +93,26 @@ class BPMediaImporter {
 	}
 
 	/**
-	 * Make copy of file.
+	 * Function to make copy of file.
 	 *
 	 * @param string $filepath Filepath.
 	 *
 	 * @return int|mixed
 	 */
 	public static function make_copy( $filepath ) {
+
 		$upload_dir = wp_upload_dir();
 		$path_info  = pathinfo( $filepath );
 		$tmp_dir    = trailingslashit( $upload_dir['basedir'] ) . 'bp-album-importer';
 		$newpath    = trailingslashit( $tmp_dir ) . $path_info['basename'];
+
 		if ( ! is_dir( $tmp_dir ) ) {
 			wp_mkdir_p( $tmp_dir );
 		}
+
 		if ( file_exists( $filepath ) ) {
 			if ( copy( $filepath, $newpath ) ) {
-				return BPMediaImporter::file_array( $newpath );
+				return self::file_array( $newpath );
 			}
 		}
 
@@ -148,7 +150,7 @@ class BPMediaImporter {
 	}
 
 	/**
-	 * Add media.
+	 * Add media into album.
 	 *
 	 * @param int    $album_id Album media.
 	 * @param string $title Title.
@@ -162,17 +164,17 @@ class BPMediaImporter {
 	 */
 	public static function add_media( $album_id, $title = '', $description = '', $filepath = '', $privacy = 0, $author_id = false, $album_name = false ) {
 
-		$files = BPMediaImporter::make_copy( $filepath );
+		$files = self::make_copy( $filepath );
 		if ( $files ) {
 			$bp_imported_media = new BPMediaHostWordpress();
 			$imported_media_id = $bp_imported_media->insertmedia( $title, $description, $album_id, 0, false, false, $files, $author_id, $album_name );
 
-			wp_update_post(
-				$args = array(
-					'ID'          => $imported_media_id,
-					'post_author' => $author_id,
-				)
+			$args = array(
+				'ID'          => $imported_media_id,
+				'post_author' => $author_id,
 			);
+
+			wp_update_post( $args );
 
 			$bp_album_privacy = $privacy;
 			if ( 10 === intval( $bp_album_privacy ) ) {
@@ -189,7 +191,7 @@ class BPMediaImporter {
 	}
 
 	/**
-	 * Cleanup.
+	 * Function to do cleanup(Delete tables and directories).
 	 *
 	 * @param string $table Table.
 	 * @param string $directory Directory.
@@ -199,12 +201,12 @@ class BPMediaImporter {
 		$wpdb->query( "DROP TABLE IF EXISTS $table" ); // @codingStandardsIgnoreLine
 		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->base_prefix}bp_activity WHERE component = %s", 'album' ) );
 		if ( is_dir( $directory ) ) {
-			BPMediaImporter::delete( $directory );
+			self::delete( $directory );
 		}
 	}
 
 	/**
-	 * Delete.
+	 * Delete Directory.
 	 *
 	 * @param string $path Path.
 	 *
@@ -215,7 +217,7 @@ class BPMediaImporter {
 			$files = array_diff( scandir( $path ), array( '.', '..' ) );
 
 			foreach ( $files as $file ) {
-				BPMediaImporter::delete( realpath( $path ) . '/' . $file );
+				self::delete( realpath( $path ) . '/' . $file );
 			}
 
 			return rmdir( $path );
