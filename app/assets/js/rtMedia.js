@@ -524,7 +524,7 @@ jQuery( 'document' ).ready( function( $ ) {
 			var css_class = '';
 			if ( res == 'true' ) {
 				message = rtmedia_main_js_strings.privacy_update_success;
-				css_class = 'success';
+				css_class = 'rtmedia-success';
 			} else {
 				message = rtmedia_main_js_strings.privacy_update_error;
 				css_class = 'fail';
