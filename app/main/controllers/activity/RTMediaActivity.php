@@ -1,13 +1,12 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Handle rtMedia activities.
  *
  * @package rtMedia
  */
 
 /**
- * Description of RTMediaActivity
+ * Class to handle rtMedia activities.
  *
  * @author saurabh
  */
@@ -35,7 +34,7 @@ class RTMediaActivity {
 	public $privacy;
 
 	/**
-	 * Constructor.
+	 * RTMediaActivity Constructor.
 	 *
 	 * @param array       $media Media.
 	 * @param int         $privacy Privacy.
@@ -96,13 +95,16 @@ class RTMediaActivity {
 		}
 		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_' . $type . '_ul_class', 'rtm-activity-media-list' );
 
-		$uploaded_media_types           = [];
+		$uploaded_media_types           = array();
 		$rtmedia_activity_ul_list_class = 'rtm-activity-mixed-list';
 
 		// Loop through each media and check media type.
-		$uploaded_media_types = array_map( function ( $current_media ) {
-			return is_object( $current_media ) ? $current_media->media_type : '';
-		}, $media_details );
+		$uploaded_media_types = array_map(
+			function ( $current_media ) {
+					return is_object( $current_media ) ? $current_media->media_type : '';
+			},
+			$media_details
+		);
 
 		// Remove empty values from media type list.
 		$media_type_list = array_filter( $uploaded_media_types, 'strlen' );
@@ -157,7 +159,7 @@ class RTMediaActivity {
 					esc_html( $media->media_title )
 				);
 			} else {
-				// Markup for all the other media linke docs and other files where anchor tag the markup is comming from add-on itself.
+				// Markup for all the other media link docs and other files where anchor tag the markup is coming from add-on itself.
 				$media_content .= sprintf(
 					'<div class="rtmedia-item-thumbnail">
 							%s
@@ -230,15 +232,13 @@ class RTMediaActivity {
 
 	/**
 	 * Actions.
-	 *
-	 * @fixme me Why this function is required ?
 	 */
 	public function actions() {
-
+		// todo Why this function is required ?
 	}
 
 	/**
-	 * Media.
+	 * Show Media.
 	 *
 	 * @param object $media Media.
 	 * @param string $type Type.
@@ -270,7 +270,6 @@ class RTMediaActivity {
 					$html = sprintf( $html, $poster, esc_url( wp_get_attachment_url( $media->media_id ) ), esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_width'] ), esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_height'] ), $video_class, esc_attr( $media->id ) );
 				}
 			} elseif ( 'music' === $media->media_type ) {
-				// $html = '<audio src="' . esc_url( wp_get_attachment_url( $media->media_id ) ) . '" width="' . esc_attr( $rtmedia->options['defaultSizes_music_activityPlayer_width'] ) . '" height="0" type="audio/mp3" class="wp-audio-shortcode" id="rt_media_audio_' . esc_attr( $media->id ) . '" controls="controls" preload="none"></audio>';
 				$html = '<audio src="%s" width="%d" height="0" type="audio/mp3" class="wp-audio-shortcode" id="rt_media_audio_%s" controls="controls" preload="none"></audio>';
 				$html = sprintf( $html, esc_url( wp_get_attachment_url( $media->media_id ) ), esc_attr( $rtmedia->options['defaultSizes_music_activityPlayer_width'] ), esc_attr( $media->id ) );
 			}

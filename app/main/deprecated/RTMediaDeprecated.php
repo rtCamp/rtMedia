@@ -1,11 +1,12 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Show deprecated functions.
+ *
+ * @package    rtMedia
  */
 
 /**
- * Description of rtMediaDeprecated
+ * RTMedia class to show deprecated functions.
  *
  * @author Udit Desai <udit.desai@rtcamp.com>
  */
@@ -26,7 +27,7 @@ class RTMediaDeprecated {
 	}
 
 	/**
-	 * Add notice.
+	 * Add notice for deprecated method.
 	 *
 	 * @param string $method Method.
 	 * @param bool   $deprecated Deprecated or not.

@@ -1,13 +1,12 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * File to include RTMediaContext class.
  *
  * @package    rtMedia
  */
 
 /**
- * Description of RTMediaContext
+ * Class to manage context for rtMedia
  *
  * Default Context - The page on from which the request is generating will be taken
  * as the default context; if any context/context_id is not passed while uploading any media
@@ -35,7 +34,7 @@ class RTMediaContext {
 	/**
 	 * RTMediaContext constructor.
 	 *
-	 * @return \RTMediaContext
+	 * @return RTMediaContext
 	 */
 	public function __construct() {
 		$this->set_context();

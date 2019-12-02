@@ -1,13 +1,12 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Handle/change BuddyPress activities behaviour.
  *
  * @package    rtMedia
  */
 
 /**
- * Description of RTMediaBuddyPressActivity
+ * Class to handle/change BuddyPress activities behaviour.
  *
  * @author faishal
  */
@@ -39,7 +38,7 @@ class RTMediaBuddyPressActivity {
 
 		add_filter( 'bp_get_activity_action_pre_meta', array( $this, 'bp_get_activity_action_pre_meta' ), 11, 2 );
 
-		// BuddyPress activity for media like action
+		// BuddyPress activity for media like action.
 		if ( isset( $rtmedia->options['buddypress_mediaLikeActivity'] ) && 0 !== intval( $rtmedia->options['buddypress_mediaLikeActivity'] ) ) {
 			add_action( 'rtmedia_after_like_media', array( $this, 'activity_after_media_like' ) );
 		}
@@ -71,11 +70,11 @@ class RTMediaBuddyPressActivity {
 	 * For adding secondary avatar in the activity header.
 	 *
 	 * @param String $action   Has the markup for activity header.
-	 * @param array  $activity Contains values realated to the activity.
+	 * @param array  $activity Contains values related to the activity.
 	 *
 	 * @return String $action.
 	 */
-	function bp_get_activity_action_pre_meta( $action, $activity ) {
+	public function bp_get_activity_action_pre_meta( $action, $activity ) {
 
 		if ( 'rtmedia_update' === $activity->type && 'groups' === $activity->component ) {
 
@@ -143,7 +142,7 @@ class RTMediaBuddyPressActivity {
 	private static function reset_multisite_transient() {
 		$sites = get_sites( array( 'fields' => 'ids' ) );
 		foreach ( $sites as $site ) {
-			if ( $site === get_current_blog_id() ) {
+			if ( get_current_blog_id() === $site ) {
 				continue;
 			}
 
@@ -182,13 +181,13 @@ class RTMediaBuddyPressActivity {
 	 */
 	public function filter_activity_with_blog( $query_string ) {
 		global $wpdb;
-		$prefix  = $wpdb->base_prefix;
+
 		$blog_id = get_current_blog_id();
 
 		$transient_name = 'rtm_filter_blog_activity_' . $blog_id;
 		$activity_ids   = get_site_transient( $transient_name );
 		if ( empty( $activity_ids ) ) {
-			$activities   = $wpdb->get_col( $wpdb->prepare( 'SELECT DISTINCT activity_id FROM ' . $prefix . 'rt_rtm_activity WHERE blog_id!=%d', $blog_id ) );
+			$activities   = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT activity_id FROM { $wpdb->base_prefix }rt_rtm_activity WHERE blog_id!=%d", $blog_id ) );
 			$activity_ids = implode( ',', $activities );
 
 			set_site_transient( $transient_name, $activity_ids );
@@ -233,7 +232,9 @@ class RTMediaBuddyPressActivity {
 		global $activities_template;
 
 		// Get the ID of the parent activity content.
-		if ( ! $parent_id = $activities_template->activity->item_id ) {
+		$parent_id = $activities_template->activity->item_id;
+
+		if ( empty( $parent_id ) ) {
 			return false;
 		}
 
@@ -282,7 +283,13 @@ class RTMediaBuddyPressActivity {
 		return $content;
 	}
 
-	function delete_comment_sync( $activity_id, $comment_id ) {
+	/**
+	 * Delete comment for activity.
+	 *
+	 * @param int $activity_id Activity id.
+	 * @param int $comment_id Comment id.
+	 */
+	public function delete_comment_sync( $activity_id, $comment_id ) {
 		global $wpdb;
 		$comment_id = $wpdb->get_var( $wpdb->prepare( "select comment_id from {$wpdb->commentmeta} where meta_key = 'activity_id' and meta_value = %s", $comment_id ) );
 		if ( $comment_id ) {
@@ -304,12 +311,14 @@ class RTMediaBuddyPressActivity {
 		$param          = wp_parse_args( $param, $default_args );
 		$user_id        = $param['user_id'];
 		$comment_author = $param['comment_author'];
+
 		if ( ! empty( $user_id ) ) {
 			$user_data      = get_userdata( $user_id );
 			$comment_author = $user_data->data->user_login;
 		}
 		$mediamodel = new RTMediaModel();
 		$media      = $mediamodel->get( array( 'activity_id' => $param['activity_id'] ) );
+
 		// if there is only single media in activity.
 		if ( 1 === count( $media ) && isset( $media[0]->media_id ) ) {
 
@@ -337,7 +346,7 @@ class RTMediaBuddyPressActivity {
 	}
 
 	/**
-	 * Non-threaded comments.
+	 * Save Non-threaded comments.
 	 */
 	public function non_threaded_comments() {
 		$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
@@ -345,7 +354,7 @@ class RTMediaBuddyPressActivity {
 			$activity_id = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_NUMBER_INT );
 			$act         = new BP_Activity_Activity( $activity_id );
 
-			if ( 'rtmedia_update' === $act->type && isset( $_REQUEST['rtmedia_disable_media_in_commented_media'] ) && ! empty( $_REQUEST['rtmedia_disable_media_in_commented_media'] ) ) {
+			if ( 'rtmedia_update' === $act->type && isset( $_REQUEST['rtmedia_disable_media_in_commented_media'] ) && ! empty( $_REQUEST['rtmedia_disable_media_in_commented_media'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
 				$_POST['comment_id'] = $activity_id;
 			}
 		}
@@ -384,14 +393,15 @@ class RTMediaBuddyPressActivity {
 			// Credit faisal : https://gist.github.com/faishal/c4306ae7267fff976465.
 			$in_str_arr    = array_fill( 0, count( $rtmedia_attached_files ), '%d' );
 			$in_str        = join( ',', $in_str_arr );
-			$sql        = $wpdb->prepare( "update {$media_obj->table_name} set activity_id = %d where blog_id = %d and ", $activity_id, get_current_blog_id() ); // @codingStandardsIgnoreLine
-			$form_id_where = $wpdb->prepare( "id IN ($in_str)", $rtmedia_attached_files );
+			$sql           = $wpdb->prepare( "update {$media_obj->table_name} set activity_id = %d where blog_id = %d and ", $activity_id, get_current_blog_id() ); // @codingStandardsIgnoreLine
+			$form_id_where = $wpdb->prepare( "id IN ($in_str)", $rtmedia_attached_files ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 			$sql          .= $form_id_where;
 			$wpdb->query( $sql );// @codingStandardsIgnoreLine
 		}
 		// hook for rtmedia buddypress after activity posted.
 		do_action( 'rtmedia_bp_activity_posted', $updated_content, $user_id, $activity_id );
 		$rtmedia_privacy = filter_input( INPUT_POST, 'rtmedia-privacy', FILTER_SANITIZE_NUMBER_INT );
+
 		if ( null !== $rtmedia_privacy ) {
 			$privacy = - 1;
 			if ( is_rtmedia_privacy_enable() ) {
@@ -418,7 +428,8 @@ class RTMediaBuddyPressActivity {
 						'activity_id' => $activity_id,
 						'user_id'     => $user_id,
 						'privacy'     => $privacy,
-					), array( 'activity_id' => $activity_id )
+					),
+					array( 'activity_id' => $activity_id )
 				);
 			}
 		}
@@ -473,7 +484,9 @@ class RTMediaBuddyPressActivity {
 
 					// update user's latest update.
 					bp_update_user_meta(
-						$user_id, 'bp_latest_update', array(
+						$user_id,
+						'bp_latest_update',
+						array(
 							'id'      => $public_activity_id,
 							'content' => $activity_content,
 						)
@@ -486,7 +499,7 @@ class RTMediaBuddyPressActivity {
 	/**
 	 * After activity post form.
 	 */
-	function bp_after_activity_post_form() {
+	public function bp_after_activity_post_form() {
 
 		/**
 		 * Filter to enable/disable media upload from the activity.
@@ -508,7 +521,8 @@ class RTMediaBuddyPressActivity {
 				'drop_element'        => 'whats-new-textarea',
 				// drag-drop area assigned to activity update textarea.
 				'filters'             => apply_filters(
-					'rtmedia_plupload_files_filter', array(
+					'rtmedia_plupload_files_filter',
+					array(
 						array(
 							'title'      => esc_html__( 'Media Files', 'buddypress-media' ),
 							'extensions' => get_rtmedia_allowed_upload_type(),
@@ -523,7 +537,7 @@ class RTMediaBuddyPressActivity {
 				'file_data_name'      => 'rtmedia_file',
 				// key passed to $_FILE.
 				'multi_selection'     => true,
-				'multipart_params'    => apply_filters(
+				'multipart_params'    => apply_filters( // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 					'rtmedia-multi-params',
 					array(
 						'redirect'             => 'no',
@@ -536,7 +550,8 @@ class RTMediaBuddyPressActivity {
 					)
 				),
 				'max_file_size_msg'   => apply_filters(
-					'rtmedia_plupload_file_size_msg', min(
+					'rtmedia_plupload_file_size_msg',
+					min(
 						array(
 							ini_get( 'upload_max_filesize' ),
 							ini_get( 'post_max_size' ),
@@ -546,7 +561,7 @@ class RTMediaBuddyPressActivity {
 			);
 
 			$params = apply_filters( 'rtmedia_modify_upload_params', $params );
-			wp_enqueue_script( 'rtmedia-backbone', false, '', false, true );
+			wp_enqueue_script( 'rtmedia-backbone', false, '', RTMEDIA_VERSION, true );
 			$is_album        = is_rtmedia_album() ? true : false;
 			$is_edit_allowed = is_rtmedia_edit_allowed() ? true : false;
 			wp_localize_script( 'rtmedia-backbone', 'is_album', $is_album );
@@ -625,7 +640,7 @@ class RTMediaBuddyPressActivity {
 	/**
 	 * To add dynamic activity actions for translation of activity items
 	 *
-	 * @param array $activities Actvities.
+	 * @param array $activities Activities.
 	 *
 	 * @return null
 	 */
@@ -710,10 +725,10 @@ class RTMediaBuddyPressActivity {
 							&& ! empty( $rtmedia_media_type_array[ $activities[ $index ]->id ] )
 							&& count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) === 1
 						) {
-							// translators: user link, count and media.
+							// translators: user link, media count and media.
 							$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $user_link, $count, $media_str );
 						} else {
-							// translators: user link, cound and rtMedia slug.
+							// translators: user link, media count and rtMedia slug.
 							$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $user_link, $count, RTMEDIA_MEDIA_SLUG );
 						}
 					}
@@ -884,9 +899,10 @@ class RTMediaBuddyPressActivity {
 					$comment_media    = false;
 					$comment_media_id = false;
 
+					// phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification
 					/* if activity is add from comment media  */
 					if ( isset( $_REQUEST['comment_content'] ) || isset( $_REQUEST['action'] ) ) {
-						if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'new_activity_comment' ) {
+						if ( isset( $_REQUEST['action'] ) && 'new_activity_comment' === $_REQUEST['action'] ) {
 
 							remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
 							/* comment content */
@@ -917,7 +933,7 @@ class RTMediaBuddyPressActivity {
 						/* add the new content to the activity */
 						$activity_content = $comment_content;
 					}
-
+					// phpcs:enable WordPress.Security.NonceVerification.NoNonceVerification
 					$wp_comment_id = $params['comment_id'];
 
 					// prepare activity arguments.
@@ -1064,7 +1080,7 @@ class RTMediaBuddyPressActivity {
 		$has_access = true;
 
 		// If activity is from a group, do an extra cap check.
-		if ( isset( $bp->groups->id ) && $activity->component == $bp->groups->id ) {
+		if ( isset( $bp->groups->id ) && $activity->component === $bp->groups->id ) {
 			// Activity is from a group, but groups is currently disabled.
 			if ( ! bp_is_active( 'groups' ) ) {
 				bp_do_404();
@@ -1072,9 +1088,10 @@ class RTMediaBuddyPressActivity {
 				return;
 			}
 
+			$group = groups_get_group( array( 'group_id' => $activity->item_id ) );
 			// Check to see if the group is not public, if so, check the
 			// user has access to see this activity.
-			if ( $group = groups_get_group( array( 'group_id' => $activity->item_id ) ) ) {
+			if ( ! empty( $group ) ) {
 				// Group is not public.
 				if ( 'public' !== $group->status ) {
 					// User is not a member of group.

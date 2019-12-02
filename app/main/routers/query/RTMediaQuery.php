@@ -1,11 +1,10 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Handle query object changes.
  */
 
 /**
- * Description of RTMediaQuery
+ * Class to handle rtMedia query changes.
  *
  * @author saurabh
  */
@@ -440,11 +439,6 @@ class RTMediaQuery {
 						$action = $second_modifier;
 						$bulk   = true;
 					}
-					// /media/photos/page/2/
-					// elseif($second_modifier=='page'){
-					// $page = $second_modifier;
-					// pagination support
-					// }
 					break;
 
 				default:
@@ -599,6 +593,7 @@ class RTMediaQuery {
 			$sql_query                           = "select id from {$wpdb->prefix}bp_activity where item_id = 0  and type = 'rtmedia_update'";
 			$this->query['activity_id']['value'] = $wpdb->get_col( $sql_query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
+
 		if ( isset( $this->query ) && isset( $this->query['global'] ) ) {
 			if ( 'true' === $this->query['global'] ) {
 				$this->shortcode_global = true;
@@ -639,6 +634,7 @@ class RTMediaQuery {
 			}
 			unset( $this->query['global'] );
 		}
+
 		$this->set_media_type();
 		$this->media_query = $this->query;
 		do_action( 'rtmedia_set_query' );
@@ -964,7 +960,7 @@ class RTMediaQuery {
 		}
 
 		/**
-		 * Multiside manipulation
+		 * Multisite manipulation
 		 */
 		if ( is_multisite() ) {
 			$blogs = array();
@@ -1005,7 +1001,7 @@ class RTMediaQuery {
 	 *
 	 * @param object $media Media object.
 	 *
-	 * @return type
+	 * @return int
 	 */
 	public function get_media_id( $media ) {
 		return $media->media_id;

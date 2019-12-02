@@ -201,6 +201,7 @@ class RTMediaRouter {
 
 		return $rt_template_content;
 
+		// todo:Check usage of code after return statement
 		// phpcs:disable Squiz.PHP.NonExecutableCode.Unreachable
 		$new_content = apply_filters( 'bp_replace_the_content', $rt_template_content );
 

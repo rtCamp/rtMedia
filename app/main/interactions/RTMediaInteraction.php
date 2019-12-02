@@ -8,7 +8,7 @@
  */
 
 /**
- * Class RTMediaInteraction
+ * Class to Set up the routes and the context
  */
 class RTMediaInteraction {
 
@@ -102,7 +102,7 @@ class RTMediaInteraction {
 	}
 
 	/**
-	 * Rewrite rules with RTMedia slugs.
+	 * add rewrite rules with RTMedia slugs.
 	 */
 	public static function rewrite_rules() {
 		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/([0-9]*)/([^/]*)/?', 'index.php?media_id=$matches[1]&action=$matches[2]', 'bottom' );
@@ -114,7 +114,7 @@ class RTMediaInteraction {
 	}
 
 	/**
-	 * Rewrite tags.
+	 * Add Rewrite tags.
 	 */
 	public static function rewrite_tags() {
 		add_rewrite_tag( '%media_id%', '([0-9]*)' );
@@ -157,7 +157,7 @@ class RTMediaInteraction {
 	/**
 	 * Set context.
 	 *
-	 * @param array $context the context array.
+	 * @param array|bool $context the context array.
 	 *
 	 * @todo the method should also allow objects
 	 */
