@@ -19,7 +19,7 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 	class RTMediaUploadTerms {
 
 		/**
-		 * Enquing scripts and styles along with data to be rendered in user side.
+		 * Enqueuing scripts and styles along with data to be rendered in user side.
 		 */
 		public function __construct() {
 			$this->load_translation();
@@ -28,17 +28,23 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 
 			// Filter into uploader to show checkbox.
 			add_filter(
-				'rtmedia_uploader_before_start_upload_button', array(
+				'rtmedia_uploader_before_start_upload_button',
+				array(
 					$this,
 					'show_terms_and_service_checkbox',
-				), 199, 1
+				),
+				199,
+				1
 			);
 			// Filter into activity uploader to show checkbox.
 			add_filter(
-				'rtmedia_uploader_after_activity_upload_button', array(
+				'rtmedia_uploader_after_activity_upload_button',
+				array(
 					$this,
 					'show_terms_and_service_checkbox_activity',
-				), 199, 1
+				),
+				199,
+				1
 			);
 		}
 
