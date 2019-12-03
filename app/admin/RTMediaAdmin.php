@@ -270,7 +270,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$link  = get_rtmedia_permalink( $rtm_id );
 				$title = _draft_or_post_title( $post->post_parent );
 
-				// translators: Title.
+				// translators: 1. Title.
 				$action['view'] = '<a href="' . esc_url( $link ) . '" title="' . esc_attr( sprintf( 'View &#8220;%s&#8221;', $title ) ) . '" rel="permalink">' . esc_html__( 'View', 'buddypress-media' ) . '</a>';
 			}
 
@@ -339,7 +339,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							<?php
 							$product_page = 'https://rtmedia.io/products/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
 
-							// translators: Product page link.
+							// translators: 1. Product page link.
 							$message = sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page );
 							?>
 							<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
@@ -1587,7 +1587,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function admin_sidebar() {
 			do_action( 'rtmedia_before_default_admin_widgets' );
 			$current_user = wp_get_current_user();
-			// translators: Home url.
+			// translators: 1. Home url.
 			$message = sprintf( esc_html__( 'I use @rtMediaWP http://rt.cx/rtmedia on %s', 'buddypress-media' ), home_url() );
 			$addons  = '<div id="social" class="rtm-social-share">
 						<p><a href="http://twitter.com/home/?status=' . esc_attr( $message ) . '" class="button twitter" target= "_blank" title="' . esc_attr__( 'Post to Twitter Now', 'buddypress-media' ) . '">' . esc_html__( 'Post to Twitter', 'buddypress-media' ) . '<span class="dashicons dashicons-twitter"></span></a></p>
@@ -1782,7 +1782,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						<p>
 							<?php wp_nonce_field( '_rtm_file_type_error_', 'rtm-file-type-error' ); ?>
 							<?php
-							// translators: Not supported image types.
+							// translators: 1. Not supported image types.
 							printf( esc_html__( 'You have images enabled on rtMedia but your network allowed filetypes do not permit uploading of %s. Click ', 'buddypress-media' ), esc_html( implode( ', ', $not_supported_image ) ) );
 							?>
 							<a href='<?php echo esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ); ?>'><?php esc_html_e( 'here', 'buddypress-media' ); ?></a>
