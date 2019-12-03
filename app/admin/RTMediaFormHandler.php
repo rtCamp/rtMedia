@@ -1,25 +1,24 @@
 <?php
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Display different type of form elements
  *
  * @package    rtMedia
  * @subpackage Admin
  */
 
 /**
- * Class for different form elements.
+ * Class for different form elements display.
  *
  * @author udit
  */
 class RTMediaFormHandler {
 
 	/**
-	 * Function to show Select box.
+	 * Show Select box.
 	 *
-	 * @param array $args Arguments.
+	 * @param array $args Arguments to display selectbox.
 	 */
-	public static function selectBox( $args ) { // @codingStandardsIgnoreLine
+	public static function selectBox( $args ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
 		$defaults = array(
 			'key'       => '',
 			'desc'      => '',
@@ -52,7 +51,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args arguments.
+	 * @param  array $args arguments to display textarea.
 	 * @param  bool  $echo Do echo or not.
 	 *
 	 * @return string $chk_obj->get_textarea( $args )
@@ -66,7 +65,7 @@ class RTMediaFormHandler {
 		$args     = wp_parse_args( $args, $defaults );
 
 		if ( ! isset( $args['value'] ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 
 			return '';
 		}
@@ -98,7 +97,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args arguments.
+	 * @param  array $args arguments to display checkbox.
 	 * @param  bool  $echo Do echo or not.
 	 *
 	 * @return string $chk_obj->get_switch( $args )
@@ -112,7 +111,7 @@ class RTMediaFormHandler {
 		$args     = wp_parse_args( $args, $defaults );
 
 		if ( ! isset( $args['value'] ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 
 			return;
 		}
@@ -144,7 +143,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args arguments.
+	 * @param  array $args arguments to show radio buttons.
 	 *
 	 * @return void
 	 */
@@ -158,7 +157,7 @@ class RTMediaFormHandler {
 		$args     = wp_parse_args( $args, $defaults );
 
 		if ( 2 > count( $args['radios'] ) ) {
-			trigger_error( esc_html__( 'Need to specify atleast two radios, else use a checkbox instead', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
+			trigger_error( esc_html__( 'Need to specify atleast two radios, else use a checkbox instead', 'buddypress-media' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 
 			return;
 		}
@@ -198,7 +197,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args arguments.
+	 * @param array $args arguments show numbers options.
 	 *
 	 * @return void
 	 */
@@ -214,7 +213,7 @@ class RTMediaFormHandler {
 		$args     = wp_parse_args( $args, $defaults );
 
 		if ( ! isset( $args['value'] ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 
 			return;
 		}
@@ -232,7 +231,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args arguments.
+	 * @param  array $args arguments to create textbox.
 	 *
 	 * @return void
 	 */
@@ -246,7 +245,7 @@ class RTMediaFormHandler {
 		$args     = wp_parse_args( $args, $defaults );
 
 		if ( ! isset( $args['value'] ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 
 			return;
 		}
@@ -264,12 +263,12 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param array $args arguments.
+	 * @param array $args arguments to create link.
 	 * @param bool  $echo Echo or not.
 	 *
 	 * @return string $link_obj
 	 *
-	 * @throws rtFormInvalidArgumentsException
+	 * @throws rtFormInvalidArgumentsException Invalid argument exception.
 	 */
 	public static function link( $args, $echo = true ) {
 
@@ -282,13 +281,13 @@ class RTMediaFormHandler {
 		$args     = wp_parse_args( $args, $defaults );
 
 		if ( ! isset( $args['href'] ) ) {
-			trigger_error( esc_html__( 'Please provide a "href" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
+			trigger_error( esc_html__( 'Please provide a "href" in the argument.', 'buddypress-media' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 
 			return '';
 		}
 
 		if ( ! isset( $args['text'] ) ) {
-			trigger_error( esc_html__( 'Please provide a "text" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
+			trigger_error( esc_html__( 'Please provide a "text" in the argument.', 'buddypress-media' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 
 			return '';
 		}
@@ -319,7 +318,7 @@ class RTMediaFormHandler {
 	 *
 	 * @return void
 	 *
-	 * @throws rtFormInvalidArgumentsException
+	 * @throws rtFormInvalidArgumentsException Invalid argument exception.
 	 */
 	public static function button( $args ) {
 		$defaults = array(
@@ -329,7 +328,7 @@ class RTMediaFormHandler {
 		$args     = wp_parse_args( $args, $defaults );
 
 		if ( empty( $args['value'] ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 
 			return;
 		}
@@ -349,7 +348,7 @@ class RTMediaFormHandler {
 	 *
 	 * @return void
 	 *
-	 * @throws rtFormInvalidArgumentsException
+	 * @throws rtFormInvalidArgumentsException Invalid argument exception.
 	 */
 	public static function fileinput( $args ) {
 		$defaults = array(
@@ -359,7 +358,7 @@ class RTMediaFormHandler {
 		$args     = wp_parse_args( $args, $defaults );
 
 		if ( empty( $args['value'] ) ) {
-			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // @codingStandardsIgnoreLine
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 
 			return;
 		}
@@ -377,7 +376,7 @@ class RTMediaFormHandler {
 	 *
 	 * @return void
 	 *
-	 * @throws rtFormInvalidArgumentsException
+	 * @throws rtFormInvalidArgumentsException Invalid argument exception.
 	 */
 	public static function inputfile( $args ) {
 		global $rtmedia;
@@ -400,12 +399,12 @@ class RTMediaFormHandler {
 
 
 	/**
-	 * extract settings.
+	 * Extract settings.
 	 *
 	 * @access static
 	 *
 	 * @param  string $section_name Section name.
-	 * @param  array  $options Options.
+	 * @param  array  $options Options array.
 	 *
 	 * @return array  $section
 	 */
@@ -426,7 +425,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options Options.
+	 * @param  array $options Options array.
 	 *
 	 * @return array  $render
 	 */
@@ -581,7 +580,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options Options.
+	 * @param  array $options General options.
 	 *
 	 * @return array $render
 	 */
@@ -786,7 +785,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options options.
+	 * @param  array $options options array to render.
 	 *
 	 * @return array  $render
 	 */
@@ -916,7 +915,8 @@ class RTMediaFormHandler {
 									<?php
 									// escaping done into inner function.
 									echo wp_kses(
-										$allow_upload_checkbox, array(
+										$allow_upload_checkbox,
+										array(
 											'span'  => array(
 												'class'    => array(),
 												'data-on'  => array(),
@@ -944,7 +944,8 @@ class RTMediaFormHandler {
 								<?php
 								// escaping done into inner function.
 								echo wp_kses(
-									$featured_checkbox, array(
+									$featured_checkbox,
+									array(
 										'span'  => array(
 											'class'    => array(),
 											'data-on'  => array(),
@@ -1006,11 +1007,11 @@ class RTMediaFormHandler {
 			$data = explode( '_', $key );
 			if ( ! isset( $render[ $data[1] ] ) ) {
 				$render[ $data[1] ]          = array();
-				$render[ $data[1] ]['title'] = esc_html__( $data[1], 'buddypress-media' );
+				$render[ $data[1] ]['title'] = $data[1];
 			}
 			if ( ! isset( $render[ $data[1] ][ $data[2] ] ) ) {
 				$render[ $data[1] ][ $data[2] ]          = array();
-				$render[ $data[1] ][ $data[2] ]['title'] = esc_html__( $data[2], 'buddypress-media' );
+				$render[ $data[1] ][ $data[2] ]['title'] = esc_html( $data[2] );
 			}
 
 			$render[ $data[1] ][ $data[2] ][ $data[3] ] = $value;
@@ -1020,7 +1021,7 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * Define sizes_content.
+	 * Display mmedia sizes table.
 	 *
 	 * @access static
 	 *
@@ -1403,11 +1404,11 @@ class RTMediaFormHandler {
 		$render_options = self::buddypress_render_options( $rtmedia->options );
 		// Change option description when 'Activity Streams' component is disabled.
 		if ( ! bp_is_active( 'activity' ) ) {
-			$render_options['rtmedia-enable-on-activity']['args']['desc']      =
-			$render_options['rtmedia-activity-feed-limit']['args']['desc']     =
-			$render_options['rtmedia-enable-like-activity']['args']['desc']    =
-			$render_options['rtmedia-enable-comment-activity']['args']['desc'] =
-				esc_html__( 'Please Enable BuddyPress Activity Streams to update option', 'buddypress-media' );
+			$desc = esc_html__( 'Please Enable BuddyPress Activity Streams to update option', 'buddypress-media' );
+			$render_options['rtmedia-enable-on-activity']['args']['desc']      = $desc;
+			$render_options['rtmedia-activity-feed-limit']['args']['desc']     = $desc;
+			$render_options['rtmedia-enable-like-activity']['args']['desc']    = $desc;
+			$render_options['rtmedia-enable-comment-activity']['args']['desc'] = $desc;
 		}
 
 		// Change option description when 'User Groups' component is disabled.
@@ -1460,7 +1461,7 @@ class RTMediaFormHandler {
 	 *
 	 * @return void
 	 */
-	public static function rtForm_settings_tabs_content( $page, $sub_tabs ) { // @codingStandardsIgnoreLine
+	public static function rtForm_settings_tabs_content( $page, $sub_tabs ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
 		$args = array(
 			'wrapper_class' => array(
 				'rtm-settings-tab-container',
@@ -1470,16 +1471,16 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * Define rtForm do_settings_fields.
+	 * Show settings fields.
 	 *
 	 * @access static
 	 *
-	 * @param  string $page Page.
-	 * @param  string $section Section.
+	 * @param  string $page Page name.
+	 * @param  string $section Section name.
 	 *
 	 * @return void
 	 */
-	public static function rtForm_do_settings_fields( $page, $section ) { // @codingStandardsIgnoreLine
+	public static function rtForm_do_settings_fields( $page, $section ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
 		global $wp_settings_fields;
 
 		if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
@@ -1507,8 +1508,8 @@ class RTMediaFormHandler {
 	/**
 	 * Render each tab content
 	 *
-	 * @param array $options Options.
-	 * @param array $groups Groups.
+	 * @param array $options Existing options.
+	 * @param array $groups Groups array to show data.
 	 * @param int   $default_group Default group.
 	 */
 	public static function render_tab_content( $options, $groups = array(), $default_group = 0 ) {
@@ -1559,7 +1560,7 @@ class RTMediaFormHandler {
 	/**
 	 * Render options
 	 *
-	 * @param array $option options.
+	 * @param array $option existing options array.
 	 */
 	public static function render_option_content( $option ) {
 		?>
@@ -1569,7 +1570,8 @@ class RTMediaFormHandler {
 				<th>
 					<?php
 					echo wp_kses(
-						$option['title'], array(
+						$option['title'],
+						array(
 							'a' => array(
 								'id'     => array(),
 								'href'   => array(),
@@ -1588,7 +1590,8 @@ class RTMediaFormHandler {
 							<span class="rtm-tip">
 								<?php
 								echo wp_kses(
-									( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA', array(
+									( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA',
+									array(
 										'a' => array(
 											'id'     => array(),
 											'href'   => array(),
@@ -1610,7 +1613,8 @@ class RTMediaFormHandler {
 			<div class="rtm-message rtm-notice">
 				<?php
 				echo wp_kses(
-					wpautop( $option['after_content'] ), array(
+					wpautop( $option['after_content'] ),
+					array(
 						'a' => array(
 							'id'     => array(),
 							'href'   => array(),

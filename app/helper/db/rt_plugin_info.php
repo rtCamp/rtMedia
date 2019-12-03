@@ -11,7 +11,7 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 	/**
 	 * Class to store rtMedia plugin info.
 	 */
-	class rt_plugin_info {
+	class rt_plugin_info { // phpcs:ignore PEAR.NamingConventions.ValidClassName, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
 
 		/**
 		 * Plugin path.
@@ -98,7 +98,7 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		public $plugin_data;
 
 		/**
-		 * __construct.
+		 * Constructor for rt_plugin_info.
 		 *
 		 * @access public
 		 *
@@ -119,11 +119,11 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		public function get_plugin_data() {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-			return @get_plugin_data( $this->plugin_path ); // @codingStandardsIgnoreLine
+			return @get_plugin_data( $this->plugin_path ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 		}
 
 		/**
-		 * Function to set plugin data.
+		 * Set plugin data.
 		 *
 		 * @access public
 		 */
@@ -142,7 +142,7 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		}
 
 		/**
-		 * Function to set current plugin path.
+		 * Set current plugin path.
 		 *
 		 * @access public
 		 *
