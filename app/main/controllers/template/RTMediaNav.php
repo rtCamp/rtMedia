@@ -19,6 +19,8 @@ class RTMediaNav {
 
 		if ( class_exists( 'BuddyPress' ) ) {
 			add_action( 'bp_init', array( $this, 'custom_media_nav_tab' ), 10, 1 );
+			add_filter( 'bp_nouveau_nav_has_count', array( $this, 'rtmedia_bp_nouveau_nav_has_count' ), 10, 3 );
+			add_filter( 'bp_nouveau_get_nav_count', array( $this, 'rtmedia_bp_nouveau_get_nav_count' ), 10, 3 );
 		}
 
 		add_filter( 'bp_settings_admin_nav', array( $this, 'setup_settings_privacy_nav' ), 3 );
@@ -454,4 +456,95 @@ class RTMediaNav {
 
 		return $privacy;
 	}
+
+	/**
+	 * Check if media component has counts.
+	 *
+	 * @param bool   $count  Component feed has count.
+	 * @param object $object Nav object.
+	 * @param string $value  Current component (personal, groups, etc).
+	 *
+	 * @return bool
+	 */
+	public function rtmedia_bp_nouveau_nav_has_count( $count, $object, $value ) {
+
+		// Check if its media.
+		if ( RTMEDIA_MEDIA_SLUG !== $object->slug ) {
+			return $count;
+		}
+
+		global $bp;
+
+		$media = [];
+
+		// If current component is `groups` then fetch its media.
+		if ( 'groups' === $value ) {
+			$media = $this->actual_counts( $bp->groups->current_group->id, 'group' );
+		}
+
+		// If current component is `personal` then fetch its media.
+		if ( 'personal' === $value ) {
+			$media = $this->actual_counts( $bp->displayed_user->id );
+		}
+
+		if ( empty( $media ) ) {
+			return $count;
+		}
+
+		// Convert to number.
+		$media_count = rtmedia_number_to_human_readable( $media['total']['all'] );
+
+		if ( empty( $media_count ) ) {
+			return $count;
+		}
+
+		// Return true because `media` has count.
+		return true;
+	}
+
+	/**
+	 * Add count to media component.
+	 *
+	 * @param int    $count  Component feed count.
+	 * @param object $object Nav object.
+	 * @param string $value  Current component (personal, groups, etc).
+	 *
+	 * @return int
+	 */
+	public function rtmedia_bp_nouveau_get_nav_count( $count, $object, $value ) {
+
+		// Check if its media.
+		if ( RTMEDIA_MEDIA_SLUG !== $object->slug ) {
+			return $count;
+		}
+
+		global $bp;
+
+		$media = [];
+
+		// If current component is `groups` then fetch its media.
+		if ( 'groups' === $value ) {
+			$media = $this->actual_counts( $bp->groups->current_group->id, 'group' );
+		}
+
+		// If current component is `personal` then fetch its media.
+		if ( 'personal' === $value ) {
+			$media = $this->actual_counts( $bp->displayed_user->id );
+		}
+
+		if ( empty( $media ) ) {
+			return $count;
+		}
+
+		// Convert to number.
+		$media_count = rtmedia_number_to_human_readable( $media['total']['all'] );
+
+		if ( empty( $media_count ) ) {
+			return $count;
+		}
+
+		// Return media count.
+		return $media_count;
+	}
+
 }
