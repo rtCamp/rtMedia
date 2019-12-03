@@ -460,13 +460,13 @@ class RTMediaNav {
 	/**
 	 * Check if media component has counts.
 	 *
-	 * @param bool   $count  Component feed has count.
+	 * @param bool   $has_count  Component feed has count.
 	 * @param object $object Nav object.
 	 * @param string $value  Current component (personal, groups, etc).
 	 *
 	 * @return bool
 	 */
-	public function rtmedia_bp_nouveau_nav_has_count( $count, $object, $value ) {
+	public function rtmedia_bp_nouveau_nav_has_count( $has_count, $object, $value ) {
 
 		// Check if its media.
 		if ( RTMEDIA_MEDIA_SLUG !== $object->slug ) {
@@ -487,15 +487,15 @@ class RTMediaNav {
 			$media = $this->actual_counts( $bp->displayed_user->id );
 		}
 
-		if ( empty( $media ) ) {
-			return $count;
+		if ( empty( $media ) || empty( $media['total'] ) || empty( $media['total']['all'] ) ) {
+			return $has_count;
 		}
 
 		// Convert to number.
-		$media_count = rtmedia_number_to_human_readable( $media['total']['all'] );
+		$media_count = rtmedia_number_to_human_readable( absint( $media['total']['all'] ) );
 
 		if ( empty( $media_count ) ) {
-			return $count;
+			return $has_count;
 		}
 
 		// Return true because `media` has count.
@@ -532,12 +532,12 @@ class RTMediaNav {
 			$media = $this->actual_counts( $bp->displayed_user->id );
 		}
 
-		if ( empty( $media ) ) {
+		if ( empty( $media ) || empty( $media['total'] ) || empty( $media['total']['all'] ) ) {
 			return $count;
 		}
 
 		// Convert to number.
-		$media_count = rtmedia_number_to_human_readable( $media['total']['all'] );
+		$media_count = rtmedia_number_to_human_readable( absint( $media['total']['all'] ) );
 
 		if ( empty( $media_count ) ) {
 			return $count;
