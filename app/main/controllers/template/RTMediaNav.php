@@ -460,9 +460,9 @@ class RTMediaNav {
 	/**
 	 * Check if media component has counts.
 	 *
-	 * @param bool   $has_count  Component feed has count.
-	 * @param object $object Nav object.
-	 * @param string $value  Current component (personal, groups, etc).
+	 * @param bool   $has_count True if the nav has a count attribute. False otherwise.
+	 * @param object $object    Nav object.
+	 * @param string $value     Current component (personal, groups, etc).
 	 *
 	 * @return bool
 	 */
