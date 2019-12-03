@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * Base class for any Database Model like Media, Album etc.
  *
@@ -50,7 +50,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		}
 
 		/**
-		 * Set table name.
+		 * Set table name for class.
 		 *
 		 * @global object $wpdb
 		 *
@@ -106,7 +106,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 				$return_array           = array();
 				$return_array['result'] = false;
 				global $wpdb;
-				$return_array[ 'total' ] = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM  {$this->table_name} WHERE {$column_name} = %s", $arguments[ 0 ] ) ) ); // @codingStandardsIgnoreLine
+				$return_array['total'] = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM  {$this->table_name} WHERE {$column_name} = %s", $arguments[0] ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				if ( $return_array['total'] > 0 ) {
 					$other = '';
 					if ( $paging ) {
@@ -119,6 +119,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 						if ( ! is_integer( $offset ) ) {
 							$offset = 0;
 						}
+
 						if ( intval( $offset ) < 0 ) {
 							$offset = 0;
 						}
@@ -130,7 +131,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 						}
 					}
 
-					$return_array[ 'result' ] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$this->table_name} WHERE {$column_name} = %s {$other}", $arguments[ 0 ] ), ARRAY_A ); // @codingStandardsIgnoreLine
+					$return_array['result'] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$this->table_name} WHERE {$column_name} = %s {$other}", $arguments[0] ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				}
 
 				return $return_array;
@@ -167,7 +168,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param array $data Data.
+		 * @param array $data Data to update.
 		 * @param array $where Where clause.
 		 *
 		 * @return false|int
@@ -184,9 +185,9 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		 *
 		 * @global object  $wpdb
 		 *
-		 * @param array    $columns Columns.
-		 * @param int|bool $offset Offset.
-		 * @param int|bool $per_page Per page.
+		 * @param array    $columns Columns to get.
+		 * @param int|bool $offset Offset for query.
+		 * @param int|bool $per_page Per page data.
 		 * @param string   $order_by Order by.
 		 *
 		 * @return array
@@ -209,7 +210,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 					$col_val_comapare = ( is_array( $colvalue['value'] ) ) ? '(\'' . implode( "','", $colvalue['value'] ) . '\')' : '(\'' . $colvalue['value'] . '\')';
 					$where           .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
 				} else {
-					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // @codingStandardsIgnoreLine
+					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				}
 			}
 			$sql = $select . $where;
@@ -232,7 +233,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 				$sql .= $wpdb->prepare( ' LIMIT %d, %d', $offset, $per_page );
 
 			}
-			return $wpdb->get_results( $sql ); // @codingStandardsIgnoreLine
+			return $wpdb->get_results( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 
 		/**
