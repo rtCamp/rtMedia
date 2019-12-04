@@ -1,6 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * File to include RTMediaSupport class
+ * Handles rtMedia support
  *
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>, Joshua Abenazer <joshua.abenazer@rtcamp.com>
  *
@@ -56,7 +56,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				$this->curr_sub_tab = $tab;
 			}
 
-			/* Check if download debug info request is made or not */
+			// Check if download debug info request is made or not.
 			$nonce = filter_input( INPUT_POST, 'download_debuginfo_wpnonce', FILTER_SANITIZE_STRING );
 			$info  = filter_input( INPUT_POST, 'download_debuginfo', FILTER_SANITIZE_STRING );
 
@@ -67,7 +67,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						'<p>' . esc_html__( 'Can not verify request source.', 'buddypress-media' ) . '</p>'
 					);
 				} else {
-					/* download the debug info */
+					// download the debug info.
 					$this->download_debuginfo_as_text();
 				}
 			}
@@ -132,11 +132,11 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		}
 
 		/**
-		 * Render support.
+		 * Render support page.
 		 *
 		 * @access public
 		 *
-		 * @param  string $page Page.
+		 * @param string $page Page name.
 		 *
 		 * @return void
 		 */
@@ -208,8 +208,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 								?>
 							><?php esc_html_e( 'New Feature', 'buddypress-media' ); ?></option>
 						</select>
-						<input name="support_submit" value="<?php esc_attr_e( 'Submit', 'buddypress-media' ); ?>"
-							type="submit" class="button"/>
+						<input name="support_submit" value="<?php esc_attr_e( 'Submit', 'buddypress-media' ); ?>" type="submit" class="button"/>
 					</p>
 				</form>
 			</div>
@@ -342,14 +341,15 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			global $wpdb;
 			$rtmedia_model = new RTMediaModel();
-			$results = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id = %d group by media_type limit 100", get_current_blog_id() ) ); // @codingStandardsIgnoreLine
+			$results       = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id = %d group by media_type limit 100", get_current_blog_id() ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
 			if ( $results ) {
 				foreach ( $results as $media ) {
 					$debug_info[ 'Total ' . ucfirst( $media->media_type ) . 's' ] = $media->count;
 				}
 			}
 
-			/* get all rtMedia Settings */
+			// get all rtMedia Settings.
 			$rtmedia_options = get_option( 'rtmedia-options' );
 			if ( is_array( $rtmedia_options ) ) {
 				foreach ( $rtmedia_options as $option => $value ) {
@@ -365,7 +365,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param string $page Page.
+		 * @param string $page Page name.
 		 *
 		 * @return void
 		 */
@@ -447,7 +447,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			}
 			?>
 			<div id="rtmedia-migration-html">
-				<?php echo $content; // @codingStandardsIgnoreLine ?>
+				<?php echo wp_kses( $content, wp_kses_allowed_html() ); ?>
 			</div>
 			<?php
 		}
@@ -483,7 +483,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					$content  = '<h3 class="rtm-option-title">' . esc_html( $meta_title ) . '</h3>';
 					$content .= '<p>' .
 						sprintf(
-							// translators: link.
+							// translators: %s: link.
 							esc_html__( 'If your site has some issues due to rtMedia and you want support, feel free to create a support topic on %s', 'buddypress-media' ),
 							'<a target="_blank" href="https://rtmedia.io/support/">' . esc_html__( 'rtMedia Support Page', 'buddypress-media' ) . '</a>.'
 						) .
@@ -491,13 +491,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 					$content .= '<p>' .
 						sprintf(
-							// translators: Github link.
+							// translators: %s: Github link.
 							esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on %s', 'buddypress-media' ),
 							'<a target="_blank" href="https://github.com/rtMediaWP/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.'
 						) .
 						'</p>';
 
-					echo $content; // @codingStandardsIgnoreLine
+					echo wp_kses( $content, wp_kses_allowed_html() );
 				} else {
 					$website         = filter_input( INPUT_POST, 'website', FILTER_SANITIZE_URL );
 					$subject         = filter_input( INPUT_POST, 'subject', FILTER_SANITIZE_STRING );
@@ -687,7 +687,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			add_filter( 'wp_mail_content_type', array( $this, 'rtmedia_mail_content_type' ) );
 
 			$debuglog_temp_path = sanitize_text_field( $form_data['debuglog_temp_path'] );
-			/* set attachment path for sending into mail */
+			// set attachment path for sending into mail.
 			$attachment_file = ( ! empty( $debuglog_temp_path ) ) ? $debuglog_temp_path : '';
 			$attachments     = array( $attachment_file );
 
@@ -707,7 +707,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				$headers,
 				$attachments
 			) ) {
-				/* delete file after sending it to mail. */
+				// delete file after sending it to mail.
 				if ( ! empty( $attachment_file ) ) {
 					unlink( $attachment_file );
 				}
@@ -725,7 +725,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				echo '<p>' . esc_html__( 'Kindly contact your server support to fix this.', 'buddypress-media' ) . '</p>';
 				echo '<p>' .
 					sprintf(
-						// translators: rtmedia link.
+						// translators: %s: rtmedia link.
 						esc_html__( 'You can alternatively create a support request %s', 'buddypress-media' ),
 						'<a target="_blank" href="https://rtmedia.io/premium-support/">' . esc_html__( 'here', 'buddypress-media' ) . '</a>.'
 					) .
@@ -744,7 +744,9 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			header( 'Content-disposition: attachment; filename=debuginfo.txt' );
 			header( 'Content-type: text/plain' );
+
 			global $wpdb, $wp_version, $bp;
+
 			$debug_info               = array();
 			$debug_info['Home URL']   = esc_url( home_url() );
 			$debug_info['Site URL']   = esc_url( site_url() );

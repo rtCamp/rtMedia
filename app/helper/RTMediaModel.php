@@ -1,6 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * File for RTMediaModel class.
+ * Handles rtMedia medias.
  *
  * @package rtMedia
  */
@@ -28,9 +28,9 @@ class RTMediaModel extends RTDBModel {
 	}
 
 	/**
-	 * Call function.
+	 * Get DB rows by particular column
 	 *
-	 * @param string $name Name.
+	 * @param string $name Column Name.
 	 * @param array  $arguments Arguments.
 	 *
 	 * @return array
@@ -49,9 +49,9 @@ class RTMediaModel extends RTDBModel {
 	 *
 	 * @global object $wpdb
 	 *
-	 * @param array  $columns columns.
-	 * @param mixed  $offset Offset.
-	 * @param mixed  $per_page Per page.
+	 * @param array  $columns column names.
+	 * @param mixed  $offset Offset to get data.
+	 * @param mixed  $per_page Rows Per page.
 	 * @param string $order_by Order by condition.
 	 * @param bool   $count_flag Count flag.
 	 *
@@ -72,7 +72,7 @@ class RTMediaModel extends RTDBModel {
 		$join  = '';
 		$where = ' where 2=2 ';
 		if ( is_multisite() ) {
-			$where .= $wpdb->prepare( " AND {$this->table_name}.blog_id =%d ", get_current_blog_id() ); // @codingStandardsIgnoreLine
+			$where .= $wpdb->prepare( " AND {$this->table_name}.blog_id =%d ", get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 		$temp = 65;
 
@@ -93,9 +93,9 @@ class RTMediaModel extends RTDBModel {
 					}
 					$meta_query['compare'] = esc_sql( $meta_query['compare'] );
 					if ( isset( $meta_query['value'] ) ) {
-						$where .= $wpdb->prepare( " AND  ({$tbl_alias}.meta_key = %s and  {$tbl_alias}.meta_value  {$meta_query["compare"]}  %s ) ", $meta_query['key'], $meta_query['value'] ); // @codingStandardsIgnoreLine
+						$where .= $wpdb->prepare( " AND  ({$tbl_alias}.meta_key = %s and  {$tbl_alias}.meta_value  {$meta_query["compare"]}  %s ) ", $meta_query['key'], $meta_query['value'] ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 					} else {
-						$where .= $wpdb->prepare( " AND  {$tbl_alias}.meta_key = %s ", $meta_query['key'] );// @codingStandardsIgnoreLine
+						$where .= $wpdb->prepare( " AND  {$tbl_alias}.meta_key = %s ", $meta_query['key'] ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 					}
 				}
 			} else {
@@ -116,7 +116,7 @@ class RTMediaModel extends RTDBModel {
 					$compare = esc_sql( $compare );
 					$where  .= " AND {$this->table_name}.{$colname} {$compare} ('{$col_val_comapare}')";
 				} else {
-					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // @codingStandardsIgnoreLine
+					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				}
 			}
 		}
@@ -162,17 +162,17 @@ class RTMediaModel extends RTDBModel {
 		}
 
 		if ( ! $count_flag ) {
-			return $wpdb->get_results( $sql ); // @codingStandardsIgnoreLine
+			return $wpdb->get_results( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		} else {
-			return $wpdb->get_var( $sql ); // @codingStandardsIgnoreLine
+			return $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 	}
 
 	/**
 	 * Populate fallback results.
 	 *
-	 * @param string $name Name.
-	 * @param array  $arguments Arguments.
+	 * @param string $name Name for fallback data.
+	 * @param array  $arguments Arguments to populate data.
 	 *
 	 * @return array|bool
 	 */
@@ -211,9 +211,9 @@ class RTMediaModel extends RTDBModel {
 	/**
 	 * Get media.
 	 *
-	 * @param array  $columns Columns.
-	 * @param mixed  $offset Offset.
-	 * @param mixed  $per_page Per page.
+	 * @param array  $columns Columns names.
+	 * @param mixed  $offset Offset to get data.
+	 * @param mixed  $per_page Rows Per page.
 	 * @param string $order_by Order by condition.
 	 * @param bool   $count_flag Count flag.
 	 *
@@ -233,8 +233,8 @@ class RTMediaModel extends RTDBModel {
 	 * Get user albums.
 	 *
 	 * @param  integer $author_id Author id.
-	 * @param  mixed   $offset Offset.
-	 * @param  mixed   $per_page Per page.
+	 * @param  mixed   $offset Offset to get data.
+	 * @param  mixed   $per_page Rows Per page.
 	 * @param  string  $order_by Order by condition.
 	 *
 	 * @return array $results
@@ -247,24 +247,30 @@ class RTMediaModel extends RTDBModel {
 		}
 
 		$sql = "SELECT * FROM {$this->table_name}  ";
-
+		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 		if ( is_multisite() ) {
-			$sub_sql = $wpdb->prepare( "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = %d AND album_id IS NOT NULL AND media_type <> 'album' AND context <> 'group' AND blog_id = %d", $author_id, get_current_blog_id() ); // @codingStandardsIgnoreLine
+			$sub_sql = $wpdb->prepare( "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = %d AND album_id IS NOT NULL AND media_type <> 'album' AND context <> 'group' AND blog_id = %d", $author_id, get_current_blog_id() );
 		} else {
-			$sub_sql = $wpdb->prepare( "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = %d AND album_id IS NOT NULL AND media_type <> 'album' AND context <> 'group'", $author_id ); // @codingStandardsIgnoreLine
+			$sub_sql = $wpdb->prepare( "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = %d AND album_id IS NOT NULL AND media_type <> 'album' AND context <> 'group'", $author_id );
 		}
-		// @codingStandardsIgnoreStart
-		$where = $wpdb->prepare( " WHERE (id IN( $sub_sql ) OR (media_author = %d ))
-			    AND media_type = 'album'
-			    AND (context = 'profile' or context is NULL) ", $author_id ); // @codingStandardsIgnoreEnd
-		if ( is_multisite() ) {
-			$where .= $wpdb->prepare( " AND {$this->table_name}.blog_id = %d ", get_current_blog_id() ); // @codingStandardsIgnoreStart
-		}
-		$where     = apply_filters( 'rtmedia-get-album-where-query', $where, $this->table_name );
 
-		$order_by = esc_sql( $order_by );
+		$where = $wpdb->prepare(
+			" WHERE (id IN( $sub_sql ) OR (media_author = %d ))
+			    AND media_type = 'album'
+			    AND (context = 'profile' or context is NULL) ",
+			$author_id
+		);
+		if ( is_multisite() ) {
+			$where .= $wpdb->prepare( " AND {$this->table_name}.blog_id = %d ", get_current_blog_id() );
+		}
+
+		$where = apply_filters( 'rtmedia-get-album-where-query', $where, $this->table_name ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+
+		// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
+		$order_by  = esc_sql( $order_by );
 		$qorder_by = " ORDER BY {$this->table_name}.$order_by ";
-		$sql .= $where . $qorder_by;
+		$sql      .= $where . $qorder_by;
+
 		if ( false !== $offset ) {
 			if ( ! is_integer( $offset ) ) {
 				$offset = 0;
@@ -283,17 +289,17 @@ class RTMediaModel extends RTDBModel {
 			$sql .= ' LIMIT ' . $offset . ',' . $per_page;
 		}
 
-		$results = $wpdb->get_results( $sql ); // @codingStandardsIgnoreEnd
+		$results = $wpdb->get_results( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 		return $results;
 	}
 
 	/**
-	 * Get group Albums.
+	 * Get group Albums from group id.
 	 *
-	 * @param  integer $group_id Ignore id.
-	 * @param  mixed   $offset Offset.
-	 * @param  mixed   $per_page Per page.
+	 * @param  integer $group_id Group id.
+	 * @param  mixed   $offset Offset for data.
+	 * @param  mixed   $per_page Rows per page.
 	 * @param  string  $order_by Order by condition.
 	 *
 	 * @return array $results
@@ -411,6 +417,7 @@ class RTMediaModel extends RTDBModel {
 	 */
 	public function get_other_album_count( $profile_id, $context = 'profile' ) {
 		global $wpdb;
+
 		$global = RTMediaAlbum::get_globals();
 		$sql    = $wpdb->prepare( "select distinct album_id from {$this->table_name} where 2=2 AND context = %s ", $context ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
@@ -427,6 +434,7 @@ class RTMediaModel extends RTDBModel {
 			}
 			$sql .= ')';
 		}
+
 		if ( 'profile' === $context ) {
 			$sql .= $wpdb->prepare( ' AND media_author=%d ', $profile_id );
 		} else {
@@ -434,6 +442,7 @@ class RTMediaModel extends RTDBModel {
 				$sql .= $wpdb->prepare( ' AND context_id=%d ', $profile_id );
 			}
 		}
+
 		$sql   .= 'limit 100';
 		$result = $wpdb->get_results( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 

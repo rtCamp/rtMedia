@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * File for RTMediaLicense
  * User: ritz
@@ -149,8 +149,8 @@ class RTMediaLicense {
 					case 'expired':
 						$class      = 'alert';
 						$messages[] = sprintf(
-							// translators: Expiry date.
-							__( 'Your license key expired on %1$s. Please renew your license key.', 'buddypress-media' ),
+							// translators: %s: Expiry date.
+							__( 'Your license key expired on %s. Please renew your license key.', 'buddypress-media' ),
 							date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
 						);
 
@@ -169,7 +169,7 @@ class RTMediaLicense {
 					case 'missing':
 						$class      = 'alert';
 						$messages[] = sprintf(
-							// translators: Account page link.
+							// translators: %s: Account page link.
 							__(
 								'Invalid license. Please <a href="%s" target="_blank">visit your account page</a> and verify it.',
 								'buddypress-media'
@@ -185,7 +185,7 @@ class RTMediaLicense {
 					case 'site_inactive':
 						$class      = 'alert';
 						$messages[] = sprintf(
-							// translators: Add-on name.
+							// translators: 1: Add-on name, 2:My account page link.
 							__( 'Your %1$s is not active for this URL. Please <a href="%2$s" target="_blank">visit your account page</a> to manage your license key URLs.', 'buddypress-media' ),
 							$addon_name,
 							'https://rtmedia.io/my-account/'
@@ -198,7 +198,7 @@ class RTMediaLicense {
 					case 'item_name_mismatch':
 						$class = 'alert';
 
-						// translators: Add-on name.
+						// translators: %s: Add-on name.
 						$messages[] = sprintf( __( 'This appears to be an invalid license key for %s.', 'buddypress-media' ), $addon_name );
 
 						$license_status = 'license-' . $class . '-notice';
@@ -208,7 +208,7 @@ class RTMediaLicense {
 					case 'no_activations_left':
 						$class = 'alert';
 
-						// translators: Account link.
+						// translators: %s: Account link.
 						$messages[] = sprintf( __( 'Your license key has reached its activation limit. <a href="%s">View possible upgrades</a> now.', 'buddypress-media' ), 'https://rtmedia.io/my-account/' );
 
 						$license_status = 'license-' . $class . '-notice';
@@ -218,7 +218,7 @@ class RTMediaLicense {
 					case 'license_not_activable':
 						$class = 'alert';
 
-						// translators: Account link.
+						// translators: %s: Account link.
 						$messages[] = sprintf( __( 'Your license is not activable, please visit <a href="%s">your account page</a>.', 'buddypress-media' ), 'https://rtmedia.io/my-account/' );
 
 						$license_status = 'license-' . $class . '-notice';
@@ -254,7 +254,7 @@ class RTMediaLicense {
 							$class = 'warning';
 
 							$messages[] = sprintf(
-								// translators: Expiry date.
+								// translators: 1: Expiry date.
 								__( 'Your license key expires soon! It expires on %1$s. Renew your license key.', 'buddypress-media' ),
 								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
 							);
@@ -266,7 +266,7 @@ class RTMediaLicense {
 							$class = 'info';
 
 							$messages[] = sprintf(
-								// translators: Expiry date.
+								// translators: %s: Expiry date.
 								__( 'Your license key expires on %s.', 'buddypress-media' ),
 								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
 							);

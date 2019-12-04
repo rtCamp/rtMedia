@@ -1,8 +1,8 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * File to add rtProgress class.
+ * Adds class to Show progress-bar
  *
- * @package    rtMedia
+ * @package rtMedia
  */
 
 /**
@@ -26,7 +26,7 @@ class rtProgress { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWi
 	 *
 	 * @access public
 	 *
-	 * @param  float $progress Progress.
+	 * @param  float $progress Current progress.
 	 * @param  bool  $echo Echo.
 	 *
 	 * @return string $progress_ui
@@ -39,7 +39,7 @@ class rtProgress { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWi
 			';
 
 		if ( $echo ) {
-			echo $progress_ui; // @codingStandardsIgnoreLine
+			echo wp_kses( $progress_ui, wp_kses_allowed_html() );
 		} else {
 			return $progress_ui;
 		}
@@ -50,7 +50,7 @@ class rtProgress { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWi
 	 *
 	 * @access public
 	 *
-	 * @param  float $progress Progress.
+	 * @param  float $progress Current progress.
 	 * @param  float $total Total.
 	 *
 	 * @return float

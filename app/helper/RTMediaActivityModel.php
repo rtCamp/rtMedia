@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * Class RTMediaActivityModel file.
  * User: ritz <ritesh.patel@rtcamp.com>

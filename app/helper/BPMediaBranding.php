@@ -1,6 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * BPMediaBranding Class file.
+ * BuddyPress Media Branding Class file.
  *
  * @package BuddyPressMedia
  * @subpackage Admin

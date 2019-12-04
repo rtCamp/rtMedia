@@ -1,6 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * File for class RTMediaInteractionModel
+ * Manages rtMedia interactions
  *
  * @package    rtMedia
  */
@@ -13,7 +13,7 @@
 class RTMediaInteractionModel extends RTDBModel {
 
 	/**
-	 * Constructor
+	 * RTMediaInteractionModel Constructor
 	 *
 	 * @access public
 	 */
@@ -28,7 +28,7 @@ class RTMediaInteractionModel extends RTDBModel {
 	 *
 	 * @param  int|string $user_id user id.
 	 * @param  int|string $media_id media id.
-	 * @param  string     $action action.
+	 * @param  string     $action action name.
 	 *
 	 * @return bool
 	 */
@@ -59,7 +59,7 @@ class RTMediaInteractionModel extends RTDBModel {
 	 *
 	 * @param  int|string $user_id user id.
 	 * @param  int|string $media_id media id.
-	 * @param  string     $action action.
+	 * @param  string     $action action name.
 	 *
 	 * @return array|bool $results
 	 */

@@ -1,6 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * File for RTMediaSettings class.
+ * File for handling rtMedia setting/options operations.
  *
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>, Joshua Abenazer <joshua.abenazer@rtcamp.com>
  *
@@ -83,7 +83,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				}
 			}
 
-			/* Privacy */
+			// Privacy settings.
 			$defaults['privacy_enabled']      = 0;
 			$defaults['privacy_default']      = 0;
 			$defaults['privacy_userOverride'] = 0;
@@ -99,7 +99,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$defaults['styles_custom']                   = '';
 			$defaults['styles_enabled']                  = 1;
 
-			/* default value for add media in comment media */
+			// default value for add media in comment media.
 			$defaults['rtmedia_disable_media_in_commented_media'] = 1;
 
 			if ( isset( $options['general_videothumbs'] ) && is_numeric( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) > 10 ) {
@@ -128,7 +128,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  array $options Options.
+		 * @param  array $options Options array.
 		 *
 		 * @return array $options
 		 */
@@ -144,7 +144,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  array $options Options.
+		 * @param  array $options Options array to save.
 		 *
 		 * @return array $options
 		 */
@@ -157,7 +157,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				}
 			}
 
-			/* Check if @import is inserted into css or not. If yes then remove that line before save. */
+			// Check if @import is inserted into css or not. If yes then remove that line before save.
 			if ( isset( $options['styles_custom'] ) && ! empty( $options['styles_custom'] ) ) {
 				$css = $options['styles_custom'];
 
@@ -333,7 +333,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$allowed_types = implode( ', ', $allowed_types );
 			echo '<span class="description">' .
 				sprintf(
-					// translators: link.
+					// translators: %s: link.
 					esc_html__( 'Currently your network allows uploading of the following file types. You can change the settings %s', 'buddypress-media' ),
 					'<a href="' . esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ) . '">' . esc_html__( 'here', 'buddypress-media' ) . '</a><br /><code>' . esc_html( $allowed_types ) . '</code>'
 				) .
@@ -345,7 +345,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  array $input Input.
+		 * @param  array $input Input array to sanitize.
 		 *
 		 * @return array $input
 		 */
@@ -371,10 +371,12 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				}
 				$input['default_count'] = 10;
 			}
+
 			if ( is_multisite() ) {
 				rtmedia_update_site_option( 'rtm-settings-saved', esc_html__( 'Settings saved.', 'buddypress-media' ) );
 			}
-			do_action( 'rtmedia_sanitize_settings', $_POST, $input ); // @codingStandardsIgnoreLine
+
+			do_action( 'rtmedia_sanitize_settings', $_POST, $input ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
 
 			return $input;
 		}
@@ -394,6 +396,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			} else {
 				$regenerate_link = wp_nonce_url( admin_url( 'update.php?action=install-plugin&plugin=regenerate-thumbnails' ), 'install-plugin_regenerate-thumbnails' );
 			}
+
 			echo '<span class="description">' . esc_html__( 'If you make changes to width, height or crop settings, you must use ', 'buddypress-media' ) .
 				'<a href="' . esc_url( $regenerate_link ) . '">' . esc_html__( 'Regenerate Thumbnail Plugin', 'buddypress-media' ) . '</a>' .
 				esc_html__( ' to regenerate old images.', 'buddypress-media' ) .
@@ -402,7 +405,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		}
 
 		/**
-		 * Output a checkbox for privacy_notice.
+		 * Output a checkbox for privacy notice.
 		 *
 		 * @access public
 		 */

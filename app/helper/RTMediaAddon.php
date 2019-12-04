@@ -1,6 +1,7 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * Contains class RTMediaAddon
+ * Shows Addons details
  *
  * @package    rtMedia
  * @subpackage Admin
@@ -30,7 +31,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		public static $page;
 
 		/**
-		 * Show coming_soon_div.
+		 * Show coming soon div.
 		 *
 		 * @access public
 		 *
@@ -45,7 +46,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  string $page Page.
+		 * @param  string $page Page name.
 		 *
 		 * @return void
 		 */
@@ -562,6 +563,17 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 				$purchase_link = '<a class="button-primary alignright product_type_simple"  href="' . esc_url( $args['buy_now'] ) . '" target="_blank">' . esc_html__( 'Buy Now', 'buddypress-media' ) . '</a>';
 			}
 
+			$allowed_html = array(
+				'a'    => array(
+					'href'   => array(),
+					'target' => array(),
+					'class'  => array(),
+				),
+				'span' => array(
+					'class' => array(),
+				),
+			);
+
 			$coming_soon_div = ( ! empty( $args['coming_soon'] ) ) ? $this->coming_soon_div() : '';
 			?>
 			<div class="plugin-card clearfix rtm-plugin-card">
@@ -585,7 +597,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 						<span class="amount"><?php echo esc_html( $args['price'] ); ?></span>
 					</span>
 					<?php
-					echo $purchase_link; // @codingStandardsIgnoreLine
+					echo wp_kses( $purchase_link, $allowed_html );
 
 					if ( '' !== $args['demo_link'] ) {
 						echo '<a class="alignright rtm-live-demo button"  href="' . esc_url( $args['demo_link'] ) . '" title="' . esc_attr( $args['title'] ) . '" target="_blank">' . esc_html__( 'Live Demo', 'buddypress-media' ) . '</a>';
