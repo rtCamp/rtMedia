@@ -1,6 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * File to include BPMediaImporter class.
+ * Handles BuddyPress media import
  *
  * @package    rtMedia
  */
@@ -43,7 +43,7 @@ class BPMediaImporter {
 	public static function table_exists( $table ) {
 		global $wpdb;
 
-		if ( 1 === intval( $wpdb->query( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table )  ) ) ) { // @codingStandardsIgnoreLine
+		if ( 1 === intval( $wpdb->query( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) ) ) {
 			return true;
 		}
 
@@ -53,7 +53,7 @@ class BPMediaImporter {
 	/**
 	 * Function to check if plugin is active.
 	 *
-	 * @param string $path Path.
+	 * @param string $path Plugin path.
 	 *
 	 * @return int
 	 */
@@ -153,8 +153,8 @@ class BPMediaImporter {
 	 * Add media into album.
 	 *
 	 * @param int    $album_id Album media.
-	 * @param string $title Title.
-	 * @param string $description Description.
+	 * @param string $title Media title.
+	 * @param string $description Media description.
 	 * @param string $filepath File path.
 	 * @param int    $privacy Privacy.
 	 * @param bool   $author_id Author id.
@@ -198,7 +198,7 @@ class BPMediaImporter {
 	 */
 	public static function cleanup( $table, $directory ) {
 		global $wpdb;
-		$wpdb->query( "DROP TABLE IF EXISTS $table" ); // @codingStandardsIgnoreLine
+		$wpdb->query( "DROP TABLE IF EXISTS $table" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->base_prefix}bp_activity WHERE component = %s", 'album' ) );
 		if ( is_dir( $directory ) ) {
 			self::delete( $directory );

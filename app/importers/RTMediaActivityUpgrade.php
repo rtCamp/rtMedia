@@ -1,6 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * File to include RTMediaActivityUpgrade class.
+ * Handles rtMedia activities
  * User: ritz <ritesh.patel@rtcamp.com>
  * Date: 11/9/14
  * Time: 1:56 PM
@@ -97,22 +97,22 @@ class RTMediaActivityUpgrade {
 	 * ajax callback for activity upgrade.
 	 *
 	 * @param int $lastid Last id.
-	 * @param int $limit Limit.
+	 * @param int $limit Limit for query.
 	 */
 	public function rtmedia_activity_upgrade( $lastid = 0, $limit = 1 ) {
 		global $wpdb;
 		if ( check_ajax_referer( 'rtmedia_media_activity_upgrade_nonce', 'nonce' ) ) {
 			$rtmedia_model          = new RTMediaModel();
 			$rtmedia_activity_model = new RTMediaActivityModel();
-			$activity_sql           = $wpdb->prepare( " SELECT *, max(privacy) as max_privacy FROM {$rtmedia_model->table_name} WHERE activity_id is NOT NULL GROUP BY activity_id ORDER BY id limit %d", $limit ); // @codingStandardsIgnoreLine
+			$activity_sql           = $wpdb->prepare( " SELECT *, max(privacy) as max_privacy FROM {$rtmedia_model->table_name} WHERE activity_id is NOT NULL GROUP BY activity_id ORDER BY id limit %d", $limit );
 
 			$lastid = filter_input( INPUT_POST, 'last_id', FILTER_SANITIZE_NUMBER_INT );
 
 			if ( ! empty( $lastid ) ) {
-				$activity_sql = $wpdb->prepare( " SELECT *, max(privacy) as max_privacy FROM {$rtmedia_model->table_name} WHERE activity_id > %d AND activity_id is NOT NULL GROUP BY activity_id ORDER BY id limit %d", $lastid, $limit ); // @codingStandardsIgnoreLine
+				$activity_sql = $wpdb->prepare( " SELECT *, max(privacy) as max_privacy FROM {$rtmedia_model->table_name} WHERE activity_id > %d AND activity_id is NOT NULL GROUP BY activity_id ORDER BY id limit %d", $lastid, $limit );
 			}
 
-			$activity_data = $wpdb->get_results( $activity_sql ); // @codingStandardsIgnoreLine
+			$activity_data = $wpdb->get_results( $activity_sql );
 
 			if ( is_array( $activity_data ) && ! empty( $activity_data ) ) {
 				if ( $rtmedia_activity_model->check( $activity_data[0]->activity_id ) ) {
@@ -146,7 +146,7 @@ class RTMediaActivityUpgrade {
 	 * Function to get upgraded activity details.
 	 *
 	 * @param object $activity_data Activity data object.
-	 * @param bool   $upgrade Upgrade.
+	 * @param bool   $upgrade Upgrade done or not.
 	 */
 	public function return_upgrade( $activity_data, $upgrade = true ) {
 		$total   = $this->get_total_count();
@@ -206,14 +206,14 @@ class RTMediaActivityUpgrade {
 		global $wpdb;
 		$rtmedia_activity_model = new RTMediaActivityModel();
 		$rtmedia_model          = new RTMediaModel();
-		$query_pending          = $wpdb->prepare( " SELECT count( DISTINCT activity_id) as pending from {$rtmedia_model->table_name} where activity_id NOT IN( SELECT activity_id from {$rtmedia_activity_model->table_name} ) AND activity_id > %d  ", 0 ); // @codingStandardsIgnoreLine
+		$query_pending          = $wpdb->prepare( " SELECT count( DISTINCT activity_id) as pending from {$rtmedia_model->table_name} where activity_id NOT IN( SELECT activity_id from {$rtmedia_activity_model->table_name} ) AND activity_id > %d  ", 0 );
 		$last_imported          = $this->get_last_imported();
 
 		if ( $last_imported ) {
 			$query_pending .= $wpdb->prepare( ' AND activity_id > %d', intval( $last_imported ) );
 		}
 
-		$pending_count = $wpdb->get_results( $query_pending ); // @codingStandardsIgnoreLine
+		$pending_count = $wpdb->get_results( $query_pending );
 
 		if ( $pending_count && count( $pending_count ) > 0 ) {
 			return $pending_count[0]->pending;
@@ -230,8 +230,8 @@ class RTMediaActivityUpgrade {
 	public function get_total_count() {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
-		$query_total   = $wpdb->prepare( " SELECT count( DISTINCT activity_id) as total FROM {$rtmedia_model->table_name} WHERE activity_id > %d ", 0 ); // @codingStandardsIgnoreLine
-		$total_count   = $wpdb->get_results( $query_total ); // @codingStandardsIgnoreLine
+		$query_total   = $wpdb->prepare( " SELECT count( DISTINCT activity_id) as total FROM {$rtmedia_model->table_name} WHERE activity_id > %d ", 0 );
+		$total_count   = $wpdb->get_results( $query_total );
 
 		if ( $total_count && count( $total_count ) > 0 ) {
 			return $total_count[0]->total;
@@ -248,8 +248,8 @@ class RTMediaActivityUpgrade {
 	public function get_last_imported() {
 		global $wpdb;
 		$rtmedia_activity_model = new RTMediaActivityModel();
-		$last_query             = $wpdb->prepare( " SELECT activity_id from {$rtmedia_activity_model->table_name} ORDER BY activity_id DESC limit %d ", 1 ); // @codingStandardsIgnoreLine
-		$last_imported          = $wpdb->get_results( $last_query ); // @codingStandardsIgnoreLine
+		$last_query             = $wpdb->prepare( " SELECT activity_id from {$rtmedia_activity_model->table_name} ORDER BY activity_id DESC limit %d ", 1 );
+		$last_imported          = $wpdb->get_results( $last_query );
 
 		if ( $last_imported && count( $last_imported ) > 0 && isset( $last_imported[0] ) && isset( $last_imported[0]->activity_id ) ) {
 			return $last_imported[0]->activity_id;
@@ -259,7 +259,7 @@ class RTMediaActivityUpgrade {
 	}
 
 	/**
-	 * Init.
+	 * Initialize activity upgrade.
 	 */
 	public function init() {
 		$prog       = new rtProgress();
@@ -273,7 +273,7 @@ class RTMediaActivityUpgrade {
 			<h2><?php esc_html_e( 'rtMedia: Upgrade rtMedia activity', 'buddypress-media' ); ?></h2>
 			<?php
 			wp_nonce_field( 'rtmedia_media_activity_upgrade_nonce', 'rtmedia_media_activity_upgrade_nonce' );
-			// translators: Estimated.
+			// translators: %s: Estimated.
 			echo '<span class="pending">' . sprintf( esc_html__( '%s (estimated)', 'buddypress-media' ), esc_html( rtmedia_migrate_formatseconds( $total - $done ) ) ) . '</span><br />';
 			echo '<span class="finished">' . esc_html( $done ) . '</span>/<span class="total">' . esc_html( $total ) . '</span>';
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';

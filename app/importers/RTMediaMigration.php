@@ -1,6 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * Media migration.
+ * Handles Media migration.
  *
  * @package    rtMedia
  */
@@ -77,8 +77,9 @@ class RTMediaMigration {
 	public function migrate_image_size_fix() {
 		if ( '' === rtmedia_get_site_option( 'rt_image_size_migration_fix', '' ) ) {
 			global $wpdb;
-			$sql = $wpdb->prepare( "update $wpdb->postmeta set meta_value=replace(meta_value	,%s,%s) where meta_key = '_wp_attachment_metadata';", 'bp_media', 'rt_media' );
-			$wpdb->get_row( $sql ); // @codingStandardsIgnoreLine
+
+			$wpdb->get_row( $wpdb->prepare( "update $wpdb->postmeta set meta_value=replace(meta_value	,%s,%s) where meta_key = '_wp_attachment_metadata';", 'bp_media', 'rt_media' ) );
+
 			update_option( 'rt_image_size_migration_fix', 'fix' );
 		}
 	}
@@ -95,17 +96,19 @@ class RTMediaMigration {
 	/**
 	 * Create notice.
 	 *
-	 * @param string $message Message.
-	 * @param string $type Type.
+	 * @param string $message Message text.
+	 * @param string $type Message tpe.
 	 */
 	public function create_notice( $message, $type = 'error' ) {
-		echo '<div class="' . esc_attr( $type ) . '">' . $message . '</div>'; // @codingStandardsIgnoreLine
+		?>
+		<div class="<?php echo esc_attr( $type ); ?>"><?php echo esc_html( $message ); ?></div>
+		<?php
 	}
 
 	/**
 	 * Check if table exists.
 	 *
-	 * @param string $table Table.
+	 * @param string $table Table name.
 	 *
 	 * @return bool
 	 */
@@ -150,12 +153,12 @@ class RTMediaMigration {
 		}
 		$sql_album_usercount = "select count(*) FROM $wpdb->usermeta where meta_key ='bp-media-default-album' ";
 
-		$_SESSION['migration_user_album'] = $wpdb->get_var( $sql_album_usercount ); // @codingStandardsIgnoreLine
+		$_SESSION['migration_user_album'] = $wpdb->get_var( $sql_album_usercount ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$count                            = intval( $_SESSION['migration_user_album'] );
 
 		if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
-			$sql_album_groupcount              = $wpdb->prepare( "select count(*) FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='%s'", 'bp_media_default_album' ); // @codingStandardsIgnoreLine
-			$_SESSION['migration_group_album'] = $wpdb->get_var( $sql_album_groupcount ); // @codingStandardsIgnoreLine
+			$sql_album_groupcount              = $wpdb->prepare( "select count(*) FROM {$bp_prefix}bp_groups_groupmeta where meta_key =%s", 'bp_media_default_album' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$_SESSION['migration_group_album'] = $wpdb->get_var( $sql_album_groupcount ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$count                            += intval( $_SESSION['migration_group_album'] );
 		}
 
@@ -178,7 +181,7 @@ class RTMediaMigration {
                                                     and is_spam <>1 and
                                                         not p.meta_value is NULL";
 
-			$_SESSION['migration_activity'] = $wpdb->get_var( $sql_bpm_comment_count ); // @codingStandardsIgnoreLine
+			$_SESSION['migration_activity'] = $wpdb->get_var( $sql_bpm_comment_count ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$count                         += intval( $_SESSION['migration_activity'] );
 		}
 
@@ -197,7 +200,7 @@ class RTMediaMigration {
                     a.post_id > 0 and  (NOT p.ID IS NULL)
                         and a.meta_key = 'bp-media-key'";
 
-		$_SESSION['migration_media'] = $wpdb->get_var( $sql ); // @codingStandardsIgnoreLine
+		$_SESSION['migration_media'] = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$count                      += intval( $_SESSION['migration_media'] );
 
 		return $count;
@@ -220,8 +223,8 @@ class RTMediaMigration {
                 where
                      a.meta_key = 'bp-media-key' and  (NOT p.ID IS NULL) and a.post_id not in (select media_id
                 from {$this->bmp_table} where blog_id = %d and media_id <> %d ) order by a.post_ID";
-		$sql = $wpdb->prepare( $sql, get_current_blog_id(), $album_id ); // @codingStandardsIgnoreLine
-		$row = $wpdb->get_row( $sql ); // @codingStandardsIgnoreLine
+		$sql = $wpdb->prepare( $sql, get_current_blog_id(), $album_id ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$row = $wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( $row ) {
 			return $row->post_ID;
 		} else {
@@ -232,7 +235,7 @@ class RTMediaMigration {
 	/**
 	 * Get count for migrated media.
 	 *
-	 * @param bool $flag Flag.
+	 * @param bool $flag Flag to get migrated media count.
 	 *
 	 * @return mixed
 	 */
@@ -254,7 +257,7 @@ class RTMediaMigration {
                     a.post_id > 0 and  (NOT p.ID IS NULL)
                         and a.meta_key = 'bp-media-key')";
 
-		$media_count = $wpdb->get_var( $wpdb->prepare( $sql, get_current_blog_id() ) ); // @codingStandardsIgnoreLine
+		$media_count = $wpdb->get_var( $wpdb->prepare( $sql, get_current_blog_id() ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 		if ( $flag ) {
 			return $media_count - 1;
@@ -277,7 +280,7 @@ class RTMediaMigration {
 					$pending_count .= " or ID in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
 				}
 				$pending_count .= ')';
-				$pending_count = $wpdb->get_var( $pending_count ); // @codingStandardsIgnoreLine
+				$pending_count  = $wpdb->get_var( $pending_count ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 				$album_count  = intval( $_SESSION['migration_user_album'] );
 				$album_count += ( isset( $_SESSION['migration_group_album'] ) ) ? intval( $_SESSION['migration_group_album'] ) : 0;
@@ -290,12 +293,13 @@ class RTMediaMigration {
 		if ( isset( $_SESSION['migration_activity'] ) && intval( $_SESSION['migration_media'] ) === intval( $media_count ) ) {
 			$comment_sql = $_SESSION['migration_activity'];
 		} else {
-			// @codingStandardsIgnoreStart
-			$comment_sql = $wpdb->get_var( "select count(*)
-                                                from $wpdb->comments a
-                                                 where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
-                                                                                            {$wpdb->posts} p ON (b.media_id = p.ID) where  (NOT p.ID IS NULL) ) and a.comment_agent=''" );
-			// @codingStandardsIgnoreEnd
+			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+			$comment_sql = $wpdb->get_var(
+				"select count(*) from $wpdb->comments a
+                        where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
+                        {$wpdb->posts} p ON (b.media_id = p.ID) where  (NOT p.ID IS NULL) ) and a.comment_agent=''"
+			);
+			// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 		}
 
 		return $media_count + $album_count + $comment_sql;
@@ -337,7 +341,7 @@ class RTMediaMigration {
 	}
 
 	/**
-	 * Manage album.
+	 * Manage album migration.
 	 *
 	 * @return bool
 	 */
@@ -351,7 +355,7 @@ class RTMediaMigration {
 
 		global $wpdb;
 
-		$album_id = $wpdb->get_var( $wpdb->prepare( "select media_id from $this->bmp_table where id = %d", $album_rt_id ) ); // @codingStandardsIgnoreLine
+		$album_id = $wpdb->get_var( $wpdb->prepare( "select media_id from $this->bmp_table where id = %d", $album_rt_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 		if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 			$bp_prefix = bp_core_get_table_prefix();
@@ -360,63 +364,80 @@ class RTMediaMigration {
 		}
 
 		if ( $stage < 1 ) {
+
 			global $wpdb;
+
 			if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 				$bp_prefix = bp_core_get_table_prefix();
 			} else {
 				$bp_prefix = '';
 			}
-			$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;", '<ul class="bp-media-list-media">', '<div class="rtmedia-activity-container"><ul class="rtmedia-list large-block-grid-3">' ); // @codingStandardsIgnoreLine
+
+			$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;", '<ul class="bp-media-list-media">', '<div class="rtmedia-activity-container"><ul class="rtmedia-list large-block-grid-3">' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;", '</ul>', '</ul></div>' ); // @codingStandardsIgnoreLine
+			$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;", '</ul>', '</ul></div>' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 			$sql_group = "update $wpdb->posts set post_parent='{$album_id}' where post_parent in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
+
 			if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
 				$sql_group .= " or post_parent in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
 			}
-			$wpdb->query( $sql_group ); // @codingStandardsIgnoreLine
+
+			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$stage = 1;
 			rtmedia_update_site_option( 'rtmedia-migration', $stage );
 			$this->return_migration();
 		}
+
 		if ( $stage < 2 ) {
-			$sql_delete = "select * from $wpdb->posts where post_type='bp_media_album' and ID in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') limit 10";
-			$results    = $wpdb->get_results( $sql_delete ); // @codingStandardsIgnoreLine
+
+			$results    = $wpdb->get_results( "select * from $wpdb->posts where post_type='bp_media_album' and ID in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') limit 10" );
 			$delete_ids = '';
 			$sep        = '';
+
 			foreach ( $results as $result ) {
 				$this->search_and_replace( $result->guid, trailingslashit( get_rtmedia_user_link( $result->post_author ) ) . RTMEDIA_MEDIA_SLUG . '/' . $album_rt_id );
 				$delete_ids .= $sep . $result->ID;
 				$sep         = ',';
 			}
+
 			if ( '' !== $delete_ids ) {
 				// @todo missing prepare
-				$wpdb->query( "delete from $wpdb->posts where ID in ({$delete_ids})" ); // @codingStandardsIgnoreLine
+				$wpdb->query( "delete from $wpdb->posts where ID in ({$delete_ids})" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			}
+
 			if ( count( $results ) < 10 ) {
 				$stage = 2;
 			}
+
 			rtmedia_update_site_option( 'rtmedia-migration', $stage );
 			$this->return_migration();
 		}
+
 		if ( $stage < 3 ) {
+
 			if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
+
 				$sql_delete = "select * from $wpdb->posts where post_type='bp_media_album' and ID in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album') limit 10";
-				$results    = $wpdb->get_results( $sql_delete ); // @codingStandardsIgnoreLine
+				$results    = $wpdb->get_results( $sql_delete ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				$delete_ids = '';
 				$sep        = '';
+
 				if ( $results ) {
+
 					foreach ( $results as $result ) {
 						$group_id = abs( intval( get_post_meta( $result->ID, 'bp-media-key', true ) ) );
 						$this->search_and_replace( trailingslashit( get_rtmedia_group_link( $group_id ) ) . 'albums/' . $result->ID, trailingslashit( get_rtmedia_group_link( $group_id ) ) . RTMEDIA_MEDIA_SLUG . '/' . $album_rt_id );
 						$delete_ids .= $sep . $result->ID;
 						$sep         = ',';
 					}
+
 					if ( '' !== $delete_ids ) {
 						// @todo prepare
-						$wpdb->query( "delete from $wpdb->posts where ID in ({$delete_ids})" ); // @codingStandardsIgnoreLine
+						$wpdb->query( "delete from $wpdb->posts where ID in ({$delete_ids})" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 					}
+
 					if ( count( $results ) < 10 ) {
 						$stage = 3;
 					}
@@ -433,10 +454,12 @@ class RTMediaMigration {
 		}
 
 		$sql = "update $wpdb->posts set post_type='{$album_post_type}' where post_type='bp_media_album'";
-		if ( false !== $wpdb->query( $sql ) ) { // @codingStandardsIgnoreLine
-			rtmedia_update_site_option( 'rtmedia-migration', '5' );
 
+		if ( false !== $wpdb->query( $sql ) ) { // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
+			rtmedia_update_site_option( 'rtmedia-migration', '5' );
 			return true;
+
 		}
 
 		return false;
@@ -598,7 +621,7 @@ class RTMediaMigration {
 	 * Migrate media to new DB.
 	 *
 	 * @param int $lastid Last id.
-	 * @param int $limit Limit.
+	 * @param int $limit Limit of rows.
 	 */
 	public function migrate_to_new_db( $lastid = 0, $limit = 1 ) {
 
@@ -649,7 +672,7 @@ class RTMediaMigration {
                 order by a.post_id
                 limit %d";
 
-			$results = $wpdb->get_results( $wpdb->prepare( $sql, $lastid, $limit ) ); // @codingStandardsIgnoreLine
+			$results = $wpdb->get_results( $wpdb->prepare( $sql, $lastid, $limit ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 			if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 				$bp_prefix = bp_core_get_table_prefix();
@@ -696,12 +719,13 @@ class RTMediaMigration {
 	/**
 	 * Migrate single media.
 	 *
-	 * @param string $result Result.
-	 * @param bool   $album Album.
+	 * @param string      $result Media id.
+	 * @param bool|string $album Album name.
 	 *
 	 * @return mixed
 	 */
 	public function migrate_single_media( $result, $album = false ) {
+
 		$blog_id = get_current_blog_id();
 		$old     = $result;
 
@@ -710,10 +734,13 @@ class RTMediaMigration {
 		} else {
 			$bp_prefix = '';
 		}
+
 		global $wpdb;
 
 		if ( false !== $album && ! ( is_object( $result ) ) ) {
-			$id = $wpdb->get_var( $wpdb->prepare( "select ID from {$this->bmp_table} where media_id = %d", $result ) ); // @codingStandardsIgnoreLine
+
+			$id = $wpdb->get_var( $wpdb->prepare( "select ID from {$this->bmp_table} where media_id = %d", $result ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
 			if ( null === $id ) {
 				$sql    = "select
                         a.post_id as 'post_id',
@@ -738,7 +765,7 @@ class RTMediaMigration {
                     where
                         a.post_id = %d and (NOT p.ID IS NULL)
                             and a.meta_key = 'bp_media_privacy'";
-				$result = $wpdb->get_row( $wpdb->prepare( $sql, $result ) ); // @codingStandardsIgnoreLine
+				$result = $wpdb->get_row( $wpdb->prepare( $sql, $result ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			} else {
 				return $id;
 			}
@@ -780,15 +807,16 @@ class RTMediaMigration {
 			}
 		}
 
-		$activity_data = $wpdb->get_row( $wpdb->prepare( "select * from {$bp_prefix}bp_activity where id= %d", $result->activity_id ) ); // @codingStandardsIgnoreLine
+		$activity_data = $wpdb->get_row( $wpdb->prepare( "select * from {$bp_prefix}bp_activity where id= %d", $result->activity_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( 'album' !== $media_type ) {
 			$this->importmedia( $media_id, $prefix );
 		}
 
 		if ( $this->table_exists( $bp_prefix . 'bp_activity' ) && class_exists( 'BP_Activity_Activity' ) ) {
 			$bp_activity = new BP_Activity_Activity();
-			// @codingStandardsIgnoreStart
-			$activity_sql = $wpdb->prepare( "SELECT
+			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+			$activity_sql = $wpdb->prepare(
+				"SELECT
                             *
                         FROM
                             {$bp_prefix}bp_activity
@@ -801,9 +829,11 @@ class RTMediaMigration {
                                     $wpdb->posts p ON (a.post_id = p.ID)
                                 where
                                     (NOT p.ID IS NULL) and p.ID = %d
-                and a.meta_key = 'bp_media_child_activity')", $media_id );
+                and a.meta_key = 'bp_media_child_activity')",
+				$media_id
+			);
 			$all_activity = $wpdb->get_results( $activity_sql );
-			// @codingStandardsIgnoreEnd
+			// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 			remove_all_actions( 'wp_insert_comment' );
 			foreach ( $all_activity as $activity ) {
 				$comments = $bp_activity->get_activity_comments( $activity->id, $activity->mptt_left, $activity->mptt_right );
@@ -909,7 +939,7 @@ class RTMediaMigration {
 	/**
 	 * Import media.
 	 *
-	 * @param int    $id Id.
+	 * @param int    $id Media id.
 	 * @param string $prefix Prefix.
 	 */
 	public function importmedia( $id, $prefix ) {
@@ -926,7 +956,7 @@ class RTMediaMigration {
 		if ( empty( $upload_path ) || 'wp-content/uploads' === $upload_path ) {
 			$dir = WP_CONTENT_DIR . '/uploads';
 		} elseif ( 0 !== strpos( $upload_path, ABSPATH ) ) {
-			// $dir is absolute, $upload_path is (maybe) relative to ABSPATH
+			// $dir is absolute, $upload_path is (maybe) relative to ABSPATH.
 			$dir = path_join( ABSPATH, $upload_path );
 		} else {
 			$dir = $upload_path;
@@ -1143,26 +1173,28 @@ class RTMediaMigration {
 	}
 
 	/**
-	 * Search and replace.
+	 * Search and replace in activity table.
 	 *
-	 * @param string $old Old.
-	 * @param string $new New.
+	 * @param string $old Old string.
+	 * @param string $new New string.
 	 */
 	public function search_and_replace( $old, $new ) {
 		global $wpdb;
+
 		if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 			$bp_prefix = bp_core_get_table_prefix();
 		} else {
 			$bp_prefix = $wpdb->prefix;
 		}
+
 		$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set action=replace(action,%s,%s) ,content=replace(content,%s,%s), primary_link=replace(primary_link,%s,%s) where id > 0;", $old, $new, $old, $new, $old, $new ); // @codingStandardsIgnoreLine
-		$wpdb->get_row( $sql );// @codingStandardsIgnoreLine
+		$wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	/**
-	 * Format seconds.
+	 * Format seconds into time.
 	 *
-	 * @param float $seconds_left Seconds.
+	 * @param float $seconds_left Seconds to format.
 	 *
 	 * @return string
 	 */
@@ -1213,7 +1245,7 @@ class RTMediaMigration {
 	 * Insert comment.
 	 *
 	 * @param int    $media_id media id.
-	 * @param array  $data data.
+	 * @param array  $data Media data.
 	 * @param string $exclude Exclude.
 	 * @param int    $parent_commnet_id parent comment id.
 	 */

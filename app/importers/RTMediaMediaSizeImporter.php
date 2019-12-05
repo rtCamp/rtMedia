@@ -1,6 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * File to include RTMediaMediaSizeImporter class.
+ * Handles media size import
  *
  * @package rtMedia
  */
@@ -120,28 +120,26 @@ class RTMediaMediaSizeImporter {
 	/**
 	 * Create notice.
 	 *
-	 * @param string $message Message.
-	 * @param string $type Type.
+	 * @param string $message Message to show.
+	 * @param string $type Type of message.
 	 */
 	public function create_notice( $message, $type = 'error' ) {
-		echo '<div class="' . esc_attr( $type ) . ' rtmedia-media-size-import-error">'
-			. wp_kses(
-				$message,
-				array(
-					'p'      => array(),
-					'a'      => array(
-						'href'    => array(),
-						'onclick' => array(),
-						'style'   => array(),
-					),
-					'strong' => array(),
-				)
-			)
-		     . '</div>'; // @codingStandardsIgnoreLine
+
+		$allowed_html = array(
+			'p'      => array(),
+			'a'      => array(
+				'href'    => array(),
+				'onclick' => array(),
+				'style'   => array(),
+			),
+			'strong' => array(),
+		);
+
+		echo '<div class="' . esc_attr( $type ) . ' rtmedia-media-size-import-error">' . wp_kses( $message, $allowed_html ) . '</div>';
 	}
 
 	/**
-	 * Init.
+	 * Initialize media size import.
 	 */
 	public function init() {
 		$prog    = new rtProgress();
@@ -153,7 +151,7 @@ class RTMediaMediaSizeImporter {
 			<h2><?php esc_html_e( 'rtMedia: Import Media Size', 'buddypress-media' ); ?></h2>
 			<?php
 			wp_nonce_field( 'rtmedia_media_size_import_nonce', 'rtmedia_media_size_import_nonce' );
-			// translators: Estimated.
+			// translators: %s: Estimated.
 			echo '<span class="pending">' . sprintf( esc_html__( '%s (estimated)', 'buddypress-media' ), esc_html( rtmedia_migrate_formatseconds( $total - $done ) ) ) . '</span><br />';
 			echo '<span class="finished">' . esc_html( $done ) . '</span>/<span class="total">' . esc_html( $total ) . '</span>';
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
@@ -260,10 +258,10 @@ class RTMediaMediaSizeImporter {
 
 		if ( $media_id ) {
 			$media_id      = intval( $media_id );
-			$query_pending = $wpdb->prepare( "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other') AND id > %d", $media_id ); // @codingStandardsIgnoreLine
+			$query_pending = $wpdb->prepare( "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other') AND id > %d", $media_id ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 
-		$pending_count = $wpdb->get_results( $query_pending ); // @codingStandardsIgnoreLine
+		$pending_count = $wpdb->get_results( $query_pending ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( $pending_count && count( $pending_count ) > 0 ) {
 			return $pending_count[0]->pending;
 		}
@@ -279,8 +277,8 @@ class RTMediaMediaSizeImporter {
 	public function get_total_count() {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
-		$query_total   = "SELECT COUNT(*) as total from {$rtmedia_model->table_name} where media_type in ('photo','video','document','music','other') "; // @codingStandardsIgnoreLine
-		$total_count   = $wpdb->get_results( $query_total ); // @codingStandardsIgnoreLine
+		$query_total   = "SELECT COUNT(*) as total from {$rtmedia_model->table_name} where media_type in ('photo','video','document','music','other') ";
+		$total_count   = $wpdb->get_results( $query_total ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 		if ( $total_count && count( $total_count ) > 0 ) {
 			return $total_count[0]->total;
@@ -293,18 +291,18 @@ class RTMediaMediaSizeImporter {
 	 * Media size import.
 	 *
 	 * @param int $lastid Last id.
-	 * @param int $limit Limit.
+	 * @param int $limit Limit of rows.
 	 */
 	public function rtmedia_media_size_import( $lastid = 0, $limit = 1 ) {
 		global $wpdb;
 		if ( check_ajax_referer( 'rtmedia_media_size_import_nonce', 'nonce' ) ) {
 			$rtmedia_model = new RTMediaModel();
-			$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $limit ); // @codingStandardsIgnoreLine
+			$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $limit ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$lastid        = filter_input( INPUT_POST, 'last_id', FILTER_SANITIZE_NUMBER_INT );
 			if ( ! empty( $lastid ) ) {
-				$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where id > %d AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $lastid, $limit ); // @codingStandardsIgnoreLine
+				$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where id > %d AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $lastid, $limit ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			}
-			$result = $wpdb->get_results( $get_media_sql ); // @codingStandardsIgnoreLine
+			$result = $wpdb->get_results( $get_media_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			if ( $result && count( $result ) > 0 ) {
 				$migrate = $this->migrate_single_media( $result[0] );
 			}
@@ -319,7 +317,7 @@ class RTMediaMediaSizeImporter {
 	/**
 	 * Migrate single media.
 	 *
-	 * @param string $result Result.
+	 * @param object $result Object of media.
 	 *
 	 * @return bool
 	 */
@@ -331,7 +329,7 @@ class RTMediaMediaSizeImporter {
 		if ( file_exists( $attached_file ) ) {
 			$file_size = filesize( $attached_file );
 		} else {
-			error_log( 'rtMedia size importer: file not exist. Media ID: ' . esc_html( $result->id ) . ', File: ' . esc_html( $attached_file ) ); // @codingStandardsIgnoreLine
+			error_log( 'rtMedia size importer: file not exist. Media ID: ' . esc_html( $result->id ) . ', File: ' . esc_html( $attached_file ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return false;
 		}
 		$post      = get_post( $result->media_id );
@@ -350,8 +348,8 @@ class RTMediaMediaSizeImporter {
 	/**
 	 * Return migration data.
 	 *
-	 * @param bool $media Media.
-	 * @param bool $migrate Migrate.
+	 * @param bool|object $media Media object.
+	 * @param bool        $migrate Migrate done or not.
 	 */
 	public function return_migration( $media = false, $migrate = true ) {
 

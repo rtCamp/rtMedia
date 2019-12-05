@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
