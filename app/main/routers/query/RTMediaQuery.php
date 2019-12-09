@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * Handle query object changes.
  */
@@ -60,7 +60,7 @@ class RTMediaQuery {
 	/**
 	 * Media to process.
 	 *
-	 * @var string $media
+	 * @var string|array $media
 	 */
 	public $media = '';
 
@@ -98,6 +98,20 @@ class RTMediaQuery {
 	 * @var bool|string $shortcode_global
 	 */
 	public $shortcode_global = false;
+
+	/**
+	 * Object of RTMediaModel class.
+	 *
+	 * @var RTMediaModel
+	 */
+	public $model;
+
+	/**
+	 * Object of RTMediaFriends class
+	 *
+	 * @var RTMediaFriends
+	 */
+	public $friendship;
 
 	/**
 	 * Initialise the query
@@ -518,7 +532,7 @@ class RTMediaQuery {
 	 *
 	 * @param object $query Query object.
 	 *
-	 * @return type
+	 * @return array
 	 */
 	public function &query( $query ) {
 		$this->original_query = $query;
@@ -989,8 +1003,7 @@ class RTMediaQuery {
 					'RTMediaGalleryShortcode',
 					'rtmedia_query_where_filter',
 				),
-				10,
-				3
+				10
 			);
 		}
 
@@ -1109,8 +1122,8 @@ class RTMediaQuery {
 	/**
 	 * Moves ahead in the loop of media within the album
 	 *
-	 * @global type $rtmedia_media
-	 * @return type
+	 * @global object $rtmedia_media
+	 * @return object
 	 */
 	public function rtmedia() {
 
@@ -1131,7 +1144,7 @@ class RTMediaQuery {
 	/**
 	 * Helper method for rt_album to move ahead in the db pool
 	 *
-	 * @return type
+	 * @return array
 	 */
 	public function next_media() {
 		$this->current_media++;
@@ -1175,7 +1188,7 @@ class RTMediaQuery {
 	/**
 	 * Function to get data.
 	 *
-	 * @return type
+	 * @return array
 	 */
 	public function &get_data() {
 

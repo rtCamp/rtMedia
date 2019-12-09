@@ -1,6 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
- * File to include RTMediaContext class.
+ * Manages context for rtMedia
  *
  * @package    rtMedia
  */

@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * Handles routing in WordPress
  *
@@ -226,7 +226,7 @@ class RTMediaRouter {
 	/**
 	 * Reset post function.
 	 *
-	 * @param array $args Arguments.
+	 * @param array $args Array of arguments.
 	 */
 	public function rt_theme_compat_reset_post( $args = array() ) {
 		global $wp_query, $post;

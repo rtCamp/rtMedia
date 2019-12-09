@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * Handle/change BuddyPress activities behaviour.
  *
@@ -301,7 +301,7 @@ class RTMediaBuddyPressActivity {
 	 * Comment sync.
 	 *
 	 * @param int   $comment_id Comment id.
-	 * @param array $param Param.
+	 * @param array $param Parameters.
 	 */
 	public function comment_sync( $comment_id, $param ) {
 		$default_args   = array(
@@ -322,11 +322,11 @@ class RTMediaBuddyPressActivity {
 		// if there is only single media in activity.
 		if ( 1 === count( $media ) && isset( $media[0]->media_id ) ) {
 
-			/* has media in comment */
+			// has media in comment.
 			$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-			/* if the media is not empty */
+			// if the media is not empty.
 			if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) && class_exists( 'RTMediaActivity' ) ) {
-				/* create new html for comment content */
+				// create new html for comment content.
 				$obj_comment      = new RTMediaActivity( $rtmedia_attached_files[0], 0, $param['content'] );
 				$param['content'] = $obj_comment->create_activity_html( 'comment-media' );
 			}
@@ -363,7 +363,7 @@ class RTMediaBuddyPressActivity {
 	/**
 	 * Groups posted update.
 	 *
-	 * @param string $content Content.
+	 * @param string $content Content to update.
 	 * @param int    $user_id User id.
 	 * @param int    $group_id Group id.
 	 * @param int    $activity_id Activity id.
@@ -375,7 +375,7 @@ class RTMediaBuddyPressActivity {
 	/**
 	 * Activity posted update.
 	 *
-	 * @param string $content Content.
+	 * @param string $content Content to update.
 	 * @param int    $user_id User id.
 	 * @param int    $activity_id Activity id.
 	 */
@@ -398,12 +398,14 @@ class RTMediaBuddyPressActivity {
 			$sql          .= $form_id_where;
 			$wpdb->query( $sql );// @codingStandardsIgnoreLine
 		}
+
 		// hook for rtmedia buddypress after activity posted.
 		do_action( 'rtmedia_bp_activity_posted', $updated_content, $user_id, $activity_id );
 		$rtmedia_privacy = filter_input( INPUT_POST, 'rtmedia-privacy', FILTER_SANITIZE_NUMBER_INT );
 
 		if ( null !== $rtmedia_privacy ) {
-			$privacy = - 1;
+			$privacy = -1;
+
 			if ( is_rtmedia_privacy_enable() ) {
 				if ( is_rtmedia_privacy_user_overide() ) {
 					$privacy = $rtmedia_privacy;
@@ -411,9 +413,11 @@ class RTMediaBuddyPressActivity {
 					$privacy = get_rtmedia_default_privacy();
 				}
 			}
+
 			bp_activity_update_meta( $activity_id, 'rtmedia_privacy', $privacy );
 			// insert/update activity details in rtmedia activity table.
 			$rtmedia_activity_model = new RTMediaActivityModel();
+
 			if ( ! $rtmedia_activity_model->check( $activity_id ) ) {
 				$rtmedia_activity_model->insert(
 					array(
@@ -438,7 +442,7 @@ class RTMediaBuddyPressActivity {
 	/**
 	 * Update `bp_latest_update` user meta with lasted public update.
 	 *
-	 * @param string $content Content.
+	 * @param string $content Content to update.
 	 * @param int    $user_id User id.
 	 * @param int    $activity_id Activity id.
 	 */
@@ -717,7 +721,7 @@ class RTMediaBuddyPressActivity {
 					$user   = get_userdata( $activities[ $index ]->user_id );
 					// Updating activity based on count.
 					if ( 1 === $count ) {
-						// translators: user link, media.
+						// translators: 1: user link, 2: media.
 						$action = sprintf( esc_html__( '%1$s added a %2$s', 'buddypress-media' ), $user_link, $media_str );
 					} else {
 						// Checking all the media linked with activity are of same type.
@@ -725,10 +729,10 @@ class RTMediaBuddyPressActivity {
 							&& ! empty( $rtmedia_media_type_array[ $activities[ $index ]->id ] )
 							&& count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) === 1
 						) {
-							// translators: user link, media count and media.
+							// translators: 1: user link, 2: media count, 3: media.
 							$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $user_link, $count, $media_str );
 						} else {
-							// translators: user link, media count and rtMedia slug.
+							// translators: 1: user link, 2: media count, 3: rtMedia slug.
 							$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $user_link, $count, RTMEDIA_MEDIA_SLUG );
 						}
 					}
@@ -745,7 +749,7 @@ class RTMediaBuddyPressActivity {
 	/**
 	 * Create BP activity when user like and delete associated activity when user remove like.
 	 *
-	 * @param object $obj RTMediaLike.
+	 * @param RTMediaLike $obj Media liked object to perform activities.
 	 */
 	public function activity_after_media_like( $obj ) {
 		if ( class_exists( 'BuddyPress' ) ) {
@@ -782,16 +786,16 @@ class RTMediaBuddyPressActivity {
 					if ( 'group' === $media_obj->context ) {
 						$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
 						$group_name = '<a href="' . esc_url( bp_get_group_permalink( $group_data ) ) . '">' . esc_html( $group_data->name ) . '</a>';
-						// translators: username, media and group name.
+						// translators: 1: username, 2: media, 3: group name.
 						$action = sprintf( esc_html__( '%1$s liked a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
 					} else {
 						if ( $user_id === $media_author ) {
-							// translators: username and media.
+							// translators: 1: username, 2: media.
 							$action = sprintf( esc_html__( '%1$s liked their %2$s', 'buddypress-media' ), $username, $media_str );
 						} else {
 							$media_author_data = get_userdata( $media_author );
 							$media_author_name = '<a href="' . esc_url( get_rtmedia_user_link( $media_author ) ) . '">' . esc_html( $media_author_data->display_name ) . '</a>';
-							// translators: username, author and media.
+							// translators: 1: username, 2: author, 3: media.
 							$action = sprintf( esc_html__( '%1$s liked %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
 						}
 					}
@@ -881,16 +885,17 @@ class RTMediaBuddyPressActivity {
 					if ( 'group' === $media_obj->context ) {
 						$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
 						$group_name = '<a href="' . esc_url( bp_get_group_permalink( $group_data ) ) . '">' . esc_html( $group_data->name ) . '</a>';
-						// translators: username, media and group name.
+						// translators: 1: username, 2: media, 3: group name.
 						$action = sprintf( esc_html__( '%1$s commented on a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
 					} else {
+
 						if ( $user_id === $media_author ) {
-							// translators: username and media.
+							// translators: 1: username, 2: media.
 							$action = sprintf( esc_html__( '%1$s commented on their %2$s', 'buddypress-media' ), $username, $media_str );
 						} else {
 							$media_author_data = get_userdata( $media_author );
 							$media_author_name = '<a href="' . esc_url( get_rtmedia_user_link( $media_author ) ) . '">' . esc_html( $media_author_data->display_name ) . '</a>';
-							// translators: username, author and media.
+							// translators: 1: username, 2: author, 3: media.
 							$action = sprintf( esc_html__( '%1$s commented on %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
 						}
 					}
@@ -900,7 +905,7 @@ class RTMediaBuddyPressActivity {
 					$comment_media_id = false;
 
 					// phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification
-					/* if activity is add from comment media  */
+					// if activity is add from comment media.
 					if ( isset( $_REQUEST['comment_content'] ) || isset( $_REQUEST['action'] ) ) {
 						if ( isset( $_REQUEST['action'] ) && 'new_activity_comment' === $_REQUEST['action'] ) {
 
@@ -930,7 +935,7 @@ class RTMediaBuddyPressActivity {
 							}
 						}
 
-						/* add the new content to the activity */
+						// add the new content to the activity.
 						$activity_content = $comment_content;
 					}
 					// phpcs:enable WordPress.Security.NonceVerification.NoNonceVerification
@@ -960,7 +965,7 @@ class RTMediaBuddyPressActivity {
 					remove_filter( 'bp_activity_content_before_save', array( $this, 'bp_activity_content_before_save' ) );
 					$activity_id = bp_activity_add( $activity_args );
 
-					/* save the profile activity id in the media meta */
+					// save the profile activity id in the media meta.
 					if ( ! empty( $comment_media ) && ! empty( $comment_media_id ) && ! empty( $activity_id ) ) {
 						add_rtmedia_meta( $comment_media_id, 'rtmedia_comment_media_profile_id', $activity_id );
 					}
@@ -976,9 +981,9 @@ class RTMediaBuddyPressActivity {
 					update_user_meta( $user_id, 'rtm-bp-media-comment-activity-' . $media_id . '-' . $wp_comment_id, $activity_id );
 
 					if ( function_exists( 'rtmedia_get_original_comment_media_content' ) ) {
-						/* get the original content of media */
+						// get the original content of media.
 						$original_content = rtmedia_get_original_comment_media_content();
-						/* save the original content in the meta fields */
+						// save the original content in the meta fields.
 						bp_activity_update_meta( $activity_id, 'bp_activity_text', $original_content );
 					}
 				}
@@ -989,7 +994,7 @@ class RTMediaBuddyPressActivity {
 	/**
 	 * Remove activity when comment on media is deleted
 	 *
-	 * @param int $comment_id comment id.
+	 * @param int $comment_id comment id to delete activity.
 	 */
 	public function remove_activity_after_media_comment_delete( $comment_id ) {
 		if ( ! empty( $comment_id ) && function_exists( 'bp_activity_delete' ) ) {
@@ -1050,7 +1055,7 @@ class RTMediaBuddyPressActivity {
 	 *
 	 * @since   4.0.2
 	 *
-	 * @param   bool $args arguments.
+	 * @param   bool|array $args array of arguments.
 	 *
 	 * @return  bool    $has_access
 	 */

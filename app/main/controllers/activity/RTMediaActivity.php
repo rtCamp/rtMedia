@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * Handle rtMedia activities.
  *
@@ -27,7 +27,7 @@ class RTMediaActivity {
 	public $activity_text = '';
 
 	/**
-	 * Privacy.
+	 * Privacy setting.
 	 *
 	 * @var int
 	 */
@@ -36,7 +36,7 @@ class RTMediaActivity {
 	/**
 	 * RTMediaActivity Constructor.
 	 *
-	 * @param array       $media Media.
+	 * @param array       $media Media array.
 	 * @param int         $privacy Privacy.
 	 * @param bool|string $activity_text Activity text.
 	 */
@@ -95,7 +95,6 @@ class RTMediaActivity {
 		}
 		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_' . $type . '_ul_class', 'rtm-activity-media-list' );
 
-		$uploaded_media_types           = array();
 		$rtmedia_activity_ul_list_class = 'rtm-activity-mixed-list';
 
 		// Loop through each media and check media type.

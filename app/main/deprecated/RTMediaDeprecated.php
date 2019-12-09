@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * Show deprecated functions.
  *
@@ -29,14 +29,14 @@ class RTMediaDeprecated {
 	/**
 	 * Add notice for deprecated method.
 	 *
-	 * @param string $method Method.
+	 * @param string $method Method name.
 	 * @param bool   $deprecated Deprecated or not.
-	 * @param string $notice Notice.
+	 * @param string $notice Notice to show.
 	 *
 	 * @return string
 	 */
 	public static function generate_notice( $method, $deprecated = false, $notice = '' ) {
-		// translators: method.
+		// translators: 1: function name, 2: method.
 		return sprintf( esc_html__( 'Deprecated %1$s. Please use %2$s.', 'buddypress-media' ), $deprecated, $method );
 	}
 }
