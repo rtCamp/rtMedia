@@ -134,9 +134,11 @@ class RTMediaJsonApiFunctions {
 	public function rtmedia_api_verfiy_token() {
 		$rtmjsonapi = new RTMediaJsonApi();
 		$token      = filter_input( INPUT_POST, 'token', FILTER_SANITIZE_STRING );
+
 		if ( empty( $token ) ) {
 			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_token_missing, $rtmjsonapi->msg_token_missing ) );
 		}
+
 		// Validate token.
 		$token_valid = $this->rtmedia_api_validate_token( $token );
 
@@ -287,6 +289,7 @@ class RTMediaJsonApiFunctions {
 
 			while ( bp_activities() ) :
 				bp_the_activity();
+
 				// Activity basic details.
 				$activity_feed[ $i ]['id']                  = $activities_template->activity->id;
 				$activity_feed[ $i ]['activity_type']       = $activities_template->activity->type;
@@ -320,7 +323,7 @@ class RTMediaJsonApiFunctions {
 				}
 				// Activity Image.
 				$activity_feed[ $i ]['media'] = $media;
-				$i ++;
+				$i++;
 			endwhile;
 		endif;
 

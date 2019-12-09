@@ -274,7 +274,6 @@ class RTMediaJsonApi {
 			ob_end_clean();
 		}
 
-		global $wpdb;
 		$rtmapilogin   = new RTMediaApiLogin();
 		$token         = filter_input( INPUT_POST, 'token', FILTER_SANITIZE_STRING );
 		$login_details = array( 'last_access' => current_time( 'mysql' ) );
@@ -453,26 +452,27 @@ class RTMediaJsonApi {
 		}
 
 		if ( username_exists( $user_login ) ) {
-			$user_exists = true;
-			$user        = get_user_by( 'login', sanitize_user( $user_login ) );
+			$user = get_user_by( 'login', sanitize_user( $user_login ) );
 		} elseif ( email_exists( $user_login ) ) { // Then, by e-mail address.
-			$user_exists = true;
-			$user        = get_user_by( 'email', sanitize_email( $user_login ) );
+			$user = get_user_by( 'email', sanitize_email( $user_login ) );
 		} else {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_username_email_not_registered, $msg_username_email_not_registered ) );
 		}
+
 		$user_login = $user->data->user_login;
 		$user_email = $user->data->user_email;
 
 		// Generate something random for a key...
 		$key = wp_generate_password( 20, false );
 		do_action( 'retrieve_password_key', $user_login, $key );
+
 		// Now insert the new md5 key into the db.
 		// Now insert the key, hashed, into the DB.
 		if ( empty( $wp_hasher ) ) {
 			require_once ABSPATH . 'wp-includes/class-phpass.php';
 			$wp_hasher = new PasswordHash( 8, true );
 		}
+
 		$hashed = $wp_hasher->HashPassword( $key );
 		$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => sanitize_user( $user_login ) ) );
 
@@ -484,6 +484,7 @@ class RTMediaJsonApi {
 		$message .= sprintf( esc_html__( 'Username: %s', 'buddypress-media' ), $user_login ) . "\r\n\r\n";
 		$message .= esc_html__( 'To reset your password visit the following address, otherwise just ignore this email and nothing will happen.', 'buddypress-media' ) . "\r\n\r\n";
 		$message .= '<' . esc_url( network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) ) . ">\r\n";
+
 		// send email message.
 		// translators: 1: Blog name.
 		if ( false === wp_mail( $user_email, sprintf( esc_html__( '[%s] Password Reset', 'buddypress-media' ), get_option( 'blogname' ) ), $message ) ) {
@@ -541,9 +542,6 @@ class RTMediaJsonApi {
 
 		$ec_comment_posted  = 800002;
 		$msg_comment_posted = esc_html__( 'comment posted', 'buddypress-media' );
-
-		// Fetch user id from token.
-		$user_data = get_userdata( $this->user_id );
 
 		$content = filter_input( INPUT_POST, 'content', FILTER_SANITIZE_STRING );
 
@@ -684,9 +682,6 @@ class RTMediaJsonApi {
 		$ec_media_comments  = 800004;
 		$msg_media_comments = esc_html__( 'media comments', 'buddypress-media' );
 
-		$ec_my_comments  = 800005;
-		$msg_my_comments = esc_html__( 'my comments', 'buddypress-media' );
-
 		$media_id = filter_input( INPUT_POST, 'media_id', FILTER_SANITIZE_NUMBER_INT );
 
 		global $wpdb;
@@ -718,6 +713,7 @@ class RTMediaJsonApi {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_comments, $msg_no_comments ) );
 			}
 		}
+
 		// If no comments.
 		wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_comments, $msg_no_comments ) );
 	}
@@ -744,9 +740,11 @@ class RTMediaJsonApi {
 		if ( isset( $media_likes['user'] ) && ! is_array( $media_likes['user'] ) ) {
 			$media_likes['user'] = array();
 		}
+
 		if ( empty( $media_likes ) || ! is_array( $media_likes ) ) {
 			$media_likes = array();
 		}
+
 		if ( empty( $media_like_users ) || ! is_array( $media_like_users ) ) {
 			$media_like_users = array();
 		}
@@ -1004,7 +1002,9 @@ class RTMediaJsonApi {
 			'leader_id'   => $unfollow_id,
 			'follower_id' => $this->user_id,
 		);
+
 		$following = bp_follow_is_following( $args );
+
 		if ( $following ) {
 			$unfollow_user = bp_follow_stop_following( $args );
 			if ( $unfollow_user ) {
@@ -1196,15 +1196,6 @@ class RTMediaJsonApi {
 
 			if ( isset( $media ) && count( $media ) > 0 ) {
 
-				$perma_link = get_rtmedia_permalink( $media[0]->id );
-				if ( 'photo' === $media[0]->media_type ) {
-					$thumb_image = rtmedia_image( 'rt_media_thumbnail', $rtupload[0], false );
-				} elseif ( 'music' === $media[0]->media_type ) {
-					$thumb_image = $media[0]->cover_art;
-				} else {
-					$thumb_image = '';
-				}
-
 				if ( 'group' === $media[0]->context ) {
 					$rtmedia_nav->refresh_counts(
 						$media[0]->context_id,
@@ -1271,9 +1262,6 @@ class RTMediaJsonApi {
 
 		$ec_no_media  = 160003;
 		$msg_no_media = esc_html__( 'no media found for requested media type', 'buddypress-media' );
-
-		$ec_invalid_media_type  = 160004;
-		$msg_invalid_media_type = esc_html__( 'media_type not allowed', 'buddypress-media' );
 
 		global $rtmedia;
 		$rtmediamodel = new RTMediaModel();
