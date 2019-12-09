@@ -393,10 +393,10 @@ class RTMediaBuddyPressActivity {
 			// Credit faisal : https://gist.github.com/faishal/c4306ae7267fff976465.
 			$in_str_arr    = array_fill( 0, count( $rtmedia_attached_files ), '%d' );
 			$in_str        = join( ',', $in_str_arr );
-			$sql           = $wpdb->prepare( "update {$media_obj->table_name} set activity_id = %d where blog_id = %d and ", $activity_id, get_current_blog_id() ); // @codingStandardsIgnoreLine
+			$sql           = $wpdb->prepare( "update {$media_obj->table_name} set activity_id = %d where blog_id = %d and ", $activity_id, get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$form_id_where = $wpdb->prepare( "id IN ($in_str)", $rtmedia_attached_files ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 			$sql          .= $form_id_where;
-			$wpdb->query( $sql );// @codingStandardsIgnoreLine
+			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 
 		// hook for rtmedia buddypress after activity posted.
@@ -482,7 +482,7 @@ class RTMediaBuddyPressActivity {
 					// latest public activity content.
 					$activity_content = bp_activity_get_meta( $public_activity_id, 'bp_activity_text' );
 					if ( empty( $activity_content ) ) {
-						$activity_content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$bp->activity->table_name} WHERE id = %d", $public_activity_id ) ); // @codingStandardsIgnoreLine
+						$activity_content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$bp->activity->table_name} WHERE id = %d", $public_activity_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 					}
 					$activity_content = apply_filters( 'bp_activity_latest_update_content', $activity_content, $activity_content );
 

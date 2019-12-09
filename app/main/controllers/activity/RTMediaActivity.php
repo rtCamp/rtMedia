@@ -200,7 +200,7 @@ class RTMediaActivity {
 		/**
 		 * Filters the output of the activity contents before save.
 		 *
-		 * @param string $activity_content Concatination of $activity_text and $media_list.
+		 * @param string $activity_content Concatenations of $activity_text and $media_list.
 		 * @param string $activity_text    HTML markup of activity text.
 		 * @param string $media_list       HTML markup of media in ul.
 		 */

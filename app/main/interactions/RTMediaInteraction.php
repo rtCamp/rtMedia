@@ -102,7 +102,7 @@ class RTMediaInteraction {
 	}
 
 	/**
-	 * add rewrite rules with RTMedia slugs.
+	 * Add rewrite rules with RTMedia slugs.
 	 */
 	public static function rewrite_rules() {
 		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/([0-9]*)/([^/]*)/?', 'index.php?media_id=$matches[1]&action=$matches[2]', 'bottom' );
@@ -359,9 +359,9 @@ class RTMediaInteraction {
 		$s        = empty( $_SERVER['HTTPS'] ) ? '' : ( ( 'on' === $_SERVER['HTTPS'] ) ? 's' : '' );
 		$sp       = strtolower( wp_unslash( $_SERVER['SERVER_PROTOCOL'] ) );
 		$protocol = substr( $sp, 0, strpos( $sp, '/' ) ) . $s;
-		$port     = ( '80' === $_SERVER['SERVER_PORT'] ) ? '' : ( ':' . $_SERVER['SERVER_PORT'] ); // @codingStandardsIgnoreLine
+		$port     = ( '80' === $_SERVER['SERVER_PORT'] ) ? '' : ( ':' . $_SERVER['SERVER_PORT'] );
 
-		return $protocol . '://' . esc_url( $_SERVER['SERVER_NAME'] ) . esc_url( $port ) . esc_url( $_SERVER['REQUEST_URI'] ); // @codingStandardsIgnoreLine
+		return $protocol . '://' . esc_url( $_SERVER['SERVER_NAME'] ) . esc_url( $port ) . esc_url( $_SERVER['REQUEST_URI'] );
 	}
 
 	/**
