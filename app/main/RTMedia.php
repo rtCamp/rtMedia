@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * The main rtMedia Class file.
  *
@@ -186,8 +186,9 @@ class RTMedia {
 				global $wpdb;
 				$row = $album_row['result'][0];
 				if ( isset( $row['media_id'] ) ) {
-					// @codingStandardsIgnoreStart
-					$sql = $wpdb->prepare( "update $wpdb->posts p
+					// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+					$sql = $wpdb->prepare(
+						"update $wpdb->posts p
                                 left join
                             $model->table_name r ON ( p.ID = r.media_id and blog_id = %d )
                         set
@@ -196,9 +197,13 @@ class RTMedia {
                             p.guid like %s
                                 and (p.post_parent = 0 or p.post_parent is NULL)
                                 and not r.id is NULL
-                                and r.media_type <> 'album'", get_current_blog_id(), $row['media_id'], '%/rtMedia/%' );
+                                and r.media_type <> 'album'",
+						get_current_blog_id(),
+						$row['media_id'],
+						'%/rtMedia/%'
+					);
 					$wpdb->query( $sql );
-					// @codingStandardsIgnoreEnd
+					// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 				}
 			}
 		}
@@ -211,7 +216,7 @@ class RTMedia {
 		global $wpdb;
 		$model      = new RTMediaModel();
 		$update_sql = "UPDATE {$model->table_name} SET privacy = '80' where privacy = '-1' ";
-		$wpdb->query( $update_sql ); // @codingStandardsIgnoreLine
+		$wpdb->query( $update_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	/**
@@ -228,9 +233,9 @@ class RTMedia {
 		if ( class_exists( 'BuddyPress' ) && $table_exist ) {
 			$model     = new RTMediaModel();
 			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' and m.privacy <> 80 ";
-			$wpdb->query( $sql_group ); // @codingStandardsIgnoreLine
+			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 20 where m.context = 'group' and ( bp.status = 'private' OR bp.status = 'hidden' ) and m.privacy <> 80 ";
-			$wpdb->query( $sql_group ); // @codingStandardsIgnoreLine
+			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 	}
 
@@ -242,15 +247,15 @@ class RTMedia {
 		$model             = new RTMediaModel();
 		$interaction_model = new RTMediaInteractionModel();
 		$update_media_sql  = 'ALTER TABLE ' . $model->table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $update_media_sql ); // @codingStandardsIgnoreLine
+		$wpdb->query( $update_media_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$update_media_meta_sql = 'ALTER TABLE ' . $wpdb->base_prefix . $model->meta_table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $update_media_meta_sql ); // @codingStandardsIgnoreLine
+		$wpdb->query( $update_media_meta_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$update_media_interaction_sql = 'ALTER TABLE ' . $interaction_model->table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $update_media_interaction_sql ); // @codingStandardsIgnoreLine
+		$wpdb->query( $update_media_interaction_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	/**
-	 * Function to set site options for rtMedia.
+	 * Set site options for rtMedia.
 	 */
 	public function set_site_options() {
 
@@ -260,7 +265,7 @@ class RTMedia {
 		if ( false === $rtmedia_options ) {
 			$this->init_site_options();
 		} else {
-			/* if new options added via filter then it needs to be updated */
+			// if new options added via filter then it needs to be updated.
 			$this->options = $rtmedia_options;
 		}
 		$this->add_image_sizes();
@@ -754,7 +759,7 @@ class RTMedia {
 
 		$this->options['buddypress_enableOnProfile'] = 1;
 
-		/* Last settings updated in options. Update them in DB & after this no other option would be saved in db */
+		// Last settings updated in options. Update them in DB & after this no other option would be saved in db.
 		rtmedia_update_site_option( 'rtmedia-options', $this->options );
 	}
 
@@ -784,7 +789,7 @@ class RTMedia {
 			$defaults[ 'allowedTypes_' . $type['name'] . '_featured' ] = 0;
 		}
 
-		/* Previous Sizes values from buddypress is migrated */
+		// Previous Sizes values from buddypress is migrated.
 		foreach ( $this->default_sizes as $type => $type_value ) {
 			foreach ( $type_value as $size => $size_value ) {
 				foreach ( $size_value as $dimension => $value ) {
@@ -816,7 +821,7 @@ class RTMedia {
 			}
 		}
 
-		/* Privacy */
+		// Privacy options.
 		$defaults['privacy_enabled']      = ( isset( $bp_media_options['privacy_enabled'] ) ) ? $bp_media_options['privacy_enabled'] : 0;
 		$defaults['privacy_default']      = ( isset( $bp_media_options['default_privacy_level'] ) ) ? $bp_media_options['default_privacy_level'] : 0;
 		$defaults['privacy_userOverride'] = ( isset( $bp_media_options['privacy_override_enabled'] ) ) ? $bp_media_options['privacy_override_enabled'] : 0;
@@ -835,19 +840,19 @@ class RTMedia {
 	 */
 	public function constants() {
 
-		/* If the plugin is installed. */
+		// If the plugin is installed.
 		if ( ! defined( 'RTMEDIA_IS_INSTALLED' ) ) {
 			define( 'RTMEDIA_IS_INSTALLED', 1 );
 		}
 
-		/* Required Version  */
+		//  Required Version.
 		if ( ! defined( 'RTMEDIA_REQUIRED_BP' ) ) {
 			define( 'RTMEDIA_REQUIRED_BP', '1.7' );
 		}
 
 		/* Slug Constants for building urls */
 
-		/* Media slugs */
+		// Media slugs.
 
 		if ( ! defined( 'RTMEDIA_MEDIA_SLUG' ) ) {
 			define( 'RTMEDIA_MEDIA_SLUG', 'media' );
@@ -881,17 +886,17 @@ class RTMedia {
 			define( 'RTMEDIA_ALBUM_PLURAL_LABEL', esc_html__( 'Albums', 'buddypress-media' ) );
 		}
 
-		/* Upload slug */
+		// Upload slug.
 		if ( ! defined( 'RTMEDIA_UPLOAD_SLUG' ) ) {
 			define( 'RTMEDIA_UPLOAD_SLUG', 'upload' );
 		}
 
-		/* Upload slug */
+		// Upload slug.
 		if ( ! defined( 'RTMEDIA_UPLOAD_LABEL' ) ) {
 			define( 'RTMEDIA_UPLOAD_LABEL', esc_html__( 'Upload', 'buddypress-media' ) );
 		}
 
-		/* Global Album/Wall Post */
+		// Global Album/Wall Post.
 		if ( ! defined( 'RTMEDIA_GLOBAL_ALBUM_LABEL' ) ) {
 			define( 'RTMEDIA_GLOBAL_ALBUM_LABEL', esc_html__( 'Wall Post', 'buddypress-media' ) );
 		}
@@ -991,7 +996,6 @@ class RTMedia {
 		/**
 		 * Load accessory functions
 		 */
-
 		$class_construct = array(
 			'deprecated'          => true,
 			'interaction'         => true,
@@ -1116,12 +1120,12 @@ class RTMedia {
 		// todo: Nonce required.
 		$album        = new RTMediaAlbum();
 		$global_album = $album->get_default();
-		// @codingStandardsIgnoreStart
+		// phpcs:disable
 		//** Hack for plupload default name.
 		if ( isset( $_POST['action'] ) && isset( $_POST['mode'] ) && 'file_upload' === sanitize_text_field( $_POST['mode'] ) ) {
 			unset( $_POST['name'] );
 		}
-		// @codingStandardsIgnoreEnd
+		// phpcs:enable
 		// **
 		global $rtmedia_error;
 		if ( isset( $rtmedia_error ) && true === $rtmedia_error ) {
@@ -1179,7 +1183,7 @@ class RTMedia {
 	 */
 	public function update_db() {
 		$update = new RTDBUpdate( false, RTMEDIA_PATH . 'index.php', RTMEDIA_PATH . 'app/schema/', true );
-		/* Current Version. */
+		// Current Version.
 		if ( ! defined( 'RTMEDIA_VERSION' ) ) {
 			define( 'RTMEDIA_VERSION', $update->db_version );
 		}
@@ -1442,7 +1446,7 @@ class RTMedia {
 		);
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_size_config', $media_size_config );
 
-		/* rtMedia fot comment media script localize*/
+		// rtMedia fot comment media script localize.
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
 
@@ -1498,7 +1502,7 @@ class RTMedia {
 		}
 
 		$rtmedia_disable_media = '1';
-		/* if the  rtmedia option does have value pick from there*/
+		// if the  rtmedia option does have value pick from there.
 		if ( isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) ) {
 			$rtmedia_disable_media = $rtmedia->options['rtmedia_disable_media_in_commented_media'];
 		}
@@ -1516,7 +1520,7 @@ class RTMedia {
 			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
 		}
 
-		// Only Applay if BP Template Nouveau is activate.
+		// Only Apply if BP Template Nouveau is activate.
 		if ( ! empty( $bp_template ) && 'nouveau' === $bp_template && ( 'group' === $rtmedia_interaction->context->type || 'profile' === $rtmedia_interaction->context->type ) ) {
 			$rtmedia_router = new RTMediaRouter();
 			if ( ! empty( $rtmedia_router->query_vars ) ) {
@@ -1799,7 +1803,7 @@ function get_rtmedia_user_link( $id ) {
  * Function to update site option based on site type.
  *
  * @param string $option_name Option name to update.
- * @param string $option_value Option value to update option with.
+ * @param mixed  $option_value Option value to update option with.
  *
  * @return bool
  */
@@ -1879,8 +1883,8 @@ function rtm_privacy_message_on_website() {
 
 	if ( ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
 		if ( ! empty( $options['general_upload_terms_show_pricacy_message'] ) && '1' === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE['rtm_show_privacy_message'] ) ) {
-			$rtm_privacy_allowed_postion  = array( 'top', 'bottom' );
-			$rtm_privacy_message_position = ! empty( $rtm_privacy_message_options['position'] ) && ( in_array( $rtm_privacy_message_options['background-color'], $rtm_privacy_allowed_postion, true ) ) ? $rtm_privacy_message_options['position'] . ':0' : 'bottom: 0';
+			$rtm_privacy_allowed_position = array( 'top', 'bottom' );
+			$rtm_privacy_message_position = ! empty( $rtm_privacy_message_options['position'] ) && ( in_array( $rtm_privacy_message_options['background-color'], $rtm_privacy_allowed_position, true ) ) ? $rtm_privacy_message_options['position'] . ':0' : 'bottom: 0';
 			$rtm_privacy_message_bgcolor  = ! empty( $rtm_privacy_message_options['background-color'] ) ? 'background-color: ' . $rtm_privacy_message_options['background-color'] : 'background-color: rgba(0,0,0,0.95)';
 			$rtm_privacy_message_color    = ! empty( $rtm_privacy_message_options['color'] ) ? 'color: ' . $rtm_privacy_message_options['color'] : 'color: #fff';
 
@@ -1901,7 +1905,7 @@ add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
  * Function to add privacy policy information in WordPress policy section.
  */
 function rtm_plugin_privacy_information() {
-	$policy = '';
+
 	if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
 		ob_start();
 		?>

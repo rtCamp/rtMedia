@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * This file applies the admin settings and handle feature of Upload Terms at front-end side.
  *
@@ -135,7 +135,6 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 		public function terms_and_service_checkbox_html( $options ) {
 			$general_upload_terms_page_link = $options['general_upload_terms_page_link'];
 			$general_upload_terms_message   = $options['general_upload_terms_message'];
-			$content                        = '';
 			ob_start();
 			?>
 			<div class="rtmedia-upload-terms">
