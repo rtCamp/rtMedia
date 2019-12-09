@@ -782,11 +782,11 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$debug_info['Template Overrides']            = implode( ', ' . PHP_EOL . str_repeat( ' ', 50 ), $this->rtmedia_scan_template_files( RTMEDIA_PATH . '/templates/' ) );
 			$rtmedia_options                             = get_option( 'rtmedia-options' );
 			$rtmedia_options                             = array_merge( $debug_info, $rtmedia_options );
-			$i = 0;
+
 			if ( ! empty( $rtmedia_options ) ) {
-				echo esc_html( '==============================================================================' . PHP_EOL );
-				echo esc_html( '================================== Debug Info ================================' . PHP_EOL );
-				echo esc_html( '==============================================================================' . PHP_EOL . PHP_EOL . PHP_EOL );
+				echo '==============================================================================' . PHP_EOL;
+				echo '================================== Debug Info ================================' . PHP_EOL;
+				echo '==============================================================================' . PHP_EOL . PHP_EOL . PHP_EOL;
 
 				foreach ( $rtmedia_options as $option => $value ) {
 					echo wp_kses_post( ucwords( str_replace( '_', ' ', $option ) ) . str_repeat( ' ', 50 - strlen( $option ) ) . wp_strip_all_tags( $value ) . PHP_EOL );
