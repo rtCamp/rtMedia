@@ -1458,7 +1458,7 @@ class RTMedia {
 	}
 
 	/**
-	 * Function to expand allowed html.
+	 * Function to expand allowed html in wp_kses_allowed_html.
 	 *
 	 * @return array
 	 */
