@@ -325,7 +325,7 @@ class RTMediaTemplate {
 
 		global $rtmedia_query;
 
-		$nonce = filter_input( INPUT_POST, 'rtmedia_media_nonce', FILTER_SANITIZE_STRING );
+		$nonce = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_media_nonce', FILTER_SANITIZE_STRING ) );
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->action_query->id ) ) {
 
@@ -362,7 +362,7 @@ class RTMediaTemplate {
 
 			$state = $media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[0]->media_id );
 
-			$rtmedia_filepath_old = filter_input( INPUT_POST, 'rtmedia-filepath-old', FILTER_SANITIZE_STRING );
+			$rtmedia_filepath_old = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-filepath-old', FILTER_SANITIZE_STRING ) );
 			if ( isset( $rtmedia_filepath_old ) ) {
 				$is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $rtmedia_filepath_old );
 
@@ -462,9 +462,9 @@ class RTMediaTemplate {
 			$media = new RTMediaMedia();
 			$model = new RTMediaModel();
 
-			$submit         = filter_input( INPUT_POST, 'submit', FILTER_SANITIZE_STRING );
-			$_move_selected = filter_input( INPUT_POST, 'move-selected', FILTER_SANITIZE_STRING );
-			$_album         = filter_input( INPUT_POST, 'album', FILTER_SANITIZE_STRING );
+			$submit         = sanitize_text_field( filter_input( INPUT_POST, 'submit', FILTER_SANITIZE_STRING ) );
+			$_move_selected = sanitize_text_field( filter_input( INPUT_POST, 'move-selected', FILTER_SANITIZE_STRING ) );
+			$_album         = sanitize_text_field( filter_input( INPUT_POST, 'album', FILTER_SANITIZE_STRING ) );
 
 			$filters = array(
 				'selected' => array(
@@ -560,7 +560,7 @@ class RTMediaTemplate {
 	}
 
 	function bulk_delete() {
-		$nonce            = filter_input( INPUT_POST, 'rtmedia_bulk_delete_nonce', FILTER_SANITIZE_STRING );
+		$nonce            = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_bulk_delete_nonce', FILTER_SANITIZE_STRING ) );
 		$_wp_http_referer = filter_input( INPUT_POST, '_wp_http_referer', FILTER_SANITIZE_URL );
 		$media            = new RTMediaMedia();
 
@@ -829,7 +829,7 @@ class RTMediaTemplate {
 						);
 					}
 				}
-				$_rt_ajax = filter_input( INPUT_POST, 'rtajax', FILTER_SANITIZE_STRING );
+				$_rt_ajax = sanitize_text_field( filter_input( INPUT_POST, 'rtajax', FILTER_SANITIZE_STRING ) );
 
 				if ( ! empty( $_rt_ajax ) ) {
 					global $wpdb;

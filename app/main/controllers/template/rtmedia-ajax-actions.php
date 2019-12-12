@@ -10,8 +10,8 @@
  */
 function rtmedia_delete_uploaded_media() {
 
-	$action   = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
-	$nonce    = filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_STRING );
+	$action   = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
+	$nonce    = sanitize_text_field( filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_STRING ) );
 	$media_id = filter_input( INPUT_POST, 'media_id', FILTER_SANITIZE_NUMBER_INT );
 
 	if ( ! empty( $action ) && 'delete_uploaded_media' === $action && ! empty( $media_id ) ) {

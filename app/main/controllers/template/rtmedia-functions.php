@@ -4005,12 +4005,12 @@ function rtmedia_get_original_comment_media_content() {
 	$old_content = '&nbsp;';
 
 	// get the original content from the POST.
-	$content = filter_input( INPUT_POST, 'content', FILTER_SANITIZE_STRING );
+	$content = sanitize_text_field( filter_input( INPUT_POST, 'content', FILTER_SANITIZE_STRING ) );
 	if ( ! empty( $content ) ) {
 		$old_content = $content;
 	}
 
-	$comment = filter_input( INPUT_POST, 'comment_content', FILTER_SANITIZE_STRING );
+	$comment = sanitize_text_field( filter_input( INPUT_POST, 'comment_content', FILTER_SANITIZE_STRING ) );
 	if ( ! empty( $comment ) ) {
 		$old_content = $comment;
 	}
@@ -4193,9 +4193,9 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 
 		if ( $rtmedia_backbone['backbone'] ) {
 
-			$media_title = filter_input( INPUT_POST, 'media_title', FILTER_SANITIZE_STRING );
+			$media_title = sanitize_text_field( filter_input( INPUT_POST, 'media_title', FILTER_SANITIZE_STRING ) );
 			if ( empty( $media_title ) ) {
-				$media_title = filter_input( INPUT_GET, 'media_title', FILTER_SANITIZE_STRING );
+				$media_title = sanitize_text_field( filter_input( INPUT_GET, 'media_title', FILTER_SANITIZE_STRING ) );
 			}
 			if ( empty( $media_title ) || 'false' === $media_title ) {
 				return 'hide';
