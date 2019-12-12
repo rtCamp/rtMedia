@@ -1,39 +1,56 @@
 <?php
-
 /**
- * Description of RTMediaUploadTemplate
- *
  * Template that handles the upload shortcode and it's rendering
  *
+ * @package rtMedia
  * @author saurabh
+ */
+
+/**
+ * Class to handle the upload shortcode and it's rendering
  */
 class RTMediaUploadTemplate {
 
 	/**
-	 *
+	 * RTMediaUploadTemplate constructor.
 	 */
-	function __construct() {
+	public function __construct() {}
 
-	}
-
-	static function render( $attr ) {
+	/**
+	 * Render upload template.
+	 *
+	 * @param array $attr Attributes array.
+	 */
+	public static function render( $attr ) {
 		$view = new RTMediaUploadView( $attr );
 
 		return $view->render( 'uploader' );
 	}
 
-	function register_script() {
-		wp_register_script( 'bpm-plupload', RTMEDIA_URL . 'app/assets/js/bpm-plupload.js', array(
-			'plupload',
-			'plupload-html5',
-			'plupload-flash',
-			'plupload-silverlight',
-			'plupload-html4',
-			'plupload-handlers',
-		), '1.0', true );
+	/**
+	 * Register upload scripts.
+	 */
+	public function register_script() {
+		wp_register_script(
+			'bpm-plupload',
+			RTMEDIA_URL . 'app/assets/js/bpm-plupload.js',
+			array(
+				'plupload',
+				'plupload-html5',
+				'plupload-flash',
+				'plupload-silverlight',
+				'plupload-html4',
+				'plupload-handlers',
+			),
+			'1.0',
+			true
+		);
 	}
 
-	function print_script() {
+	/**
+	 * Print script for upload media.
+	 */
+	public function print_script() {
 		if ( ! $this->add_sc_script ) {
 			return;
 		}
@@ -43,12 +60,15 @@ class RTMediaUploadTemplate {
 			'browse_button'       => 'browse-button',
 			'container'           => 'bpm-file_upload-ui',
 			'drop_element'        => 'drag-drop-area',
-			'filters'             => apply_filters( 'bp_media_plupload_files_filter', array(
+			'filters'             => apply_filters(
+				'bp_media_plupload_files_filter',
 				array(
-					'title'      => 'Media Files',
-					'extensions' => get_rtmedia_allowed_upload_type(),
-				),
-			) ),
+					array(
+						'title'      => 'Media Files',
+						'extensions' => get_rtmedia_allowed_upload_type(),
+					),
+				)
+			),
 			'max_file_size'       => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
 			'multipart'           => true,
 			'urlstream_upload'    => true,
@@ -59,15 +79,15 @@ class RTMediaUploadTemplate {
 			'multipart_params'    => apply_filters( 'bp_media_multipart_params_filter', array( 'action' => 'wp_handle_upload' ) ),
 		);
 
-		foreach ( ( array ) $params as $key => $value ) {
+		foreach ( (array) $params as $key => $value ) {
 			if ( ! is_scalar( $value ) ) {
 				continue;
 			}
 
-			$params[ $key ] = html_entity_decode( ( string ) $value, ENT_QUOTES, 'UTF-8' );
+			$params[ $key ] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
 		}
 
-		echo "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5
+		echo "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5.
 		echo "/* <![CDATA[ */\n";
 		echo 'var bpm_plupload_params = ' . wp_json_encode( $params ) . ";\n";
 		echo "/* ]]> */\n";
