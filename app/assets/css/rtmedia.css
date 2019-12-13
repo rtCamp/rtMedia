@@ -1915,6 +1915,12 @@ a.rtmedia-comment-link.rtmedia-comments-link {
   width: 100%;
 }
 
+.rtmedia-album-list .rtmedia-list-item {
+  border: 1px solid #ddd !important;
+  padding: 5px;
+  border-radius: 5px;
+}
+
 /*------------------------------------------------------------------------------
   14.0 - Media Screen
 ------------------------------------------------------------------------------*/
