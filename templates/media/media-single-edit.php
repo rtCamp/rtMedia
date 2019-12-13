@@ -1,6 +1,15 @@
+<?php
+/**
+ * Media single editing template.
+ *
+ * @package rtMedia
+ */
+
+?>
 <div class="rtmedia-container rtmedia-single-container rtmedia-media-edit">
 	<?php
-	if ( have_rtmedia() ) : rtmedia();
+	if ( have_rtmedia() ) :
+		rtmedia();
 		if ( rtmedia_edit_allowed() ) {
 			global $rtmedia_media;
 			// Added to get nonce of current media.
@@ -9,8 +18,7 @@
 			<div class="rtmedia-single-edit-title-container">
 				<h2 class="rtmedia-title"><?php esc_html_e( 'Edit Media', 'buddypress-media' ); ?></h2>
 			</div>
-			<form method="post" action="" name="rtmedia_media_single_edit" id="rtmedia_media_single_edit"
-			      class="rtm-form">
+			<form method="post" action="" name="rtmedia_media_single_edit" id="rtmedia_media_single_edit" class="rtm-form">
 				<div class="rtmedia-editor-main">
 					<ul class="rtm-tabs clearfix">
 						<li class="active">
@@ -30,11 +38,12 @@
 								<?php rtmedia_title_input(); ?>
 							</div>
 							<!--This function shows the privacy dropdown-->
-							<?php echo rtmedia_edit_media_privacy_ui(); // @codingStandardsIgnoreLine ?>
+							<?php echo wp_kses( rtmedia_edit_media_privacy_ui(), wp_kses_allowed_html( 'post' ) ); ?>
 							<div class="rtmedia-editor-description rtm-field-wrap">
-								<label><?php esc_html_e( 'Description: ', 'buddypress-media' ) ?></label>
+								<label><?php esc_html_e( 'Description: ', 'buddypress-media' ); ?></label>
 								<?php
-								rtmedia_description_input( $editor = false, true );
+								$editor = false;
+								rtmedia_description_input( $editor, true );
 
 								RTMediaMedia::media_nonce_generator( rtmedia_id() );
 								?>
@@ -46,8 +55,7 @@
 						<?php do_action( 'rtmedia_add_edit_tab_content', rtmedia_type() ); ?>
 					</div>
 					<div class="rtmedia-editor-buttons">
-						<input type="submit" class="button rtm-button rtm-button-save"
-						onclick="imageEdit.save(<?php echo esc_attr( $rtmedia_media->media_id ) . ', \'' . esc_attr( $media_id_nonce ); ?>')" value="<?php esc_attr_e( 'Save', 'buddypress-media' ); ?>"/>
+						<input type="submit" class="button rtm-button rtm-button-save" onclick="imageEdit.save(<?php echo esc_attr( $rtmedia_media->media_id ) . ', \'' . esc_attr( $media_id_nonce ); ?>')" value="<?php esc_attr_e( 'Save', 'buddypress-media' ); ?>"/>
 						<a class="button rtm-button rtm-button-back"
 						href="<?php rtmedia_permalink(); ?>"><?php esc_html_e( 'Back', 'buddypress-media' ); ?></a>
 					</div>
@@ -59,14 +67,13 @@
 			<p><?php esc_html_e( 'Sorry !! You do not have rights to edit this media', 'buddypress-media' ); ?></p>
 			<?php
 		} else :
-		?>
+			?>
 		<p class="rtmedia-no-media-found">
 			<?php
-			$message = apply_filters( 'rtmedia_no_media_found_message_filter', 'Sorry !! There\'s no media found for the request !!' );
-			echo esc_html__( $message, 'buddypress-media' );
+			echo esc_html( apply_filters( 'rtmedia_no_media_found_message_filter', __( 'Sorry !! There\'s no media found for the request !!', 'buddypress-media' ) ) );
 			?>
 		</p>
-		<?php
-	endif; // End if().
-	?>
+			<?php
+	endif; // End if.
+		?>
 </div>

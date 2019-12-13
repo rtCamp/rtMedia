@@ -1,22 +1,27 @@
 <?php
+/**
+ * Show album gallery container.
+ *
+ * @package rtMedia
+ */
 
-// Generate random number for gallery container
-// This will be useful when multiple gallery shortcodes are used in a single page
-$rand_id = rand( 0, 1000 );
+// Generate random number for gallery container.
+// This will be useful when multiple gallery shortcodes are used in a single page.
+$rand_id = wp_rand( 0, 1000 );
 
 ?>
-<div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo $rand_id;?>">
+<div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo esc_attr( $rand_id ); ?>">
 	<?php
 	do_action( 'rtmedia_before_album_gallery' );
 
-	$title = get_rtmedia_gallery_title();
+	$gallery_title = get_rtmedia_gallery_title();
 	?>
 
 	<div id="rtm-gallery-title-container" class="clearfix">
 		<h2 class="rtm-gallery-title">
 			<?php
-			if ( $title ) {
-				echo esc_html( $title );
+			if ( $gallery_title ) {
+				echo esc_html( $gallery_title );
 			} else {
 				esc_html_e( 'Album List', 'buddypress-media' );
 			}
@@ -36,13 +41,17 @@ $rand_id = rand( 0, 1000 );
 
 	<?php
 	do_action( 'rtmedia_after_media_gallery_title' );
-	if ( have_rtmedia() ) { ?>
+	if ( have_rtmedia() ) {
+		?>
 
 		<!-- addClass 'rtmedia-list-media' for work properly selectbox -->
 		<ul class="rtmedia-list-media rtmedia-list rtmedia-album-list clearfix">
-			<?php while ( have_rtmedia() ) : rtmedia(); ?>
-					<?php include( 'album-gallery-item.php' ); ?>
-				<?php endwhile; ?>
+			<?php
+			while ( have_rtmedia() ) :
+				rtmedia();
+				include 'album-gallery-item.php';
+			endwhile;
+			?>
 		</ul>
 
 		<div class="rtmedia_next_prev rtm-load-more clearfix">
@@ -63,8 +72,7 @@ $rand_id = rand( 0, 1000 );
 					$display = 'display:none;';
 				}
 				?>
-				<a id="rtMedia-galary-next" style='<?php echo esc_attr( $display ); ?>'
-				   href="<?php echo esc_url( rtmedia_pagination_next_link() ); ?>"><?php esc_html_e( 'Load More', 'buddypress-media' ); ?></a>
+				<a id="rtMedia-galary-next" style='<?php echo esc_attr( $display ); ?>' href="<?php echo esc_url( rtmedia_pagination_next_link() ); ?>"><?php esc_html_e( 'Load More', 'buddypress-media' ); ?></a>
 				<?php
 			}
 			?>
@@ -72,8 +80,7 @@ $rand_id = rand( 0, 1000 );
 	<?php } else { ?>
 		<p class="rtmedia-no-media-found">
 			<?php
-			$message = apply_filters( 'rtmedia_no_media_found_message_filter', 'Sorry !! There\'s no media found for the request !!' );
-			echo esc_html__( $message, 'buddypress-media' );
+			echo esc_html( apply_filters( 'rtmedia_no_media_found_message_filter', __( 'Sorry !! There\'s no media found for the request !!', 'buddypress-media' ) ) );
 			?>
 		</p>
 	<?php } ?>
