@@ -1,13 +1,12 @@
 <?php
 /**
- * **************************************
  * Main.php
  *
  * The main template file, that loads the header, footer and sidebar
  * apart from loading the appropriate rtMedia template
  *
  * @package rtMedia
- * *************************************** */
+ */
 
 // by default it is not an ajax request.
 global $rt_ajax_request;
