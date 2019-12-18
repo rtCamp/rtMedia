@@ -37,7 +37,7 @@ class RTMediaModel extends RTDBModel {
 	 * @param mixed $per_page
 	 * @param string $order_by
 	 *
-	 * @return array
+	 * @return array|int
 	 */
 	function get( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ) {
 		global $wpdb;
