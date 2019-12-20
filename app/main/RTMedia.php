@@ -1534,6 +1534,16 @@ class RTMedia {
 				wp_enqueue_style( 'bp-nouveau-stylesheet-buddypress', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/buddypress.min.css', '', RTMEDIA_VERSION );
 			}
 		}
+
+		global $rtmedia;
+		$options = $rtmedia->options;
+
+		// Previously done with rtmedia_custom_css() method on wp_head hook.
+		if ( ! empty( $options['styles_custom'] ) ) {
+			wp_register_style( 'rtmedia-custom-css', false );
+			wp_enqueue_style( 'rtmedia-custom-css' );
+			wp_add_inline_style( 'rtmedia-custom-css', $options['styles_custom'] );
+		}
 	}
 
 	/**
@@ -1699,7 +1709,6 @@ class RTMedia {
 	 * @return array
 	 */
 	public static function expanded_allowed_tags() {
-
 		$new_allowed = wp_kses_allowed_html( 'post' );
 
 		// form input.
@@ -1712,11 +1721,12 @@ class RTMedia {
 
 		// form fields - input.
 		$new_allowed['input'] = array(
-			'class' => array(),
-			'id'    => array(),
-			'name'  => array(),
-			'value' => array(),
-			'type'  => array(),
+			'class'   => array(),
+			'id'      => array(),
+			'name'    => array(),
+			'value'   => array(),
+			'type'    => array(),
+			'onclick' => array(),
 		);
 
 		// select.
@@ -1731,10 +1741,16 @@ class RTMedia {
 		// select options.
 		$new_allowed['option'] = array(
 			'selected' => array(),
+			'value'  => array(),
+		);
+
+		// select optgroup.
+		$new_allowed['optgroup'] = array(
+			'label' => array(),
+			'value' => array(),
 		);
 
 		return $new_allowed;
-
 	}
 }
 
