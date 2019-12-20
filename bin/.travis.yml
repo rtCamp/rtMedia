@@ -2,7 +2,7 @@ dist: xenial
 language: php
 sudo: required
 php:
-  - 7.1
+  - 7.2
 branches:
   only:
     - develop
@@ -45,6 +45,7 @@ before_script:
   - cd /var/www/automation.rtmedia.me/htdocs/
   - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.5.0.0.zip
   - wp plugin activate --all
+  - wp theme activate twentynineteen
   - cd $PLUGIN_DIR
   - cd tests/codeception/tests/_data
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data

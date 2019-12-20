@@ -147,6 +147,15 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.5.10 [December 23, 2019] ###
+
+* Enhancement
+	* Add better styling for albums
+
+* FIXED
+	* Warnings on Support page of rtMedia Settings
+	* Issue with rtMedia Update filter on BuddyPress activity wall
+
 ### 4.5.9 [October 29, 2019] ###
 
 * Enhancement
