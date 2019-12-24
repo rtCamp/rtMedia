@@ -493,7 +493,7 @@ class RTMediaMigration {
 			<div class="error">
 				<p>
 					<?php
-					/* translators: %1$s gets replaced by '<strong>', and %2$s by '</strong>' */
+					/* translators: 1: %s gets replaced by '<strong>', 2: %s by '</strong>' */
 					printf( esc_html__( 'Please Backup your %1$sDATABASE%2$s and %1$sUPLOAD%2$s folder before Migration.', 'buddypress-media' ), '<strong>', '</strong>' );
 					?>
 				</p>
@@ -1187,7 +1187,7 @@ class RTMediaMigration {
 			$bp_prefix = $wpdb->prefix;
 		}
 
-		$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set action=replace(action,%s,%s) ,content=replace(content,%s,%s), primary_link=replace(primary_link,%s,%s) where id > 0;", $old, $new, $old, $new, $old, $new ); // @codingStandardsIgnoreLine
+		$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set action=replace(action,%s,%s) ,content=replace(content,%s,%s), primary_link=replace(primary_link,%s,%s) where id > 0;", $old, $new, $old, $new, $old, $new ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 

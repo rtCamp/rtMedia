@@ -300,14 +300,15 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 	public function get_finished_comments() {
 		global $wpdb;
 		$bp_album_table = $wpdb->base_prefix . 'bp_album';
-		$activity_table = $wpdb->base_prefix . 'bp_activity';
+
 		if ( $this->table_exists( $bp_album_table ) ) {
-			// @codingStandardsIgnoreStart
-			return $wpdb->get_var( "SELECT COUNT( activity.id ) AS count
-                                        FROM $activity_table AS activity
-                                        INNER JOIN $bp_album_table AS album ON ( activity.item_id = album.import_status )
-                                        WHERE activity.component =  'activity'
-                                        AND activity.type =  'activity_comment'" );
+			return $wpdb->get_var(
+				"SELECT COUNT( activity.id ) AS count
+                        FROM {$wpdb->base_prefix}bp_activity AS activity
+                        INNER JOIN {$wpdb->base_prefix}bp_album AS album ON ( activity.item_id = album.import_status )
+                        WHERE activity.component =  'activity'
+                        AND activity.type =  'activity_comment'"
+			);
 		}
 
 		return 0;
@@ -323,15 +324,16 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( self::table_exists( $table ) ) {
 
-			return $wpdb->get_results( "SELECT COUNT( DISTINCT owner_id ) AS users
-                                            FROM $table
-                                            WHERE owner_id NOT
-                                            IN (
-                                                SELECT a.owner_id
-                                                FROM $table a
-                                                WHERE a.import_status =0
-                                            )
-                                        " );
+			return $wpdb->get_results(
+				"SELECT COUNT( DISTINCT owner_id ) AS users
+                    FROM {$wpdb->base_prefix}bp_album
+                    WHERE owner_id NOT
+                    IN (
+                        SELECT a.owner_id
+                        FROM {$wpdb->base_prefix}bp_album a
+                        WHERE a.import_status =0
+                    )"
+			);
 
 		}
 
@@ -347,7 +349,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( self::table_exists( $table ) ) {
-			return $wpdb->get_results( "SELECT COUNT(id) as media FROM $table WHERE import_status!=0" );
+			return $wpdb->get_results( "SELECT COUNT(id) as media FROM {$wpdb->base_prefix}bp_album WHERE import_status!=0" );
 		}
 
 		return 0;
@@ -362,7 +364,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( self::table_exists( $table ) ) {
-			return $wpdb->get_results( "SELECT id,title,pic_org_url FROM $table WHERE import_status=-1" );
+			return $wpdb->get_results( "SELECT id,title,pic_org_url FROM {$wpdb->base_prefix}bp_album WHERE import_status=-1" );
 		}
 
 		return 0;
@@ -377,10 +379,14 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 	 */
 	public static function batch_import( $count = 5 ) {
 		global $wpdb;
-		$table         = $wpdb->base_prefix . 'bp_album';
-		$bp_album_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$table} WHERE import_status = 0 ORDER BY owner_id LIMIT %d", $count ) );
 
-		return $bp_album_data;
+		$table = $wpdb->base_prefix . 'bp_album';
+		if ( self::table_exists( $table ) ) {
+			$bp_album_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->base_prefix}bp_album WHERE import_status = 0 ORDER BY owner_id LIMIT %d", $count ) );
+			return $bp_album_data;
+		}
+
+		return array();
 	}
 
 	/**
@@ -419,9 +425,9 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 			if ( $imported_media_id ) {
 				$comments += (int) self::update_recorded_time_and_comments( $imported_media_id, $bp_album_item->id, "{$wpdb->base_prefix}bp_album" );
 
-				$bp_album_media_id = $wpdb->get_var( "SELECT activity.id from $activity_table as activity INNER JOIN $table as album ON ( activity.item_id = album.id ) WHERE activity.item_id = $bp_album_item->id AND activity.component = 'album' AND activity.type='bp_album_picture'" );
+				$bp_album_media_id = $wpdb->get_var( "SELECT activity.id from $activity_table as activity INNER JOIN $table as album ON ( activity.item_id = album.id ) WHERE activity.item_id = $bp_album_item->id AND activity.component = 'album' AND activity.type='bp_album_picture'" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				$wpdb->update( $table, array( 'old_activity_id' => $bp_album_media_id ), array( 'id' => $bp_album_item->id ), array( '%d' ), array( '%d' ) );
-				$bp_new_activity_id = $wpdb->get_var( "SELECT id from $activity_table WHERE item_id = $imported_media_id AND component = 'activity' AND type='activity_update' AND secondary_item_id=0" );
+				$bp_new_activity_id = $wpdb->get_var( "SELECT id from $activity_table WHERE item_id = $imported_media_id AND component = 'activity' AND type='activity_update' AND secondary_item_id=0" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				$wpdb->update( $table, array( 'new_activity_id' => $bp_new_activity_id ), array( 'id' => $bp_album_item->id ), array( '%d' ), array( '%d' ) );
 
 				if ( $wpdb->update(
@@ -468,9 +474,9 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
 		echo wp_json_encode(
 			array(
-			'favorites' => $wpdb->get_var( "SELECT COUNT(id) from $table WHERE favorites != 0" ),
-				'users'  => $users['total_users'],
-				'offset' => (int) get_site_option( 'bp_media_bp_album_favorite_import_status', 0 ),
+				'favorites' => $wpdb->get_var( "SELECT COUNT(id) from $table WHERE favorites != 0" ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				'users'     => $users['total_users'],
+				'offset'    => (int) get_site_option( 'bp_media_bp_album_favorite_import_status', 0 ),
 			)
 		);
 
@@ -511,7 +517,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
 					$new_favorite_activities = $favorite_activities;
 					foreach ( $favorite_activities as $key => $favorite ) {
-						if ( $new_act = $wpdb->get_var( $wpdb->prepare( "SELECT new_activity_id from $table WHERE old_activity_id = %d limit 1", $favorite ) ) ) {
+						$new_act = $wpdb->get_var( $wpdb->prepare( "SELECT new_activity_id from $table WHERE old_activity_id = %d limit 1", $favorite ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+						if ( ! empty( $new_act ) ) {
 							$new_favorite_activities[ $key ] = $new_act;
 						}
 					}
@@ -566,7 +573,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 			$comments    = 0;
 
 			if ( $activity_id ) {
-				$date_uploaded   = $wpdb->get_var( $wpdb->prepare( "SELECT date_uploaded from $table WHERE id = %d", $bp_album_id ) );
+				$date_uploaded   = $wpdb->get_var( $wpdb->prepare( "SELECT date_uploaded from $table WHERE id = %d", $bp_album_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				$old_activity_id = $wpdb->get_var( $wpdb->prepare( "SELECT id from {$wpdb->base_prefix}bp_activity WHERE component = 'album' AND type = 'bp_album_picture' AND item_id = %d", $bp_album_id ) );
 				if ( $old_activity_id ) {
 					$comments = $wpdb->get_results( $wpdb->prepare( "SELECT id,secondary_item_id from {$wpdb->base_prefix}bp_activity WHERE component = 'activity' AND type = 'activity_comment' AND item_id = %d", $old_activity_id ) );

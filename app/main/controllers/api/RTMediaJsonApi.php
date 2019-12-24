@@ -182,7 +182,7 @@ class RTMediaJsonApi {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_api_disabled, $this->msg_api_disabled ) );
 		}
 
-		$method = filter_input( INPUT_POST, 'method', FILTER_SANITIZE_STRING );
+		$method = sanitize_text_field( filter_input( INPUT_POST, 'method', FILTER_SANITIZE_STRING ) );
 		if ( empty( $method ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_method_missing, $this->msg_method_missing ) );
 		}
@@ -191,7 +191,7 @@ class RTMediaJsonApi {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_bp_missing, $this->msg_bp_missing ) );
 		}
 		$this->rtmediajsonapifunction = new RTMediaJsonApiFunctions();
-		$token                        = filter_input( INPUT_POST, 'token', FILTER_SANITIZE_STRING );
+		$token                        = sanitize_text_field( filter_input( INPUT_POST, 'token', FILTER_SANITIZE_STRING ) );
 
 		if ( ! empty( $token ) ) {
 			$this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
@@ -275,7 +275,7 @@ class RTMediaJsonApi {
 		}
 
 		$rtmapilogin   = new RTMediaApiLogin();
-		$token         = filter_input( INPUT_POST, 'token', FILTER_SANITIZE_STRING );
+		$token         = sanitize_text_field( filter_input( INPUT_POST, 'token', FILTER_SANITIZE_STRING ) );
 		$login_details = array( 'last_access' => current_time( 'mysql' ) );
 
 		if ( ! empty( $token ) ) {
@@ -314,8 +314,8 @@ class RTMediaJsonApi {
 
 		$ec_login_success  = 200004;
 		$msg_login_success = esc_html__( 'login success', 'buddypress-media' );
-		$username          = filter_input( INPUT_POST, 'username', FILTER_SANITIZE_STRING );
-		$password          = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING );
+		$username          = sanitize_text_field( filter_input( INPUT_POST, 'username', FILTER_SANITIZE_STRING ) );
+		$password          = sanitize_text_field( filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING ) );
 
 		if ( empty( $username ) || empty( $password ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_user_pass_missing, $msg_user_pass_missing ) );
@@ -381,23 +381,23 @@ class RTMediaJsonApi {
 
 		$registration_fields = array( 'username', 'email', 'password', 'password_confirm' );
 		// fields empty field_1, field_4.
-		$field_1 = filter_input( INPUT_POST, 'field_1', FILTER_SANITIZE_STRING );
+		$field_1 = sanitize_text_field( filter_input( INPUT_POST, 'field_1', FILTER_SANITIZE_STRING ) );
 
 		if ( empty( $field_1 ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_register_fields_missing, $msg_register_fields_missing ) );
 		}
 
 		foreach ( $registration_fields as $field_name ) {
-			$field_signup = filter_input( INPUT_POST, 'signup_' . $field_name, FILTER_SANITIZE_STRING );
+			$field_signup = sanitize_text_field( filter_input( INPUT_POST, 'signup_' . $field_name, FILTER_SANITIZE_STRING ) );
 			if ( empty( $field_signup ) ) {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_register_fields_missing, $msg_register_fields_missing ) );
 			}
 		}
 
 		$signup_email            = filter_input( INPUT_POST, 'signup_email', FILTER_VALIDATE_EMAIL );
-		$signup_username         = filter_input( INPUT_POST, 'signup_username', FILTER_SANITIZE_STRING );
-		$signup_password         = filter_input( INPUT_POST, 'signup_password', FILTER_SANITIZE_STRING );
-		$signup_password_confirm = filter_input( INPUT_POST, 'signup_password_confirm', FILTER_SANITIZE_STRING );
+		$signup_username         = sanitize_text_field( filter_input( INPUT_POST, 'signup_username', FILTER_SANITIZE_STRING ) );
+		$signup_password         = sanitize_text_field( filter_input( INPUT_POST, 'signup_password', FILTER_SANITIZE_STRING ) );
+		$signup_password_confirm = sanitize_text_field( filter_input( INPUT_POST, 'signup_password_confirm', FILTER_SANITIZE_STRING ) );
 
 		// incorrect email.
 		if ( ! is_email( $signup_email ) ) {
@@ -445,7 +445,7 @@ class RTMediaJsonApi {
 
 		$ec_email_sent  = 500003;
 		$msg_email_sent = esc_html__( 'reset link sent', 'buddypress-media' );
-		$user_login     = filter_input( INPUT_POST, 'user_login', FILTER_SANITIZE_STRING );
+		$user_login     = sanitize_text_field( filter_input( INPUT_POST, 'user_login', FILTER_SANITIZE_STRING ) );
 
 		if ( empty( $user_login ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_email_missing, $msg_email_missing ) );
@@ -543,7 +543,7 @@ class RTMediaJsonApi {
 		$ec_comment_posted  = 800002;
 		$msg_comment_posted = esc_html__( 'comment posted', 'buddypress-media' );
 
-		$content = filter_input( INPUT_POST, 'content', FILTER_SANITIZE_STRING );
+		$content = sanitize_text_field( filter_input( INPUT_POST, 'content', FILTER_SANITIZE_STRING ) );
 
 		if ( empty( $content ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_comment_content_missing, $msg_comment_content_missing ) );
@@ -1032,8 +1032,8 @@ class RTMediaJsonApi {
 			$field_str          = 'field_';
 			$field_str         .= $i;
 			$field_str_privacy  = $field_str . '_privacy';
-			$$field_str         = filter_input( INPUT_POST, $field_str, FILTER_SANITIZE_STRING );
-			$$field_str_privacy = filter_input( INPUT_POST, $field_str_privacy, FILTER_SANITIZE_STRING );
+			$$field_str         = sanitize_text_field( filter_input( INPUT_POST, $field_str, FILTER_SANITIZE_STRING ) );
+			$$field_str_privacy = sanitize_text_field( filter_input( INPUT_POST, $field_str_privacy, FILTER_SANITIZE_STRING ) );
 			! empty( $$field_str ) ? $$field_str : '';
 			! empty( $$field_str_privacy ) ? $$field_str_privacy : 'public';
 			if ( 1 === $i || 4 === $i ) {
@@ -1100,10 +1100,10 @@ class RTMediaJsonApi {
 		$ec_look_updated  = 140004;
 		$msg_look_updated = esc_html__( 'media updated', 'buddypress-media' );
 
-		$rtmedia_file = filter_input( INPUT_POST, 'rtmedia_file', FILTER_SANITIZE_STRING );
-		$image_type   = filter_input( INPUT_POST, 'image_type', FILTER_SANITIZE_STRING );
-		$title        = filter_input( INPUT_POST, 'title', FILTER_SANITIZE_STRING );
-		$description  = filter_input( INPUT_POST, 'description', FILTER_SANITIZE_STRING );
+		$rtmedia_file = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_file', FILTER_SANITIZE_STRING ) );
+		$image_type   = sanitize_text_field( filter_input( INPUT_POST, 'image_type', FILTER_SANITIZE_STRING ) );
+		$title        = sanitize_text_field( filter_input( INPUT_POST, 'title', FILTER_SANITIZE_STRING ) );
+		$description  = sanitize_text_field( filter_input( INPUT_POST, 'description', FILTER_SANITIZE_STRING ) );
 
 		$updated       = false;
 		$uploaded_look = false;
@@ -1167,9 +1167,9 @@ class RTMediaJsonApi {
 
 			$album_id   = filter_input( INPUT_POST, 'album_id', FILTER_SANITIZE_NUMBER_INT );
 			$context_id = filter_input( INPUT_POST, 'context_id', FILTER_SANITIZE_NUMBER_INT );
-			$context    = filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING );
-			$privacy    = filter_input( INPUT_POST, 'privacy', FILTER_SANITIZE_STRING );
-			$tags       = filter_input( INPUT_POST, 'tags', FILTER_SANITIZE_STRING );
+			$context    = sanitize_text_field( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING ) );
+			$privacy    = sanitize_text_field( filter_input( INPUT_POST, 'privacy', FILTER_SANITIZE_STRING ) );
+			$tags       = sanitize_text_field( filter_input( INPUT_POST, 'tags', FILTER_SANITIZE_STRING ) );
 
 			$uploaded['rtmedia_upload_nonce']       = wp_create_nonce( 'rtmedia_upload_nonce' );
 			$uploaded['rtmedia_simple_file_upload'] = 1;
@@ -1291,7 +1291,7 @@ class RTMediaJsonApi {
 		);
 
 		// global.
-		$global = filter_input( INPUT_POST, 'global', FILTER_SANITIZE_STRING );
+		$global = sanitize_text_field( filter_input( INPUT_POST, 'global', FILTER_SANITIZE_STRING ) );
 		if ( isset( $global ) ) {
 			if ( 'false' === $global ) {
 				$args['context'] = array(
@@ -1302,7 +1302,7 @@ class RTMediaJsonApi {
 		}
 
 		// context.
-		$context = filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING );
+		$context = sanitize_text_field( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING ) );
 		if ( isset( $context ) ) {
 			$args['context'] = $context;
 		}
@@ -1435,7 +1435,7 @@ class RTMediaJsonApi {
 	 * @return array
 	 */
 	public function api_new_media_upload_dir( $args ) {
-		$token = filter_input( INPUT_POST, 'token', FILTER_SANITIZE_STRING );
+		$token = sanitize_text_field( filter_input( INPUT_POST, 'token', FILTER_SANITIZE_STRING ) );
 
 		if ( ! empty( $args ) || ! is_array( $args ) || empty( $token ) ) {
 			foreach ( $args as $key => $arg ) {

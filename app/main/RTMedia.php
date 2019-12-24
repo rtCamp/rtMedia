@@ -1120,13 +1120,15 @@ class RTMedia {
 		// todo: Nonce required.
 		$album        = new RTMediaAlbum();
 		$global_album = $album->get_default();
-		// phpcs:disable
-		//** Hack for plupload default name.
-		if ( isset( $_POST['action'] ) && isset( $_POST['mode'] ) && 'file_upload' === sanitize_text_field( $_POST['mode'] ) ) {
-			unset( $_POST['name'] );
+
+		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
+		$mode   = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_STRING ) );
+
+		// Hack for plupload default name.
+		if ( ! empty( $action ) && ! empty( $mode ) && 'file_upload' === $mode ) {
+			unset( $_POST['name'] ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
 		}
-		// phpcs:enable
-		// **
+
 		global $rtmedia_error;
 		if ( isset( $rtmedia_error ) && true === $rtmedia_error ) {
 			return false;
@@ -1574,12 +1576,18 @@ class RTMedia {
 	 * @return array|mixed
 	 */
 	public function filter_image_sizes_details( $sizes ) {
-		if ( isset( $_REQUEST['post_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+
+		$post_id = filter_input( INPUT_POST, 'post_id', FILTER_VALIDATE_INT );
+		$id      = filter_input( INPUT_POST, 'id', FILTER_VALIDATE_INT );
+
+		if ( isset( $post_id ) ) {
 			$sizes = $this->unset_bp_media_image_sizes_details( $sizes );
-		} elseif ( isset( $_REQUEST['id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		} elseif ( isset( $id ) ) {
+
 			// For Regenerate Thumbnails Plugin.
 			$model  = new RTMediaModel();
-			$result = $model->get( array( 'media_id' => intval( wp_unslash( $_REQUEST['id'] ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+			$result = $model->get( array( 'media_id' => intval( wp_unslash( $id ) ) ) );
+
 			if ( ! empty( $result ) ) {
 				$bp_media_sizes = $this->image_sizes();
 				$sizes          = array(
@@ -1622,10 +1630,12 @@ class RTMedia {
 	 * @return array|mixed
 	 */
 	public function filter_image_sizes( $sizes ) {
-		// For Regenerate Thumbnails Plugin.
-		if ( isset( $_REQUEST['postid'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		$post_id = filter_input( INPUT_POST, 'postid', FILTER_VALIDATE_INT );
 
-			$parent_id = get_post_field( 'post_parent', intval( wp_unslash( $_REQUEST['postid'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		// For Regenerate Thumbnails Plugin.
+		if ( ! empty( $post_id ) ) {
+
+			$parent_id = get_post_field( 'post_parent', $post_id );
 			if ( ! empty( $parent_id ) ) {
 				$post_type = get_post_field( 'post_type', $parent_id );
 

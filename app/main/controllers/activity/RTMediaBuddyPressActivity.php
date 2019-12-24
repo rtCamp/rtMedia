@@ -365,12 +365,13 @@ class RTMediaBuddyPressActivity {
 	 * Save Non-threaded comments.
 	 */
 	public function non_threaded_comments() {
-		$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
+		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
 		if ( 'new_activity_comment' === $action ) {
-			$activity_id = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_NUMBER_INT );
-			$act         = new BP_Activity_Activity( $activity_id );
+			$activity_id   = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_NUMBER_INT );
+			$disable_media = filter_input( INPUT_POST, 'rtmedia_disable_media_in_commented_media', FILTER_SANITIZE_STRING );
+			$act           = new BP_Activity_Activity( $activity_id );
 
-			if ( 'rtmedia_update' === $act->type && isset( $_REQUEST['rtmedia_disable_media_in_commented_media'] ) && ! empty( $_REQUEST['rtmedia_disable_media_in_commented_media'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+			if ( 'rtmedia_update' === $act->type && ! empty( $disable_media ) ) {
 				$_POST['comment_id'] = $activity_id;
 			}
 		}
@@ -920,41 +921,41 @@ class RTMediaBuddyPressActivity {
 					$comment_media    = false;
 					$comment_media_id = false;
 
-					// phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification
+					$post_action          = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
+					$post_comment_content = sanitize_text_field( filter_input( INPUT_POST, 'comment_content', FILTER_SANITIZE_STRING ) );
+
 					// if activity is add from comment media.
-					if ( isset( $_REQUEST['comment_content'] ) || isset( $_REQUEST['action'] ) ) {
-						if ( isset( $_REQUEST['action'] ) && 'new_activity_comment' === $_REQUEST['action'] ) {
+					if ( ! empty( $post_comment_content ) || ! empty( $post_action ) ) {
+						if ( ! empty( $post_action ) && 'new_activity_comment' === $post_action ) {
 
 							remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
-							/* comment content */
-							$comment_content = $_REQUEST['content'];
-						} elseif ( isset( $_REQUEST['comment_content'] ) ) {
-							/* comment content */
-							$comment_content = $_REQUEST['comment_content'];
+							// comment content.
+							$comment_content = sanitize_text_field( filter_input( INPUT_POST, 'content', FILTER_SANITIZE_STRING ) );;
+						} elseif ( ! empty( $post_comment_content ) ) {
+							// comment content.
+							$comment_content = $post_comment_content;
 						}
 
-						/* is comment is empty then add content content space */
+						// is comment is empty then add content content space.
 						if ( strstr( $comment_content, 'nbsp' ) ) {
 							$comment_content = '&nbsp;';
 						}
 
-						/* if comment has comment media then create new html for it */
-						if ( isset( $_REQUEST['rtMedia_attached_files'] ) ) {
-							$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+						// if comment has comment media then create new html for it.
+						$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
-							/* check media should be in array format and is not empty to */
-							if ( class_exists( 'RTMediaActivity' ) && is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files ) ) {
-								$comment_media    = true;
-								$comment_media_id = $rtmedia_attached_files[0];
-								$obj_comment      = new RTMediaActivity( $rtmedia_attached_files[0], 0, $comment_content );
-								$comment_content  = $obj_comment->create_activity_html();
-							}
+						// check media should be in array format and is not empty to.
+						if ( ! empty( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) && is_array( $rtmedia_attached_files ) ) {
+							$comment_media    = true;
+							$comment_media_id = $rtmedia_attached_files[0];
+							$obj_comment      = new RTMediaActivity( $rtmedia_attached_files[0], 0, $comment_content );
+							$comment_content  = $obj_comment->create_activity_html();
 						}
 
 						// add the new content to the activity.
 						$activity_content = $comment_content;
 					}
-					// phpcs:enable WordPress.Security.NonceVerification.NoNonceVerification
+
 					$wp_comment_id = $params['comment_id'];
 
 					// prepare activity arguments.

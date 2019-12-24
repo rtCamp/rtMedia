@@ -266,10 +266,12 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 
 			if ( $this->action_query->id === $this->featured ) {
 				$this->set( 0 );
-				$return['next'] = $this->label;
+				$return['next']   = $this->label;
+				$return['action'] = false;
 			} else {
 				$this->set( $this->action_query->id );
-				$return['next'] = $this->undo_label;
+				$return['next']   = $this->undo_label;
+				$return['action'] = true;
 			}
 
 			$return['status'] = true;
@@ -282,7 +284,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 			$return['error']  = esc_html__( 'Media type is not allowed', 'buddypress-media' );
 		}
 
-		$is_json = filter_input( INPUT_POST, 'json', FILTER_SANITIZE_STRING );
+		$is_json = sanitize_text_field( filter_input( INPUT_POST, 'json', FILTER_SANITIZE_STRING ) );
 
 		if ( isset( $is_json ) && 'true' === $is_json ) {
 			wp_send_json( $return );

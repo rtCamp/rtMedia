@@ -133,7 +133,7 @@ class RTMediaJsonApiFunctions {
 	 */
 	public function rtmedia_api_verfiy_token() {
 		$rtmjsonapi = new RTMediaJsonApi();
-		$token      = filter_input( INPUT_POST, 'token', FILTER_SANITIZE_STRING );
+		$token      = sanitize_text_field( filter_input( INPUT_POST, 'token', FILTER_SANITIZE_STRING ) );
 
 		if ( empty( $token ) ) {
 			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_token_missing, $rtmjsonapi->msg_token_missing ) );

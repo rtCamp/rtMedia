@@ -85,18 +85,12 @@ class RTMediaMedia {
 	 */
 	public function verify_nonce( $mode ) {
 
-		$nonce = '';
-		$mode  = '';
+		$nonce = sanitize_text_field( filter_input( INPUT_POST, "rtmedia_{$mode}_media_nonce", FILTER_SANITIZE_STRING ) );
+		$mode  = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_STRING ) );
 
-		// phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification
-		if ( isset( $_REQUEST[ "rtmedia_{$mode}_media_nonce" ] ) ) {
-			$nonce = sanitize_text_field( wp_unslash( $_REQUEST[ "rtmedia_{$mode}_media_nonce" ] ) );
+		if ( empty( $mode ) ) {
+			$mode = '';
 		}
-
-		if ( isset( $_REQUEST['mode'] ) ) {
-			$mode = sanitize_text_field( wp_unslash( $_REQUEST['mode'] ) );
-		}
-		// phpcs:enable WordPress.Security.NonceVerification.NoNonceVerification
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $mode ) ) {
 			return true;
@@ -371,7 +365,7 @@ class RTMediaMedia {
 				}
 			}
 
-			$post_comment = filter_input( INPUT_POST, 'comment_id', FILTER_SANITIZE_STRING );
+			$post_comment = sanitize_text_field( filter_input( INPUT_POST, 'comment_id', FILTER_SANITIZE_STRING ) );
 
 			// delete comment if media is in the comment.
 			if ( class_exists( 'RTMediaTemplate' ) && isset( $media[0]->id ) && empty( $post_comment ) ) {

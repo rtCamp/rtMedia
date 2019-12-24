@@ -150,10 +150,10 @@ add_filter( 'rtm_main_template_buddypress_enable', 'rtm_is_buddypress_enable', 1
  * @return bool
  */
 function rtmedia_media_gallery_show_title_template_request( $flag ) {
-	$media_title = filter_input( INPUT_POST, 'media_title', FILTER_SANITIZE_STRING );
+	$media_title = sanitize_text_field( filter_input( INPUT_POST, 'media_title', FILTER_SANITIZE_STRING ) );
 
 	if ( empty( $media_title ) ) {
-		$media_title = filter_input( INPUT_GET, 'media_title', FILTER_SANITIZE_STRING );
+		$media_title = sanitize_text_field( filter_input( INPUT_GET, 'media_title', FILTER_SANITIZE_STRING ) );
 	}
 
 	if ( ! empty( $media_title ) && 'false' === $media_title ) {
@@ -174,10 +174,10 @@ add_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_media_gallery_sho
  */
 function rtmedia_media_gallery_lightbox_template_request( $class ) {
 
-	$lightbox = filter_input( INPUT_POST, 'lightbox', FILTER_SANITIZE_STRING );
+	$lightbox = sanitize_text_field( filter_input( INPUT_POST, 'lightbox', FILTER_SANITIZE_STRING ) );
 
 	if ( empty( $lightbox ) ) {
-		$lightbox = filter_input( INPUT_GET, 'lightbox', FILTER_SANITIZE_STRING );
+		$lightbox = sanitize_text_field( filter_input( INPUT_GET, 'lightbox', FILTER_SANITIZE_STRING ) );
 	}
 
 	if ( ! empty( $lightbox ) && 'false' === $lightbox ) {
@@ -581,7 +581,7 @@ function rtmedia_edit_media_on_database( $data, $post_ID ) {
 	$action  = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
 	$context = sanitize_text_field( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING ) );
 
-	// @todo need to check why 'context' key is not set in $_REQUEST when user clicks on scale button on edit image.
+	// @todo need to check why 'context' key is not set in POST when user clicks on scale button on edit image.
 	if ( ! empty( $postid ) && 'image-editor' === $action && ! empty( $context ) && 'edit-attachment' === $context ) {
 
 		$media           = new RTMediaModel();

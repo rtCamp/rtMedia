@@ -31,10 +31,7 @@ class RTMediaGalleryShortcode {
 	 * Get template for json response.
 	 */
 	public function ajax_rtmedia_get_template() {
-		$template = '';
-		if ( isset( $_REQUEST['template'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
-			$template = sanitize_text_field( wp_unslash( $_REQUEST['template'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
-		}
+		$template = sanitize_text_field( filter_input( INPUT_GET, 'template', FILTER_SANITIZE_STRING ) );
 
 		if ( ! empty( $template ) ) {
 			$template_url = RTMediaTemplate::locate_template( $template, 'media/', false );
