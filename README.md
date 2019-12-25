@@ -147,7 +147,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
-### 4.5.10 [December 23, 2019] ###
+### 4.5.10 [December 26, 2019] ###
 
 * Enhancement
 	* Add better styling for albums
