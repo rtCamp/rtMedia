@@ -138,12 +138,13 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Enhancement
 
- * Add better styling for albums  
+ * Add better styling for albums
 
 * FIXED
 
- * Warnings on Support page of rtMedia Settings  
- * Issue with rtMedia Update filter on BuddyPress activity wall  
+ * Warnings on Support page of rtMedia Settings
+ * Issue with rtMedia Update filter on BuddyPress activity wall
+ * Redirection popup on Media upload in Activity stream
 
 = 4.5.9 [October 29, 2019] =
 
@@ -153,8 +154,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * FIXED
 
- * Post Update button issue with BuddyPress Nouveau template 
- * Issue when user uploads the media with link in comment on buddypress activity 
+ * Post Update button issue with BuddyPress Nouveau template
+ * Issue when user uploads the media with link in comment on buddypress activity
 
 = 4.5.8 [August 6, 2019] =
 
@@ -182,8 +183,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Issue of entering text in text area when Direct Upload and Upload terms enabled together
  * UI of pagination button height and text field
  * Export/Import button issue in Firefox browser
- * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1 
- * Empty space issue for generated activity when media is uploaded without adding text 
+ * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1
+ * Empty space issue for generated activity when media is uploaded without adding text
  * Other Errors, Warnings and notices
  * Group Activity media are not shown in Group Media tab with BuddyPress Nouveau Template
  * User’s name autosuggestion
@@ -1637,7 +1638,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.5.10 =
-rtMedia 4.5.10, with improved styling for albums, fixes for rtMedia Update filter on BuddyPress activity wall and PHP Warning on the support page.
+rtMedia 4.5.10, with improved styling for albums and improved UX on BuddyPress Activity Wall.
 
 == Sponsors ==
 
