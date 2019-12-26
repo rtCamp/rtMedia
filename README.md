@@ -155,6 +155,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * FIXED
 	* Warnings on Support page of rtMedia Settings
 	* Issue with rtMedia Update filter on BuddyPress activity wall
+	* Redirection popup on Media upload in Activity stream
 
 ### 4.5.9 [October 29, 2019] ###
 
@@ -1643,8 +1644,8 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.3 ####
-Now upload media in comment & fixed rtMedia shortcode pagination along with several other bugs. Please update/re-save the permalinks after the plugin update.
+#### 4.5.10 ####
+rtMedia 4.5.10, with improved styling for albums and improved UX on BuddyPress Activity Wall.
 
 ## Sponsors ##
 
