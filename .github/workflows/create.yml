@@ -11,7 +11,7 @@ jobs:
     - name: WordPress Plugin Deploy
       uses: rtCamp/action-wordpress-org-plugin-deploy@master
       env:
-        ASSETS_DIR: assets
+        ASSETS_DIR: wpassets
         EXCLUDE_LIST: .bowerrc .gitattributes .gitignore .jshintrc .travis.yml CONTRIBUTING.md
           Gruntfile.js README.md bin deploy.sh package-lock.json package.json phpcs.xml phpunit.xml
           tests

@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 5.3.2
-Stable tag: 4.5.10
+Stable tag: 4.5.11
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -134,7 +134,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.5.10 [December 26, 2019] =
+= 4.5.11 [December 26, 2019] =
 
 * Enhancement
 
@@ -142,9 +142,14 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * FIXED
 
+ * Redirection popup on Media upload in Activity stream
+
+= 4.5.10 [December 26, 2019] =
+
+* FIXED
+
  * Warnings on Support page of rtMedia Settings
  * Issue with rtMedia Update filter on BuddyPress activity wall
- * Redirection popup on Media upload in Activity stream
 
 = 4.5.9 [October 29, 2019] =
 
@@ -1637,8 +1642,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.10 =
-rtMedia 4.5.10, with improved styling for albums and improved UX on BuddyPress Activity Wall.
+= 4.5.11 =
+rtMedia 4.5.11, with improved styling for albums and improved UX on BuddyPress Activity Wall.
 
 == Sponsors ==
 
