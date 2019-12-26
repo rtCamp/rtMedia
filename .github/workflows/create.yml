@@ -13,7 +13,7 @@ jobs:
       env:
         ASSETS_DIR: assets
         EXCLUDE_LIST: .bowerrc .gitattributes .gitignore .jshintrc .travis.yml CONTRIBUTING.md
-          Gruntfile.js README.md bin deploy.sh package-lock.json package.json phpunit.xml
+          Gruntfile.js README.md bin deploy.sh package-lock.json package.json phpcs.xml phpunit.xml
           tests
         SLUG: buddypress-media
         WORDPRESS_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
