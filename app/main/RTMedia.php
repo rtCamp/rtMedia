@@ -1760,6 +1760,40 @@ class RTMedia {
 			'value' => array(),
 		);
 
+		// audio.
+		$new_allowed['audio'] = array_merge(
+			$new_allowed['audio'],
+			array(
+				'width'  => array(),
+				'height' => array(),
+				'type'   => array(),
+			)
+		);
+
+		// video.
+		$new_allowed['video'] = array_merge(
+			$new_allowed['video'],
+			array(
+				'type' => array(),
+			)
+		);
+
+		// h2.
+		$new_allowed['h2'] = array_merge(
+			$new_allowed['h2'],
+			array(
+				'name' => array(),
+			)
+		);
+
+		// div.
+		$new_allowed['div'] = array_merge(
+			$new_allowed['div'],
+			array(
+				'name' => array(),
+			)
+		);
+var_dump($new_allowed['textarea']);wp_die();
 		return $new_allowed;
 	}
 }
