@@ -233,6 +233,7 @@ class RTMediaMedia {
 
 		if ( array_key_exists( 'media_title', $data ) || array_key_exists( 'description', $data ) ) {
 			$post_data['ID'] = $media_id;
+
 			if ( isset( $data['media_title'] ) ) {
 				$data['media_title']     = wp_kses( $data['media_title'], wp_kses_allowed_html() );
 				$post_data['post_title'] = $data['media_title'];

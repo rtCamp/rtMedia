@@ -1285,7 +1285,7 @@ function rtmedia_actions() {
 	$actions = apply_filters( 'rtmedia_action_buttons_before_delete', $actions );
 
 	foreach ( $actions as $action ) {
-		echo $action; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $action, RTMedia::expanded_allowed_tags() );
 	}
 
 	$actions = array();
@@ -1297,7 +1297,7 @@ function rtmedia_actions() {
 	$actions = apply_filters( 'rtmedia_action_buttons_after_delete', $actions );
 
 	foreach ( $actions as $action ) {
-		echo $action; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $action, RTMedia::expanded_allowed_tags() );
 	}
 
 	do_action( 'after_rtmedia_action_buttons' );
@@ -1350,7 +1350,7 @@ function rtmedia_comments( $echo = true ) {
 	}
 
 	if ( $html ) {
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $html, RTMedia::expanded_allowed_tags() );
 	} else {
 		return $html;
 	}
@@ -1718,7 +1718,7 @@ function rtmedia_media_pagination() {
 	if ( $rtmedia_backbone['backbone'] ) {
 		echo '<%= pagination %>';
 	} else {
-		echo rtmedia_get_pagination_values(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( rtmedia_get_pagination_values(), RTMedia::expanded_allowed_tags() );
 	}
 
 }
@@ -2210,7 +2210,7 @@ function rtmedia_delete_form( $echo = true ) {
 		$html .= '<input type="hidden" name="request_action" id="request_action" value="delete">';
 
 		if ( $echo ) {
-			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses( $html, RTMedia::expanded_allowed_tags() );
 
 			RTMediaMedia::media_nonce_generator( rtmedia_id(), true );
 
@@ -2245,11 +2245,11 @@ function rtmedia_uploader( $attr = '' ) {
 	if ( rtmedia_is_uploader_view_allowed( true, 'media_gallery' ) ) {
 		if ( function_exists( 'bp_is_blog_page' ) && ! bp_is_blog_page() ) {
 			if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() === get_current_user_id() ) {
-				echo RTMediaUploadShortcode::pre_render( $attr ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses( RTMediaUploadShortcode::pre_render( $attr ), RTMedia::expanded_allowed_tags() );
 			} else {
 				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 					if ( can_user_upload_in_group() ) {
-						echo RTMediaUploadShortcode::pre_render( $attr ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo wp_kses( RTMediaUploadShortcode::pre_render( $attr ), RTMedia::expanded_allowed_tags() );
 					}
 				}
 			}
@@ -2266,9 +2266,7 @@ function rtmedia_uploader( $attr = '' ) {
  * @param array|string $attr Attributes array.
  */
 function rtmedia_gallery( $attr = '' ) {
-
-	echo RTMediaGalleryShortcode::render( $attr ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
+	echo wp_kses( RTMediaGalleryShortcode::render( $attr ), RTMedia::expanded_allowed_tags() );
 }
 
 /**
@@ -4070,7 +4068,7 @@ function rtmedia_bp_activity_entry_comments_callback() {
 	// if activity id is not empty and the type is not as $allow_media_activity_type.
 	if ( $activity_id && isset( $activities_template->activity ) && isset( $activities_template->activity->type ) && ! in_array( $activities_template->activity->type, $allow_media_activity_type, true ) ) {
 		add_action( 'before_rtmedia_comment_uploader_display', 'rtmedia_before_rtmedia_comment_uploader_display_callback', 10 );
-		echo rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity', $activities_template->activity->component ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( rtmedia_bp_activity_entry_comments_id_callback( $activity_id, 'activity', $activities_template->activity->component ), RTMedia::expanded_allowed_tags() );
 		remove_action( 'before_rtmedia_comment_uploader_display', 'rtmedia_before_rtmedia_comment_uploader_display_callback', 10 );
 	}
 }
@@ -4142,7 +4140,7 @@ function rtmedia_add_comments_extra_callback() {
 
 	$rtmedia_id = rtmedia_id();
 	if ( $rtmedia_id ) {
-		echo rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia', $context ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( rtmedia_bp_activity_entry_comments_id_callback( $rtmedia_id, 'rtmedia', $context ), RTMedia::expanded_allowed_tags() );
 	}
 }
 

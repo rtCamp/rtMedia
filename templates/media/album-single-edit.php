@@ -99,7 +99,8 @@ $rtmedia_media = $media[0];
 									<?php $global_albums = rtmedia_get_site_option( 'rtmedia-global-albums' ); ?>
 									<span><?php esc_html_e( 'Move selected media to the album : ', 'buddypress-media' ); ?></span>
 									<select name="album" class="rtmedia-user-album-list">
-										<?php echo rtmedia_user_album_list(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+										<?php
+										echo wp_kses( rtmedia_user_album_list(), RTMedia::expanded_allowed_tags() ); ?>
 									</select>
 									<input type="button" class="rtmedia-move-selected" name="move-selected" value="<?php esc_attr_e( 'Move Selected', 'buddypress-media' ); ?>"/>
 								</p>

@@ -1727,16 +1727,24 @@ class RTMedia {
 			'id'     => array(),
 			'name'   => array(),
 			'class'  => array(),
+			'method' => array(),
 		);
 
 		// form fields - input.
 		$new_allowed['input'] = array(
-			'class'   => array(),
-			'id'      => array(),
-			'name'    => array(),
-			'value'   => array(),
-			'type'    => array(),
-			'onclick' => array(),
+			'class'       => array(),
+			'id'          => array(),
+			'name'        => array(),
+			'value'       => array(),
+			'type'        => array(),
+			'onclick'     => array(),
+			'min'         => array(),
+			'max'         => array(),
+			'step'        => array(),
+			'style'       => array(),
+			'placeholder' => array(),
+			'checked'     => array(),
+			'data-*'      => true,
 		);
 
 		// select.
@@ -1751,7 +1759,10 @@ class RTMedia {
 		// select options.
 		$new_allowed['option'] = array(
 			'selected' => array(),
-			'value'  => array(),
+			'value'    => array(),
+			'class'    => array(),
+			'id'       => array(),
+			'name'     => array(),
 		);
 
 		// select optgroup.
@@ -1793,8 +1804,21 @@ class RTMedia {
 				'name' => array(),
 			)
 		);
-var_dump($new_allowed['textarea']);wp_die();
+
 		return $new_allowed;
+	}
+
+	/**
+	 * Add extra inline allowed style.
+	 *
+	 * @param array $styles Allowed styles.
+	 *
+	 * @return array
+	 */
+	public static function allow_display_in_style( $styles ) {
+		$styles[] = 'display';
+
+		return $styles;
 	}
 }
 

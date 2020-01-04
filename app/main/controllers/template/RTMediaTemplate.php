@@ -172,7 +172,7 @@ class RTMediaTemplate {
 						}
 
 						if ( 'before' === $include_uploader ) {
-							echo RTMediaUploadShortcode::pre_render( $shortcode_attr['attr'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo wp_kses( RTMediaUploadShortcode::pre_render( $shortcode_attr['attr'] ), RTMedia::expanded_allowed_tags() );
 						}
 
 						echo "<div class='rtmedia_gallery_wrapper'>";
@@ -189,7 +189,7 @@ class RTMediaTemplate {
 						echo '</div>';
 
 						if ( 'after' === $include_uploader || 'true' === $include_uploader ) {
-							echo RTMediaUploadShortcode::pre_render( $shortcode_attr['attr'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo wp_kses( RTMediaUploadShortcode::pre_render( $shortcode_attr['attr'] ), RTMedia::expanded_allowed_tags() );
 						}
 					} else {
 						echo esc_html__( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
@@ -827,10 +827,10 @@ class RTMediaTemplate {
 					remove_filter( 'bp_activity_content_before_save', array( $rtmedia_buddypress_activity, 'bp_activity_content_before_save' ) );
 
 					if ( function_exists( 'bp_activity_new_comment' ) ) {
-						/* comment content add to new */
+						// comment content add to new.
 						$activity_content = $comment_content_old;
 
-						/* if activity has media in it create an html for it */
+						// if activity has media in it create an html for it.
 						if ( class_exists( 'RTMediaActivity' ) && $comment_with_media ) {
 							$obj_comment      = new RTMediaActivity( $rtmedia_attached_files[0], 0, $comment_content_old );
 							$activity_content = $obj_comment->create_activity_html();
@@ -849,10 +849,10 @@ class RTMediaTemplate {
 
 				if ( ! empty( $comment_activity_id ) ) {
 
-					/* add activity id in comment meta fields */
+					// add activity id in comment meta fields.
 					update_comment_meta( $id, 'activity_id', $comment_activity_id );
 
-					/* change comment media activity id to current activity id*/
+					// change comment media activity id to current activity id.
 					if ( $comment_with_media && is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) && class_exists( 'RTMediaModel' ) ) {
 						$rtmedia_model = new RTMediaModel();
 						$rtmedia_model->update(
@@ -871,7 +871,7 @@ class RTMediaTemplate {
 					global $wpdb;
 
 					$comments = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_ID = %d limit 100", $id ), ARRAY_A );
-					echo rmedia_single_comment( $comments ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses( rmedia_single_comment( $comments ), RTMedia::expanded_allowed_tags() );
 					exit;
 				}
 			} else {

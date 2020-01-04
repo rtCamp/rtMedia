@@ -88,7 +88,7 @@ if ( is_array( $tabs ) && count( $tabs ) ) {
 								<?php
 								do_action( 'rtmedia_before_' . $mode . '_ui' );
 								// it is outputting html and make sure content is escaping proper while setting.
-								echo wp_kses( $tabs[ $mode ][ $upload_type ]['content'], wp_kses_allowed_html( 'post' ) );
+								echo wp_kses( $tabs[ $mode ][ $upload_type ]['content'], RTMedia::expanded_allowed_tags() );
 								echo '<input type="hidden" name="mode" value="' . esc_attr( $mode ) . '" />';
 								do_action( 'rtmedia_after_' . $mode . '_ui', $attr );
 								?>

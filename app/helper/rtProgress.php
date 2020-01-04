@@ -39,7 +39,7 @@ class rtProgress { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWi
 			';
 
 		if ( $echo ) {
-			echo wp_kses( $progress_ui, wp_kses_allowed_html() );
+			echo wp_kses( $progress_ui, RTMedia::expanded_allowed_tags() );
 		} else {
 			return $progress_ui;
 		}

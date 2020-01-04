@@ -519,7 +519,7 @@ class RTMediaQuery {
 			$modifier_type   => $modifier_value,
 			'action'         => $action,
 			'bulk'           => $bulk,
-			'page'           => $pageno,
+			'page'           => intval( $pageno ),
 			'per_page_media' => $per_page_media,
 			'attributes'     => $attributes,
 		);

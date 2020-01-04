@@ -300,7 +300,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
  * @param bool|int $user_id User ID.
  */
 function rtmedia_featured( $user_id = false ) {
-	echo rtmedia_get_featured( $user_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( rtmedia_get_featured( $user_id ), RTMedia::expanded_allowed_tags() );
 }
 
 /**
@@ -324,7 +324,7 @@ if ( ! function_exists( 'bp_media_featured' ) ) {
 	 * @param bool|int $user_id User ID.
 	 */
 	function bp_media_featured( $user_id = false ) {
-		echo rtmedia_get_featured( $user_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( rtmedia_get_featured( $user_id ), RTMedia::expanded_allowed_tags() );
 	}
 
 	/**

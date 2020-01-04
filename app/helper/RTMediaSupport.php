@@ -447,7 +447,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			}
 			?>
 			<div id="rtmedia-migration-html">
-				<?php echo wp_kses( $content, wp_kses_allowed_html() ); ?>
+				<?php echo wp_kses( $content, RTMedia::expanded_allowed_tags() ); ?>
 			</div>
 			<?php
 		}
@@ -497,7 +497,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						) .
 						'</p>';
 
-					echo wp_kses( $content, wp_kses_allowed_html() );
+					echo wp_kses( $content, RTMedia::expanded_allowed_tags() );
 				} else {
 					$website         = filter_input( INPUT_POST, 'website', FILTER_SANITIZE_URL );
 					$subject         = filter_input( INPUT_POST, 'subject', FILTER_SANITIZE_STRING );
