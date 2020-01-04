@@ -1,27 +1,42 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * File to include class rtDimensions
+ *
+ * @package rtMedia
  */
 
 /**
- * Description of rtDimension
+ * Class to handle rtMedia dimensions
  *
  * @author udit
  */
-class rtDimensions extends rtForm {
+class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
 
+	/**
+	 * Element ID.
+	 *
+	 * @var $element_id
+	 */
 	private $element_id;
+
+	/**
+	 * ID count.
+	 *
+	 * @var int $id_count
+	 */
 	private static $id_count = 0;
+
+	/**
+	 * Default class.
+	 *
+	 * @var string $default_class
+	 */
 	private static $default_class = 'rt-form-dimension';
 
 	/**
 	 * Get default html id count.
 	 *
 	 * @access private
-	 *
-	 * @param  void
 	 *
 	 * @return int $id_count
 	 */
@@ -33,10 +48,6 @@ class rtDimensions extends rtForm {
 	 * Update default html id count.
 	 *
 	 * @access private
-	 *
-	 * @param  void
-	 *
-	 * @return int $id_count
 	 */
 	private function update_default_id() {
 		self::$id_count ++;
@@ -47,8 +58,6 @@ class rtDimensions extends rtForm {
 	 *
 	 * @access private
 	 *
-	 * @param  void
-	 *
 	 * @return string $default_class
 	 */
 	private function get_default_class() {
@@ -57,15 +66,16 @@ class rtDimensions extends rtForm {
 
 
 	/**
-	 * Embedd html class to html output.
+	 * Embed html class to html output.
 	 *
 	 * @access private
 	 *
-	 * @param string $element
-	 * @param null $class
+	 * @param string $element element.
+	 * @param null   $class class.
 	 *
 	 * @return string
-	 * @throws rtFormsInvalidArgumentsException
+	 *
+	 * @throws rtFormsInvalidArgumentsException Form invalid argument exception.
 	 */
 	private function embedd_class( $element, $class = null ) {
 		$html = 'class= "' . $this->get_default_class();
@@ -88,7 +98,7 @@ class rtDimensions extends rtForm {
 	 *
 	 * @access protected
 	 *
-	 * @param  array $attributes
+	 * @param  array $attributes Attributes.
 	 *
 	 * @return string $html
 	 */
@@ -102,54 +112,53 @@ class rtDimensions extends rtForm {
 		);
 
 		$attributes = wp_parse_args( $attributes, $defaults );
-		extract( $attributes );
 
 		$html = '';
 
 		$html .= '<td>' .
-		         parent::get_number(
-			         array(
-				         'name'      => "rtmedia-options[{$key}_width]",
-				         'value'     => $width,
-				         'class'     => array( 'small-text large-offset-1' ),
-				         'show_desc' => $show_desc,
-			         )
-		         ) .
-		         '</td>';
+				parent::get_number(
+					array(
+						'name'      => "rtmedia-options[{$attributes['key']}_width]",
+						'value'     => $attributes['width'],
+						'class'     => array( 'small-text large-offset-1' ),
+						'show_desc' => $attributes['show_desc'],
+					)
+				) .
+				'</td>';
 
-		if ( isset( $height ) ) {
+		if ( isset( $attributes['height'] ) ) {
 			$html .= '<td>' .
-			         parent::get_number(
-				         array(
-					         'name'      => "rtmedia-options[{$key}_height]",
-					         'value'     => $height,
-					         'class'     => array( 'small-text large-offset-1' ),
-					         'show_desc' => $show_desc,
-				         )
-			         ) .
-			         '</td>';
+					parent::get_number(
+						array(
+							'name'      => "rtmedia-options[{$attributes['key']}_height]",
+							'value'     => $attributes['height'],
+							'class'     => array( 'small-text large-offset-1' ),
+							'show_desc' => $attributes['show_desc'],
+						)
+					) .
+					'</td>';
 		}
 
-		if ( isset( $crop ) ) {
+		if ( isset( $attributes['crop'] ) ) {
 			$html .= '<td>' .
-			         parent::get_switch(
-				         array(
-					         'name'           => "rtmedia-options[{$key}_crop]",
-					         'rtForm_options' => array(
-						         array(
-							         ''        => 1, //label would be blank
-							         'checked' => $crop,
-						         ),
-					         ),
-					         'value'          => ( isset( $options[ "rtmedia-options[{$key}_crop]" ] ) ) ? $options[ "rtmedia-options[{$key}_crop]" ] : '0',
-					         'show_desc'      => $show_desc,
-				         )
-			         ) .
-			         '</td>';
+					parent::get_switch(
+						array(
+							'name'           => "rtmedia-options[{$attributes['key']}_crop]",
+							'rtForm_options' => array(
+								array(
+									''        => 1, // label would be blank.
+									'checked' => $attributes['crop'],
+								),
+							),
+							'value'          => ( isset( $options[ "rtmedia-options[{$attributes['key']}_crop]" ] ) ) ? $options[ "rtmedia-options[{$attributes['key']}_crop]" ] : '0',
+							'show_desc'      => $attributes['show_desc'],
+						)
+					) .
+					'</td>';
 		}
 
-		if ( $desc && $show_desc ) {
-			$html .= '<span class="clearfix large-offset-3 description">' . esc_html( $desc ) . '</span>';
+		if ( $attributes['desc'] && $attributes['show_desc'] ) {
+			$html .= '<span class="clearfix large-offset-3 description">' . esc_html( $attributes['desc'] ) . '</span>';
 		}
 
 		if ( isset( $attributes['label'] ) ) {
@@ -164,16 +173,21 @@ class rtDimensions extends rtForm {
 	 *
 	 * @access public
 	 *
-	 * @param  mixed $attributes
+	 * @param  mixed $attributes Attribute.
 	 *
-	 * @return void
+	 * @return string|null
 	 */
 	public function get_dimensions( $attributes = '' ) {
 		return $this->generate_dimensions( $attributes );
 	}
 
+	/**
+	 * Display dimensions.
+	 *
+	 * @param string $args Arguments.
+	 */
 	public function display_dimensions( $args = '' ) {
-		echo $this->get_dimensions( $args );
+		echo $this->get_dimensions( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 }

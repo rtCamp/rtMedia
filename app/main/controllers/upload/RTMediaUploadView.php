@@ -1,29 +1,50 @@
 <?php
 /**
- * Description of RTMediaUploadView
+ * Handles media upload view.
  *
+ * @package rtMedia
  * @author joshua
+ */
+
+/**
+ * Class to handle media upload view.
  */
 class RTMediaUploadView {
 
+	/**
+	 * Media attributes.
+	 *
+	 * @var array $attributes
+	 */
 	private $attributes;
 
 	/**
+	 * RTMediaUploadView constructor.
 	 *
-	 * @param type $attr
+	 * @param array $attr Attributes.
 	 */
-	function __construct( $attr ) {
+	public function __construct( $attr ) {
 		$this->attributes = $attr;
 	}
 
-	static function upload_nonce_generator( $echo = true, $only_nonce = false ) {
+	/**
+	 * Function to generate nonce for media upload.
+	 *
+	 * @param bool $echo Weather to echo or not.
+	 * @param bool $only_nonce Weather to return only nonce.
+	 *
+	 * @return false|string
+	 */
+	public static function upload_nonce_generator( $echo = true, $only_nonce = false ) {
 
 		if ( $echo ) {
 			wp_nonce_field( 'rtmedia_upload_nonce', 'rtmedia_upload_nonce' );
 		} else {
+
 			if ( $only_nonce ) {
 				return wp_create_nonce( 'rtmedia_upload_nonce' );
 			}
+
 			$token = array(
 				'action' => 'rtmedia_upload_nonce',
 				'nonce'  => wp_create_nonce( 'rtmedia_upload_nonce' ),
@@ -36,13 +57,15 @@ class RTMediaUploadView {
 	/**
 	 * Render the uploader shortcode and attach the uploader panel
 	 *
-	 * @param type $template_name
+	 * @param string $template_name Template name to render.
 	 */
 	public function render( $template_name ) {
 
 		global $rtmedia_query;
 		$album = '';
+
 		if ( apply_filters( 'rtmedia_render_select_album_upload', true ) ) {
+
 			if ( $rtmedia_query && isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query['album_id'] ) && is_rtmedia_album( $rtmedia_query->media_query['album_id'] ) ) {
 				$album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="' . esc_attr( $rtmedia_query->media_query['album_id'] ) . '" />';
 			} elseif ( is_rtmedia_album_enable() && $rtmedia_query && is_rtmedia_gallery() ) {
@@ -50,22 +73,26 @@ class RTMediaUploadView {
 				if ( isset( $rtmedia_query->query['context'] ) && 'profile' === $rtmedia_query->query['context'] ) {
 					$album = '<span> <label> <i class="dashicons dashicons-format-gallery"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select></span>';
 				}
+
 				if ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
 					$album = '<span> <label> <i class="dashicons dashicons-format-gallery"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list() . '</select></span>';
 				}
 			}
 		}
-		$up_privacy = $privacy = ''; //uploader privacy dropdown for uploader under rtMedia Media tab.
+
+		$privacy    = '';
+		$up_privacy = ''; // uploader privacy dropdown for uploader under rtMedia Media tab.
+
 		if ( is_rtmedia_privacy_enable()
 			&& ( ( ! isset( $rtmedia_query->is_upload_shortcode ) || false === $rtmedia_query->is_upload_shortcode ) )
 			|| ( isset( $rtmedia_query->is_upload_shortcode ) && ! isset( $this->attributes['privacy'] ) )
 		) {
 			if ( ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) || ( function_exists( 'bp_is_groups_component' ) && bp_is_groups_component() ) ) {
-				// bp_get_group_status() is always reurning NULL.
+				// bp_get_group_status() is always returning NULL.
 				// So fetched data from DB and assigned to media.
 				global $wpdb;
 
-				// BP Groups tablename.
+				// BP Groups table name.
 				$table_name = $wpdb->prefix . 'bp_groups';
 				// Will fetch ID of current group.
 				$group_id = bp_get_current_group_id();
@@ -75,7 +102,7 @@ class RTMediaUploadView {
 
 				if ( false === $group_status ) {
 					// Query to fetch current group's privacy status.
-					$group_status = $wpdb->get_var( 'SELECT `status` FROM ' . $table_name . ' WHERE id = ' . $group_id );
+					$group_status = $wpdb->get_var( 'SELECT `status` FROM ' . $table_name . ' WHERE id = ' . $group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 					// Set data in transient for better performance.
 					set_transient( 'group_status_' . $group_id, $group_status );
@@ -89,10 +116,14 @@ class RTMediaUploadView {
 				$privacy_levels_array = apply_filters( 'rtmedia_group_privacy_levels', $privacy_levels_array );
 				$privacy_val          = $privacy_levels_array[ $group_status ];
 
-				$up_privacy = $privacy = "<input type='hidden' name='privacy' value='" . esc_attr( $privacy_val ) . "' />";
+				$up_privacy = "<input type='hidden' name='privacy' value='" . esc_attr( $privacy_val ) . "' />";
+				$privacy    = $up_privacy;
+
 			} else {
+
 				$up_privacy = new RTMediaPrivacy( false );
 				$up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy' );
+
 				if ( $up_privacy ) {
 					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility'></i>" . esc_html__( 'Privacy:', 'buddypress-media' ) . '</label>' . $up_privacy . '</span>';
 				}
@@ -119,9 +150,11 @@ class RTMediaUploadView {
 				$upload_tab_html = $upload_tabs['file_upload']['content'];
 			} else {
 				$upload_tab_html = '<div class="rtm-uploader-main-wrapper"><div class="rtm-uploader-tabs"><ul>';
+
 				foreach ( $upload_tabs as $single_tab ) {
 					$upload_tab_html .= '<li class="' . implode( ' ', $single_tab['class'] ) . '">' . $single_tab['title'] . '</li>';
 				}
+
 				$upload_tab_html .= '</ul></div>';
 				foreach ( $upload_tabs as $single_tab ) {
 					$upload_tab_html .= $single_tab['content'];
@@ -133,23 +166,25 @@ class RTMediaUploadView {
 		}
 		global $rtmedia;
 
-		$rtmedia_comment_main = "rtmedia-comment-action-update";
-		$rtmedia_comment_container = "rtmedia-comment-media-upload-container";
-		$rtmedia_comment_button = "rtmedia-comment-media-upload";
-		$rtmedia_comment_filelist = "rtmedia_uploader_filelist";
-		$rtmedia_comment_context = "activity";
-		if(
-			( isset( $this->attributes['upload_parent_id'] )  && ! empty( $this->attributes['upload_parent_id'] )  )
+		$rtmedia_comment_main      = 'rtmedia-comment-action-update';
+		$rtmedia_comment_container = 'rtmedia-comment-media-upload-container';
+		$rtmedia_comment_button    = 'rtmedia-comment-media-upload';
+		$rtmedia_comment_filelist  = 'rtmedia_uploader_filelist';
+		$rtmedia_comment_context   = 'activity';
+		if (
+			( isset( $this->attributes['upload_parent_id'] ) && ! empty( $this->attributes['upload_parent_id'] ) )
 			&&
-			( isset( $this->attributes['upload_parent_id_type'] )  && ! empty( $this->attributes['upload_parent_id_type'] )  )
-		){
-			$main_id =  '-'.$this->attributes['upload_parent_id_type'].'-'.$this->attributes['upload_parent_id'];
-			$rtmedia_comment_main .= $main_id;
+			( isset( $this->attributes['upload_parent_id_type'] ) && ! empty( $this->attributes['upload_parent_id_type'] ) )
+		) {
+			$main_id                    = '-' . $this->attributes['upload_parent_id_type'] . '-' . $this->attributes['upload_parent_id'];
+			$rtmedia_comment_main      .= $main_id;
 			$rtmedia_comment_container .= $main_id;
-			$rtmedia_comment_button .= $main_id;
-			$rtmedia_comment_filelist .= $main_id;
-			$up_privacy = $privacy = "<input type='hidden' name='privacy' value='" . esc_attr( 0 ) . "' />";
-			if( isset( $this->attributes['upload_parent_id_context'] ) ){
+			$rtmedia_comment_button    .= $main_id;
+			$rtmedia_comment_filelist  .= $main_id;
+			$up_privacy                 = "<input type='hidden' name='privacy' value='" . esc_attr( 0 ) . "' />";
+			$privacy                    = $up_privacy;
+
+			if ( isset( $this->attributes['upload_parent_id_context'] ) ) {
 				$rtmedia_comment_context = $this->attributes['upload_parent_id_context'];
 			}
 		}
@@ -195,15 +230,15 @@ class RTMediaUploadView {
 						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul>'
 						. '</div>',
 				),
-				'comment' => array(
+				'comment'  => array(
 					'title'   => esc_html__( 'File Upload', 'buddypress-media' ),
 					'content' =>
 						'<div class="rtmedia-plupload-container rtmedia-comment-media-main rtmedia-container clearfix">'
-							. '<div id="'.$rtmedia_comment_main.'" class="clearfix">'
+							. '<div id="' . $rtmedia_comment_main . '" class="clearfix">'
 								. '<div class="rtm-upload-button-wrapper">'
-									. '<div id="'.$rtmedia_comment_container.'">'
+									. '<div id="' . $rtmedia_comment_container . '">'
 									. '</div>'
-									. '<button type="button" class="rtmedia-comment-media-upload" data-media_context="'.$rtmedia_comment_context.'" id="' . $rtmedia_comment_button . '" title="' . apply_filters( 'rtmedia_comment_attach_media_button_title', esc_attr__( 'Attach Media', 'buddypress-media' ) ) . '">'
+									. '<button type="button" class="rtmedia-comment-media-upload" data-media_context="' . $rtmedia_comment_context . '" id="' . $rtmedia_comment_button . '" title="' . apply_filters( 'rtmedia_comment_attach_media_button_title', esc_attr__( 'Attach Media', 'buddypress-media' ) ) . '">'
 										. '<span class="dashicons dashicons-admin-media"></span>'
 										. apply_filters( 'rtmedia_attach_file_message', '' )
 									. '</button>'
@@ -213,7 +248,7 @@ class RTMediaUploadView {
 						. '</div>'
 						. apply_filters( 'rtmedia_uploader_after_comment_upload_button', '' )
 						. '<div class="rtmedia-plupload-notice">'
-							. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="'. $rtmedia_comment_filelist .'"></ul>'
+							. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="' . $rtmedia_comment_filelist . '"></ul>'
 						. '</div>',
 				),
 			),
@@ -226,22 +261,27 @@ class RTMediaUploadView {
 
 		$attr = $this->attributes;
 		$mode = filter_input( INPUT_GET, 'mode', FILTER_SANITIZE_STRING );
+
 		if ( is_null( $mode ) || false === $mode || ! array_key_exists( $mode, $tabs ) ) {
 			$mode = 'file_upload';
 		}
+
 		if ( $attr && is_array( $attr ) ) {
+
 			foreach ( $attr as $key => $val ) {
-				$selector = "id";
-				if( ( $key == 'upload_parent_id'  && ! empty( $key ) ) || ( $key == 'upload_parent_id_type'  && ! empty( $key ) ) ){
-					$selector = "class";
+				$selector = 'id';
+
+				if ( ( 'upload_parent_id' === $key && ! empty( $key ) ) || ( 'upload_parent_id_type' === $key && ! empty( $key ) ) ) {
+					$selector = 'class';
 				}
 				?>
-				<input type='hidden' <?php echo $selector; ?>="rt_upload_hf_<?php echo esc_attr( $key ); ?>"
-				       value='<?php echo esc_attr( $val ); ?>'
-				       name='<?php echo esc_attr( $key ); ?>'/>
+				<input type='hidden' <?php echo esc_html( $selector ); ?>="rt_upload_hf_<?php echo esc_attr( $key ); ?>"
+					value='<?php echo esc_attr( $val ); ?>'
+					name='<?php echo esc_attr( $key ); ?>'/>
 				<?php
 			}
 		}
+
 		$upload_type = 'default';
 		if ( isset( $attr['activity'] ) && $attr['activity'] ) {
 			$upload_type = 'activity';
@@ -258,7 +298,7 @@ class RTMediaUploadView {
 	/**
 	 * Template Locator
 	 *
-	 * @param type $template
+	 * @param string $template Template name.
 	 *
 	 * @return string
 	 */
@@ -270,10 +310,11 @@ class RTMediaUploadView {
 		if ( ! $template_name ) {
 			$located = false;
 		}
-		if ( file_exists( STYLESHEETPATH . '/rtmedia/upload/' . $template_name ) ) {
-			$located = STYLESHEETPATH . '/rtmedia/upload/' . $template_name;
-		} else if ( file_exists( TEMPLATEPATH . '/rtmedia/upload/' . $template_name ) ) {
-			$located = TEMPLATEPATH . '/rtmedia/upload/' . $template_name;
+
+		if ( file_exists( get_stylesheet_directory() . '/rtmedia/upload/' . $template_name ) ) {
+			$located = get_stylesheet_directory() . '/rtmedia/upload/' . $template_name;
+		} elseif ( file_exists( get_template_directory() . '/rtmedia/upload/' . $template_name ) ) {
+			$located = get_template_directory() . '/rtmedia/upload/' . $template_name;
 		} else {
 			$located = RTMEDIA_PATH . 'templates/upload/' . $template_name;
 		}

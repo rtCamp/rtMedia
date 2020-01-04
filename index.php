@@ -1,13 +1,15 @@
 <?php
-/*
-  Plugin Name: rtMedia for WordPress, BuddyPress and bbPress
-  Plugin URI: https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
-  Description: This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!
-  Version: 4.5.9
-  Author: rtCamp
-  Text Domain: buddypress-media
-  Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
-  Domain Path: /languages/
+/**
+ * Plugin Name: rtMedia for WordPress, BuddyPress and bbPress
+ * Plugin URI: https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
+ * Description: This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!
+ * Version: 4.5.9
+ * Author: rtCamp
+ * Text Domain: buddypress-media
+ * Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
+ * Domain Path: /languages/
+ *
+ * @package rtMedia
  */
 
 /**
@@ -20,16 +22,14 @@
 if ( ! defined( 'RTMEDIA_VERSION' ) ) {
 	/**
 	 * The version of the plugin
-	 *
 	 */
-	define( 'RTMEDIA_VERSION', '4.5.9' );
+	define( 'RTMEDIA_VERSION', '4.5.11' );
 }
 
 if ( ! defined( 'RTMEDIA_PATH' ) ) {
 
 	/**
 	 *  The server file system path to the plugin directory
-	 *
 	 */
 	define( 'RTMEDIA_PATH', plugin_dir_path( __FILE__ ) );
 }
@@ -38,7 +38,6 @@ if ( ! defined( 'BP_MEDIA_PATH' ) ) {
 
 	/**
 	 *  Legacy support
-	 *
 	 */
 	define( 'BP_MEDIA_PATH', RTMEDIA_PATH );
 }
@@ -48,7 +47,6 @@ if ( ! defined( 'RTMEDIA_URL' ) ) {
 
 	/**
 	 * The url to the plugin directory
-	 *
 	 */
 	define( 'RTMEDIA_URL', plugin_dir_url( __FILE__ ) );
 }
@@ -57,7 +55,6 @@ if ( ! defined( 'RTMEDIA_BASE_NAME' ) ) {
 
 	/**
 	 * The url to the plugin directory
-	 *
 	 */
 	define( 'RTMEDIA_BASE_NAME', plugin_basename( __FILE__ ) );
 }
@@ -67,7 +64,7 @@ if ( ! defined( 'RTMEDIA_BASE_NAME' ) ) {
  *
  * Autoloads classes on instantiation. Used by spl_autoload_register.
  *
- * @param string $class_name The name of the class to autoload
+ * @param string $class_name The name of the class to autoload.
  */
 function rtmedia_autoloader( $class_name ) {
 	$rtlibpath = array(
@@ -111,7 +108,11 @@ function rtmedia_autoloader( $class_name ) {
 /**
  * Register the autoloader function into spl_autoload
  */
-spl_autoload_register( 'rtmedia_autoloader' );
+try {
+	spl_autoload_register( 'rtmedia_autoloader' );
+} catch ( Exception $e ) {
+	echo esc_html( $e->getMessage() );
+}
 
 /**
  * Instantiate the BuddyPressMedia class.
@@ -119,15 +120,21 @@ spl_autoload_register( 'rtmedia_autoloader' );
 global $rtmedia;
 $rtmedia = new RTMedia();
 
+/**
+ * Check if it's VIP environment or not.
+ *
+ * @return bool
+ */
 function is_rtmedia_vip_plugin() {
 	return ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV );
 }
-/*
+
+/**
  * Look Ma! Very few includes! Next File: /app/main/RTMedia.php
  */
 
 /**
- * rtmedia_plugin_deactivate Do stuff on plugin deactivation
+ * Do stuff on plugin deactivation
  */
 function rtmedia_plugin_deactivate() {
 	update_option( 'is_permalink_reset', 'no' );

@@ -1030,6 +1030,7 @@ jQuery( document ).ready( function( $ ) {
 		} );
 
 		whats_new_form.bind( 'submit', function () {
+			window.onbeforeunload = null;
 			setTimeout( function () {
 				whats_new_form.find( '.rtmedia-uploader-div' ).hide();
 			}, 2000 );
