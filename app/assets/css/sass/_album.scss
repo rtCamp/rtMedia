@@ -28,3 +28,13 @@
 		width: 100%;
 	}
 }
+
+#buddypress {
+    ul.rtmedia-album-list {
+        li.rtmedia-list-item {
+			border: 1px solid #ddd;
+			padding: 5px;
+			border-radius: 5px;
+		}
+	}
+}
