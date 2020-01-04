@@ -126,7 +126,7 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 				) .
 				'</td>';
 
-		if ( isset( $height ) ) {
+		if ( isset( $attributes['height'] ) ) {
 			$html .= '<td>' .
 					parent::get_number(
 						array(
@@ -139,7 +139,7 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 					'</td>';
 		}
 
-		if ( isset( $crop ) ) {
+		if ( isset( $attributes['crop'] ) ) {
 			$html .= '<td>' .
 					parent::get_switch(
 						array(
