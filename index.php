@@ -23,7 +23,7 @@ if ( ! defined( 'RTMEDIA_VERSION' ) ) {
 	/**
 	 * The version of the plugin
 	 */
-	define( 'RTMEDIA_VERSION', '4.5.9' );
+	define( 'RTMEDIA_VERSION', '4.5.11' );
 }
 
 if ( ! defined( 'RTMEDIA_PATH' ) ) {
