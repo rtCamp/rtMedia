@@ -130,7 +130,7 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 			$html .= '<td>' .
 					parent::get_number(
 						array(
-							'name'      => "rtmedia-options[{{$attributes['key']}_height]",
+							'name'      => "rtmedia-options[{$attributes['key']}_height]",
 							'value'     => $attributes['height'],
 							'class'     => array( 'small-text large-offset-1' ),
 							'show_desc' => $attributes['show_desc'],
