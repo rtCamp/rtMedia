@@ -1692,6 +1692,50 @@ class RTMedia {
 
 		return $sizes;
 	}
+
+	/**
+	 * Function to expand allowed html in wp_kses_allowed_html.
+	 *
+	 * @return array
+	 */
+	public static function expanded_allowed_tags() {
+
+		$new_allowed = wp_kses_allowed_html( 'post' );
+
+		// form input.
+		$new_allowed['form'] = array(
+			'action' => array(),
+			'id'     => array(),
+			'name'   => array(),
+			'class'  => array(),
+		);
+
+		// form fields - input.
+		$new_allowed['input'] = array(
+			'class' => array(),
+			'id'    => array(),
+			'name'  => array(),
+			'value' => array(),
+			'type'  => array(),
+		);
+
+		// select.
+		$new_allowed['select'] = array(
+			'class'  => array(),
+			'id'     => array(),
+			'name'   => array(),
+			'value'  => array(),
+			'type'   => array(),
+		);
+
+		// select options.
+		$new_allowed['option'] = array(
+			'selected' => array(),
+		);
+
+		return $new_allowed;
+
+	}
 }
 
 /**
