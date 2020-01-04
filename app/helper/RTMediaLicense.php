@@ -1,15 +1,30 @@
 <?php
-
 /**
- * Created by PhpStorm.
+ * File for RTMediaLicense
  * User: ritz
  * Date: 18/9/14
  * Time: 5:05 PM
+ *
+ * @package    rtMedia
+ */
+
+/**
+ * Class to show rtMedia license details.
  */
 class RTMediaLicense {
-	static $page;
+	/**
+	 * Page.
+	 *
+	 * @var $page
+	 */
+	public static $page;
 
-	static function render_license( $page = '' ) {
+	/**
+	 * Render license.
+	 *
+	 * @param string $page Page.
+	 */
+	public static function render_license( $page = '' ) {
 		self::$page = $page;
 
 		$tabs            = apply_filters( 'rtmedia_license_tabs', array() );
@@ -38,7 +53,7 @@ class RTMediaLicense {
 			<?php
 		}
 
-		// For add-on which aren't updated with the latest code
+		// For add-on which aren't updated with the latest code.
 		if ( did_action( 'rtmedia_addon_license_details' ) ) {
 			$addon_installed = true;
 			?>
@@ -55,15 +70,21 @@ class RTMediaLicense {
 		}
 	}
 
-	static function render_license_section( $page = '', $tab = '' ) {
+	/**
+	 * Render license section.
+	 *
+	 * @param string $page page.
+	 * @param string $tab tab.
+	 */
+	public static function render_license_section( $page = '', $tab = '' ) {
 
-		$args			   = $tab['args'];
-		$license		   = ( isset( $args['license_key'] ) ) ? $args['license_key'] : false;
-		$status			   = ( isset( $args['status'] ) ) ? $args['status'] : false;
-		$el_id			   = $args['addon_id'];
-		$license_key_id	   = $args['key_id'];
+		$args              = $tab['args'];
+		$license           = ( isset( $args['license_key'] ) ) ? $args['license_key'] : false;
+		$status            = ( isset( $args['status'] ) ) ? $args['status'] : false;
+		$el_id             = $args['addon_id'];
+		$license_key_id    = $args['key_id'];
 		$license_status_id = $args['status_id'];
-		$license_data 	   = get_option( 'edd_' . $el_id . '_active', '' );
+		$license_data      = get_option( 'edd_' . $el_id . '_active', '' );
 		?>
 		<div class="large-4 medium-6 small-12 license-column">
 
@@ -73,7 +94,7 @@ class RTMediaLicense {
 				</h4>
 
 				<div class="license-inner">
-					<input id="<?php echo esc_attr( $license_key_id ) ?>" name="<?php echo esc_attr( $license_key_id ) ?>" type="text" class="regular-text" value="<?php echo esc_attr( $license ); ?>" />
+					<input id="<?php echo esc_attr( $license_key_id ); ?>" name="<?php echo esc_attr( $license_key_id ); ?>" type="text" class="regular-text" value="<?php echo esc_attr( $license ); ?>" />
 					<?php
 					$nonce_action = 'edd_' . $el_id . '_nonce';
 					$nonce_name   = 'edd_' . $el_id . '_nonce';
@@ -91,39 +112,45 @@ class RTMediaLicense {
 
 					<input type="submit" class="button-secondary" name="<?php echo esc_attr( $btn_name ); ?>" value="<?php echo esc_attr( $btn_val ); ?>" />
 
-					<?php /* ?>
-					*** Classes to be append with `license-message` ***
-
-					* warning
-					* success
-					* info
-					* alert
-
-					<?php */ ?>
-					<?php self::render_license_message( $license_data, $tab['title'] ); ?>
+					<?php
+					/**
+					 * Classes to be append with `license-message` ***
+					 * warning
+					 * success
+					 * info
+					 * alert
+					 */
+					self::render_license_message( $license_data, $tab['title'] );
+					?>
 				</div><!-- End of .license-inner -->
 			</div><!-- End of .rtm-addon-license -->
 		</div><!-- End of .license-column -->
 		<?php
 	}
 
-	static function render_license_message( $license = '', $addon_name = '' ) {
+	/**
+	 * Render license message.
+	 *
+	 * @param string $license license.
+	 * @param string $addon_name add-on name.
+	 */
+	public static function render_license_message( $license = '', $addon_name = '' ) {
 
 		$addon_name = isset( $license->item_name ) ? esc_html( $license->item_name ) : esc_html( $addon_name );
-		$messages = array();
+		$messages   = array();
 
 		if ( ! empty( $license ) && is_object( $license ) ) {
 
-			// activate_license 'invalid' on anything other than valid, so if there was an error capture it
+			// activate_license 'invalid' on anything other than valid, so if there was an error capture it.
 			if ( false === $license->success ) {
 
 				switch ( $license->error ) {
 
-					case 'expired' :
-
-						$class = 'alert';
+					case 'expired':
+						$class      = 'alert';
 						$messages[] = sprintf(
-							__( 'Your license key expired on %1$s. Please renew your license key.', 'buddypress-media' ),
+							// translators: %s: Expiry date.
+							__( 'Your license key expired on %s. Please renew your license key.', 'buddypress-media' ),
 							date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
 						);
 
@@ -131,31 +158,34 @@ class RTMediaLicense {
 
 						break;
 
-					case 'revoked' :
-
-						$class = 'alert';
+					case 'revoked':
+						$class      = 'alert';
 						$messages[] = __( 'Your license key has been disabled. Please contact support for more information.', 'buddypress-media' );
 
 						$license_status = 'license-' . $class . '-notice';
 
 						break;
 
-					case 'missing' :
-
-						$class = 'alert';
+					case 'missing':
+						$class      = 'alert';
 						$messages[] = sprintf(
-							__( 'Invalid license. Please <a href="%s" target="_blank">visit your account page</a> and verify it.', 'buddypress-media' ), 'https://rtmedia.io/my-account/'
+							// translators: %s: Account page link.
+							__(
+								'Invalid license. Please <a href="%s" target="_blank">visit your account page</a> and verify it.',
+								'buddypress-media'
+							),
+							'https://rtmedia.io/my-account/'
 						);
 
 						$license_status = 'license-' . $class . '-notice';
 
 						break;
 
-					case 'invalid' :
-					case 'site_inactive' :
-
-						$class = 'alert';
+					case 'invalid':
+					case 'site_inactive':
+						$class      = 'alert';
 						$messages[] = sprintf(
+							// translators: 1: Add-on name, 2:My account page link.
 							__( 'Your %1$s is not active for this URL. Please <a href="%2$s" target="_blank">visit your account page</a> to manage your license key URLs.', 'buddypress-media' ),
 							$addon_name,
 							'https://rtmedia.io/my-account/'
@@ -165,9 +195,10 @@ class RTMediaLicense {
 
 						break;
 
-					case 'item_name_mismatch' :
-
+					case 'item_name_mismatch':
 						$class = 'alert';
+
+						// translators: %s: Add-on name.
 						$messages[] = sprintf( __( 'This appears to be an invalid license key for %s.', 'buddypress-media' ), $addon_name );
 
 						$license_status = 'license-' . $class . '-notice';
@@ -175,8 +206,9 @@ class RTMediaLicense {
 						break;
 
 					case 'no_activations_left':
-
 						$class = 'alert';
+
+						// translators: %s: Account link.
 						$messages[] = sprintf( __( 'Your license key has reached its activation limit. <a href="%s">View possible upgrades</a> now.', 'buddypress-media' ), 'https://rtmedia.io/my-account/' );
 
 						$license_status = 'license-' . $class . '-notice';
@@ -184,17 +216,17 @@ class RTMediaLicense {
 						break;
 
 					case 'license_not_activable':
-
 						$class = 'alert';
+
+						// translators: %s: Account link.
 						$messages[] = sprintf( __( 'Your license is not activable, please visit <a href="%s">your account page</a>.', 'buddypress-media' ), 'https://rtmedia.io/my-account/' );
 
 						$license_status = 'license-' . $class . '-notice';
 
 						break;
 
-					default :
-
-						$class = 'alert';
+					default:
+						$class      = 'alert';
 						$messages[] = __( 'To receive updates, please enter your valid license key.', 'buddypress-media' );
 
 						$license_status = 'license-' . $class . '-notice';
@@ -204,9 +236,8 @@ class RTMediaLicense {
 
 				switch ( $license->license ) {
 
-					case 'valid' :
+					case 'valid':
 					default:
-
 						$class = 'success';
 
 						$now        = current_time( 'timestamp' );
@@ -223,6 +254,7 @@ class RTMediaLicense {
 							$class = 'warning';
 
 							$messages[] = sprintf(
+								// translators: 1: Expiry date.
 								__( 'Your license key expires soon! It expires on %1$s. Renew your license key.', 'buddypress-media' ),
 								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
 							);
@@ -234,6 +266,7 @@ class RTMediaLicense {
 							$class = 'info';
 
 							$messages[] = sprintf(
+								// translators: %s: Expiry date.
 								__( 'Your license key expires on %s.', 'buddypress-media' ),
 								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
 							);
@@ -264,6 +297,6 @@ class RTMediaLicense {
 			}
 		}
 
-		echo $html; // Please ignore PHPCS warning for $html
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
