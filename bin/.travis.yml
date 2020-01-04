@@ -43,8 +43,9 @@ before_script:
   - cd $PLUGIN_DIR
   - cp -Rf * /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
   - cd /var/www/automation.rtmedia.me/htdocs/
-  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.5.0.0.zip
+  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.5.1.1.zip
   - wp plugin activate --all
+  - wp theme activate twentynineteen
   - cd $PLUGIN_DIR
   - cd tests/codeception/tests/_data
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
