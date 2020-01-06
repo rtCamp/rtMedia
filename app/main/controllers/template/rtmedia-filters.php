@@ -1,12 +1,14 @@
 <?php
 /**
+ * Media filters.
+ *
  * @package rtMedia
  */
 
 /**
  * Creating an album
  *
- * @param array $options
+ * @param array $options Options array.
  *
  * @return array|void
  * @global RTMediaQuery $rtmedia_query
@@ -60,7 +62,7 @@ add_filter( 'rtmedia_gallery_actions', 'rtmedia_create_album', 12 );
 /**
  * Edit album option
  *
- * @param array $options
+ * @param array $options Options array.
  *
  * @return array|void
  * @global RTMediaQuery $rtmedia_query
@@ -104,7 +106,7 @@ add_filter( 'rtmedia_gallery_actions', 'rtmedia_album_edit', 11 );
 /**
  * Add activity type
  *
- * @param array $actions
+ * @param array $actions Actions array.
  *
  * @return array
  */
@@ -120,7 +122,7 @@ add_filter( 'bp_activity_get_types', 'rtmedia_bp_activity_get_types', 10, 1 );
 /**
  * Checking if BuddyPress enable
  *
- * @param bool $flag
+ * @param bool $flag Check if Buddypress enable or not.
  *
  * @return bool
  * @global RTMediaQuery $rtmedia_query
@@ -141,16 +143,21 @@ function rtm_is_buddypress_enable( $flag ) {
 add_filter( 'rtm_main_template_buddypress_enable', 'rtm_is_buddypress_enable', 10, 1 );
 
 /**
- * we need to use show title filter when there is a request for template from rtMedia.backbone.js
+ * We need to use show title filter when there is a request for template from rtMedia.backbone.js
  *
- * @param bool $flag
+ * @param bool $flag Show title or not.
  *
  * @return bool
  */
 function rtmedia_media_gallery_show_title_template_request( $flag ) {
+	$media_title = filter_input( INPUT_POST, 'media_title', FILTER_SANITIZE_STRING );
 
-	if ( isset( $_REQUEST['media_title'] ) && 'false' === $_REQUEST['media_title'] ) {
-		return false;
+	if ( empty( $media_title ) ) {
+		$media_title = filter_input( INPUT_GET, 'media_title', FILTER_SANITIZE_STRING );
+	}
+
+	if ( ! empty( $media_title ) && 'false' === $media_title ) {
+		$flag = false;
 	}
 
 	return $flag;
@@ -159,16 +166,22 @@ function rtmedia_media_gallery_show_title_template_request( $flag ) {
 add_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_media_gallery_show_title_template_request', 10, 1 );
 
 /**
- * we need to use lightbox filter when there is a request for template from rtMedia.backbone.js
+ * We need to use lightbox filter when there is a request for template from rtMedia.backbone.js
  *
- * @param string $class
+ * @param string $class Classes for media div.
  *
  * @return string
  */
 function rtmedia_media_gallery_lightbox_template_request( $class ) {
 
-	if ( isset( $_REQUEST['lightbox'] ) && 'false' === $_REQUEST['lightbox'] ) {
-		return $class .= ' no-popup';
+	$lightbox = filter_input( INPUT_POST, 'lightbox', FILTER_SANITIZE_STRING );
+
+	if ( empty( $lightbox ) ) {
+		$lightbox = filter_input( INPUT_GET, 'lightbox', FILTER_SANITIZE_STRING );
+	}
+
+	if ( ! empty( $lightbox ) && 'false' === $lightbox ) {
+		$class .= ' no-popup';
 	}
 
 	return $class;
@@ -179,7 +192,7 @@ add_filter( 'rtmedia_gallery_list_item_a_class', 'rtmedia_media_gallery_lightbox
 /**
  * Fix for BuddyPress multilingual plugin on activity pages
  *
- * @param array $params
+ * @param array $params Array parameters.
  *
  * @return array
  */
@@ -210,7 +223,7 @@ add_filter( 'rtmedia_modify_upload_params', 'rtmedia_modify_activity_upload_url'
 /**
  * WordPress filter to change browser title if theme has title-tag support
  *
- * @param array $title
+ * @param array $title Title.
  *
  * @return array
  * @global RTMediaQuery $rtmedia_query
@@ -235,8 +248,8 @@ add_filter( 'document_title_parts', 'rtm_modify_document_title_parts', 30, 1 );
 /**
  * Replace original src with the transcoded media src
  *
- * @param string $html
- * @param object $rtmedia_media
+ * @param string $html HTML string.
+ * @param object $rtmedia_media RTMedia object.
  *
  * @return string
  */
@@ -257,9 +270,10 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 		return $html;
 	}
 
-	$medias = get_post_meta( $attachment_id, '_rt_media_transcoded_files', true );
+	$medias   = get_post_meta( $attachment_id, '_rt_media_transcoded_files', true );
+	$file_url = rtt_is_video_exists( $medias, $media_type );
 
-	if ( $file_url = rtt_is_video_exists( $medias, $media_type ) ) {
+	if ( ! empty( $file_url ) ) {
 		// for WordPress backward compatibility.
 		if ( function_exists( 'wp_get_upload_dir' ) ) {
 			$uploads = wp_get_upload_dir();
@@ -287,8 +301,8 @@ add_filter( 'rtmedia_single_content_filter', 'replace_src_with_transcoded_file_u
 /**
  * Replace aws url of image with the WordPress attachment url in buddypress activity
  *
- * @param string $html
- * @param object $rtmedia_media
+ * @param string $html HTML string.
+ * @param object $rtmedia_media RTMedia object.
  *
  * @return string
  */
@@ -299,9 +313,9 @@ function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
 	}
 
 	/**
-	 * Allow users/plugins to prevent replacing of URL from activty
+	 * Allow users/plugins to prevent replacing of URL from activity
 	 *
-	 * @var boolean                 Boolean false is passed as a parameter.
+	 * @var boolean               Boolean false is passed as a parameter.
 	 * @var object $rtmedia_media Object of rtmedia containing media_id, media_type etc.
 	 */
 	if ( apply_filters( 'replace_aws_img_urls_from_activity', false, $rtmedia_media ) ) {
@@ -359,7 +373,7 @@ add_filter( 'rtmedia_single_content_filter', 'replace_aws_img_urls_from_activity
  * When rtAmazon S3 is disabled we need to restore/replace the attachment URLS with the
  * original WordPress URL structure
  *
- * @param string        $content HTML contents of the activity
+ * @param string        $content HTML contents of the activity.
  * @param object|string $activity Activity object.
  *
  * @return string
@@ -484,10 +498,7 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 			$uploads = wp_upload_dir();
 		}
 
-		if ( 0 === strpos( $thumbnail_id, $uploads['baseurl'] ) ) {
-			// URL is clean here.
-			// Apply any filter here if its required.
-		} else {
+		if ( 0 !== strpos( $thumbnail_id, $uploads['baseurl'] ) ) {
 			$baseurl = $uploads['baseurl'];
 
 			$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
@@ -527,7 +538,7 @@ function rt_get_comment_link_callback( $link, $comment ) {
 
 	$rtmedia_media_id = rtmedia_id( $comment->comment_post_ID );
 
-	if ( get_post_type( $comment->comment_post_ID ) == 'attachment' && is_admin() && ! empty( $rtmedia_media_id ) ) {
+	if ( get_post_type( $comment->comment_post_ID ) === 'attachment' && is_admin() && ! empty( $rtmedia_media_id ) ) {
 		$link = esc_url( get_rtmedia_permalink( $rtmedia_media_id ) ) . '#rtmedia_comment_ul';
 	}
 	return $link;
@@ -566,55 +577,56 @@ function rtmedia_edit_media_on_database( $data, $post_ID ) {
 
 	$post = get_post( $post_ID );
 
-	if ( $_REQUEST ) {
+	$postid  = filter_input( INPUT_POST, 'postid', FILTER_VALIDATE_INT );
+	$action  = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
+	$context = sanitize_text_field( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING ) );
 
-		// @todo need to check why 'context' key is not set in $_REQUEST when user clicks on scale button on edit image.
-		if ( isset( $_REQUEST['postid'] ) && 'image-editor' == $_REQUEST['action'] && ! empty( $_REQUEST['context'] ) && 'edit-attachment' == $_REQUEST['context'] ) {
+	// @todo need to check why 'context' key is not set in $_REQUEST when user clicks on scale button on edit image.
+	if ( ! empty( $postid ) && 'image-editor' === $action && ! empty( $context ) && 'edit-attachment' === $context ) {
 
-			$media           = new RTMediaModel();
-			$media_available = $media->get_media(
-				array(
-					'media_id' => $_REQUEST['postid'],
-				),
-				0,
-				1
-			);
+		$media           = new RTMediaModel();
+		$media_available = $media->get_media(
+			array(
+				'media_id' => $postid,
+			),
+			0,
+			1
+		);
 
-			$media_id = $media_available[0]->id;
+		$media_id = $media_available[0]->id;
 
-			if ( ! empty( $media_available ) ) {
-				$rtmedia_filepath_old = rtmedia_image( 'rt_media_activity_image', $media_id, false );
+		if ( ! empty( $media_available ) ) {
+			$rtmedia_filepath_old = rtmedia_image( 'rt_media_activity_image', $media_id, false );
 
-				if ( isset( $rtmedia_filepath_old ) ) {
-					$is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $rtmedia_filepath_old );
+			if ( isset( $rtmedia_filepath_old ) ) {
+				$is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $rtmedia_filepath_old );
 
-					if ( $is_valid_url && function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
-						$thumbnailinfo = wp_get_attachment_image_src( $post_ID, 'rt_media_activity_image' );
-						$activity_id   = rtmedia_activity_id( $media_id );
+				if ( $is_valid_url && function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
+					$thumbnailinfo = wp_get_attachment_image_src( $post_ID, 'rt_media_activity_image' );
+					$activity_id   = rtmedia_activity_id( $media_id );
 
-						if ( $post_ID && ! empty( $activity_id ) ) {
-							global $wpdb, $bp;
+					if ( $post_ID && ! empty( $activity_id ) ) {
+						global $wpdb, $bp;
 
-							if ( ! empty( $bp->activity ) ) {
+						if ( ! empty( $bp->activity ) ) {
 
-								$media->model       = new RTMediaModel();
-								$related_media_data = $media->model->get( array( 'activity_id' => $activity_id ) );
-								$related_media      = array();
+							$media->model       = new RTMediaModel();
+							$related_media_data = $media->model->get( array( 'activity_id' => $activity_id ) );
+							$related_media      = array();
 
-								foreach ( $related_media_data as $activity_media ) {
-									$related_media[] = $activity_media->id;
-								}
-
-								$activity_text = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
-
-								$activity = new RTMediaActivity( $related_media, 0, $activity_text );
-
-								$activity_content_new = $activity->create_activity_html();
-
-								$activity_content = str_replace( $rtmedia_filepath_old, wp_get_attachment_url( $post_ID ), $activity_content_new );
-
-								$wpdb->update( $bp->activity->table_name, array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
+							foreach ( $related_media_data as $activity_media ) {
+								$related_media[] = $activity_media->id;
 							}
+
+							$activity_text = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
+
+							$activity = new RTMediaActivity( $related_media, 0, $activity_text );
+
+							$activity_content_new = $activity->create_activity_html();
+
+							$activity_content = str_replace( $rtmedia_filepath_old, wp_get_attachment_url( $post_ID ), $activity_content_new );
+
+							$wpdb->update( $bp->activity->table_name, array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
 						}
 					}
 				}
@@ -630,6 +642,10 @@ if ( ! function_exists( 'rtmedia_media_edit_priv_callback' ) ) {
 
 	/**
 	 * Disallow media edit for comment media
+	 *
+	 * @param bool $value If mmedia edit is allowed or not.
+	 *
+	 * @return bool
 	 */
 	function rtmedia_media_edit_priv_callback( $value ) {
 		// comment media.
@@ -653,7 +669,7 @@ if ( ! function_exists( 'rtmedia_author_actions_callback' ) ) {
 	/**
 	 * Disallow media author action
 	 *
-	 * @param $value
+	 * @param string $value Comment value.
 	 *
 	 * @return bool
 	 */
@@ -675,15 +691,17 @@ if ( ! function_exists( 'rtmedia_author_actions_callback' ) ) {
 add_filter( 'rtmedia_author_actions', 'rtmedia_author_actions_callback', 10, 1 );
 
 /**
- * @param $like_count
- * @param $user_like_it
+ * MMultiple like on media show.
+ *
+ * @param int  $like_count Total likes.
+ * @param true $user_like_it Current user liked it or not.
  *
  * @return string
  */
 function rtmedia_like_html_you_and_more_like_callback( $like_count, $user_like_it ) {
 	if ( $like_count > 1 && $user_like_it ) {
-		/* if login user has like the comment then less from the total count */
-		$like_count --;
+		// if login user has like the comment then less from the total count.
+		$like_count--;
 	}
 	return sprintf( '<span class="rtmedia-like-counter">%s</span>', $like_count );
 }
@@ -692,9 +710,9 @@ add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_mo
 /**
  * Update where query for media search
  *
- * @param string $where
- * @param string $table_name
- * @param string $join
+ * @param string $where Where condition query string.
+ * @param string $table_name Table name.
+ * @param string $join Join query string.
  *
  * @return string
  */
@@ -702,10 +720,10 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
 
-		$search                = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( urldecode( wp_unslash( $_REQUEST['search'] ) ) ) : '';
-		$search_by             = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
-		$media_type            = ( isset( $_REQUEST['media_type'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['media_type'] ) ) : '';
-		$rtmedia_current_album = ( isset( $_REQUEST['rtmedia-current-album'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['rtmedia-current-album'] ) ) : '';
+		$search                = sanitize_text_field( urldecode( wp_unslash( filter_input( INPUT_POST, 'search', FILTER_SANITIZE_STRING ) ) ) );
+		$search_by             = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search_by', FILTER_SANITIZE_STRING ) ) );
+		$media_type            = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'media_type', FILTER_SANITIZE_STRING ) ) );
+		$rtmedia_current_album = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'rtmedia-current-album', FILTER_SANITIZE_STRING ) ) );
 
 		if ( '' !== $search ) {
 			$author_id   = rtm_select_user( $search );
@@ -788,8 +806,8 @@ add_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 1
 /**
  * Update join query for media search
  *
- * @param string $join
- * @param string $table_name
+ * @param string $join Join query string.
+ * @param string $table_name Table name.
  *
  * @return string
  */
@@ -802,8 +820,8 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 		$terms_table              = $wpdb->terms;
 		$term_relationships_table = $wpdb->term_relationships;
 		$term_taxonomy_table      = $wpdb->term_taxonomy;
-		$search                   = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
-		$search_by                = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
+		$search                   = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search', FILTER_SANITIZE_STRING ) ) );
+		$search_by                = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search_by', FILTER_SANITIZE_STRING ) ) );
 
 		if ( '' !== $search ) {
 				$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
@@ -825,13 +843,14 @@ add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11,
 /**
  * Update media type for media search
  *
- * @param array $columns
+ * @param array $columns Query columns.
  *
  * @return array
  */
 function rtmedia_model_query_columns( $columns ) {
-	$search    = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
-	$search_by = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
+	$search    = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search', FILTER_SANITIZE_STRING ) ) );
+	$search_by = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search_by', FILTER_SANITIZE_STRING ) ) );
+
 	if ( ! empty( $search ) ) {
 		if ( ! empty( $search_by ) && 'media_type' === $search_by ) {
 			if ( isset( $columns['media_type']['value'] ) && is_array( $columns['media_type']['value'] ) ) {
@@ -847,16 +866,16 @@ add_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns', 10, 1 
 /**
  * Add link for @mentions of the username in the comment or the activity section after the media delete or media is trancoder
  *
- * @param $retval
- * @param $activity_id
- * @param $meta_key
- * @param $single
+ * @param string $retval Meta Value.
+ * @param int    $activity_id activity id.
+ * @param string $meta_key Meta key.
+ * @param bool   $single Single value or not.
  *
  * @return mixed
  */
 function rtmedia_bp_activity_get_meta_callback( $retval, $activity_id, $meta_key, $single ) {
 	$new_retval = $retval;
-	if ( 'bp_activity_text' == $meta_key && true == $single && function_exists( 'bp_activity_at_name_filter' ) ) {
+	if ( 'bp_activity_text' === $meta_key && true === $single && function_exists( 'bp_activity_at_name_filter' ) ) {
 		$new_retval = bp_activity_at_name_filter( $new_retval );
 	}
 	return $new_retval;
@@ -868,7 +887,7 @@ if ( ! function_exists( 'rtmedia_gallery_shortcode_parameter_pre_filter_callback
 	/**
 	 * Remove unwanted attr of sorting when rtmedia-sorting addon is not there
 	 *
-	 * @param $attr
+	 * @param array $attr Attributes array.
 	 *
 	 * @return mixed
 	 */
