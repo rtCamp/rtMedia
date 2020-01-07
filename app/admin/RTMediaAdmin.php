@@ -232,9 +232,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				echo '</script>';
 			}
 
-			$page = sanitize_text_field( filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING ) );
+			$page_name = sanitize_text_field( filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING ) );
 
-			if ( ! empty( $page ) && 'rtmedia-settings' === $page ) {
+			if ( ! empty( $page_name ) && 'rtmedia-settings' === $page_name ) {
 				/**
 				 * Filter is use to enable comment option in side the media that are being uploaded in the comment section.
 				 *
@@ -1201,8 +1201,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return string | array
 		 */
 		public static function get_current_tab() {
-			$page = sanitize_text_field( filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING ) );
-			return isset( $page ) ? $page : 'rtmedia-settings';
+			$page_name = sanitize_text_field( filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING ) );
+			return isset( $page_name ) ? $page_name : 'rtmedia-settings';
 		}
 
 		/**
@@ -1211,12 +1211,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @access public
 		 * @global      string 'buddypress-media'
 		 *
-		 * @param  string $page page name to render.
+		 * @param  string $page_name page name to render.
 		 * @param  array  $option_group option group.
 		 *
 		 * @return void
 		 */
-		public function render_page( $page, $option_group = null ) {
+		public function render_page( $page_name, $option_group = null ) {
 			?>
 
 			<div class="wrap bp-media-admin <?php echo esc_attr( $this->get_current_tab() ); ?>">
@@ -1239,7 +1239,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					<div id="bp-media-settings-boxes" class="bp-media-settings-boxes-container rtm-setting-container">
 
 						<?php
-						if ( 'rtmedia-settings' === $page ) {
+						if ( 'rtmedia-settings' === $page_name ) {
 							?>
 							<form id="bp_media_settings_form" name="bp_media_settings_form" method="post" enctype="multipart/form-data">
 							<div class="bp-media-metabox-holder">
@@ -1257,13 +1257,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 								</div>
 								<?php
 								settings_fields( $option_group );
-								if ( 'rtmedia-settings' === $page ) {
+								if ( 'rtmedia-settings' === $page_name ) {
 									echo '<div id="rtm-settings-tabs">';
 									$sub_tabs = $this->settings_sub_tabs();
-									RTMediaFormHandler::rtForm_settings_tabs_content( $page, $sub_tabs );
+									RTMediaFormHandler::rtForm_settings_tabs_content( $page_name, $sub_tabs );
 									echo '</div>';
 								} else {
-									do_settings_sections( $page );
+									do_settings_sections( $page_name );
 								}
 								?>
 
@@ -1293,25 +1293,25 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							?>
 							<div class="bp-media-metabox-holder">
 								<?php
-								if ( 'rtmedia-addons' === $page ) {
-									RTMediaAddon::render_addons( $page );
-								} elseif ( 'rtmedia-support' === $page ) {
+								if ( 'rtmedia-addons' === $page_name ) {
+									RTMediaAddon::render_addons( $page_name );
+								} elseif ( 'rtmedia-support' === $page_name ) {
 									$rtmedia_support = new RTMediaSupport( false );
-									$rtmedia_support->render_support( $page );
-								} elseif ( 'rtmedia-themes' === $page ) {
-									RTMediaThemes::render_themes( $page );
+									$rtmedia_support->render_support( $page_name );
+								} elseif ( 'rtmedia-themes' === $page_name ) {
+									RTMediaThemes::render_themes( $page_name );
 								} else {
-									if ( 'rtmedia-license' === $page ) {
-										RTMediaLicense::render_license( $page );
+									if ( 'rtmedia-license' === $page_name ) {
+										RTMediaLicense::render_license( $page_name );
 									} else {
-										do_settings_sections( $page );
+										do_settings_sections( $page_name );
 									}
 								}
-								do_action( 'rtmedia_admin_page_insert', $page );
+								do_action( 'rtmedia_admin_page_insert', $page_name );
 								?>
 							</div>
 							<?php
-							do_action( 'rtmedia_admin_page_append', $page );
+							do_action( 'rtmedia_admin_page_append', $page_name );
 						}
 						?>
 					</div>
@@ -1428,18 +1428,18 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  string $page page name.
+		 * @param  string $page_name page name.
 		 *
 		 * @return void
 		 */
-		public function settings_content_tabs( $page ) {
+		public function settings_content_tabs( $page_name ) {
 			global $wp_settings_sections, $wp_settings_fields;
 
-			if ( ! isset( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $page ] ) ) {
+			if ( ! isset( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $page_name ] ) ) {
 				return;
 			}
 
-			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+			foreach ( (array) $wp_settings_sections[ $page_name ] as $section ) {
 				if ( $section['title'] ) {
 					?>
 					<h3><?php esc_html( $section['title'] ); ?></h3>
@@ -1450,12 +1450,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					call_user_func( $section['callback'], $section );
 				}
 
-				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
+				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page_name ] ) || ! isset( $wp_settings_fields[ $page_name ][ $section['id'] ] ) ) {
 					continue;
 				}
 
 				echo '<table class="form-table">';
-				do_settings_fields( $page, $section['id'] );
+				do_settings_fields( $page_name, $section['id'] );
 				echo '</table>';
 			}
 		}
@@ -1936,11 +1936,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		/**
 		 * Render Admin UI.
 		 *
-		 * @param string $page Page name.
+		 * @param string $page_name Page name.
 		 * @param array  $sub_tabs Sub tabs for page.
 		 * @param array  $args Arguments to render page.
 		 */
-		public static function render_admin_ui( $page, $sub_tabs, $args = array() ) {
+		public static function render_admin_ui( $page_name, $sub_tabs, $args = array() ) {
 
 			// wrapper class.
 			$wrapper_class = '';
@@ -1949,12 +1949,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			// tabs.
-			if ( 'rtmedia-settings' === $page ) {
+			if ( 'rtmedia-settings' === $page_name ) {
 				$sub_tabs = apply_filters( 'rtmedia_pro_settings_tabs_content', $sub_tabs );
 				ksort( $sub_tabs );
 			}
 			$tab_position_class = 'rtm-vertical-tabs';
-			if ( 'rtmedia-addons' === $page ) {
+			if ( 'rtmedia-addons' === $page_name ) {
 				$tab_position_class = 'rtm-horizotanl-tabs';
 			}
 			?>
@@ -2012,9 +2012,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						$tab_without_hash = $tab_without_hash[1];
 						echo '<div class="rtm-content' . esc_attr( $active_class ) . '" id="' . esc_attr( $tab_without_hash ) . '">';
 						if ( isset( $tab['args'] ) ) {
-							call_user_func( $tab['callback'], $page, $tab['args'] );
+							call_user_func( $tab['callback'], $page_name, $tab['args'] );
 						} else {
-							call_user_func( $tab['callback'], $page );
+							call_user_func( $tab['callback'], $page_name );
 						}
 						echo '</div>';
 					}
@@ -2034,8 +2034,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return array $removable_query_args
 		 */
 		public function removable_query_args( $removable_query_args ) {
-			$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
-			if ( isset( $page ) && 'rtmedia-settings' === $page ) {
+			$page_name = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+			if ( isset( $page_name ) && 'rtmedia-settings' === $page_name ) {
 				$removable_query_args[] = 'settings-saved';
 			}
 
@@ -2051,14 +2051,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function rtm_addon_license_notice() {
 
-			$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
-			$args = array(
+			$page_name = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+			$args      = array(
 				'a' => array(
 					'href' => array(),
 				),
 			);
 
-			if ( ! empty( $page ) && 'rtmedia-license' === $page ) {
+			if ( ! empty( $page_name ) && 'rtmedia-license' === $page_name ) {
 				$my_account  = 'https://rtmedia.io/my-account';
 				$license_doc = 'https://rtmedia.io/docs/license/';
 
