@@ -103,7 +103,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  string $sql SQL query string.
+		 * @param  string $sql SQL.
 		 *
 		 * @return void
 		 */
@@ -155,19 +155,11 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 		 */
 		public function do_upgrade() {
 			global $wpdb;
-
 			if ( version_compare( $this->db_version, $this->install_db_version, '>' ) ) {
-
-				$path   = $this->schema_path;
-				$handle = opendir( $path );
-
-				if ( ! empty( $handle ) ) {
-					$entry = readdir( $handle );
-
-					while ( false !== $entry ) {
-
+				$path = $this->schema_path;
+				if ( $handle = opendir( $path ) ) {
+					while ( false !== ( $entry = readdir( $handle ) ) ) {
 						if ( '.' !== $entry && '..' !== $entry ) {
-
 							if ( false !== strpos( $entry, '.schema' ) && file_exists( $path . '/' . $entry ) ) {
 								if ( is_multisite() ) {
 									$table_name = str_replace( '.schema', '', strtolower( $entry ) );
@@ -177,11 +169,11 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 										$table_name = ( ( $this->mu_single_table ) ? $wpdb->base_prefix : $wpdb->prefix ) . 'rt_' . $table_name;
 										if ( $tb_name !== $table_name ) {
 											$alter_sql = 'ALTER TABLE ' . $tb_name . ' RENAME TO ' . $table_name;
-											$wpdb->query( $alter_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+											$wpdb->query( $alter_sql ); // @codingStandardsIgnoreLine
 										}
 									}
 								}
-								$this->create_table( $this->genrate_sql( $entry, file_get_contents( $path . '/' . $entry ) ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+								$this->create_table( $this->genrate_sql( $entry, file_get_contents( $path . '/' . $entry ) ) );
 							}
 						}
 					}
@@ -197,7 +189,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 		}
 
 		/**
-		 * Check if given table exists.
+		 * Check if table_exists.
 		 *
 		 * @access static
 		 *
@@ -231,7 +223,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 		}
 
 		/**
-		 * Generate table name according to filename.
+		 * Generate table_name.
 		 *
 		 * @access public
 		 *

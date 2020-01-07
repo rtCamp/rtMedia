@@ -14,7 +14,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 	class RTMediaAdmin {
 
 		/**
-		 * Check if rtmedia upgrade available
+		 * Variable for rtmedia_upgrade
 		 *
 		 * @var mixed rtmedia_upgrade
 		 */
@@ -35,14 +35,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public $rtmedia_encoding;
 
 		/**
-		 * Support class object.
+		 * Support.
 		 *
 		 * @var RTMediaSupport
 		 */
 		public $rtmedia_support;
 
 		/**
-		 * Feed for rtMedia.
+		 * Feed.
 		 *
 		 * @var mixed
 		 */
@@ -67,25 +67,21 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			add_action( 'wp_ajax_rtmedia_submit_request', array( $this->rtmedia_support, 'submit_request' ), 1 );
 
-			add_action( 'wp_ajax_rtmedia_linkback', array( $this, 'linkback' ), 1 ); // todo: is it being used ?
+			add_action( 'wp_ajax_rtmedia_linkback', array( $this, 'linkback' ), 1 ); // fixme : is it being used ?
 			add_action( 'wp_ajax_rtmedia_rt_album_deactivate', 'BPMediaAlbumimporter::bp_album_deactivate', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_import', 'BPMediaAlbumimporter::bpmedia_ajax_import_callback', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_import_favorites', 'BPMediaAlbumimporter::bpmedia_ajax_import_favorites', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_import_step_favorites', 'BPMediaAlbumimporter::bpmedia_ajax_import_step_favorites', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_cleanup', 'BPMediaAlbumimporter::cleanup_after_install' );
-			add_action( 'wp_ajax_rtmedia_convert_videos_form', array( $this, 'convert_videos_mailchimp_send' ), 1 ); // todo: is it being used ?
+			add_action( 'wp_ajax_rtmedia_convert_videos_form', array( $this, 'convert_videos_mailchimp_send' ), 1 ); // fixme : is it being used ?
 			add_action( 'wp_ajax_rtmedia_correct_upload_filetypes', array( $this, 'correct_upload_filetypes' ), 1 );
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_meta_premium_addon_link' ), 1, 2 );
 			add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widgets' ), 0 );
 			add_action( 'wp_ajax_rtmedia_export_settings', array( $this, 'export_settings' ), 10 );
-			add_action(
-				'wp_ajax_rtmedia_hide_addon_update_notice',
-				array(
-					$this,
-					'rtmedia_hide_addon_update_notice',
-				),
-				1
-			);
+			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array(
+				$this,
+				'rtmedia_hide_addon_update_notice',
+			), 1 );
 			add_filter( 'media_row_actions', array( $this, 'modify_medialibrary_permalink' ), 10, 2 );
 
 			if ( ! isset( $rtmedia->options ) ) {
@@ -128,31 +124,19 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				add_action( 'admin_init', array( $this, 'check_permalink_admin_notice' ) );
 			}
 
-			add_action(
-				'wp_ajax_rtmedia_hide_template_override_notice',
-				array(
-					$this,
-					'rtmedia_hide_template_override_notice',
-				),
-				1
-			);
+			add_action( 'wp_ajax_rtmedia_hide_template_override_notice', array(
+				$this,
+				'rtmedia_hide_template_override_notice',
+			), 1 );
 			add_action( 'admin_init', array( $this, 'rtmedia_bp_add_update_type' ) );
-			add_action(
-				'wp_ajax_rtmedia_hide_inspirebook_release_notice',
-				array(
-					$this,
-					'rtmedia_hide_inspirebook_release_notice',
-				),
-				1
-			);
-			add_action(
-				'wp_ajax_rtmedia_hide_social_sync_notice',
-				array(
-					$this,
-					'rtmedia_hide_social_sync_notice',
-				),
-				1
-			);
+			add_action( 'wp_ajax_rtmedia_hide_inspirebook_release_notice', array(
+				$this,
+				'rtmedia_hide_inspirebook_release_notice',
+			), 1 );
+			add_action( 'wp_ajax_rtmedia_hide_social_sync_notice', array(
+				$this,
+				'rtmedia_hide_social_sync_notice',
+			), 1 );
 			add_action( 'wp_ajax_rtmedia_hide_premium_addon_notice', array( $this, 'rtmedia_hide_premium_addon_notice' ), 1 );
 
 			new RTMediaMediaSizeImporter(); // do not delete this line. We only need to create object of this class if we are in admin section.
@@ -178,7 +162,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function install_transcoder_admin_notice() {
 			$show_notice = get_site_option( 'install_transcoder_admin_notice', 1 );
 			if ( '1' === $show_notice || 1 === $show_notice ) :
-				?>
+		?>
 			<div class="notice notice-info install-transcoder-notice is-dismissible">
 				<?php wp_nonce_field( '_install_transcoder_hide_notice_', 'install_transcoder_hide_notice_nonce' ); ?>
 				<p>
@@ -206,7 +190,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					});
 				});
 			</script>
-				<?php
+		<?php
 			endif;
 		}
 
@@ -221,7 +205,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Include admin templates.
+		 * Function for admin templates.
 		 */
 		public function rtm_admin_templates() {
 			foreach ( glob( RTMEDIA_PATH . 'app/admin/templates/*.php' ) as $filename ) {
@@ -232,7 +216,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				echo '</script>';
 			}
 
-			$page = sanitize_text_field( filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING ) );
+			$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
 			if ( ! empty( $page ) && 'rtmedia-settings' === $page ) {
 				/**
@@ -258,7 +242,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		/**
 		 * Function to modify media library permalink.
 		 *
-		 * @param array  $action Action details array.
+		 * @param string $action Action.
 		 * @param object $post Post Object.
 		 *
 		 * @return mixed
@@ -271,14 +255,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$title = _draft_or_post_title( $post->post_parent );
 
 				// translators: Title.
-				$action['view'] = '<a href="' . esc_url( $link ) . '" title="' . esc_attr( sprintf( 'View &#8220;%s&#8221;', $title ) ) . '" rel="permalink">' . esc_html__( 'View', 'buddypress-media' ) . '</a>';
+				$action['view'] = '<a href="' . esc_url( $link ) . '" title="' . esc_attr( sprintf( esc_html__( 'View &#8220;%s&#8221;', 'buddypress-media' ), $title ) ) . '" rel="permalink">' . esc_html__( 'View', 'buddypress-media' ) . '</a>';
 			}
 
 			return $action;
 		}
 
 		/**
-		 * Get rtmedia migration object.
+		 * Rtmedia migration.
 		 */
 		public function rtmedia_migration() {
 			new RTMediaMigration();
@@ -344,17 +328,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							?>
 							<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
 							<?php
-							echo wp_kses(
-								$message,
-								array(
-									'a' => array(
-										'href' => array(),
-									),
-								)
-							);
+							echo wp_kses( $message, array(
+								'a' => array(
+									'href' => array(),
+								),
+							) );
 							?>
 						</span>
-						<a href="#" onclick="rtmedia_hide_premium_addon_notice('<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>');" style="float:right"><?php esc_html_e( 'Dismiss', 'buddypress-media' ); ?>></a>
+						<a href="#" onclick="rtmedia_hide_premium_addon_notice('<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>');" style="float:right">Dismiss</a>
 					</p>
 				</div>
 				<script type="text/javascript">
@@ -641,7 +622,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						global $wpdb;
 						$results = wp_cache_get( 'rt-stats', 'rt-dashboard' );
 						if ( false === $results ) {
-							$results = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id=%d group by media_type", get_current_blog_id() ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+							$results = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id=%d group by media_type", get_current_blog_id() ) ); // @codingStandardsIgnoreLine
 							wp_cache_set( 'stats', $results, 'rt-dashboard', HOUR_IN_SECONDS );
 						}
 						if ( $results ) {
@@ -680,7 +661,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						<?php
 						$with_media_count = wp_cache_get( 'with_media', 'rt-dashboard' );
 						if ( false === $with_media_count ) {
-							$with_media_count = $wpdb->get_var( "select count(distinct media_author) from {$rtmedia_model->table_name}" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+							$with_media_count = $wpdb->get_var( "select count(distinct media_author) from {$rtmedia_model->table_name}" ); // @codingStandardsIgnoreLine
 							wp_cache_set( 'with_media', $with_media_count, 'rt-dashboard', HOUR_IN_SECONDS );
 						}
 						?>
@@ -691,7 +672,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						<?php
 						$comments = wp_cache_get( 'comments', 'rt-dashboard' );
 						if ( false === $comments ) {
-							$comments = $wpdb->get_var( "select count(*) from {$wpdb->comments} where comment_post_ID in ( select media_id from {$rtmedia_model->table_name} )" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+							$comments = $wpdb->get_var( "select count(*) from {$wpdb->comments} where comment_post_ID in ( select media_id from {$rtmedia_model->table_name} )" ); // @codingStandardsIgnoreLine
 							wp_cache_set( 'comments', $comments, 'rt-dashboard', HOUR_IN_SECONDS );
 						}
 						?>
@@ -702,7 +683,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						<?php
 						$likes = wp_cache_get( 'likes', 'rt-dashboard' );
 						if ( false === $likes ) {
-							$likes = $wpdb->get_var( "select sum(likes) from {$rtmedia_model->table_name}" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+							$likes = $wpdb->get_var( "select sum(likes) from {$rtmedia_model->table_name}" ); // @codingStandardsIgnoreLine
 							wp_cache_set( 'likes', $likes, 'rt-dashboard', HOUR_IN_SECONDS );
 						}
 						?>
@@ -739,14 +720,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return void
 		 */
 		public function add_dashboard_widgets() {
-			wp_add_dashboard_widget(
-				'rtmedia_dashboard_widget',
-				esc_html__( 'Right Now in rtMedia', 'buddypress-media' ),
-				array(
-					&$this,
-					'rtmedia_dashboard_widget_function',
-				)
-			);
+			wp_add_dashboard_widget( 'rtmedia_dashboard_widget', esc_html__( 'Right Now in rtMedia', 'buddypress-media' ), array(
+				&$this,
+				'rtmedia_dashboard_widget_function',
+			) );
 			global $wp_meta_boxes;
 
 			// Get the regular dashboard widgets array
@@ -761,7 +738,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$sorted_dashboard = array_merge( $example_widget_backup, $normal_dashboard );
 
 			// Save the sorted array back into the original metaboxes.
-			$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+			$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
 		}
 
 		/**
@@ -769,7 +746,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  array $links Existing links array.
+		 * @param  array $links Links.
 		 *
 		 * @return array $links
 		 */
@@ -796,95 +773,81 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				return;
 			}
 
-			$admin_bar->add_menu(
-				array(
-					'id'    => 'rtMedia',
-					'title' => 'rtMedia',
-					'href'  => admin_url( 'admin.php?page=rtmedia-settings' ),
-					'meta'  => array(
-						'title' => esc_html__( 'rtMedia', 'buddypress-media' ),
-					),
-				)
-			);
-			$admin_bar->add_menu(
-				array(
-					'id'     => 'rt-media-dashborad',
-					'parent' => 'rtMedia',
+			$admin_bar->add_menu( array(
+				'id'    => 'rtMedia',
+				'title' => 'rtMedia',
+				'href'  => admin_url( 'admin.php?page=rtmedia-settings' ),
+				'meta'  => array(
+					'title' => esc_html__( 'rtMedia', 'buddypress-media' ),
+				),
+			) );
+			$admin_bar->add_menu( array(
+				'id'     => 'rt-media-dashborad',
+				'parent' => 'rtMedia',
+				'title'  => esc_html__( 'Settings', 'buddypress-media' ),
+				'href'   => admin_url( 'admin.php?page=rtmedia-settings' ),
+				'meta'   => array(
 					'title'  => esc_html__( 'Settings', 'buddypress-media' ),
-					'href'   => admin_url( 'admin.php?page=rtmedia-settings' ),
-					'meta'   => array(
-						'title'  => esc_html__( 'Settings', 'buddypress-media' ),
-						'target' => '_self',
-					),
-				)
-			);
+					'target' => '_self',
+				),
+			) );
 			if ( ! is_rtmedia_vip_plugin() ) {
-				$admin_bar->add_menu(
-					array(
-						'id'     => 'rt-media-addons',
-						'parent' => 'rtMedia',
-						'title'  => esc_html__( 'Addons', 'buddypress-media' ),
-						'href'   => admin_url( 'admin.php?page=rtmedia-addons' ),
-						'meta'   => array(
-							'title'  => esc_html__( 'Addons', 'buddypress-media' ),
-							'target' => '_self',
-						),
-					)
-				);
-			}
-			$admin_bar->add_menu(
-				array(
-					'id'     => 'rt-media-support',
+				$admin_bar->add_menu( array(
+					'id'     => 'rt-media-addons',
 					'parent' => 'rtMedia',
-					'title'  => esc_html__( 'Support', 'buddypress-media' ),
-					'href'   => admin_url( 'admin.php?page=rtmedia-support' ),
+					'title'  => esc_html__( 'Addons', 'buddypress-media' ),
+					'href'   => admin_url( 'admin.php?page=rtmedia-addons' ),
 					'meta'   => array(
-						'title'  => esc_html__( 'Support', 'buddypress-media' ),
+						'title'  => esc_html__( 'Addons', 'buddypress-media' ),
 						'target' => '_self',
 					),
-				)
-			);
+				) );
+			}
+			$admin_bar->add_menu( array(
+				'id'     => 'rt-media-support',
+				'parent' => 'rtMedia',
+				'title'  => esc_html__( 'Support', 'buddypress-media' ),
+				'href'   => admin_url( 'admin.php?page=rtmedia-support' ),
+				'meta'   => array(
+					'title'  => esc_html__( 'Support', 'buddypress-media' ),
+					'target' => '_self',
+				),
+			) );
 			if ( ! is_rtmedia_vip_plugin() ) {
-				$admin_bar->add_menu(
-					array(
-						'id'     => 'rt-media-themes',
-						'parent' => 'rtMedia',
+				$admin_bar->add_menu( array(
+					'id'     => 'rt-media-themes',
+					'parent' => 'rtMedia',
+					'title'  => esc_html__( 'Themes', 'buddypress-media' ),
+					'href'   => admin_url( 'admin.php?page=rtmedia-themes' ),
+					'meta'   => array(
 						'title'  => esc_html__( 'Themes', 'buddypress-media' ),
-						'href'   => admin_url( 'admin.php?page=rtmedia-themes' ),
-						'meta'   => array(
-							'title'  => esc_html__( 'Themes', 'buddypress-media' ),
-							'target' => '_self',
-						),
-					)
-				);
+						'target' => '_self',
+					),
+				) );
 			}
 			if ( ! is_rtmedia_vip_plugin() ) {
-				$admin_bar->add_menu(
-					array(
-						'id'     => 'rt-media-hire-us',
-						'parent' => 'rtMedia',
+				$admin_bar->add_menu( array(
+					'id'     => 'rt-media-hire-us',
+					'parent' => 'rtMedia',
+					'title'  => esc_html__( 'Hire Us', 'buddypress-media' ),
+					'href'   => admin_url( 'admin.php?page=rtmedia-hire-us' ),
+					'meta'   => array(
 						'title'  => esc_html__( 'Hire Us', 'buddypress-media' ),
-						'href'   => admin_url( 'admin.php?page=rtmedia-hire-us' ),
-						'meta'   => array(
-							'title'  => esc_html__( 'Hire Us', 'buddypress-media' ),
-							'target' => '_self',
-						),
-					)
-				);
+						'target' => '_self',
+					),
+				) );
 			}
 			if ( has_filter( 'rtmedia_license_tabs' ) || has_action( 'rtmedia_addon_license_details' ) ) {
-				$admin_bar->add_menu(
-					array(
-						'id'     => 'rt-media-license',
-						'parent' => 'rtMedia',
+				$admin_bar->add_menu( array(
+					'id'     => 'rt-media-license',
+					'parent' => 'rtMedia',
+					'title'  => esc_html__( 'Licenses', 'buddypress-media' ),
+					'href'   => admin_url( 'admin.php?page=rtmedia-license' ),
+					'meta'   => array(
 						'title'  => esc_html__( 'Licenses', 'buddypress-media' ),
-						'href'   => admin_url( 'admin.php?page=rtmedia-license' ),
-						'meta'   => array(
-							'title'  => esc_html__( 'Licenses', 'buddypress-media' ),
-							'target' => '_self',
-						),
-					)
-				);
+						'target' => '_self',
+					),
+				) );
 			}
 		}
 
@@ -893,7 +856,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  string $hook Hook name.
+		 * @param  string $hook hook.
 		 *
 		 * @return void
 		 */
@@ -971,11 +934,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_support_strings', $rtmedia_admin_support_strings );
 
-				// Only one CSS file should enqueue.
+				/* Only one CSS file should enqueue */
 				wp_enqueue_style( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/css/admin' . $suffix . '.css', '', RTMEDIA_VERSION );
 			} else {
 
-				// This CSS is using for "Right Now in rtMedia" Widget section on Dashboard.
+				/* This CSS is using for "Right Now in rtMedia" Widget section on Dashboard */
 				wp_enqueue_style( 'rtmedia-widget', RTMEDIA_URL . 'app/assets/admin/css/widget' . $suffix . '.css', '', RTMEDIA_VERSION );
 			}
 		}
@@ -989,95 +952,45 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return void
 		 */
 		public function menu() {
-			add_menu_page(
-				'rtMedia',
-				'rtMedia',
-				'manage_options',
-				'rtmedia-settings',
-				array(
-					$this,
-					'settings_page',
-				),
-				RTMEDIA_URL . 'app/assets/admin/img/rtmedia-logo.png',
-				'40.1111'
-			);
+			add_menu_page( 'rtMedia', 'rtMedia', 'manage_options', 'rtmedia-settings', array(
+				$this,
+				'settings_page',
+			), RTMEDIA_URL . 'app/assets/admin/img/rtmedia-logo.png', '40.1111' );
 
-			add_submenu_page(
-				'rtmedia-settings',
-				esc_html__( 'Settings', 'buddypress-media' ),
-				esc_html__( 'Settings', 'buddypress-media' ),
-				'manage_options',
-				'rtmedia-settings',
-				array(
-					$this,
-					'settings_page',
-				)
-			);
+			add_submenu_page( 'rtmedia-settings', esc_html__( 'Settings', 'buddypress-media' ), esc_html__( 'Settings', 'buddypress-media' ), 'manage_options', 'rtmedia-settings', array(
+				$this,
+				'settings_page',
+			) );
 
-			add_submenu_page(
-				'rtmedia-settings',
-				esc_html__( 'Addons', 'buddypress-media' ),
-				esc_html__( 'Addons', 'buddypress-media' ),
-				'manage_options',
-				'rtmedia-addons',
-				array(
-					$this,
-					'addons_page',
-				)
-			);
+			add_submenu_page( 'rtmedia-settings', esc_html__( 'Addons', 'buddypress-media' ), esc_html__( 'Addons', 'buddypress-media' ), 'manage_options', 'rtmedia-addons', array(
+				$this,
+				'addons_page',
+			) );
 
-			add_submenu_page(
-				'rtmedia-settings',
-				esc_html__( 'Support', 'buddypress-media' ),
-				esc_html__( 'Support', 'buddypress-media' ),
-				'manage_options',
-				'rtmedia-support',
-				array(
-					$this,
-					'support_page',
-				)
-			);
+			add_submenu_page( 'rtmedia-settings', esc_html__( 'Support', 'buddypress-media' ), esc_html__( 'Support', 'buddypress-media' ), 'manage_options', 'rtmedia-support', array(
+				$this,
+				'support_page',
+			) );
 
 			if ( ! is_rtmedia_vip_plugin() ) {
-				add_submenu_page(
-					'rtmedia-settings',
-					esc_html__( 'Themes', 'buddypress-media' ),
-					esc_html__( 'Themes', 'buddypress-media' ),
-					'manage_options',
-					'rtmedia-themes',
-					array(
-						$this,
-						'theme_page',
-					)
-				);
+				add_submenu_page( 'rtmedia-settings', esc_html__( 'Themes', 'buddypress-media' ), esc_html__( 'Themes', 'buddypress-media' ), 'manage_options', 'rtmedia-themes', array(
+					$this,
+					'theme_page',
+				) );
 			}
 
 			if ( ! is_rtmedia_vip_plugin() ) {
-				add_submenu_page(
-					'rtmedia-settings',
-					esc_html__( 'Hire Us', 'buddypress-media' ),
-					esc_html__( 'Hire Us', 'buddypress-media' ),
-					'manage_options',
-					'rtmedia-hire-us',
-					array(
-						$this,
-						'hire_us_page',
-					)
-				);
+				add_submenu_page( 'rtmedia-settings', esc_html__( 'Hire Us', 'buddypress-media' ), esc_html__( 'Hire Us', 'buddypress-media' ), 'manage_options', 'rtmedia-hire-us', array(
+					$this,
+					'hire_us_page',
+				) );
 			}
 
 			if ( has_filter( 'rtmedia_license_tabs' ) || has_action( 'rtmedia_addon_license_details' ) ) {
-				add_submenu_page(
-					'rtmedia-settings',
-					esc_html__( 'Licenses', 'buddypress-media' ),
-					esc_html__( 'Licenses', 'buddypress-media' ),
-					'manage_options',
-					'rtmedia-license',
-					array(
-						$this,
-						'license_page',
-					)
-				);
+				add_submenu_page( 'rtmedia-settings', esc_html__( 'Licenses', 'buddypress-media' ), esc_html__( 'Licenses', 'buddypress-media' ), 'manage_options', 'rtmedia-license', array(
+					$this,
+					'license_page',
+				) );
 			}
 
 		}
@@ -1201,7 +1114,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return string | array
 		 */
 		public static function get_current_tab() {
-			$page = sanitize_text_field( filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING ) );
+			$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
 			return isset( $page ) ? $page : 'rtmedia-settings';
 		}
 
@@ -1211,7 +1124,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @access public
 		 * @global      string 'buddypress-media'
 		 *
-		 * @param  string $page page name to render.
+		 * @param  string $page page.
 		 * @param  array  $option_group option group.
 		 *
 		 * @return void
@@ -1269,18 +1182,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 								<div class="rtm-button-container bottom">
 									<div class="rtm-social-links alignleft">
-										<a href="http://twitter.com/rtMediaWP" class="twitter" target="_blank">
-											<span class="dashicons dashicons-twitter"></span>
-										</a>
-										<a href="https://www.facebook.com/rtmediawp" class="facebook" target="_blank">
-											<span class="dashicons dashicons-facebook"></span>
-										</a>
-										<a href="http://profiles.wordpress.org/rtcamp" class="wordpress" target="_blank">
-											<span class="dashicons dashicons-wordpress"></span>
-										</a>
-										<a href="https://rtmedia.io/feed/" class="rss" target="_blank">
-											<span class="dashicons dashicons-rss"></span>
-										</a>
+										<a href="http://twitter.com/rtMediaWP" class="twitter" target="_blank"><span
+												class="dashicons dashicons-twitter"></span></a>
+										<a href="https://www.facebook.com/rtmediawp" class="facebook"
+										   target="_blank"><span class="dashicons dashicons-facebook"></span></a>
+										<a href="http://profiles.wordpress.org/rtcamp" class="wordpress"
+										   target="_blank"><span class="dashicons dashicons-wordpress"></span></a>
+										<a href="https://rtmedia.io/feed/" class="rss" target="_blank"><span
+												class="dashicons dashicons-rss"></span></a>
 									</div>
 
 									<input type="hidden" name="rtmedia-options-save" value="true">
@@ -1330,8 +1239,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * Adds a tab for Media settings in the BuddyPress settings page
 		 *
 		 * @access public
-		 *
-		 * @return void
 		 */
 		public function tab() {
 
@@ -1428,7 +1335,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  string $page page name.
+		 * @param  string $page page.
 		 *
 		 * @return void
 		 */
@@ -1554,7 +1461,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function save_multisite_options() {
 			global $rtmedia_admin;
-			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // @codingStandardsIgnoreLine
 
 			$rtmedia_options = filter_input( INPUT_POST, 'rtmedia_options' );
 			if ( isset( $rtmedia_options ) ) {
@@ -1562,17 +1469,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				rtmedia_update_site_option( 'rtmedia_options', $rtmedia_options );
 
 				// redirect to settings page in network.
-				wp_safe_redirect(
-					esc_url_raw(
-						add_query_arg(
-							array(
-								'page'    => 'rtmedia-settings',
-								'updated' => 'true',
-							),
-							( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) )
-						)
-					)
-				);
+				wp_redirect( esc_url_raw( add_query_arg( array(
+					'page'    => 'rtmedia-settings',
+					'updated' => 'true',
+				), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) );
 				exit;
 			}
 		}
@@ -1620,7 +1520,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return mixed
 		 */
 		public function linkback() {
-			// todo: remove code looks like old setting save code new code at app/helper/RTMediaSettings.php.
+			// Fixme: remove code looks like old setting save code new code at app/helper/RTMediaSettings.php.
 			$linkback = filter_input( INPUT_POST, 'linkback' );
 			if ( isset( $linkback ) && $linkback ) {
 				return rtmedia_update_site_option( 'rtmedia-add-linkback', true );
@@ -1718,19 +1618,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$email      = filter_input( INPUT_POST, 'email', FILTER_SANITIZE_EMAIL );
 
 			if ( 'Yes' === $interested && ! empty( $choice ) ) {
-				wp_remote_get(
-					esc_url_raw(
-						add_query_arg(
-							array(
-								'rtmedia-convert-videos-form' => 1,
-								'choice' => $choice,
-								'url'    => $url,
-								'email'  => $email,
-							),
-							'https://rtmedia.io/'
-						)
-					)
-				);
+				wp_remote_get( esc_url_raw( add_query_arg( array(
+					'rtmedia-convert-videos-form' => 1,
+					'choice'                      => $choice,
+					'url'                         => $url,
+					'email'                       => $email,
+				), 'https://rtmedia.io/' ) ) );
 			} else {
 				rtmedia_update_site_option( 'rtmedia-survey', 0 );
 			}
@@ -1781,10 +1674,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					<div class="error upload-filetype-network-settings-error">
 						<p>
 							<?php wp_nonce_field( '_rtm_file_type_error_', 'rtm-file-type-error' ); ?>
-							<?php
-							// translators: Not supported image types.
-							printf( esc_html__( 'You have images enabled on rtMedia but your network allowed filetypes do not permit uploading of %s. Click ', 'buddypress-media' ), esc_html( implode( ', ', $not_supported_image ) ) );
-							?>
+							<?php printf( esc_html__( 'You have images enabled on rtMedia but your network allowed filetypes do not permit uploading of %s. Click ', 'buddypress-media' ), esc_html( implode( ', ', $not_supported_image ) ) ); ?>
 							<a href='<?php echo esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ); ?>'><?php esc_html_e( 'here', 'buddypress-media' ); ?></a>
 							<?php esc_html_e( ' to change your settings manually.', 'buddypress-media' ); ?>
 							<br />
@@ -1861,8 +1751,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			global $rtmedia;
-			$upload_filetypes_orig = rtmedia_get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
-			$upload_filetypes      = $upload_filetypes_orig;
+			$upload_filetypes_orig = $upload_filetypes = rtmedia_get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
 			$upload_filetypes      = explode( ' ', $upload_filetypes );
 
 			if ( isset( $rtmedia->options['images_enabled'] ) && $rtmedia->options['images_enabled'] ) {
@@ -1936,9 +1825,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		/**
 		 * Render Admin UI.
 		 *
-		 * @param string $page Page name.
-		 * @param array  $sub_tabs Sub tabs for page.
-		 * @param array  $args Arguments to render page.
+		 * @param string $page Page.
+		 * @param array  $sub_tabs Sub tabs.
+		 * @param array  $args Arguments.
 		 */
 		public static function render_admin_ui( $page, $sub_tabs, $args = array() ) {
 
@@ -1967,9 +1856,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					foreach ( $sub_tabs as $tab ) {
 
 						// tab status.
-						$active_class = '';
-						$error_class  = '';
-
+						$active_class = $error_class = '';
 						if ( ! empty( $tab['args'] ) && ( empty( $tab['args']['status'] ) || 'valid' !== $tab['args']['status'] ) ) {
 							$error_class = 'error';
 						}
@@ -1977,21 +1864,21 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							$active_class = 'active';
 						}
 
+						// tab icon.
+						$icon = '';
+						if ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) {
+							$icon = '<i class="' . esc_attr( $tab['icon'] ) . ' dashicons"></i>';
+						}
 						?>
 						<li class="<?php echo esc_attr( $active_class ); ?> <?php echo esc_attr( $error_class ); ?>">
-							<a id="tab-<?php echo esc_attr( substr( $tab['href'], 1 ) ); ?>" title="<?php echo esc_attr( $tab['title'] ); ?>" href="<?php echo esc_url( $tab['href'] ); ?>" class="rtmedia-tab-title <?php echo esc_attr( sanitize_title( $tab['name'] ) ); ?>">
-								<?php
-								if ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) {
-									?>
-									<i class="<?php echo esc_attr( $tab['icon'] ); ?> dashicons"></i>
-									<?php
-								}
-								?>
-								<span><?php echo esc_html( $tab['name'] ); ?></span>
+							<a id="tab-<?php echo esc_attr( substr( $tab['href'], 1 ) ); ?>" title="<?php echo esc_attr( $tab['title'] ); ?>"
+							   href="<?php echo esc_url( $tab['href'] ); ?>"
+							   class="rtmedia-tab-title <?php echo esc_attr( sanitize_title( $tab['name'] ) ); ?>">
+								<?php echo $icon ; // @codingStandardsIgnoreLine ?><span><?php echo esc_html( $tab['name'] ); ?></span>
 							</a>
 						</li>
 						<?php
-						$i++;
+						$i ++;
 					}
 					?>
 				</ul>
@@ -2004,7 +1891,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						if ( 1 === $k ) {
 							$active_class = ' active';
 						}
-						$k++;
+						$k ++;
 						if ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) {
 							$icon = '<i class="' . esc_attr( $tab['icon'] ) . '"></i>';
 						}
@@ -2043,7 +1930,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Display invalid license notice to admins.
+		 * Display invlaid license notice to admins.
 		 *
 		 * @since 4.1.7
 		 *
@@ -2062,7 +1949,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$my_account  = 'https://rtmedia.io/my-account';
 				$license_doc = 'https://rtmedia.io/docs/license/';
 
-				// translators: 1. Account page and link.
+				// translators: Account page and link.
 				$message = sprintf( __( 'Your license keys can be found on <a href="%1$s">my-account</a> page. For more details, please refer to <a href="%2$s">License documentation</a> page.', 'buddypress-media' ), $my_account, $license_doc );
 				echo '<div class="notice"><p>' . wp_kses( $message, $args ) . '</p></div>';
 
@@ -2075,11 +1962,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				return;
 			}
 
+			$message = '';
 			foreach ( $addons as $addon ) {
 				if ( empty( $addon['args']['status'] ) || 'valid' !== $addon['args']['status'] ) {
 					$message = sprintf(
-						// translators: 1. License page link.
-						__( 'We found an invalid or expired license key for an rtMedia add-on. Please go to the <a href="%1$s">Licenses page</a> to fix this issue.', 'buddypress-media' ),
+						// translators: License page link.
+						__( 'We found an invalid or expired license key for an rtMedia add-on. Please go to the <a href="%s">Licenses page</a> to fix this issue.', 'buddypress-media' ),
 						admin_url( 'admin.php?page=rtmedia-license' )
 					);
 					echo '<div class="error"><p>' . wp_kses( $message, $args ) . '</p></div>';

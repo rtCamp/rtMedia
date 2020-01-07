@@ -25,7 +25,6 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 		 * @var string
 		 */
 		public $upload_terms_message;
-
 		/**
 		 * Error message for label on front end side.
 		 *
@@ -73,7 +72,6 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 		 * Default option value for admin settings
 		 *
 		 * @param  array $defaults Default values of rtMedia admin settings.
-		 *
 		 * @return array defaults
 		 */
 		public function add_admin_option_default_value( $defaults ) {
@@ -120,7 +118,6 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 		 * Add setting option in rtmedia settings
 		 *
 		 * @param  array $general_group Add group message.
-		 *
 		 * @return array $general_group
 		 */
 		public function admin_setting_add_terms_section( $general_group ) {
@@ -134,7 +131,6 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 		 *
 		 * @param  array $render_options  Rendering according to selected options.
 		 * @param  array $options         Options selected in settings.
-		 *
 		 * @return array $render_option
 		 */
 		public function admin_setting_add_terms_option( $render_options, $options ) {
