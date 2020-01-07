@@ -113,7 +113,7 @@ class RTMediaPrivacy {
 	 */
 	public function rtm_change_activity_privacy() {
 
-		$nonce       = filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_STRING );
+		$nonce       = sanitize_text_field( filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_STRING ) );
 		$privacy     = filter_input( INPUT_POST, 'privacy', FILTER_SANITIZE_NUMBER_INT );
 		$activity_id = filter_input( INPUT_POST, 'activity_id', FILTER_SANITIZE_NUMBER_INT );
 
@@ -267,7 +267,7 @@ class RTMediaPrivacy {
 		}
 
 		if ( $echo ) {
-			echo wp_kses( $form->get_select( $attributes ), wp_kses_allowed_html() );
+			echo wp_kses( $form->get_select( $attributes ), RTMedia::expanded_allowed_tags() );
 		} else {
 			return $form->get_select( $attributes );
 		}
@@ -463,10 +463,11 @@ class RTMediaPrivacy {
 			return;
 		}
 
-		$default_privacy = filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING );
-		$nonce           = filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING );
+		$default_privacy = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING ) );
+		$nonce           = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING ) );
 
-		if ( null !== $default_privacy ) {
+		if ( ! empty( $default_privacy ) ) {
+
 			$status = false;
 			if ( wp_verify_nonce( $nonce, 'rtmedia_member_settings_privacy' ) ) {
 				// todo user attribute.

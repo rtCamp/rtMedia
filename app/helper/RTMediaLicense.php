@@ -297,6 +297,6 @@ class RTMediaLicense {
 			}
 		}
 
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $html, RTMedia::expanded_allowed_tags() );
 	}
 }

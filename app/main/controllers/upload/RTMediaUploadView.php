@@ -260,7 +260,7 @@ class RTMediaUploadView {
 		$tabs          = apply_filters( 'rtmedia_upload_tabs', $tabs );
 
 		$attr = $this->attributes;
-		$mode = filter_input( INPUT_GET, 'mode', FILTER_SANITIZE_STRING );
+		$mode = sanitize_text_field( filter_input( INPUT_GET, 'mode', FILTER_SANITIZE_STRING ) );
 
 		if ( is_null( $mode ) || false === $mode || ! array_key_exists( $mode, $tabs ) ) {
 			$mode = 'file_upload';

@@ -1712,8 +1712,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function convert_videos_mailchimp_send() {
 			// todo: nonce required.
-			$interested = filter_input( INPUT_POST, 'linkback', FILTER_SANITIZE_STRING );
-			$choice     = filter_input( INPUT_POST, 'choice', FILTER_SANITIZE_STRING );
+			$interested = sanitize_text_field( filter_input( INPUT_POST, 'linkback', FILTER_SANITIZE_STRING ) );
+			$choice     = sanitize_text_field( filter_input( INPUT_POST, 'choice', FILTER_SANITIZE_STRING ) );
 			$url        = filter_input( INPUT_POST, 'url', FILTER_SANITIZE_URL );
 			$email      = filter_input( INPUT_POST, 'email', FILTER_SANITIZE_EMAIL );
 

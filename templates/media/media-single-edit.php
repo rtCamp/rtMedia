@@ -38,7 +38,7 @@
 								<?php rtmedia_title_input(); ?>
 							</div>
 							<!--This function shows the privacy dropdown-->
-							<?php echo wp_kses( rtmedia_edit_media_privacy_ui(), wp_kses_allowed_html( 'post' ) ); ?>
+							<?php echo wp_kses( rtmedia_edit_media_privacy_ui(), RTMedia::expanded_allowed_tags() ); ?>
 							<div class="rtmedia-editor-description rtm-field-wrap">
 								<label><?php esc_html_e( 'Description: ', 'buddypress-media' ); ?></label>
 								<?php

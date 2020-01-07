@@ -346,20 +346,20 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 */
 		private function process_attributes( $element, $attributes, $container = false ) {
 
-			/* generating the id on its own if not provided otherwise taken from the parameter provided */
+			// generating the id on its own if not provided otherwise taken from the parameter provided.
 			if ( isset( $attributes['id'] ) ) {
 				$html = $this->generate_element_id( $element, $attributes['id'] ) . ' ';
 			} else {
 				$html = $this->generate_element_id( $element ) . ' ';
 			}
 
-			/* name attribute according to multiple flag */
+			// name attribute according to multiple flag.
 			$multiple = ( isset( $attributes['multiple'] ) && $attributes['multiple'] ) ? true : false;
 			$name     = ( isset( $attributes['name'] ) ) ? $attributes['name'] : $element;
 			$html    .= $this->generate_element_name( $element, $multiple, $name ) . ' ';
 
-			/*
-			 *  list down all the classes provided along with the default class of rtForms.
+			/**
+			 *  List down all the classes provided along with the default class of rtForms.
 			 *  default class of rtForms will always be attached irrespective of the attributes provided.
 			 */
 			if ( ! $container ) {
@@ -579,13 +579,13 @@ if ( ! class_exists( 'rtForm' ) ) {
 			$element = 'rtText';
 			if ( is_array( $attributes ) ) {
 
-				/* Starting the input tag */
+				// Starting the input tag.
 				$html = '<input type="text" ';
 
-				/* generating attributes */
+				// generating attributes.
 				$html .= $this->process_attributes( $element, $attributes );
 
-				/* ending the tag */
+				// ending the tag.
 				$html .= ' />';
 
 				if ( isset( $attributes['label'] ) ) {
@@ -624,17 +624,17 @@ if ( ! class_exists( 'rtForm' ) ) {
 				// Adding nonce for file upload.
 				$nonce = wp_create_nonce( 'rtmedia-admin-upload' );
 
-				/* Keep customized button for file input */
+				// Keep customized button for file input.
 				$html = '<button class="rtm-form-button button button-primary button-small">Browse File</button>';
 
-				/* Starting the input tag */
+				// Starting the input tag.
 				$html .= '<input type="hidden" id="rtmedia_admin_upload_nonce" value="' . esc_attr( $nonce ) . '" />';
 				$html .= '<input type="file" ';
 
-				/* Generating attributes */
+				// Generating attributes.
 				$html .= $this->process_attributes( $element, $attributes );
 
-				/* Ending the tag */
+				// Ending the tag.
 				$html .= ' />';
 
 				if ( ! empty( $attributes['name'] ) && ! empty( $attributes['value'] ) ) {
@@ -696,7 +696,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param string|array $args Arguments.
 		 */
 		public function display_textbox( $args = '' ) {
-			echo $this->get_textbox( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses( $this->get_textbox( $args ), RTMedia::expanded_allowed_tags() );
 		}
 
 		/**
@@ -769,7 +769,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_link( $args = '' ) {
-			echo $this->get_link( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses( $this->get_link( $args ), RTMedia::expanded_allowed_tags() );
 		}
 
 		/**
@@ -797,7 +797,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 */
 		public function display_inputfile( $args = '' ) {
 			// Previously escaped and sanitized so not required here.
-			echo $this->get_inputfile( $args ); // WPCS: XSS ok.
+			echo wp_kses( $this->get_inputfile( $args ), RTMedia::expanded_allowed_tags() );
 		}
 
 		/**
@@ -816,10 +816,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 			$element = 'rtNumber';
 			if ( is_array( $attributes ) ) {
 
-				/* Starting the input tag */
+				// Starting the input tag.
 				$html = '<input type="number" ';
 
-				/* generating attributes */
+				// generating attributes.
 				$html .= $this->process_attributes( $element, $attributes );
 				if ( isset( $attributes['min'] ) ) {
 					$html .= " min='" . esc_attr( $attributes['min'] ) . "' ";
@@ -831,7 +831,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 					$html .= " step='" . esc_attr( $attributes['step'] ) . "' ";
 				}
 
-				/* ending the tag */
+				// ending the tag.
 				$html .= ' />';
 
 				if ( isset( $attributes['label'] ) ) {
@@ -876,7 +876,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_number( $args = '' ) {
-			echo $this->get_number( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses( $this->get_number( $args ), RTMedia::expanded_allowed_tags() );
 		}
 
 		/**
@@ -947,13 +947,13 @@ if ( ! class_exists( 'rtForm' ) ) {
 			$element = 'rtHidden';
 			if ( is_array( $attributes ) ) {
 
-				/* Starting the input tag */
+				// Starting the input tag.
 				$html = '<input type="hidden" ';
 
-				/* generating attributes */
+				// generating attributes.
 				$html .= $this->process_attributes( $element, $attributes );
 
-				/* ending the tag */
+				// ending the tag.
 				$html .= ' />';
 
 				if ( isset( $attributes['label'] ) ) {
@@ -1053,7 +1053,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_textarea( $args = '' ) {
-			echo $this->get_textarea( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses( $this->get_textarea( $args ), RTMedia::expanded_allowed_tags() );
 		}
 
 		/**
@@ -1118,7 +1118,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_radio( $args = '' ) {
-			echo $this->get_radio( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses( $this->get_radio( $args ), RTMedia::expanded_allowed_tags() );
 		}
 
 		/**
@@ -1195,7 +1195,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param string $args Arguments.
 		 */
 		public function display_switch( $args = '' ) {
-			echo $this->get_switch( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses( $this->get_switch( $args ), RTMedia::expanded_allowed_tags() );
 		}
 
 		/**
@@ -1299,7 +1299,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_select( $args = '' ) {
-			echo $this->get_select( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses( $this->get_select( $args ), RTMedia::expanded_allowed_tags() );
 		}
 
 		/**
@@ -1320,13 +1320,13 @@ if ( ! class_exists( 'rtForm' ) ) {
 
 			$element = 'rtButton';
 
-			/* Starting the input tag */
+			// Starting the input tag.
 			$html = '<input type="button" ';
 
-			/* generating attributes */
+			// generating attributes.
 			$html .= $this->process_attributes( $element, $attributes );
 
-			/* ending the tag */
+			// ending the tag.
 			$html .= ' />';
 
 			if ( isset( $attributes['label'] ) ) {
@@ -1367,8 +1367,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_button( $args ) {
-
-			echo $this->get_button( $args ); // WPCS: XSS ok.
+			echo wp_kses( $this->get_button( $args ), RTMedia::expanded_allowed_tags() );
 		}
 
 		/**
@@ -1392,17 +1391,17 @@ if ( ! class_exists( 'rtForm' ) ) {
 			// Adding nonce for file upload.
 			$nonce = wp_create_nonce( 'rtmedia-admin-upload' );
 
-			/* Keep customized button for file input */
+			// Keep customized button for file input.
 			$html = '<button class="rtm-form-button button button-primary button-small">Browse File</button>';
 
-			/* Starting the input tag */
+			// Starting the input tag.
 			$html .= '<input type="hidden" id="rtmedia_admin_upload_nonce" value="' . esc_attr( $nonce ) . '" />';
 			$html .= '<input type="file" ';
 
-			/* generating attributes */
+			// generating attributes.
 			$html .= $this->process_attributes( $element, $attributes );
 
-			/* ending the tag */
+			// ending the tag.
 			$html .= ' />';
 
 			if ( isset( $attributes['label'] ) ) {
@@ -1443,8 +1442,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @throws rtFormInvalidArgumentsException Invalid arguments exception.
 		 */
 		public function display_file_input( $args ) {
-
-			echo $this->get_file_input( $args ); // WPCS: XSS ok.
+			echo wp_kses( $this->get_file_input( $args ), RTMedia::expanded_allowed_tags() );
 		}
 	}
 

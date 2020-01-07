@@ -236,7 +236,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 			return;
 		}
 
-		$nonce = filter_input( INPUT_POST, 'featured_nonce', FILTER_SANITIZE_STRING );
+		$nonce = sanitize_text_field( filter_input( INPUT_POST, 'featured_nonce', FILTER_SANITIZE_STRING ) );
 
 		if ( ! wp_verify_nonce( $nonce, 'rtm_media_featured_nonce' . $this->media->id ) ) {
 			$return['nonce'] = true;
@@ -269,7 +269,8 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 			$return['status'] = false;
 			$return['error']  = esc_html__( 'Media type is not allowed', 'buddypress-media' );
 		}
-		$is_json = filter_input( INPUT_POST, 'json', FILTER_SANITIZE_STRING );
+
+		$is_json = sanitize_text_field( filter_input( INPUT_POST, 'json', FILTER_SANITIZE_STRING ) );
 
 		if ( ! empty( $is_json ) && 'true' === $is_json ) {
 			wp_send_json( $return );
@@ -299,7 +300,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
  * @param bool|int $user_id User ID.
  */
 function rtmedia_featured( $user_id = false ) {
-	echo rtmedia_get_featured( $user_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( rtmedia_get_featured( $user_id ), RTMedia::expanded_allowed_tags() );
 }
 
 /**
@@ -323,7 +324,7 @@ if ( ! function_exists( 'bp_media_featured' ) ) {
 	 * @param bool|int $user_id User ID.
 	 */
 	function bp_media_featured( $user_id = false ) {
-		echo rtmedia_get_featured( $user_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( rtmedia_get_featured( $user_id ), RTMedia::expanded_allowed_tags() );
 	}
 
 	/**

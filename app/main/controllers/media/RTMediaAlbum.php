@@ -107,17 +107,12 @@ class RTMediaAlbum {
 	 */
 	public function verify_nonce( $mode ) {
 
-		$nonce = '';
-		$mode  = '';
+		$nonce = sanitize_text_field( filter_input( INPUT_POST, "rtmedia_{$mode}_album_nonce", FILTER_SANITIZE_STRING ) );
+		$mode  = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_STRING ) );
 
-		// phpcs:disble WordPress.Security.NonceVerification.NoNonceVerification
-		if ( isset( $_REQUEST[ "rtmedia_{$mode}_album_nonce" ] ) ) {
-			$nonce = sanitize_text_field( wp_unslash( $_REQUEST[ "rtmedia_{$mode}_album_nonce" ] ) );
+		if ( empty( $mode ) ) {
+			$mode = '';
 		}
-		if ( isset( $_REQUEST['mode'] ) ) {
-			$mode = sanitize_text_field( wp_unslash( $_REQUEST['mode'] ) );
-		}
-		// phpcs:enable WordPress.Security.NonceVerification.NoNonceVerification
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $mode ) ) {
 			return true;

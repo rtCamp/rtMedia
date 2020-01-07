@@ -732,7 +732,7 @@ function rt_check_addon_status() {
 			if ( ! empty( $addon_data ) && is_object( $addon_data ) && empty( $addon['args']['license_key'] ) ) {
 				if ( isset( $addon_data->success ) && isset( $addon_data->license ) ) {
 
-					$activate_addon = filter_input( INPUT_POST, 'edd_' . $addon_id . '_license_key', FILTER_SANITIZE_STRING );
+					$activate_addon = sanitize_text_field( filter_input( INPUT_POST, 'edd_' . $addon_id . '_license_key', FILTER_SANITIZE_STRING ) );
 
 					if ( ( isset( $activate_addon ) && '' === $activate_addon ) || '' === $addon_data->success || 'invalid' === $addon_data->license ) {
 						delete_option( 'edd_' . $addon_id . '_license_status' );
@@ -795,7 +795,7 @@ function rt_check_addon_status() {
 				}
 			}
 
-			$activate = filter_input( INPUT_POST, 'edd_' . $addon_id . '_license_activate', FILTER_SANITIZE_STRING );
+			$activate = sanitize_text_field( filter_input( INPUT_POST, 'edd_' . $addon_id . '_license_activate', FILTER_SANITIZE_STRING ) );
 
 			// Listen for activate button to be clicked.
 			// Also check if information about the addon in already fetched from the store.
@@ -1127,7 +1127,7 @@ if ( ! function_exists( 'rtmedia_gallery_after_title_callback' ) ) {
 		) {
 			$description = rtmedia_get_media_description( $rtmedia_query->media_query['album_id'] );
 			if ( ! empty( $description ) ) {
-				echo '<div class="gallery-description gallery-album-description">' . esc_html( $description ) . '</div>';
+				echo '<div class="gallery-description gallery-album-description">' . wp_kses( $description, RTMedia::expanded_allowed_tags() ) . '</div>';
 			}
 		}
 	}

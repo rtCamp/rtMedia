@@ -53,6 +53,7 @@ class RTMediaLoginPopup {
 	 * Login/register popup display.
 	 */
 	public function rtmedia_login_register_modal_popup() {
+
 		if ( ! is_user_logged_in() ) {
 			$uri = '';
 			if ( isset( $_REQUEST['REQUEST_URI'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification

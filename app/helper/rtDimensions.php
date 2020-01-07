@@ -187,7 +187,7 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 	 * @param string $args Arguments.
 	 */
 	public function display_dimensions( $args = '' ) {
-		echo $this->get_dimensions( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $this->get_dimensions( $args ), RTMedia::expanded_allowed_tags() );
 	}
 
 }

@@ -296,7 +296,9 @@ class RTMediaQuery {
 	 */
 	public function set_json_format() {
 
-		if ( ! empty( $_REQUEST['json'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		$json = sanitize_text_field( filter_input( INPUT_GET, 'json', FILTER_SANITIZE_STRING ) );
+
+		if ( ! empty( $json ) ) {
 			$this->format = 'json';
 		}
 	}
@@ -332,17 +334,20 @@ class RTMediaQuery {
 		$modifier_value = false;
 		$format         = '';
 		$pageno         = 1;
-		// phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification
+
+		$json = sanitize_text_field( filter_input( INPUT_GET, 'json', FILTER_SANITIZE_STRING ) );
+
 		// Get page number for json response.
-		if ( ! empty( $_REQUEST['json'] ) ) {
-			$pageno = ( isset( $_REQUEST['rtmedia_page'] ) && ! empty( $_REQUEST['rtmedia_page'] ) ) ? intval( $_REQUEST['rtmedia_page'] ) : 1;
+		if ( ! empty( $json ) ) {
+			$rtmedia_page = filter_input( INPUT_GET, 'rtmedia_page', FILTER_VALIDATE_INT );
+			$pageno       = ( ! empty( $rtmedia_page ) ) ? $rtmedia_page : 1;
 		}
 
 		// Get page number for none json response.
-		if ( ! isset( $_REQUEST['json'] ) && empty( $_REQUEST['json'] ) ) {
+		if ( empty( $json ) ) {
 			$pageno = ( get_query_var( 'pg' ) ) ? get_query_var( 'pg' ) : 1;
 		}
-		// phpcs:enable WordPress.Security.NonceVerification.NoNonceVerification
+
 		$attributes = '';
 
 		// The first part of the query /media/{*}/ .
@@ -369,7 +374,7 @@ class RTMediaQuery {
 
 				$modifier_type = 'id';
 
-				$request_action = filter_input( INPUT_POST, 'request_action', FILTER_SANITIZE_STRING );
+				$request_action = sanitize_text_field( filter_input( INPUT_POST, 'request_action', FILTER_SANITIZE_STRING ) );
 				// this block is unnecessary, please delete, asap.
 				if ( 'delete' === $request_action ) {
 
@@ -514,7 +519,7 @@ class RTMediaQuery {
 			$modifier_type   => $modifier_value,
 			'action'         => $action,
 			'bulk'           => $bulk,
-			'page'           => $pageno,
+			'page'           => intval( $pageno ),
 			'per_page_media' => $per_page_media,
 			'attributes'     => $attributes,
 		);
@@ -567,19 +572,17 @@ class RTMediaQuery {
 				'media_title',
 			)
 		);
-		// phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification
-		if ( isset( $_REQUEST['rtmedia_shortcode'] ) ) {
-			$rtmedia_shortcode = $_REQUEST['rtmedia_shortcode'];
-		}
+
+		$rtmedia_shortcode = sanitize_text_field( filter_input( INPUT_GET, 'rtmedia_shortcode', FILTER_SANITIZE_STRING ) );
 
 		if ( ! empty( $rtmedia_shortcode ) ) {
-			$query_data = $_REQUEST;
+			$query_data = $_REQUEST; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
 			foreach ( $query_data as $key => $val ) {
 				if ( ! in_array( $key, $allowed_query, true ) ) {
 					unset( $query_data[ $key ] );
 				}
 			}
-			// phpcs:enable WordPress.Security.NonceVerification.NoNonceVerification
+
 			$this->query = wp_parse_args( $query_data, $this->query );
 
 		} else {
