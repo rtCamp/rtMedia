@@ -161,9 +161,8 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 				$path = $this->schema_path;
 
 				if ( $handle = opendir( $path ) ) { // phpcs:ignore
-					$entry = readdir( $handle );
 
-					while ( false !== $entry ) {
+					while ( false !== ( $entry = readdir( $handle ) ) ) { // phpcs:ignore
 
 						if ( '.' !== $entry && '..' !== $entry ) {
 
