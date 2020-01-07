@@ -403,8 +403,8 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  string $section_name Section name.
-	 * @param  array  $options Options array.
+	 * @param string $section_name Section name.
+	 * @param array  $options Options array.
 	 *
 	 * @return array  $section
 	 */
@@ -425,7 +425,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options Options array.
+	 * @param array $options Options array.
 	 *
 	 * @return array  $render
 	 */
@@ -580,7 +580,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options General options.
+	 * @param array $options General options.
 	 *
 	 * @return array $render
 	 */
@@ -785,7 +785,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $options options array to render.
+	 * @param array $options options array to render.
 	 *
 	 * @return array  $render
 	 */
@@ -1021,7 +1021,7 @@ class RTMediaFormHandler {
 	}
 
 	/**
-	 * Display mmedia sizes table.
+	 * Display media sizes table.
 	 *
 	 * @access static
 	 *
@@ -1426,7 +1426,7 @@ class RTMediaFormHandler {
 		/**
 		 * Disable inputs and change background color to differentiate disabled inputs,
 		 * if 'Activity Streams' component is disabled in BuddyPress Settings.
-		*/
+		 */
 		if ( ! bp_is_active( 'activity' ) ) {
 			?>
 			<script>

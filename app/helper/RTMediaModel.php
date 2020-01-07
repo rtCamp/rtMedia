@@ -55,7 +55,7 @@ class RTMediaModel extends RTDBModel {
 	 * @param string $order_by Order by condition.
 	 * @param bool   $count_flag Count flag.
 	 *
-	 * @return array|int
+	 * @return array|int|string
 	 */
 	public function get( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ) {
 		global $wpdb, $rtmedia_interaction;

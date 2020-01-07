@@ -158,13 +158,11 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 
 			if ( version_compare( $this->db_version, $this->install_db_version, '>' ) ) {
 
-				$path   = $this->schema_path;
-				$handle = opendir( $path );
+				$path = $this->schema_path;
 
-				if ( ! empty( $handle ) ) {
-					$entry = readdir( $handle );
+				if ( $handle = opendir( $path ) ) { // phpcs:ignore
 
-					while ( false !== $entry ) {
+					while ( false !== ( $entry = readdir( $handle ) ) ) { // phpcs:ignore
 
 						if ( '.' !== $entry && '..' !== $entry ) {
 

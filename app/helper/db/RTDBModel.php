@@ -105,8 +105,10 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 				$this->per_page         = apply_filters( 'rt_db_model_per_page', $this->per_page, $this->table_name );
 				$return_array           = array();
 				$return_array['result'] = false;
+
 				global $wpdb;
 				$return_array['total'] = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM  {$this->table_name} WHERE {$column_name} = %s", $arguments[0] ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
 				if ( $return_array['total'] > 0 ) {
 					$other = '';
 					if ( $paging ) {
