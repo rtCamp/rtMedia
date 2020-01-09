@@ -170,7 +170,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 	 * Get last media.
 	 */
 	public function get_last_media() {
-		// todo:remove id not used.
+		// todo:remove if not used.
 	}
 
 	/**
@@ -301,7 +301,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
  * @param bool|int $group_id Group id.
  */
 function rtmedia_group_featured( $group_id = false ) {
-	echo rtmedia_get_group_featured( $group_id );
+	echo wp_kses( rtmedia_get_group_featured( $group_id ), RTMedia::expanded_allowed_tags() );
 }
 
 /**

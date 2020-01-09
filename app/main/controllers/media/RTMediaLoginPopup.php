@@ -55,10 +55,7 @@ class RTMediaLoginPopup {
 	public function rtmedia_login_register_modal_popup() {
 
 		if ( ! is_user_logged_in() ) {
-			$uri = '';
-			if ( isset( $_REQUEST['REQUEST_URI'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
-				$uri = esc_url_raw( wp_unslash( $_REQUEST['REQUEST_URI'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
-			}
+			$uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 			?>
 			<div class="rtmedia-popup mfp-hide rtm-modal" id="rtmedia-login-register-modal">
 				<div id="rtm-modal-container">

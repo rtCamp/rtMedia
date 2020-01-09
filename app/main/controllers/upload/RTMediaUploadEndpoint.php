@@ -46,11 +46,11 @@ class RTMediaUploadEndpoint {
 			$_activity_id  = filter_input( INPUT_POST, 'activity_id', FILTER_VALIDATE_INT );
 			$_redirect_url = filter_input( INPUT_POST, 'redirect', FILTER_SANITIZE_NUMBER_INT );
 
-			$rtupload      = false;
-			$activity_id   = -1;
-			$redirect_url  = '';
-			$permalink     = '';
-			$thumb_image   = '';
+			$rtupload     = false;
+			$activity_id  = - 1;
+			$redirect_url = '';
+			$permalink    = '';
+			$thumb_image  = '';
 
 			if ( wp_verify_nonce( $nonce, 'rtmedia_upload_nonce' ) ) {
 				$model = new RTMediaUploadModel();
