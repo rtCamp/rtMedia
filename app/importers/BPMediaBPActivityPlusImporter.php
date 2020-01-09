@@ -7,7 +7,7 @@
  */
 
 /**
- * class for BPMedia import
+ * Class for BPMedia import
  *
  * @author saurabh
  */

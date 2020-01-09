@@ -1,6 +1,8 @@
 <?php
 /**
  * Handle query object changes.
+ *
+ * @package rtMedia
  */
 
 /**

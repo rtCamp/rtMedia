@@ -998,7 +998,7 @@ class RTMediaJsonApi {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_empty_unfollow_id, $msg_empty_unfollow_id ) );
 		}
 
-		$args      = array(
+		$args = array(
 			'leader_id'   => $unfollow_id,
 			'follower_id' => $this->user_id,
 		);

@@ -926,11 +926,13 @@ class RTMediaBuddyPressActivity {
 
 					// if activity is add from comment media.
 					if ( ! empty( $post_comment_content ) || ! empty( $post_action ) ) {
+
 						if ( ! empty( $post_action ) && 'new_activity_comment' === $post_action ) {
 
 							remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
+
 							// comment content.
-							$comment_content = sanitize_text_field( filter_input( INPUT_POST, 'content', FILTER_SANITIZE_STRING ) );;
+							$comment_content = sanitize_text_field( filter_input( INPUT_POST, 'content', FILTER_SANITIZE_STRING ) );
 						} elseif ( ! empty( $post_comment_content ) ) {
 							// comment content.
 							$comment_content = $post_comment_content;

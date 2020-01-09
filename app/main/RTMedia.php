@@ -7,6 +7,7 @@
  *
  * @author Faishal <faishal.saiyed@rtcamp.com>
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -845,7 +846,7 @@ class RTMedia {
 			define( 'RTMEDIA_IS_INSTALLED', 1 );
 		}
 
-		//  Required Version.
+		// Required Version.
 		if ( ! defined( 'RTMEDIA_REQUIRED_BP' ) ) {
 			define( 'RTMEDIA_REQUIRED_BP', '1.7' );
 		}
@@ -853,7 +854,6 @@ class RTMedia {
 		/* Slug Constants for building urls */
 
 		// Media slugs.
-
 		if ( ! defined( 'RTMEDIA_MEDIA_SLUG' ) ) {
 			define( 'RTMEDIA_MEDIA_SLUG', 'media' );
 		}
@@ -1749,11 +1749,11 @@ class RTMedia {
 
 		// select.
 		$new_allowed['select'] = array(
-			'class'  => array(),
-			'id'     => array(),
-			'name'   => array(),
-			'value'  => array(),
-			'type'   => array(),
+			'class' => array(),
+			'id'    => array(),
+			'name'  => array(),
+			'value' => array(),
+			'type'  => array(),
 		);
 
 		// select options.

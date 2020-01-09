@@ -185,7 +185,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		}
 
 		$like_html = '<span class="rtmedia-like-counter"></span>';
-		if ( $actions > 0  && function_exists( 'rtmedia_who_like_html' ) ) {
+		if ( $actions > 0 && function_exists( 'rtmedia_who_like_html' ) ) {
 			$like_html = rtmedia_who_like_html( $actions, $this->increase );
 		}
 
