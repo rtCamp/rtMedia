@@ -1021,7 +1021,7 @@ class RTMedia {
 			$class = 'BPMedia' . ucfirst( $classname );
 			if ( class_exists( $class ) ) {
 				if ( true === $global_scope ) {
-					global ${'bp_media_' . $classname};
+					global ${'bp_media_' . $classname}; // phpcs:ignore PHPCompatibility.Variables.ForbiddenGlobalVariableVariable.NonBareVariableFound
 					${'bp_media_' . $classname} = new $class();
 				} else {
 					new $class();
@@ -1045,7 +1045,7 @@ class RTMedia {
 
 			if ( class_exists( $class ) ) {
 				if ( true === $global_scope ) {
-					global ${'rtmedia_' . $key};
+					global ${'rtmedia_' . $key}; // phpcs:ignore PHPCompatibility.Variables.ForbiddenGlobalVariableVariable.NonBareVariableFound
 					${'rtmedia_' . $key} = new $class();
 				} else {
 					new $class();
@@ -1216,7 +1216,7 @@ class RTMedia {
 
 		$bp_template = get_option( '_bp_theme_package_id' );
 
-		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
+		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION, true );
 		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement-wp', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.min.css', '', RTMEDIA_VERSION );
 		wp_enqueue_script( 'rt-mediaelement-wp', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.min.js', 'rt-mediaelement', RTMEDIA_VERSION, true );
@@ -1239,7 +1239,8 @@ class RTMedia {
 					'jquery',
 					'rt-mediaelement-wp',
 				),
-				RTMEDIA_VERSION
+				RTMEDIA_VERSION,
+				true
 			);
 			wp_enqueue_script(
 				'rtmedia-admin-tabs',
@@ -1248,7 +1249,8 @@ class RTMedia {
 					'jquery',
 					'rt-mediaelement-wp',
 				),
-				RTMEDIA_VERSION
+				RTMEDIA_VERSION,
+				true
 			);
 			wp_enqueue_script(
 				'rtmedia-main',
@@ -1257,7 +1259,8 @@ class RTMedia {
 					'jquery',
 					'rt-mediaelement-wp',
 				),
-				RTMEDIA_VERSION
+				RTMEDIA_VERSION,
+				true
 			);
 		} else {
 			wp_enqueue_script(
@@ -1267,7 +1270,8 @@ class RTMedia {
 					'jquery',
 					'rt-mediaelement-wp',
 				),
-				RTMEDIA_VERSION
+				RTMEDIA_VERSION,
+				true
 			);
 			// localize for rtmedia js.
 			wp_localize_script( 'rtmedia-main', 'bp_template_pack', $bp_template );
@@ -1542,7 +1546,7 @@ class RTMedia {
 
 		// Previously done with rtmedia_custom_css() method on wp_head hook.
 		if ( ! empty( $options['styles_custom'] ) ) {
-			wp_register_style( 'rtmedia-custom-css', false );
+			wp_register_style( 'rtmedia-custom-css', false, '', RTMEDIA_VERSION );
 			wp_enqueue_style( 'rtmedia-custom-css' );
 			wp_add_inline_style( 'rtmedia-custom-css', $options['styles_custom'] );
 		}

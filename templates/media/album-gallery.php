@@ -88,7 +88,9 @@ $rand_id = wp_rand( 0, 1000 );
 	<?php do_action( 'rtmedia_after_album_gallery' ); ?>
 	<?php do_action( 'rtmedia_after_media_gallery' ); ?>
 </div>
-
+<?php
+// phpcs:disable Generic.PHP.DisallowAlternativePHPTags.MaybeASPShortOpenTagFound, PHPCompatibility.Miscellaneous.RemovedAlternativePHPTags.MaybeASPOpenTagFound
+?>
 <!-- template for single media in gallery -->
 <script id="rtmedia-gallery-item-template" type="text/template">
 	<div class="rtmedia-item-thumbnail">
@@ -106,3 +108,5 @@ $rand_id = wp_rand( 0, 1000 );
 	</div>
 </script>
 <!-- rtmedia_actions remained in script tag -->
+<?php
+// phpcs:enable Generic.PHP.DisallowAlternativePHPTags.MaybeASPShortOpenTagFound, PHPCompatibility.Miscellaneous.RemovedAlternativePHPTags.MaybeASPOpenTagFound
