@@ -271,7 +271,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$title = _draft_or_post_title( $post->post_parent );
 
 				// translators: 1. Title.
-				$action['view'] = '<a href="' . esc_url( $link ) . '" title="' . esc_attr( sprintf( 'View &#8220;%s&#8221;', $title ) ) . '" rel="permalink">' . esc_html__( 'View', 'buddypress-media' ) . '</a>';
+				$action['view'] = '<a href="' . esc_url( $link ) . '" title="' . esc_attr( sprintf( 'View "%s"', $title ) ) . '" rel="permalink">' . esc_html__( 'View', 'buddypress-media' ) . '</a>';
 			}
 
 			return $action;
