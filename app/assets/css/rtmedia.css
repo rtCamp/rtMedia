@@ -651,7 +651,12 @@ input.imgedit-submit-btn {
 }
 .rtm-tabs a {
   border: 0;
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 5px 15px;
   text-decoration: none;
 }
