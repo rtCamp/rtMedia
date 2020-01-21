@@ -347,6 +347,9 @@ button#rtmedia-add-media-button-post-update .dashicons {
 .rtm-form .rtm-field-wrap {
   margin-bottom: 20px;
 }
+.rtm-form .rtm-field-wrap .rtmedia-title-editor {
+  width: 100%;
+}
 
 #buddypress a.rtm-button-back {
   padding: 3px 10px;
