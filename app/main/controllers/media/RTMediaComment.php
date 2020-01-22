@@ -197,7 +197,7 @@ class RTMediaComment {
 				}
 
 				$view = new RTMediaUploadView( $attr );
-				echo wp_kses_post( $view->render( $template ) );
+				echo wp_kses( $view->render( $template ), RTMedia::expanded_allowed_tags() );
 
 			}
 		} else {

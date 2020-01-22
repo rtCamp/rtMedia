@@ -243,7 +243,7 @@ class RTMediaUploadFile {
 				'rtmedia_plupload_files_filter',
 				array(
 					array(
-						'title'      => 'Media Files',
+						'title'      => __( 'Media Files', 'buddypress-media' ),
 						'extensions' => implode( ',', $allowed_types ),
 					),
 				)
