@@ -2443,7 +2443,7 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 				jQuery( input_file_el ).click();
 				file_dialog_open = false;
 			}
-			$(this).blur();
+			jQuery(this).blur();
 		} );
 
 		var form_html = jQuery( "."+comment_media_wrapper+widget_id );
@@ -2629,7 +2629,7 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 			/**
 			 * Uploader improper enter behavior issue(124) fixed
 			 */
-			$('.rtmedia-comment-media-submit-'+widget_id).focus();
+			jQuery('.rtmedia-comment-media-submit-'+widget_id).focus();
 			/**
 			 * End of issue 124
 			 */
@@ -2739,7 +2739,7 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 				'class': 'plupload_file_progress ui-widget-header',
 			});
 			progressBar.css( 'width', file.percent + '%' );
-			$( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
+			jQuery( '#' + file.id + ' .plupload_file_status' ).html( progressBar );
 			// filter to customize existing progress bar can be used to display
 			// '%' of upload completed.
 			rtMediaHook.call( 'rtm_custom_progress_bar_content', [ file ] );
