@@ -131,7 +131,14 @@ function rtm_is_buddypress_enable( $flag ) {
 
 	global $rtmedia_query;
 
-	if ( ( isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] && is_rtmedia_group_media_enable() ) || ( isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] ) && 'profile' === $rtmedia_query->query['context'] && is_rtmedia_profile_media_enable() ) ) {
+	if ( (
+		isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] )
+		&& 'group' === $rtmedia_query->query['context'] && is_rtmedia_group_media_enable()
+		) || (
+			isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] )
+			&& 'profile' === $rtmedia_query->query['context'] && is_rtmedia_profile_media_enable()
+		) )
+	{
 		return $flag;
 	}
 
