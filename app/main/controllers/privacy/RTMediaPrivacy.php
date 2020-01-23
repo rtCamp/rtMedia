@@ -466,7 +466,7 @@ class RTMediaPrivacy {
 		$default_privacy = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING ) );
 		$nonce           = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING ) );
 
-		if ( ! empty( $default_privacy ) ) {
+		if ( ! empty( $default_privacy ) || '0' === $default_privacy ) {
 
 			$status = false;
 			if ( wp_verify_nonce( $nonce, 'rtmedia_member_settings_privacy' ) ) {
@@ -514,7 +514,7 @@ class RTMediaPrivacy {
 					<div class="rtm-privacy-levels">
 						<?php foreach ( $rtmedia->privacy_settings['levels'] as $level => $data ) { ?>
 							<label>
-								<input type='radio' value='<?php echo esc_attr( $level ); ?>' name='rtmedia-default-privacy' <?php echo esc_attr( ( intval( $default_privacy ) === $level ) ? 'checked' : '' ); ?> />
+								<input type='radio' value='<?php echo esc_attr( $level ); ?>' name='rtmedia-default-privacy' <?php checked( intval( $default_privacy ), $level, true ); ?> />
 								<?php echo esc_html( $data ); ?>
 							</label>
 							<br/>
