@@ -466,7 +466,7 @@ class RTMediaPrivacy {
 		$default_privacy = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING ) );
 		$nonce           = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING ) );
 
-		if ( ! empty( $default_privacy ) || '0' === $default_privacy ) {
+		if ( ! empty( $default_privacy ) || 0 === intval( $default_privacy ) ) {
 
 			$status = false;
 			if ( wp_verify_nonce( $nonce, 'rtmedia_member_settings_privacy' ) ) {
