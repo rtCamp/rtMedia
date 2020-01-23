@@ -369,7 +369,7 @@ function rtmedia_link_in_footer() {
 		?>
 		<div class='rtmedia-footer-link'>
 			<?php esc_html_e( 'Empowering your community with ', 'buddypress-media' ); ?>
-			<a href='<?php echo 'https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media'; ?>' title='<?php esc_attr_e( 'The only complete media solution for WordPress, BuddyPress and bbPress', 'buddypress-media' ); ?> '>rtMedia</a>
+			<a href='https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='<?php esc_attr_e( 'The only complete media solution for WordPress, BuddyPress and bbPress', 'buddypress-media' ); ?> '>rtMedia</a>
 		</div>
 		<?php
 	}
