@@ -159,7 +159,7 @@ class RTMedia {
 			'rtmedia_plupload_files_filter',
 			array(
 				array(
-					'title'      => 'Media Files',
+					'title'      => esc_html__( 'Media Files', 'buddypress-media' ),
 					'extensions' => implode( ',', $allowed_types ),
 				),
 			)
@@ -1465,7 +1465,7 @@ class RTMedia {
 				'rtmedia_plupload_files_filter',
 				array(
 					array(
-						'title'      => 'Media Files',
+						'title'      => esc_html__( 'Media Files', 'buddypress-media' ),
 						'extensions' => get_rtmedia_allowed_upload_type(),
 					),
 				)

@@ -131,12 +131,10 @@ function rtmedia_add_album_selection_field( $media_type ) {
 			<?php
 			if ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
 				// show group album list.
-				$selected_album_id = $curr_album_id;
-				$album_list        = rtmedia_group_album_list( $selected_album_id );
+				$album_list = rtmedia_group_album_list( $curr_album_id );
 			} else {
 				// show profile album list.
-				$selected_album_id = $curr_album_id;
-				$album_list        = rtmedia_user_album_list( false, $selected_album_id );
+				$album_list = rtmedia_user_album_list( false, $curr_album_id );
 			}
 			?>
 			<select name="album_id" class="rtmedia-merge-user-album-list"><?php echo wp_kses( $album_list, RTMedia::expanded_allowed_tags() ); ?></select>
@@ -368,13 +366,10 @@ function rtmedia_link_in_footer() {
 	$link   = ( isset( $option['rtmedia_add_linkback'] ) ) ? $option['rtmedia_add_linkback'] : false;
 
 	if ( $link ) {
-
-		$aff_id = ( '' !== $option['rtmedia_affiliate_id'] ) ? '&ref=' . $option['rtmedia_affiliate_id'] : '';
-		$href   = 'https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' . $aff_id;
 		?>
 		<div class='rtmedia-footer-link'>
 			<?php esc_html_e( 'Empowering your community with ', 'buddypress-media' ); ?>
-			<a href='<?php echo esc_url( $href ); ?>' title='<?php esc_attr_e( 'The only complete media solution for WordPress, BuddyPress and bbPress', 'buddypress-media' ); ?> '>rtMedia</a>
+			<a href='https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='<?php esc_attr_e( 'The only complete media solution for WordPress, BuddyPress and bbPress', 'buddypress-media' ); ?> '>rtMedia</a>
 		</div>
 		<?php
 	}

@@ -4644,7 +4644,7 @@ function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
 				'value' => $media_title,
 			),
 			array(
-				'name'  => __( 'Media URL', 'buddypress-media' ),
+				'name'  => esc_html__( 'Media URL', 'buddypress-media' ),
 				'value' => $media_url,
 			),
 			array(

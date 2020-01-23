@@ -131,9 +131,14 @@ function rtm_is_buddypress_enable( $flag ) {
 
 	global $rtmedia_query;
 
-	if ( isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] && is_rtmedia_group_media_enable() ) {
-		return $flag;
-	} elseif ( isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] ) && 'profile' === $rtmedia_query->query['context'] && is_rtmedia_profile_media_enable() ) {
+	if ( (
+		isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] )
+		&& 'group' === $rtmedia_query->query['context'] && is_rtmedia_group_media_enable()
+		) || (
+			isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] )
+			&& 'profile' === $rtmedia_query->query['context'] && is_rtmedia_profile_media_enable()
+		) )
+	{
 		return $flag;
 	}
 
@@ -720,10 +725,10 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
 
-		$search                = sanitize_text_field( urldecode( wp_unslash( filter_input( INPUT_POST, 'search', FILTER_SANITIZE_STRING ) ) ) );
-		$search_by             = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search_by', FILTER_SANITIZE_STRING ) ) );
-		$media_type            = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'media_type', FILTER_SANITIZE_STRING ) ) );
-		$rtmedia_current_album = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'rtmedia-current-album', FILTER_SANITIZE_STRING ) ) );
+		$search                = sanitize_text_field( urldecode( wp_unslash( filter_input( INPUT_GET, 'search', FILTER_SANITIZE_STRING ) ) ) );
+		$search_by             = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'search_by', FILTER_SANITIZE_STRING ) ) );
+		$media_type            = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'media_type', FILTER_SANITIZE_STRING ) ) );
+		$rtmedia_current_album = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'rtmedia-current-album', FILTER_SANITIZE_STRING ) ) );
 
 		if ( '' !== $search ) {
 			$author_id   = rtm_select_user( $search );
@@ -820,8 +825,8 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 		$terms_table              = $wpdb->terms;
 		$term_relationships_table = $wpdb->term_relationships;
 		$term_taxonomy_table      = $wpdb->term_taxonomy;
-		$search                   = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search', FILTER_SANITIZE_STRING ) ) );
-		$search_by                = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search_by', FILTER_SANITIZE_STRING ) ) );
+		$search                   = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'search', FILTER_SANITIZE_STRING ) ) );
+		$search_by                = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'search_by', FILTER_SANITIZE_STRING ) ) );
 
 		if ( '' !== $search ) {
 				$join .= "INNER JOIN $posts_table as post_table ON ( post_table.ID = $table_name.media_id AND post_table.post_type = 'attachment')";
@@ -848,8 +853,8 @@ add_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11,
  * @return array
  */
 function rtmedia_model_query_columns( $columns ) {
-	$search    = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search', FILTER_SANITIZE_STRING ) ) );
-	$search_by = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search_by', FILTER_SANITIZE_STRING ) ) );
+	$search    = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'search', FILTER_SANITIZE_STRING ) ) );
+	$search_by = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'search_by', FILTER_SANITIZE_STRING ) ) );
 
 	if ( ! empty( $search ) ) {
 		if ( ! empty( $search_by ) && 'media_type' === $search_by ) {
