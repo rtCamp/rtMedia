@@ -39,10 +39,10 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
  1. **WordPress Integration** - Display media on WordPress author pages ( eg: http://demo.rtmedia.io/author/admin/media/ )
  2. **BuddyPress Integration** - Find a new media tab under BuddyPress Profiles & Groups.
  3. **BuddyPress Activity Stream** - Attach media to activity status updates just like Facebook.
- 4. **Albums** - Organise media into manageable collections. BuddyPress Group albums support collaboration.
+ 4. **Albums** - Organize media into manageable collections. BuddyPress Group albums support collaboration.
  5. **Responsive** - Album Slideshow (Lightbox), video player, uploads work on mobiles & tablets. Support for swipe guestures.
  6. **Privacy** - Control who can see media files, albums and BuddyPress activities.
- 7. **Templating system** - Completely customise rtMedia by modifying the template files. Just copy over the template folder to your theme.
+ 7. **Templating system** - Completely customize rtMedia by modifying the template files. Just copy over the template folder to your theme.
  8. **[Featured Media](https://rtmedia.io/docs/developers/featured-media/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
  9. **[rtMedia Uploader](https://rtmedia.io/docs/features/upload/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Uploader")** - Use `[rtmedia_uploader]` shortcode or `<?php rtmedia_uploader() ?>` template tag, to show drag-n-drop uploader in any WordPress area (post, page, custom-post, etc).
  10. **[rtMedia Gallery](https://rtmedia.io/docs/features/gallery/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Gallery")** - Display media gallery anywhere on your site using `[rtmedia_gallery]` shortcode or `<?php rtmedia_gallery ?>` template tag.
@@ -219,7 +219,6 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
     * Anchor tag issue for activity generated after adding media.
     * Media upload issue on posting public messages.
     * UI for Member name in media tab.
-    * Issue with redirect attribute value in uploader shortcode.
     * Issue with redirect attribute value in uploader shortcode.
     * Issue with upload terms when sidebar widget is active on activity page.
     * Issue with ‘rtmedia_no_media_found_message_filter’ functionality.
@@ -607,7 +606,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * Fix for profile pic not changing on uploading photo
 
 #### 4.0.4 [Jul 08, 2016] ####
-* Backward compability for PHP 5.2
+* Backward compatibility for PHP 5.2
 
 #### 4.0.3 [Jul 05, 2016] ####
 * Fix filter_input warning for media in group creation

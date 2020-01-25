@@ -524,7 +524,7 @@ class RTMediaFormHandler {
 			),
 		);
 
-		// If buddypress is not active, then remove the option from rtMedia settings.
+		// If buddyPress is not active, then remove the option from rtMedia settings.
 		if ( ! is_plugin_active( 'buddypress/bp-loader.php' ) ) {
 			unset( $render['general_masonry_layout_activity'] );
 		}

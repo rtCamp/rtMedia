@@ -164,7 +164,7 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 				),
 				'group'    => 40,
 			);
-			// add extra field for admin setting.
+			// Add extra field for admin setting.
 			$render_options['general_upload_terms_message']              = array(
 				'title'    => __( 'Terms of Service Message', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'textbox' ),
