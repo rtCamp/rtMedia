@@ -199,7 +199,7 @@ class RTMediaBuddyPressActivity {
 				}
 
 				// Conditions to match required class.
-				if ( 'class' === $att->name && strpos( $att->value, 'rtm-activity-media-list' ) !== false ) {
+				if ( 'class' === $att->name && strpos( $att->value, 'rtm-activity-media-list' ) !== false && count( $ul->childNodes ) > 0 ) {
 
 					// Number of li (images) allowed to show.
 					$count = 1;
