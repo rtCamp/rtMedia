@@ -13,6 +13,18 @@ if ( 'object' === typeof rtMediaHook ) {
 
 		var terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
 
+		/**
+         * Show the warning message if the terms checkbox is enabled in the admin panel.
+         * Extra check if the HTML not exists, or has been removed intentionally.
+         *
+         * @author Adarsh Verma <adarsh.verma@rtcamp.com>
+         */
+        var activity_terms_enabled = rtmedia_upload_terms_data.activity_terms_enabled;
+        if( 'true' === activity_terms_enabled && 0 === terms_conditions_checkbox.length ) {
+            rtp_display_terms_warning(jQuery('#whats-new-options'), rtmedia_upload_terms_data.message);
+            return false;
+        }
+
 		if ( terms_conditions_checkbox.length > 0 ) {
 			if ( ! terms_conditions_checkbox.is( ':checked' ) ) {
 				rtp_display_terms_warning( terms_conditions_checkbox.parent( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
