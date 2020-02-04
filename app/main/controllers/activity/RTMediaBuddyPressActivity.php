@@ -21,6 +21,9 @@ class RTMediaBuddyPressActivity {
 			// manage user's last activity update.
 			add_action( 'bp_activity_posted_update', array( &$this, 'manage_user_last_activity_update' ), 999, 3 );
 			add_action( 'bp_groups_posted_update', array( &$this, 'bp_groups_posted_update' ), 99, 4 );
+
+			// Code to show media with read more option.
+			add_filter( 'bp_activity_truncate_entry', array( $this, 'bp_activity_truncate_entry' ), 10, 3 );
 		}
 		add_action( 'bp_init', array( $this, 'non_threaded_comments' ) );
 		add_action( 'bp_activity_comment_posted', array( $this, 'comment_sync' ), 10, 2 );
@@ -62,6 +65,71 @@ class RTMediaBuddyPressActivity {
 			add_action( 'bp_activity_after_save', array( $this, 'bp_activity_after_save' ) );
 			add_action( 'bp_activity_after_delete', array( $this, 'bp_activity_after_delete' ) );
 		}
+	}
+
+	/**
+	 * Show media even if the test is long with read more option.
+	 *
+	 * @param string $excerpt  Excerpt of the activity text.
+	 * @param string $text     Actual text of activity.
+	 * @param string $readmore Read more text.
+	 *
+	 * @return string Custom excerpt if conditions are match.
+	 */
+	public function bp_activity_truncate_entry( $excerpt, $text, $readmore ) {
+		global $activities_template;
+
+		$excerpt_length = bp_activity_get_excerpt_length();
+		// Run the text through the excerpt function. If it's too short, the original text will be returned.
+		$temp_excerpt = bp_create_excerpt( $text, $excerpt_length, array() );
+		if ( strlen( $temp_excerpt ) >= strlen( strip_shortcodes( $text ) ) ) {
+			return $excerpt;
+		}
+
+		$activity_id = bp_get_activity_id();
+
+		$dom = new DOMDocument();
+		$dom->loadHTML( $text );
+		$div_list = $dom->getElementsByTagName( 'div' );
+
+		$first_div = '';
+
+		$break = false;
+		foreach ( $div_list as $div ) {
+			if ( empty( $first_div ) ) {
+				$first_div = $div;
+			}
+
+			if ( $break ) {
+				break;
+			}
+
+			if ( empty( $div->attributes ) ) {
+				continue;
+			}
+
+			$atts = $div->attributes;
+			foreach ( $atts as $att ) {
+				if ( empty( $att->name ) || empty( $att->value ) ) {
+					continue;
+				}
+
+				if ( 'class' === $att->name && 'rtmedia-activity-text' === $att->value ) {
+					$custom_excerpt   = bp_create_excerpt( $div->textContent, (int) $excerpt_length / 2, array( 'ending' => '...' ) ); // phpcs:ignore
+					$div->textContent = trim( $custom_excerpt ); // phpcs:ignore
+
+					$id = ( ! empty( $activities_template->activity->current_comment->id ) ? 'acomment-read-more-' . $activities_template->activity->current_comment->id : 'activity-read-more-' . $activity_id );
+
+					$content = $first_div->ownerDocument->saveHTML( $first_div ); // phpcs:ignore
+
+					$return = sprintf( '%1$s<span class="activity-read-more" id="%2$s"><a href="%3$s" rel="nofollow">%4$s</a></span>', $content, $id, bp_get_activity_thread_permalink(), $readmore );
+
+					return $return;
+				}
+			}
+		}
+
+		return $excerpt;
 	}
 
 	/**
