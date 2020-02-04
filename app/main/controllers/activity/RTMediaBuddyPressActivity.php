@@ -119,7 +119,7 @@ class RTMediaBuddyPressActivity {
 				}
 
 				// Condition to find text div.
-				if ( 'class' === $att->name && 'rtmedia-activity-text' === $att->value ) {
+				if ( 'class' === $att->name && strpos( $att->value, 'rtmedia-activity-text' ) !== false ) {
 					// Create excerpt only on text and then set it to div text.
 					// We're using actual length / 2 to make space for image.
 					$custom_excerpt   = bp_create_excerpt( $div->textContent, (int) $excerpt_length / 2, array( 'ending' => '...' ) ); // phpcs:ignore
