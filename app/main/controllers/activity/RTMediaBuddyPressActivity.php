@@ -96,6 +96,11 @@ class RTMediaBuddyPressActivity {
 		// So we need to iterate.
 		$div_list = $dom->getElementsByTagName( 'div' );
 
+		// Return if no divs found.
+		if ( empty( $div_list ) ) {
+			return $excerpt;
+		}
+
 		// We're storing first div to create final markup.
 		// If we create markup from dom object, it'll create whole HTML which we don't want.
 		$first_div = '';
