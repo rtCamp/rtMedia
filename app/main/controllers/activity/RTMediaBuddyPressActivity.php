@@ -68,7 +68,7 @@ class RTMediaBuddyPressActivity {
 	}
 
 	/**
-	 * Show media even if the test is long with read more option.
+	 * Show media even if the text is long with read more option.
 	 *
 	 * @param string $excerpt  Excerpt of the activity text.
 	 * @param string $text     Actual text of activity.
