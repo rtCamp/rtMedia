@@ -139,12 +139,12 @@ class RTMediaBuddyPressActivity {
 				if ( 'class' === $att->name && strpos( $att->value, 'rtmedia-activity-text' ) !== false ) {
 					// Create excerpt only on text and then set it to div text.
 					// We're using actual length / 2 to make space for image.
-					$custom_excerpt   = bp_create_excerpt( $div->textContent, (int) $excerpt_length / 2, array( 'ending' => '...' ) ); // phpcs:ignore
-					$div->textContent = trim( $custom_excerpt ); // phpcs:ignore
+					$custom_excerpt   = bp_create_excerpt( $div->textContent, (int) $excerpt_length / 2, array( 'ending' => '...' ) ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
+					$div->textContent = trim( $custom_excerpt ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
 
 					// Show 4 images if text is less, else show 2 images.
 					$images_to_show = 4;
-					if ( strlen( $div->textContent ) > 20 ) { // phpcs:ignore
+					if ( strlen( $div->textContent ) > 20 ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
 						$images_to_show = 2;
 					}
 
@@ -155,7 +155,7 @@ class RTMediaBuddyPressActivity {
 					$id = ( ! empty( $activities_template->activity->current_comment->id ) ? 'acomment-read-more-' . $activities_template->activity->current_comment->id : 'activity-read-more-' . $activity_id );
 
 					// Get final HTML.
-					$content = $first_div->ownerDocument->saveHTML( $first_div ); // phpcs:ignore
+					$content = $first_div->ownerDocument->saveHTML( $first_div ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
 
 					// Append read more link and text.
 					$return = sprintf( '%1$s<span class="activity-read-more" id="%2$s"><a href="%3$s" rel="nofollow">%4$s</a></span>', $content, $id, bp_get_activity_thread_permalink(), $readmore );
@@ -199,14 +199,14 @@ class RTMediaBuddyPressActivity {
 				}
 
 				// Conditions to match required class.
-				if ( 'class' === $att->name && strpos( $att->value, 'rtm-activity-media-list' ) !== false && count( $ul->childNodes ) > 0 ) {
+				if ( 'class' === $att->name && strpos( $att->value, 'rtm-activity-media-list' ) !== false && count( $ul->childNodes ) > 0 ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
 
 					// Number of li (images) allowed to show.
 					$count = 1;
 					// Array where items to remove will be stored.
 					$items_to_remove = array();
 					// Iterate all children of ul which are images (li).
-					foreach ( $ul->childNodes as $li ) { // phpcs:ignore
+					foreach ( $ul->childNodes as $li ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
 
 						// If max number of images reached, add li to items_to_remove array.
 						if ( $count > $images_to_show ) {
