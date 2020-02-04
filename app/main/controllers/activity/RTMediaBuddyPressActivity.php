@@ -22,8 +22,15 @@ class RTMediaBuddyPressActivity {
 			add_action( 'bp_activity_posted_update', array( &$this, 'manage_user_last_activity_update' ), 999, 3 );
 			add_action( 'bp_groups_posted_update', array( &$this, 'bp_groups_posted_update' ), 99, 4 );
 
-			// Code to show media with read more option.
-			add_filter( 'bp_activity_truncate_entry', array( $this, 'bp_activity_truncate_entry' ), 10, 3 );
+			/**
+			 * Filter to disable bp_activity_truncate_entry override function.
+			 * 
+			 * @param boolean By default its enabled.
+			 */
+			if ( apply_filters( 'rtmedia_disable_truncate_entry_override', true ) ) {
+				// Code to show media with read more option.
+				add_filter( 'bp_activity_truncate_entry', array( $this, 'bp_activity_truncate_entry' ), 10, 3 );
+			}
 		}
 		add_action( 'bp_init', array( $this, 'non_threaded_comments' ) );
 		add_action( 'bp_activity_comment_posted', array( $this, 'comment_sync' ), 10, 2 );
@@ -77,6 +84,11 @@ class RTMediaBuddyPressActivity {
 	 * @return string Custom excerpt if conditions are match.
 	 */
 	public function bp_activity_truncate_entry( $excerpt, $text, $readmore ) {
+		// Return if class doesn't exist.
+		if ( ! class_exists( 'DOMDocument' ) ) {
+			return $excerpt;
+		}
+
 		global $activities_template;
 
 		$excerpt_length = bp_activity_get_excerpt_length();
@@ -130,6 +142,15 @@ class RTMediaBuddyPressActivity {
 					$custom_excerpt   = bp_create_excerpt( $div->textContent, (int) $excerpt_length / 2, array( 'ending' => '...' ) ); // phpcs:ignore
 					$div->textContent = trim( $custom_excerpt ); // phpcs:ignore
 
+					// Show 4 images if text is less, else show 2 images.
+					$images_to_show = 4;
+					if ( strlen( $div->textContent ) > 20 ) { // phpcs:ignore
+						$images_to_show = 2;
+					}
+
+					// Set number of images to show in excerpt.
+					$dom = $this->get_bp_activity_media_html( $dom, $images_to_show );
+
 					// Code copied from buddypress.
 					$id = ( ! empty( $activities_template->activity->current_comment->id ) ? 'acomment-read-more-' . $activities_template->activity->current_comment->id : 'activity-read-more-' . $activity_id );
 
@@ -146,6 +167,68 @@ class RTMediaBuddyPressActivity {
 
 		return $excerpt;
 	}
+
+	/**
+	 * Set number of images to show in activity excerpt.
+	 *
+	 * @param object $dom            DOMDocument object for DOM manipulation.
+	 * @param int    $images_to_show Number of images to show.
+	 *
+	 * @return object Modified DOMDocument object.
+	 */
+	private function get_bp_activity_media_html( $dom, $images_to_show ) {
+		// Get media list which is inside <ul>.
+		$ul_list = $dom->getElementsByTagName( 'ul' );
+
+		// Return if no ul element.
+		if ( empty( $ul_list ) ) {
+			return $dom;
+		}
+
+		// Iterate to find out media-list ul.
+		foreach ( $ul_list as $ul ) {
+			// We need ul having class 'rtm-activity-media-list'.
+			if ( empty( $ul->attributes ) ) {
+				continue;
+			}
+
+			// Iterate attributes.
+			foreach ( $ul->attributes as $att ) {
+				if ( empty( $att->name ) || empty( $att->value ) ) {
+					continue;
+				}
+
+				// Conditions to match required class.
+				if ( 'class' === $att->name && strpos( $att->value, 'rtm-activity-media-list' ) !== false ) {
+
+					// Number of li (images) allowed to show.
+					$count = 1;
+					// Array where items to remove will be stored.
+					$items_to_remove = array();
+					// Iterate all children of ul which are images (li).
+					foreach ( $ul->childNodes as $li ) { // phpcs:ignore
+
+						// If max number of images reached, add li to items_to_remove array.
+						if ( $count > $images_to_show ) {
+							$items_to_remove[] = $li;
+						}
+
+						$count++;
+					}
+
+					// Remove images.
+					foreach ( $items_to_remove as $item ) {
+						$ul->removeChild( $item );
+					}
+
+					return $dom;
+				}
+			}
+		}
+
+		return $dom;
+	}
+
 
 	/**
 	 * For adding secondary avatar in the activity header.
