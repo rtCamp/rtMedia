@@ -86,42 +86,52 @@ class RTMediaBuddyPressActivity {
 			return $excerpt;
 		}
 
+		// Get current activity id.
 		$activity_id = bp_get_activity_id();
 
+		// We need to separate text and rtMedia images, for this we need DOM manipulation.
 		$dom = new DOMDocument();
 		$dom->loadHTML( $text );
+		// We need to find div having rtmedia-activity-text class, but no direct method for it.
+		// So we need to iterate.
 		$div_list = $dom->getElementsByTagName( 'div' );
 
+		// We're storing first div to create final markup.
+		// If we create markup from dom object, it'll create whole HTML which we don't want.
 		$first_div = '';
 
-		$break = false;
 		foreach ( $div_list as $div ) {
+			// Set first div.
 			if ( empty( $first_div ) ) {
 				$first_div = $div;
 			}
 
-			if ( $break ) {
-				break;
-			}
-
+			// We need div with class attribute.
 			if ( empty( $div->attributes ) ) {
 				continue;
 			}
 
 			$atts = $div->attributes;
+			// Check attributes by iterating them.
 			foreach ( $atts as $att ) {
 				if ( empty( $att->name ) || empty( $att->value ) ) {
 					continue;
 				}
 
+				// Condition to find text div.
 				if ( 'class' === $att->name && 'rtmedia-activity-text' === $att->value ) {
+					// Create excerpt only on text and then set it to div text.
+					// We're using actual length / 2 to make space for image.
 					$custom_excerpt   = bp_create_excerpt( $div->textContent, (int) $excerpt_length / 2, array( 'ending' => '...' ) ); // phpcs:ignore
 					$div->textContent = trim( $custom_excerpt ); // phpcs:ignore
 
+					// Code copied from buddypress.
 					$id = ( ! empty( $activities_template->activity->current_comment->id ) ? 'acomment-read-more-' . $activities_template->activity->current_comment->id : 'activity-read-more-' . $activity_id );
 
+					// Get final HTML.
 					$content = $first_div->ownerDocument->saveHTML( $first_div ); // phpcs:ignore
 
+					// Append read more link and text.
 					$return = sprintf( '%1$s<span class="activity-read-more" id="%2$s"><a href="%3$s" rel="nofollow">%4$s</a></span>', $content, $id, bp_get_activity_thread_permalink(), $readmore );
 
 					return $return;
