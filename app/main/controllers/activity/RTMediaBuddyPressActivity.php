@@ -103,7 +103,11 @@ class RTMediaBuddyPressActivity {
 
 		// We need to separate text and rtMedia images, for this we need DOM manipulation.
 		$dom = new DOMDocument();
+		// DOMDocument gives error on html5 tags, so we need to disable errors.
+		libxml_use_internal_errors( true );
 		$dom->loadHTML( $text );
+		// DOMDocument gives error on html5 tags, so we need to disable errors.
+		libxml_clear_errors();
 		// We need to find div having rtmedia-activity-text class, but no direct method for it.
 		// So we need to iterate.
 		$div_list = $dom->getElementsByTagName( 'div' );
