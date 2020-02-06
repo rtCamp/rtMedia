@@ -112,25 +112,27 @@ jQuery( document ).ready( function ( $ ) {
 			}
 		}
 
+		var error_msg = "";
+
+		/**
+		 * Validate the media/page general setting.
+		 * Changed the code from showing alert boxes to appending error messages to the selector.
+		 *
+		 * @type {jQuery|HTMLElement|Window.$.fn.init}
+		 */
 		var general_jpeg_image_quality = jQuery( 'input[name^="rtmedia-options[general_jpeg_image_quality]"]' );
-		if ( return_code && general_jpeg_image_quality.length > 0 && typeof general_jpeg_image_quality != "undefined" ) {
-			var error_msg = "";
-			var general_jpeg_image_quality_val = 0;
+		if ( return_code && 1 === general_jpeg_image_quality.length && 'undefined' !== typeof general_jpeg_image_quality ) {
 			if ( general_jpeg_image_quality.val() <= 0 ) {
 				error_msg += rtmedia_admin_strings.jpeg_quality_negative_error;
-				general_jpeg_image_quality_val = 90;
 			} else if ( general_jpeg_image_quality.val() > 100 ) {
 				error_msg += rtmedia_admin_strings.jpeg_quality_percentage_error;
-				general_jpeg_image_quality_val = 100;
 			} else if ( !reg.test( general_jpeg_image_quality.val() ) ) {
 				error_msg += rtmedia_admin_strings.jpeg_quality_invalid_value + ' ' + Math.round( general_jpeg_image_quality.val() ) + ".";
-				general_jpeg_image_quality_val = Math.round( general_jpeg_image_quality.val() );
 			}
-			if ( error_msg != "" ) {
-				alert( error_msg );
-				general_jpeg_image_quality.val( general_jpeg_image_quality_val );
-				return_code = false;
-				return false;
+			if ( '' !== error_msg ) {
+				general_jpeg_image_quality.next( '.error_msg' ).remove();
+				$( '#tab-' + general_jpeg_image_quality.parents( '.rtm-content' ).attr( 'id' ) ).click();
+				return rtp_show_error_message ( general_jpeg_image_quality, error_msg );
 			}
 		}
 
@@ -142,7 +144,6 @@ jQuery( document ).ready( function ( $ ) {
 		 */
 		var general_perPageMedia = jQuery( 'input[name^="rtmedia-options[general_perPageMedia]"]' );
 		if ( return_code && 1 === general_perPageMedia.length && 'undefined' !== typeof general_perPageMedia ) {
-			var error_msg = '';
 			if ( 1 > general_perPageMedia.val() ) {
 				error_msg += rtmedia_admin_strings.per_page_media_negative_value;
 			} else if ( jQuery.isNumeric( general_perPageMedia.val() ) && ( Math.floor( general_perPageMedia.val() ) != general_perPageMedia.val() ) ) {
