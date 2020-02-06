@@ -134,22 +134,24 @@ jQuery( document ).ready( function ( $ ) {
 			}
 		}
 
+		/**
+		 * Validate the media/page general setting.
+		 * Changed the code from showing alert boxes to appending error messages to the selector.
+		 *
+		 * @type {jQuery|HTMLElement|Window.$.fn.init}
+		 */
 		var general_perPageMedia = jQuery( 'input[name^="rtmedia-options[general_perPageMedia]"]' );
-		if ( return_code && general_perPageMedia.length > 0 && typeof general_perPageMedia != "undefined" ) {
-			var error_msg = "";
-			var general_perPageMedia_val = 0;
-			if ( general_perPageMedia.val() < 1 ) {
+		if ( return_code && 1 === general_perPageMedia.length && 'undefined' !== typeof general_perPageMedia ) {
+			var error_msg = '';
+			if ( 1 > general_perPageMedia.val() ) {
 				error_msg += rtmedia_admin_strings.per_page_media_negative_value;
-				general_perPageMedia_val = 10;
 			} else if ( jQuery.isNumeric( general_perPageMedia.val() ) && ( Math.floor( general_perPageMedia.val() ) != general_perPageMedia.val() ) ) {
 				error_msg += rtmedia_admin_strings.per_page_media_positive_error + " " + Math.round( general_perPageMedia.val() ) + ".";
-				general_perPageMedia_val = Math.round( general_perPageMedia.val() );
 			}
-			if ( error_msg != "" ) {
-				alert( error_msg );
-				general_perPageMedia.val( general_perPageMedia_val );
-				return_code = false;
-				return false;
+			if ( '' !== error_msg ) {
+				general_perPageMedia.next( '.error_msg' ).remove();
+				$( '#tab-' + general_perPageMedia.parents( '.rtm-content' ).attr( 'id' ) ).click();
+				return rtp_show_error_message ( general_perPageMedia, error_msg );
 			}
 		}
 
@@ -978,6 +980,19 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( '#rtm-erase-data-button' ).click(function () {
 		window.location.href = '/wp-admin/tools.php?page=remove_personal_data';
 	});
+
+	/* Show Error Message If Incorrect Validation  */
+	function rtp_show_error_message( selector, error_msg ) {
+		var elm_selector = jQuery( selector );
+		elm_selector.focus();
+		elm_selector.css( 'border-color', 'red' );
+		if ( elm_selector.parent().length > 0 && 'error_msg' !== elm_selector.parent().attr( 'class' ) ) {
+			var invalid_error_msg = jQuery( "<span />" ).attr( 'style', 'display:block' ).addClass( 'error_msg' ).html( error_msg );
+			elm_selector.after( invalid_error_msg );
+		}
+		return_code = false;
+		return false;
+	}
 
 } );
 
