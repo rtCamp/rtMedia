@@ -33,21 +33,21 @@ jQuery( document ).ready( function ( $ ) {
                 jQuery( '.rtm-form-text' ).css( 'border-color', '#ddd' );
                 if ( !/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test( general_upload_terms_page_link.val() ) ) {
                     error_msg += rtm_upload_terms_error_msgs.valid_url;
-                    $( '#tab-' + general_enable_upload_terms.parents( '.rtm-content' ).attr( 'id' ) ).click();
+                    $( '#tab-' + general_enable_upload_terms.parents( '.rtm-content' ).attr( 'id' ) ).click(); // navigate the admin to this location, so he can know about this error.
                     return rtp_show_error_message ( general_upload_terms_page_link, error_msg );
                 }
 
                 /* Check "Terms of Service Message" Emply Or Not */
                 if ( '' === general_upload_terms_message.val().trim() ) {
                     error_msg += rtm_upload_terms_error_msgs.terms_msg;
-                    $( '#tab-' + general_upload_terms_message.parents( '.rtm-content' ).attr( 'id' ) ).click();
+                    $( '#tab-' + general_upload_terms_message.parents( '.rtm-content' ).attr( 'id' ) ).click(); // navigate the admin to this location, so he can know about this error.
                     return rtp_show_error_message ( general_upload_terms_message, error_msg );
                 }
 
                 /* Check "Error Message" Emply Or Not */
                 if (  '' === general_upload_terms_error_message.val().trim() ) {
                     error_msg += rtm_upload_terms_error_msgs.error_msg;
-                    $( '#tab-' + general_upload_terms_error_message.parents( '.rtm-content' ).attr( 'id' ) ).click();
+                    $( '#tab-' + general_upload_terms_error_message.parents( '.rtm-content' ).attr( 'id' ) ).click(); // navigate the admin to this location, so he can know about this error.
                     return rtp_show_error_message ( general_upload_terms_error_message, error_msg );
                 }
             }
@@ -60,6 +60,7 @@ jQuery( document ).ready( function ( $ ) {
                 /* Check "Terms of Service Message" Emply Or Not */
                 if ( '' === general_upload_terms_privacy_message.val().trim() ) {
                     error_msg += rtm_upload_terms_error_msgs.privacy_msg;
+                    $( '#tab-' + general_upload_terms_privacy_message.parents( '.rtm-content' ).attr( 'id' ) ).click(); // navigate the admin to this location, so he can know about this error.
                     return rtp_show_error_message ( general_upload_terms_privacy_message, error_msg );
                 }
             }
