@@ -67,7 +67,13 @@ jQuery( document ).ready( function ( $ ) {
         }
     } );
 
-    /* Show Error Message If Incorrect Validation  */
+    /**
+	 * Show error message if validation fails.
+	 *
+	 * @param selector
+	 * @param error_msg
+	 * @returns {boolean}
+	 */
     function rtp_show_error_message( selector, error_msg ) {
         var elm_selector = jQuery( selector );
         elm_selector.focus();

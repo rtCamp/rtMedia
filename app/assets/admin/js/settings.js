@@ -82,14 +82,23 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( '#bp-media-settings-boxes' ).on( 'submit', '#bp_media_settings_form, .rtmedia-settings-submit', function ( e ) {
 		var return_code = true;
 		var reg = new RegExp( '^[0-9]+$' );
+		var error_msg = '';
 
-		jQuery( "input[name*='defaultSizes']" ).each( function ( el ) {
-			if ( !reg.test( jQuery( this ).val() ) ) {
-				alert( "Invalid value for " + jQuery( this ).attr( 'name' ).replace( 'rtmedia-options[defaultSizes_', '' ).replace( ']', '' ).replace( /_/g, ' ' ).replace( /(\b)([a-zA-Z] )/g, function ( firstLetter ) {
+		/**
+		 * Validate the default dimensions of the 3 types of media.
+		 * Changed the code from showing alert boxes to appending error messages to the selector.
+		 */
+		$( "input[name*='defaultSizes']" ).each( function () {
+			var current_element = $( this );
+			current_element.css( 'border-color', '#7e8993' ).next( '.error_msg' ).remove();
+			if ( ! reg.test( current_element.val() ) ) {
+				error_msg = "Invalid value for " + current_element.attr( 'name' ).replace(
+				'rtmedia-options[defaultSizes_', '' ).replace( ']', '' ).replace( /_/g, ' ' ).replace( /(\b)([a-zA-Z] )/g, function ( firstLetter ) {
 					return firstLetter.toUpperCase();
-				} ) );
-				return_code = false;
-				return false;
+				} );
+				$( '#tab-' + current_element.parents( '.rtm-content' ).attr( 'id' ) ).click();
+				e.preventDefault();
+				return rtp_show_error_message ( current_element, error_msg );
 			}
 		} );
 
@@ -111,8 +120,6 @@ jQuery( document ).ready( function ( $ ) {
 				return false;
 			}
 		}
-
-		var error_msg = "";
 
 		/**
 		 * Validate the media/page general setting.
@@ -982,7 +989,13 @@ jQuery( document ).ready( function ( $ ) {
 		window.location.href = '/wp-admin/tools.php?page=remove_personal_data';
 	});
 
-	/* Show Error Message If Incorrect Validation  */
+	/**
+	 * Show error message if validation fails.
+	 *
+	 * @param selector
+	 * @param error_msg
+	 * @returns {boolean}
+	 */
 	function rtp_show_error_message( selector, error_msg ) {
 		var elm_selector = jQuery( selector );
 		elm_selector.focus();
