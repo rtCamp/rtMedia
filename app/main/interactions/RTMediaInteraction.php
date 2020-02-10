@@ -283,7 +283,7 @@ class RTMediaInteraction {
 		if ( ! array_key_exists( 'media', $wp_query->query_vars ) ) {
 			return $url;
 		}
-		$s        = empty( $_SERVER['HTTPS'] ) ? '' : ( 'on' === $_SERVER['HTTPS'] ) ? 's' : '';
+		$s        = empty( $_SERVER['HTTPS'] ) ? '' : ( ( 'on' === $_SERVER['HTTPS'] ) ? 's' : '' );
 		$sp       = strtolower( wp_unslash( $_SERVER['SERVER_PROTOCOL'] ) );
 		$protocol = substr( $sp, 0, strpos( $sp, '/' ) ) . $s;
 		$port     = ( '80' === $_SERVER['SERVER_PORT'] ) ? '' : ( ':' . $_SERVER['SERVER_PORT'] ); // @codingStandardsIgnoreLine
