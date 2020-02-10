@@ -21,9 +21,11 @@ if ( 'xmlhttprequest' === strtolower( $_rt_ajax_request ) ) {
 	$rt_ajax_request = true;
 }
 
+// Get currently active template (Nouveau / Legacy).
 $bp_template = get_option( '_bp_theme_package_id' );
 
 $class = '';
+// Getting extran classes for #buddypress when Nouveau is active.
 if ( 'nouveau' === $bp_template && ! $rt_ajax_request ) {
 	$class = bp_nouveau_get_container_classes();
 }
@@ -39,6 +41,7 @@ if ( ! $rt_ajax_request ) {
 		$template_type = '';
 	}
 
+	// When Nouveau is active.
 	if ( 'nouveau' === $bp_template ) {
 
 		if ( 'buddypress' === $template_type ) {
@@ -163,7 +166,7 @@ if ( ! $rt_ajax_request ) {
 				}
 			}
 		}
-	} else {
+	} else { // When Legacy is active.
 		if ( 'buddypress' === $template_type ) {
 			// load buddypress markup.
 			if ( bp_displayed_user_id() ) {
@@ -304,11 +307,11 @@ if ( ! $rt_ajax_request ) {
 			}
 		}
 	}
-} else {
+} else { // If ajax/iframe request, just load images.
 	rtmedia_load_template();
 }
 
 // close all markup.
 ?>
-	</div><!--#buddypress-->
+</div><!--#buddypress-->
 <?php
