@@ -59,7 +59,7 @@ if ( 'object' === typeof rtMediaHook ) {
         }
 
         if ( 1 === terms_conditions_checkbox.length ) {
-            terms_conditions_checkbox.removeAttr('disabled');
+            terms_conditions_checkbox.removeAttr( 'disabled' );
 
             if ( false === args ) {
                 whats_new_submit.removeAttr( 'disabled' );
