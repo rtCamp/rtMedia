@@ -684,7 +684,7 @@ class RTMedia {
 							break;
 						case 'video':
 						case 'music':
-							$old = ( 'video' === $type ) ? 'video' : ( 'music' === $type ) ? 'audio' : '';
+							$old = ( 'video' === $type ) ? 'video' : ( ( 'music' === $type ) ? 'audio' : '' );
 							switch ( $size ) {
 								case 'activityPlayer':
 									if ( isset( $bp_media_options['sizes'][ $old ]['medium'][ $dimension ] ) && ! empty( $bp_media_options['sizes'][ $old ]['medium'][ $dimension ] ) ) {
