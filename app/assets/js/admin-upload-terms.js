@@ -94,7 +94,8 @@ jQuery( document ).ready( function ( $ ) {
         var elm_selector = $( selector );
         elm_selector.focus();
         elm_selector.css( 'border-color', 'red' );
-        if ( elm_selector.parent().length > 0 && 'error_msg' !== elm_selector.parent().attr( 'class' ) ) {
+        var elm_selector_parent = elm_selector.parent();
+        if ( elm_selector_parent.length > 0 && 'error_msg' !== elm_selector_parent.attr( 'class' ) ) {
             var invalid_error_msg = $( "<span />" ).attr( 'style', 'display:block' ).addClass( 'error_msg' ).html( error_msg );
             elm_selector.after( invalid_error_msg );
         }
