@@ -235,7 +235,7 @@ class RTMediaNav {
 		//condition to keep "Album" tab active
 		if ( array_key_exists( 'media_type', $rtmedia_query->query ) && isset( $rtmedia_query->query['media_type'] ) && ( 'album' === $rtmedia_query->query['media_type'] ) ) {
 			 $albums = 'current selected';
-		} elseif ( array_key_exists( 'media_type', $rtmedia_query->action_query )  && isset( $rtmedia_query->action_query->media_type ) && ( 'album' === $rtmedia_query->action_query->media_type ) ) {
+		} elseif ( isset( $rtmedia_query->action_query->media_type ) && ( 'album' === $rtmedia_query->action_query->media_type ) ) {
 			 $albums = 'current selected';
 
 		}
