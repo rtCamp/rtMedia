@@ -106,7 +106,7 @@ if ( 'object' === typeof rtMediaHook ) {
      */
     rtMediaHook.register( 'rtmedia_js_after_activity_added', function () {
         var rtmedia_terms_conditions = $( '#rtmedia_upload_terms_conditions' );
-        if ( rtmedia_terms_conditions.is( ':checked' ) ) {
+        if ( 1 === rtmedia_terms_conditions.length && rtmedia_terms_conditions.is( ':checked' ) ) {
             rtmedia_terms_conditions.prop( 'checked', false );
         }
     } );
