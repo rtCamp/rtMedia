@@ -28,14 +28,18 @@ jQuery( document ).ready( function ( $ ) {
         if (return_code && general_enable_upload_terms.length > 0 && 'undefined' !== typeof general_enable_upload_terms ||
             return_code && activity_enable_upload_terms.length > 0 && typeof 'undefined' !== activity_enable_upload_terms ) {
             var error_msg = "";
+
             if ( general_enable_upload_terms.prop( 'checked' ) || activity_enable_upload_terms.prop( 'checked' ) ) {
                 $( '.error_msg' ).remove();
                 $( '.rtm-form-text' ).css( 'border-color', '#ddd' );
+
                 if ( !/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test( general_upload_terms_page_link.val() ) ) {
                     error_msg += rtm_upload_terms_error_msgs.valid_url;
-                    if( 0 < general_enable_upload_terms.parents( '.rtm-content' ).attr( 'id' ).length ) {
+                    var general_enable_upload_terms_parents_el = general_enable_upload_terms.parents( '.rtm-content' ).attr( 'id' );
+                    
+                    if ( 0 < general_enable_upload_terms_parents_el.length ) {
                         // navigate the admin to this location, so he can know about this error.
-                        $( '#tab-' + general_enable_upload_terms.parents( '.rtm-content' ).attr( 'id' ) ).click();
+                        $( '#tab-' + general_enable_upload_terms_parents_el ).click();
                     }
 
                     return rtp_show_error_message ( general_upload_terms_page_link, error_msg );
@@ -44,9 +48,11 @@ jQuery( document ).ready( function ( $ ) {
                 /* Check "Terms of Service Message" Emply Or Not */
                 if ( '' === general_upload_terms_message.val().trim() ) {
                     error_msg += rtm_upload_terms_error_msgs.terms_msg;
-                    if( 0 < general_upload_terms_message.parents( '.rtm-content' ).attr( 'id' ).length ) {
+                    var general_upload_terms_message_parents_el = general_upload_terms_message.parents( '.rtm-content' ).attr( 'id' );
+
+                    if ( 0 < general_upload_terms_message_parents_el.length ) {
                         // navigate the admin to this location, so he can know about this error.
-                        $( '#tab-' + general_upload_terms_message.parents( '.rtm-content' ).attr( 'id' ) ).click();
+                        $( '#tab-' + general_upload_terms_message_parents_el ).click();
                     }
 
                     return rtp_show_error_message ( general_upload_terms_message, error_msg );
@@ -55,9 +61,11 @@ jQuery( document ).ready( function ( $ ) {
                 /* Check "Error Message" Emply Or Not */
                 if (  '' === general_upload_terms_error_message.val().trim() ) {
                     error_msg += rtm_upload_terms_error_msgs.error_msg;
-                    if( 0 < general_upload_terms_error_message.parents( '.rtm-content' ).attr( 'id' ).length ) {
+                    var general_upload_terms_error_message_parents_el = general_upload_terms_error_message.parents( '.rtm-content' ).attr( 'id' );
+
+                    if ( 0 < general_upload_terms_error_message_parents_el.length ) {
                         // navigate the admin to this location, so he can know about this error.
-                        $( '#tab-' + general_upload_terms_error_message.parents( '.rtm-content' ).attr( 'id' ) ).click();
+                        $( '#tab-' + general_upload_terms_error_message_parents_el ).click();
                     }
 
                     return rtp_show_error_message ( general_upload_terms_error_message, error_msg );
@@ -66,15 +74,19 @@ jQuery( document ).ready( function ( $ ) {
         }
         if ( return_code && general_upload_terms_show_pricacy_message.length > 0 && 'undefined' !== typeof general_upload_terms_show_pricacy_message ) {
             var error_msg = "";
+
             if ( general_upload_terms_show_pricacy_message.prop( 'checked' ) ) {
                 $( '.error_msg' ).remove();
 
                 /* Check "Terms of Service Message" Emply Or Not */
+
                 if ( '' === general_upload_terms_privacy_message.val().trim() ) {
                     error_msg += rtm_upload_terms_error_msgs.privacy_msg;
-                    if( 0 < general_upload_terms_privacy_message.parents( '.rtm-content' ).attr( 'id' ).length ) {
+                    var general_upload_terms_privacy_message_parents_el = general_upload_terms_privacy_message.parents( '.rtm-content' ).attr( 'id' );
+
+                    if ( 0 < general_upload_terms_privacy_message_parents_el.length ) {
                         // navigate the admin to this location, so he can know about this error.
-                        $( '#tab-' + general_upload_terms_privacy_message.parents( '.rtm-content' ).attr( 'id' ) ).click();
+                        $( '#tab-' + general_upload_terms_privacy_message_parents_el ).click();
                     }
 
                     return rtp_show_error_message ( general_upload_terms_privacy_message, error_msg );
@@ -95,6 +107,7 @@ jQuery( document ).ready( function ( $ ) {
         elm_selector.focus();
         elm_selector.css( 'border-color', 'red' );
         var elm_selector_parent = elm_selector.parent();
+
         if ( elm_selector_parent.length > 0 && 'error_msg' !== elm_selector_parent.attr( 'class' ) ) {
             var invalid_error_msg = $( "<span />" ).attr( 'style', 'display:block' ).addClass( 'error_msg' ).html( error_msg );
             elm_selector.after( invalid_error_msg );
@@ -110,6 +123,7 @@ jQuery( document ).ready( function ( $ ) {
      * By: Yahil And Malav
      */
     function rtp_terms_option_toggle() {
+
          if ( general_enable_upload_terms.prop( 'checked' ) || activity_enable_upload_terms.prop( 'checked' ) ) {
              general_upload_terms_page_link.closest( '.form-table' ).slideDown();
              general_upload_terms_message.closest( '.form-table' ).slideDown();
@@ -121,7 +135,7 @@ jQuery( document ).ready( function ( $ ) {
          }
 
          // Show privacy message
-         if( general_upload_terms_show_pricacy_message.prop( 'checked' ) ) {
+         if ( general_upload_terms_show_pricacy_message.prop( 'checked' ) ) {
             general_upload_terms_privacy_message.closest( '.form-table' ).slideDown();
          } else {
             general_upload_terms_privacy_message.closest( '.form-table' ).slideUp();
