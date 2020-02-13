@@ -1,14 +1,14 @@
-# Copyright (C) 2019 rtCamp
+# Copyright (C) 2020 rtCamp
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.5.11\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2019-12-26 11:07:53+00:00\n"
+"POT-Creation-Date: 2020-01-23 12:05:27+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
 "Last-Translator: rtMedia <rtmedia@rtcamp.com>\n"
 "Language-Team: rtMedia <rtmedia@rtcamp.com>\n"
 "Language: en\n"
