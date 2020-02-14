@@ -67,7 +67,7 @@ if ( ! $rt_ajax_request ) {
 
 						<?php do_action( 'bp_before_member_body' ); ?>
 						<?php do_action( 'bp_before_member_media' ); ?>
-						<nav class="<?php bp_nouveau_single_item_subnav_classes(); ?>" id="subnav" role="navigation" aria-label="<?php esc_attr_e( 'rtMedia menu', 'buddypress' ); ?>">
+						<nav class="<?php bp_nouveau_single_item_subnav_classes(); ?>" id="subnav" role="navigation" aria-label="<?php esc_attr_e( 'rtMedia menu', 'buddypress-media' ); ?>">
 							<ul class="subnav">
 
 								<?php rtmedia_sub_nav(); ?>
@@ -140,7 +140,7 @@ if ( ! $rt_ajax_request ) {
 									do_action( 'bp_after_group_status_message' );
 								} else {
 									?>
-									<nav class="<?php bp_nouveau_single_item_subnav_classes(); ?>" id="subnav" role="navigation" aria-label="<?php esc_attr_e( 'rtMedia menu', 'buddypress' ); ?>">
+									<nav class="<?php bp_nouveau_single_item_subnav_classes(); ?>" id="subnav" role="navigation" aria-label="<?php esc_attr_e( 'rtMedia menu', 'buddypress-media' ); ?>">
 										<ul class="subnav">
 											<?php rtmedia_sub_nav(); ?>
 											<?php do_action( 'rtmedia_sub_nav' ); ?>
