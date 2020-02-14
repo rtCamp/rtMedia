@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 5.3.2
-Stable tag: 4.5.11
+Stable tag: 4.6.0
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -133,6 +133,22 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.6.0 [February 17, 2020] =
+
+* Enhancement
+
+ * Show long text truncated with read more option and image displayed below the truncated text on activity
+
+* FIXED
+
+ * Error uploading media in comments with Kleo theme
+ * JavaScript errors
+ * Album styling when masonry style is disabled
+ * The template loaded on media page when nouveau template is set
+ * Compatibility issues with PHP 7.4.1
+ * UI related bugs
+ * Notices and Warnings
 
 = 4.5.11 [December 26, 2019] =
 
@@ -1642,8 +1658,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.11 =
-rtMedia 4.5.11, with improved styling for albums and improved UX on BuddyPress Activity Wall.
+= 4.6.0 =
+rtMedia 4.6.0, with improved activity content preview and JavaScript and Nouveau template related fixes.
 
 == Sponsors ==
 
