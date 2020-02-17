@@ -1,14 +1,14 @@
-# Copyright (C) 2019 rtCamp
+# Copyright (C) 2020 rtCamp
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.5.11\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.0\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2019-12-26 11:07:53+00:00\n"
+"POT-Creation-Date: 2020-02-14 09:36:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
 "Last-Translator: rtMedia <rtmedia@rtcamp.com>\n"
 "Language-Team: rtMedia <rtmedia@rtcamp.com>\n"
 "Language: en\n"
@@ -147,7 +147,7 @@ msgstr ""
 #: app/admin/RTMediaAdmin.php:761 app/admin/RTMediaAdmin.php:1267
 #: app/admin/RTMediaAdmin.php:1268 app/importers/RTMediaActivityUpgrade.php:128
 #: app/importers/RTMediaMigration.php:68 app/main/RTMedia.php:1060
-#: app/main/RTMedia.php:1637
+#: app/main/RTMedia.php:1622
 msgid "rtMedia"
 msgstr ""
 
@@ -2519,48 +2519,48 @@ msgstr ""
 msgid "I agree to"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:479
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:649
 msgid "Media Files"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:517
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:687
 #: app/main/controllers/media/RTMediaComment.php:175
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:102
 #: app/main/controllers/template/rtmedia-functions.php:2132
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:652
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:822
 msgid "%s added a %s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:659
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:661
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:829
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:831
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:229
 msgid "%s added %d %s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:714
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:884
 msgid "%1$s liked a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:717
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:887
 msgid "%1$s liked their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:721
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:891
 msgid "%1$s liked %2$s's %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:811
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:981
 msgid "%1$s commented on a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:814
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:984
 msgid "%1$s commented on their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:818
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:988
 msgid "%1$s commented on %2$s's %3$s"
 msgstr ""
 
@@ -3408,6 +3408,10 @@ msgstr ""
 
 #: app/main/deprecated/RTMediaDeprecated.php:27
 msgid "Deprecated %s. Please use %s."
+msgstr ""
+
+#: templates/main.php:70 templates/main.php:143
+msgid "rtMedia menu"
 msgstr ""
 
 #: templates/media/album-gallery.php:21

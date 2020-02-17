@@ -48,6 +48,7 @@ class getid3_pcd extends getid3_handler
 		if ($this->ExtractData > 3) {
 
 			$this->error('Cannot extract PSD image data for detail levels above BASE (level-3) because encrypted with Kodak-proprietary compression/encryption.');
+			return false;
 
 		} elseif ($this->ExtractData > 0) {
 
@@ -76,11 +77,11 @@ class getid3_pcd extends getid3_handler
 
 				for ($x = 0; $x < $PCD_width; $x++) {
 					if ($PCDisVertical) {
-						$info['pcd']['data'][$PCD_width - $x][$y]     = $this->YCbCr2RGB(ord($PCD_data_Y1{$x}), ord($PCD_data_Cb{(int) floor($x / 2)}), ord($PCD_data_Cr{(int) floor($x / 2)}));
-						$info['pcd']['data'][$PCD_width - $x][$y + 1] = $this->YCbCr2RGB(ord($PCD_data_Y2{$x}), ord($PCD_data_Cb{(int) floor($x / 2)}), ord($PCD_data_Cr{(int) floor($x / 2)}));
+						$info['pcd']['data'][$PCD_width - $x][$y]     = $this->YCbCr2RGB(ord($PCD_data_Y1[$x]), ord($PCD_data_Cb[(int) floor($x / 2)]), ord($PCD_data_Cr[(int) floor($x / 2)]));
+						$info['pcd']['data'][$PCD_width - $x][$y + 1] = $this->YCbCr2RGB(ord($PCD_data_Y2[$x]), ord($PCD_data_Cb[(int) floor($x / 2)]), ord($PCD_data_Cr[(int) floor($x / 2)]));
 					} else {
-						$info['pcd']['data'][$y][$x]                  = $this->YCbCr2RGB(ord($PCD_data_Y1{$x}), ord($PCD_data_Cb{(int) floor($x / 2)}), ord($PCD_data_Cr{(int) floor($x / 2)}));
-						$info['pcd']['data'][$y + 1][$x]              = $this->YCbCr2RGB(ord($PCD_data_Y2{$x}), ord($PCD_data_Cb{(int) floor($x / 2)}), ord($PCD_data_Cr{(int) floor($x / 2)}));
+						$info['pcd']['data'][$y][$x]                  = $this->YCbCr2RGB(ord($PCD_data_Y1[$x]), ord($PCD_data_Cb[(int) floor($x / 2)]), ord($PCD_data_Cr[(int) floor($x / 2)]));
+						$info['pcd']['data'][$y + 1][$x]              = $this->YCbCr2RGB(ord($PCD_data_Y2[$x]), ord($PCD_data_Cb[(int) floor($x / 2)]), ord($PCD_data_Cr[(int) floor($x / 2)]));
 					}
 				}
 			}
@@ -100,6 +101,7 @@ class getid3_pcd extends getid3_handler
 
 		}
 
+		return false;
 	}
 
 	/**
