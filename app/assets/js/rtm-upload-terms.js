@@ -11,6 +11,7 @@ if ( 'object' === typeof rtMediaHook ) {
      * Show warning if unchecked else proceed.
      */
     rtMediaHook.register( 'rtmedia_js_upload_file', function ( args ) {
+
         if ( false === args ) {
 
             return args;
@@ -23,12 +24,14 @@ if ( 'object' === typeof rtMediaHook ) {
          * @author Adarsh Verma <adarsh.verma@rtcamp.com>
          */
         var activity_terms_enabled = rtmedia_upload_terms_data.activity_terms_enabled;
+
         if ( 'false' === activity_terms_enabled ) {
 
             return false;
         }
 
         var terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
+
         if ( 0 === terms_conditions_checkbox.length ) {
             rtp_display_terms_warning( jQuery( '#whats-new-options' ), rtmedia_upload_terms_data.message );
 
@@ -48,6 +51,7 @@ if ( 'object' === typeof rtMediaHook ) {
      * Show the warning message if the terms checkbox is unchecked before posting the media update.
      */
     rtMediaHook.register( 'rtmedia_js_before_activity_added', function ( args ) {
+
         var terms_conditions_checkbox, form;
         var whats_new_submit = jQuery( '#aw-whats-new-submit' );
 
@@ -71,6 +75,7 @@ if ( 'object' === typeof rtMediaHook ) {
             if ( ! terms_conditions_checkbox.is( ':checked' ) ) {
                 whats_new_submit.removeAttr( 'disabled' );
                 whats_new_submit.removeClass( 'loading' );
+
                 if ( args && 'activity' === args.src ) {
                     rtp_display_terms_warning( form.find('.rtmedia-upload-terms'), rtmedia_upload_terms_data.message );
                 } else {
@@ -82,6 +87,7 @@ if ( 'object' === typeof rtMediaHook ) {
         }
 
         return true;
+
     } );
 
     /**
@@ -91,22 +97,27 @@ if ( 'object' === typeof rtMediaHook ) {
      * By: Yahil
      */
     rtMediaHook.register( 'rtmedia_js_after_file_upload', function () {
+
         var terms_conditions_checkbox = jQuery( '#rtmedia-upload-container #rtmedia_upload_terms_conditions' );
+
         if ( 1 === terms_conditions_checkbox.length ) {
             terms_conditions_checkbox.removeAttr( 'checked' );
             jQuery( '.rt_alert_msg' ).remove();
         }
 
         return true;
+
     });
 
     /**
      * Uncheck the terms checkbox after the activity is posted successfully.
      */
     rtMediaHook.register( 'rtmedia_js_after_activity_added', function () {
+
         jQuery( '#rtmedia_upload_terms_conditions' ).prop( 'checked', false );
 
         return true;
+
     } );
 }
 
@@ -122,24 +133,30 @@ jQuery( document ).ready( function () {
         // Show error message if terms-condition is not checked.
         if ( terms_conditions_checkbox.is( ':checked' ) ) {
             var alter_msg_span = terms_conditions_checkbox.siblings( 'span.rt_alert_msg' );
+
             if ( 1 === alter_msg_span.length ) {
                 alter_msg_span.remove();
             } else {
                 terms_conditions_checkbox.parent().siblings( 'span.rt_alert_msg' ).remove();
             }
+
         } else {
             rtp_display_terms_warning( terms_conditions_checkbox.parent( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
         }
 
         if ( 'undefined' !== typeof rtmedia_direct_upload_enabled && '1' === rtmedia_direct_upload_enabled ) {
             var whats_new_submit = jQuery( '#aw-whats-new-submit' );
+
             if ( 1 === whats_new_submit.length ) {
+
                 if ( '' !== jQuery( '#whats-new' ).val().trim() || 1 === jQuery( '#rtmedia_uploader_filelist' ).children( 'li' ).length ) {
                     whats_new_submit.trigger( 'click' );
                 }
+
             } else {
                 upload_start_btn.trigger( 'click' );
             }
+
         }
     } );
 
@@ -154,10 +171,12 @@ jQuery( document ).ready( function () {
  * By: Malav Vasita
  */
 function rtp_display_terms_warning( selector, rt_alert_msg ) {
+
     if ( 0 === jQuery( '.rt_alert_msg' ).length ) {
-        var invalid_error_msg = jQuery( "<span />" ).attr( 'style', 'color:red; display:block; clear:both;' ).addClass( 'rt_alert_msg' ).empty().append( rt_alert_msg );
+        var invalid_error_msg = jQuery( '<span />' ).attr( 'style', 'color:red; display:block; clear:both;' ).addClass( 'rt_alert_msg' ).empty().append( rt_alert_msg );
         selector.after( invalid_error_msg );
     }
+
 }
 
 /**
@@ -166,7 +185,8 @@ function rtp_display_terms_warning( selector, rt_alert_msg ) {
  * By: Malav Vasita
  */
 function handle_privacy_message() {
-    jQuery( '#close_rtm_privacy_message' ).on( 'click', function (c) {
+
+    jQuery( '#close_rtm_privacy_message' ).on( 'click', function () {
         var privacy_wrapper = jQuery( '.privacy_message_wrapper' );
         privacy_wrapper.fadeOut( 'slow', function () {
             privacy_wrapper.remove();
@@ -175,9 +195,10 @@ function handle_privacy_message() {
                 'view',
                 {
                     expires: 1,
-                    path: "/"
+                    path: '/'
                 }
             );
         } );
     } );
+
 }
