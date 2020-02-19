@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Delete uploaded media
+ * Delete uploaded media.
+ * Modified 10-02-2019 by Adarsh Verma <adarsh.verma@rtcamp.com>
  */
 function rtmedia_delete_uploaded_media() {
 
@@ -13,16 +14,45 @@ function rtmedia_delete_uploaded_media() {
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . get_current_user_id() ) ) {
 
 			$rtmedia_media  = new RTMediaMedia();
+			$rtmedia_media->delete( $media_id );
 
-			$delete = $rtmedia_media->delete( $media_id );
+			// Fetch the remaining media count.
+			if( class_exists( 'RTMediaNav' ) ) {
+				global $bp;
+				$rtmedia_nav_obj = new RTMediaNav();
+				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+					$counts = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
+				} else {
+					$counts = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile');
+				}
+				$remaining_all_media = ( isset( $counts['total']['all'] ) && ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
+				$remaining_photos    = ( isset( $counts['total']['photo'] ) && ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
+				$remaining_videos    = ( isset( $counts['total']['video'] ) && ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
+				$remaining_music     = ( isset( $counts['total']['music'] ) && ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
+			} else {
+				$remaining_photos = $remaining_music = $remaining_videos = $remaining_all_media = 0;
+			}
 
-			echo '1';
+			wp_send_json_success(
+				array(
+					'code'            => 'rtmedia-media-deleted',
+					'all_media_count' => $remaining_all_media,
+					'photos_count'    => $remaining_photos,
+					'music_count'     => $remaining_music,
+					'videos_count'    => $remaining_videos,
+				)
+			);
 
 			wp_die();
 		}
 	}
 
-	echo '0';
+	wp_send_json_error(
+		array(
+			'code'    => 'rtmedia-media-not-deleted',
+			'message' => esc_html__( 'Doing wrong, invalid AJAX request!', 'buddypress-media' )
+		)
+	);
 
 	wp_die();
 
