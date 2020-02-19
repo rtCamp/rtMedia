@@ -1108,7 +1108,7 @@ class RTMedia {
 			array(
 				'media_delete_confirmation' => apply_filters( 'rtmedia_delete_prompt_message', esc_html__( 'Are you sure you want to delete this media?', 'buddypress-media' ) ),
 				'rtmedia_ajaxurl'           => admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ),
-				'media_delete_success'      => esc_html__( 'Media file deleted successfully.', 'buddypress-media' ),
+				'media_delete_success'      => apply_filters( 'rtmedia_media_delete_success_message', esc_html__( 'Media file deleted successfully.', 'buddypress-media' ) ),
 			)
 		);
 

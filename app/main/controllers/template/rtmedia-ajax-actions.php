@@ -23,7 +23,7 @@ function rtmedia_delete_uploaded_media() {
 				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 					$counts = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
 				} else {
-					$counts = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile');
+					$counts = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
 				}
 				$remaining_all_media = ( isset( $counts['total']['all'] ) && ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
 				$remaining_photos    = ( isset( $counts['total']['photo'] ) && ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
@@ -50,7 +50,7 @@ function rtmedia_delete_uploaded_media() {
 	wp_send_json_error(
 		array(
 			'code'    => 'rtmedia-media-not-deleted',
-			'message' => esc_html__( 'Doing wrong, invalid AJAX request!', 'buddypress-media' )
+			'message' => esc_html__( 'Doing wrong, invalid AJAX request!', 'buddypress-media' ),
 		)
 	);
 
