@@ -18,18 +18,20 @@ function rtmedia_delete_uploaded_media() {
 	if ( ! empty( $action ) && 'delete_uploaded_media' === $action && ! empty( $media_id ) ) {
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . get_current_user_id() ) ) {
 
-			$rtmedia_media  = new RTMediaMedia();
+			$rtmedia_media = new RTMediaMedia();
 			$rtmedia_media->delete( $media_id );
 
 			// Fetch the remaining media count.
-			if( class_exists( 'RTMediaNav' ) ) {
+			if ( class_exists( 'RTMediaNav' ) ) {
 				global $bp;
 				$rtmedia_nav_obj = new RTMediaNav();
+
 				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 					$counts = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
 				} else {
 					$counts = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
 				}
+
 				$remaining_all_media = ( isset( $counts['total']['all'] ) && ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
 				$remaining_photos    = ( isset( $counts['total']['photo'] ) && ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
 				$remaining_videos    = ( isset( $counts['total']['video'] ) && ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
