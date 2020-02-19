@@ -24,6 +24,16 @@ class RTMediaBuddyPressActivity {
 			// manage user's last activity update.
 			add_action( 'bp_activity_posted_update', array( &$this, 'manage_user_last_activity_update' ), 999, 3 );
 			add_action( 'bp_groups_posted_update', array( &$this, 'bp_groups_posted_update' ), 99, 4 );
+
+			/**
+			 * Filter to disable bp_activity_truncate_entry override function.
+			 * 
+			 * @param boolean By default its enabled.
+			 */
+			if ( apply_filters( 'rtmedia_disable_truncate_entry_override', true ) ) {
+				// Code to show media with read more option.
+				add_filter( 'bp_activity_truncate_entry', array( $this, 'bp_activity_truncate_entry' ), 10, 3 );
+			}
 		}
 		add_action( 'bp_init', array( $this, 'non_threaded_comments' ) );
 		add_action( 'bp_activity_comment_posted', array( $this, 'comment_sync' ), 10, 2 );
@@ -66,6 +76,166 @@ class RTMediaBuddyPressActivity {
 			add_action( 'bp_activity_after_delete', array( $this, 'bp_activity_after_delete' ) );
 		}
 	}
+
+	/**
+	 * Show media even if the text is long with read more option.
+	 *
+	 * @param string $excerpt  Excerpt of the activity text.
+	 * @param string $text     Actual text of activity.
+	 * @param string $readmore Read more text.
+	 *
+	 * @return string Custom excerpt if conditions are match.
+	 */
+	public function bp_activity_truncate_entry( $excerpt, $text, $readmore ) {
+		// Return if class doesn't exist.
+		if ( ! class_exists( 'DOMDocument' ) ) {
+			return $excerpt;
+		}
+
+		global $activities_template;
+
+		$excerpt_length = bp_activity_get_excerpt_length();
+		// Run the text through the excerpt function. If it's too short, the original text will be returned.
+		$temp_excerpt = bp_create_excerpt( $text, $excerpt_length, array() );
+		if ( strlen( $temp_excerpt ) >= strlen( strip_shortcodes( $text ) ) ) {
+			return $excerpt;
+		}
+
+		// Get current activity id.
+		$activity_id = bp_get_activity_id();
+
+		// We need to separate text and rtMedia images, for this we need DOM manipulation.
+		$dom = new DOMDocument();
+		// DOMDocument gives error on html5 tags, so we need to disable errors.
+		libxml_use_internal_errors( true );
+		$dom->loadHTML( $text );
+		// DOMDocument gives error on html5 tags, so we need to disable errors.
+		libxml_clear_errors();
+		// We need to find div having rtmedia-activity-text class, but no direct method for it.
+		// So we need to iterate.
+		$div_list = $dom->getElementsByTagName( 'div' );
+
+		// Return if no divs found.
+		if ( empty( $div_list ) ) {
+			return $excerpt;
+		}
+
+		// We're storing first div to create final markup.
+		// If we create markup from dom object, it'll create whole HTML which we don't want.
+		$first_div = '';
+
+		foreach ( $div_list as $div ) {
+			// Set first div.
+			if ( empty( $first_div ) ) {
+				$first_div = $div;
+			}
+
+			// We need div with class attribute.
+			if ( empty( $div->attributes ) ) {
+				continue;
+			}
+
+			$atts = $div->attributes;
+			// Check attributes by iterating them.
+			foreach ( $atts as $att ) {
+				if ( empty( $att->name ) || empty( $att->value ) ) {
+					continue;
+				}
+
+				// Condition to find text div.
+				if ( 'class' === $att->name && strpos( $att->value, 'rtmedia-activity-text' ) !== false ) {
+					// Create excerpt only on text and then set it to div text.
+					// We're using actual length / 2 to make space for image.
+					$custom_excerpt   = bp_create_excerpt( $div->textContent, (int) $excerpt_length / 2, array( 'ending' => '...' ) ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
+					$div->textContent = trim( $custom_excerpt ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
+
+					// Show 4 images if text is less, else show 2 images.
+					$images_to_show = 4;
+					if ( strlen( $div->textContent ) > 20 ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
+						$images_to_show = 2;
+					}
+
+					// Set number of images to show in excerpt.
+					$dom = $this->get_bp_activity_media_html( $dom, $images_to_show );
+
+					// Code copied from buddypress.
+					$id = ( ! empty( $activities_template->activity->current_comment->id ) ? 'acomment-read-more-' . $activities_template->activity->current_comment->id : 'activity-read-more-' . $activity_id );
+
+					// Get final HTML.
+					$content = $first_div->ownerDocument->saveHTML( $first_div ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
+
+					// Append read more link and text.
+					$return = sprintf( '%1$s<span class="activity-read-more" id="%2$s"><a href="%3$s" rel="nofollow">%4$s</a></span>', $content, $id, bp_get_activity_thread_permalink(), $readmore );
+
+					return $return;
+				}
+			}
+		}
+
+		return $excerpt;
+	}
+
+	/**
+	 * Set number of images to show in activity excerpt.
+	 *
+	 * @param object $dom            DOMDocument object for DOM manipulation.
+	 * @param int    $images_to_show Number of images to show.
+	 *
+	 * @return object Modified DOMDocument object.
+	 */
+	private function get_bp_activity_media_html( $dom, $images_to_show ) {
+		// Get media list which is inside <ul>.
+		$ul_list = $dom->getElementsByTagName( 'ul' );
+
+		// Return if no ul element.
+		if ( empty( $ul_list ) ) {
+			return $dom;
+		}
+
+		// Iterate to find out media-list ul.
+		foreach ( $ul_list as $ul ) {
+			// We need ul having class 'rtm-activity-media-list'.
+			if ( empty( $ul->attributes ) ) {
+				continue;
+			}
+
+			// Iterate attributes.
+			foreach ( $ul->attributes as $att ) {
+				if ( empty( $att->name ) || empty( $att->value ) ) {
+					continue;
+				}
+
+				// Conditions to match required class.
+				if ( 'class' === $att->name && strpos( $att->value, 'rtm-activity-media-list' ) !== false && count( $ul->childNodes ) > 0 ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
+
+					// Number of li (images) allowed to show.
+					$count = 1;
+					// Array where items to remove will be stored.
+					$items_to_remove = array();
+					// Iterate all children of ul which are images (li).
+					foreach ( $ul->childNodes as $li ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
+
+						// If max number of images reached, add li to items_to_remove array.
+						if ( $count > $images_to_show ) {
+							$items_to_remove[] = $li;
+						}
+
+						$count++;
+					}
+
+					// Remove images.
+					foreach ( $items_to_remove as $item ) {
+						$ul->removeChild( $item );
+					}
+
+					return $dom;
+				}
+			}
+		}
+
+		return $dom;
+	}
+
 
 	/**
 	 * For adding secondary avatar in the activity header.

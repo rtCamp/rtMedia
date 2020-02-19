@@ -1525,31 +1525,6 @@ class RTMedia {
 		if ( empty( $is_buddypress_activate ) ) {
 			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
 		}
-
-		// Only Apply if BP Template Nouveau is activate.
-		if ( ! empty( $bp_template ) && 'nouveau' === $bp_template && ( 'group' === $rtmedia_interaction->context->type || 'profile' === $rtmedia_interaction->context->type ) ) {
-			$rtmedia_router = new RTMediaRouter();
-			if ( ! empty( $rtmedia_router->query_vars ) ) {
-				$wp_current_stylesheet = get_stylesheet();
-
-				// If file is already exists in buddypress then enqueue it.
-				if ( file_exists( sprintf( '%sbp-templates/bp-legacy/css/%s.min.css', BP_PLUGIN_DIR, $wp_current_stylesheet ) ) ) {
-					wp_enqueue_style( 'bp-nouveau-stylesheet-theme', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/' . $wp_current_stylesheet . '.min.css', array(), RTMEDIA_VERSION );
-				}
-
-				wp_enqueue_style( 'bp-nouveau-stylesheet-buddypress', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/buddypress.min.css', '', RTMEDIA_VERSION );
-			}
-		}
-
-		global $rtmedia;
-		$options = $rtmedia->options;
-
-		// Previously done with rtmedia_custom_css() method on wp_head hook.
-		if ( ! empty( $options['styles_custom'] ) ) {
-			wp_register_style( 'rtmedia-custom-css', false, '', RTMEDIA_VERSION );
-			wp_enqueue_style( 'rtmedia-custom-css' );
-			wp_add_inline_style( 'rtmedia-custom-css', $options['styles_custom'] );
-		}
 	}
 
 	/**

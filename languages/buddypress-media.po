@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.5.11\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.0\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2020-01-21 09:38:18+00:00\n"
+"POT-Creation-Date: 2020-02-14 09:36:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -143,10 +143,10 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:805 app/admin/RTMediaAdmin.php:1347
-#: app/admin/RTMediaAdmin.php:1348 app/importers/RTMediaActivityUpgrade.php:188
-#: app/importers/RTMediaMigration.php:92 app/main/RTMedia.php:1208
-#: app/main/RTMedia.php:2056
+#: app/admin/RTMediaAdmin.php:761 app/admin/RTMediaAdmin.php:1267
+#: app/admin/RTMediaAdmin.php:1268 app/importers/RTMediaActivityUpgrade.php:128
+#: app/importers/RTMediaMigration.php:68 app/main/RTMedia.php:1060
+#: app/main/RTMedia.php:1622
 msgid "rtMedia"
 msgstr ""
 
@@ -2548,60 +2548,48 @@ msgstr ""
 msgid "I agree to"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:548
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:649
 msgid "Media Files"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:595
-#: app/main/controllers/media/RTMediaComment.php:204
-#: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:125
-#: app/main/controllers/template/rtmedia-functions.php:2258
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:687
+#: app/main/controllers/media/RTMediaComment.php:175
+#: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:102
+#: app/main/controllers/template/rtmedia-functions.php:2132
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:742
-#: app/main/controllers/media/RTMediaMedia.php:782
-#. translators: 1: user link, 2: media.
-#. translators: 1: username, 2: media type, 3: media name, 4: total media.
-msgid "%1$s added a %2$s"
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:822
+msgid "%s added a %s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:750
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:753
-#: app/main/controllers/upload/RTMediaUploadEndpoint.php:249
-#. translators: 1: user link, 2: media count, 3: media.
-#. translators: 1: user link, 2: media count, 3: rtMedia slug.
-#. translators: 1: Username, 2: Number of medias, 3: Media slug.
-msgid "%1$s added %2$d %3$s"
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:829
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:831
+#: app/main/controllers/upload/RTMediaUploadEndpoint.php:229
+msgid "%s added %d %s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:807
-#. translators: 1: username, 2: media, 3: group name.
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:884
 msgid "%1$s liked a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:811
-#. translators: 1: username, 2: media.
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:887
 msgid "%1$s liked their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:816
-#. translators: 1: username, 2: author, 3: media.
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:891
 msgid "%1$s liked %2$s's %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:906
-#. translators: 1: username, 2: media, 3: group name.
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:981
 msgid "%1$s commented on a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:911
-#. translators: 1: username, 2: media.
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:984
 msgid "%1$s commented on their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:916
-#. translators: 1: username, 2: author, 3: media.
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:988
 msgid "%1$s commented on %2$s's %3$s"
 msgstr ""
 
@@ -3448,7 +3436,11 @@ msgstr ""
 msgid "Deprecated %1$s. Please use %2$s."
 msgstr ""
 
-#: templates/media/album-gallery.php:26
+#: templates/main.php:70 templates/main.php:143
+msgid "rtMedia menu"
+msgstr ""
+
+#: templates/media/album-gallery.php:21
 msgid "Album List"
 msgstr ""
 
