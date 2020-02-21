@@ -29,16 +29,22 @@ function rtmedia_delete_uploaded_media() {
 				global $bp;
 				$rtmedia_nav_obj = new RTMediaNav();
 
-				if ( function_exists( 'bp_is_group' ) && bp_is_group() && isset( $bp->groups->current_group->id ) && ! empty( $bp->groups->current_group->id ) ) {
-					$counts = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
-				} elseif ( function_exists( 'bp_displayed_user_id' ) ) {
-					$counts = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
+				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+
+					if ( ! empty( $bp->groups->current_group->id ) ) {
+						$counts = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
+					}
+				} else {
+
+					if ( function_exists( 'bp_displayed_user_id' ) ) {
+						$counts = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
+					}
 				}
 
-				$remaining_all_media = ( isset( $counts['total']['all'] ) && ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
-				$remaining_photos    = ( isset( $counts['total']['photo'] ) && ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
-				$remaining_videos    = ( isset( $counts['total']['video'] ) && ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
-				$remaining_music     = ( isset( $counts['total']['music'] ) && ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
+				$remaining_all_media = ! empty( $counts['total']['all'] ) ? $counts['total']['all'] : 0;
+				$remaining_photos    = ! empty( $counts['total']['photo'] ) ? $counts['total']['photo'] : 0;
+				$remaining_videos    = ! empty( $counts['total']['video'] ) ? $counts['total']['video'] : 0;
+				$remaining_music     = ! empty( $counts['total']['music'] ) ? $counts['total']['music'] : 0;
 			}
 
 			wp_send_json_success(
