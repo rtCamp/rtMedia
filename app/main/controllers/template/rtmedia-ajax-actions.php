@@ -41,10 +41,10 @@ function rtmedia_delete_uploaded_media() {
 					}
 				}
 
-				$remaining_all_media = ! empty( $counts['total']['all'] ) ? $counts['total']['all'] : 0;
-				$remaining_photos    = ! empty( $counts['total']['photo'] ) ? $counts['total']['photo'] : 0;
-				$remaining_videos    = ! empty( $counts['total']['video'] ) ? $counts['total']['video'] : 0;
-				$remaining_music     = ! empty( $counts['total']['music'] ) ? $counts['total']['music'] : 0;
+				$remaining_all_media = ( ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
+				$remaining_photos    = ( ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
+				$remaining_videos    = ( ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
+				$remaining_music     = ( ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
 			}
 
 			wp_send_json_success(
