@@ -885,7 +885,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'rtmedia-admin',
 					'RTMedia_Admin_Settings_JS',
 					array(
-						'rtmedia_default_sizes_error_message' => esc_html__( 'Invalid value for [default_size_property].', 'buddypress-media' )
+						'rtmedia_default_sizes_error_message' => esc_html__( 'Invalid value for [default_size_property].', 'buddypress-media' ),
 					)
 				);
 

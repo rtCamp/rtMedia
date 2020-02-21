@@ -43,14 +43,14 @@ jQuery( document ).ready( function ( $ ) {
                     return rtp_show_error_message ( general_upload_terms_page_link, error_msg );
                 }
 
-                /* Check "Terms of Service Message" Emply Or Not */
+                /* Check "Terms of Service Message" Empty Or Not */
                 if ( '' === general_upload_terms_message.val().trim() ) {
                     error_msg = rtm_upload_terms_error_msgs.terms_msg;
 
                     return rtp_show_error_message ( general_upload_terms_message, error_msg );
                 }
 
-                /* Check "Error Message" Emply Or Not */
+                /* Check "Error Message" Empty Or Not */
                 if (  '' === general_upload_terms_error_message.val().trim() ) {
                     error_msg = rtm_upload_terms_error_msgs.error_msg;
 
@@ -65,7 +65,7 @@ jQuery( document ).ready( function ( $ ) {
             if ( general_upload_terms_show_pricacy_message.prop( 'checked' ) ) {
                 $( '.error_msg' ).remove();
 
-                /* Check "Terms of Service Message" Emply Or Not */
+                /* Check "Terms of Service Message" Empty Or Not */
                 if ( '' === general_upload_terms_privacy_message.val().trim() ) {
                     error_msg = rtm_upload_terms_error_msgs.privacy_msg;
 

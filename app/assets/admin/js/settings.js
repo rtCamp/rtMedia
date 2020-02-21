@@ -116,7 +116,7 @@ jQuery( document ).ready( function ( $ ) {
 		var general_videothumb = jQuery( 'input[name^="rtmedia-options[general_videothumbs]"]' );
 
 		if ( return_code && general_videothumb.length > 0 && typeof general_videothumb != "undefined" ) {
-			var error_msg = "";
+			var error_msg = '';
 			var general_videothumb_val = 0;
 
 			if ( general_videothumb.val() <= 0 ) {
