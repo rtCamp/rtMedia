@@ -1392,7 +1392,7 @@ class RTMedia {
 		$rtmedia_main_js_strings = array(
 			'rtmedia_albums'         => esc_html__( 'Albums', 'buddypress-media' ),
 			'privacy_update_success' => esc_html__( 'Privacy updated successfully.', 'buddypress-media' ),
-			'privacy_update_error' => esc_html__( 'Couldn\'t change privacy, please try again.', 'buddypress-media' ),
+			'privacy_update_error'   => esc_html__( 'Couldn\'t change privacy, please try again.', 'buddypress-media' ),
 		);
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_main_js_strings', $rtmedia_main_js_strings );
