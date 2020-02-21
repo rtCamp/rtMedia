@@ -29,9 +29,9 @@ function rtmedia_delete_uploaded_media() {
 				global $bp;
 				$rtmedia_nav_obj = new RTMediaNav();
 
-				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+				if ( function_exists( 'bp_is_group' ) && bp_is_group() && isset( $bp->groups->current_group->id ) && ! empty( $bp->groups->current_group->id ) ) {
 					$counts = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
-				} else {
+				} elseif ( function_exists( 'bp_displayed_user_id' ) ) {
 					$counts = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
 				}
 

@@ -1277,6 +1277,9 @@ class RTMedia {
 			wp_localize_script( 'rtmedia-main', 'bp_template_pack', $bp_template );
 		}
 
+		$media_delete_confirmation_msg = __( 'Are you sure you want to delete this media?', 'buddypress-media' );
+		$media_delete_success_msg      = __( 'Media file deleted successfully.', 'buddypress-media' );
+
 		/**
 		 * Media deletion confirmation message.
 		 *
@@ -1284,8 +1287,7 @@ class RTMedia {
 		 *
 		 * @param string $media_delete_confirmation_msg Holds the actual confirmation message.
 		 */
-		$media_delete_confirmation_msg = __( 'Are you sure you want to delete this media?', 'buddypress-media' );
-		$media_delete_confirmation     = apply_filters( 'rtmedia_delete_prompt_message', $media_delete_confirmation_msg );
+		$media_delete_confirmation = apply_filters( 'rtmedia_delete_prompt_message', $media_delete_confirmation_msg );
 
 		/**
 		 * Media deletion success message.
@@ -1294,8 +1296,7 @@ class RTMedia {
 		 *
 		 * @param string $media_delete_success_msg Holds the actual success message.
 		 */
-		$media_delete_success_msg = __( 'Media file deleted successfully.', 'buddypress-media' );
-		$media_delete_success     = apply_filters( 'rtmedia_media_delete_success_message', $media_delete_success_msg );
+		$media_delete_success = apply_filters( 'rtmedia_media_delete_success_message', $media_delete_success_msg );
 
 		wp_localize_script(
 			'rtmedia-main',
