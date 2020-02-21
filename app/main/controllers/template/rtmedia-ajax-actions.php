@@ -21,27 +21,8 @@ function rtmedia_delete_uploaded_media() {
 			$remaining_music     = 0;
 			$remaining_videos    = 0;
 			$remaining_all_media = 0;
-			
-			/**
-			 * Before media deletion.
-			 *
-			 * The added action `rtmedia_before_media_delete` fires just before the media deletion.
-			 *
-			 * @param string $media_id Holds the media ID.
-			 */
-			do_action( 'rtmedia_before_media_delete', $media_id );
-
-			$rtmedia_media = new RTMediaMedia();
+			$rtmedia_media       = new RTMediaMedia();
 			$rtmedia_media->delete( $media_id );
-
-			/**
-			 * After media deletion.
-			 *
-			 * The added action `rtmedia_after_media_delete` fires just after the media deletion.
-			 *
-			 * @param string $media_id Holds the media ID.
-			 */
-			do_action( 'rtmedia_after_media_delete', $media_id );
 
 			// Fetch the remaining media count.
 			if ( class_exists( 'RTMediaNav' ) ) {
