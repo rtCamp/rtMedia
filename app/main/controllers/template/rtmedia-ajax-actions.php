@@ -17,9 +17,31 @@ function rtmedia_delete_uploaded_media() {
 
 	if ( ! empty( $action ) && 'delete_uploaded_media' === $action && ! empty( $media_id ) ) {
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . get_current_user_id() ) ) {
+			$remaining_photos    = 0;
+			$remaining_music     = 0;
+			$remaining_videos    = 0;
+			$remaining_all_media = 0;
+			
+			/**
+			 * Before media deletion.
+			 *
+			 * The added action `rtmedia_before_media_delete` fires just before the media deletion.
+			 *
+			 * @param string $media_id Holds the media ID.
+			 */
+			do_action( 'rtmedia_before_media_delete', $media_id );
 
 			$rtmedia_media = new RTMediaMedia();
 			$rtmedia_media->delete( $media_id );
+
+			/**
+			 * After media deletion.
+			 *
+			 * The added action `rtmedia_after_media_delete` fires just after the media deletion.
+			 *
+			 * @param string $media_id Holds the media ID.
+			 */
+			do_action( 'rtmedia_after_media_delete', $media_id );
 
 			// Fetch the remaining media count.
 			if ( class_exists( 'RTMediaNav' ) ) {
@@ -36,8 +58,6 @@ function rtmedia_delete_uploaded_media() {
 				$remaining_photos    = ( isset( $counts['total']['photo'] ) && ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
 				$remaining_videos    = ( isset( $counts['total']['video'] ) && ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
 				$remaining_music     = ( isset( $counts['total']['music'] ) && ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
-			} else {
-				$remaining_photos = $remaining_music = $remaining_videos = $remaining_all_media = 0;
 			}
 
 			wp_send_json_success(
