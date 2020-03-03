@@ -1,23 +1,36 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Handles rtMedia media group related tasks.
  *
+ * @package rtMedia
  */
 
+/**
+ * Class RTMediaGroup to handle rtMedia media group related tasks.
+ */
 class RTMediaGroup {
+	/**
+	 * Media setting slug.
+	 *
+	 * @var string
+	 */
 	public $create_slug = 'media-setting';
 
-	function __construct() {
+	/**
+	 * RTMediaGroup constructor.
+	 */
+	public function __construct() {
 		global $rtmedia;
 		$options = $rtmedia->options;
+
 		if ( isset( $options['buddypress_enableOnGroup'] ) && 1 === intval( $options ['buddypress_enableOnGroup'] ) ) {
-			// return;
+			// return.
 			$extension = true;
+
 			if ( isset( $options['general_enableAlbums'] ) && 0 === intval( $options['general_enableAlbums'] ) ) {
 				$extension = false;
 			}
+
 			$extension = apply_filters( 'rtmedia_group_media_extension', $extension );
 			if ( ! $extension ) {
 				return;
@@ -35,9 +48,9 @@ class RTMediaGroup {
 	/**
 	 * Update group last activity.
 	 *
-	 * @param $group_id
+	 * @param int $group_id Group id to get last activity.
 	 */
-	static function update_last_active( $group_id ) {
+	public static function update_last_active( $group_id ) {
 		groups_update_last_activity( $group_id );
 	}
 }
