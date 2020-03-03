@@ -6,7 +6,8 @@
  */
 
 /**
- * Delete uploaded media
+ * Delete uploaded media.
+ * Modified 10-02-2019 by Adarsh Verma <adarsh.verma@rtcamp.com>
  */
 function rtmedia_delete_uploaded_media() {
 
@@ -16,18 +17,56 @@ function rtmedia_delete_uploaded_media() {
 
 	if ( ! empty( $action ) && 'delete_uploaded_media' === $action && ! empty( $media_id ) ) {
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . get_current_user_id() ) ) {
+			$remaining_photos    = 0;
+			$remaining_music     = 0;
+			$remaining_videos    = 0;
+			$remaining_all_media = 0;
+			$rtmedia_media       = new RTMediaMedia();
+			$rtmedia_media->delete( $media_id );
 
-			$rtmedia_media = new RTMediaMedia();
+			// Fetch the remaining media count.
+			if ( class_exists( 'RTMediaNav' ) ) {
+				global $bp;
+				$rtmedia_nav_obj = new RTMediaNav();
 
-			$delete = $rtmedia_media->delete( $media_id );
+				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 
-			echo '1';
+					if ( ! empty( $bp->groups->current_group->id ) ) {
+						$counts = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
+					}
+				} else {
+
+					if ( function_exists( 'bp_displayed_user_id' ) ) {
+						$counts = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
+					}
+				}
+
+				$remaining_all_media = ( ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
+				$remaining_photos    = ( ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
+				$remaining_videos    = ( ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
+				$remaining_music     = ( ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
+			}
+
+			wp_send_json_success(
+				array(
+					'code'            => 'rtmedia-media-deleted',
+					'all_media_count' => $remaining_all_media,
+					'photos_count'    => $remaining_photos,
+					'music_count'     => $remaining_music,
+					'videos_count'    => $remaining_videos,
+				)
+			);
 
 			wp_die();
 		}
 	}
 
-	echo '0';
+	wp_send_json_error(
+		array(
+			'code'    => 'rtmedia-media-not-deleted',
+			'message' => esc_html__( 'Doing wrong, invalid AJAX request!', 'buddypress-media' ),
+		)
+	);
 
 	wp_die();
 
