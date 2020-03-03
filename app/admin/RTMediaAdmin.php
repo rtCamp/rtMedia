@@ -931,6 +931,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin.min.js', array( 'backbone', 'wp-util' ), RTMEDIA_VERSION, true );
 				}
 
+				wp_localize_script(
+					'rtmedia-admin',
+					'RTMedia_Admin_Settings_JS',
+					array(
+						'rtmedia_default_sizes_error_message' => esc_html__( 'Invalid value for [default_size_property].', 'buddypress-media' ),
+					)
+				);
+
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_on_label', esc_html__( 'ON', 'buddypress-media' ) );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_off_label', esc_html__( 'OFF', 'buddypress-media' ) );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_ajax', $admin_ajax );

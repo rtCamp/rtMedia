@@ -11,7 +11,10 @@ rtMediaAdmin.templates = {
 
 jQuery( document ).ready( function ( $ ) {
 
+	var bp_media_settings_box = $( '#bp-media-settings-boxes' );
+	var bp_media_metabox_holder = $( '#bp_media_settings_form .bp-media-metabox-holder' );
 	var rtm_licence = $( '#rtm-licenses' );
+
 	if ( rtm_licence.length > 0 ) {
 		rtm_licence.find( '.license-inner:first input:first' ).focus();
 	}
@@ -37,13 +40,10 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	/* Select Request */
-	jQuery( '#bp-media-settings-boxes' ).on( 'change', '#select-request', function () {
+	bp_media_settings_box.on( 'change', '#select-request', function () {
+
 		if ( jQuery( this ).val() ) {
-			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html();
-
-			//'<div class="support_form_loader"></div>'
-
-			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( support_form_loader_div );
+			bp_media_metabox_holder.html( support_form_loader_div );
 			var data = {
 				action: 'rtmedia_select_request',
 				form: jQuery( this ).val()
@@ -51,105 +51,146 @@ jQuery( document ).ready( function ( $ ) {
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 			jQuery.post( ajaxurl, data, function ( response ) {
-				jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html();
-				jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( response ).fadeIn( 'slow' );
+				bp_media_metabox_holder.html( response ).fadeIn( 'slow' );
 			} );
 		}
+
 	} );
 
 	/* Cancel Request */
-	jQuery( '#bp-media-settings-boxes' ).on( 'click', '#cancel-request', function () {
+	bp_media_settings_box.on( 'click', '#cancel-request', function () {
+
 		if ( jQuery( this ).val() ) {
-			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html();
+			bp_media_metabox_holder.html();
 
 			// '<div class="support_form_loader"></div>'
 
-			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( support_form_loader_div );
+			bp_media_metabox_holder.html( support_form_loader_div );
 			var data = {
 				action: 'rtmedia_cancel_request'
 			};
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 			jQuery.post( ajaxurl, data, function ( response ) {
-				jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html();
-				jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( response ).fadeIn( 'slow' );
+				bp_media_metabox_holder.html();
+				bp_media_metabox_holder.html( response ).fadeIn( 'slow' );
 			} );
 		}
+
 	} );
 
 	/* Submit Request */
 
-	jQuery( '#bp-media-settings-boxes' ).on( 'submit', '#bp_media_settings_form, .rtmedia-settings-submit', function ( e ) {
+	bp_media_settings_box.on( 'submit', '#bp_media_settings_form, .rtmedia-settings-submit', function ( e ) {
 		var return_code = true;
 		var reg = new RegExp( '^[0-9]+$' );
+		var error_msg = '';
 
-		jQuery( "input[name*='defaultSizes']" ).each( function ( el ) {
-			if ( !reg.test( jQuery( this ).val() ) ) {
-				alert( "Invalid value for " + jQuery( this ).attr( 'name' ).replace( 'rtmedia-options[defaultSizes_', '' ).replace( ']', '' ).replace( /_/g, ' ' ).replace( /(\b)([a-zA-Z] )/g, function ( firstLetter ) {
-					return firstLetter.toUpperCase();
-				} ) );
-				return_code = false;
-				return false;
+		/**
+		 * Validate the default dimensions of the 3 types of media.
+		 * Changed the code from showing alert boxes to appending error messages to the selector.
+		 */
+		$( "input[name*='defaultSizes']" ).each( function () {
+			var current_element = $( this );
+			current_element.css( 'border-color', '#7e8993' ).next( '.error_msg' ).remove();
+
+			if ( ! reg.test( current_element.val() ) ) {
+				var name_attr = current_element.attr( 'name' );
+				name_attr = name_attr.replace( 'rtmedia-options[defaultSizes_', '' );
+				name_attr = name_attr.replace( ']', '' );
+				name_attr = name_attr.replace( /_/g, ' ' );
+				var error_msg = RTMedia_Admin_Settings_JS.rtmedia_default_sizes_error_message;
+				error_msg = error_msg.replace( '[default_size_property]', name_attr );
+				var current_element_parents_el = current_element.parents( '.rtm-content' ).attr( 'id' );
+
+				if ( 0 < current_element_parents_el.length ) {
+					$( '#tab-' + current_element_parents_el ).click();
+				}
+
+				e.preventDefault();
+
+				return rtp_show_error_message ( current_element, error_msg );
 			}
 		} );
 
 		var general_videothumb = jQuery( 'input[name^="rtmedia-options[general_videothumbs]"]' );
+
 		if ( return_code && general_videothumb.length > 0 && typeof general_videothumb != "undefined" ) {
-			var error_msg = "";
+			var error_msg = '';
 			var general_videothumb_val = 0;
+
 			if ( general_videothumb.val() <= 0 ) {
 				error_msg += rtmedia_admin_strings.video_thumbnail_error;
 				general_videothumb_val = 2;
-			} else if ( !reg.test( general_videothumb.val() ) ) {
+			} else if ( ! reg.test( general_videothumb.val() ) ) {
 				error_msg += rtmedia_admin_strings.video_thumbnail_invalid_value + ' ' + Math.round( general_videothumb.val() ) + ".";
 				general_videothumb_val = Math.round( general_videothumb.val() );
 			}
-			if ( error_msg != "" ) {
+
+			if ( '' !== error_msg ) {
 				alert( error_msg );
 				general_videothumb.val( general_videothumb_val );
 				return_code = false;
+
 				return false;
 			}
 		}
 
+		/**
+		 * Validate the media/page general setting.
+		 * Changed the code from showing alert boxes to appending error messages to the selector.
+		 *
+		 * @type {jQuery|HTMLElement|Window.$.fn.init}
+		 */
 		var general_jpeg_image_quality = jQuery( 'input[name^="rtmedia-options[general_jpeg_image_quality]"]' );
-		if ( return_code && general_jpeg_image_quality.length > 0 && typeof general_jpeg_image_quality != "undefined" ) {
-			var error_msg = "";
-			var general_jpeg_image_quality_val = 0;
+
+		if ( return_code && 1 === general_jpeg_image_quality.length && 'undefined' !== typeof general_jpeg_image_quality ) {
+
 			if ( general_jpeg_image_quality.val() <= 0 ) {
 				error_msg += rtmedia_admin_strings.jpeg_quality_negative_error;
-				general_jpeg_image_quality_val = 90;
 			} else if ( general_jpeg_image_quality.val() > 100 ) {
 				error_msg += rtmedia_admin_strings.jpeg_quality_percentage_error;
-				general_jpeg_image_quality_val = 100;
-			} else if ( !reg.test( general_jpeg_image_quality.val() ) ) {
+			} else if ( ! reg.test( general_jpeg_image_quality.val() ) ) {
 				error_msg += rtmedia_admin_strings.jpeg_quality_invalid_value + ' ' + Math.round( general_jpeg_image_quality.val() ) + ".";
-				general_jpeg_image_quality_val = Math.round( general_jpeg_image_quality.val() );
 			}
-			if ( error_msg != "" ) {
-				alert( error_msg );
-				general_jpeg_image_quality.val( general_jpeg_image_quality_val );
-				return_code = false;
-				return false;
+
+			if ( '' !== error_msg ) {
+				general_jpeg_image_quality.next( '.error_msg' ).remove();
+				var general_jpeg_image_quality_parents_el = general_jpeg_image_quality.parents( '.rtm-content' ).attr( 'id' );
+
+				if ( 0 < general_jpeg_image_quality_parents_el.length ) {
+					$( '#tab-' + general_jpeg_image_quality_parents_el ).click();
+				}
+
+				return rtp_show_error_message ( general_jpeg_image_quality, error_msg );
 			}
 		}
 
+		/**
+		 * Validate the media/page general setting.
+		 * Changed the code from showing alert boxes to appending error messages to the selector.
+		 *
+		 * @type {jQuery}
+		 */
 		var general_perPageMedia = jQuery( 'input[name^="rtmedia-options[general_perPageMedia]"]' );
-		if ( return_code && general_perPageMedia.length > 0 && typeof general_perPageMedia != "undefined" ) {
-			var error_msg = "";
-			var general_perPageMedia_val = 0;
-			if ( general_perPageMedia.val() < 1 ) {
+
+		if ( return_code && 1 === general_perPageMedia.length && 'undefined' !== typeof general_perPageMedia ) {
+
+			if ( 1 > general_perPageMedia.val() ) {
 				error_msg += rtmedia_admin_strings.per_page_media_negative_value;
-				general_perPageMedia_val = 10;
 			} else if ( jQuery.isNumeric( general_perPageMedia.val() ) && ( Math.floor( general_perPageMedia.val() ) != general_perPageMedia.val() ) ) {
 				error_msg += rtmedia_admin_strings.per_page_media_positive_error + " " + Math.round( general_perPageMedia.val() ) + ".";
-				general_perPageMedia_val = Math.round( general_perPageMedia.val() );
 			}
-			if ( error_msg != "" ) {
-				alert( error_msg );
-				general_perPageMedia.val( general_perPageMedia_val );
-				return_code = false;
-				return false;
+
+			if ( '' !== error_msg ) {
+				general_perPageMedia.next( '.error_msg' ).remove();
+				var general_perPageMedia_parents_el = general_perPageMedia.parents( '.rtm-content' ).attr( 'id' );
+
+				if ( 0 < general_perPageMedia_parents_el.length ) {
+					$( '#tab-' + general_perPageMedia_parents_el ).click();
+				}
+
+				return rtp_show_error_message ( general_perPageMedia, error_msg );
 			}
 		}
 
@@ -188,7 +229,7 @@ jQuery( document ).ready( function ( $ ) {
 						class : 'error'
 					};
 
-					jQuery( '#bp-media-settings-boxes' ).before( rtMediaAdmin.templates.rtm_msg_div( data ) );
+					bp_media_settings_box.before( rtMediaAdmin.templates.rtm_msg_div( data ) );
 				}
 			} );
 		}
@@ -217,10 +258,10 @@ jQuery( document ).ready( function ( $ ) {
 				var hash = window.location.hash;
 				tempUrl = tempUrl.replace( hash, '' );
 
-				if ( tempUrl.toString().indexOf( '&apikey=' + response.apikey ) == -1 ) {
+				if ( -1 === tempUrl.toString().indexOf( '&apikey=' + response.apikey ) ) {
 					tempUrl += '&apikey=' + response.apikey;
 				}
-				if ( tempUrl.toString().indexOf( '&update=true' ) == -1 ) {
+				if ( -1 === tempUrl.toString().indexOf( '&update=true' ) ) {
 					tempUrl += '&update=true';
 				}
 
@@ -292,6 +333,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( document ).on( 'click', '#enable-encoding', function ( e ) {
 		e.preventDefault();
+
 		if ( confirm( rtmedia_admin_strings.enable_encoding ) ) {
 			var data = {
 				src   : rtmedia_admin_url + "images/wpspin_light.gif"
@@ -304,6 +346,7 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 			jQuery.post( ajaxurl, data, function ( response ) {
+
 				if ( response ) {
 					jQuery( '.settings-error-encoding-enabled' ).remove();
 
@@ -319,8 +362,9 @@ jQuery( document ).ready( function ( $ ) {
 						jQuery( 'h2:first' ).after( rtMediaAdmin.templates.rtm_msg_div( data ) );
 					}
 
-					jQuery( '#enable-encoding' ).next( 'img' ).remove();
-					jQuery( '#enable-encoding' ).hide();
+					var enable_encoding_el = jQuery( '#enable-encoding' );
+					enable_encoding_el.next( 'img' ).remove();
+					enable_encoding_el.hide();
 					jQuery( '#disable-encoding' ).show();
 				} else {
 					jQuery( '#settings-error-encoding-disabled' ).remove();
@@ -351,21 +395,23 @@ jQuery( document ).ready( function ( $ ) {
 						src   : rtmedia_admin_url + "images/wpspin_light.gif"
 					};
 
-					jQuery( '.bpm-unsubscribe' ).after( rtMediaAdmin.templates.rtm_image( data ) );
+					var bpm_unsubscribe = $( '.bpm-unsubscribe' );
+
+					bpm_unsubscribe.after( rtMediaAdmin.templates.rtm_image( data ) );
 
 					var data = {
 						action: 'rtmedia_unsubscribe_encoding_service',
 						note: jQuery( '#bpm-unsubscribe-note' ).val(),
-						plan: jQuery( '.bpm-unsubscribe' ).attr( 'data-plan' ),
-						price: jQuery( '.bpm-unsubscribe' ).attr( 'data-price' )
+						plan: bpm_unsubscribe.attr( 'data-plan' ),
+						price: bpm_unsubscribe.attr( 'data-price' )
 					};
 
 					// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 					jQuery.getJSON( ajaxurl, data, function ( response ) {
 						if ( response.error === undefined && response.updated ) {
-							jQuery( '.bpm-unsubscribe' ).next().remove();
-							jQuery( '.bpm-unsubscribe' ).after( response.form );
-							jQuery( '.bpm-unsubscribe' ).remove();
+							bpm_unsubscribe.next().remove();
+							bpm_unsubscribe.after( response.form );
+							bpm_unsubscribe.remove();
 							jQuery( '#settings-unsubscribed-successfully' ).remove();
 							jQuery( '#settings-unsubscribe-error' ).remove();
 
@@ -378,7 +424,7 @@ jQuery( document ).ready( function ( $ ) {
 							jQuery( 'h2:first' ).after( rtMediaAdmin.templates.rtm_msg_div( data ) );
 							window.location.hash = '#settings-unsubscribed-successfully';
 						} else {
-							jQuery( '.bpm-unsubscribe' ).next().remove();
+							bpm_unsubscribe.next().remove();
 							jQuery( '#settings-unsubscribed-successfully' ).remove();
 							jQuery( '#settings-unsubscribe-error' ).remove();
 
@@ -399,9 +445,11 @@ jQuery( document ).ready( function ( $ ) {
 
 	function fireRequest( data ) {
 		return jQuery.post( ajaxurl, data, function ( response ) {
+
 			if ( response != 0 ) {
 				var redirect = false;
 				var progw = Math.ceil( ( ( ( parseInt( response ) * 20 ) + parseInt( data.values[ 'finished' ] ) ) / parseInt( data.values[ 'total' ] ) ) * 100 );
+
 				if ( progw > 100 ) {
 					progw = 100;
 					redirect = true
@@ -409,6 +457,7 @@ jQuery( document ).ready( function ( $ ) {
 				jQuery( '#rtprogressbar>div' ).css( 'width', progw + '%' );
 				finished = jQuery( '#rtprivacyinstaller span.finished' ).html();
 				jQuery( '#rtprivacyinstaller span.finished' ).html( parseInt( finished ) + data.count );
+
 				if ( redirect ) {
 					jQuery.post( ajaxurl, {
 						action: 'rtmedia_privacy_redirect'
@@ -436,7 +485,8 @@ jQuery( document ).ready( function ( $ ) {
 		$progress_parent = jQuery( '#rtprivacyinstaller' );
 		$progress_parent.find( '.rtprivacytype' ).each( function () {
 			$type = jQuery( this ).attr( 'id' );
-			if ( $type == 'total' ) {
+
+			if ( 'total' === $type ) {
 				$values = [];
 				jQuery( this ).find( 'input' ).each( function () {
 
@@ -446,12 +496,12 @@ jQuery( document ).ready( function ( $ ) {
 				$data = {};
 				for ( var i = 1; i <= $values[ 'steps' ][ 0 ]; i++ ) {
 					$count = 20;
-					if ( i == $values[ 'steps' ][ 0 ] ) {
+					if ( i === $values[ 'steps' ][ 0 ] ) {
 						$count = parseInt( $values[ 'laststep' ][ 0 ] );
-						if ( $count == 0 ) {
+
+						if ( 0 === $count ) {
 							$count = 20
 						}
-						;
 					}
 					newvals = {
 						'page': i,
@@ -475,6 +525,7 @@ jQuery( document ).ready( function ( $ ) {
 	function fireimportRequest( data ) {
 		return jQuery.getJSON( ajaxurl, data, function ( response ) {
 			favorites = false;
+
 			if ( response ) {
 				var redirect = false;
 				var media_progw = Math.ceil( ( ( ( parseInt( response.page ) * 5 ) + parseInt( data.values[ 'finished' ] ) ) / parseInt( data.values[ 'total' ] ) ) * 100 );
@@ -485,6 +536,7 @@ jQuery( document ).ready( function ( $ ) {
 				users_finished = jQuery( '#bpmedia-bpalbumimporter .bp-album-users span.finished' ).html();
 				var comments_progw = Math.ceil( ( ( ( parseInt( response.comments ) ) + parseInt( comments_finished ) ) / parseInt( comments_total ) ) * 100 );
 				var users_progw = Math.ceil( ( parseInt( response.users ) / parseInt( users_total ) ) * 100 );
+
 				if ( media_progw > 100 || media_progw == 100 ) {
 					media_progw = 100;
 					favorites = true
@@ -494,34 +546,41 @@ jQuery( document ).ready( function ( $ ) {
 				jQuery( '.bp-album-comments #rtprogressbar>div' ).css( 'width', comments_progw + '%' );
 				jQuery( '.bp-album-users #rtprogressbar>div' ).css( 'width', users_progw + '%' );
 				media_finished = jQuery( '#bpmedia-bpalbumimporter .bp-album-media span.finished' ).html();
+
 				if ( parseInt( media_finished ) < parseInt( media_total ) )
 					jQuery( '#bpmedia-bpalbumimporter .bp-album-media span.finished' ).html( parseInt( media_finished ) + data.count );
 				jQuery( '#bpmedia-bpalbumimporter .bp-album-comments span.finished' ).html( parseInt( response.comments ) + parseInt( comments_finished ) );
 				jQuery( '#bpmedia-bpalbumimporter .bp-album-users span.finished' ).html( parseInt( response.users ) );
+
 				if ( favorites ) {
 					favorite_data = {
 						'action': 'rtmedia_rt_album_import_favorites',
 						rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
-					}
+					};
 					jQuery.post( ajaxurl, favorite_data, function ( response ) {
+
 						if (response.hasOwnProperty(favorites) && (response.favorites !== 0 || response.favorites !== '0')) {
+
 							if ( !jQuery( '.bp-album-favorites' ).length ) {
 								var data = {
 									users : response.users
-								}
+								};
 
 								jQuery( '.bp-album-comments' ).after( rtMediaAdmin.templates.rtm_album_favourites_importer( data ) );
 							}
 
 							$favorites = {};
-							if ( response.offset != 0 || response.offset != '0' )
+
+							if ( 0 !== response.offset || '0' !== response.offset )
 								start = response.offset * 1 + 1;
 							else
 								start = 1
 							for ( var i = start; i <= response.users; i++ ) {
 								$count = 1;
-								if ( i == response.users ) {
+
+								if ( i === response.users ) {
 									$count = parseInt( response.users % $count );
+
 									if ( $count == 0 ) {
 										$count = 1;
 									}
@@ -529,10 +588,10 @@ jQuery( document ).ready( function ( $ ) {
 
 								newvals = {
 									'action': 'rtmedia_rt_album_import_step_favorites',
-									'offset': ( i - 1 ) * 1,
-									'redirect': i == response.users,
+									'offset': ( i - 1 ),
+									'redirect': i === response.users,
 									'rtm_wpnonce': jQuery('#bpaimporter_wpnonce').val()
-								}
+								};
 								$favorites[ i ] = newvals;
 							}
 							var $startingpoint = jQuery.Deferred();
@@ -548,6 +607,7 @@ jQuery( document ).ready( function ( $ ) {
 					}, 'json' );
 				}
 			} else {
+
 				if (data.hasOwnProperty(page)) {
 					var map_data = {
 						msg : "Row " + response.page + " failed."
@@ -572,11 +632,13 @@ jQuery( document ).ready( function ( $ ) {
 			favorites_finished = jQuery( '#bpmedia-bpalbumimporter .bp-album-favorites span.finished' ).html();
 			jQuery( '#bpmedia-bpalbumimporter .bp-album-favorites span.finished' ).html( parseInt( favorites_finished ) + 1 );
 			var favorites_progw = Math.ceil( ( parseInt( favorites_finished + 1 ) / parseInt( favorites_total ) ) * 100 );
+
 			if ( favorites_progw > 100 || favorites_progw == 100 ) {
 				favorites_progw = 100;
 				redirect = true;
 			}
 			jQuery( '.bp-album-favorites #rtprogressbar>div' ).css( 'width', favorites_progw + '%' );
+
 			if ( redirect ) {
 				window.setTimeout( reload_url, 2000 );
 			}
@@ -600,6 +662,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '#bpmedia-bpalbumimporter' ).on( 'click', '#bpmedia-bpalbumimport', function ( e ) {
 		e.preventDefault();
+
 		if ( !jQuery( '#bp-album-import-accept' ).prop( 'checked' ) ) {
 			jQuery( 'html, body' ).animate( {
 				scrollTop: jQuery( '#bp-album-import-accept' ).offset().top
@@ -613,6 +676,7 @@ jQuery( document ).ready( function ( $ ) {
 				$el.css( "background-color", "#EE0000" );
 				setTimeout( function () {
 					$el.css( "background-color", originalColor );
+
 					if ( --i )
 						setTimeout( loop, x ); //restart loop
 				}, x );
@@ -646,6 +710,7 @@ jQuery( document ).ready( function ( $ ) {
 		$data = {};
 		for ( var i = 1; i <= $values[ 'steps' ][ 0 ]; i++ ) {
 			$count = 5;
+
 			if ( i == $values[ 'steps' ][ 0 ] ) {
 				$count = parseInt( $values[ 'laststep' ][ 0 ] );
 				if ( $count == 0 ) {
@@ -658,7 +723,7 @@ jQuery( document ).ready( function ( $ ) {
 				'count': $count,
 				'values': $values,
 				rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
-			}
+			};
 			$data[ i ] = newvals;
 		}
 		var $startingpoint = jQuery.Deferred();
@@ -670,11 +735,11 @@ jQuery( document ).ready( function ( $ ) {
 		} );
 	} );
 
-	jQuery( '#bp-media-settings-boxes' ).on( 'click', '.interested', function () {
+	bp_media_settings_box.on( 'click', '.interested', function () {
 		jQuery( '.interested-container' ).removeClass( 'hidden' );
 		jQuery( '.choice-free' ).attr( 'required', 'required' );
 	} );
-	jQuery( '#bp-media-settings-boxes' ).on( 'click', '.not-interested', function () {
+	bp_media_settings_box.on( 'click', '.not-interested', function () {
 		jQuery( '.interested-container' ).addClass( 'hidden' );
 		jQuery( '.choice-free' ).removeAttr( 'required' );
 	} );
@@ -687,7 +752,7 @@ jQuery( document ).ready( function ( $ ) {
 			url: jQuery( '.url' ).val(),
 			choice: jQuery( 'input[name="choice"]:checked' ).val(),
 			interested: jQuery( 'input[name="interested"]:checked' ).val()
-		}
+		};
 		jQuery.post( ajaxurl, data, function ( response ) {
 			var p_data = {
 				msg :response,
@@ -696,6 +761,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			jQuery( '#video-transcoding-main-container' ).html( rtMediaAdmin.templates.rtm_p_tag( p_data ) );
 		} );
+
 		return false;
 	} );
 
@@ -705,8 +771,9 @@ jQuery( document ).ready( function ( $ ) {
 		var data = {
 			action: 'rtmedia_rt_album_deactivate',
 			rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
-		}
+		};
 		jQuery.get( ajaxurl, data, function ( response ) {
+
 			if ( response ) {
 				location.reload();
 			} else {
@@ -752,6 +819,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	var onData = '';
 	var offData = '';
+
 	if ( rtmedia_on_label !== undefined )
 		onData = 'data-on-label="' + rtmedia_on_label + '"';
 	if ( rtmedia_off_label !== undefined )
@@ -794,30 +862,45 @@ jQuery( document ).ready( function ( $ ) {
 			user_agent: user_agent,
 			debuglog_temp_path: debuglog_temp_path
 		};
+
 		if ( request_type == "bug_report" ) {
 			var wp_admin_username = jQuery( '#wp_admin_username' ).val();
-			if ( wp_admin_username == "" ) {
+
+			if ( '' === wp_admin_username ) {
 				alert( rtmedia_admin_support_strings.wp_admin_username_error );
+
 				return false;
 			}
+
 			var wp_admin_pwd = jQuery( '#wp_admin_pwd' ).val();
-			if ( wp_admin_pwd == "" ) {
+
+			if ( '' === wp_admin_pwd ) {
 				alert( rtmedia_admin_support_strings.wp_admin_pwd_error );
+
 				return false;
 			}
+
 			var ssh_ftp_host = jQuery( '#ssh_ftp_host' ).val();
-			if ( ssh_ftp_host == "" ) {
+
+			if ( '' === ssh_ftp_host ) {
 				alert( rtmedia_admin_support_strings.ssh_ftp_host_error );
+
 				return false;
 			}
+
 			var ssh_ftp_username = jQuery( '#ssh_ftp_username' ).val();
-			if ( ssh_ftp_username == "" ) {
+
+			if ( '' === ssh_ftp_username ) {
 				alert( rtmedia_admin_support_strings.ssh_ftp_username_error );
+
 				return false;
 			}
+
 			var ssh_ftp_pwd = jQuery( '#ssh_ftp_pwd' ).val();
-			if ( ssh_ftp_pwd == "" ) {
+
+			if ( '' === ssh_ftp_pwd ) {
 				alert( rtmedia_admin_support_strings.ssh_ftp_pwd_error );
+
 				return false;
 			}
 			form_data = {
@@ -840,11 +923,14 @@ jQuery( document ).ready( function ( $ ) {
 			};
 		}
 		for ( formdata in form_data ) {
-			if ( form_data[ formdata ] == "" && formdata != 'debuglog_temp_path' ) {
+
+			if ( '' === form_data[ formdata ] && 'debuglog_temp_path' !== formdata ) {
 				alert( "Please enter " + formdata.replace( "_", " " ) + " field." );
+
 				return false;
-			} else if ( form_data[ formdata ] == "" && formdata == 'debuglog_temp_path' ) {
+			} else if ( '' === form_data[ formdata ] && 'debuglog_temp_path' === formdata ) {
 				alert( "Please upload attachment." );
+
 				return false;
 			}
 		}
@@ -884,6 +970,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		// Append nonce.
 		var rtmedia_admin_upload_nonce = jQuery( '#rtmedia_admin_upload_nonce' ).val();
+
 		if ( 'undefined' !== typeof rtmedia_admin_upload_nonce && '' !== rtmedia_admin_upload_nonce ) {
 			data.append( 'rtmedia_admin_upload_nonce', rtmedia_admin_upload_nonce );
 		}
@@ -899,6 +986,7 @@ jQuery( document ).ready( function ( $ ) {
 			processData: false,
 			contentType: false,
 			success: function( data ) {
+
 				if ( data.hasOwnProperty('rtm_response') && data.hasOwnProperty('rtm_response_msg') ) {
 					jQuery('#rtm-setting-msg').remove();
 					var setting_message = jQuery( '<div/>', {
@@ -906,7 +994,7 @@ jQuery( document ).ready( function ( $ ) {
 						'class' : 'rtm-fly-warning',
 					});
 
-					if( 'success' === data.rtm_response ) {
+					if ( 'success' === data.rtm_response ) {
 						setting_message.addClass( 'rtm-success rtm-save-settings-msg' );
 						setting_message.text( data.rtm_response_msg );
 						jQuery('.rtm-button-container.top').append( setting_message );
@@ -919,7 +1007,8 @@ jQuery( document ).ready( function ( $ ) {
 					}
 				}
 
-				if( typeof data.error === 'undefined' ) {
+				if ( typeof data.error === 'undefined' ) {
+
 					if ( data.exceed_size_msg ) {
 						jQuery( '#debuglog' ).val( '' );
 						alert( data.exceed_size_msg );
@@ -946,11 +1035,13 @@ jQuery( document ).ready( function ( $ ) {
 		jQuery( '.rtm_enable_masonry_view' ).parents( '.metabox-holder' ).find( '.rtmedia-info' ).hide();
 	}
 	jQuery( '.rtm_enable_masonry_view input[type=checkbox]' ).on( "click", function ( e ) {
+
 		if ( jQuery( this ).is( ":checked" ) ) {
 			jQuery( '.rtm_enable_masonry_view' ).parents( '.metabox-holder' ).find( '.rtmedia-info' ).show();
 		} else {
 			jQuery( '.rtm_enable_masonry_view' ).parents( '.metabox-holder' ).find( '.rtmedia-info' ).hide();
 		}
+
 	} );
 	jQuery( "#rtm-masonry-change-thumbnail-info" ).click( function ( e ) {
 		jQuery( "html, body" ).animate( { scrollTop: 0 }, '500', 'swing' );
@@ -978,6 +1069,28 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( '#rtm-erase-data-button' ).click(function () {
 		window.location.href = '/wp-admin/tools.php?page=remove_personal_data';
 	});
+
+	/**
+	 * This appends the error message to the received selector, showing that the validation has failed.
+	 *
+	 * @param selector
+	 * @param error_msg
+	 * @returns {boolean}
+	 */
+	function rtp_show_error_message( selector, error_msg ) {
+		var elm_selector = jQuery( selector );
+		elm_selector.focus();
+		elm_selector.css( 'border-color', 'red' );
+		var elm_selector_parent = elm_selector.parent();
+
+		if ( elm_selector_parent.length > 0 && 'error_msg' !== elm_selector_parent.attr( 'class' ) ) {
+			var invalid_error_msg = jQuery( "<span />" ).attr( 'style', 'display:block' ).addClass( 'error_msg' ).html( error_msg );
+			elm_selector.after( invalid_error_msg );
+		}
+		return_code = false;
+
+		return false;
+	}
 
 } );
 
