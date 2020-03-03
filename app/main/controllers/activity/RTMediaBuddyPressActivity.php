@@ -108,7 +108,8 @@ class RTMediaBuddyPressActivity {
 		$dom = new DOMDocument();
 		// DOMDocument gives error on html5 tags, so we need to disable errors.
 		libxml_use_internal_errors( true );
-		$dom->loadHTML( $text );
+		// Use utf-8 encoding for different languages.
+		$dom->loadHTML( '<?xml encoding="utf-8" ?>' . $text );
 		// DOMDocument gives error on html5 tags, so we need to disable errors.
 		libxml_clear_errors();
 		// We need to find div having rtmedia-activity-text class, but no direct method for it.
