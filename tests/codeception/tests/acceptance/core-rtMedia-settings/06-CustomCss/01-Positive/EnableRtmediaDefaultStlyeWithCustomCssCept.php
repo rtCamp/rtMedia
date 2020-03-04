@@ -33,5 +33,6 @@
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivity();
 
-    $I->seeInSource( ConstantsPage::$customCssValue );
+    // $I->seeInSource( ConstantsPage::$customCssValue );
+    $I->seeInPageSource( ConstantsPage::$customCssValue );
 ?>
