@@ -32,7 +32,6 @@
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivity();
-
-    // $I->seeInSource( ConstantsPage::$customCssValue );
-    $I->seeInPageSource( ConstantsPage::$customCssValue );
+    $I->seeInSource( '<style type='text/css'> #buddypress #whats-new { height: 500px !important; overflow: hidden;} </style>' );
+    //$I->seeInPageSource( ConstantsPage::$customCssValue );
 ?>
