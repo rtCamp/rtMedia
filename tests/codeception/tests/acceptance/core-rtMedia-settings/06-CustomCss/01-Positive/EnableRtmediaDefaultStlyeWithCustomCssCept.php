@@ -32,6 +32,11 @@
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivity();
-    $I->seeInPageSource( ConstantsPage::$customCssValue );
+
+    $bar = $I->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webdriver) {
+    return $webdriver->findElement(WebDriverBy::cssSelector('textarea#whats-new'))->getCSSValue('border-color');
+    });
+
+    $I->assertEquals( $bar, 'rgb(255, 0, 0)' );
 
 ?>
