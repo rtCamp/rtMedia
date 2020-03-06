@@ -25,12 +25,15 @@
         $settings->saveSettings();
     }
 
-    $value = $I->grabValueFrom( ConstantsPage::$cssTextarea );
-    echo "Css text area value = \n" . $value;
+    // $value = $I->grabValueFrom( ConstantsPage::$cssTextarea );
+    // echo "Css text area value = \n" . $value;
     $settings->setValue( ConstantsPage::$customCssLabel, ConstantsPage::$cssTextarea, ConstantsPage::$customCssValue );
-    $settings->saveSettings();
-
-    $I->reloadPage();
+    // $settings->saveSettings();
+    $I->executeJS( "jQuery('.rtm-button-container.bottom .rtmedia-settings-submit').click();" );
+    $I->waitForText( 'Settings saved successfully!', 30 );
+    $temp = $I->grabValueFrom( ConstantsPage::$cssTextarea );
+    echo " \n Text area value = " . $temp;
+    // $I->reloadPage();
 
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivity();
@@ -39,17 +42,7 @@
     return $webdriver->findElement(WebDriverBy::cssSelector('textarea#whats-new'))->getCSSValue('border-color');
     });
 
-    $I->wait(5);
-
-    $I->fillField('textarea#whats-new', 'HI..!I see this red color border!');
-    $I->waitForElementVisible( ConstantsPage::$postUpdateButton, 60);
-
-    $expected = 'rgb(255, 0, 0)';
-    $actual = $bar;
-
-    echo "Exepcted textarea border color = " . $expected . "\n";
-    echo "Actual textarea border color = " . $actual . "\n";
-    // $I->assertEquals( $bar, 'rgb(255, 0, 0)' );
-    $I->assertEquals( $actual, $expected );
+    $I->assertEquals( $bar, 'rgb(255, 0, 0)' );
+    // $I->assertEquals( $actual, $expected );
 
 ?>
