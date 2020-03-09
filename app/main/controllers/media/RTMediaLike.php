@@ -12,9 +12,18 @@
 class RTMediaLike extends RTMediaUserInteraction {
 
 	/**
+	 * Check whether like nonce is already added or not.
+	 *
+	 * @var boolean
+	 */
+	private $like_nonce_loaded;
+
+	/**
 	 * RTMediaLike constructor.
 	 */
 	public function __construct() {
+
+		$this->like_nonce_loaded = false;
 
 		$args = array(
 			'action'              => 'like',
@@ -390,12 +399,10 @@ class RTMediaLike extends RTMediaUserInteraction {
 	 */
 	public function like_button_filter_nonce( $button ) {
 		// We create only 1 nonce field for like button.
-		global $like_nonce;
-
-		if ( empty( $like_nonce ) ) {
+		if ( empty( $this->like_nonce_loaded ) ) {
 			$button .= wp_nonce_field( 'rtm_media_like_nonce' . $this->media->id, 'rtm_media_like_nonce', true, false );
 
-			$like_nonce = true;
+			$this->like_nonce_loaded = true;
 		}
 
 		return $button;
