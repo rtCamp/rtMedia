@@ -16,14 +16,12 @@ class RTMediaLike extends RTMediaUserInteraction {
 	 *
 	 * @var boolean
 	 */
-	private $like_nonce_loaded;
+	private $like_nonce_loaded = false;
 
 	/**
 	 * RTMediaLike constructor.
 	 */
 	public function __construct() {
-
-		$this->like_nonce_loaded = false;
 
 		$args = array(
 			'action'              => 'like',
