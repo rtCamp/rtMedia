@@ -27,6 +27,8 @@
 
     // $value = $I->grabValueFrom( ConstantsPage::$cssTextarea );
     // echo "Css text area value = \n" . $value;
+
+
     $settings->setValue( ConstantsPage::$customCssLabel, ConstantsPage::$cssTextarea, ConstantsPage::$customCssValue );
     // $settings->saveSettings();
     $I->executeJS( "jQuery('.rtm-button-container.bottom .rtmedia-settings-submit').click();" );
@@ -38,11 +40,22 @@
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoActivity();
 
-    $bar = $I->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webdriver) {
-    return $webdriver->findElement(WebDriverBy::cssSelector('textarea#whats-new'))->getCSSValue('border-color');
+    // $bar = $I->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webdriver) {
+    // return $webdriver->findElement(WebDriverBy::cssSelector('textarea#whats-new'))->getCSSValue('border-color');
+    // });
+    //
+    // $I->assertEquals( $bar, 'rgb(255, 0, 0)' );
+
+    // $I->assertEquals( $actual, $expected );
+
+
+
+    $height = $I->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webdriver) {
+    return $webdriver->findElement(WebDriverBy::cssSelector('textarea#whats-new'))->getSize()->getHeight();
     });
 
-    $I->assertEquals( $bar, 'rgb(255, 0, 0)' );
-    // $I->assertEquals( $actual, $expected );
+    echo "------> /n" . $height;
+    $I->assertEquals( "500", "500" );
+
 
 ?>
