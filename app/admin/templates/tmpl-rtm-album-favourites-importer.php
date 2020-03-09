@@ -1,3 +1,11 @@
+<?php
+/**
+ * Displays album favourites Div.
+ *
+ * @package rtMedia
+ */
+
+?>
 <br />
 <div class="bp-album-favorites">
 	<strong>

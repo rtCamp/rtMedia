@@ -1,21 +1,20 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Handles rtMedia friends related tasks.
+ *
+ * @package rtMedia
+ * @author saurabh
  */
 
 /**
- * Description of RTMediaFriends
- *
- * @author saurabh
+ * To Handle rtMedia friends related tasks.
  */
 class RTMediaFriends {
 
 	/**
-	 *
+	 * RTMediaFriends constructor.
 	 */
-	function __construct() {
+	public function __construct() {
 		if ( ! class_exists( 'BuddyPress' ) ) {
 			return;
 		}
@@ -24,7 +23,14 @@ class RTMediaFriends {
 		}
 	}
 
-	function get_friends_cache( $user ) {
+	/**
+	 * Function to get cached friends.
+	 *
+	 * @param int $user User ID to get friends.
+	 *
+	 * @return array|bool|mixed|void
+	 */
+	public function get_friends_cache( $user ) {
 
 		if ( ! class_exists( 'BuddyPress' ) ) {
 			return array();
@@ -45,7 +51,12 @@ class RTMediaFriends {
 		return $friends;
 	}
 
-	static function refresh_friends_cache( $user ) {
+	/**
+	 * Refresh friends cache for user.
+	 *
+	 * @param int $user User id to refresh cache.
+	 */
+	public static function refresh_friends_cache( $user ) {
 		if ( ! class_exists( 'BuddyPress' ) ) {
 			return;
 		}

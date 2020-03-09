@@ -4,8 +4,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 5.3
-Stable tag: 4.5.9
+Tested up to: 5.3.2
+Stable tag: 4.6.0
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -134,6 +134,39 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
+= 4.6.0 [February 17, 2020] =
+
+* Enhancement
+
+ * Show long text truncated with read more option and image displayed below the truncated text on activity
+
+* FIXED
+
+ * Error uploading media in comments with Kleo theme
+ * JavaScript errors
+ * Album styling when masonry style is disabled
+ * The template loaded on media page when nouveau template is set
+ * Compatibility issues with PHP 7.4.1
+ * UI related bugs
+ * Notices and Warnings
+
+= 4.5.11 [December 26, 2019] =
+
+* Enhancement
+
+ * Add better styling for albums
+
+* FIXED
+
+ * Redirection popup on Media upload in Activity stream
+
+= 4.5.10 [December 26, 2019] =
+
+* FIXED
+
+ * Warnings on Support page of rtMedia Settings
+ * Issue with rtMedia Update filter on BuddyPress activity wall
+
 = 4.5.9 [October 29, 2019] =
 
 * Enhancement
@@ -142,8 +175,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * FIXED
 
- * Post Update button issue with BuddyPress Nouveau template 
- * Issue when user uploads the media with link in comment on buddypress activity 
+ * Post Update button issue with BuddyPress Nouveau template
+ * Issue when user uploads the media with link in comment on buddypress activity
 
 = 4.5.8 [August 6, 2019] =
 
@@ -171,8 +204,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Issue of entering text in text area when Direct Upload and Upload terms enabled together
  * UI of pagination button height and text field
  * Export/Import button issue in Firefox browser
- * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1 
- * Empty space issue for generated activity when media is uploaded without adding text 
+ * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1
+ * Empty space issue for generated activity when media is uploaded without adding text
  * Other Errors, Warnings and notices
  * Group Activity media are not shown in Group Media tab with BuddyPress Nouveau Template
  * User’s name autosuggestion
@@ -1625,8 +1658,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.9 =
-rtMedia 4.5.9, with an addition of new classes in BuddPress Activity based on the uploaded media type, and other minor fixes around BuddPress Activity.
+= 4.6.0 =
+rtMedia 4.6.0, with improved activity content preview and JavaScript and Nouveau template related fixes.
 
 == Sponsors ==
 

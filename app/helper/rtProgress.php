@@ -1,34 +1,33 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Adds class to Show progress-bar
+ *
+ * @package rtMedia
  */
 
 /**
- * Description of rtProgress
+ * Class to show progress-bar.
  *
  * @author saurabh
  */
-class rtProgress {
+class rtProgress { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
 
 	/**
 	 * Constructor
 	 *
 	 * @access public
-	 * @return void
 	 */
-	function __construct() {
+	public function __construct() {
 
 	}
 
 	/**
-	 * Show progress_ui.
+	 * Show progress-bar ui.
 	 *
 	 * @access public
 	 *
-	 * @param  float $progress
-	 * @param  bool $echo
+	 * @param  float $progress Current progress.
+	 * @param  bool  $echo Echo.
 	 *
 	 * @return string $progress_ui
 	 */
@@ -40,7 +39,7 @@ class rtProgress {
 			';
 
 		if ( $echo ) {
-			echo $progress_ui; // @codingStandardsIgnoreLine
+			echo wp_kses( $progress_ui, RTMedia::expanded_allowed_tags() );
 		} else {
 			return $progress_ui;
 		}
@@ -51,8 +50,8 @@ class rtProgress {
 	 *
 	 * @access public
 	 *
-	 * @param  float $progress
-	 * @param  float $total
+	 * @param  float $progress Current progress.
+	 * @param  float $total Total.
 	 *
 	 * @return float
 	 */
