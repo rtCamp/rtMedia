@@ -389,6 +389,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 	 * @return string
 	 */
 	public function like_button_filter_nonce( $button ) {
+		// This nonce is rendered multiple times on same page, so having common ID will result in HTML warning.
 		$button .= '<input type="hidden" name="rtm_media_like_nonce" value="' . esc_attr( wp_create_nonce( 'rtm_media_like_nonce' . $this->media->id ) ) . '" />';
 		return $button;
 	}
