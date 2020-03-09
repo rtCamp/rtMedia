@@ -1,65 +1,121 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Handles user interactions with media
+ *
+ * @package rtMedia
+ * @author saurabh
  */
 
 /**
- * Description of RTMediaUserInteractions
- *
- * @author saurabh
+ * Class to handle user interactions
  */
 class RTMediaUserInteraction {
 
 	/**
+	 * The singular action word (like, unlike, view, download, etc)
 	 *
-	 * @var string The singular action word (like, unlike, view, download, etc)
+	 * @var string
 	 */
 	public $action;
 
 	/**
+	 * The plural of the action (likes, unlikes, etc)
 	 *
-	 * @var string The plural of the action (likes, unlikes, etc)
+	 * @var string
 	 */
 	public $actions;
 
 	/**
+	 * Whether the action increases the count or decreases the count
 	 *
-	 * @var boolean Whether the action increases the count or decreases the count
+	 * @var boolean
 	 */
 	public $increase;
 
 
 	/**
+	 * The action query populated by the default query
 	 *
-	 * @var object The action query populated by the default query
+	 * @var object
 	 */
 	public $action_query;
 
 	/**
+	 * The db model
 	 *
-	 * @var object The db model
+	 * @var object
 	 */
 	public $model;
+
+	/**
+	 * User id.
+	 *
+	 * @var int
+	 */
 	public $interactor;
+
+	/**
+	 * Media owner
+	 *
+	 * @var int $owner
+	 */
 	public $owner;
+
+	/**
+	 * Media details
+	 *
+	 * @var array|object
+	 */
 	public $media;
+
+	/**
+	 * Privacy setting.
+	 *
+	 * @var int
+	 */
 	public $privacy;
+
+	/**
+	 * Action button label.
+	 *
+	 * @var string
+	 */
+	public $label;
+
+	/**
+	 * Remove action button label.
+	 *
+	 * @var string
+	 */
+	public $undo_label;
+
+	/**
+	 * Privacy setting of user.
+	 *
+	 * @var int
+	 */
+	public $interactor_privacy;
+
+	/**
+	 * Plural label.
+	 *
+	 * @var string
+	 */
+	public $plural;
 
 	/**
 	 * Initialise the user interaction
 	 *
-	 * @param array $args
+	 * @param array $args Arguments array.
 	 *
 	 * @global object $rtmedia_query Default query
 	 *
-	 * @internal param string $action The user action
-	 * @internal param bool $private Whether other users are allowed the action
-	 * @internal param string $label The label for the button
-	 * @internal param bool $increase Increase or decrease the action count
+	 * @internal param string $action The user action.
+	 * @internal param bool $private Whether other users are allowed the action.
+	 * @internal param string $label The label for the button.
+	 * @internal param bool $increase Increase or decrease the action count.
 	 */
-	function __construct( $args = array() ) {
+	public function __construct( $args = array() ) {
 		$defaults = array(
 			'action'     => '',
 			'label'      => '',
@@ -80,17 +136,21 @@ class RTMediaUserInteraction {
 
 		$this->init();
 
-		// filter the default actions with this new one
+		// filter the default actions with this new one.
 		add_filter( 'rtmedia_query_actions', array( $this, 'register' ) );
-		// hook into the template for this action
+		// hook into the template for this action.
 		add_action( 'rtmedia_pre_action_' . $this->action, array( $this, 'preprocess' ) );
 		add_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );
 	}
 
 
-	function init() {
+	/**
+	 * Initialize class.
+	 */
+	public function init() {
 		$this->model = new RTMediaModel();
 		global $rtmedia_query;
+
 		if ( ! isset( $rtmedia_query->action_query ) ) {
 			return;
 		}
@@ -108,21 +168,26 @@ class RTMediaUserInteraction {
 	/**
 	 * Checks if there's a label, if not creates from the action name
 	 */
-	function set_label() {
+	public function set_label() {
 		if ( empty( $this->label ) ) {
 			$this->label = ucfirst( $this->action );
 		}
 	}
 
-	function set_plural() {
+	/**
+	 * Set plural label.
+	 */
+	public function set_plural() {
 		if ( empty( $this->plural ) ) {
 			$this->plural = $this->label . 's';
 		}
 	}
 
-	function set_media() {
+	/**
+	 * Set media and owner.
+	 */
+	public function set_media() {
 
-		$media_id    = false;
 		$this->media = false;
 
 		global $rtmedia_query;
@@ -139,7 +204,10 @@ class RTMediaUserInteraction {
 
 	}
 
-	function set_interactor() {
+	/**
+	 * Set user interactor.
+	 */
+	public function set_interactor() {
 		$this->interactor = false;
 		if ( is_user_logged_in() ) {
 			$this->interactor = get_current_user_id();
@@ -147,7 +215,12 @@ class RTMediaUserInteraction {
 		$this->interactor_privacy = $this->interactor_privacy();
 	}
 
-	function interactor_privacy() {
+	/**
+	 * Set interactor privacy.
+	 *
+	 * @return int
+	 */
+	public function interactor_privacy() {
 
 		if ( ! isset( $this->interactor ) ) {
 			return 0;
@@ -169,7 +242,12 @@ class RTMediaUserInteraction {
 		return 20;
 	}
 
-	function is_visible() {
+	/**
+	 * Check if element is visible.
+	 *
+	 * @return bool
+	 */
+	public function is_visible() {
 		if ( $this->interactor_privacy >= $this->privacy ) {
 			return true;
 		}
@@ -177,8 +255,14 @@ class RTMediaUserInteraction {
 		return false;
 	}
 
-	function is_clickable() {
+	/**
+	 * Check if current button clickable or not.
+	 *
+	 * @return bool
+	 */
+	public function is_clickable() {
 		$clickable = false;
+
 		if ( $this->repeatable ) {
 			$clickable = true;
 			if ( $this->undoable ) {
@@ -193,20 +277,32 @@ class RTMediaUserInteraction {
 		return $clickable;
 	}
 
-	function before_render() {
+	/**
+	 * Before rendering button.
+	 */
+	public function before_render() {
 
 	}
 
-	function render() {
+	/**
+	 * Render buttons.
+	 *
+	 * @return bool|mixed|string|void
+	 */
+	public function render() {
 		$before_render = $this->before_render();
+
 		if ( false === $before_render ) {
 			return false;
 		}
-		$button = $button_start = $button_end = '';
+
+		$button = '';
+
 		if ( $this->is_visible() ) {
-			$link     = trailingslashit( get_rtmedia_permalink( $this->media->id ) ) .
-			            $this->action . '/';
-			$disabled = $icon = '';
+			$link     = trailingslashit( get_rtmedia_permalink( $this->media->id ) ) . $this->action . '/';
+			$disabled = '';
+			$icon     = '';
+
 			if ( ! $this->is_clickable() ) {
 				$disabled = ' disabled';
 			}
@@ -214,6 +310,7 @@ class RTMediaUserInteraction {
 			if ( isset( $this->icon_class ) && '' !== $this->icon_class ) {
 				$icon = "<i class='" . esc_attr( $this->icon_class ) . "'></i>";
 			}
+
 			$button_start = '<form action="' . esc_url( $link ) . '">';
 			$button_label = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 			$button       = '<button type="submit" id="rtmedia-' . esc_attr( $this->action ) . '-button-' . esc_attr( $this->media->id ) . '" class="rtmedia-' . esc_attr( $this->action )
@@ -239,7 +336,15 @@ class RTMediaUserInteraction {
 		return $button;
 	}
 
-	function button_filter( $buttons ) {
+	/**
+	 * Add buttons.
+	 *
+	 * @param array $buttons buttons to show.
+	 *
+	 * @return array
+	 */
+	public function button_filter( $buttons ) {
+
 		if ( empty( $this->media ) ) {
 			$this->init();
 		}
@@ -249,12 +354,13 @@ class RTMediaUserInteraction {
 	}
 
 	/**
+	 * Register action.
 	 *
-	 * @param array $actions The default array of actions
+	 * @param array $actions The default array of actions.
 	 *
 	 * @return array $actions Filtered actions array
 	 */
-	function register( $actions ) {
+	public function register( $actions ) {
 		if ( empty( $this->media ) ) {
 			$this->init();
 		}
@@ -268,9 +374,8 @@ class RTMediaUserInteraction {
 	 * Checks if an id is set
 	 * Creates pre and post process hooks for the action
 	 * Calls the process
-	 *
 	 */
-	function preprocess() {
+	public function preprocess() {
 		global $rtmedia_query;
 		$this->action_query = $rtmedia_query->action_query;
 
@@ -294,7 +399,7 @@ class RTMediaUserInteraction {
 
 		do_action( 'rtmedia_post_process_' . $this->action, $result );
 
-		print_r( $result );
+		print_r( $result ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 
 		die();
 	}
@@ -304,7 +409,7 @@ class RTMediaUserInteraction {
 	 *
 	 * @return integer New count
 	 */
-	function process() {
+	public function process() {
 		return false;
 	}
 }
