@@ -324,7 +324,7 @@ class RTMediaUserInteraction {
 				$button = '<button type="submit" class="rtmedia-' . esc_attr( $this->action ) . ' rtmedia-action-buttons button' . esc_attr( $disabled ) . '" title="' . esc_attr( $button_label ) . '">' . $icon . '<span>' . esc_html( $button_label ) . '</span></button>';
 			}
 
-			//filter the button as required
+			// Filter the button as required.
 			$button = apply_filters( 'rtmedia_' . $this->action . '_button_filter', $button );
 
 			$button_end = '</form>';
