@@ -279,11 +279,18 @@ class RTMediaUploadView {
 					$selector = 'class';
 				}
 
+				// We use associated array for O(1) time, which increases performance.
+				$elems_with_class = array(
+					'comment'                  => 1,
+					'privacy'                  => 1,
+					'upload_parent_id_context' => 1,
+				);
+
 				/**
 				 * These will be repeated for all activities, which will result in duplicate elements with same IDs.
 				 * So adding these as class.
 				 */
-				if ( 'comment' === $key || 'privacy' === $key || 'upload_parent_id_context' === $key ) {
+				if ( ! empty( $elems_with_class[ $key ] ) ) {
 					$selector = 'class';
 				}
 
