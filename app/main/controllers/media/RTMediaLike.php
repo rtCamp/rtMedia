@@ -122,7 +122,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$actions    = $this->model->get( array( 'id' => $this->action_query->id ) );
 		$like_nonce = sanitize_text_field( filter_input( INPUT_POST, 'like_nonce', FILTER_SANITIZE_STRING ) );
 
-		if ( ! wp_verify_nonce( $like_nonce, 'rtm_media_like_nonce' ) ) {
+		if ( ! wp_verify_nonce( $like_nonce, 'rtm_media_like_nonce' . $this->media->id ) ) {
 			die();
 		}
 
@@ -389,7 +389,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 	 * @return string
 	 */
 	public function like_button_filter_nonce( $button ) {
-		$button .= '<input type="hidden" name="rtm_media_like_nonce" value="' . esc_attr( wp_create_nonce( 'rtm_media_like_nonce' ) ) . '" />';
+		$button .= '<input type="hidden" name="rtm_media_like_nonce" value="' . esc_attr( wp_create_nonce( 'rtm_media_like_nonce' . $this->media->id ) ) . '" />';
 		return $button;
 	}
 }
