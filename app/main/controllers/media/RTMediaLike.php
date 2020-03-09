@@ -39,7 +39,6 @@ class RTMediaLike extends RTMediaUserInteraction {
 		add_filter( 'rtmedia_check_enable_disable_like', array( $this, 'rtmedia_check_enable_disable_like' ), 10, 1 );
 	}
 
-
 	/**
 	 * check Likes for media is enabled or not
 	 * @global type $rtmedia
@@ -95,7 +94,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 	function process() {
 		$actions    = $this->model->get( array( 'id' => $this->action_query->id ) );
 		$like_nonce = filter_input( INPUT_POST, 'like_nonce', FILTER_SANITIZE_STRING );
-		if ( ! wp_verify_nonce( $like_nonce, 'rtm_media_like_nonce' . $this->media->id ) ) {
+		if ( ! wp_verify_nonce( $like_nonce, 'rtm_media_like_nonce' ) ) {
 			die();
 		}
 		$rtmediainteraction = new RTMediaInteractionModel();
@@ -292,7 +291,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 	}
 
 	function like_button_filter_nonce( $button ) {
-		$button .= wp_nonce_field( 'rtm_media_like_nonce' . $this->media->id, 'rtm_media_like_nonce', true, false );
+		$button .= '<input type="hidden" name="rtm_media_like_nonce" value="' . esc_attr( wp_create_nonce( 'rtm_media_like_nonce' ) ) . '" />';
 		return $button;
 	}
 }

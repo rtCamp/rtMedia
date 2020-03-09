@@ -219,6 +219,14 @@ class RTMediaUserInteraction {
 			$button       = '<button type="submit" id="rtmedia-' . esc_attr( $this->action ) . '-button-' . esc_attr( $this->media->id ) . '" class="rtmedia-' . esc_attr( $this->action )
 			. ' rtmedia-action-buttons button' . esc_attr( $disabled ) . '" title="' . esc_attr( $button_label ) . '">' . $icon . '<span>' . esc_html( $button_label ) . '</span></button>';
 
+			/**
+			 * Like button is displayed more then 1 time on same page, so giving this button ID will result
+			 * in HTML warnings.
+			 */
+			if ( 'like' === $this->action ) {
+				$button = '<button type="submit" class="rtmedia-' . esc_attr( $this->action ) . ' rtmedia-action-buttons button' . esc_attr( $disabled ) . '" title="' . esc_attr( $button_label ) . '">' . $icon . '<span>' . esc_html( $button_label ) . '</span></button>';
+			}
+
 			//filter the button as required
 			$button = apply_filters( 'rtmedia_' . $this->action . '_button_filter', $button );
 
