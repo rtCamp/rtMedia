@@ -12,6 +12,13 @@
 class RTMediaLike extends RTMediaUserInteraction {
 
 	/**
+	 * Check whether like nonce is already added or not.
+	 *
+	 * @var boolean
+	 */
+	private $like_nonce_loaded = false;
+
+	/**
 	 * RTMediaLike constructor.
 	 */
 	public function __construct() {
@@ -44,7 +51,6 @@ class RTMediaLike extends RTMediaUserInteraction {
 
 		add_filter( 'rtmedia_check_enable_disable_like', array( $this, 'rtmedia_check_enable_disable_like' ), 10, 1 );
 	}
-
 
 	/**
 	 * Check Likes for media is enabled or not
@@ -390,7 +396,13 @@ class RTMediaLike extends RTMediaUserInteraction {
 	 * @return string
 	 */
 	public function like_button_filter_nonce( $button ) {
-		$button .= wp_nonce_field( 'rtm_media_like_nonce' . $this->media->id, 'rtm_media_like_nonce', true, false );
+		// We create only 1 nonce field for like button.
+		if ( empty( $this->like_nonce_loaded ) ) {
+			$button .= wp_nonce_field( 'rtm_media_like_nonce' . $this->media->id, 'rtm_media_like_nonce', true, false );
+
+			$this->like_nonce_loaded = true;
+		}
+
 		return $button;
 	}
 }

@@ -1786,7 +1786,7 @@ jQuery( document ).ready( function( $ ) {
 	$( document ).on( 'click', '.rtmedia-like', function( e ) {
 		e.preventDefault();
 		var that = this;
-		var like_nonce = $( this ).siblings( '#rtm_media_like_nonce' ).val();
+		var like_nonce = $( '#rtm_media_like_nonce' ).val();
 		$( this ).attr( 'disabled', 'disabled' );
 		var url = $( this ).parent().attr( 'action' );
 		$( that ).prepend( '<img class=\'rtm-like-loading\' src=\'' + rMedia_loading_file + '\' style=\'width:10px\' />' );

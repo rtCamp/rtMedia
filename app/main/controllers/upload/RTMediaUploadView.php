@@ -38,7 +38,11 @@ class RTMediaUploadView {
 	public static function upload_nonce_generator( $echo = true, $only_nonce = false ) {
 
 		if ( $echo ) {
-			wp_nonce_field( 'rtmedia_upload_nonce', 'rtmedia_upload_nonce' );
+			/**
+			 * If we use wp_nonce_field, it'll create a hidden field with ID, which will generate HTML warning.
+			 * Because this nonce is being used in multiple places on the same page.
+			 */
+			echo '<input type="hidden" name="rtmedia_upload_nonce" value="' . esc_attr( wp_create_nonce( 'rtmedia_upload_nonce' ) ) . '" />';
 		} else {
 
 			if ( $only_nonce ) {
@@ -274,6 +278,22 @@ class RTMediaUploadView {
 				if ( ( 'upload_parent_id' === $key && ! empty( $key ) ) || ( 'upload_parent_id_type' === $key && ! empty( $key ) ) ) {
 					$selector = 'class';
 				}
+
+				// We use associated array for O(1) time, which increases performance.
+				$elems_with_class = array(
+					'comment'                  => 1,
+					'privacy'                  => 1,
+					'upload_parent_id_context' => 1,
+				);
+
+				/**
+				 * These will be repeated for all activities, which will result in duplicate elements with same IDs.
+				 * So adding these as class.
+				 */
+				if ( ! empty( $elems_with_class[ $key ] ) ) {
+					$selector = 'class';
+				}
+
 				?>
 				<input type='hidden' <?php echo esc_html( $selector ); ?>="rt_upload_hf_<?php echo esc_attr( $key ); ?>"
 					value='<?php echo esc_attr( $val ); ?>'
