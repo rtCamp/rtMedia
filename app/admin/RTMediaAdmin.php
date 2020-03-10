@@ -528,7 +528,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					$return_falg = true;
 				}
 			} elseif ( defined( 'RTMEDIA_WATERMARK_PATH' ) ) {
-				// check for rtMedia Photo Watermak version
+				// check for rtMedia Photo Watermark version
 				$plugin_info = get_plugin_data( RTMEDIA_WATERMARK_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '1.1.8' ) ) ) {
 					$return_falg = true;
@@ -1903,7 +1903,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Display invlaid license notice to admins.
+		 * Display invalid license notice to admins.
 		 *
 		 * @since 4.1.7
 		 *
