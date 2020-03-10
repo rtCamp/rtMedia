@@ -593,7 +593,7 @@ class RTMediaNav {
 
 		// Check if its media.
 		if ( RTMEDIA_MEDIA_SLUG !== $object->slug ) {
-			return $count;
+			return $has_count;
 		}
 
 		global $bp;
