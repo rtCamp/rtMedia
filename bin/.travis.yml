@@ -8,7 +8,7 @@ branches:
     - develop
     - pre-release-travis-test
     - pre-release
-    # - codeception
+    - WIP-TravisFix
 
 before_install:
   - rm -rf ~/.gnupg

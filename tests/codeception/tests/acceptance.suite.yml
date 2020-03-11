@@ -9,6 +9,7 @@ modules:
         - \Helper\Acceptance
         - WPWebDriver
         - Asserts
+        - Cli
     config:
         WPWebDriver:
             host: 'hub-cloud.browserstack.com'
