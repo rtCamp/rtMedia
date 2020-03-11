@@ -37,11 +37,11 @@
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia();
 
-    $optionDivColor = $I->executeJS('return $(".rtm-media-options").css("color");');
+    $optionDivColor = $I->executeJS('return $(".rtm-media-options").css("margin-bottom");');
 
     echo "\n Option div button color = ". $optionDivColor;
     echo "\n";
-    $I->assertEquals( $optionDivColor, 'rgba(34, 139, 34, 1)' );
+    $I->assertEquals( $optionDivColor, '20px' );
 
 
 ?>

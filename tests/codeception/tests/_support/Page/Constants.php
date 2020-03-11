@@ -15,7 +15,12 @@ class Constants {
 
 	// Constant Values
 	public static $commentStr = 'Test comment';
-	public static $customCssValue = '.rtm-media-options  { color: #228B22; };';
+	public static $customCssValue = '.rtm-media-options {
+										line-height: 1.4;
+										margin-bottom: 20px;
+										clear: both;
+										/* overflow: hidden; */
+									}'';
 	// public static $customCssValue = '#buddypress form#whats-new-form textarea {display: none; }';
 	public static $customCssEmptyValue = '';
 	public static $numOfMediaPerPage = '2';
