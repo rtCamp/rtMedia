@@ -37,7 +37,7 @@
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia();
 
-    $optionDivColor = $I->executeJS('$(".rtm-media-options").css("color");');
+    $optionDivColor = $I->executeJS('return $(".rtm-media-options").css("color");');
 
     echo "\n Option div button color = ". $optionDivColor;
     echo "\n";
