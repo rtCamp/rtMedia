@@ -20,7 +20,7 @@ class Constants {
 										margin-bottom: 20px;
 										clear: both;
 										/* overflow: hidden; */
-									}'';
+									}';
 	// public static $customCssValue = '#buddypress form#whats-new-form textarea {display: none; }';
 	public static $customCssEmptyValue = '';
 	public static $numOfMediaPerPage = '2';
