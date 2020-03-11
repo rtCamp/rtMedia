@@ -25,13 +25,24 @@
         $settings->saveSettings();
     }
 
-    $value = $I->grabValueFrom( ConstantsPage::$cssTextarea );
-    echo "Css text area value = \n" . $value;
+
     $settings->setValue( ConstantsPage::$customCssLabel, ConstantsPage::$cssTextarea, ConstantsPage::$customCssValue );
-    $settings->saveSettings();
+    // $settings->saveSettings();
+    $I->executeJS( "jQuery('.rtm-button-container.bottom .rtmedia-settings-submit').click();" );
+    $I->waitForText( 'Settings saved successfully!', 30 );
+    $temp = $I->grabTextFrom( ConstantsPage::$cssTextarea );
+    echo " \n Text area value = " . $temp;
+
 
     $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoActivity();
+    $buddypress->gotoMedia();
 
-    $I->seeInSource( ConstantsPage::$customCssValue );
+    $optionDivColor = $I->executeJS('$(".rtm-media-options").css("color");');
+
+    echo "\n Option div button color = ". $optionDivColor;
+    echo "\n";
+    $I->assertEquals( $optionDivColor, 'rgba(34, 139, 34, 1)' );
+
+
 ?>
+© 2020 GitHub, Inc.
