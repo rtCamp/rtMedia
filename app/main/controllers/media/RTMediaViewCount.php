@@ -1,17 +1,20 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Handles view count of media.
+ *
+ * @package rtMedia
+ * @author ritz
  */
 
 /**
- * Description of RTMediaViewCount
- *
- * @author ritz
+ * Class to handle media view count.
  */
 class RTMediaViewCount extends RTMediaUserInteraction {
-	function __construct() {
+
+	/**
+	 * RTMediaViewCount constructor.
+	 */
+	public function __construct() {
 		$args = array(
 			'action'  => 'view',
 			'label'   => 'view',
@@ -22,7 +25,12 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 		add_filter( 'rtmedia_action_buttons_after_delete', array( $this, 'button_filter' ), 99 );
 	}
 
-	function render() {
+	/**
+	 * Renders media view form.
+	 *
+	 * @return bool|mixed|string|void
+	 */
+	public function render() {
 		/**
 		 * We were using session to store view count for a media by a particular user.
 		 * Session will no more use in rtmedia.
@@ -35,15 +43,23 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 		do_action( 'rtmedia_view_media_counts', $this );
 	}
 
-	function process() {
+	/**
+	 * Process updating view count.
+	 *
+	 * @return int|void
+	 */
+	public function process() {
 		$user_id = $this->interactor;
+
 		if ( ! $user_id ) {
 			$user_id = - 1;
 		}
+
 		$media_id           = $this->action_query->id;
 		$action             = $this->action_query->action;
 		$rtmediainteraction = new RTMediaInteractionModel();
 		$check_action       = $rtmediainteraction->check( $user_id, $media_id, $action );
+
 		if ( $check_action ) {
 			$results       = $rtmediainteraction->get_row( $user_id, $media_id, $action );
 			$row           = $results[0];
@@ -65,7 +81,7 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 			$insert_id = $rtmediainteraction->insert( $columns );
 		}
 
-		//todo update `views` column in media index table, might be need to write migration as well for old media
+		// todo update `views` column in media index table, might be need to write migration as well for old media.
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = $this->action_query->id;
 		do_action( 'rtmedia_after_view_media', $this );

@@ -25,11 +25,11 @@
         $settings->saveSettings();
     }
 
-
     $settings->setValue( ConstantsPage::$customCssLabel, ConstantsPage::$cssTextarea, ConstantsPage::$customCssValue );
     // $settings->saveSettings();
     $I->executeJS( "jQuery('.rtm-button-container.bottom .rtmedia-settings-submit').click();" );
     $I->waitForText( 'Settings saved successfully!', 30 );
+
     $temp = $I->grabTextFrom( ConstantsPage::$cssTextarea );
     echo " \n Text area value = " . $temp;
 
@@ -43,6 +43,3 @@
     echo "\n";
     $I->assertEquals( $optionDivColor, 'rgba(34, 139, 34, 1)' );
 
-
-?>
-© 2020 GitHub, Inc.
