@@ -33,7 +33,7 @@
     $temp = $I->grabTextFrom( ConstantsPage::$cssTextarea );
     echo " \n Text area value = " . $temp;
 
-    $I->cleanDir('app/storage/cache');
+    $I->runShellCommand('rm -rf app/storage/cache/*');
     $buddypress = new BuddypressSettingsPage( $I );
     $buddypress->gotoMedia();
 
