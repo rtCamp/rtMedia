@@ -454,7 +454,7 @@ class RTMediaBuddyPressActivity {
 
 				// We set error object in buddypress, so it'll show error on activity page.
 				if ( isset( $class_obj->errors ) && is_wp_error( $class_obj->errors ) ) {
-					$class_obj->errors->add( 101, esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
+					$class_obj->errors->add( 400, esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
 				} elseif ( isset( $class_obj->component ) ) {
 					// If error object is not found, we set component to null so it'll show error.
 					$class_obj->component = null;
