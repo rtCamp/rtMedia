@@ -52,28 +52,25 @@ class RTMediaUploadEndpoint {
 			if ( ! empty( $rtmedia->options['activity_enable_upload_terms'] ) ) {
 
 				// When media comment is uploaded, comment_media_activity_id will be there, so we check if it's not there.
-				$comment = wp_unslash( filter_input( INPUT_POST, 'comment_media_activity_id', FILTER_SANITIZE_STRING ) );
-				if ( empty( $comment ) ) {
-					$context = wp_unslash( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING ) );
-					// The context should be profile or group.
-					if ( 'profile' === $context || 'group' === $context ) {
-						$term = wp_unslash( filter_input( INPUT_POST, 'rtmedia_upload_terms_conditions', FILTER_SANITIZE_STRING ) );
-						if ( empty( $term ) ) {
-							// This will be uploaded by JavaScript only so we send json response.
-							echo wp_json_encode( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
-							die;
-						}
+				$activity_request = wp_unslash( filter_input( INPUT_POST, 'activity_terms_condition_request', FILTER_SANITIZE_STRING ) );
+				if ( ! empty( $activity_request ) ) {
+					$terms_condition = wp_unslash( filter_input( INPUT_POST, 'activity_terms_condition', FILTER_SANITIZE_STRING ) );
+					if ( empty( $terms_condition ) ) {
+						// This will be uploaded by JavaScript only so we send json response.
+						echo wp_json_encode( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
+						die;
 					}
 				}
 			}
 
 			// When activity upload terms are enabled on media upload page, we check whether someone has removed the html element or not.
 			if ( ! empty( $rtmedia->options['general_enable_upload_terms'] ) ) {
-				$context = wp_unslash( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING ) );
+
+				$uploader_request = wp_unslash( filter_input( INPUT_POST, 'uploader_terms_condition_request', FILTER_SANITIZE_STRING ) );
 				// We check for all other contexts, group and profile is checked above.
-				if ( 'profile' !== $context && 'group' !== $context ) {
-					$term = wp_unslash( filter_input( INPUT_POST, 'rtmedia_upload_terms_conditions', FILTER_SANITIZE_STRING ) );
-					if ( empty( $term ) ) {
+				if ( ! empty( $uploader_request ) ) {
+					$terms_condition = wp_unslash( filter_input( INPUT_POST, 'uploader_terms_condition', FILTER_SANITIZE_STRING ) );
+					if ( empty( $terms_condition ) ) {
 						// This will be uploaded by JavaScript only so we send json response.
 						echo wp_json_encode( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
 						die;

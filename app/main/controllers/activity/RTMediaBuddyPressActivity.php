@@ -445,8 +445,10 @@ class RTMediaBuddyPressActivity {
 	public function bp_activity_content_before_save( $content, $class_obj ) {
 		global $rtmedia;
 
+		// Check if this is not a comment.
+		$action = wp_unslash( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
 		// When activity upload terms are enabled on activity page, we check whether someone has removed the html element or not.
-		if ( ! empty( $rtmedia->options['activity_enable_upload_terms'] ) ) {
+		if ( ! empty( $rtmedia->options['activity_enable_upload_terms'] ) && 'new_activity_comment' !== $action ) {
 			$term = wp_unslash( filter_input( INPUT_POST, 'rtmedia_upload_terms_conditions', FILTER_SANITIZE_STRING ) );
 			if ( empty( $term ) ) {
 

@@ -829,6 +829,20 @@ jQuery( function( $ ) {
 			} );
 
 			uploaderObj.uploader.bind( 'BeforeUpload', function( up, file ) {
+				// We send terms conditions data on backend to validate this on server side.
+				if ( false !== rtmedia_upload_terms_data.uploader_terms_enabled ) {
+					// To determine whether uploader terms enabled for uploader request.
+					up.settings.multipart_params['uploader_terms_condition_request'] = 'true';
+
+					var terms = $( '#rtmedia_upload_terms_conditions' );
+					if ( terms.length > 0 ) {
+						// Send terms conditions data on backend.
+						up.settings.multipart_params['uploader_terms_condition'] = ( terms.is( ':checked' ) ? 'true' : 'false' );
+					} else {
+						return false;
+					}
+				}
+
 				up.settings.multipart_params.title = file.title.split( '.' )[ 0 ];
 
 				if ( typeof file.description != 'undefined' ) {
@@ -1400,6 +1414,19 @@ jQuery( document ).ready( function( $ ) {
 		} );
 
 		objUploadView.uploader.bind( 'BeforeUpload', function( up, files ) {
+			// We send terms conditions data on backend to validate this on server side.
+			if ( false !== rtmedia_upload_terms_data.activity_terms_enabled ) {
+				// To determine whether activity terms enabled for activity request.
+				up.settings.multipart_params['activity_terms_condition_request'] = 'true';
+
+				var terms = $( '#rtmedia_upload_terms_conditions' );
+				if ( terms.length > 0 ) {
+					// Send terms conditions data on backend.
+					up.settings.multipart_params['activity_terms_condition'] = ( terms.is( ':checked' ) ? 'true' : 'false' );
+				} else {
+					return false;
+				}
+			}
 
 			$.each( objUploadView.upload_remove_array, function( i, rfile ) {
 				if ( up.getFile( rfile ) ) {
