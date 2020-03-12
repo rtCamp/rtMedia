@@ -57,8 +57,7 @@ class RTMediaUploadEndpoint {
 					$terms_condition = wp_unslash( filter_input( INPUT_POST, 'activity_terms_condition', FILTER_SANITIZE_STRING ) );
 					if ( empty( $terms_condition ) ) {
 						// This will be uploaded by JavaScript only so we send json response.
-						echo wp_json_encode( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
-						die;
+						wp_send_json_error( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
 					}
 				}
 			}
@@ -72,8 +71,7 @@ class RTMediaUploadEndpoint {
 					$terms_condition = wp_unslash( filter_input( INPUT_POST, 'uploader_terms_condition', FILTER_SANITIZE_STRING ) );
 					if ( empty( $terms_condition ) ) {
 						// This will be uploaded by JavaScript only so we send json response.
-						echo wp_json_encode( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
-						die;
+						wp_send_json_error( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
 					}
 				}
 			}
