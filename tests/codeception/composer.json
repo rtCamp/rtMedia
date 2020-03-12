@@ -1,6 +1,4 @@
 {
-    "require": {
-    },
     "require-dev": {
         "lucatume/wp-browser": "*"
     }

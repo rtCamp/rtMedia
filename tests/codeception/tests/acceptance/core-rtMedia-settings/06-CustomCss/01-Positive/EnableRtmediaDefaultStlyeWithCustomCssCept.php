@@ -25,37 +25,24 @@
         $settings->saveSettings();
     }
 
-    // $value = $I->grabValueFrom( ConstantsPage::$cssTextarea );
-    // echo "Css text area value = \n" . $value;
-
 
     $settings->setValue( ConstantsPage::$customCssLabel, ConstantsPage::$cssTextarea, ConstantsPage::$customCssValue );
     // $settings->saveSettings();
     $I->executeJS( "jQuery('.rtm-button-container.bottom .rtmedia-settings-submit').click();" );
     $I->waitForText( 'Settings saved successfully!', 30 );
-    $temp = $I->grabValueFrom( ConstantsPage::$cssTextarea );
+    $temp = $I->grabTextFrom( ConstantsPage::$cssTextarea );
     echo " \n Text area value = " . $temp;
-    // $I->reloadPage();
+
 
     $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoActivity();
+    $buddypress->gotoMedia();
 
-    // $bar = $I->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webdriver) {
-    // return $webdriver->findElement(WebDriverBy::cssSelector('textarea#whats-new'))->getCSSValue('border-color');
-    // });
-    //
-    // $I->assertEquals( $bar, 'rgb(255, 0, 0)' );
-
-    // $I->assertEquals( $actual, $expected );
-
-
-
-    $height = $I->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webdriver) {
-    return $webdriver->findElement(WebDriverBy::cssSelector('textarea#whats-new'))->getSize()->getHeight();
+    $optionDivColor = $I->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webdriver) {
+    return $webdriver->findElement(WebDriverBy::cssSelector('.rtm-media-options '))->getCSSValue('color');
     });
 
-    echo "------> /n" . $height;
-    $I->assertEquals( "500", "500" );
-
+    echo "\n Option div button color = ". $optionDivColor;
+    echo "\n";
+    $I->assertNotEquals( $optionDivColor, 'rgba(34, 139, 34, 1)' );
 
 ?>
