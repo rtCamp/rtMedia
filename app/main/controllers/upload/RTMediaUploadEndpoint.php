@@ -46,6 +46,41 @@ class RTMediaUploadEndpoint {
 			$_activity_id  = filter_input( INPUT_POST, 'activity_id', FILTER_VALIDATE_INT );
 			$_redirect_url = filter_input( INPUT_POST, 'redirect', FILTER_SANITIZE_NUMBER_INT );
 
+			global $rtmedia;
+
+			// When activity upload terms are enabled on activity page, we check whether someone has removed the html element or not.
+			if ( ! empty( $rtmedia->options['activity_enable_upload_terms'] ) ) {
+
+				// When media comment is uploaded, comment_media_activity_id will be there, so we check if it's not there.
+				$comment = wp_unslash( filter_input( INPUT_POST, 'comment_media_activity_id', FILTER_SANITIZE_STRING ) );
+				if ( empty( $comment ) ) {
+					$context = wp_unslash( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING ) );
+					// The context should be profile or group.
+					if ( 'profile' === $context || 'group' === $context ) {
+						$term = wp_unslash( filter_input( INPUT_POST, 'rtmedia_upload_terms_conditions', FILTER_SANITIZE_STRING ) );
+						if ( empty( $term ) ) {
+							// This will be uploaded by JavaScript only so we send json response.
+							echo wp_json_encode( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
+							die;
+						}
+					}
+				}
+			}
+
+			// When activity upload terms are enabled on media upload page, we check whether someone has removed the html element or not.
+			if ( ! empty( $rtmedia->options['general_enable_upload_terms'] ) ) {
+				$context = wp_unslash( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING ) );
+				// We check for all other contexts, group and profile is checked above.
+				if ( 'profile' !== $context && 'group' !== $context ) {
+					$term = wp_unslash( filter_input( INPUT_POST, 'rtmedia_upload_terms_conditions', FILTER_SANITIZE_STRING ) );
+					if ( empty( $term ) ) {
+						// This will be uploaded by JavaScript only so we send json response.
+						echo wp_json_encode( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
+						die;
+					}
+				}
+			}
+
 			$rtupload     = false;
 			$activity_id  = - 1;
 			$redirect_url = '';
@@ -81,7 +116,6 @@ class RTMediaUploadEndpoint {
 				// if media is add in from the comment media section.
 				if ( isset( $this->upload['comment_media_activity_id'] ) && ! empty( $this->upload['comment_media_activity_id'] ) ) {
 					// if group is public, then set media privacy as 0.
-					global $rtmedia;
 					$privacy = '0';
 
 					if ( isset( $rtmedia->options['privacy_enabled'] ) && isset( $rtmedia->options['privacy_default'] ) ) {

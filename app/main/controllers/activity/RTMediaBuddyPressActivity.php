@@ -40,7 +40,7 @@ class RTMediaBuddyPressActivity {
 		add_action( 'bp_activity_delete_comment', array( $this, 'delete_comment_sync' ), 10, 2 );
 		add_filter( 'bp_activity_allowed_tags', array( &$this, 'override_allowed_tags' ) );
 		add_filter( 'bp_get_activity_parent_content', array( &$this, 'bp_get_activity_parent_content' ) );
-		add_filter( 'bp_activity_content_before_save', array( $this, 'bp_activity_content_before_save' ) );
+		add_filter( 'bp_activity_content_before_save', array( $this, 'bp_activity_content_before_save' ), 10, 2 );
 		add_filter( 'bp_activity_type_before_save', array( $this, 'bp_activity_type_before_save' ) );
 		add_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
 
@@ -437,11 +437,34 @@ class RTMediaBuddyPressActivity {
 	/**
 	 * This function will check for the media file attached to the activity and accordingly will set content.
 	 *
-	 * @param string $content Content of the Activity.
+	 * @param string $content   Content of the Activity.
+	 * @param object $class_obj BP_Activity_Activity class object.
 	 *
 	 * @return string Filtered value of the activity content.
 	 */
-	public function bp_activity_content_before_save( $content ) {
+	public function bp_activity_content_before_save( $content, $class_obj ) {
+		global $rtmedia;
+
+		// When activity upload terms are enabled on activity page, we check whether someone has removed the html element or not.
+		if ( ! empty( $rtmedia->options['activity_enable_upload_terms'] ) ) {
+			$term = wp_unslash( filter_input( INPUT_POST, 'rtmedia_upload_terms_conditions', FILTER_SANITIZE_STRING ) );
+			if ( empty( $term ) ) {
+
+				// We set error object in buddypress, so it'll show error on activity page.
+				if ( isset( $class_obj->errors ) && is_wp_error( $class_obj->errors ) ) {
+					$class_obj->errors->add( 101, esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
+				} elseif ( isset( $class_obj->component ) ) {
+					// If error object is not found, we set component to null so it'll show error.
+					$class_obj->component = null;
+				}
+
+				if ( isset( $class_obj->error_type ) ) {
+					$class_obj->error_type = 'wp_error';
+				}
+
+				return '';
+			}
+		}
 
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
