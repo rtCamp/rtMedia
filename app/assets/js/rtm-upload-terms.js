@@ -110,7 +110,6 @@ if ( 'object' === typeof rtMediaHook ) {
 
         if ( 0 === terms.length ) {
             rtp_display_terms_warning( parent, rtmedia_upload_terms_data.message );
-
             return false;
         }
 
@@ -119,7 +118,6 @@ if ( 'object' === typeof rtMediaHook ) {
             return true;
         } else {
             rtp_display_terms_warning( parent, rtmedia_upload_terms_data.message );
-
             return false;
         }
 
