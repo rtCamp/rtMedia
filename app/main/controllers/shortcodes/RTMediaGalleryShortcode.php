@@ -64,6 +64,8 @@ class RTMediaGalleryShortcode {
 			array(
 				'plupload-all',
 				'backbone',
+				// Whole rtmedia-backbone file is dependent on rtmedia-main  file (eg. rtMediaHook).
+				'rtmedia-main'
 			),
 			RTMEDIA_VERSION,
 			true
