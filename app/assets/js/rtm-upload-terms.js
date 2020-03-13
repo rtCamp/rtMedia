@@ -76,26 +76,51 @@ if ( 'object' === typeof rtMediaHook ) {
             return args;
         }
 
+        var parent = false;
+        var isTermsEnabled = false;
+
+        var terms = $( '#rtmedia_upload_terms_conditions' );
         if ( 'uploader' === args.src ) {
-            if ( 'false' === rtmedia_upload_terms_data.uploader_terms_enabled ) {
-                return true;
-            }
 
-            var terms = $( '#rtmedia_upload_terms_conditions' );
             if ( terms.length === 0 ) {
-                rtp_display_terms_warning( $( '#drag-drop-area' ), rtmedia_upload_terms_data.message );
-
-                return false;
-            }
-
-            rtmediaTermsConditionsElement = terms;
-            if ( terms.prop( 'checked' ) ) {
-                return true;
+                parent = $( '#drag-drop-area' );
             } else {
-                rtp_display_terms_warning( terms.parent( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
-
-                return false;
+                parent = terms.parent( '.rtmedia-upload-terms' );
             }
+
+            if ( 'true' === rtmedia_upload_terms_data.uploader_terms_enabled ) {
+                isTermsEnabled = true;
+            }
+        } else if ( 'activity' === args.src ) {
+
+            if ( terms.length === 0 ) {
+                parent = $( '#whats-new-options' );
+            } else {
+                parent = terms.parent( '.rtmedia-upload-terms' );
+            }
+
+            if ( 'true' === rtmedia_upload_terms_data.activity_terms_enabled ) {
+                isTermsEnabled = true;
+            }
+        }
+
+        if ( ! isTermsEnabled ) {
+            return args;
+        }
+
+        if ( terms.length === 0 ) {
+            rtp_display_terms_warning( parent, rtmedia_upload_terms_data.message );
+
+            return false;
+        }
+
+        rtmediaTermsConditionsElement = terms;
+        if ( terms.prop( 'checked' ) ) {
+            return true;
+        } else {
+            rtp_display_terms_warning( parent, rtmedia_upload_terms_data.message );
+
+            return false;
         }
 
     } );
