@@ -82,7 +82,7 @@ if ( 'object' === typeof rtMediaHook ) {
         var terms = $( '#rtmedia_upload_terms_conditions' );
         if ( 'uploader' === args.src ) {
 
-            if ( terms.length === 0 ) {
+            if ( 0 === terms.length ) {
                 parent = $( '#drag-drop-area' );
             } else {
                 parent = terms.parent( '.rtmedia-upload-terms' );
@@ -93,7 +93,7 @@ if ( 'object' === typeof rtMediaHook ) {
             }
         } else if ( 'activity' === args.src ) {
 
-            if ( terms.length === 0 ) {
+            if ( 0 === terms.length ) {
                 parent = $( '#whats-new-options' );
             } else {
                 parent = terms.parent( '.rtmedia-upload-terms' );
@@ -108,7 +108,7 @@ if ( 'object' === typeof rtMediaHook ) {
             return args;
         }
 
-        if ( terms.length === 0 ) {
+        if ( 0 === terms.length ) {
             rtp_display_terms_warning( parent, rtmedia_upload_terms_data.message );
 
             return false;
