@@ -12,9 +12,7 @@ if ( 'object' === typeof rtMediaHook ) {
      * Check terms condition checkbox before uploading files.
      */
     rtMediaHook.register( 'rtmedia_js_before_upload', function ( args ) {
-
         if ( false === args || 'undefined' === typeof args.uploader.settings.multipart_params || 'undefined' === typeof args.src ) {
-
             return args;
         }
 
@@ -68,9 +66,7 @@ if ( 'object' === typeof rtMediaHook ) {
      * Show warning if unchecked else proceed.
      */
     rtMediaHook.register( 'rtmedia_js_upload_file', function ( args ) {
-
         if ( false === args || 'undefined' === typeof args.src ) {
-
             return args;
         }
 
