@@ -10,6 +10,9 @@ if ( 'object' === typeof rtMediaHook ) {
 
     /**
      * Check terms condition checkbox before uploading files.
+     * 
+     * @param {object/boolean} args Arguments passed when calling this hook.
+     * @return {boolean}
      */
     rtMediaHook.register( 'rtmedia_js_before_upload', function ( args ) {
         if ( false === args || 'undefined' === typeof args.uploader.settings.multipart_params || 'undefined' === typeof args.src ) {
@@ -64,6 +67,9 @@ if ( 'object' === typeof rtMediaHook ) {
     /**
      * Check for the terms checkbox to be checked before the media is uploaded.
      * Show warning if unchecked else proceed.
+     
+     * @param {object/boolean} args Arguments passed when calling this hook.
+     * @return {boolean}
      */
     rtMediaHook.register( 'rtmedia_js_upload_file', function ( args ) {
         if ( false === args || 'undefined' === typeof args.src ) {
