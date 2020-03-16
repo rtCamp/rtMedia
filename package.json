@@ -1,6 +1,9 @@
 {
   "name": "rtMedia",
-  "dependencies": {},
+  "dependencies": {
+    "acorn": "^7.1.1",
+    "minimist": "^1.2.5"
+  },
   "devDependencies": {
     "grunt": "^1.0.4",
     "grunt-autoprefixer": "^3.0.4",
