@@ -232,9 +232,9 @@ jQuery( document ).ready( function () {
         if ( 'undefined' !== typeof rtmedia_direct_upload_enabled && '1' === rtmedia_direct_upload_enabled ) {
             var whats_new_submit = jQuery( '#aw-whats-new-submit' );
 
-            if ( 1 === whats_new_submit.length ) {
+            if ( whats_new_submit.length ) {
 
-                if ( '' !== jQuery( '#whats-new' ).val().trim() || 1 === jQuery( '#rtmedia_uploader_filelist' ).children( 'li' ).length ) {
+                if ( '' !== jQuery( '#whats-new' ).val().trim() || jQuery( '#rtmedia_uploader_filelist' ).children( 'li' ).length ) {
                     whats_new_submit.trigger( 'click' );
                 }
 
