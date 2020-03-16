@@ -1,9 +1,6 @@
 {
   "name": "rtMedia",
-  "dependencies": {
-    "acorn": "^7.1.1",
-    "minimist": "^1.2.5"
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": "^1.0.4",
     "grunt-autoprefixer": "^3.0.4",
@@ -13,6 +10,8 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-wp-i18n": "^1.0.3",
     "load-grunt-tasks": "^5.0.0",
-    "diff": ">=3.5.0"
+    "diff": ">=3.5.0",
+    "acorn": "^7.1.1",
+    "minimist": "^1.2.5"
   }
 }
