@@ -744,7 +744,7 @@ jQuery( function( $ ) {
 				rtMediaHook.call( 'rtmedia_js_after_files_added', [ up, files ] );
 
 				if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-					var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+					var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', { src: 'uploader' } );
 					if ( allow_upload == false ) {
 						return false;
 					}
@@ -1321,7 +1321,7 @@ jQuery( document ).ready( function( $ ) {
 					}
 				}
 				//Call upload event direct when direct upload is enabled (removed UPLOAD button and its triggered event)
-				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', { src: 'activity' } );
 
 				if ( allow_upload == false ) {
 					return false;
