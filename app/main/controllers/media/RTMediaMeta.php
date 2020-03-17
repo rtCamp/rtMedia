@@ -135,7 +135,7 @@ class RTMediaMeta {
 				)
 			);
 		} else {
-			if ( $this->get_single_meta( $id, $key ) ) {
+			if ( false !== $this->get_single_meta( $id, $key ) ) {
 				$meta       = array( 'meta_value' => $value );
 				$where      = array(
 					'media_id' => $id,
