@@ -143,7 +143,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args arguments to show radio buttons.
+	 * @param array $args Arguments to show radio buttons.
 	 *
 	 * @return void
 	 */
@@ -170,7 +170,7 @@ class RTMediaFormHandler {
 		foreach ( $args['radios'] as $value => $key ) {
 			$args['rtForm_options'][] = array(
 				$key      => $value,
-				'checked' => ( $args['default'] === $value ) ? true : false,
+				'checked' => ( (int) $args['default'] === $value ) ? true : false,
 			);
 		}
 
