@@ -143,7 +143,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 *
-	 * @param  array $args Arguments to show radio buttons.
+	 * @param array $args Arguments to show radio buttons.
 	 *
 	 * @return void
 	 */
