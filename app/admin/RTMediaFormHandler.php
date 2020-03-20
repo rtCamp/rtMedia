@@ -170,7 +170,7 @@ class RTMediaFormHandler {
 		foreach ( $args['radios'] as $value => $key ) {
 			$args['rtForm_options'][] = array(
 				$key      => $value,
-				'checked' => ( (int) $args['default'] === $value ) ? true : false,
+				'checked' => ( $args['default'] == $value ) ? true : false, // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison The == error ignored as the privacy levels indexes are integer, and while saving in database, the saved value becomes string.
 			);
 		}
 
