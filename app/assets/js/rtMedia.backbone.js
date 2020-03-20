@@ -744,7 +744,7 @@ jQuery( function( $ ) {
 				rtMediaHook.call( 'rtmedia_js_after_files_added', [ up, files ] );
 
 				if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-					var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+					var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', { src: 'uploader' } );
 					if ( allow_upload == false ) {
 						return false;
 					}
@@ -796,7 +796,7 @@ jQuery( function( $ ) {
 				* To check if any media file is selected or not for uploading
 				*/
 				if ( jQuery( '#rtmedia_uploader_filelist' ).children( 'li' ).length > 0 ) {
-					var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+					var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', { src: 'uploader' } );
 
 					if ( allow_upload == false ) {
 						return false;
@@ -829,6 +829,9 @@ jQuery( function( $ ) {
 			} );
 
 			uploaderObj.uploader.bind( 'BeforeUpload', function( up, file ) {
+				// We send terms conditions data on backend to validate this on server side.
+				rtMediaHook.call( 'rtmedia_js_before_upload', { uploader: up, file: file, src: 'uploader' } );
+
 				up.settings.multipart_params.title = file.title.split( '.' )[ 0 ];
 
 				if ( typeof file.description != 'undefined' ) {
@@ -1318,7 +1321,7 @@ jQuery( document ).ready( function( $ ) {
 					}
 				}
 				//Call upload event direct when direct upload is enabled (removed UPLOAD button and its triggered event)
-				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', { src: 'activity' } );
 
 				if ( allow_upload == false ) {
 					return false;
@@ -1400,6 +1403,8 @@ jQuery( document ).ready( function( $ ) {
 		} );
 
 		objUploadView.uploader.bind( 'BeforeUpload', function( up, files ) {
+			// We send terms conditions data on backend to validate this on server side.
+			rtMediaHook.call( 'rtmedia_js_before_upload', { uploader: up, file: files, src: 'activity' } );
 
 			$.each( objUploadView.upload_remove_array, function( i, rfile ) {
 				if ( up.getFile( rfile ) ) {
@@ -1786,7 +1791,7 @@ jQuery( document ).ready( function( $ ) {
 	$( document ).on( 'click', '.rtmedia-like', function( e ) {
 		e.preventDefault();
 		var that = this;
-		var like_nonce = $( this ).siblings( '#rtm_media_like_nonce' ).val();
+		var like_nonce = $( '#rtm_media_like_nonce' ).val();
 		$( this ).attr( 'disabled', 'disabled' );
 		var url = $( this ).parent().attr( 'action' );
 		$( that ).prepend( '<img class=\'rtm-like-loading\' src=\'' + rMedia_loading_file + '\' style=\'width:10px\' />' );

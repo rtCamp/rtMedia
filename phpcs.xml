@@ -15,7 +15,7 @@
 	<config name="testVersion" value="5.3-"/>
 
 	<arg name="extensions" value="php"/>
-	<arg value="s"/>
+	<arg value="psvn"/>
 
 	<exclude-pattern>*/bin/*</exclude-pattern>
 	<exclude-pattern>*/lib/*</exclude-pattern>

@@ -1,20 +1,39 @@
 <?php
-
 /**
- * Description of RTMediaUploadShortcode
- *
- * rtMedia uploader shortcode
+ * Handles rtMedia uploader shortcode
  *
  * @author joshua
+ * @package rtMedia
+ */
+
+/**
+ * Handles rtMedia uploader shortcode
  */
 class RTMediaUploadShortcode {
 
-	static $add_sc_script = false;
-	var $deprecated = false;
-	static $uploader_displayed = false;
+	/**
+	 * Flag to add shortcode script.
+	 *
+	 * @var bool
+	 */
+	public static $add_sc_script = false;
 
 	/**
+	 * Add deprecated method.
 	 *
+	 * @var bool
+	 */
+	public $deprecated = false;
+
+	/**
+	 * Displayed uploader.
+	 *
+	 * @var bool
+	 */
+	public static $uploader_displayed = false;
+
+	/**
+	 * RTMediaUploadShortcode constructor.
 	 */
 	public function __construct() {
 
@@ -22,7 +41,7 @@ class RTMediaUploadShortcode {
 		$method_name = strtolower( str_replace( 'RTMedia', '', __CLASS__ ) );
 
 		if ( is_callable( "RTMediaDeprecated::{$method_name}", true, $callable_name ) ) {
-			$this->deprecated = RTMediaDeprecated::$method_name ();
+			$this->deprecated = RTMediaDeprecated::$method_name();
 		}
 	}
 
@@ -31,7 +50,7 @@ class RTMediaUploadShortcode {
 	 *
 	 * @return bool
 	 */
-	static function display_allowed() {
+	public static function display_allowed() {
 		global $rtmedia_query;
 		$media_enabled = ( is_rtmedia_upload_music_enabled() || is_rtmedia_upload_photo_enabled()
 			|| is_rtmedia_upload_video_enabled() || is_rtmedia_upload_document_enabled()
@@ -51,20 +70,24 @@ class RTMediaUploadShortcode {
 	/**
 	 * Render the uploader shortcode and attach the uploader panel
 	 *
-	 * @param mixed $attr
+	 * @param mixed $attr Attributes of shortcodes.
 	 *
 	 * @return string|void
 	 */
-	static function pre_render( $attr ) {
+	public static function pre_render( $attr ) {
 		if ( rtmedia_is_uploader_view_allowed( true, 'uploader_shortcode' ) ) {
+
 			global $post;
 			global $rtmedia_query;
+
 			if ( ! $rtmedia_query ) {
-				$rtmedia_query = new RTMediaQuery(); }
+				$rtmedia_query = new RTMediaQuery();
+			}
+
 			if ( ! isset( $attr['is_up_shortcode'] ) || false !== $attr['is_up_shortcode'] ) {
-				$rtmedia_query->is_upload_shortcode = true;// set is_upload_shortcode in rtmedia query as true
+				$rtmedia_query->is_upload_shortcode = true;// set is_upload_shortcode in rtmedia query as true.
 			} else {
-				$rtmedia_query->is_upload_shortcode = false;// set is_upload_shortcode in rtmedia query as true
+				$rtmedia_query->is_upload_shortcode = false;// set is_upload_shortcode in rtmedia query as true.
 			}
 
 			if ( isset( $attr['media_type'] ) ) {
@@ -99,7 +122,7 @@ class RTMediaUploadShortcode {
 				return ob_get_clean();
 			}
 		} else {
-			echo "<div class='rtmedia-upload-not-allowed'>" . wp_kses( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.','buddypress-media' ), 'uploader_shortcode' ), RTMediaUpload::$wp_kses_allowed_tags ) . '</div>';
+			echo "<div class='rtmedia-upload-not-allowed'>" . wp_kses( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ), 'uploader_shortcode' ), RTMediaUpload::$wp_kses_allowed_tags ) . '</div>';
 		}
 	}
 }
