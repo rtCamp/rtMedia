@@ -939,8 +939,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					)
 				);
 
-				wp_localize_script( 'rtmedia-admin', 'rtmedia_on_label', esc_html__( 'ON', 'buddypress-media' ) );
-				wp_localize_script( 'rtmedia-admin', 'rtmedia_off_label', esc_html__( 'OFF', 'buddypress-media' ) );
+				wp_localize_script( 'rtmedia-admin', 'rtmedia_on_label', __( 'ON', 'buddypress-media' ) );
+				wp_localize_script( 'rtmedia-admin', 'rtmedia_off_label', __( 'OFF', 'buddypress-media' ) );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_ajax', $admin_ajax );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_url', admin_url() );
 				/* path for file upload using ajax */
