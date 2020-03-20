@@ -170,7 +170,8 @@ class RTMediaFormHandler {
 		foreach ( $args['radios'] as $value => $key ) {
 			$args['rtForm_options'][] = array(
 				$key      => $value,
-				'checked' => ( (int) $args['default'] === $value ) ? true : false,
+				// The function 'strval()' is used to fix the privacy levels being integer to match the saved privacy value.
+				'checked' => ( strval( $args['default'] ) === strval( $value ) ) ? true : false,
 			);
 		}
 
