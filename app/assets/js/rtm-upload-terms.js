@@ -88,7 +88,7 @@ if ( 'object' === typeof rtMediaHook ) {
                 parent = terms.parent( '.rtmedia-upload-terms' );
             }
 
-            if ( 'true' === rtmedia_upload_terms_data.uploader_terms_enabled || ( 'undefined' !== typeof rtmedia_upload_terms_data && 'undefined' === typeof rtmedia_upload_terms_data.uploader_terms_enabled ) ) {
+            if ( ( 'undefined' !== typeof rtmedia_upload_terms_data && 'undefined' === typeof rtmedia_upload_terms_data.uploader_terms_enabled ) || 'true' === rtmedia_upload_terms_data.uploader_terms_enabled ) {
                 isTermsEnabled = true;
             }
         } else if ( 'activity' === args.src ) {
