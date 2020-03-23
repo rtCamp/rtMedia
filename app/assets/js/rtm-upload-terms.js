@@ -79,22 +79,22 @@ if ( 'object' === typeof rtMediaHook ) {
         var parent = false;
         var isTermsEnabled = false;
 
-        var terms = $( '#rtmedia_upload_terms_conditions' );
+        var terms = jQuery( '#rtmedia_upload_terms_conditions' );
         if ( 'uploader' === args.src ) {
 
             if ( 0 === terms.length ) {
-                parent = $( '#drag-drop-area' );
+                parent = jQuery( '#drag-drop-area' );
             } else {
                 parent = terms.parent( '.rtmedia-upload-terms' );
             }
 
-            if ( 'true' === rtmedia_upload_terms_data.uploader_terms_enabled ) {
+            if ( 'true' === rtmedia_upload_terms_data.uploader_terms_enabled || ( 'undefined' !== typeof rtmedia_upload_terms_data && 'undefined' === typeof rtmedia_upload_terms_data.uploader_terms_enabled ) ) {
                 isTermsEnabled = true;
             }
         } else if ( 'activity' === args.src ) {
 
             if ( 0 === terms.length ) {
-                parent = $( '#whats-new-options' );
+                parent = jQuery( '#whats-new-options' );
             } else {
                 parent = terms.parent( '.rtmedia-upload-terms' );
             }
