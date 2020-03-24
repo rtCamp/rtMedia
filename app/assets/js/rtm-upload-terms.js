@@ -220,10 +220,8 @@ jQuery( document ).ready( function () {
             return true;
         }
 
-        if ( 'post_update' === originalOptions.data.action ) {
-            if ( terms_conditions_checkbox.length ) {
-                options.data += '&rtmedia_upload_terms_conditions=' + terms_conditions_checkbox.prop( 'checked' );
-            }
+        if ( 'post_update' === originalOptions.data.action && terms_conditions_checkbox.length ) {
+            options.data += '&rtmedia_upload_terms_conditions=' + terms_conditions_checkbox.prop( 'checked' );
         }
 
         return true;
