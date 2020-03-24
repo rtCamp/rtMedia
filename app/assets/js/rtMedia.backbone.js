@@ -1567,6 +1567,12 @@ jQuery( document ).ready( function( $ ) {
 					if ( ! media_uploading && objUploadView.uploader.files.length > 0 ) {
 						$( '#whats-new-post-in' ).attr( 'disabled', 'disabled' );
 						$( '#rtmedia-add-media-button-post-update' ).attr( 'disabled', 'disabled' );
+
+						var terms_condition_cb = $( '#rtmedia_upload_terms_conditions' );
+						if ( terms_condition_cb.prop( 'checked' ) ) {
+							terms_condition_cb.prop( 'disabled', true );
+						}
+
 						objUploadView.uploadFiles();
 						media_uploading = true;
 						return false;
