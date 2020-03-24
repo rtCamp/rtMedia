@@ -209,6 +209,7 @@ if ( 'object' === typeof rtMediaHook ) {
 }
 
 jQuery( document ).ready( function () {
+    var terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
 
     /**
      * Fires before ajax request.
@@ -220,16 +221,15 @@ jQuery( document ).ready( function () {
         }
 
         if ( 'post_update' === originalOptions.data.action ) {
-            var terms = jQuery( '#rtmedia_upload_terms_conditions' );
-            if ( terms.length ) {
-                options.data += '&rtmedia_upload_terms_conditions=' + terms.prop( 'checked' );
+            if ( terms_conditions_checkbox.length ) {
+                options.data += '&rtmedia_upload_terms_conditions=' + terms_conditions_checkbox.prop( 'checked' );
             }
         }
 
         return true;
     } );
 
-    var terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
+
     terms_conditions_checkbox.on( 'click', function () {
 
         // Focus on `start upload` button.
