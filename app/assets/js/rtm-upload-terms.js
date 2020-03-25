@@ -164,6 +164,8 @@ if ( 'object' === typeof rtMediaHook ) {
                 }
 
                 return false;
+            } else {
+                terms_conditions_checkbox.prop( 'disabled', true );
             }
         } else {
             rtp_display_terms_warning( form.find( '#whats-new-options' ), rtmedia_upload_terms_data.message );
@@ -199,7 +201,7 @@ if ( 'object' === typeof rtMediaHook ) {
      */
     rtMediaHook.register( 'rtmedia_js_after_activity_added', function () {
 
-        jQuery( '#rtmedia_upload_terms_conditions' ).prop( 'checked', false );
+        jQuery( '#rtmedia_upload_terms_conditions' ).removeAttr( 'checked' ).removeAttr( 'disabled' );
 
         return true;
 
@@ -207,8 +209,25 @@ if ( 'object' === typeof rtMediaHook ) {
 }
 
 jQuery( document ).ready( function () {
-
     var terms_conditions_checkbox = jQuery( '#rtmedia_upload_terms_conditions' );
+
+    /**
+     * Fires before ajax request.
+     * Send terms condition checkbox status on backend to validate it on server side.
+     */
+    jQuery.ajaxPrefilter( function ( options, originalOptions, jqXHR ) {
+        if ( 'undefined' === typeof options || 'undefined' === typeof options.data || 'undefined' === typeof originalOptions || 'undefined' === typeof originalOptions.data ) {
+            return true;
+        }
+
+        if ( 'post_update' === originalOptions.data.action && terms_conditions_checkbox.length ) {
+            options.data += '&rtmedia_upload_terms_conditions=' + terms_conditions_checkbox.prop( 'checked' );
+        }
+
+        return true;
+    } );
+
+
     terms_conditions_checkbox.on( 'click', function () {
 
         // Focus on `start upload` button.
