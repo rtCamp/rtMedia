@@ -234,7 +234,6 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				$http_referer = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
 				if ( isset( $http_referer ) ) {
 					wp_safe_redirect( $http_referer . $settings_saved );
-					exit();
 				}
 				global $rtmedia;
 				$rtmedia->options = $options;
