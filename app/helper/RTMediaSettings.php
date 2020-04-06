@@ -233,6 +233,11 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 				$http_referer = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
 				if ( isset( $http_referer ) ) {
+					/**
+					 * We're not adding exit() here because the functionality is breaking.
+					 * I tried moving this code at the end of the function but it's still not working,
+					 * maybe there is another function/code which is being executed after this function.
+					 */
 					wp_safe_redirect( $http_referer . $settings_saved );
 				}
 				global $rtmedia;
