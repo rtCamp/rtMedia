@@ -310,7 +310,6 @@ if ( ! $rt_ajax_request ) {
 } else { // If ajax/iframe request, just load images.
 	rtmedia_load_template();
 }
-
 // close all markup.
 ?>
 </div><!--#buddypress-->
