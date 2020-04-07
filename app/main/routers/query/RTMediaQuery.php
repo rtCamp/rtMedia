@@ -173,7 +173,7 @@ class RTMediaQuery {
 		if ( ! isset( $this->query['media_type'] ) ) {
 			if ( isset( $this->action_query->id ) ) {
 				$media = $this->model->get( array( 'id' => $this->action_query->id ) );
-				if ( count( $media ) > 0 ) {
+				if ( is_array( $media ) && count( $media ) > 0 ) {
 					$media_type                = $media[0]->media_type;
 					$this->query['media_type'] = $media_type;
 				}
