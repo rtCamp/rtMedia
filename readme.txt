@@ -134,7 +134,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.6.1 [April 8, 2020] =
+= 4.6.1 [April 9, 2020] =
 
 * Enhancement
 
