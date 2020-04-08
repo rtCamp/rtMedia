@@ -147,6 +147,19 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.1 [April 8, 2020] ###
+
+* Enhancement
+	* Disable the terms of service checkbox when the activity is published
+
+* FIXED
+	* Different language characters not showing up properly on rtMedia pages
+	* HTML warnings of rtMedia contents
+	* Nouveau template tab count bug
+	* Added server side validation for terms of service
+	* Terms of service checkbox conflicting with rtMedia Sidebar Widgets addon
+	* PHPCS errors and warnings
+
 ### 4.6.0 [February 17, 2020] ###
 
 * Enhancement
@@ -1662,8 +1675,8 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.6.0 ####
-rtMedia 4.6.0, with improved activity content preview and JavaScript and Nouveau template related fixes.
+#### 4.6.1 ####
+rtMedia 4.6.1 with added server side validation for terms of services checkbox, minor bug fixes along with warnings and PHPCS fixes
 
 ## Sponsors ##
 

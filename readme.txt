@@ -4,8 +4,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 5.3.2
-Stable tag: 4.6.0
+Tested up to: 5.4
+Stable tag: 4.6.1
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -133,6 +133,21 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.6.1 [April 8, 2020] =
+
+* Enhancement
+
+ * Disable the terms of service checkbox when the activity is published
+
+* FIXED
+
+ * Different language characters not showing up properly on rtMedia pages
+ * HTML warnings of rtMedia contents
+ * Nouveau template tab count bug
+ * Added server side validation for terms of service
+ * Terms of service checkbox conflicting with rtMedia Sidebar Widgets addon
+ * PHPCS errors and warnings
 
 = 4.6.0 [February 17, 2020] =
 
@@ -1658,8 +1673,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.6.0 =
-rtMedia 4.6.0, with improved activity content preview and JavaScript and Nouveau template related fixes.
+= 4.6.1 =
+rtMedia 4.6.1 with added server side validation for terms of services checkbox, minor bug fixes along with warnings and PHPCS fixes
 
 == Sponsors ==
 
