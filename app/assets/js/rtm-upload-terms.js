@@ -15,8 +15,12 @@ if ( 'object' === typeof rtMediaHook ) {
      * @return {boolean}
      */
     rtMediaHook.register( 'rtmedia_js_before_upload', function ( args ) {
-        if ( false === args || 'undefined' === typeof args.uploader.settings.multipart_params || 'undefined' === typeof args.src ) {
+        if ( ! args ) {
             return args;
+        }
+
+        if ( 'undefined' === typeof args.uploader || 'undefined' === typeof args.uploader.settings || 'undefined' === typeof args.uploader.settings.multipart_params || 'undefined' === typeof args.src ) {
+            return ( 'boolean' === typeof args ? args : true );
         }
 
         var multipart_params = args.uploader.settings.multipart_params;
@@ -72,7 +76,7 @@ if ( 'object' === typeof rtMediaHook ) {
      * @return {boolean}
      */
     rtMediaHook.register( 'rtmedia_js_upload_file', function ( args ) {
-        if ( false === args ) {
+        if ( ! args ) {
             return args;
         }
 
@@ -120,7 +124,7 @@ if ( 'object' === typeof rtMediaHook ) {
         }
 
         if ( ! isTermsEnabled ) {
-            return args;
+            return ( 'boolean' === typeof args ? args : true );
         }
 
         if ( 0 === terms.length ) {
