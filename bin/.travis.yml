@@ -1,6 +1,7 @@
 dist: xenial
 language: php
-sudo: required
+sudo: false
+os: linux
 php:
   - 7.2
 branches:
