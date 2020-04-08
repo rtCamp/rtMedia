@@ -1,6 +1,5 @@
 dist: xenial
 language: php
-sudo: false
 os: linux
 php:
   - 7.2
