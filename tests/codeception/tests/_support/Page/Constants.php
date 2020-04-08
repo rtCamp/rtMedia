@@ -15,7 +15,8 @@ class Constants {
 
 	// Constant Values
 	public static $commentStr = 'Test comment';
-	public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
+	// public static $customCssValue = '#buddypress #whats-new { height: 500px !important; overflow: hidden;}';
+	public static $customCssValue = '.rtm-media-options  { color: #228B22; };';
 	public static $customCssEmptyValue = '';
 	public static $numOfMediaPerPage = '2';
 	public static $numOfMediaPerPageOnActivity = '4';

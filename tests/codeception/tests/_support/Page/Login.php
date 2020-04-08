@@ -18,7 +18,7 @@ class Login {
 		$I = $this->tester;
 
 		$I->amOnPage( '/wp-admin' );
-		$I->wait(5);
+		// $I->wait(5);
 
 		// Will load the session saved in saveSessionSnapshot().
 		if ( $I->loadSessionSnapshot( 'login' ) ) {
@@ -38,9 +38,6 @@ class Login {
 		$I->fillField( ConstantsPage::$wpPasswordField, new PasswordArgument(ConstantsPage::$password));
 
 		$I->click( ConstantsPage::$wpSubmitButton );
-		// $I->wait(5);
-		// // $I->waitForElement( ConstantsPage::$wpDashboard, 20 );
-		// $I->waitForElement( ConstantsPage::$dashBoardMenu, 20 );
 
 		// Will Save the Session
 		if ( $saveSession ) {
@@ -50,8 +47,8 @@ class Login {
 			echo nl2br( "Session Not Saved! \n" );
 		}
 
-		$I->reloadPage();
-		// $I->maximizeWindow();
+		// $I->reloadPage();
+		$I->maximizeWindow();
 	}
 
 }

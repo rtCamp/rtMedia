@@ -1,35 +1,108 @@
 <?php
-
 /**
- * Description of rt_plugin_info
+ * Class to store rtMedia plugin info.
+ *
+ * @package    rtMedia
  *
  * @author udit
  */
 
 if ( ! class_exists( 'rt_plugin_info' ) ) {
-	class rt_plugin_info {
+	/**
+	 * Class to store rtMedia plugin info.
+	 */
+	class rt_plugin_info { // phpcs:ignore PEAR.NamingConventions.ValidClassName, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
 
-		//put your code here
+		/**
+		 * Plugin path.
+		 *
+		 * @var string $plugin_path
+		 */
 		public $plugin_path;
-		public $name; //'Name' - Name of the plugin, must be unique.
-		public $title; //'Title' - Title of the plugin and the link to the plugin's web site.
-		public $desctipriton; //'Description' - Description of what the plugin does and/or notes from the author.
-		public $authro; //'Author' - The author's name
-		public $authoruri; //'AuthorURI' - The authors web site address.
-		public $version; //'Version' - The plugin version number.
-		public $pluginuri; //'PluginURI' - Plugin web site address.
-		public $textdomain; //'TextDomain' - Plugin's text domain for localization.
-		public $domain_path; //'DomainPath' - Plugin's relative directory path to .mo files.
-		public $network; //'Network' - Boolean. Whether the plugin can only be activated network wide.
+
+		/**
+		 * 'Name' - Name of the plugin, must be unique.
+		 *
+		 * @var string $name
+		 */
+		public $name;
+
+		/**
+		 * 'Title' - Title of the plugin and the link to the plugin's web site.
+		 *
+		 * @var string $title
+		 */
+		public $title;
+
+		/**
+		 * 'Description' - Description of what the plugin does and/or notes from the author.
+		 *
+		 * @var string $desctipriton
+		 */
+		public $desctipriton; // TODO : Correct spelling error.
+
+		/**
+		 * 'Author' - The author's name
+		 *
+		 * @var $author
+		 */
+		public $author;
+
+		/**
+		 * 'AuthorURI' - The authors web site address.
+		 *
+		 * @var string $authoruri
+		 */
+		public $authoruri;
+
+		/**
+		 * 'Version' - The plugin version number.
+		 *
+		 * @var $version
+		 */
+		public $version;
+
+		/**
+		 * 'PluginURI' - Plugin web site address.
+		 *
+		 * @var string $pluginuri
+		 */
+		public $pluginuri;
+
+		/**
+		 * 'TextDomain' - Plugin's text domain for localization.
+		 *
+		 * @var string $textdomain
+		 */
+		public $textdomain;
+
+		/**
+		 * 'DomainPath' - Plugin's relative directory path to .mo files.
+		 *
+		 * @var string $domain_path
+		 */
+		public $domain_path;
+
+		/**
+		 * 'Network' - Whether the plugin can only be activated network wide.
+		 *
+		 * @var bool $network
+		 */
+		public $network;
+
+		/**
+		 * Plugin data.
+		 *
+		 * @var $plugin_data
+		 */
 		public $plugin_data;
 
 		/**
-		 * __construct.
+		 * Constructor for rt_plugin_info.
 		 *
 		 * @access public
 		 *
-		 * @param  void
-		 *
+		 * @param string $path Path.
 		 */
 		public function __construct( $path = null ) {
 			$this->set_current_plugin_path( $path );
@@ -37,27 +110,22 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		}
 
 		/**
-		 * get_plugin_data.
+		 * Function to get plugin data.
 		 *
 		 * @access public
-		 *
-		 * @param  void
 		 *
 		 * @return array
 		 */
 		public function get_plugin_data() {
-			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-			return @get_plugin_data( $this->plugin_path );
+			return @get_plugin_data( $this->plugin_path ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 		}
 
 		/**
-		 * set_plugin_data.
+		 * Set plugin data.
 		 *
 		 * @access public
-		 *
-		 * @param  void
-		 *
 		 */
 		public function set_plugin_data() {
 			$this->plugin_data  = $this->get_plugin_data();
@@ -74,12 +142,11 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		}
 
 		/**
-		 * set_current_plugin_path.
+		 * Set current plugin path.
 		 *
 		 * @access public
 		 *
-		 * @param  string $path
-		 *
+		 * @param string $path Path.
 		 */
 		public function set_current_plugin_path( $path ) {
 			if ( null !== $path ) {
