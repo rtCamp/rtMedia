@@ -54,8 +54,8 @@ before_script:
   - unzip BrowserStackLocal-linux-x64.zip
   - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
   - cd $PLUGIN_DIR/tests/codeception/
-  - composer update
-  # - composer install
+  # - composer update
+  - composer install
   - export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
     ## PHP_CodeSniffer
   - git clone https://github.com/squizlabs/PHP_CodeSniffer.git
