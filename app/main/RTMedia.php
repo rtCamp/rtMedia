@@ -1322,6 +1322,7 @@ class RTMedia {
 		wp_localize_script( 'rtmedia-magnific', 'rtmedia_load_more', __( 'Loading media', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_activity_msg', __( 'Please enter some content to post.', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_comment_msg', __( 'Empty comment is not allowed.', 'buddypress-media' ) );
+		wp_localize_script( 'rtmedia-main', 'rtmedia_media_delete_confirmation', __( 'Are you sure you want to delete this media?', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_comment_delete_confirmation', __( 'Are you sure you want to delete this comment?', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_album_delete_confirmation', __( 'Are you sure you want to delete this Album?', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_drop_media_msg', __( 'Drop files here', 'buddypress-media' ) );
