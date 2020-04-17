@@ -2,7 +2,7 @@ dist: xenial
 language: php
 os: linux
 php:
-  - 7.2
+  - 7.4
 branches:
   only:
     - develop
