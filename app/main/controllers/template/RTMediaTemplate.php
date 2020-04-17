@@ -459,12 +459,33 @@ class RTMediaTemplate {
 
 	/**
 	 * Show error message for media update error.
+	 *
+	 * @return void
 	 */
 	public function media_update_success_error() {
-		$message = apply_filters( 'rtmedia_update_media_message', esc_html__( 'Error in updating Media', 'buddypress-media' ), true );
-		$html    = "<div class='rtmedia-error  media-edit-messge'>" . esc_html( $message ) . '</div>';
+		/**
+		 * To filter error message on media update.
+		 *
+		 * @param string $message Raw error message.
+		 * @param bool   $bool
+		 *
+		 * @return string Raw error message.
+		 */
+		$message = apply_filters( 'rtmedia_update_media_message', __( 'Error in updating Media', 'buddypress-media' ), true );
+		$html    = sprintf( '<div class="rtmedia-warning media-edit-messge">%s</div>', esc_html( $message ) );
 
-		echo wp_kses( apply_filters( 'rtmedia_update_media_message_html', $html, $message, true ), RTMedia::expanded_allowed_tags() );
+		/**
+		 * To filter error message HTML on media update.
+		 *
+		 * @param string $html    HTML of error message.
+		 * @param string $message Raw error message.
+		 * @param bool   $bool
+		 *
+		 * @return string HTML of error message.
+		 */
+		$html = apply_filters( 'rtmedia_update_media_message_html', $html, $message, true );
+
+		echo wp_kses( $html, RTMedia::expanded_allowed_tags() );
 	}
 
 	/**
