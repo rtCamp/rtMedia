@@ -242,7 +242,7 @@ class RTMediaRouter {
 						break;
 					}
 				}
-			} elseif ( ! empty( $rtmedia_query->media[0] ) ) {
+			} elseif ( ! empty( $rtmedia_query->media[0] ) && isset( $rtmedia_query->media[0]->media_id ) ) {
 				$wp_query->post = get_post( $rtmedia_query->media[0]->media_id );
 			}
 
