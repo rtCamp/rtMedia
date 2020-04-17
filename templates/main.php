@@ -26,7 +26,7 @@ $bp_template = get_option( '_bp_theme_package_id' );
 
 $class = '';
 // Getting extran classes for #buddypress when Nouveau is active.
-if ( 'nouveau' === $bp_template && ! $rt_ajax_request ) {
+if ( 'nouveau' === $bp_template && ! $rt_ajax_request && function_exists( 'bp_nouveau_get_container_classes' ) ) {
 	$class = bp_nouveau_get_container_classes();
 }
 ?>
