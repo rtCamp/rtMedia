@@ -165,6 +165,36 @@ if ( ! $rt_ajax_request ) {
 					endwhile;
 				}
 			}
+		} else { // if BuddyPress.
+			?>
+			<div id="item-body">
+			<?php
+		}
+
+		rtmedia_load_template();
+
+		if ( ! $rt_ajax_request ) {
+			if ( function_exists( 'bp_displayed_user_id' ) && 'buddypress' === $template_type && ( bp_displayed_user_id() || bp_is_group() ) ) {
+				if ( bp_is_group() ) {
+					do_action( 'bp_after_group_media' );
+					do_action( 'bp_after_group_body' );
+				}
+				if ( bp_displayed_user_id() ) {
+					do_action( 'bp_after_member_media' );
+					do_action( 'bp_after_member_body' );
+				}
+			}
+			?>
+			</div><!--#item-body-->
+			<?php
+			if ( function_exists( 'bp_displayed_user_id' ) && 'buddypress' === $template_type && ( bp_displayed_user_id() || bp_is_group() ) ) {
+				if ( bp_is_group() ) {
+					do_action( 'bp_after_group_home_content' );
+				}
+				if ( bp_displayed_user_id() ) {
+					do_action( 'bp_after_member_home_content' );
+				}
+			}
 		}
 	} else { // When Legacy is active.
 		if ( 'buddypress' === $template_type ) {
@@ -277,7 +307,7 @@ if ( ! $rt_ajax_request ) {
 			}
 		} else { // if BuddyPress.
 			?>
-		<div id="item-body">
+			<div id="item-body">
 			<?php
 		}
 
