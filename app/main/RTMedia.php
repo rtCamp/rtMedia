@@ -1859,7 +1859,7 @@ function parentlink_global_album( $id ) {
 	$parent_link   = '';
 
 	if ( is_array( $global_albums ) && '' !== $global_albums ) {
-		if ( in_array( $id, $global_albums, true ) && function_exists( 'bp_displayed_user_id' ) ) {
+		if ( in_array( $id, $global_albums, false ) && function_exists( 'bp_displayed_user_id' ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.FoundNonStrictFalse -- This option sometimes comes from buddypress or normal options, so can't be sure.
 			$disp_user = bp_displayed_user_id();
 			$curr_user = get_current_user_id();
 			if ( $disp_user === $curr_user ) {
