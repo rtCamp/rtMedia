@@ -1555,6 +1555,15 @@ class RTMedia {
 		if ( empty( $is_buddypress_activate ) ) {
 			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
 		}
+
+		$options = $rtmedia->options;
+		// Previously done with rtmedia_custom_css() method on wp_head hook.
+		if ( ! empty( $options['styles_custom'] ) ) {
+			wp_register_style( 'rtmedia-custom-css', false );
+			wp_enqueue_style( 'rtmedia-custom-css' );
+			$css = stripslashes( wp_filter_nohtml_kses( $options['styles_custom'] ) );
+			wp_add_inline_style( 'rtmedia-custom-css', $css );
+		}
 	}
 
 	/**
