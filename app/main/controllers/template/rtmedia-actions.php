@@ -395,6 +395,31 @@ function rtmedia_content_before_media() {
 add_action( 'rtmedia_before_media', 'rtmedia_content_before_media', 10 );
 
 /**
+ * Rendering custom CSS.
+ *
+ * @global RTMedia $rtmedia
+ *
+ * @return void
+ */
+function rtmedia_custom_css() {
+
+	global $rtmedia;
+
+	$options = $rtmedia->options;
+
+	if ( ! empty( $options['styles_custom'] ) ) {
+		?>
+		<style type='text/css'>
+			<?php stripslashes( wp_filter_nohtml_kses( $options['styles_custom'] ) ); ?>
+		</style>
+		<?php
+	}
+
+}
+
+add_action( 'wp_head', 'rtmedia_custom_css' );
+
+/**
  * Update the group media privacy according to the group privacy settings when group settings are changed
  *
  * @param int $group_id Buddypress Group id.
