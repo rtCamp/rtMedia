@@ -1730,6 +1730,13 @@ class RTMedia {
 	public static function expanded_allowed_tags() {
 		$new_allowed = wp_kses_allowed_html( 'post' );
 
+		// Iframe.
+		$new_allowed['iframe'] = array(
+			'src'   => array(),
+			'class' => array(),
+			'id'    => array(),
+		);
+
 		// form input.
 		$new_allowed['form'] = array(
 			'action' => array(),
