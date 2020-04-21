@@ -167,28 +167,28 @@ if ( ! $rt_ajax_request ) {
 			}
 		} else { // if BuddyPress.
 			echo '<div id="item-body">';
-		}
 
-		rtmedia_load_template();
+			rtmedia_load_template();
 
-		if ( ! $rt_ajax_request ) {
-			if ( 'buddypress' === $template_type ) {
-				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
-					do_action( 'bp_after_group_media' );
-					do_action( 'bp_after_group_body' );
+			if ( ! $rt_ajax_request ) {
+				if ( 'buddypress' === $template_type ) {
+					if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+						do_action( 'bp_after_group_media' );
+						do_action( 'bp_after_group_body' );
+					}
+					if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
+						do_action( 'bp_after_member_media' );
+						do_action( 'bp_after_member_body' );
+					}
 				}
-				if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
-					do_action( 'bp_after_member_media' );
-					do_action( 'bp_after_member_body' );
-				}
-			}
-			echo '</div><!--#item-body-->';
-			if ( 'buddypress' === $template_type ) {
-				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
-					do_action( 'bp_after_group_home_content' );
-				}
-				if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
-					do_action( 'bp_after_member_home_content' );
+				echo '</div><!--#item-body-->';
+				if ( 'buddypress' === $template_type ) {
+					if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+						do_action( 'bp_after_group_home_content' );
+					}
+					if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
+						do_action( 'bp_after_member_home_content' );
+					}
 				}
 			}
 		}
