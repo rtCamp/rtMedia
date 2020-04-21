@@ -1350,7 +1350,7 @@ function rtmedia_comments( $echo = true ) {
 	}
 
 	if ( $html ) {
-		echo wp_kses( $html, RTMedia::expanded_allowed_tags() );
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains data-* attributes.
 	} else {
 		return $html;
 	}
