@@ -466,8 +466,10 @@ class RTMediaPrivacy {
 		$default_privacy = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING ) );
 		$nonce           = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING ) );
 
-		if ( ! empty( $default_privacy ) || 0 === intval( $default_privacy ) ) {
-
+		// Old condition won't work as we've added sanitize_text_field for $default_privacy.
+		// We can't perform empty as 0 could be the possible value, so we check for empty string instead.
+		// Condition intval( $default_privacy ) will always 0 which shouldn't happen.
+		if ( 0 !== strlen( strval( $default_privacy ) ) ) {
 			$status = false;
 			if ( wp_verify_nonce( $nonce, 'rtmedia_member_settings_privacy' ) ) {
 				// todo user attribute.
@@ -487,15 +489,7 @@ class RTMediaPrivacy {
 
 			bp_core_add_message( $feedback, $feedback_type );
 			do_action( 'bp_core_general_settings_after_save' );
-
-			// Function exists checks.
-			if ( function_exists( 'bp_get_requested_url' ) && function_exists( 'bp_displayed_user_domain' ) && function_exists( 'bp_get_settings_slug' ) ) {
-				// If redirect url is same as current url, then don't redirect to avoid redirect loop.
-				$redirect_url = bp_displayed_user_domain() . bp_get_settings_slug() . '/privacy/';
-				if ( bp_get_requested_url() !== $redirect_url && function_exists( 'bp_core_redirect' ) ) {
-					bp_core_redirect( $redirect_url );
-				}
-			}
+			bp_core_redirect( bp_displayed_user_domain() . bp_get_settings_slug() . '/privacy/' );
 		}
 	}
 
