@@ -138,11 +138,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * FIXED
 
- * Redirection to WallPost album for user with subscriber role
+ * Redirecting to admin's WallPost album
  * Preview not loading for Docs and Other files in lightbox
  * Custom css not applying when added from rtMedia settings’ custom css tab
- * Too many redirections on BuddyPress’ privacy page.
- * Unable to delete media from lightbox and single media page.
+ * Too many redirections on BuddyPress’ privacy page
+ * Unable to delete media from lightbox and single media page
+ * Likes on mendia comment not working
  * PHP errors and warning
 
 = 4.6.1 [April 9, 2020] =
