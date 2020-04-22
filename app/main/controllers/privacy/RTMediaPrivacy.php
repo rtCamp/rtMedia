@@ -487,7 +487,15 @@ class RTMediaPrivacy {
 
 			bp_core_add_message( $feedback, $feedback_type );
 			do_action( 'bp_core_general_settings_after_save' );
-			bp_core_redirect( bp_displayed_user_domain() . bp_get_settings_slug() . '/privacy/' );
+
+			// Function exists checks.
+			if ( function_exists( 'bp_get_requested_url' ) && function_exists( 'bp_displayed_user_domain' ) && function_exists( 'bp_get_settings_slug' ) ) {
+				// If redirect url is same as current url, then don't redirect to avoid redirect loop.
+				$redirect_url = bp_displayed_user_domain() . bp_get_settings_slug() . '/privacy/';
+				if ( bp_get_requested_url() !== $redirect_url && function_exists( 'bp_core_redirect' ) ) {
+					bp_core_redirect( $redirect_url );
+				}
+			}
 		}
 	}
 
