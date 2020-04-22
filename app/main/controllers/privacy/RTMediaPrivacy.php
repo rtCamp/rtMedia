@@ -466,8 +466,10 @@ class RTMediaPrivacy {
 		$default_privacy = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING ) );
 		$nonce           = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING ) );
 
-		if ( ! empty( $default_privacy ) || 0 === intval( $default_privacy ) ) {
-
+		// Old condition won't work as we've added sanitize_text_field for $default_privacy.
+		// We can't perform empty as 0 could be the possible value, so we check for empty string instead.
+		// Condition intval( $default_privacy ) will always 0 which shouldn't happen.
+		if ( 0 !== strlen( strval( $default_privacy ) ) ) {
 			$status = false;
 			if ( wp_verify_nonce( $nonce, 'rtmedia_member_settings_privacy' ) ) {
 				// todo user attribute.
