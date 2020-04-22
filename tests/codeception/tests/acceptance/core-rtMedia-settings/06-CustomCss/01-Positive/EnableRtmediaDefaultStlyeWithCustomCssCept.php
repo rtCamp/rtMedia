@@ -43,6 +43,6 @@
 
     echo "\n Option div button color = ". $optionDivColor;
     echo "\n";
-    $I->assertNotEquals( $optionDivColor, 'rgba(34, 139, 34, 1)' );
+    $I->assertEquals( $optionDivColor, 'rgba(34, 139, 34, 1)' );
 
 ?>

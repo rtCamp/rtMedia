@@ -1350,7 +1350,8 @@ function rtmedia_comments( $echo = true ) {
 	}
 
 	if ( $html ) {
-		echo wp_kses( $html, RTMedia::expanded_allowed_tags() );
+		// @todo: Change a.rtmedia-comment-like-click attribute to data-comment-id from data-comment_id in rtmedia-likes (https://github.com/rtCamp/rtmedia-likes) addon.
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains data-* attributes.
 	} else {
 		return $html;
 	}
