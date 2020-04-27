@@ -1555,6 +1555,15 @@ class RTMedia {
 		if ( empty( $is_buddypress_activate ) ) {
 			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
 		}
+
+		$options = $rtmedia->options;
+		// Previously done with rtmedia_custom_css() method on wp_head hook.
+		if ( ! empty( $options['styles_custom'] ) ) {
+			wp_register_style( 'rtmedia-custom-css', false );
+			wp_enqueue_style( 'rtmedia-custom-css' );
+			$css = stripslashes( wp_filter_nohtml_kses( $options['styles_custom'] ) );
+			wp_add_inline_style( 'rtmedia-custom-css', $css );
+		}
 	}
 
 	/**
@@ -1730,6 +1739,13 @@ class RTMedia {
 	public static function expanded_allowed_tags() {
 		$new_allowed = wp_kses_allowed_html( 'post' );
 
+		// Iframe.
+		$new_allowed['iframe'] = array(
+			'src'   => array(),
+			'class' => array(),
+			'id'    => array(),
+		);
+
 		// form input.
 		$new_allowed['form'] = array(
 			'action' => array(),
@@ -1843,7 +1859,7 @@ function parentlink_global_album( $id ) {
 	$parent_link   = '';
 
 	if ( is_array( $global_albums ) && '' !== $global_albums ) {
-		if ( in_array( $id, $global_albums, true ) && function_exists( 'bp_displayed_user_id' ) ) {
+		if ( in_array( $id, $global_albums, false ) && function_exists( 'bp_displayed_user_id' ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.FoundNonStrictFalse -- This option sometimes comes from buddypress or normal options, so can't be sure.
 			$disp_user = bp_displayed_user_id();
 			$curr_user = get_current_user_id();
 			if ( $disp_user === $curr_user ) {

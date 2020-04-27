@@ -892,7 +892,8 @@ class RTMediaTemplate {
 					global $wpdb;
 
 					$comments = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_ID = %d limit 100", $id ), ARRAY_A );
-					echo wp_kses( rmedia_single_comment( $comments ), RTMedia::expanded_allowed_tags() );
+					// @todo: Change a.rtmedia-comment-like-click attribute to data-comment-id from data-comment_id in rtmedia-likes (https://github.com/rtCamp/rtmedia-likes) addon.
+					echo rmedia_single_comment( $comments ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains data-* attributes.
 					exit;
 				}
 			} else {

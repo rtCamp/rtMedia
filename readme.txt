@@ -1,11 +1,11 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala, shobhit2412
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 5.4
-Stable tag: 4.6.1
+Stable tag: 4.6.2
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -133,6 +133,18 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.6.2 [April 22, 2020] =
+
+* FIXED
+
+ * Redirecting to admin's WallPost album
+ * Preview not loading for Docs and Other files in lightbox
+ * Custom css not applying when added from rtMedia settings’ custom css tab
+ * Too many redirections on BuddyPress’ privacy page
+ * Unable to delete media from lightbox and single media page
+ * Likes on mendia comment not working
+ * PHP errors and warning
 
 = 4.6.1 [April 9, 2020] =
 
@@ -1673,8 +1685,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.6.1 =
-rtMedia 4.6.1 with added server side validation for terms of services checkbox, minor bug fixes along with warnings and PHPCS fixes
+= 4.6.2 =
+rtMedia 4.6.2 with added fixes for preview not loading of docs and files in lightbox, privacy page redirection on user's profile along with warnings and PHP errors
 
 == Sponsors ==
 

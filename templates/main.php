@@ -165,6 +165,32 @@ if ( ! $rt_ajax_request ) {
 					endwhile;
 				}
 			}
+		} else { // if BuddyPress.
+			echo '<div id="item-body">';
+
+			rtmedia_load_template();
+
+			if ( ! $rt_ajax_request ) {
+				if ( 'buddypress' === $template_type ) {
+					if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+						do_action( 'bp_after_group_media' );
+						do_action( 'bp_after_group_body' );
+					}
+					if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
+						do_action( 'bp_after_member_media' );
+						do_action( 'bp_after_member_body' );
+					}
+				}
+				echo '</div><!--#item-body-->';
+				if ( 'buddypress' === $template_type ) {
+					if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+						do_action( 'bp_after_group_home_content' );
+					}
+					if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
+						do_action( 'bp_after_member_home_content' );
+					}
+				}
+			}
 		}
 	} else { // When Legacy is active.
 		if ( 'buddypress' === $template_type ) {
@@ -276,32 +302,28 @@ if ( ! $rt_ajax_request ) {
 				endif; // group/profile if/else.
 			}
 		} else { // if BuddyPress.
-			?>
-		<div id="item-body">
-			<?php
+			echo '<div id="item-body">';
 		}
 
 		rtmedia_load_template();
 
 		if ( ! $rt_ajax_request ) {
-			if ( function_exists( 'bp_displayed_user_id' ) && 'buddypress' === $template_type && ( bp_displayed_user_id() || bp_is_group() ) ) {
-				if ( bp_is_group() ) {
+			if ( 'buddypress' === $template_type ) {
+				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 					do_action( 'bp_after_group_media' );
 					do_action( 'bp_after_group_body' );
 				}
-				if ( bp_displayed_user_id() ) {
+				if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
 					do_action( 'bp_after_member_media' );
 					do_action( 'bp_after_member_body' );
 				}
 			}
-			?>
-			</div><!--#item-body-->
-			<?php
-			if ( function_exists( 'bp_displayed_user_id' ) && 'buddypress' === $template_type && ( bp_displayed_user_id() || bp_is_group() ) ) {
-				if ( bp_is_group() ) {
+			echo '</div><!--#item-body-->';
+			if ( 'buddypress' === $template_type ) {
+				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 					do_action( 'bp_after_group_home_content' );
 				}
-				if ( bp_displayed_user_id() ) {
+				if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
 					do_action( 'bp_after_member_home_content' );
 				}
 			}
