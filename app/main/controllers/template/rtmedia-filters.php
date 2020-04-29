@@ -427,9 +427,15 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 
 				$baseurl = $uploads['baseurl'];
 
+				$thumbnail_url = '';
 				if ( 0 === strpos( $url, $uploads['baseurl'] ) ) {
 					$thumbnail_url = $url;
-				} else {
+				} elseif ( ! is_multisite() ) {
+					/**
+					 * Code in this condition replaces AWS image URL with normal URL, which shouldn't happen in case of a multisite.
+					 * Because wp_upload_dir will give current site's uploads directory, which will be different for image of different subsite.
+					 */
+
 					$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
 
 					$thumbnail_url = explode( $rtmedia_folder_name, $url );
