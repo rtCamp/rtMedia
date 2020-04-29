@@ -3303,9 +3303,9 @@ function rtmedia_convert_date( $_date ) {
 	$length    = array( 1, 60, 3600, 86400 );
 	// translators: %s: count of hour/minute/second.
 	$ago_text = esc_html__( '%s ago ', 'buddypress-media' );
-	$no       = 0;
+	$no       = $diff / $length[ $i ];
 
-	for ( $i = count( $length ) - 1; ( $i >= 0 ) && ( $no <= 1 ); $i-- ) {
+	for ( $i = count( $length ) - 1; ( $i >= 0 && $no <= 1 ); $i -- ) {
 		$no = $diff / $length[ $i ];
 	}
 
