@@ -1746,6 +1746,14 @@ class RTMedia {
 			'id'    => array(),
 		);
 
+		// Script, for social sync plugin.
+		$new_allowed['script'] = array(
+			'type'  => array(),
+			'class' => array(),
+			'id'    => array(),
+			'src'   => array(),
+		);
+
 		// form input.
 		$new_allowed['form'] = array(
 			'action' => array(),
