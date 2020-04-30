@@ -52,7 +52,7 @@ class RTMediaInteraction {
 
 		add_filter( 'wp_title', array( $this, 'set_title' ), 99999, 2 );
 		add_filter( 'wpseo_opengraph_title', array( $this, 'set_title' ), 9999, 1 );
-		add_filter( 'wpseo_opengraph', array( $this, 'rtmedia_wpseo_og_image' ), 999, 1 );
+		add_filter( 'wpseo_frontend_presenters', array( $this, 'rtmedia_wpseo_og_image' ), 999, 1 );
 		add_filter( 'wpseo_opengraph_url', array( $this, 'rtmedia_wpseo_og_url' ), 999, 1 );
 		add_filter( 'wpseo_opengraph_desc', array( $this, 'rtmedia_wpseo_og_desc' ), 999, 1 );
 	}
