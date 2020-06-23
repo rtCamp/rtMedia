@@ -206,9 +206,20 @@ class RTMediaMedia {
 			$rtmedia_points_media_id = $media_ids[0];
 		}
 
+		/**
+		 * Action after a specific type of media is added from rtMedia.
+		 */
 		do_action( 'rtmedia_after_add_' . $rtmedia_type );
 
-		do_action( 'rtmedia_after_add_media', $media_ids, $file_object, $uploaded );
+		/**
+		 * Action after media is added from rtMedia.
+		 *
+		 * @param array $media_ids      rtMedia IDs.
+		 * @param array $file_object    File details.
+		 * @param array $uploaded       Uploaded media details.
+		 * @param array $attachment_ids Attachment IDs of uploaded media.
+		 */
+		do_action( 'rtmedia_after_add_media', $media_ids, $file_object, $uploaded, $attachment_ids );
 
 		return $media_ids;
 	}
