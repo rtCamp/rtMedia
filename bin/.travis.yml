@@ -56,7 +56,7 @@ before_script:
   - cd $PLUGIN_DIR/tests/codeception/
   # - composer update
   - composer install
-  - export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
+  - export PATH="$PATH:/home/travis/build/rtCamp/rtMedia/tests/codeception/vendor/bin"
     ## PHP_CodeSniffer
   - git clone https://github.com/squizlabs/PHP_CodeSniffer.git
   - cd PHP_CodeSniffer
