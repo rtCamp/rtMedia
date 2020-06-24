@@ -35,7 +35,7 @@ jQuery( function( $ ) {
 		$( '#rtmedia_media_single_edit .rtm-button-save' ).on( 'click', function() {
 			var $media_id = $( '#rtmedia-editor-media-id' ).val();
 			var $nonce = $( '#rtmedia-editor-nonce' ).val();
-			if ( ( 'undefined' !== typeof $nonce && '' === $nonce.trim() ) || ( 'undefined' !== typeof $media_id && '' === $media_id.trim() ) ) {
+			if ( 'undefined' === typeof $nonce || '' === $nonce.trim() || 'undefined' === typeof $media_id || '' === $media_id.trim() ) {
 				return;
 			}
 
