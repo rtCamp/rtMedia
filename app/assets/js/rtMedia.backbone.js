@@ -28,6 +28,24 @@ jQuery( function( $ ) {
 				media_children.remove();
 			}
 		});
+
+		/**
+		 * Remove imageEdit.save function call and add it only when image is being modified in WP editor.
+		 */
+		$( '#rtmedia_media_single_edit .rtm-button-save' ).on( 'click', function() {
+			var $media_id = $( '#rtmedia-editor-media-id' ).val();
+			var $nonce = $( '#rtmedia-editor-nonce' ).val();
+			if ( '' === $nonce.trim() || '' === $media_id.trim() ) {
+				return;
+			}
+			$media_id = parseInt( $media_id );
+			$media_head = $( '#media-head-' + $media_id );
+			if ( ! $media_head.length || 'undefined' === typeof $media_head.css( 'display' ) || 'none' !== $media_head.css( 'display' ).trim() ) {
+				return;
+			}
+
+			imageEdit.save( $media_id, $nonce );
+		} );
 	});
 	/**
 	 * End of issue 1059 fix
