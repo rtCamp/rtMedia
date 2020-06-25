@@ -147,6 +147,13 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.3 [April 30, 2020] ###
+
+* FIXED
+	* Conflict with Yoast SEO plugin
+	* Wrong Date/Time stamp for media
+	* Printing JavaScript code as text when Social Sync addon is active
+
 ### 4.6.2 [April 22, 2020] ###
 
 * FIXED

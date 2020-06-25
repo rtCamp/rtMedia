@@ -3308,7 +3308,9 @@ function rtmedia_convert_date( $_date ) {
 	$no = $diff / $length[ $i ];
 	while ( $i >= 0 && $no <= 1 ) {
 		$i--;
-		$no = $diff / $length[ $i ];
+		if ( $i >= 0 ) {
+			$no = $diff / $length[ $i ];
+		}
 	}
 
 	if ( $i < 0 ) {

@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 5.4
-Stable tag: 4.6.2
+Stable tag: 4.6.3
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -133,6 +133,14 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.6.3 [April 30, 2020] =
+
+* FIXED
+
+ * Conflict with Yoast SEO plugin
+ * Wrong Date/Time stamp for media
+ * Printing JavaScript code as text when Social Sync addon is active
 
 = 4.6.2 [April 22, 2020] =
 
@@ -1685,8 +1693,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.6.2 =
-rtMedia 4.6.2 with added fixes for preview not loading of docs and files in lightbox, privacy page redirection on user's profile along with warnings and PHP errors
+= 4.6.3 =
+rtMedia 4.6.3 with added fix for fatal errors issue with Yoast plugin along with the missing timestamp of media and added script tag for rtMedia social sync add-on
 
 == Sponsors ==
 
