@@ -297,8 +297,15 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 		$final_file_url = wp_get_attachment_url( $attachment_id );
 	}
 
-	// Add timestamp to resolve conflict with cache media.
-	return preg_replace( '/src=["]([^"]+)["]/', 'src="' . $final_file_url . '?' . time() . '"', $html );
+	// Add timestamp to bypass cache and load fresh image.
+	$final_file_url_query = wp_parse_url( $final_file_url, PHP_URL_QUERY );
+	if ( empty( $final_file_url_query ) ) {
+		$final_file_url .= '?' . time();
+	} else {
+		$final_file_url .= '&' . time();
+	}
+
+	return preg_replace( '/src=["]([^"]+)["]/', 'src="' . $final_file_url . '"', $html );
 
 }
 add_filter( 'rtmedia_single_content_filter', 'replace_src_with_transcoded_file_url', 100, 2 );

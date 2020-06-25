@@ -578,18 +578,26 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 	if ( isset( $rtmedia_media->media_type ) ) {
 
 		if ( 'photo' === $rtmedia_media->media_type ) {
-
 			$src = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
 
-			/**
-			 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
-			 * Added by checking the code from "wp-admin/includes/media.php:2740".
-			 * Because in media library, it was not breaking.
-			 *
-			 * Add timestamp to resolve conflict with cache image.
-			 */
-			$html = "<img src='" . set_url_scheme( $src[0] . '?' . time() ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+			if ( ! empty( $src[0] ) ) {
+				$src = $src[0];
 
+				// Add timestamp to bypass cache and load fresh image.
+				$src_query = wp_parse_url( $src, PHP_URL_QUERY );
+				if ( empty( $src_query ) ) {
+					$src .= '?' . time();
+				} else {
+					$src .= '&' . time();
+				}
+
+				/**
+				 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
+				 * Added by checking the code from "wp-admin/includes/media.php:2740".
+				 * Because in media library, it was not breaking.
+				 */
+				$html = "<img src='" . set_url_scheme( $src ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+			}
 		} elseif ( 'video' === $rtmedia_media->media_type ) {
 
 			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
@@ -747,8 +755,13 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 
 	$src = apply_filters( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
 
-	// Added timestamp because conflict with cache image.
-	$src = $src . '?' . time();
+	// Add timestamp to bypass cache and load fresh image.
+	$src_query = wp_parse_url( $src, PHP_URL_QUERY );
+	if ( empty( $src_query ) ) {
+		$src .= '?' . time();
+	} else {
+		$src .= '&' . time();
+	}
 
 	if ( true === $echo ) {
 		echo wp_kses( set_url_scheme( $src ), RTMedia::expanded_allowed_tags() );
