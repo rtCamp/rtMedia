@@ -38,7 +38,6 @@ jQuery( function( $ ) {
 			if ( 'undefined' === typeof $nonce || '' === $nonce.trim() || 'undefined' === typeof $media_id || '' === $media_id.trim() ) {
 				return;
 			}
-
 			$media_id = parseInt( $media_id );
 			$media_head = $( '#media-head-' + $media_id );
 			if ( ! $media_head.length || 'undefined' === typeof $media_head.css( 'display' ) || 'none' !== $media_head.css( 'display' ).trim() ) {
