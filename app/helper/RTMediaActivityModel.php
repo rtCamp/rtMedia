@@ -41,6 +41,22 @@ class RTMediaActivityModel extends RTDBModel {
 	}
 
 	/**
+	 * Get activity without setting blog_id.
+	 *
+	 * @since v4.6.4
+	 *
+	 * @param array    $columns  Columns.
+	 * @param bool|int $offset   Offset.
+	 * @param bool|int $per_page Per page.
+	 * @param string   $order_by Order by.
+	 *
+	 * @return array Returned data.
+	 */
+	public function get_without_blog_id( $columns, $offset = false, $per_page = false, $order_by = 'activity_id DESC' ) {
+		return parent::get( $columns, $offset, $per_page, $order_by );
+	}
+
+	/**
 	 * Insert row.
 	 *
 	 * @param array $row Row data.

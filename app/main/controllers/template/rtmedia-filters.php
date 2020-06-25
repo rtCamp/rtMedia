@@ -418,11 +418,22 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 
 			if ( ! class_exists( 'RTAWSS3_Class' ) && ! class_exists( 'AS3CF_Utils' ) ) {
 
-				// for WordPress backward compatibility.
+				// Get blog_id of activity from rtMedia table.
+				$rt_activity_model = new RTMediaActivityModel();
+				$rtmedia_activity  = $rt_activity_model->get_without_blog_id( array( 'activity_id' => $activity->id ) );
+				// Switch to activity blog to get correct uploads URL.
+				if ( ! empty( $rtmedia_activity[0]->blog_id ) ) {
+					switch_to_blog( $rtmedia_activity[0]->blog_id );
+				}
+				// For WordPress backward compatibility.
 				if ( function_exists( 'wp_get_upload_dir' ) ) {
 					$uploads = wp_get_upload_dir();
 				} else {
 					$uploads = wp_upload_dir();
+				}
+				// Restore current blog if it was switched to other blog.
+				if ( ! empty( $rtmedia_activity[0]->blog_id ) ) {
+					restore_current_blog();
 				}
 
 				$baseurl = $uploads['baseurl'];
@@ -430,12 +441,7 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 				$thumbnail_url = '';
 				if ( 0 === strpos( $url, $uploads['baseurl'] ) ) {
 					$thumbnail_url = $url;
-				} elseif ( ! is_multisite() ) {
-					/**
-					 * Code in this condition replaces AWS image URL with normal URL, which shouldn't happen in case of a multisite.
-					 * Because wp_upload_dir will give current site's uploads directory, which will be different for image of different subsite.
-					 */
-
+				} else {
 					$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
 
 					$thumbnail_url = explode( $rtmedia_folder_name, $url );
