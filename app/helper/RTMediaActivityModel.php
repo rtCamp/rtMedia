@@ -42,6 +42,8 @@ class RTMediaActivityModel extends RTDBModel {
 
 	/**
 	 * Get activity without setting blog_id.
+	 * This function is needed because there's no way to get activity of a different blog.
+	 * Existing get method sets blog_id to current blog.
 	 *
 	 * @since v4.6.4
 	 *
