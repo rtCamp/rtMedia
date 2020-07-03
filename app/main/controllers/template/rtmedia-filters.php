@@ -297,13 +297,7 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 		$final_file_url = wp_get_attachment_url( $attachment_id );
 	}
 
-	// Add timestamp to bypass cache and load fresh image.
-	$final_file_url_query = wp_parse_url( $final_file_url, PHP_URL_QUERY );
-	if ( empty( $final_file_url_query ) ) {
-		$final_file_url .= '?' . time();
-	} else {
-		$final_file_url .= '&' . time();
-	}
+	$final_file_url = rtmedia_append_timestamp_in_url( $final_file_url );
 
 	return preg_replace( '/src=["]([^"]+)["]/', 'src="' . $final_file_url . '"', $html );
 

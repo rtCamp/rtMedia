@@ -581,15 +581,7 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			$src = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
 
 			if ( ! empty( $src[0] ) ) {
-				$src = $src[0];
-
-				// Add timestamp to bypass cache and load fresh image.
-				$src_query = wp_parse_url( $src, PHP_URL_QUERY );
-				if ( empty( $src_query ) ) {
-					$src .= '?' . time();
-				} else {
-					$src .= '&' . time();
-				}
+				$src = rtmedia_append_timestamp_in_url( $src[0] );
 
 				/**
 				 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
@@ -754,14 +746,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 	}
 
 	$src = apply_filters( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
-
-	// Add timestamp to bypass cache and load fresh image.
-	$src_query = wp_parse_url( $src, PHP_URL_QUERY );
-	if ( empty( $src_query ) ) {
-		$src .= '?' . time();
-	} else {
-		$src .= '&' . time();
-	}
+	$src = rtmedia_append_timestamp_in_url( $src );
 
 	if ( true === $echo ) {
 		echo wp_kses( set_url_scheme( $src ), RTMedia::expanded_allowed_tags() );
@@ -769,6 +754,24 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 		return $src;
 	}
 
+}
+
+/**
+ * Appends timestamp at the end of the URL to bypass cache and load fresh image.
+ *
+ * @param string $src Image URL.
+ *
+ * @return string Modified URL.
+ */
+function rtmedia_append_timestamp_in_url( $src ) {
+	$src_query = wp_parse_url( $src, PHP_URL_QUERY );
+	if ( empty( $src_query ) ) {
+		$src .= '?' . time();
+	} elseif ( false === strpos( $src, 'amazonaws.com' ) ) {
+		$src .= '&' . time();
+	}
+
+	return $src;
 }
 
 /**
