@@ -35,7 +35,6 @@ class RTMediaBuddyPressActivity {
 				add_filter( 'bp_activity_truncate_entry', array( $this, 'bp_activity_truncate_entry' ), 10, 3 );
 			}
 		}
-		add_action( 'bp_init', array( $this, 'non_threaded_comments' ) );
 		add_action( 'bp_activity_comment_posted', array( $this, 'comment_sync' ), 10, 2 );
 		add_action( 'bp_activity_delete_comment', array( $this, 'delete_comment_sync' ), 10, 2 );
 		add_filter( 'bp_activity_allowed_tags', array( &$this, 'override_allowed_tags' ) );
@@ -554,22 +553,6 @@ class RTMediaBuddyPressActivity {
 				)
 			);
 			update_comment_meta( $id, 'activity_id', $comment_id );
-		}
-	}
-
-	/**
-	 * Save Non-threaded comments.
-	 */
-	public function non_threaded_comments() {
-		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
-		if ( 'new_activity_comment' === $action ) {
-			$activity_id   = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_NUMBER_INT );
-			$disable_media = filter_input( INPUT_POST, 'rtmedia_disable_media_in_commented_media', FILTER_SANITIZE_STRING );
-			$act           = new BP_Activity_Activity( $activity_id );
-
-			if ( 'rtmedia_update' === $act->type && ! empty( $disable_media ) ) {
-				$_POST['comment_id'] = $activity_id;
-			}
 		}
 	}
 
