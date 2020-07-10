@@ -3137,22 +3137,22 @@ if ( ! function_exists( 'rtmedia_who_like_html' ) ) {
 }
 
 /**
- * Get music cover art
+ * Get music cover art.
  *
  * @param object $media_object Media details object.
  *
- * @return      bool|string
+ * @return bool|string Uploaded thumbnail URL | False.
  */
 function rtm_get_music_cover_art( $media_object ) {
 
-	// return URL if cover_art already set.
+	// Return URL if cover_art already set.
 	$url = $media_object->cover_art;
 
 	if ( ! empty( $url ) && ! is_numeric( $url ) ) {
 		return $url;
 	}
 
-	// return false if covert_art is already analyzed earlier.
+	// Return false if covert_art is already analyzed earlier.
 	if ( -1 === intval( $url ) ) {
 		return false;
 	}
@@ -3163,25 +3163,25 @@ function rtm_get_music_cover_art( $media_object ) {
 	$media_tags = new RTMediaTags( $file );
 	$title_info = $media_tags->title;
 	$image_info = $media_tags->image;
-	$image_mime = $image_info['mime'];
-	$mime       = explode( '/', $image_mime );
 	$id         = $media_object->id;
 
-	if ( ! empty( $image_info['data'] ) ) {
+	if ( ! empty( $image_info['data'] ) && ! empty( $image_info['mime'] ) ) {
+		$mime = explode( '/', $image_info['mime'] );
 
-		$thumb_upload_info = wp_upload_bits( $title_info . '.' . $mime[ count( $mime ) - 1 ], null, $image_info['data'] );
+		if ( ! empty( $mime ) && is_array( $mime ) ) {
+			$thumb_upload_info = wp_upload_bits( $title_info . '.' . $mime[ count( $mime ) - 1 ], null, $image_info['data'] );
+			if ( ! empty( $thumb_upload_info['url'] ) ) {
+				$media_obj->model->update(
+					array(
+						'cover_art' => $thumb_upload_info['url'],
+					),
+					array(
+						'id' => $id,
+					)
+				);
 
-		if ( is_array( $thumb_upload_info ) && ! empty( $thumb_upload_info['url'] ) ) {
-			$media_obj->model->update(
-				array(
-					'cover_art' => $thumb_upload_info['url'],
-				),
-				array(
-					'id' => $id,
-				)
-			);
-
-			return $thumb_upload_info['url'];
+				return $thumb_upload_info['url'];
+			}
 		}
 	}
 
@@ -3195,7 +3195,6 @@ function rtm_get_music_cover_art( $media_object ) {
 	);
 
 	return false;
-
 }
 
 if ( ! function_exists( 'get_music_cover_art' ) ) {
