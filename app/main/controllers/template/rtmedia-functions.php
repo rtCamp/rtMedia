@@ -3141,7 +3141,7 @@ if ( ! function_exists( 'rtmedia_who_like_html' ) ) {
  *
  * @param object $media_object Media details object.
  *
- * @return bool|string Uploaded thumbnail URL | False.
+ * @return string|bool Uploaded thumbnail URL | False.
  */
 function rtm_get_music_cover_art( $media_object ) {
 
