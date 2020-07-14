@@ -55,9 +55,10 @@
 						<?php do_action( 'rtmedia_add_edit_tab_content', rtmedia_type() ); ?>
 					</div>
 					<div class="rtmedia-editor-buttons">
-						<input type="submit" class="button rtm-button rtm-button-save" onclick="imageEdit.save(<?php echo esc_attr( $rtmedia_media->media_id ) . ', \'' . esc_attr( $media_id_nonce ); ?>')" value="<?php esc_attr_e( 'Save', 'buddypress-media' ); ?>"/>
-						<a class="button rtm-button rtm-button-back"
-						href="<?php rtmedia_permalink(); ?>"><?php esc_html_e( 'Back', 'buddypress-media' ); ?></a>
+						<input type="hidden" id="rtmedia-editor-nonce" name="rtmedia-editor-nonce" value="<?php echo esc_attr( $media_id_nonce ); ?>" />
+						<input type="hidden" id="rtmedia-editor-media-id" name="rtmedia-editor-media-id" value="<?php echo esc_attr( $rtmedia_media->media_id ); ?>" />
+						<input type="submit" class="button rtm-button rtm-button-save" value="<?php esc_attr_e( 'Save', 'buddypress-media' ); ?>"/>
+						<a class="button rtm-button rtm-button-back" href="<?php rtmedia_permalink(); ?>"><?php esc_html_e( 'Back', 'buddypress-media' ); ?></a>
 					</div>
 				</div>
 			</form>

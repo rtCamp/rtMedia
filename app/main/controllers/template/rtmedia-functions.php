@@ -578,18 +578,18 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 	if ( isset( $rtmedia_media->media_type ) ) {
 
 		if ( 'photo' === $rtmedia_media->media_type ) {
-
 			$src = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
 
-			/**
-			 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
-			 * Added by checking the code from "wp-admin/includes/media.php:2740".
-			 * Because in media library, it was not breaking.
-			 *
-			 * Add timestamp to resolve conflict with cache image.
-			 */
-			$html = "<img src='" . set_url_scheme( $src[0] . '?' . time() ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+			if ( ! empty( $src[0] ) ) {
+				$src = rtmedia_append_timestamp_in_url( $src[0] );
 
+				/**
+				 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
+				 * Added by checking the code from "wp-admin/includes/media.php:2740".
+				 * Because in media library, it was not breaking.
+				 */
+				$html = "<img src='" . set_url_scheme( $src ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+			}
 		} elseif ( 'video' === $rtmedia_media->media_type ) {
 
 			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
@@ -746,9 +746,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 	}
 
 	$src = apply_filters( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
-
-	// Added timestamp because conflict with cache image.
-	$src = $src . '?' . time();
+	$src = rtmedia_append_timestamp_in_url( $src );
 
 	if ( true === $echo ) {
 		echo wp_kses( set_url_scheme( $src ), RTMedia::expanded_allowed_tags() );
@@ -756,6 +754,24 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 		return $src;
 	}
 
+}
+
+/**
+ * Appends timestamp at the end of the URL to bypass cache and load fresh image.
+ *
+ * @param string $src Image URL.
+ *
+ * @return string Modified URL.
+ */
+function rtmedia_append_timestamp_in_url( $src ) {
+	$src_query = wp_parse_url( $src, PHP_URL_QUERY );
+	if ( empty( $src_query ) ) {
+		$src .= '?' . time();
+	} elseif ( false === strpos( $src, 'amazonaws.com' ) ) {
+		$src .= '&' . time();
+	}
+
+	return $src;
 }
 
 /**
@@ -3121,22 +3137,22 @@ if ( ! function_exists( 'rtmedia_who_like_html' ) ) {
 }
 
 /**
- * Get music cover art
+ * Get music cover art.
  *
  * @param object $media_object Media details object.
  *
- * @return      bool|string
+ * @return string|bool Uploaded thumbnail URL | False.
  */
 function rtm_get_music_cover_art( $media_object ) {
 
-	// return URL if cover_art already set.
+	// Return URL if cover_art already set.
 	$url = $media_object->cover_art;
 
 	if ( ! empty( $url ) && ! is_numeric( $url ) ) {
 		return $url;
 	}
 
-	// return false if covert_art is already analyzed earlier.
+	// Return false if covert_art is already analyzed earlier.
 	if ( -1 === intval( $url ) ) {
 		return false;
 	}
@@ -3147,25 +3163,25 @@ function rtm_get_music_cover_art( $media_object ) {
 	$media_tags = new RTMediaTags( $file );
 	$title_info = $media_tags->title;
 	$image_info = $media_tags->image;
-	$image_mime = $image_info['mime'];
-	$mime       = explode( '/', $image_mime );
 	$id         = $media_object->id;
 
-	if ( ! empty( $image_info['data'] ) ) {
+	if ( ! empty( $image_info['data'] ) && ! empty( $image_info['mime'] ) ) {
+		$mime = explode( '/', $image_info['mime'] );
 
-		$thumb_upload_info = wp_upload_bits( $title_info . '.' . $mime[ count( $mime ) - 1 ], null, $image_info['data'] );
+		if ( ! empty( $mime ) && is_array( $mime ) ) {
+			$thumb_upload_info = wp_upload_bits( $title_info . '.' . $mime[ count( $mime ) - 1 ], null, $image_info['data'] );
+			if ( ! empty( $thumb_upload_info['url'] ) ) {
+				$media_obj->model->update(
+					array(
+						'cover_art' => $thumb_upload_info['url'],
+					),
+					array(
+						'id' => $id,
+					)
+				);
 
-		if ( is_array( $thumb_upload_info ) && ! empty( $thumb_upload_info['url'] ) ) {
-			$media_obj->model->update(
-				array(
-					'cover_art' => $thumb_upload_info['url'],
-				),
-				array(
-					'id' => $id,
-				)
-			);
-
-			return $thumb_upload_info['url'];
+				return $thumb_upload_info['url'];
+			}
 		}
 	}
 
@@ -3179,7 +3195,6 @@ function rtm_get_music_cover_art( $media_object ) {
 	);
 
 	return false;
-
 }
 
 if ( ! function_exists( 'get_music_cover_art' ) ) {
@@ -3308,7 +3323,9 @@ function rtmedia_convert_date( $_date ) {
 	$no = $diff / $length[ $i ];
 	while ( $i >= 0 && $no <= 1 ) {
 		$i--;
-		$no = $diff / $length[ $i ];
+		if ( $i >= 0 ) {
+			$no = $diff / $length[ $i ];
+		}
 	}
 
 	if ( $i < 0 ) {
