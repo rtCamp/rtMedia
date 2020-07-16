@@ -4,8 +4,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 5.4
-Stable tag: 4.6.3
+Tested up to: 5.4.2
+Stable tag: 4.6.4
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -133,6 +133,22 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.6.4 [July 16, 2020] =
+
+* Enhancement
+
+ * Support for Amazon S3 presigned URLs
+ * Add attachment_ids in `rtmedia_after_add_media` action hook
+
+* FIXED
+
+ * Console errors on media editing
+ * Extension getting changed when renaming media before upload
+ * Activities not in sync with other subsites in a multisite network, when each subsite has a separate BuddyPress activity feed
+ * PHP Notices and Warnings
+ * Comment nesting issue with media activities
+ * Wrong timestamp while adding comments
 
 = 4.6.3 [April 30, 2020] =
 
@@ -1693,8 +1709,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.6.3 =
-rtMedia 4.6.3 with added fix for fatal errors issue with Yoast plugin along with the missing timestamp of media and added script tag for rtMedia social sync add-on
+= 4.6.4 =
+rtMedia 4.6.4 with support for Amazon S3 presigned URLs, along with some fixes such as: issue with nested comments, activities sync issue in a multisite network and other small fixes and improvements.
 
 == Sponsors ==
 

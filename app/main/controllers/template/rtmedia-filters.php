@@ -297,8 +297,9 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 		$final_file_url = wp_get_attachment_url( $attachment_id );
 	}
 
-	// Add timestamp to resolve conflict with cache media.
-	return preg_replace( '/src=["]([^"]+)["]/', 'src="' . $final_file_url . '?' . time() . '"', $html );
+	$final_file_url = rtmedia_append_timestamp_in_url( $final_file_url );
+
+	return preg_replace( '/src=["]([^"]+)["]/', 'src="' . $final_file_url . '"', $html );
 
 }
 add_filter( 'rtmedia_single_content_filter', 'replace_src_with_transcoded_file_url', 100, 2 );
@@ -418,15 +419,27 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 
 			if ( ! class_exists( 'RTAWSS3_Class' ) && ! class_exists( 'AS3CF_Utils' ) ) {
 
-				// for WordPress backward compatibility.
+				// Get blog_id of activity from rtMedia table.
+				$rt_activity_model = new RTMediaActivityModel();
+				$rtmedia_activity  = $rt_activity_model->get_without_blog_id( array( 'activity_id' => $activity->id ) );
+				// Switch to activity blog to get correct uploads URL.
+				if ( ! empty( $rtmedia_activity[0]->blog_id ) ) {
+					switch_to_blog( $rtmedia_activity[0]->blog_id );
+				}
+				// For WordPress backward compatibility.
 				if ( function_exists( 'wp_get_upload_dir' ) ) {
 					$uploads = wp_get_upload_dir();
 				} else {
 					$uploads = wp_upload_dir();
 				}
+				// Restore current blog if it was switched to other blog.
+				if ( ! empty( $rtmedia_activity[0]->blog_id ) ) {
+					restore_current_blog();
+				}
 
 				$baseurl = $uploads['baseurl'];
 
+				$thumbnail_url = '';
 				if ( 0 === strpos( $url, $uploads['baseurl'] ) ) {
 					$thumbnail_url = $url;
 				} else {

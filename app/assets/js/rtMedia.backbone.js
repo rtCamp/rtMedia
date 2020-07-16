@@ -28,6 +28,24 @@ jQuery( function( $ ) {
 				media_children.remove();
 			}
 		});
+
+		/**
+		 * Remove imageEdit.save function call and add it only when image is being modified in WP editor.
+		 */
+		$( '#rtmedia_media_single_edit .rtm-button-save' ).on( 'click', function() {
+			var $media_id = $( '#rtmedia-editor-media-id' ).val();
+			var $nonce = $( '#rtmedia-editor-nonce' ).val();
+			if ( 'undefined' === typeof $nonce || '' === $nonce.trim() || 'undefined' === typeof $media_id || '' === $media_id.trim() ) {
+				return;
+			}
+			$media_id = parseInt( $media_id );
+			$media_head = $( '#media-head-' + $media_id );
+			if ( ! $media_head.length || 'undefined' === typeof $media_head.css( 'display' ) || 'none' !== $media_head.css( 'display' ).trim() ) {
+				return;
+			}
+
+			imageEdit.save( $media_id, $nonce );
+		} );
 	});
 	/**
 	 * End of issue 1059 fix
@@ -717,10 +735,11 @@ jQuery( function( $ ) {
 						    var file_desc_val = jQuery( rtm_file_desc_input ).val();
 						    var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
 
-						    if ( file_title_val != '' ) {
-						        file_name_wrapper_el.text( file_title_val + '.' + rtm_file_name_array[ 1 ] );
-						        file.title = file_title_val;
-						    }
+							if ( '' !== file_title_val.trim() ) {
+								var extension = file.name.split( '.' )[1];
+								file_name_wrapper_el.text( file_title_val + '.' + extension );
+								file.title = file_title_val;
+							}
 
 						    if ( file_desc_val != '' ) {
 						        file.description = file_desc_val;
@@ -1285,8 +1304,9 @@ jQuery( document ).ready( function( $ ) {
 
 					var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
 
-					if ( file_title_val != '' ) {
-						file_name_wrapper_el.text( file_title_val + '.' + rtm_file_name_array[ 1 ] );
+					if ( '' !== file_title_val.trim() ) {
+						var extension = file.name.split( '.' )[1];
+						file_name_wrapper_el.text( file_title_val + '.' + extension );
 						file.title = file_title_val;
 					}
 
@@ -2631,8 +2651,9 @@ function renderUploadercomment_media( widget_id, parent_id_type ) {
 
 					var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
 
-					if ( file_title_val != '' ) {
-						file_name_wrapper_el.text( file_title_val + '.' + rtm_file_name_array[ 1 ] );
+					if ( '' !== file_title_val.trim() ) {
+						var extension = file.name.split( '.' )[1];
+						file_name_wrapper_el.text( file_title_val + '.' + extension );
 						file.title = file_title_val;
 					}
 
