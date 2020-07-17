@@ -147,6 +147,21 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.4 [July 16, 2020] ###
+
+* Enhancement
+	* Support for Amazon S3 presigned URLs
+	* Add attachment_ids in `rtmedia_after_add_media` action hook
+
+* FIXED
+
+	* Console errors on media editing
+	* Extension getting changed when renaming media before upload
+	* Activities not in sync with other subsites in a multisite network, when each subsite has a separate BuddyPress activity feed
+	* PHP Notices and Warnings
+	* Comment nesting issue with media activities
+	* Wrong timestamp while adding comments
+
 ### 4.6.3 [April 30, 2020] ###
 
 * FIXED
