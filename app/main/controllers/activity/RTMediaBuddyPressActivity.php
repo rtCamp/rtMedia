@@ -34,6 +34,8 @@ class RTMediaBuddyPressActivity {
 				// Code to show media with read more option.
 				add_filter( 'bp_activity_truncate_entry', array( $this, 'bp_activity_truncate_entry' ), 10, 3 );
 			}
+
+			add_filter( 'b_e_a_plugin_option_editable_types', array( $this, 'b_e_a_plugin_option_editable_types' ) );
 		}
 		add_action( 'bp_activity_comment_posted', array( $this, 'comment_sync' ), 10, 2 );
 		add_action( 'bp_activity_delete_comment', array( $this, 'delete_comment_sync' ), 10, 2 );
@@ -74,6 +76,25 @@ class RTMediaBuddyPressActivity {
 			add_action( 'bp_activity_after_save', array( $this, 'bp_activity_after_save' ) );
 			add_action( 'bp_activity_after_delete', array( $this, 'bp_activity_after_delete' ) );
 		}
+	}
+
+	/**
+	 * Adds rtmedia_update in editable activity types when BuddyPress Edit Activity plugin is active.
+	 *
+	 * @param array $option Editable activity types.
+	 *
+	 * @return array Modified editable activity types.
+	 */
+	public function b_e_a_plugin_option_editable_types( $option ) {
+		if ( empty( $option ) || ! is_array( $option ) ) {
+			$option = array();
+		}
+
+		if ( ! in_array( 'rtmedia_update', $option, true ) ) {
+			$option[] = 'rtmedia_update';
+		}
+
+		return $option;
 	}
 
 	/**

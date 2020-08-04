@@ -46,6 +46,31 @@ jQuery( function( $ ) {
 
 			imageEdit.save( $media_id, $nonce );
 		} );
+
+		/**
+		 * Reload page when rtmedia_update type of activity is edited.
+		 */
+		function filterBeaSaveSuccess() {
+			location.reload();
+		}
+		/**
+		 * Prefilters ajax call which saves edited activity content.
+		 * Needed with BuddyPress Edit Activity plugin.
+		 * https://wordpress.org/plugins/buddypress-edit-activity/
+		 */
+		$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+			if ( 'undefined' === typeof originalOptions || 'undefined' === typeof originalOptions.data || 'buddypress-edit-activity-save' !== originalOptions.data.action ) {
+				return;
+			}
+
+			if ( ! $( '#activity-' + originalOptions.data.activity_id ).hasClass( 'rtmedia_update' ) ) {
+				return;
+			}
+
+			// Change the callback function to our own function, which reloads the page.
+			originalOptions.success = filterBeaSaveSuccess;
+			options.success = filterBeaSaveSuccess;
+		} );
 	});
 	/**
 	 * End of issue 1059 fix
