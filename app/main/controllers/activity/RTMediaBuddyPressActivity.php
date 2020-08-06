@@ -35,7 +35,7 @@ class RTMediaBuddyPressActivity {
 				add_filter( 'bp_activity_truncate_entry', array( $this, 'bp_activity_truncate_entry' ), 10, 3 );
 			}
 
-			add_filter( 'b_e_a_plugin_option_editable_types', array( $this, 'b_e_a_plugin_option_editable_types' ) );
+			add_filter( 'b_e_a_plugin_option_editable_types', array( $this, 'rtmedia_bea_plugin_option_editable_types' ) );
 		}
 		add_action( 'bp_activity_comment_posted', array( $this, 'comment_sync' ), 10, 2 );
 		add_action( 'bp_activity_delete_comment', array( $this, 'delete_comment_sync' ), 10, 2 );
@@ -85,7 +85,7 @@ class RTMediaBuddyPressActivity {
 	 *
 	 * @return array Modified editable activity types.
 	 */
-	public function b_e_a_plugin_option_editable_types( $option ) {
+	public function rtmedia_bea_plugin_option_editable_types( $option ) {
 		if ( empty( $option ) || ! is_array( $option ) ) {
 			$option = array();
 		}
