@@ -623,13 +623,11 @@ class RTMediaBuddyPressActivity {
 		if ( null !== $rtmedia_privacy ) {
 
 			// Set Privacy 0 if media privacy is disabled.
-			$privacy = 0;
+			$privacy = get_rtmedia_default_privacy();
 
 			if ( is_rtmedia_privacy_enable() ) {
 				if ( is_rtmedia_privacy_user_overide() ) {
 					$privacy = $rtmedia_privacy;
-				} else {
-					$privacy = get_rtmedia_default_privacy();
 				}
 			}
 
