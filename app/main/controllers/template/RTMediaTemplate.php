@@ -63,6 +63,7 @@ class RTMediaTemplate {
 				'rtmedia-image-edit',
 				admin_url( 'js/image-edit.js' ),
 				array(
+					'wp-i18n',
 					'jquery',
 					'json2',
 					'imgareaselect',
