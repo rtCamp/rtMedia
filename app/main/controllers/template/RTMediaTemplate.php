@@ -71,6 +71,7 @@ class RTMediaTemplate {
 				RTMEDIA_VERSION,
 				1
 			);
+			wp_add_inline_script( 'rtmedia-image-edit', 'window.imageEdit.focusManager=function(){return;}' );
 			wp_enqueue_style( 'rtmedia-image-area-select', includes_url( '/js/imgareaselect/imgareaselect.css' ), array(), RTMEDIA_VERSION );
 			wp_enqueue_style( 'rtmedia-image-edit', admin_url( 'css/media.css' ), array(), RTMEDIA_VERSION );
 		}
