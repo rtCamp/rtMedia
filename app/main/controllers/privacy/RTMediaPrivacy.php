@@ -47,6 +47,9 @@ class RTMediaPrivacy {
 			// show change privacy option in activity meta.
 			add_action( 'bp_activity_entry_meta', array( $this, 'update_activity_privacy_option' ) );
 
+			// To show load more button all the time.
+			add_filter( 'bp_activity_has_more_items', array( $this, 'rtm_bp_activity_has_more_items' ) );
+
 			// Add nonce field to change activity privacy option.
 			add_action( 'template_notices', array( $this, 'add_activity_privacy_nonce' ) );
 
@@ -56,6 +59,17 @@ class RTMediaPrivacy {
 		}
 		add_action( 'friends_friendship_accepted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
 		add_action( 'friends_friendship_deleted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
+	}
+
+	/**
+	 * Show load more all the time.
+	 *
+	 * @param bool $has_more_items Flag for whether to show load more button or not.
+	 *
+	 * @return bool
+	 */
+	public function rtm_bp_activity_has_more_items( $has_more_items ) {
+		return true;
 	}
 
 	/**
