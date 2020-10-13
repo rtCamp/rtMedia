@@ -1009,6 +1009,7 @@ jQuery( document ).ready( function ( $ ) {
 
 				if ( typeof data.error === 'undefined' ) {
 
+					data = JSON.parse( data );
 					if ( data.exceed_size_msg ) {
 						jQuery( '#debuglog' ).val( '' );
 						alert( data.exceed_size_msg );
