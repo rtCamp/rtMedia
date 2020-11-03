@@ -81,7 +81,7 @@ script:
   - codecept run acceptance --steps
 
 after_script:
-  - sudo cat /var/log/ee/ee.log
+  #- sudo cat /var/log/ee/ee.log
 
 #notifications:
 #  slack:
