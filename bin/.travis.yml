@@ -43,7 +43,7 @@ before_script:
   - sudo chown -R $USER:www-data /var/www/automation.rtmedia.me
   - sudo chmod -R g+s /var/www/automation.rtmedia.me
   - sudo chmod -R o-rwx /var/www/automation.rtmedia.me
-  - cd /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/ && sudo mkdir rtMedia
+  - cd /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
   - cd $PLUGIN_DIR
   - cp -Rf * /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
   - cd /var/www/automation.rtmedia.me/htdocs/
