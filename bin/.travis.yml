@@ -40,9 +40,10 @@ before_script:
   - sudo wp --yes --allow-root cli update --nightly
   - sudo wo site create automation.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
   - sudo sed -i '/^127.0.0.1/ s/$/ automation.rtmedia.me/' /etc/hosts
-  - find /var/www/automation.rtmedia.me/htdocs -type f -exec chmod 0644 {} \;
-  - find /var/www/automation.rtmedia.me/htdocs -type d -exec chmod 0755 {} \;
-  - cd /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
+  - sudo chown -R $USER:www-data /var/www/automation.rtmedia.me
+  - sudo chmod -R g+s /var/www/automation.rtmedia.me
+  - sudo chmod -R o-rwx /var/www/automation.rtmedia.me
+  - cd /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/ && sudo mkdir rtMedia
   - cd $PLUGIN_DIR
   - cp -Rf * /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
   - cd /var/www/automation.rtmedia.me/htdocs/
