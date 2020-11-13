@@ -32,11 +32,11 @@ before_script:
   - sudo apt-get autoremove
   - sudo apt-get autoclean
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
-  - wget -qO ee rt.cx/ee && sudo bash ee
-  - sudo ee stack install --nginx
-  - sudo ee stack install --web
+  - wget -qO wo wops.cc && sudo bash wo
+  - sudo wo stack install --nginx
+  - sudo wo stack install --web
   - sudo wp --yes --allow-root cli update --nightly
-  - sudo ee site create automation.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
+  - sudo wo site create automation.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
   - sudo sed -i '/^127.0.0.1/ s/$/ automation.rtmedia.me/' /etc/hosts
   - sudo chmod 777 -R /var/www
   - cd /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
@@ -79,9 +79,6 @@ script:
   - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./tests/acceptance -name '*.php')
   - if find . -name "*.php" ! -path "./node_modules/*" ! -path "./vendor/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
   - codecept run acceptance --steps
-
-after_script:
-  - sudo cat /var/log/ee/ee.log
 
 #notifications:
 #  slack:
