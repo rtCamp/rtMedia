@@ -1468,16 +1468,29 @@ jQuery( document ).ready( function( $ ) {
 			var object  = '';
 			var item_id = 0;
 
-			if ( jQuery( '#whats-new-post-in' ).length ) {
-				item_id = jQuery( '#whats-new-post-in' ).val();
-			} else if ( jQuery( '.groups-header' ).length ) {
-				item_id = jQuery( '.groups-header' ).attr( 'data-bp-item-id' );
-			}
+			if ( 'legacy' === bp_template_pack ) {
+				if ( jQuery( '#whats-new-post-in' ).length ) {
+					item_id = jQuery( '#whats-new-post-in' ).val();
+				} else if ( jQuery( '.groups-header' ).length ) {
+					item_id = jQuery( '.groups-header' ).attr( 'data-bp-item-id' );
+				}
 
-			if ( item_id > 0 ) {
-				object = 'group';
+				if ( item_id > 0 ) {
+					object = 'group';
+				} else {
+					object = 'profile';
+				}
 			} else {
-				object = 'profile';
+				var whatsNewPostIn = jQuery( '#whats-new-post-in' );
+				if ( whatsNewPostIn.length ) {
+					object = whatsNewPostIn.val();
+					item_id = 0;
+				}
+
+				var contextData = jQuery( '#whats-new-post-in-box-items li.bp-activity-object.selected input[type="hidden"]' );
+				if ( contextData.length ) {
+					item_id = contextData.val();
+				}
 			}
 
 			up.settings.multipart_params.context = object;
