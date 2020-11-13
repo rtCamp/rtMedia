@@ -31,6 +31,7 @@
     $uploadmedia->uploadMediaUsingStartUploadButton();
 
     $I->reloadPage();
+    $I->wait(2);
 
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 
