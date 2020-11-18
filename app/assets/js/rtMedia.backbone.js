@@ -46,6 +46,31 @@ jQuery( function( $ ) {
 
 			imageEdit.save( $media_id, $nonce );
 		} );
+
+		/**
+		 * Reload page when rtmedia_update type of activity is edited.
+		 */
+		function filterBeaSaveSuccess() {
+			location.reload();
+		}
+		/**
+		 * Prefilters ajax call which saves edited activity content.
+		 * Needed with BuddyPress Edit Activity plugin.
+		 * https://wordpress.org/plugins/buddypress-edit-activity/
+		 */
+		$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+			if ( 'undefined' === typeof originalOptions || 'undefined' === typeof originalOptions.data || 'buddypress-edit-activity-save' !== originalOptions.data.action ) {
+				return;
+			}
+
+			if ( ! $( '#activity-' + originalOptions.data.activity_id ).hasClass( 'rtmedia_update' ) ) {
+				return;
+			}
+
+			// Change the callback function to our own function, which reloads the page.
+			originalOptions.success = filterBeaSaveSuccess;
+			options.success = filterBeaSaveSuccess;
+		} );
 	});
 	/**
 	 * End of issue 1059 fix
@@ -1443,16 +1468,29 @@ jQuery( document ).ready( function( $ ) {
 			var object  = '';
 			var item_id = 0;
 
-			if ( jQuery( '#whats-new-post-in' ).length ) {
-				item_id = jQuery( '#whats-new-post-in' ).val();
-			} else if ( jQuery( '.groups-header' ).length ) {
-				item_id = jQuery( '.groups-header' ).attr( 'data-bp-item-id' );
-			}
+			if ( 'legacy' === bp_template_pack ) {
+				if ( jQuery( '#whats-new-post-in' ).length ) {
+					item_id = jQuery( '#whats-new-post-in' ).val();
+				} else if ( jQuery( '.groups-header' ).length ) {
+					item_id = jQuery( '.groups-header' ).attr( 'data-bp-item-id' );
+				}
 
-			if ( item_id > 0 ) {
-				object = 'group';
+				if ( item_id > 0 ) {
+					object = 'group';
+				} else {
+					object = 'profile';
+				}
 			} else {
-				object = 'profile';
+				var whatsNewPostIn = jQuery( '#whats-new-post-in' );
+				if ( whatsNewPostIn.length ) {
+					object = whatsNewPostIn.val();
+					item_id = 0;
+				}
+
+				var contextData = jQuery( '#whats-new-post-in-box-items li.bp-activity-object.selected input[type="hidden"]' );
+				if ( contextData.length ) {
+					item_id = contextData.val();
+				}
 			}
 
 			up.settings.multipart_params.context = object;
