@@ -8,6 +8,9 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
+    //Adding webdriver namespace to check if it works
+    use Facebook\WebDriver\WebDriverBy;
+
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'set custom css style when default rtmedia style is enabled.' );
 
