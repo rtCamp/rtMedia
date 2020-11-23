@@ -396,6 +396,9 @@ jQuery( function( $ ) {
 			} );
 		} );
 		$( this ).parent().remove();
+
+		/** Scroll function called */
+		rtMediaScrollComments();
 	} );
 
 		$( document ).on( 'keypress', '#rtmedia_go_to_num', function( e ) {
@@ -1813,6 +1816,9 @@ jQuery( document ).ready( function( $ ) {
 				rtmedia_reset_video_and_audio_for_popup();
 
 				rtMediaHook.call( 'rtmedia_js_after_comment_added', [ ] );
+
+				/** Scroll function called */
+				rtMediaScrollComments();
 			},
 			error: function( data ) {
 				if ( widget_id ) {
@@ -2912,4 +2918,11 @@ function rtmedia_disable_popup_navigation( $selector ){
 			}
 		} );
 	} );
+}
+
+/** Function that smooth scrolls to the latest comment in rtMedia */
+const rtMediaScrollComments = () => {
+	const commentBox = document.getElementById('rtmedia_comment_ul');
+	const commentsToScroll = (document.getElementById('rtmedia_comment_ul').offsetHeight)*1000; 
+	commentBox.scrollTo({top: commentsToScroll, behavior: 'smooth'});
 }
