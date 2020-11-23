@@ -2920,7 +2920,10 @@ function rtmedia_disable_popup_navigation( $selector ){
 	} );
 }
 
-/** Function that smooth scrolls to the latest comment in rtMedia */
+/** 
+ * Function that smooth scrolls to the latest comment in rtMedia.
+ *  Created on 23-Nov-2020 by Vipin Kumar Dinkar <vipin.dinkar@rtcamp.com>
+ */
 const rtMediaScrollComments = () => {
 	const commentBox = document.getElementById('rtmedia_comment_ul');
 	const commentsToScroll = (document.getElementById('rtmedia_comment_ul').offsetHeight)*1000; 
