@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.4\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.5\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2020-07-15 12:31:21+00:00\n"
+"POT-Creation-Date: 2020-11-23 08:24:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -440,7 +440,7 @@ msgstr ""
 #: app/admin/RTMediaAdmin.php:1796 app/admin/RTMediaAdmin.php:1814
 #: app/admin/RTMediaAdmin.php:1832 app/admin/RTMediaFormHandler.php:628
 #: app/helper/RTMediaSettings.php:342 app/helper/RTMediaSupport.php:445
-#: app/helper/RTMediaSupport.php:730
+#: app/helper/RTMediaSupport.php:736
 msgid "here"
 msgstr ""
 
@@ -1642,11 +1642,11 @@ msgstr ""
 msgid "GitHub"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:66 app/helper/RTMediaSupport.php:602
+#: app/helper/RTMediaSupport.php:66 app/helper/RTMediaSupport.php:608
 msgid "Cheatin' uh?"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:67 app/helper/RTMediaSupport.php:603
+#: app/helper/RTMediaSupport.php:67 app/helper/RTMediaSupport.php:609
 msgid "Can not verify request source."
 msgstr ""
 
@@ -1761,51 +1761,51 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:571
+#: app/helper/RTMediaSupport.php:577
 msgid "Attachment"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:576
+#: app/helper/RTMediaSupport.php:582
 msgid "Allowed file types are : images, documents and texts."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:618
+#: app/helper/RTMediaSupport.php:624
 msgid "rtMedia Premium Support Request from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:621
+#: app/helper/RTMediaSupport.php:627
 msgid "rtMedia New Feature Request from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:624
+#: app/helper/RTMediaSupport.php:630
 msgid "rtMedia Bug Report from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:627
+#: app/helper/RTMediaSupport.php:633
 msgid "rtMedia Contact from"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:716
+#: app/helper/RTMediaSupport.php:722
 msgid "Thank you for your Feedback/Suggestion."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:718
+#: app/helper/RTMediaSupport.php:724
 msgid "Thank you for posting your support request."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:719
+#: app/helper/RTMediaSupport.php:725
 msgid "We will get back to you shortly."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:724
+#: app/helper/RTMediaSupport.php:730
 msgid "Your server failed to send an email."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:725
+#: app/helper/RTMediaSupport.php:731
 msgid "Kindly contact your server support to fix this."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:729
+#: app/helper/RTMediaSupport.php:735
 #. translators: %s: rtmedia link.
 msgid "You can alternatively create a support request %s"
 msgstr ""
@@ -2286,7 +2286,7 @@ msgid "No time remaining."
 msgstr ""
 
 #: app/main/RTMedia.php:162 app/main/RTMedia.php:1498
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:727
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:748
 #: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:112
 #: app/main/controllers/upload/processors/RTMediaUploadFile.php:246
 msgid "Media Files"
@@ -2558,28 +2558,28 @@ msgstr ""
 msgid "I agree to"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:456
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:477
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:60
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:74
 msgid "Terms and Conditions checkbox not found!"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:774
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:795
 #: app/main/controllers/media/RTMediaComment.php:204
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:125
 #: app/main/controllers/template/rtmedia-functions.php:2275
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:921
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:942
 #: app/main/controllers/media/RTMediaMedia.php:793
 #. translators: 1: user link, 2: media.
 #. translators: 1: username, 2: media type, 3: media name, 4: total media.
 msgid "%1$s added a %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:929
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:932
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:950
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:953
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:279
 #. translators: 1: user link, 2: media count, 3: media.
 #. translators: 1: user link, 2: media count, 3: rtMedia slug.
@@ -2587,32 +2587,32 @@ msgstr ""
 msgid "%1$s added %2$d %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:986
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1007
 #. translators: 1: username, 2: media, 3: group name.
 msgid "%1$s liked a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:990
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1011
 #. translators: 1: username, 2: media.
 msgid "%1$s liked their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:995
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1016
 #. translators: 1: username, 2: author, 3: media.
 msgid "%1$s liked %2$s's %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1085
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1106
 #. translators: 1: username, 2: media, 3: group name.
 msgid "%1$s commented on a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1090
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1111
 #. translators: 1: username, 2: media.
 msgid "%1$s commented on their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1095
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1116
 #. translators: 1: username, 2: author, 3: media.
 msgid "%1$s commented on %2$s's %3$s"
 msgstr ""
@@ -3037,23 +3037,23 @@ msgstr ""
 msgid "Data mismatch, Please insert data properly."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:141
-#: app/main/controllers/template/RTMediaTemplate.php:195
+#: app/main/controllers/template/RTMediaTemplate.php:143
+#: app/main/controllers/template/RTMediaTemplate.php:197
 msgid "Invalid attribute passed for rtmedia_gallery shortcode."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:445
-#: app/main/controllers/template/RTMediaTemplate.php:574
-#: app/main/controllers/template/RTMediaTemplate.php:680
-#: app/main/controllers/template/RTMediaTemplate.php:900
+#: app/main/controllers/template/RTMediaTemplate.php:447
+#: app/main/controllers/template/RTMediaTemplate.php:576
+#: app/main/controllers/template/RTMediaTemplate.php:682
+#: app/main/controllers/template/RTMediaTemplate.php:902
 msgid "Ooops !!! Invalid access. No nonce was found !!"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:455
+#: app/main/controllers/template/RTMediaTemplate.php:457
 msgid "Media updated Sucessfully"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:474
+#: app/main/controllers/template/RTMediaTemplate.php:476
 msgid "Error in updating Media"
 msgstr ""
 
