@@ -32,18 +32,23 @@ before_script:
   - sudo apt-get autoremove
   - sudo apt-get autoclean
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
-  - wget -qO ee rt.cx/ee && sudo bash ee
-  - sudo ee stack install --nginx
-  - sudo ee stack install --web
+  - wget -qO wo wops.cc && sudo bash wo
+  - sudo wo stack install --nginx
+  - sudo wo stack install --web
+  - sudo rm /etc/nginx/conf.d/stub_status.conf /etc/nginx/sites-enabled/22222
+  - sudo wo stack restart --nginx
   - sudo wp --yes --allow-root cli update --nightly
-  - sudo ee site create automation.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
+  - sudo wo site create automation.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
   - sudo sed -i '/^127.0.0.1/ s/$/ automation.rtmedia.me/' /etc/hosts
-  - sudo chmod 777 -R /var/www
+  - sudo chown -R $USER:www-data /var/www/automation.rtmedia.me
+  - sudo chmod -R g+s /var/www/automation.rtmedia.me
+  - sudo chmod -R o-rwx /var/www/automation.rtmedia.me
   - cd /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
   - cd $PLUGIN_DIR
   - cp -Rf * /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
   - cd /var/www/automation.rtmedia.me/htdocs/
-  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.5.1.2.zip
+  - curl -I http://automation.rtmedia.me
+  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.6.3.0.zip
   - wp plugin activate --all
   - wp theme activate twentynineteen
   - cd $PLUGIN_DIR
@@ -81,7 +86,7 @@ script:
   - codecept run acceptance --steps
 
 after_script:
-  - sudo cat /var/log/ee/ee.log
+  #- sudo cat /var/log/ee/ee.log
 
 #notifications:
 #  slack:

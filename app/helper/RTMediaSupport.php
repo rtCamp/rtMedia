@@ -563,6 +563,12 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							<input type="hidden" name="ip_address" value="<?php echo esc_attr( $remote_addr ); ?>"/>
 							<input type="hidden" name="server_type" value="<?php echo esc_attr( $server_software ); ?>"/>
 							<input type="hidden" name="user_agent" value="<?php echo esc_attr( $http_user_agent ); ?>"/>
+
+							<?php
+							// Adding nonce for file upload.
+							$nonce = wp_create_nonce( 'rtmedia-admin-upload' );
+							?>
+							<input type="hidden" id="rtmedia_admin_upload_nonce" value="<?php echo esc_attr( $nonce ); ?>" />
 							<input type="hidden" name="debuglog_temp_path" id="debuglog_temp_path" />
 						</div>
 

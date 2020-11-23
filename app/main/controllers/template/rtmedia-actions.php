@@ -518,7 +518,7 @@ function rtmedia_admin_pages_content( $page ) {
 				<li><?php esc_html_e( 'WordPress/BuddyPress Plugin Development', 'buddypress-media' ); ?></li>
 			</ol>
 			<div class="clearfix">
-				<a href="https://rtmedia.io/enterprise-plan" class="rtm-button rtm-success" target="_blank"><?php esc_html_e( 'Contact Us', 'buddypress-media' ); ?></a>
+				<a href="https://rtmedia.io/enterprise-plan" class="button button-primary button-big" target="_blank"><?php esc_html_e( 'Contact Us', 'buddypress-media' ); ?></a>
 			</div>
 		</div>
 		<?php
