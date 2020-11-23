@@ -147,6 +147,15 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.5 [November 23, 2020] ###
+
+* FIXED
+
+	* Javascript errors while editing rtMedia image
+	* UI/UX issues
+	* Issue with attachment when creating support ticket
+	* Media not appearing in Profile/Group when uploading from BuddyPress’ sitewide activity stream
+
 ### 4.6.4 [July 16, 2020] ###
 
 * Enhancement
