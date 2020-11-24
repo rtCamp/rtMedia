@@ -46,6 +46,9 @@
 		}
 
 		.rtmedia-comment-media-list {
+			margin:0;
+			padding:0;
+
 			.mejs-container.mejs-video {
 				min-height: 200px;
 				min-width: 200px;
@@ -411,13 +414,13 @@
 }
 
 .rtm-comment-list {
-	&.rtm-comment-list {
-                height: 340px;
+
+        height: 340px;
 		list-style: none;
 		margin: 0;
-                overflow: auto;
+        overflow: auto;
 		padding: 0;
-	}
+
 
 	li {
 		background: #edeff4;
@@ -480,6 +483,15 @@
 	p {
 		margin: 0;
 	}
+	
+	.rtmedia-comment-media-container{
+		margin:0;
+	}
+
+	.rtmedia-comment{
+		margin:auto;
+	}
+
 }
 
 .rtmedia-comment-details {
@@ -492,7 +504,12 @@
 		display: inline-block;
 		margin-bottom: 5px;
 	}
+
+	input[type=submit] {
+		padding: 3px 6px;
+	}
 }
+
 
 .rtmedia-item-comments {
 	textarea {
