@@ -574,6 +574,20 @@
 	white-space: nowrap;
 }
 
+li.rtmedia-list-item.media-type-music {
+	display: inline;
+}
+
+li.rtmedia-list-item.media-type-video {
+	display: inline;
+
+	.mejs-overlay-play{
+		height: 100% !important;
+		width: 100% !important;
+		margin: auto;
+	}
+}
+
 .rtm-single-media.rtm-media-type-video {
 	padding-bottom: 40px;
 	padding-top: 40px;
