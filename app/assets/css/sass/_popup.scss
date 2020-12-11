@@ -46,6 +46,7 @@
 		}
 
 		.rtmedia-comment-media-list {
+			overflow: hidden;
 			margin:0;
 			padding:0;
 
@@ -576,10 +577,18 @@
 
 li.rtmedia-list-item.media-type-music {
 	display: inline;
+
+	.rtmedia-item-title{
+		padding-left: 10px;
+	}
 }
 
 li.rtmedia-list-item.media-type-video {
 	display: inline;
+
+	.rtmedia-item-title{
+		padding-left: 10px;
+	}
 
 	.mejs-overlay-play{
 		height: 100% !important;
