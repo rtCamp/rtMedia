@@ -163,6 +163,10 @@ body.media.buddypress {
   margin-top: 0;
 }
 
+.rtmedia-upload-terms {
+  float: right;
+}
+
 #whats-new-post-in-box {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1234,6 +1238,7 @@ img.mfp-img {
   margin: 5px 0; */
 }
 .mfp-content .rtm-lightbox-container .rtmedia-comment-media-list {
+  overflow: hidden;
   margin: 0;
   padding: 0;
 }
@@ -1667,9 +1672,15 @@ img.mfp-img {
 li.rtmedia-list-item.media-type-music {
   display: inline;
 }
+li.rtmedia-list-item.media-type-music .rtmedia-item-title {
+  padding-left: 10px;
+}
 
 li.rtmedia-list-item.media-type-video {
   display: inline;
+}
+li.rtmedia-list-item.media-type-video .rtmedia-item-title {
+  padding-left: 10px;
 }
 li.rtmedia-list-item.media-type-video .mejs-overlay-play {
   height: 100% !important;
@@ -1834,6 +1845,7 @@ li.rtmedia-list-item.media-type-video .mejs-overlay-play {
 #aw-whats-new-submit,
 .rtmedia-add-media-button {
   display: block;
+  line-height: initial;
 }
 
 #aw-whats-new-reset {
