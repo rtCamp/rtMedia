@@ -2925,7 +2925,7 @@ function rtmedia_disable_popup_navigation( $selector ){
  *  Created on 23-Nov-2020 by Vipin Kumar Dinkar <vipin.dinkar@rtcamp.com>
  */
 const rtMediaScrollComments = () => {
-	const commentBox = document.getElementById('rtmedia_comment_ul');
+	const commentBox       = document.getElementById('rtmedia_comment_ul');
 	const commentsToScroll = (document.getElementById('rtmedia_comment_ul').offsetHeight)*1000; 
 	commentBox.scrollTo({top: commentsToScroll, behavior: 'smooth'});
 }
