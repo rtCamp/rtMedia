@@ -259,11 +259,11 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 		}
 
 		.rtmedia-plupload-container {
-			width: 25%;
+			width: fit-content;
 		}
 
 		.rtmedia-upload-terms{
-			float:right;
+			float: left;
 		}
 
 		.rtmedia-upload-terms #rtmedia_upload_terms_conditions {

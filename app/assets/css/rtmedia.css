@@ -1949,10 +1949,10 @@ form.rt_media_comment_form .rtmedia-plupload-container {
   margin-left: 8.5%;
 }
 .bp-nouveau .activity-update-form .rtmedia-plupload-container {
-  width: 25%;
+  width: fit-content;
 }
 .bp-nouveau .activity-update-form .rtmedia-upload-terms {
-  float: right;
+  float: left;
 }
 .bp-nouveau .activity-update-form .rtmedia-upload-terms #rtmedia_upload_terms_conditions {
   margin-left: 20px;
