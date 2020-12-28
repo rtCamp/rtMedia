@@ -11,8 +11,29 @@
 
 // Additional Styles
 .mfp-content {
-	.rtm-lightbox-container {
+
+	/* Add animation frames */
+	@keyframes open {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	
+	@keyframes close {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+	
+	.rtm-lightbox-container { 
 		background: $black;
+		animation: open 1s;
 		margin: 0 auto;
 		position: relative;
 
