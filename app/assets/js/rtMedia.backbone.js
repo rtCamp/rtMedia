@@ -59,8 +59,13 @@ jQuery( function( $ ) {
 		 * https://wordpress.org/plugins/buddypress-edit-activity/
 		 */
 		$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
-			if ( 'undefined' === typeof originalOptions || 'undefined' === typeof originalOptions.data || 'buddypress-edit-activity-save' !== originalOptions.data.action ) {
-				return;
+			// Modify options, control originalOptions, store jqXHR, etc
+			try {
+				if ( null === originalOptions.data || typeof ( originalOptions.data ) === 'undefined' || typeof ( originalOptions.data.action ) === 'undefined' || 'buddypress-edit-activity-save' !== originalOptions.data.action ) {
+					return true;
+				}
+			} catch ( e ) {
+				return true;
 			}
 
 			if ( ! $( '#activity-' + originalOptions.data.activity_id ).hasClass( 'rtmedia_update' ) ) {
