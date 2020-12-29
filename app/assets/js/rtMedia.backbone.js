@@ -2944,6 +2944,9 @@ function rtmedia_disable_popup_navigation( $selector ){
  */
 const rtMediaScrollComments = () => {
 	const commentBox       = document.getElementById( 'rtmedia_comment_ul' );
-	const commentsToScroll = ( commentBox.offsetHeight ) * 1000;
-	commentBox.scrollTo( { top: commentsToScroll, behavior: 'smooth' } );
+
+	if ( commentBox !== null ) {
+		const commentsToScroll = ( commentBox.offsetHeight ) * 1000;
+		commentBox.scrollTo( { top: commentsToScroll, behavior: 'smooth' } );
+	}
 }
