@@ -147,6 +147,16 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.6 [December 30, 2020] ###
+
+* Enhancement
+	* Added fading effect for the media lightbox
+
+* FIXED
+
+	* UI/UX issues
+	* JS errors/notices
+
 ### 4.6.5 [November 23, 2020] ###
 
 * FIXED
@@ -186,7 +196,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 	* Custom css not applying when added from rtMedia settings’ custom css tab
 	* Too many redirections on BuddyPress’ privacy page
 	* Unable to delete media from lightbox and single media page
-	* Likes on mendia comment not working
+	* Likes on media comment not working
 	* PHP errors and warning
 
 ### 4.6.1 [April 9, 2020] ###
