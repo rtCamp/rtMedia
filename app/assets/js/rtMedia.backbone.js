@@ -59,8 +59,13 @@ jQuery( function( $ ) {
 		 * https://wordpress.org/plugins/buddypress-edit-activity/
 		 */
 		$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
-			if ( 'undefined' === typeof originalOptions || 'undefined' === typeof originalOptions.data || 'buddypress-edit-activity-save' !== originalOptions.data.action ) {
-				return;
+			// Modify options, control originalOptions, store jqXHR, etc
+			try {
+				if ( null === originalOptions.data || typeof ( originalOptions.data ) === 'undefined' || typeof ( originalOptions.data.action ) === 'undefined' || 'buddypress-edit-activity-save' !== originalOptions.data.action ) {
+					return true;
+				}
+			} catch ( e ) {
+				return true;
 			}
 
 			if ( ! $( '#activity-' + originalOptions.data.activity_id ).hasClass( 'rtmedia_update' ) ) {
@@ -396,6 +401,9 @@ jQuery( function( $ ) {
 			} );
 		} );
 		$( this ).parent().remove();
+
+		/** Scroll function called */
+		rtMediaScrollComments();
 	} );
 
 		$( document ).on( 'keypress', '#rtmedia_go_to_num', function( e ) {
@@ -1826,6 +1834,9 @@ jQuery( document ).ready( function( $ ) {
 				rtmedia_reset_video_and_audio_for_popup();
 
 				rtMediaHook.call( 'rtmedia_js_after_comment_added', [ ] );
+
+				/** Scroll function called */
+				rtMediaScrollComments();
 			},
 			error: function( data ) {
 				if ( widget_id ) {
@@ -2925,4 +2936,17 @@ function rtmedia_disable_popup_navigation( $selector ){
 			}
 		} );
 	} );
+}
+
+/** 
+ * Function that smooth scrolls to the latest comment in rtMedia.
+ *  Created on 23-Nov-2020 by Vipin Kumar Dinkar <vipin.dinkar@rtcamp.com>
+ */
+const rtMediaScrollComments = () => {
+	const commentBox       = document.getElementById( 'rtmedia_comment_ul' );
+
+	if ( commentBox !== null ) {
+		const commentsToScroll = ( commentBox.offsetHeight ) * 1000;
+		commentBox.scrollTo( { top: commentsToScroll, behavior: 'smooth' } );
+	}
 }

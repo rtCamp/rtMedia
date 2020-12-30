@@ -1187,8 +1187,45 @@ img.mfp-img {
   z-index: 2147483647;
 }
 
+.mfp-content {
+  /* Add animation frames */
+}
+@-webkit-keyframes open {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes open {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes close {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes close {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 .mfp-content .rtm-lightbox-container {
   background: #000000;
+  -webkit-animation: open 1s;
+          animation: open 1s;
   margin: 0 auto;
   position: relative;
 }
