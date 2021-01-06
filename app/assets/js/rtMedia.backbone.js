@@ -178,12 +178,12 @@ jQuery( function( $ ) {
 			that = this;
 			if ( rtmedia_load_template_flag == true ) {
 				if ( jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=media_title]' ).length > 0 ) {
-					template_url += '&media_title=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=media_title]' ).val();
+					template_url.data += '&media_title=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=media_title]' ).val();
 				}
 				if ( jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=lightbox]' ).length > 0 ) {
-					template_url += '&lightbox=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=lightbox]' ).val();
+					template_url.data += '&lightbox=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=lightbox]' ).val();
 				}
-				$( '#rtmedia-gallery-item-template' ).load( template_url, { backbone: true, is_album: o_is_album, is_edit_allowed: o_is_edit_allowed }, function() {
+				$( '#rtmedia-gallery-item-template' ).load( template_url.data, { backbone: true, is_album: o_is_album, is_edit_allowed: o_is_edit_allowed }, function() {
 					rtmedia_load_template_flag = false;
 					that.getNext( page, el, element);
 				} );
