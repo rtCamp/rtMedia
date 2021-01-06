@@ -1,6 +1,12 @@
 var rtMagnificPopup;
 var rtm_masonry_container;
 var comment_media = false;
+
+/* Makes new variables added in rtmedia_admin_strings accessable */
+for (var key in rtmedia_js_msgs) {
+	window[key] = rtmedia_js_msgs[key];
+}
+
 function apply_rtMagnificPopup( selector ) {
 	jQuery( 'document' ).ready( function( $ ) {
 		var rt_load_more = '';
@@ -234,7 +240,7 @@ function rtmedia_init_action_dropdown( parent ) {
 jQuery( 'document' ).ready( function( $ ) {
 	// When Ajax completed attach media uploader to new activity, applay popup and attach media to comment uploader.
 	jQuery( document ).ajaxComplete( function( event, xhr, settings ) {
-		if ( 'legacy' !== bp_template_pack && bp_template_pack ) {
+		if ( 'legacy' !== bp_template_pack.data && bp_template_pack.data ) {
 			var get_action = get_parameter( 'action', settings.data );
 			if (('activity_filter' === get_action || 'post_update' === get_action || 'get_single_activity_content' === get_action || 'activity_get_older_updates' === get_action) && 'undefined' !== typeof rtmedia_masonry_layout && 'true' === rtmedia_masonry_layout && 'undefined' !== typeof rtmedia_masonry_layout_activity && 'true' === rtmedia_masonry_layout_activity ) {
 				setTimeout( function() {

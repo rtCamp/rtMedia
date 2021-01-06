@@ -1053,7 +1053,7 @@ jQuery( document ).ready( function( $ ) {
 	/**
 	 * UI changes for buddypress nouveau theme on activity page
 	 */
-	if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+	if ( bp_template_pack.data && 'legacy' !== bp_template_pack.data ) {
 
 		var whats_new_form = jQuery( '#whats-new-form' );
 
@@ -1178,7 +1178,7 @@ jQuery( document ).ready( function( $ ) {
 		/**
 		 * Appends rtMedia Uploader option below form content section
 		 */
-		if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+		if ( bp_template_pack.data && 'legacy' !== bp_template_pack.data ) {
 
 			var form_ref        = jQuery( '#whats-new-form' );
 			var rt_uploader_div = jQuery( '.rtmedia-uploader-div' );
@@ -1476,7 +1476,7 @@ jQuery( document ).ready( function( $ ) {
 			var object  = '';
 			var item_id = 0;
 
-			if ( 'legacy' === bp_template_pack ) {
+			if ( 'legacy' === bp_template_pack.data ) {
 				if ( jQuery( '#whats-new-post-in' ).length ) {
 					item_id = jQuery( '#whats-new-post-in' ).val();
 				} else if ( jQuery( '.groups-header' ).length ) {
@@ -1523,7 +1523,7 @@ jQuery( document ).ready( function( $ ) {
 			/**
 			 * Blank error display issue resolved
 			 */
-			if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+			if ( bp_template_pack.data && 'legacy' !== bp_template_pack.data ) {
 
 				if ( 'disable' === rtmedia_activity_text_with_attachment &&  '' === jQuery.trim( jQuery( '#whats-new' ).val() ) ) {
 					let textarea = jQuery( '#whats-new' );
@@ -1981,7 +1981,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	/**
 	 * Blank error display issue resolved
 	 */
-	if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+	if ( bp_template_pack.data && 'legacy' !== bp_template_pack.data ) {
 
 		var new_submit_btn = jQuery( '#aw-whats-new-submit' );
 		if ( 0 < new_submit_btn.length ) {
@@ -2884,7 +2884,7 @@ function rtmedia_comment_media_upload( upload_comment ){
 function rtmedia_activity_stream_comment_media(){
 
     // For Buddypress new template nouveau
-    if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+    if ( bp_template_pack.data && 'legacy' !== bp_template_pack.data ) {
 		jQuery('#buddypress div#activity-stream ul.activity-list li.activity-item, #buddypress ul#activity-stream ul.activity-list li.activity-item').each(function () {
             if( jQuery( this ).find( '.rt_upload_hf_upload_parent_id' ).length  && jQuery( this ).find( '.rt_upload_hf_upload_parent_id_type' ).length ){
                 if ( jQuery( this ).find( "input[type=file]" ).length == 0 ) {
