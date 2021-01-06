@@ -1305,7 +1305,7 @@ function rtm_upload_terms_activity() {
 			if ( 0 !== condition_checkbox.length && false === condition_checkbox.prop( 'checked' ) && form.find( '#message' ).length === 0 ) {
 				event.preventDefault();
 				var selector = form.find( '.rtmedia-upload-terms' );
-				rtp_display_terms_warning( selector, rtmedia_upload_terms_check_terms_message );
+				rtp_display_terms_warning( selector, rtmedia_upload_terms_check_terms_message.data );
 			}
 		});
 
