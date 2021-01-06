@@ -939,12 +939,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					)
 				);
 
-				wp_localize_script( 'rtmedia-admin', 'rtmedia_on_label', __( 'ON', 'buddypress-media' ) );
-				wp_localize_script( 'rtmedia-admin', 'rtmedia_off_label', __( 'OFF', 'buddypress-media' ) );
-				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_ajax', $admin_ajax );
-				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_url', admin_url() );
 				/* path for file upload using ajax */
-				wp_localize_script( 'rtmedia-admin', 'rtmedia_fileupload_url', RTMEDIA_URL . 'app/helper/rtUploadAttachment.php' );
 
 				$rtmedia_admin_strings = array(
 					'no_refresh'                    => esc_html__( 'Please do not refresh this page.', 'buddypress-media' ),
@@ -962,11 +957,17 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'per_page_media_positive_error' => esc_html__( 'Please enter positive integer value only. Setting number of media per page value to round value', 'buddypress-media' ),
 					'request_failed'                => esc_html__( 'Request failed.', 'buddypress-media' ),
 					'wrong_css_input'               => esc_html__( 'You can not use @import statement in custom css', 'buddypress-media' ),
+					'rtmedia_admin_url'             => admin_url(),
+					/* Added vars below */
+					'rtmedia_on_label'              => __( 'ON', 'buddypress-media' ),
+					'rtmedia_off_label'             => __( 'OFF', 'buddypress-media' ),
+					'rtmedia_admin_ajax'            => $admin_ajax,
+					'rtmedia_fileupload_url'        => RTMEDIA_URL . 'app/helper/rtUploadAttachment.php',
+					'settings_url'                  => esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) . '#privacy_enabled',
+					'settings_rt_album_import_url'  => esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ),
 				);
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
-				wp_localize_script( 'rtmedia-admin', 'settings_url', esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) . '#privacy_enabled' );
-				wp_localize_script( 'rtmedia-admin', 'settings_rt_album_import_url', esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) );
 
 				$rtmedia_admin_support_strings = array(
 					'wp_admin_username_error' => esc_html__( 'Please enter WP Admin Login.', 'buddypress-media' ),

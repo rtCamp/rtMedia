@@ -1,5 +1,10 @@
 var rtMediaAdmin = new Object();
 
+/* Makes new variables added in rtmedia_admin_strings accessable */
+for (var key in rtmedia_admin_strings) {
+	window[key] = rtmedia_admin_strings[key];
+}
+
 rtMediaAdmin.templates = {
 	rtm_image : wp.template( 'rtm-image' ),
 	rtm_msg_div : wp.template( 'rtm-msg-div' ),
