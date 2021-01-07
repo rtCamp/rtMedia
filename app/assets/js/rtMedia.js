@@ -7,6 +7,10 @@ for (var key in rtmedia_js_msgs) {
 	window[key] = rtmedia_js_msgs[key];
 }
 
+for (var key in rtmedia_main_data) {
+	window[key] = rtmedia_main_data[key];
+}
+
 /* non groupable data vars here */
 bp_template_pack = bp_template_pack.data || bp_template_pack;
 ajaxurl = ajaxurl.data || ajaxurl;
