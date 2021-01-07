@@ -2,7 +2,7 @@ var rtMagnificPopup;
 var rtm_masonry_container;
 var comment_media = false;
 
-/* Makes new variables added in rtmedia_admin_strings accessable */
+/* Makes new variables accessable */
 for (var key in rtmedia_js_msgs) {
 	window[key] = rtmedia_js_msgs[key];
 }
@@ -14,13 +14,12 @@ for (var key in rtmedia_main_data) {
 /* non groupable data vars here */
 bp_template_pack = bp_template_pack.data || bp_template_pack;
 ajaxurl = ajaxurl.data || ajaxurl;
-rtmedia_masonry_layout = rtmedia_masonry_layout.data || rtmedia_masonry_layout;
 rtmedia_upload_terms_check_terms_message = rtmedia_upload_terms_check_terms_message.data || rtmedia_upload_terms_check_terms_message;
+rtmedia_masonry_layout = rtmedia_masonry_layout.data || rtmedia_masonry_layout;
+
 if (rtmedia_masonry_layout === "true"){
 rtmedia_masonry_layout_activity = rtmedia_masonry_layout_activity.data || rtmedia_masonry_layout_activity;
 }
-
-
 
 function apply_rtMagnificPopup( selector ) {
 	jQuery( 'document' ).ready( function( $ ) {

@@ -1324,8 +1324,6 @@ class RTMedia {
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_main_data', $rtmedia_main_data );
 
-		// wp_localize_script( 'rtmedia-magnific', 'rtmedia_load_more', __( 'Loading media', 'buddypress-media' ) );
-
 		$rtmedia_backbone_data = array(
 			'rMedia_loading_media'                  => RTMEDIA_URL . 'app/assets/admin/img/boxspinner.gif',
 			'rtmedia_set_featured_image_msg'        => __( 'Featured media set successfully.', 'buddypress-media' ),
