@@ -7,6 +7,17 @@ for (var key in rtmedia_js_msgs) {
 	window[key] = rtmedia_js_msgs[key];
 }
 
+/* non groupable data vars here */
+bp_template_pack = bp_template_pack.data || bp_template_pack;
+ajaxurl = ajaxurl.data || ajaxurl;
+rtmedia_masonry_layout = rtmedia_masonry_layout.data || rtmedia_masonry_layout;
+rtmedia_upload_terms_check_terms_message = rtmedia_upload_terms_check_terms_message.data || rtmedia_upload_terms_check_terms_message;
+if (rtmedia_masonry_layout === "true"){
+rtmedia_masonry_layout_activity = rtmedia_masonry_layout_activity.data || rtmedia_masonry_layout_activity;
+}
+
+
+
 function apply_rtMagnificPopup( selector ) {
 	jQuery( 'document' ).ready( function( $ ) {
 		var rt_load_more = '';
@@ -240,7 +251,7 @@ function rtmedia_init_action_dropdown( parent ) {
 jQuery( 'document' ).ready( function( $ ) {
 	// When Ajax completed attach media uploader to new activity, applay popup and attach media to comment uploader.
 	jQuery( document ).ajaxComplete( function( event, xhr, settings ) {
-		if ( 'legacy' !== bp_template_pack.data && bp_template_pack.data ) {
+		if ( 'legacy' !== bp_template_pack && bp_template_pack ) {
 			var get_action = get_parameter( 'action', settings.data );
 			if (('activity_filter' === get_action || 'post_update' === get_action || 'get_single_activity_content' === get_action || 'activity_get_older_updates' === get_action) && 'undefined' !== typeof rtmedia_masonry_layout && 'true' === rtmedia_masonry_layout && 'undefined' !== typeof rtmedia_masonry_layout_activity && 'true' === rtmedia_masonry_layout_activity ) {
 				setTimeout( function() {
@@ -1311,7 +1322,7 @@ function rtm_upload_terms_activity() {
 			if ( 0 !== condition_checkbox.length && false === condition_checkbox.prop( 'checked' ) && form.find( '#message' ).length === 0 ) {
 				event.preventDefault();
 				var selector = form.find( '.rtmedia-upload-terms' );
-				rtp_display_terms_warning( selector, rtmedia_upload_terms_check_terms_message.data );
+				rtp_display_terms_warning( selector, rtmedia_upload_terms_check_terms_message );
 			}
 		});
 

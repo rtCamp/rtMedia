@@ -1412,29 +1412,29 @@ class RTMedia {
 			if ( wp_script_is( 'jquery-masonry', 'registered' ) ) {
 				wp_enqueue_style( 'jquery-masonry' );
 				wp_enqueue_script( 'jquery-masonry' );
-				wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', 'true' );
+				wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', array( 'data' => 'true' ) );
 				if ( isset( $rtmedia->options ) && isset( $rtmedia->options['general_masonry_layout_activity'] ) && 1 === intval( $rtmedia->options['general_masonry_layout_activity'] ) ) {
-					wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout_activity', 'true' );
+					wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout_activity', array( 'data' => 'true' ) );
 				} else {
-					wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout_activity', 'false' );
+					wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout_activity', array( 'data' => 'false' ) );
 				}
 			} else {
-				wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', 'false' );
+				wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', array( 'data' => 'false' ) );
 			}
 		} else {
-			wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', 'false' );
+			wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', array( 'data' => 'false' ) );
 		}
 
 		if ( isset( $rtmedia->options['general_display_media'] ) ) {
-			wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', (string) $rtmedia->options['general_display_media'] );
+			wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', array( 'data' => (string) $rtmedia->options['general_display_media'] ) );
 		} else {
-			wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', 'load_more' );
+			wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', array( 'data' => 'load_more' ) );
 		}
 
 		if ( isset( $rtmedia->options['buddypress_enableOnActivity'] ) ) {
-			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', (string) $rtmedia->options['buddypress_enableOnActivity'] );
+			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', array( 'data' => (string) $rtmedia->options['buddypress_enableOnActivity'] ) );
 		} else {
-			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', '0' );
+			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', array( 'data' => '0' ) );
 		}
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_upload_progress_error_message', __( 'There are some uploads in progress. Do you want to cancel them?', 'buddypress-media' ) );
@@ -1559,7 +1559,7 @@ class RTMedia {
 		// Check if BuddyPress plugin is not activated.
 		$is_buddypress_activate = rtm_is_buddypress_activate();
 		if ( empty( $is_buddypress_activate ) ) {
-			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
+			wp_localize_script( 'rtmedia-main', 'ajaxurl', array( 'data' => admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) ) );
 		}
 
 		$options = $rtmedia->options;
