@@ -785,9 +785,9 @@ class RTMediaBuddyPressActivity {
 			wp_enqueue_script( 'rtmedia-backbone', false, '', RTMEDIA_VERSION, true );
 			$is_album        = is_rtmedia_album() ? true : false;
 			$is_edit_allowed = is_rtmedia_edit_allowed() ? true : false;
-			// wp_localize_script( 'rtmedia-backbone', 'is_album', $is_album );
-			// wp_localize_script( 'rtmedia-backbone', 'is_edit_allowed', $is_edit_allowed );
-			// wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
+			wp_localize_script( 'rtmedia-backbone', 'is_album', $is_album );
+			wp_localize_script( 'rtmedia-backbone', 'is_edit_allowed', $is_edit_allowed );
+			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
 			wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_check',
 				array(
 					'is_album'        => $is_album,

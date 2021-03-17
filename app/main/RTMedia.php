@@ -1217,6 +1217,7 @@ class RTMedia {
 		$rtmedia_main = array();
 		$rtmedia_magnific = array();
 		$rtmedia_backbone = array();
+		$rtmedia_bp_tpl = array();
 
 		$bp_template = get_option( '_bp_theme_package_id' );
 
@@ -1279,7 +1280,7 @@ class RTMedia {
 			);
 			// localize for rtmedia js.
 			// wp_localize_script( 'rtmedia-main', 'bp_template_pack', $bp_template );
-			$rtmedia_main['bp_template_pack'] = $bp_template;
+			wp_localize_script( 'rtmedia-main', 'rtmedia_bp', array( 'template_pack' => $bp_template ) );
 		}
 
 		$media_delete_confirmation_msg = __( 'Are you sure you want to delete this media?', 'buddypress-media' );
@@ -1422,10 +1423,9 @@ class RTMedia {
 		 * */
 		$rtmedia_media_thumbs = apply_filters( 'rtmedia_add_docs_thumbs', $rtmedia_media_thumbs );
 
-		// wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
 		// wp_localize_script( 'rtmedia-backbone', 'rtmedia_set_featured_image_msg', __( 'Featured media set successfully.', 'buddypress-media' ) );
 		// wp_localize_script( 'rtmedia-backbone', 'rtmedia_unset_featured_image_msg', __( 'Featured media removed successfully.', 'buddypress-media' ) );
-		$rtmedia_backbone['rtmedia_media_thumbs']             = $rtmedia_media_thumbs;
 		$rtmedia_backbone['rtmedia_set_featured_image_msg']   = __( 'Featured media set successfully.', 'buddypress-media' );
 		$rtmedia_backbone['rtmedia_unset_featured_image_msg'] = __( 'Featured media removed successfully.', 'buddypress-media' );
 
@@ -1448,10 +1448,10 @@ class RTMedia {
 
 		// Localise fot rtmedia-backcone js.
 		// wp_localize_script( 'rtmedia-backbone', 'bp_template_pack', $bp_template );
-		$rtmedia_backbone['bp_template_pack'] =  $bp_template;		
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp', array( 'template_pack' => $bp_template ) );
 
-		// wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_strings', $rtmedia_backbone_strings );
-		$rtmedia_backbone['rtmedia_backbone_strings'] = $rtmedia_backbone_strings;
+
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_strings', $rtmedia_backbone_strings );
 
 		// Localizing strings for rtMedia.js.
 		$rtmedia_main_js_strings = array(
@@ -1460,8 +1460,7 @@ class RTMedia {
 			'privacy_update_error'   => esc_html__( 'Couldn\'t change privacy, please try again.', 'buddypress-media' ),
 		);
 
-		// wp_localize_script( 'rtmedia-main', 'rtmedia_main_js_strings', $rtmedia_main_js_strings );
-		$rtmedia_main['rtmedia_main_js_strings'] =  $rtmedia_main_js_strings;
+		wp_localize_script( 'rtmedia-main', 'rtmedia_main_js_strings', $rtmedia_main_js_strings );
 
 		// Enqueue touchswipe.
 		wp_enqueue_script( 'rtmedia-touchswipe', RTMEDIA_URL . 'lib/touchswipe/jquery.touchSwipe.min.js', array( 'jquery' ), RTMEDIA_VERSION, true );
@@ -1557,9 +1556,7 @@ class RTMedia {
 				),
 			),
 		);
-		// wp_localize_script( 'rtmedia-main', 'rtmedia_media_size_config', $media_size_config );
-		$rtmedia_main[ 'rtmedia_media_size_config'] =  $media_size_config;
-		
+		wp_localize_script( 'rtmedia-main', 'rtmedia_media_size_config', $media_size_config );
 
 		// rtMedia fot comment media script localize.
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
@@ -1627,12 +1624,10 @@ class RTMedia {
 		// wp_localize_script( 'rtmedia-main', 'rtmedia_disable_media_in_commented_media_text', __( 'Adding media in Comments is not allowed', 'buddypress-media' ) );
 		$rtmedia_main['rtmedia_disable_media_in_commented_media_text'] = __( 'Adding media in Comments is not allowed', 'buddypress-media' );
 
-		// wp_localize_script( 'rtmedia-backbone', 'rtmedia_exteansions', $rtmedia_extns );
-		// wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_comment', $params );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_exteansions', $rtmedia_extns );
+		wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_comment', $params );
 		// wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( '/images/loading.gif' ) );
 
-		$rtmedia_backbone['rtmedia_exteansions'] = $rtmedia_extns;
-		$rtmedia_backbone['rtMedia_update_plupload_comment'] = $params;
 		$rtmedia_backbone['rMedia_loading_file'] = admin_url( '/images/loading.gif' );
 
 		// Check if BuddyPress plugin is not activated.

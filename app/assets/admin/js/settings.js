@@ -50,7 +50,7 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-			jQuery.post( ajaxurl, data, function ( response ) {
+			jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
 				bp_media_metabox_holder.html( response ).fadeIn( 'slow' );
 			} );
 		}
@@ -71,7 +71,7 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-			jQuery.post( ajaxurl, data, function ( response ) {
+			jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
 				bp_media_metabox_holder.html();
 				bp_media_metabox_holder.html( response ).fadeIn( 'slow' );
 			} );
@@ -213,7 +213,7 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-			jQuery.getJSON( ajaxurl, data, function ( response ) {
+			jQuery.getJSON( rtmedia_main.ajaxurl, data, function ( response ) {
 				if ( response.error === undefined && response.apikey ) {
 					var tempUrl = window.location.href;
 					var hash = window.location.hash;
@@ -252,7 +252,7 @@ jQuery( document ).ready( function ( $ ) {
 		};
 
 		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-		jQuery.getJSON( ajaxurl, data, function ( response ) {
+		jQuery.getJSON( rtmedia_main.ajaxurl, data, function ( response ) {
 			if ( response.error === undefined && response.apikey ) {
 				var tempUrl = window.location.href;
 				var hash = window.location.hash;
@@ -296,7 +296,7 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-			jQuery.post( ajaxurl, data, function ( response ) {
+			jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
 				if ( response ) {
 					jQuery( '.settings-error-encoding-disabled' ).remove();
 
@@ -345,7 +345,7 @@ jQuery( document ).ready( function ( $ ) {
 				action: 'rtmedia_enable_encoding'
 			};
 
-			jQuery.post( ajaxurl, data, function ( response ) {
+			jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
 
 				if ( response ) {
 					jQuery( '.settings-error-encoding-enabled' ).remove();
@@ -407,7 +407,7 @@ jQuery( document ).ready( function ( $ ) {
 					};
 
 					// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-					jQuery.getJSON( ajaxurl, data, function ( response ) {
+					jQuery.getJSON( rtmedia_main.ajaxurl, data, function ( response ) {
 						if ( response.error === undefined && response.updated ) {
 							bpm_unsubscribe.next().remove();
 							bpm_unsubscribe.after( response.form );
@@ -444,7 +444,7 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	function fireRequest( data ) {
-		return jQuery.post( ajaxurl, data, function ( response ) {
+		return jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
 
 			if ( response != 0 ) {
 				var redirect = false;
@@ -459,7 +459,7 @@ jQuery( document ).ready( function ( $ ) {
 				jQuery( '#rtprivacyinstaller span.finished' ).html( parseInt( finished ) + data.count );
 
 				if ( redirect ) {
-					jQuery.post( ajaxurl, {
+					jQuery.post( rtmedia_main.ajaxurl, {
 						action: 'rtmedia_privacy_redirect'
 					}, function ( response ) {
 						window.location = rtmedia.settings_url ;
@@ -523,7 +523,7 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	function fireimportRequest( data ) {
-		return jQuery.getJSON( ajaxurl, data, function ( response ) {
+		return jQuery.getJSON( rtmedia_main.ajaxurl, data, function ( response ) {
 			favorites = false;
 
 			if ( response ) {
@@ -557,7 +557,7 @@ jQuery( document ).ready( function ( $ ) {
 						'action': 'rtmedia_rt_album_import_favorites',
 						rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 					};
-					jQuery.post( ajaxurl, favorite_data, function ( response ) {
+					jQuery.post( rtmedia_main.ajaxurl, favorite_data, function ( response ) {
 
 						if (response.hasOwnProperty(favorites) && (response.favorites !== 0 || response.favorites !== '0')) {
 
@@ -626,7 +626,7 @@ jQuery( document ).ready( function ( $ ) {
 	}
 
 	function fireimportfavoriteRequest( data ) {
-		return jQuery.post( ajaxurl, data, function ( response ) {
+		return jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
 			redirect = false;
 			favorites_total = jQuery( '#bpmedia-bpalbumimporter .bp-album-favorites span.total' ).html();
 			favorites_finished = jQuery( '#bpmedia-bpalbumimporter .bp-album-favorites span.finished' ).html();
@@ -651,7 +651,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '#bpmedia-bpalbumimport-cleanup' ).click( function ( e ) {
 		e.preventDefault();
-		jQuery.post( ajaxurl, {
+		jQuery.post( rtmedia_main.ajaxurl, {
 			action: 'rtmedia_rt_album_cleanup',
 			rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 		}, function ( response ) {
@@ -685,7 +685,7 @@ jQuery( document ).ready( function ( $ ) {
 		} else {
 			jQuery( this ).prop( 'disabled', true );
 		}
-		wp_admin_url = ajaxurl.replace( 'admin-ajax.php', '' );
+		wp_admin_url = rtmedia_main.ajaxurl.replace( 'admin-ajax.php', '' );
 
 		if ( !jQuery( '.bpm-ajax-loader' ).length ) {
 			var data = {
@@ -753,7 +753,7 @@ jQuery( document ).ready( function ( $ ) {
 			choice: jQuery( 'input[name="choice"]:checked' ).val(),
 			interested: jQuery( 'input[name="interested"]:checked' ).val()
 		};
-		jQuery.post( ajaxurl, data, function ( response ) {
+		jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
 			var p_data = {
 				msg :response,
 				strong : 'yes'
@@ -772,7 +772,7 @@ jQuery( document ).ready( function ( $ ) {
 			action: 'rtmedia_rt_album_deactivate',
 			rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 		};
-		jQuery.get( ajaxurl, data, function ( response ) {
+		jQuery.get( rtmedia_main.ajaxurl, data, function ( response ) {
 
 			if ( response ) {
 				location.reload();
@@ -796,7 +796,7 @@ jQuery( document ).ready( function ( $ ) {
 		var data = {
 			action: 'rtmedia_hide_encoding_notice'
 		}
-		jQuery.post( ajaxurl, data, function ( response ) {
+		jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
 			if ( response ) {
 				jQuery( '.bpm-hide-encoding-notice' ).closest( '.updated' ).remove();
 			}
@@ -939,7 +939,7 @@ jQuery( document ).ready( function ( $ ) {
 			form_data: form_data,
 			support_wpnonce: jQuery('#support_wpnonce').val()
 		};
-		jQuery.post( ajaxurl, data, function ( data ) {
+		jQuery.post( rtmedia_main.ajaxurl, data, function ( data ) {
 			data = data.trim();
 			if ( data == "false" ) {
 				alert( rtmedia_admin_support_strings.all_fields_error );
@@ -1052,7 +1052,7 @@ jQuery( document ).ready( function ( $ ) {
 		data = {
 			action: "rtmedia_export_settings",
 		};
-		jQuery.post( ajaxurl, data, function ( data ) {
+		jQuery.post( rtmedia_main.ajaxurl, data, function ( data ) {
 			var dataStr            = "data:text/json;charset=utf-8," + encodeURIComponent( JSON.stringify( data ) );
 			var downloadAnchorNode = document.createElement( 'a' );
 			downloadAnchorNode.setAttribute( 'href', dataStr );
