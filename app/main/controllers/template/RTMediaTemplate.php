@@ -48,7 +48,7 @@ class RTMediaTemplate {
 
 		// wp_localize_script( 'rtmedia-backbone', 'is_album', array( $is_album ) );
 		// wp_localize_script( 'rtmedia-backbone', 'is_edit_allowed', array( $is_edit_allowed ) );
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_tpl',
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_check',
 			array(
 				'is_album'        => $is_album,
 				'is_edit_allowed' => $is_edit_allowed,
