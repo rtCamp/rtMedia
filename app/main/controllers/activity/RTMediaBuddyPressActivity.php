@@ -788,13 +788,6 @@ class RTMediaBuddyPressActivity {
 			wp_localize_script( 'rtmedia-backbone', 'is_album', $is_album );
 			wp_localize_script( 'rtmedia-backbone', 'is_edit_allowed', $is_edit_allowed );
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
-			// wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_check',
-			// 	array(
-			// 		'is_album'        => $is_album,
-			// 		'is_edit_allowed' => $is_edit_allowed,
-			// 		'rtMedia_update_plupload_config' =>  $params,
-			// 	)
-			// );
 
 			$upload_view = new RTMediaUploadView( array( 'activity' => true ) );
 			$upload_view->render( 'uploader' );

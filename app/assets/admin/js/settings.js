@@ -120,10 +120,10 @@ jQuery( document ).ready( function ( $ ) {
 			var general_videothumb_val = 0;
 
 			if ( general_videothumb.val() <= 0 ) {
-				error_msg += rtmedia.admin_strings.video_thumbnail_error;
+				error_msg += rtmedia_admin_strings.video_thumbnail_error;
 				general_videothumb_val = 2;
 			} else if ( ! reg.test( general_videothumb.val() ) ) {
-				error_msg += rtmedia.admin_strings.video_thumbnail_invalid_value + ' ' + Math.round( general_videothumb.val() ) + ".";
+				error_msg += rtmedia_admin_strings.video_thumbnail_invalid_value + ' ' + Math.round( general_videothumb.val() ) + ".";
 				general_videothumb_val = Math.round( general_videothumb.val() );
 			}
 
@@ -147,11 +147,11 @@ jQuery( document ).ready( function ( $ ) {
 		if ( return_code && 1 === general_jpeg_image_quality.length && 'undefined' !== typeof general_jpeg_image_quality ) {
 
 			if ( general_jpeg_image_quality.val() <= 0 ) {
-				error_msg += rtmedia.admin_strings.jpeg_quality_negative_error;
+				error_msg += rtmedia_admin_strings.jpeg_quality_negative_error;
 			} else if ( general_jpeg_image_quality.val() > 100 ) {
-				error_msg += rtmedia.admin_strings.jpeg_quality_percentage_error;
+				error_msg += rtmedia_admin_strings.jpeg_quality_percentage_error;
 			} else if ( ! reg.test( general_jpeg_image_quality.val() ) ) {
-				error_msg += rtmedia.admin_strings.jpeg_quality_invalid_value + ' ' + Math.round( general_jpeg_image_quality.val() ) + ".";
+				error_msg += rtmedia_admin_strings.jpeg_quality_invalid_value + ' ' + Math.round( general_jpeg_image_quality.val() ) + ".";
 			}
 
 			if ( '' !== error_msg ) {
@@ -177,9 +177,9 @@ jQuery( document ).ready( function ( $ ) {
 		if ( return_code && 1 === general_perPageMedia.length && 'undefined' !== typeof general_perPageMedia ) {
 
 			if ( 1 > general_perPageMedia.val() ) {
-				error_msg += rtmedia.admin_strings.per_page_media_negative_value;
+				error_msg += rtmedia_admin_strings.per_page_media_negative_value;
 			} else if ( jQuery.isNumeric( general_perPageMedia.val() ) && ( Math.floor( general_perPageMedia.val() ) != general_perPageMedia.val() ) ) {
-				error_msg += rtmedia.admin_strings.per_page_media_positive_error + " " + Math.round( general_perPageMedia.val() ) + ".";
+				error_msg += rtmedia_admin_strings.per_page_media_positive_error + " " + Math.round( general_perPageMedia.val() ) + ".";
 			}
 
 			if ( '' !== error_msg ) {
@@ -201,7 +201,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( document ).on( 'click', "#bpm-services .encoding-try-now,#rtm-services .encoding-try-now", function ( e ) {
 		e.preventDefault();
-		if ( confirm( rtmedia.admin_strings.are_you_sure ) ) {
+		if ( confirm( rtmedia_admin_strings.are_you_sure ) ) {
 			var data = {
 				src   : rtmedia.admin_url + "images/wpspin_light.gif"
 			};
@@ -284,7 +284,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( document ).on( 'click', '#disable-encoding', function ( e ) {
 		e.preventDefault();
-		if ( confirm( rtmedia.admin_strings.disable_encoding ) ) {
+		if ( confirm( rtmedia_admin_strings.disable_encoding ) ) {
 			var data = {
 				src   : rtmedia.admin_url + "images/wpspin_light.gif"
 			};
@@ -321,7 +321,7 @@ jQuery( document ).ready( function ( $ ) {
 
 					var data = {
 						id : 'settings-error-encoding-disabled',
-						msg : rtmedia.admin_strings.something_went_wrong,
+						msg : rtmedia_admin_strings.something_went_wrong,
 						class : 'error'
 					};
 
@@ -334,7 +334,7 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( document ).on( 'click', '#enable-encoding', function ( e ) {
 		e.preventDefault();
 
-		if ( confirm( rtmedia.admin_strings.enable_encoding ) ) {
+		if ( confirm( rtmedia_admin_strings.enable_encoding ) ) {
 			var data = {
 				src   : rtmedia.admin_url + "images/wpspin_light.gif"
 			};
@@ -371,7 +371,7 @@ jQuery( document ).ready( function ( $ ) {
 
 					var data = {
 						id : 'settings-error-encoding-enabled',
-						msg : rtmedia.admin_strings.something_went_wrong,
+						msg : rtmedia_admin_strings.something_went_wrong,
 						class : 'error'
 					};
 
@@ -616,7 +616,7 @@ jQuery( document ).ready( function ( $ ) {
 					jQuery('#map_progress_msgs').html( rtMediaAdmin.templates.rtm_map_mapping_failure( map_data ) );
 				} else {
 					var map_data = {
-						msg : rtmedia.admin_strings.request_failed
+						msg : rtmedia_admin_strings.request_failed
 					};
 
 					jQuery('#map_progress_msgs').html( rtMediaAdmin.templates.rtm_map_mapping_failure( map_data ) );
@@ -691,7 +691,7 @@ jQuery( document ).ready( function ( $ ) {
 			var data = {
 				src   : rtmedia.admin_url + "images/wpspin_light.gif",
 				class : 'bpm-ajax-loader',
-				norefresh : rtmedia.admin_strings.no_refresh
+				norefresh : rtmedia_admin_strings.no_refresh
 			};
 
 			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -778,7 +778,7 @@ jQuery( document ).ready( function ( $ ) {
 				location.reload();
 			} else {
 				var p_data = {
-					msg : rtmedia.admin_strings.something_went_wrong
+					msg : rtmedia_admin_strings.something_went_wrong
 				};
 
 				$bpalbum.parent().after( rtMediaAdmin.templates.rtm_p_tag( p_data ) );

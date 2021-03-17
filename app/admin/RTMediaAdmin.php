@@ -956,6 +956,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'request_failed'                => esc_html__( 'Request failed.', 'buddypress-media' ),
 					'wrong_css_input'               => esc_html__( 'You can not use @import statement in custom css', 'buddypress-media' ),
 				);
+				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
 
 				wp_localize_script(
 					'rtmedia-admin',
@@ -966,7 +967,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						'admin_ajax'     => $admin_ajax,
 						'admin_url'      => admin_url(),
 						'fileupload_url' => RTMEDIA_URL . 'app/helper/rtUploadAttachment.php', /* path for file upload using ajax */
-						'admin_strings'                => $rtmedia_admin_strings,
 						'settings_url'                 => esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ): admin_url( 'admin.php' ) ) ) ) . '#privacy_enabled',
 						'settings_rt_album_import_url' => esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ),
 					)

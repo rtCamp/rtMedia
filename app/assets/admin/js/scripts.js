@@ -14,7 +14,7 @@ jQuery( document ).ready( function( $ ) {
 		$( '.rtm-save-settings-msg' ).remove();
 
 		if ( 0 === $( '.rtm-fly-warning' ).length ) {
-			rtm_warning.innerText = rtmedia.admin_strings.settings_changed;
+			rtm_warning.innerText = rtmedia_admin_strings.settings_changed;
 
 			$( '.rtm-button-container.top' ).prepend( rtm_warning );
 			$( '.rtm-fly-warning' ).slideDown();
@@ -203,7 +203,7 @@ jQuery( document ).ready( function( $ ) {
 
 			// if @import found in the css, then show error message
 			if ( removable_line != null ) {
-				jQuery( '#rtmedia-custom-css' ).after( '<div id="rtcss-notice" class="error"><p>' + rtmedia.admin_strings.wrong_css_input + '</p></div>' );
+				jQuery( '#rtmedia-custom-css' ).after( '<div id="rtcss-notice" class="error"><p>' + rtmedia_admin_strings.wrong_css_input + '</p></div>' );
 				return false;
 			}
 		}
