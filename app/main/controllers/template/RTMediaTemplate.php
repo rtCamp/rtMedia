@@ -46,8 +46,14 @@ class RTMediaTemplate {
 		$is_album        = is_rtmedia_album() ? true : false;
 		$is_edit_allowed = is_rtmedia_edit_allowed() ? true : false;
 
-		wp_localize_script( 'rtmedia-backbone', 'is_album', array( $is_album ) );
-		wp_localize_script( 'rtmedia-backbone', 'is_edit_allowed', array( $is_edit_allowed ) );
+		// wp_localize_script( 'rtmedia-backbone', 'is_album', array( $is_album ) );
+		// wp_localize_script( 'rtmedia-backbone', 'is_edit_allowed', array( $is_edit_allowed ) );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_tpl',
+			array(
+				'is_album'        => $is_album,
+				'is_edit_allowed' => $is_edit_allowed,
+			)
+		)
 	}
 
 	/**

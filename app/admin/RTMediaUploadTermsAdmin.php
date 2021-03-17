@@ -65,7 +65,7 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 				'privacy_msg' => esc_html__( 'Please enter privacy message.', 'buddypress-media' ),
 			);
 
-			wp_localize_script( 'rtmedia-upload-terms-main', 'rtm_upload_terms_error_msgs', $translation_data );
+			wp_localize_script( 'rtmedia-upload-terms-main', 'rtm_upload_terms', array( 'error_msgs' => $translation_data ) );
 
 		}
 
