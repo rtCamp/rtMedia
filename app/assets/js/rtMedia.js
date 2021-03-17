@@ -4,7 +4,7 @@ var comment_media = false;
 function apply_rtMagnificPopup( selector ) {
 	jQuery( 'document' ).ready( function( $ ) {
 		var rt_load_more = '';
-		if ( typeof ( rtmedia_magnific.rtmedia_load_more ) === 'undefined' ) {
+		if ( typeof ( rtmedia_magnific ) === 'undefined' || typeof ( rtmedia_magnific.rtmedia_load_more ) === 'undefined' ) {
 			rt_load_more = 'Loading media';
 		} else {
 			rt_load_more = rtmedia_magnific.rtmedia_load_more;
