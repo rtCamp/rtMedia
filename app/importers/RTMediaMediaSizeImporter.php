@@ -182,7 +182,7 @@ class RTMediaMediaSizeImporter {
 							"nonce": jQuery.trim(jQuery('#rtmedia_media_size_import_nonce').val())
 						};
 						jQuery.ajax({
-							url: rtmedia_admin_ajax,
+							url: rtmedia.admin_ajax,
 							type: 'post',
 							data: ajax_data,
 							success: function (sdata) {

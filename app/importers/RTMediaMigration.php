@@ -559,7 +559,7 @@ class RTMediaMigration {
 					if (db_done < db_total) {
 						jQuery("#rtMediaSyncing").show();
 						jQuery.ajax({
-							url: rtmedia_admin_ajax,
+							url: rtmedia.admin_ajax,
 							type: 'post',
 							data: {
 								"action": "bp_media_rt_db_migration",
