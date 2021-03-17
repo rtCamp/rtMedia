@@ -35,7 +35,7 @@ jQuery( document ).ready( function ( $ ) {
 			action: 'rtmedia_linkback',
 			linkback: jQuery( '#bp-media-add-linkback:checked' ).length
 		};
-		jQuery.post( rtmedia_admin_ajax, data, function ( response ) {
+		jQuery.post( rtmedia.admin_ajax, data, function ( response ) {
 		} );
 	} );
 
@@ -120,10 +120,10 @@ jQuery( document ).ready( function ( $ ) {
 			var general_videothumb_val = 0;
 
 			if ( general_videothumb.val() <= 0 ) {
-				error_msg += rtmedia_admin_strings.video_thumbnail_error;
+				error_msg += rtmedia.admin_strings.video_thumbnail_error;
 				general_videothumb_val = 2;
 			} else if ( ! reg.test( general_videothumb.val() ) ) {
-				error_msg += rtmedia_admin_strings.video_thumbnail_invalid_value + ' ' + Math.round( general_videothumb.val() ) + ".";
+				error_msg += rtmedia.admin_strings.video_thumbnail_invalid_value + ' ' + Math.round( general_videothumb.val() ) + ".";
 				general_videothumb_val = Math.round( general_videothumb.val() );
 			}
 
@@ -147,11 +147,11 @@ jQuery( document ).ready( function ( $ ) {
 		if ( return_code && 1 === general_jpeg_image_quality.length && 'undefined' !== typeof general_jpeg_image_quality ) {
 
 			if ( general_jpeg_image_quality.val() <= 0 ) {
-				error_msg += rtmedia_admin_strings.jpeg_quality_negative_error;
+				error_msg += rtmedia.admin_strings.jpeg_quality_negative_error;
 			} else if ( general_jpeg_image_quality.val() > 100 ) {
-				error_msg += rtmedia_admin_strings.jpeg_quality_percentage_error;
+				error_msg += rtmedia.admin_strings.jpeg_quality_percentage_error;
 			} else if ( ! reg.test( general_jpeg_image_quality.val() ) ) {
-				error_msg += rtmedia_admin_strings.jpeg_quality_invalid_value + ' ' + Math.round( general_jpeg_image_quality.val() ) + ".";
+				error_msg += rtmedia.admin_strings.jpeg_quality_invalid_value + ' ' + Math.round( general_jpeg_image_quality.val() ) + ".";
 			}
 
 			if ( '' !== error_msg ) {
@@ -177,9 +177,9 @@ jQuery( document ).ready( function ( $ ) {
 		if ( return_code && 1 === general_perPageMedia.length && 'undefined' !== typeof general_perPageMedia ) {
 
 			if ( 1 > general_perPageMedia.val() ) {
-				error_msg += rtmedia_admin_strings.per_page_media_negative_value;
+				error_msg += rtmedia.admin_strings.per_page_media_negative_value;
 			} else if ( jQuery.isNumeric( general_perPageMedia.val() ) && ( Math.floor( general_perPageMedia.val() ) != general_perPageMedia.val() ) ) {
-				error_msg += rtmedia_admin_strings.per_page_media_positive_error + " " + Math.round( general_perPageMedia.val() ) + ".";
+				error_msg += rtmedia.admin_strings.per_page_media_positive_error + " " + Math.round( general_perPageMedia.val() ) + ".";
 			}
 
 			if ( '' !== error_msg ) {
@@ -201,9 +201,9 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( document ).on( 'click', "#bpm-services .encoding-try-now,#rtm-services .encoding-try-now", function ( e ) {
 		e.preventDefault();
-		if ( confirm( rtmedia_admin_strings.are_you_sure ) ) {
+		if ( confirm( rtmedia.admin_strings.are_you_sure ) ) {
 			var data = {
-				src   : rtmedia_admin_url + "images/wpspin_light.gif"
+				src   : rtmedia.admin_url + "images/wpspin_light.gif"
 			};
 
 			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -240,7 +240,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		if ( jQuery( this ).next( 'img' ).length == 0 ) {
 			var data = {
-				src   : rtmedia_admin_url + "images/wpspin_light.gif"
+				src   : rtmedia.admin_url + "images/wpspin_light.gif"
 			};
 
 			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -284,9 +284,9 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( document ).on( 'click', '#disable-encoding', function ( e ) {
 		e.preventDefault();
-		if ( confirm( rtmedia_admin_strings.disable_encoding ) ) {
+		if ( confirm( rtmedia.admin_strings.disable_encoding ) ) {
 			var data = {
-				src   : rtmedia_admin_url + "images/wpspin_light.gif"
+				src   : rtmedia.admin_url + "images/wpspin_light.gif"
 			};
 
 			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -321,7 +321,7 @@ jQuery( document ).ready( function ( $ ) {
 
 					var data = {
 						id : 'settings-error-encoding-disabled',
-						msg : rtmedia_admin_strings.something_went_wrong,
+						msg : rtmedia.admin_strings.something_went_wrong,
 						class : 'error'
 					};
 
@@ -334,9 +334,9 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( document ).on( 'click', '#enable-encoding', function ( e ) {
 		e.preventDefault();
 
-		if ( confirm( rtmedia_admin_strings.enable_encoding ) ) {
+		if ( confirm( rtmedia.admin_strings.enable_encoding ) ) {
 			var data = {
-				src   : rtmedia_admin_url + "images/wpspin_light.gif"
+				src   : rtmedia.admin_url + "images/wpspin_light.gif"
 			};
 
 			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -371,7 +371,7 @@ jQuery( document ).ready( function ( $ ) {
 
 					var data = {
 						id : 'settings-error-encoding-enabled',
-						msg : rtmedia_admin_strings.something_went_wrong,
+						msg : rtmedia.admin_strings.something_went_wrong,
 						class : 'error'
 					};
 
@@ -392,7 +392,7 @@ jQuery( document ).ready( function ( $ ) {
 					jQuery( this ).dialog( "close" );
 
 					var data = {
-						src   : rtmedia_admin_url + "images/wpspin_light.gif"
+						src   : rtmedia.admin_url + "images/wpspin_light.gif"
 					};
 
 					var bpm_unsubscribe = $( '.bpm-unsubscribe' );
@@ -462,7 +462,7 @@ jQuery( document ).ready( function ( $ ) {
 					jQuery.post( ajaxurl, {
 						action: 'rtmedia_privacy_redirect'
 					}, function ( response ) {
-						window.location = settings_url;
+						window.location = rtmedia.settings_url ;
 					} );
 				}
 			} else {
@@ -616,7 +616,7 @@ jQuery( document ).ready( function ( $ ) {
 					jQuery('#map_progress_msgs').html( rtMediaAdmin.templates.rtm_map_mapping_failure( map_data ) );
 				} else {
 					var map_data = {
-						msg : rtmedia_admin_strings.request_failed
+						msg : rtmedia.admin_strings.request_failed
 					};
 
 					jQuery('#map_progress_msgs').html( rtMediaAdmin.templates.rtm_map_mapping_failure( map_data ) );
@@ -655,7 +655,7 @@ jQuery( document ).ready( function ( $ ) {
 			action: 'rtmedia_rt_album_cleanup',
 			rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 		}, function ( response ) {
-			window.location = settings_rt_album_import_url;
+			window.location = rtmedia.settings_rt_album_import_url;
 		} );
 
 	} );
@@ -689,9 +689,9 @@ jQuery( document ).ready( function ( $ ) {
 
 		if ( !jQuery( '.bpm-ajax-loader' ).length ) {
 			var data = {
-				src   : rtmedia_admin_url + "images/wpspin_light.gif",
+				src   : rtmedia.admin_url + "images/wpspin_light.gif",
 				class : 'bpm-ajax-loader',
-				norefresh : rtmedia_admin_strings.no_refresh
+				norefresh : rtmedia.admin_strings.no_refresh
 			};
 
 			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -778,7 +778,7 @@ jQuery( document ).ready( function ( $ ) {
 				location.reload();
 			} else {
 				var p_data = {
-					msg : rtmedia_admin_strings.something_went_wrong
+					msg : rtmedia.admin_strings.something_went_wrong
 				};
 
 				$bpalbum.parent().after( rtMediaAdmin.templates.rtm_p_tag( p_data ) );
@@ -788,7 +788,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '.updated' ).on( 'click', '.bpm-hide-encoding-notice', function () {
 		var data = {
-			src   : rtmedia_admin_url + "images/wpspin_light.gif"
+			src   : rtmedia.admin_url + "images/wpspin_light.gif"
 		};
 
 		jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -820,10 +820,10 @@ jQuery( document ).ready( function ( $ ) {
 	var onData = '';
 	var offData = '';
 
-	if ( rtmedia_on_label !== undefined )
-		onData = 'data-on-label="' + rtmedia_on_label + '"';
-	if ( rtmedia_off_label !== undefined )
-		offData = 'data-off-label="' + rtmedia_off_label + '"';
+	if ( rtmedia.on_label !== undefined )
+		onData = 'data-on-label="' + rtmedia.on_label + '"';
+	if ( rtmedia.off_label !== undefined )
+		offData = 'data-off-label="' + rtmedia.off_label + '"';
 
 	var files;
 	/* upload file immediately after selecting it */
@@ -979,7 +979,7 @@ jQuery( document ).ready( function ( $ ) {
 		data.append( 'action', 'rtmedia_admin_upload' );
 
 		jQuery.ajax({
-			url: rtmedia_admin_ajax,
+			url: rtmedia.admin_ajax,
 			type: 'POST',
 			data: data,
 			cache: false,
@@ -1099,7 +1099,7 @@ function rtmedia_addon_do_not_show() {
 	var data = {
 		action: 'rtmedia_addon_popup_not_show_again'
 	};
-	jQuery.post( rtmedia_admin_ajax, data, function ( response ) {
+	jQuery.post( rtmedia.admin_ajax, data, function ( response ) {
 		jQuery( '#TB_window' ).remove();
 		jQuery( '#TB_overlay' ).remove();
 	} );

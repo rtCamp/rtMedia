@@ -83,15 +83,15 @@ jQuery( function( $ ) {
 
 
 	var o_is_album, o_is_edit_allowed;
-	if ( typeof ( is_album ) == 'undefined' ) {
+	if ( typeof ( rtmedia_backbone_check.is_album ) == 'undefined' ) {
 		o_is_album = new Array( '' );
 	} else {
-		o_is_album = is_album;
+		o_is_album = rtmedia_backbone_check.is_album;
 	}
-	if ( typeof ( is_edit_allowed ) == 'undefined' ) {
+	if ( typeof ( rtmedia_backbone_check.is_edit_allowed ) == 'undefined' ) {
 		o_is_edit_allowed = new Array( '' );
 	} else {
-		o_is_edit_allowed = is_edit_allowed;
+		o_is_edit_allowed = rtmedia_backbone_check.is_edit_allowed;
 	}
 
 	rtMedia = window.rtMedia || { };
@@ -178,12 +178,12 @@ jQuery( function( $ ) {
 			that = this;
 			if ( rtmedia_load_template_flag == true ) {
 				if ( jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=media_title]' ).length > 0 ) {
-					template_url += '&media_title=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=media_title]' ).val();
+					rtmedia_template.url += '&media_title=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=media_title]' ).val();
 				}
 				if ( jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=lightbox]' ).length > 0 ) {
-					template_url += '&lightbox=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=lightbox]' ).val();
+					rtmedia_template.url += '&lightbox=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=lightbox]' ).val();
 				}
-				$( '#rtmedia-gallery-item-template' ).load( template_url, { backbone: true, is_album: o_is_album, is_edit_allowed: o_is_edit_allowed }, function() {
+				$( '#rtmedia-gallery-item-template' ).load( rtmedia_template.url, { backbone: true, is_album: o_is_album, is_edit_allowed: o_is_edit_allowed }, function() {
 					rtmedia_load_template_flag = false;
 					that.getNext( page, el, element);
 				} );
@@ -1151,7 +1151,7 @@ jQuery( document ).ready( function( $ ) {
 		}
 	} );
 
-	if ( typeof rtMedia_update_plupload_config == 'undefined' ) {
+	if ( typeof rtmedia_backbone_check.rtMedia_update_plupload_config == 'undefined' ) {
 		return false;
 	}
 	var activity_attachemnt_ids = [ ];
@@ -1161,7 +1161,7 @@ jQuery( document ).ready( function( $ ) {
 	}
 
 	if ( rtmedia_add_media_button_post_update.length > 0 ) {
-		objUploadView = new UploadView( rtMedia_update_plupload_config );
+		objUploadView = new UploadView( rtmedia_backbone_check.rtMedia_update_plupload_config );
 		objUploadView.initUploader();
 
 		setTimeout( function() {
