@@ -480,7 +480,7 @@ jQuery( document ).ready( function ( $ ) {
 		jQuery( '.bp-album-importer-wizard' ).slideToggle();
 	} );
 
-	jQuery( '#rtprivacyinstall' ).click( function ( e ) {
+	jQuery( '#rtprivacyinstall' ).on( 'click', function ( e ) {
 		e.preventDefault();
 		$progress_parent = jQuery( '#rtprivacyinstaller' );
 		$progress_parent.find( '.rtprivacytype' ).each( function () {
@@ -649,7 +649,7 @@ jQuery( document ).ready( function ( $ ) {
 		window.location = document.URL;
 	}
 
-	jQuery( '#bpmedia-bpalbumimport-cleanup' ).click( function ( e ) {
+	jQuery( '#bpmedia-bpalbumimport-cleanup' ).on( 'click', function ( e ) {
 		e.preventDefault();
 		jQuery.post( ajaxurl, {
 			action: 'rtmedia_rt_album_cleanup',
@@ -834,7 +834,7 @@ jQuery( document ).ready( function ( $ ) {
 		rtmedia_upload_files( event );
 	}
 
-	jQuery( '#rtmedia-submit-request' ).click( function () {
+	jQuery( '#rtmedia-submit-request' ).on( 'click', function () {
 		var flag = true;
 		var name = jQuery( '#name' ).val();
 		var email = jQuery( '#email' ).val();
@@ -1026,7 +1026,7 @@ jQuery( document ).ready( function ( $ ) {
 		});
 	}
 
-	jQuery( '#cancel-request' ).click( function () {
+	jQuery( '#cancel-request' ).on( 'click', function () {
 		return false;
 	} );
 
@@ -1044,11 +1044,11 @@ jQuery( document ).ready( function ( $ ) {
 		}
 
 	} );
-	jQuery( "#rtm-masonry-change-thumbnail-info" ).click( function ( e ) {
+	jQuery( "#rtm-masonry-change-thumbnail-info" ).on( 'click', function ( e ) {
 		jQuery( "html, body" ).animate( { scrollTop: 0 }, '500', 'swing' );
 	} );
 
-	jQuery( '#rtm-export-button' ).click( function () {
+	jQuery( '#rtm-export-button' ).on( 'click', function () {
 		data = {
 			action: "rtmedia_export_settings",
 		};
@@ -1063,11 +1063,11 @@ jQuery( document ).ready( function ( $ ) {
 		} );
 	} );
 
-	jQuery( '#rtm-export-data-button' ).click( function(){
+	jQuery( '#rtm-export-data-button' ).on( 'click', function(){
 		window.location.href = '/wp-admin/tools.php?page=export_personal_data';
 	} );
 
-	jQuery( '#rtm-erase-data-button' ).click(function () {
+	jQuery( '#rtm-erase-data-button' ).on( 'click', function () {
 		window.location.href = '/wp-admin/tools.php?page=remove_personal_data';
 	});
 
@@ -1105,6 +1105,6 @@ function rtmedia_addon_do_not_show() {
 	} );
 }
 
-jQuery( window ).load( function () {
+jQuery( window ).on( 'load', function () {
 	jQuery( '.rtmedia-addon-thickbox' ).trigger( 'click' );
 } );
