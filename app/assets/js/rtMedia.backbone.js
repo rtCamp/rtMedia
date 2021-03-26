@@ -607,7 +607,7 @@ jQuery( function( $ ) {
 			if ( typeof rtmedia_upload_type_filter == 'object' && rtmedia_upload_type_filter.length > 0 ) {
 				rtMedia_plupload_config.filters[0].extensions = rtmedia_upload_type_filter.join();
 			}
-			uploaderObj = new UploadView( rtMedia_plupload_config );
+			uploaderObj = new UploadView( rtMedia_plupload.config );
 			uploaderObj.initUploader();
 
 			var rtnObj = '';
