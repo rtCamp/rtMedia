@@ -83,15 +83,15 @@ jQuery( function( $ ) {
 
 
 	var o_is_album, o_is_edit_allowed;
-	if ( typeof ( is_album ) == 'undefined' ) {
+	if ( typeof ( rtMedia_activity.is_album ) == 'undefined' ) {
 		o_is_album = new Array( '' );
 	} else {
-		o_is_album = is_album;
+		o_is_album = rtMedia_activity.is_album;
 	}
-	if ( typeof ( is_edit_allowed ) == 'undefined' ) {
+	if ( typeof ( rtMedia_activity.is_edit_allowed ) == 'undefined' ) {
 		o_is_edit_allowed = new Array( '' );
 	} else {
-		o_is_edit_allowed = is_edit_allowed;
+		o_is_edit_allowed = rtMedia_activity.is_edit_allowed;
 	}
 
 	rtMedia = window.rtMedia || { };
