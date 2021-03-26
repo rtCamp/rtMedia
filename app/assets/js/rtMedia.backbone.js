@@ -81,16 +81,14 @@ jQuery( function( $ ) {
 	 * End of issue 1059 fix
 	 */
 
-
 	var o_is_album, o_is_edit_allowed;
-	if ( typeof ( rtMedia_activity.is_album ) == 'undefined' ) {
-		o_is_album = new Array( '' );
-	} else {
+	o_is_album = new Array( '' );
+	if ( 'object' === typeof( rtMedia_activity ) && rtMedia_activity.hasOwnProperty( 'is_album' )  ){
 		o_is_album = rtMedia_activity.is_album;
 	}
-	if ( typeof ( rtMedia_activity.is_edit_allowed ) == 'undefined' ) {
-		o_is_edit_allowed = new Array( '' );
-	} else {
+
+	o_is_edit_allowed = new Array( '' );
+	if ( 'object' === typeof ( rtMedia_activity ) && rtMedia_activity.hasOwnProperty( 'is_edit_allowed' ) ) {
 		o_is_edit_allowed = rtMedia_activity.is_edit_allowed;
 	}
 
