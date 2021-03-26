@@ -246,7 +246,7 @@ class RTMediaGalleryShortcode {
 
 				$template_url = esc_url( add_query_arg( $media_template_args, admin_url( 'admin-ajax.php' ) ), null, '' );
 			}
-			// wp_localize_script( 'rtmedia-backbone', 'template_url', $template_url );
+
 			wp_localize_script( 'rtmedia-backbone', 'rtmedia_template', array( 'url' => $template_url ) );
 
 			/**
