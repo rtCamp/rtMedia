@@ -428,7 +428,7 @@ jQuery( 'document' ).ready( function( $ ) {
 			// Since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 			$( '#rtmedia_create_new_album' ).attr( 'disabled', 'disabled' );
 			var old_val = $( '#rtmedia_create_new_album' ).html();
-			$( '#rtmedia_create_new_album' ).prepend( '<img src=\'' + rMedia_loading_file + '\' />' );
+			$( '#rtmedia_create_new_album' ).prepend( '<img src=\'' + rtmedia_backbone.rMedia_loading_file + '\' />' );
 			jQuery.post( rtmedia_main.rtmedia_ajax_url, data, function( response ) {
 				if ( typeof response.album != 'undefined' ) {
 					response = jQuery.trim( response.album );
@@ -1335,4 +1335,3 @@ jQuery( document ).ready( function () {
 		}
 	}
 });
-
