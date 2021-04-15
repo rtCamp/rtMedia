@@ -1214,10 +1214,10 @@ class RTMedia {
 	public function enqueue_scripts_styles() {
 		global $rtmedia, $bp, $rtmedia_interaction;
 
-		$rtmedia_main = array();
+		$rtmedia_main     = array();
 		$rtmedia_magnific = array();
 		$rtmedia_backbone = array();
-		$rtmedia_bp_tpl = array();
+		$rtmedia_bp_tpl   = array();
 
 		$bp_template = get_option( '_bp_theme_package_id' );
 
@@ -1303,13 +1303,12 @@ class RTMedia {
 		 */
 		$media_delete_success = apply_filters( 'rtmedia_media_delete_success_message', $media_delete_success_msg );
 
-
 		$rtmedia_main['media_delete_confirmation'] = $media_delete_confirmation;
 		$rtmedia_main['rtmedia_ajaxurl']           = admin_url( 'admin-ajax.php' );
 		$rtmedia_main['media_delete_success']      = $media_delete_success;
 
-		$rtmedia_main['rtmedia_ajax_url'] = admin_url( 'admin-ajax.php' );
-		$rtmedia_main['rtmedia_media_slug'] = RTMEDIA_MEDIA_SLUG;
+		$rtmedia_main['rtmedia_ajax_url']         = admin_url( 'admin-ajax.php' );
+		$rtmedia_main['rtmedia_media_slug']       = RTMEDIA_MEDIA_SLUG;
 		$rtmedia_main['rtmedia_lightbox_enabled'] = strval( $this->options['general_enableLightbox'] );
 
 		$direct_upload = ( isset( $this->options['general_direct_upload'] ) ? $this->options['general_direct_upload'] : '0' );
@@ -1357,9 +1356,7 @@ class RTMedia {
 		$rtmedia_main['rtmedia_delete_uploaded_media']              = __( 'This media is uploaded. Are you sure you want to delete this media?', 'buddypress-media' );
 		$rtmedia_main['rtm_wp_version']                             = get_bloginfo( 'version' );
 
-
 		$rtmedia_backbone['rMedia_loading_media'] = RTMEDIA_URL . 'app/assets/admin/img/boxspinner.gif';
-
 
 		$rtmedia_media_thumbs = array();
 		foreach ( $this->allowed_types as $key_type => $value_type ) {
@@ -1386,7 +1383,7 @@ class RTMedia {
 			)
 		);
 
-		$rtmedia_backbone['rtmedia_no_media_found'] =  __( 'Oops !! There\'s no media found for the request !!', 'buddypress-media' );
+		$rtmedia_backbone['rtmedia_no_media_found'] = __( 'Oops !! There\'s no media found for the request !!', 'buddypress-media' );
 
 		// Localizing strings for rtMedia.backbone.js.
 		$rtmedia_backbone_strings = array(
@@ -1395,7 +1392,6 @@ class RTMedia {
 
 		// Localise fot rtmedia-backcone js.
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp', array( 'template_pack' => $bp_template ) );
-
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_strings', $rtmedia_backbone_strings );
 
@@ -1421,30 +1417,30 @@ class RTMedia {
 					$rt_media_main['rtmedia_masonry_layout_activity'] = 'true';
 				} else {
 					$rtmedia_main['rtmedia_masonry_layout_activity'] = 'false';
-					
+
 				}
 			} else {
 				$rtmedia_main['rtmedia_masonry_layout'] = 'false';
 			}
 		} else {
-			$rtmedia_main['rtmedia_masonry_layout'] =  'false';
+			$rtmedia_main['rtmedia_masonry_layout'] = 'false';
 		}
 
 		if ( isset( $rtmedia->options['general_display_media'] ) ) {
-			$rtmedia_backbone['rtmedia_load_more_or_pagination'] =  (string) $rtmedia->options['general_display_media'];
+			$rtmedia_backbone['rtmedia_load_more_or_pagination'] = (string) $rtmedia->options['general_display_media'];
 		} else {
-			$rtmedia_backbone[ 'rtmedia_load_more_or_pagination' ] = 'load_more';
+			$rtmedia_backbone['rtmedia_load_more_or_pagination'] = 'load_more';
 		}
 
 		if ( isset( $rtmedia->options['buddypress_enableOnActivity'] ) ) {
-			$rtmedia_backbone['rtmedia_bp_enable_activity'] =  (string) $rtmedia->options['buddypress_enableOnActivity'];
+			$rtmedia_backbone['rtmedia_bp_enable_activity'] = (string) $rtmedia->options['buddypress_enableOnActivity'];
 		} else {
 			$rtmedia_backbone['rtmedia_bp_enable_activity'] = '0';
 		}
 
 		$rtmedia_backbone['rtmedia_upload_progress_error_message'] = __( 'There are some uploads in progress. Do you want to cancel them?', 'buddypress-media' );
 		// Added to display error message when all media types upload are disabled.
-		$rtmedia_backbone[ 'rtmedia_media_disabled_error_message'] =  __( 'Media upload is disabled. Please Enable at least one media type to proceed.', 'buddypress-media' );
+		$rtmedia_backbone['rtmedia_media_disabled_error_message'] = __( 'Media upload is disabled. Please Enable at least one media type to proceed.', 'buddypress-media' );
 
 		// localise media size config.
 		$media_size_config = array(
@@ -1553,7 +1549,7 @@ class RTMedia {
 		if ( isset( $rtmedia->options['rtmedia_disable_media_in_commented_media'] ) ) {
 			$rtmedia_disable_media = $rtmedia->options['rtmedia_disable_media_in_commented_media'];
 		}
-		$rtmedia_main['rtmedia_disable_media_in_commented_media'] =  $rtmedia_disable_media ;
+		$rtmedia_main['rtmedia_disable_media_in_commented_media'] = $rtmedia_disable_media;
 
 		$rtmedia_main['rtmedia_disable_media_in_commented_media_text'] = __( 'Adding media in Comments is not allowed', 'buddypress-media' );
 
@@ -1565,7 +1561,7 @@ class RTMedia {
 		// Check if BuddyPress plugin is not activated.
 		$is_buddypress_activate = rtm_is_buddypress_activate();
 		if ( empty( $is_buddypress_activate ) ) {
-			$rtmedia_main[ 'ajaxurl'] =  admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' );
+			$rtmedia_main['ajaxurl'] = admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' );
 		}
 
 		$options = $rtmedia->options;

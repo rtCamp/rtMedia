@@ -962,12 +962,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'rtmedia-admin',
 					'rtmedia',
 					array(
-						'on_label'       => __( 'ON', 'buddypress-media' ),
-						'off_label'      => __( 'OFF', 'buddypress-media' ),
-						'admin_ajax'     => $admin_ajax,
-						'admin_url'      => admin_url(),
-						'fileupload_url' => RTMEDIA_URL . 'app/helper/rtUploadAttachment.php', /* path for file upload using ajax */
-						'settings_url'                 => esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ): admin_url( 'admin.php' ) ) ) ) . '#privacy_enabled',
+						'on_label'                     => __( 'ON', 'buddypress-media' ),
+						'off_label'                    => __( 'OFF', 'buddypress-media' ),
+						'admin_ajax'                   => $admin_ajax,
+						'admin_url'                    => admin_url(),
+						'fileupload_url'               => RTMEDIA_URL . 'app/helper/rtUploadAttachment.php', /* path for file upload using ajax */
+						'settings_url'                 => esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) . '#privacy_enabled',
 						'settings_rt_album_import_url' => esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ),
 					)
 				);
