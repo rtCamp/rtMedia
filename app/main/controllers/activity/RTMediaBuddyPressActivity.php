@@ -27,7 +27,7 @@ class RTMediaBuddyPressActivity {
 
 			/**
 			 * Filter to disable bp_activity_truncate_entry override function.
-			 * 
+			 *
 			 * @param boolean By default its enabled.
 			 */
 			if ( apply_filters( 'rtmedia_disable_truncate_entry_override', true ) ) {
@@ -787,7 +787,7 @@ class RTMediaBuddyPressActivity {
 			$is_edit_allowed = is_rtmedia_edit_allowed() ? true : false;
 
 			$activity = array(
-				'is_album' => $is_album,
+				'is_album'        => $is_album,
 				'is_edit_allowed' => $is_edit_allowed,
 			);
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_activity', $activity );
