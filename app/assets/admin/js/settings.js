@@ -462,7 +462,7 @@ jQuery( document ).ready( function ( $ ) {
 					jQuery.post( rtmedia_main.ajaxurl, {
 						action: 'rtmedia_privacy_redirect'
 					}, function ( response ) {
-						window.location = rtmedia.settings_url ;
+						window.location = rtmedia.settings_url;
 					} );
 				}
 			} else {
