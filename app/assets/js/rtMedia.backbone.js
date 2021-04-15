@@ -857,8 +857,7 @@ jQuery( function( $ ) {
 			} );
 
 			uploaderObj.uploader.bind( 'UploadProgress', function( up, file ) {
-				//$("#" + file.id + " .plupload_file_status").html(file.percent + "%");
-				//$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_main.rtmedia_uploading_msg + '( ' + file.percent + '% )' );
+
 				// creates a progress bar to display file upload status
 				var progressBar = jQuery( '<div/>', {
 					'class': 'plupload_file_progress ui-widget-header',
@@ -1539,7 +1538,7 @@ jQuery( document ).ready( function( $ ) {
 		} );
 
 		objUploadView.uploader.bind( 'UploadProgress', function( up, file ) {
-			//$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_main.rtmedia_uploading_msg + '( ' + file.percent + '% )' );
+
 			// creates a progress bar to display file upload status
 			var progressBar = jQuery( '<div/>', {
 				'class': 'plupload_file_progress ui-widget-header',
