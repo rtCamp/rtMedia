@@ -106,7 +106,7 @@ class RTMediaMediaSizeImporter {
 			<script type="text/javascript">
 				function rtmedia_hide_media_size_import_notice() {
 					var data = {action: 'rtmedia_hide_media_size_import_notice'};
-					jQuery.post(rtmedia_main.ajaxurl, data, function (response) {
+					jQuery.post(ajaxurl, data, function (response) {
 						response = response.trim();
 						if (response === '1')
 							jQuery('.rtmedia-media-size-import-error').remove();
@@ -182,7 +182,7 @@ class RTMediaMediaSizeImporter {
 							"nonce": jQuery.trim(jQuery('#rtmedia_media_size_import_nonce').val())
 						};
 						jQuery.ajax({
-							url: rtmedia.admin_ajax,
+							url: rtmedia_admin_ajax,
 							type: 'post',
 							data: ajax_data,
 							success: function (sdata) {
