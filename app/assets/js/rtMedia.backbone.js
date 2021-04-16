@@ -8,6 +8,15 @@ var rtmedia_load_template_flag = true;
 var rtmedia_add_media_button_post_update = false;
 
 
+jQuery( document ).ready( function () {
+
+	// Need to pass the object[key] as global variable.
+	for( var key in rtmedia_backbone ) {
+		window[key] = rtmedia_backbone[key];
+	}
+
+} );
+
 jQuery( function( $ ) {
 	/**
 	 * Issue 1059 fixed: negative comment count

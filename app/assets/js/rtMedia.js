@@ -1,6 +1,20 @@
 var rtMagnificPopup;
 var rtm_masonry_container;
 var comment_media = false;
+
+jQuery( document ).ready( function () {
+
+	// Need to pass the object[key] as global variable.
+	for( var key in rtmedia_bp ) {
+		window[key] = rtmedia_bp[key];
+	}
+
+	for( var key in rtmedia_main ) {
+		window[key] = rtmedia_main[key];
+	}
+
+});
+
 function apply_rtMagnificPopup( selector ) {
 	jQuery( 'document' ).ready( function( $ ) {
 		var rt_load_more = '';
@@ -1324,19 +1338,3 @@ function rtm_upload_terms_activity() {
 	}
 }
 
-jQuery( document ).ready( function () {
-	// Call function when document loaded.
-	rtm_upload_terms_activity();
-
-	// Avoid Lightbox conflict due to class has-sidebar in theme 2017 v2.1.
-	if( jQuery( 'body' ).hasClass( 'has-sidebar' ) && 0 === jQuery( '#secondary' ).length ) {
-		if ( jQuery( '.rtmedia-single-container' ).length || jQuery( '.rtmedia-container' ).length ) {
-			jQuery( 'body' ).removeClass( 'has-sidebar' );
-		}
-	}
-
-	// Need to pass the object[key] as global variable.
-	for( var key in rtmedia_bp ) {
-		window[key] = rtmedia_bp[key];
-	}
-});

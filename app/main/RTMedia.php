@@ -1215,7 +1215,6 @@ class RTMedia {
 		global $rtmedia, $bp, $rtmedia_interaction;
 
 		$rtmedia_main     = array();
-		$rtmedia_magnific = array();
 		$rtmedia_backbone = array();
 		$rtmedia_bp_tpl   = array();
 
@@ -1303,9 +1302,15 @@ class RTMedia {
 		 */
 		$media_delete_success = apply_filters( 'rtmedia_media_delete_success_message', $media_delete_success_msg );
 
-		$rtmedia_main['media_delete_confirmation'] = $media_delete_confirmation;
-		$rtmedia_main['rtmedia_ajaxurl']           = admin_url( 'admin-ajax.php' );
-		$rtmedia_main['media_delete_success']      = $media_delete_success;
+		wp_localize_script(
+			'rtmedia-main',
+			'RTMedia_Main_JS',
+			array(
+				'media_delete_confirmation' => $media_delete_confirmation,
+				'rtmedia_ajaxurl'           => admin_url( 'admin-ajax.php' ),
+				'media_delete_success'      => $media_delete_success,
+			)
+		);
 
 		$rtmedia_main['rtmedia_ajax_url']         = admin_url( 'admin-ajax.php' );
 		$rtmedia_main['rtmedia_media_slug']       = RTMEDIA_MEDIA_SLUG;
@@ -1319,7 +1324,10 @@ class RTMedia {
 		$rtmedia_main['rtmedia_gallery_reload_on_upload'] = '1';
 
 		// javascript messages.
-		$rtmedia_magnific['rtmedia_load_more'] = __( 'Loading media', 'buddypress-media' );
+		wp_localize_script( 'rtmedia-magnific', 'rtmedia_magnific', array(
+				'rtmedia_load_more' => __( 'Loading media', 'buddypress-media' )
+			)
+		);
 
 		$rtmedia_main['rtmedia_empty_activity_msg']                 = __( 'Please enter some content to post.', 'buddypress-media' );
 		$rtmedia_main['rtmedia_empty_comment_msg']                  = __( 'Empty comment is not allowed.', 'buddypress-media' );
@@ -1574,7 +1582,6 @@ class RTMedia {
 		}
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_main', $rtmedia_main );
-		wp_localize_script( 'rtmedia-magnific', 'rtmedia_magnific', $rtmedia_magnific );
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone', $rtmedia_backbone );
 
 	}
