@@ -35,7 +35,7 @@ jQuery( document ).ready( function ( $ ) {
 			action: 'rtmedia_linkback',
 			linkback: jQuery( '#bp-media-add-linkback:checked' ).length
 		};
-		jQuery.post( rtmedia.admin_ajax, data, function ( response ) {
+		jQuery.post( rtmedia_admin_ajax, data, function ( response ) {
 		} );
 	} );
 
@@ -50,7 +50,7 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-			jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
+			jQuery.post( ajaxurl, data, function ( response ) {
 				bp_media_metabox_holder.html( response ).fadeIn( 'slow' );
 			} );
 		}
@@ -71,7 +71,7 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-			jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
+			jQuery.post( ajaxurl, data, function ( response ) {
 				bp_media_metabox_holder.html();
 				bp_media_metabox_holder.html( response ).fadeIn( 'slow' );
 			} );
@@ -203,7 +203,7 @@ jQuery( document ).ready( function ( $ ) {
 		e.preventDefault();
 		if ( confirm( rtmedia_admin_strings.are_you_sure ) ) {
 			var data = {
-				src   : rtmedia.admin_url + "images/wpspin_light.gif"
+				src   : rtmedia_admin_url + "images/wpspin_light.gif"
 			};
 
 			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -213,7 +213,7 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-			jQuery.getJSON( rtmedia_main.ajaxurl, data, function ( response ) {
+			jQuery.getJSON( ajaxurl, data, function ( response ) {
 				if ( response.error === undefined && response.apikey ) {
 					var tempUrl = window.location.href;
 					var hash = window.location.hash;
@@ -240,7 +240,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		if ( jQuery( this ).next( 'img' ).length == 0 ) {
 			var data = {
-				src   : rtmedia.admin_url + "images/wpspin_light.gif"
+				src   : rtmedia_admin_url + "images/wpspin_light.gif"
 			};
 
 			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -252,7 +252,7 @@ jQuery( document ).ready( function ( $ ) {
 		};
 
 		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-		jQuery.getJSON( rtmedia_main.ajaxurl, data, function ( response ) {
+		jQuery.getJSON( ajaxurl, data, function ( response ) {
 			if ( response.error === undefined && response.apikey ) {
 				var tempUrl = window.location.href;
 				var hash = window.location.hash;
@@ -286,7 +286,7 @@ jQuery( document ).ready( function ( $ ) {
 		e.preventDefault();
 		if ( confirm( rtmedia_admin_strings.disable_encoding ) ) {
 			var data = {
-				src   : rtmedia.admin_url + "images/wpspin_light.gif"
+				src   : rtmedia_admin_url + "images/wpspin_light.gif"
 			};
 
 			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -296,7 +296,7 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-			jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
+			jQuery.post( ajaxurl, data, function ( response ) {
 				if ( response ) {
 					jQuery( '.settings-error-encoding-disabled' ).remove();
 
@@ -336,7 +336,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		if ( confirm( rtmedia_admin_strings.enable_encoding ) ) {
 			var data = {
-				src   : rtmedia.admin_url + "images/wpspin_light.gif"
+				src   : rtmedia_admin_url + "images/wpspin_light.gif"
 			};
 
 			jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -345,7 +345,7 @@ jQuery( document ).ready( function ( $ ) {
 				action: 'rtmedia_enable_encoding'
 			};
 
-			jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
+			jQuery.post( ajaxurl, data, function ( response ) {
 
 				if ( response ) {
 					jQuery( '.settings-error-encoding-enabled' ).remove();
@@ -392,7 +392,7 @@ jQuery( document ).ready( function ( $ ) {
 					jQuery( this ).dialog( "close" );
 
 					var data = {
-						src   : rtmedia.admin_url + "images/wpspin_light.gif"
+						src   : rtmedia_admin_url + "images/wpspin_light.gif"
 					};
 
 					var bpm_unsubscribe = $( '.bpm-unsubscribe' );
@@ -407,7 +407,7 @@ jQuery( document ).ready( function ( $ ) {
 					};
 
 					// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-					jQuery.getJSON( rtmedia_main.ajaxurl, data, function ( response ) {
+					jQuery.getJSON( ajaxurl, data, function ( response ) {
 						if ( response.error === undefined && response.updated ) {
 							bpm_unsubscribe.next().remove();
 							bpm_unsubscribe.after( response.form );
@@ -444,7 +444,7 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	function fireRequest( data ) {
-		return jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
+		return jQuery.post( ajaxurl, data, function ( response ) {
 
 			if ( response != 0 ) {
 				var redirect = false;
@@ -459,10 +459,10 @@ jQuery( document ).ready( function ( $ ) {
 				jQuery( '#rtprivacyinstaller span.finished' ).html( parseInt( finished ) + data.count );
 
 				if ( redirect ) {
-					jQuery.post( rtmedia_main.ajaxurl, {
+					jQuery.post( ajaxurl, {
 						action: 'rtmedia_privacy_redirect'
 					}, function ( response ) {
-						window.location = rtmedia.settings_url;
+						window.location = settings_url;
 					} );
 				}
 			} else {
@@ -523,7 +523,7 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	function fireimportRequest( data ) {
-		return jQuery.getJSON( rtmedia_main.ajaxurl, data, function ( response ) {
+		return jQuery.getJSON( ajaxurl, data, function ( response ) {
 			favorites = false;
 
 			if ( response ) {
@@ -557,7 +557,7 @@ jQuery( document ).ready( function ( $ ) {
 						'action': 'rtmedia_rt_album_import_favorites',
 						rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 					};
-					jQuery.post( rtmedia_main.ajaxurl, favorite_data, function ( response ) {
+					jQuery.post( ajaxurl, favorite_data, function ( response ) {
 
 						if (response.hasOwnProperty(favorites) && (response.favorites !== 0 || response.favorites !== '0')) {
 
@@ -626,7 +626,7 @@ jQuery( document ).ready( function ( $ ) {
 	}
 
 	function fireimportfavoriteRequest( data ) {
-		return jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
+		return jQuery.post( ajaxurl, data, function ( response ) {
 			redirect = false;
 			favorites_total = jQuery( '#bpmedia-bpalbumimporter .bp-album-favorites span.total' ).html();
 			favorites_finished = jQuery( '#bpmedia-bpalbumimporter .bp-album-favorites span.finished' ).html();
@@ -651,11 +651,11 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '#bpmedia-bpalbumimport-cleanup' ).click( function ( e ) {
 		e.preventDefault();
-		jQuery.post( rtmedia_main.ajaxurl, {
+		jQuery.post( ajaxurl, {
 			action: 'rtmedia_rt_album_cleanup',
 			rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 		}, function ( response ) {
-			window.location = rtmedia.settings_rt_album_import_url;
+			window.location = settings_rt_album_import_url;
 		} );
 
 	} );
@@ -685,11 +685,11 @@ jQuery( document ).ready( function ( $ ) {
 		} else {
 			jQuery( this ).prop( 'disabled', true );
 		}
-		wp_admin_url = rtmedia_main.ajaxurl.replace( 'admin-ajax.php', '' );
+		wp_admin_url = ajaxurl.replace( 'admin-ajax.php', '' );
 
 		if ( !jQuery( '.bpm-ajax-loader' ).length ) {
 			var data = {
-				src   : rtmedia.admin_url + "images/wpspin_light.gif",
+				src   : rtmedia_admin_url + "images/wpspin_light.gif",
 				class : 'bpm-ajax-loader',
 				norefresh : rtmedia_admin_strings.no_refresh
 			};
@@ -753,7 +753,7 @@ jQuery( document ).ready( function ( $ ) {
 			choice: jQuery( 'input[name="choice"]:checked' ).val(),
 			interested: jQuery( 'input[name="interested"]:checked' ).val()
 		};
-		jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
+		jQuery.post( ajaxurl, data, function ( response ) {
 			var p_data = {
 				msg :response,
 				strong : 'yes'
@@ -772,7 +772,7 @@ jQuery( document ).ready( function ( $ ) {
 			action: 'rtmedia_rt_album_deactivate',
 			rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 		};
-		jQuery.get( rtmedia_main.ajaxurl, data, function ( response ) {
+		jQuery.get( ajaxurl, data, function ( response ) {
 
 			if ( response ) {
 				location.reload();
@@ -788,7 +788,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '.updated' ).on( 'click', '.bpm-hide-encoding-notice', function () {
 		var data = {
-			src   : rtmedia.admin_url + "images/wpspin_light.gif"
+			src   : rtmedia_admin_url + "images/wpspin_light.gif"
 		};
 
 		jQuery( this ).after( rtMediaAdmin.templates.rtm_image( data ) );
@@ -796,7 +796,7 @@ jQuery( document ).ready( function ( $ ) {
 		var data = {
 			action: 'rtmedia_hide_encoding_notice'
 		}
-		jQuery.post( rtmedia_main.ajaxurl, data, function ( response ) {
+		jQuery.post( ajaxurl, data, function ( response ) {
 			if ( response ) {
 				jQuery( '.bpm-hide-encoding-notice' ).closest( '.updated' ).remove();
 			}
@@ -820,10 +820,10 @@ jQuery( document ).ready( function ( $ ) {
 	var onData = '';
 	var offData = '';
 
-	if ( rtmedia.on_label !== undefined )
-		onData = 'data-on-label="' + rtmedia.on_label + '"';
-	if ( rtmedia.off_label !== undefined )
-		offData = 'data-off-label="' + rtmedia.off_label + '"';
+	if ( rtmedia_on_label !== undefined )
+		onData = 'data-on-label="' + rtmedia_on_label + '"';
+	if ( rtmedia_off_label !== undefined )
+		offData = 'data-off-label="' + rtmedia_off_label + '"';
 
 	var files;
 	/* upload file immediately after selecting it */
@@ -939,7 +939,7 @@ jQuery( document ).ready( function ( $ ) {
 			form_data: form_data,
 			support_wpnonce: jQuery('#support_wpnonce').val()
 		};
-		jQuery.post( rtmedia_main.ajaxurl, data, function ( data ) {
+		jQuery.post( ajaxurl, data, function ( data ) {
 			data = data.trim();
 			if ( data == "false" ) {
 				alert( rtmedia_admin_support_strings.all_fields_error );
@@ -979,7 +979,7 @@ jQuery( document ).ready( function ( $ ) {
 		data.append( 'action', 'rtmedia_admin_upload' );
 
 		jQuery.ajax({
-			url: rtmedia.admin_ajax,
+			url: rtmedia_admin_ajax,
 			type: 'POST',
 			data: data,
 			cache: false,
@@ -1099,7 +1099,7 @@ function rtmedia_addon_do_not_show() {
 	var data = {
 		action: 'rtmedia_addon_popup_not_show_again'
 	};
-	jQuery.post( rtmedia.admin_ajax, data, function ( response ) {
+	jQuery.post( rtmedia_admin_ajax, data, function ( response ) {
 		jQuery( '#TB_window' ).remove();
 		jQuery( '#TB_overlay' ).remove();
 	} );

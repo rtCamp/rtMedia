@@ -267,7 +267,7 @@ jQuery( document ).ready( function () {
             rtp_display_terms_warning( terms_conditions_checkbox.parent( '.rtmedia-upload-terms' ), rtmedia_upload_terms_data.message );
         }
 
-        if ( 'undefined' !== typeof rtmedia_main.rtmedia_direct_upload_enabled && '1' === rtmedia_main.rtmedia_direct_upload_enabled ) {
+        if ( 'undefined' !== typeof rtmedia_direct_upload_enabled && '1' === rtmedia_direct_upload_enabled ) {
             var whats_new_submit = jQuery( '#aw-whats-new-submit' );
 
             if ( whats_new_submit.length ) {
