@@ -13,6 +13,10 @@ jQuery( document ).ready( function () {
 		window[key] = rtmedia_main[key];
 	}
 
+	for( var key in rtmedia_upload_terms ) {
+		window[key] = rtmedia_upload_terms[key];
+	}
+
 });
 
 function apply_rtMagnificPopup( selector ) {
@@ -1337,4 +1341,3 @@ function rtm_upload_terms_activity() {
 		}
 	}
 }
-

@@ -94,7 +94,7 @@ class RTMediaGalleryShortcode {
 
 			$template_url = esc_url( add_query_arg( $media_template_args, admin_url( 'admin-ajax.php' ) ), null, '' );
 		}
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_template', array( 'url' => $template_url ) );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_template', array( 'template_url' => $template_url ) );
 
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
@@ -138,7 +138,7 @@ class RTMediaGalleryShortcode {
 
 		$params = apply_filters( 'rtmedia_modify_upload_params', $params );
 
-		wp_localize_script( 'rtmedia-backbone', 'rtMedia_plupload', array( 'config' => $params ) );
+		wp_localize_script( 'rtmedia-backbone', 'rtMedia_plupload', array( 'rtMedia_plupload_config' => $params ) );
 	}
 
 	/**
@@ -247,7 +247,7 @@ class RTMediaGalleryShortcode {
 				$template_url = esc_url( add_query_arg( $media_template_args, admin_url( 'admin-ajax.php' ) ), null, '' );
 			}
 
-			wp_localize_script( 'rtmedia-backbone', 'rtmedia_template', array( 'url' => $template_url ) );
+			wp_localize_script( 'rtmedia-backbone', 'rtmedia_template', array( 'template_url' => $template_url ) );
 
 			/**
 			 * Remove search_filter parameter from attr,

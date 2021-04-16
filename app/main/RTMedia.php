@@ -1324,8 +1324,11 @@ class RTMedia {
 		$rtmedia_main['rtmedia_gallery_reload_on_upload'] = '1';
 
 		// javascript messages.
-		wp_localize_script( 'rtmedia-magnific', 'rtmedia_magnific', array(
-				'rtmedia_load_more' => __( 'Loading media', 'buddypress-media' )
+		wp_localize_script(
+			'rtmedia-magnific',
+			'rtmedia_magnific',
+			array(
+				'rtmedia_load_more' => __( 'Loading media', 'buddypress-media' ),
 			)
 		);
 

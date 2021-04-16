@@ -15,6 +15,18 @@ jQuery( document ).ready( function () {
 		window[key] = rtmedia_backbone[key];
 	}
 
+	for( var key in rtMedia_plupload ) {
+		window[key] = rtMedia_plupload[key];
+	}
+
+	for( var key in rtmedia_template ) {
+		window[key] = rtmedia_template[key];
+	}
+
+	for( var key in rtMedia_activity ) {
+		window[key] = rtMedia_activity[key];
+	}
+
 } );
 
 jQuery( function( $ ) {
