@@ -1334,5 +1334,9 @@ jQuery( document ).ready( function () {
 			jQuery( 'body' ).removeClass( 'has-sidebar' );
 		}
 	}
-});
 
+	// Need to pass the object[key] as global variable.
+	for( var key in rtmedia_bp ) {
+		window[key] = rtmedia_bp[key];
+	}
+});

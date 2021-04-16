@@ -1279,7 +1279,7 @@ class RTMedia {
 				true
 			);
 			// localize for rtmedia js.
-			wp_localize_script( 'rtmedia-main', 'rtmedia_bp', array( 'template_pack' => $bp_template ) );
+			wp_localize_script( 'rtmedia-main', 'rtmedia_bp', array( 'bp_template_pack' => $bp_template ) );
 		}
 
 		$media_delete_confirmation_msg = __( 'Are you sure you want to delete this media?', 'buddypress-media' );
@@ -1391,7 +1391,7 @@ class RTMedia {
 		);
 
 		// Localise fot rtmedia-backcone js.
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp', array( 'template_pack' => $bp_template ) );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp', array( 'bp_template_pack' => $bp_template ) );
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_strings', $rtmedia_backbone_strings );
 
