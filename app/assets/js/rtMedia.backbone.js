@@ -11,22 +11,26 @@ var rtmedia_add_media_button_post_update = false;
 jQuery( document ).ready( function () {
 
 	// Need to pass the object[key] as global variable.
-	for( var key in rtmedia_backbone ) {
-		window[key] = rtmedia_backbone[key];
+	if ( typeof rtmedia_backbone === 'object' ) {
+		for( var key in rtmedia_backbone ) {
+			window[key] = rtmedia_backbone[key];
+		}
 	}
-
-	for( var key in rtMedia_plupload ) {
-		window[key] = rtMedia_plupload[key];
+	if ( typeof rtMedia_plupload === 'object' ) {
+		for( var key in rtMedia_plupload ) {
+			window[key] = rtMedia_plupload[key];
+		}
 	}
-
-	for( var key in rtmedia_template ) {
-		window[key] = rtmedia_template[key];
+	if ( typeof rtmedia_template === 'object' ) {
+		for( var key in rtmedia_template ) {
+			window[key] = rtmedia_template[key];
+		}
 	}
-
-	for( var key in rtMedia_activity ) {
-		window[key] = rtMedia_activity[key];
+	if ( typeof rtMedia_activity === 'object' ) {
+		for( var key in rtMedia_activity ) {
+			window[key] = rtMedia_activity[key];
+		}
 	}
-
 } );
 
 jQuery( function( $ ) {

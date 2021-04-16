@@ -5,16 +5,22 @@ var comment_media = false;
 jQuery( document ).ready( function () {
 
 	// Need to pass the object[key] as global variable.
-	for( var key in rtmedia_bp ) {
-		window[key] = rtmedia_bp[key];
+	if ( typeof rtmedia_bp === 'object' ) {
+		for( var key in rtmedia_bp ) {
+			window[key] = rtmedia_bp[key];
+		}
+	}
+	
+	if ( typeof rtmedia_main === 'object' ) {
+		for( var key in rtmedia_main ) {
+			window[key] = rtmedia_main[key];
+		}
 	}
 
-	for( var key in rtmedia_main ) {
-		window[key] = rtmedia_main[key];
-	}
-
-	for( var key in rtmedia_upload_terms ) {
-		window[key] = rtmedia_upload_terms[key];
+	if ( typeof rtmedia_upload_terms === 'object' ) {
+		for( var key in rtmedia_upload_terms ) {
+			window[key] = rtmedia_upload_terms[key];
+		}
 	}
 
 });
