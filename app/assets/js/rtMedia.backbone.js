@@ -12,7 +12,7 @@ jQuery( document ).ready( function () {
 
 	// Need to pass the object[key] as global variable.
 	if ( 'object' === typeof rtmedia_backbone ) {
-		for( var key in rtmedia_backbone ) {
+		for ( var key in rtmedia_backbone ) {
 			window[key] = rtmedia_backbone[key];
 		}
 	}
