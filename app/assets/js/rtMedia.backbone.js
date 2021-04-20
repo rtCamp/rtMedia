@@ -31,6 +31,11 @@ jQuery( document ).ready( function () {
 			window[key] = rtMedia_activity[key];
 		}
 	}
+	if ( 'object' === typeof rtmedia_bp ) {
+		for( var key in rtmedia_bp ) {
+			window[key] = rtmedia_bp[key];
+		}
+	}
 } );
 
 jQuery( function( $ ) {
