@@ -36,6 +36,11 @@ jQuery( document ).ready( function () {
 			window[key] = rtmedia_bp[key];
 		}
 	}
+	if ( 'object' === typeof rtmedia_main ) {
+		for( var key in rtmedia_main ) {
+			window[key] = rtmedia_main[key];
+		}
+	}
 } );
 
 jQuery( function( $ ) {
