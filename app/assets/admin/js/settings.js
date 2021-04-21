@@ -11,6 +11,13 @@ rtMediaAdmin.templates = {
 
 jQuery( document ).ready( function ( $ ) {
 
+	// Need to pass the object[key] as global variable.
+	if ( 'object' === typeof rtmedia_admin ) {
+		for ( var key in rtmedia_admin ) {
+			window[key] = rtmedia_admin[key];
+		}
+	}
+
 	var bp_media_settings_box = $( '#bp-media-settings-boxes' );
 	var bp_media_metabox_holder = $( '#bp_media_settings_form .bp-media-metabox-holder' );
 	var rtm_licence = $( '#rtm-licenses' );
