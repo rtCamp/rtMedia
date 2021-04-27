@@ -1,6 +1,36 @@
 var rtMagnificPopup;
 var rtm_masonry_container;
 var comment_media = false;
+
+jQuery( document ).ready( function () {
+
+	// Need to pass the object[key] as global variable.
+	if ( 'object' === typeof rtmedia_bp ) {
+		for( var key in rtmedia_bp ) {
+			window[key] = rtmedia_bp[key];
+		}
+	}
+	
+	if ( 'object' === typeof rtmedia_main ) {
+		for( var key in rtmedia_main ) {
+			window[key] = rtmedia_main[key];
+		}
+	}
+
+	if ( 'object' === typeof rtmedia_upload_terms ) {
+		for( var key in rtmedia_upload_terms ) {
+			window[key] = rtmedia_upload_terms[key];
+		}
+	}
+
+	if ( 'object' === typeof rtmedia_magnific ) {
+		for( var key in rtmedia_magnific ) {
+			window[key] = rtmedia_magnific[key];
+		}
+	}
+
+});
+
 function apply_rtMagnificPopup( selector ) {
 	jQuery( 'document' ).ready( function( $ ) {
 		var rt_load_more = '';
@@ -1335,4 +1365,3 @@ jQuery( document ).ready( function () {
 		}
 	}
 });
-

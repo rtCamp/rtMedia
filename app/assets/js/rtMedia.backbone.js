@@ -8,6 +8,41 @@ var rtmedia_load_template_flag = true;
 var rtmedia_add_media_button_post_update = false;
 
 
+jQuery( document ).ready( function () {
+
+	// Need to pass the object[key] as global variable.
+	if ( 'object' === typeof rtmedia_backbone ) {
+		for ( var key in rtmedia_backbone ) {
+			window[key] = rtmedia_backbone[key];
+		}
+	}
+	if ( 'object' === typeof rtMedia_plupload ) {
+		for( var key in rtMedia_plupload ) {
+			window[key] = rtMedia_plupload[key];
+		}
+	}
+	if ( 'object' === typeof rtmedia_template ) {
+		for( var key in rtmedia_template ) {
+			window[key] = rtmedia_template[key];
+		}
+	}
+	if ( 'object' === typeof rtMedia_activity ) {
+		for( var key in rtMedia_activity ) {
+			window[key] = rtMedia_activity[key];
+		}
+	}
+	if ( 'object' === typeof rtmedia_bp ) {
+		for( var key in rtmedia_bp ) {
+			window[key] = rtmedia_bp[key];
+		}
+	}
+	if ( 'object' === typeof rtmedia_main ) {
+		for( var key in rtmedia_main ) {
+			window[key] = rtmedia_main[key];
+		}
+	}
+} );
+
 jQuery( function( $ ) {
 	/**
 	 * Issue 1059 fixed: negative comment count
