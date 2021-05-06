@@ -1528,6 +1528,8 @@ jQuery( document ).ready( function( $ ) {
 				if ( whatsNewPostIn.length ) {
 					object = whatsNewPostIn.val();
 					item_id = 0;
+				} else {
+					object = 'profile';
 				}
 
 				var contextData = jQuery( '#whats-new-post-in-box-items li.bp-activity-object.selected input[type="hidden"]' );
@@ -1536,6 +1538,7 @@ jQuery( document ).ready( function( $ ) {
 				}
 			}
 
+			console.log(object);
 			up.settings.multipart_params.context = object;
 			up.settings.multipart_params.context_id = item_id;
 			up.settings.multipart_params.title = files.title;
