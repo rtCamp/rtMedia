@@ -1538,7 +1538,6 @@ jQuery( document ).ready( function( $ ) {
 				}
 			}
 
-			console.log(object);
 			up.settings.multipart_params.context = object;
 			up.settings.multipart_params.context_id = item_id;
 			up.settings.multipart_params.title = files.title;
