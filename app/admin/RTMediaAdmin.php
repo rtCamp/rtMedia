@@ -242,7 +242,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				 *
 				 * @param True to hide the option and false to show the option.
 				 */
-				$display = apply_filters( 'rtmedia_disable_media_in_commented_media', true );
+				$display = apply_filters( 'rtmedia_disable_media_in_commented_media', false );
 				if ( $display ) {
 					?>
 					<style type="text/css">
