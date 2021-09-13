@@ -10,7 +10,7 @@ jQuery( document ).ready( function () {
 			window[key] = rtmedia_bp[key];
 		}
 	}
-	
+
 	if ( 'object' === typeof rtmedia_main ) {
 		for( var key in rtmedia_main ) {
 			window[key] = rtmedia_main[key];
@@ -28,7 +28,6 @@ jQuery( document ).ready( function () {
 			window[key] = rtmedia_magnific[key];
 		}
 	}
-
 });
 
 function apply_rtMagnificPopup( selector ) {
@@ -1364,4 +1363,12 @@ jQuery( document ).ready( function () {
 			jQuery( 'body' ).removeClass( 'has-sidebar' );
 		}
 	}
+
+	// remove download option from video.
+	setTimeout( () => {
+		jQuery( 'video' ).each( function () {
+			jQuery( this ).attr( 'controlsList', 'nodownload' );
+			jQuery( this ).load();
+		} );
+	}, 100 );
 });
