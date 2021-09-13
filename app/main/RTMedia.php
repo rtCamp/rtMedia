@@ -1584,6 +1584,12 @@ class RTMedia {
 			wp_add_inline_style( 'rtmedia-custom-css', $css );
 		}
 
+		if ( is_plugin_active( 'rtmedia-direct-download-link/index.php' ) ) {
+			if ( array_key_exists( 'allowedTypes_video_download', $this->options ) ) {
+				$rtmedia_main['rtmedia_direct_download_link'] = $this->options['allowedTypes_video_download'];
+			}
+		}
+
 		wp_localize_script( 'rtmedia-main', 'rtmedia_main', $rtmedia_main );
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone', $rtmedia_backbone );
 
