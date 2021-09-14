@@ -497,7 +497,7 @@ class RTMediaBuddyPressActivity {
 
 			$content = $obj_activity->create_activity_html();
 		}
-		return $content;
+		return '&nbsp;' !== $content ? $content : '';
 	}
 
 	/**
