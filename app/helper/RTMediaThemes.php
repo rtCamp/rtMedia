@@ -103,12 +103,12 @@ class RTMediaThemes {
 			$inspirebook_purchase = '<a href="https://rtmedia.io/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy InspireBook</a> | ';
 		}
 
-		$rtmedia_demo_url = 'http://demo.rtmedia.io/';
+		$rtmedia_demo_url = 'https://%s.demo.rtmedia.io/';
 		$themes           = array(
 			'rtdating'    => array(
 				'name'        => esc_html__( 'rtDating', 'buddypress-media' ),
 				'image'       => RTMEDIA_URL . 'app/assets/admin/img/rtDating.png',
-				'demo_url'    => $rtmedia_demo_url . 'rtdating/',
+				'demo_url'    => sprintf( $rtmedia_demo_url, 'rtdating' ),
 				'author'      => esc_html__( 'rtCamp', 'buddypress-media' ),
 				'author_url'  => 'https://rtcamp.com/',
 				'buy_url'     => 'https://rtmedia.io/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
@@ -118,7 +118,7 @@ class RTMediaThemes {
 			'inspirebook' => array(
 				'name'        => esc_html__( 'InspireBook', 'buddypress-media' ),
 				'image'       => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-InspireBook.png',
-				'demo_url'    => $rtmedia_demo_url . 'inspirebook/',
+				'demo_url'    => sprintf( $rtmedia_demo_url, 'inspirebook' ),
 				'author'      => esc_html__( 'rtCamp', 'buddypress-media' ),
 				'author_url'  => 'https://rtcamp.com/',
 				'buy_url'     => 'https://rtmedia.io/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
@@ -128,7 +128,7 @@ class RTMediaThemes {
 			'foodmania'   => array(
 				'name'        => esc_html__( 'Foodmania', 'buddypress-media' ),
 				'image'       => 'https://rtmedia.io/wp-content/uploads/edd/2015/08/foodmania-img1.png',
-				'demo_url'    => $rtmedia_demo_url . 'foodmania/',
+				'demo_url'    => sprintf( $rtmedia_demo_url, 'foodmania' ),
 				'author'      => esc_html__( 'rtCamp', 'buddypress-media' ),
 				'author_url'  => 'https://rtcamp.com/',
 				'buy_url'     => 'https://rtmedia.io/products/foodmania/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
