@@ -1367,12 +1367,14 @@ jQuery( document ).ready( function () {
 	// remove download option from video.
 	if ( rtmedia_main ) {
 		if ( 'undefined' === rtmedia_main.rtmedia_direct_download_link || ! parseInt( rtmedia_main.rtmedia_direct_download_link ) ) {
-			setTimeout( function() {
-				jQuery( 'video' ).each( function () {
-					jQuery( this ).attr( 'controlsList', 'nodownload' );
-					jQuery( this ).load();
-				} );
-			}, 200 );
+			jQuery( window ).on( 'load', function () {
+				setTimeout( function() {
+					jQuery( 'video' ).each( function () {
+						jQuery( this ).attr( 'controlsList', 'nodownload' );
+						jQuery( this ).load();
+					} );
+				}, 200 );
+			} );
 		}
 	}
 });
