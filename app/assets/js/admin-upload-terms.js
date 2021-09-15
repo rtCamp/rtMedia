@@ -22,7 +22,7 @@ jQuery( document ).ready( function ( $ ) {
 
     rtp_terms_option_toggle();
 
-    $( 'input[name^="rtmedia-options[general_enable_upload_terms]"], input[name^="rtmedia-options[activity_enable_upload_terms]"], input[name^="rtmedia-options[general_upload_terms_show_pricacy_message]"]' ).change( function () {
+    $( 'input[name^="rtmedia-options[general_enable_upload_terms]"], input[name^="rtmedia-options[activity_enable_upload_terms]"], input[name^="rtmedia-options[general_upload_terms_show_pricacy_message]"]' ).on( 'change', function () {
         rtp_terms_option_toggle();
     } );
 
