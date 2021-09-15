@@ -1563,7 +1563,7 @@ jQuery( document ).ready( function( $ ) {
 				if ( 'disable' === rtmedia_activity_text_with_attachment &&  '' === jQuery.trim( jQuery( '#whats-new' ).val() ) ) {
 					let textarea = jQuery( '#whats-new' );
 					textarea.css( 'color', 'transparent' );
-					textarea.val( '&nbsp;' );
+					textarea.val( ' ' );
 				}
 
 				jQuery( '#whats-new-form' ).submit();
