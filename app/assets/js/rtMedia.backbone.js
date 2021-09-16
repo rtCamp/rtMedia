@@ -1186,6 +1186,18 @@ jQuery( document ).ready( function( $ ) {
 		}
 	} );
 
+	// change color of what's new if content is &nbsp;
+	let whatsNew = jQuery( '#whats-new' );
+	whatsNew.on( 'keyup', function( e ) {
+		if ( '&nbsp;' === whatsNew.val() ) {
+			whatsNew.css( 'color', 'transparent' );
+		} else {
+			let replaceNbsp = whatsNew.val().replace( '&nbsp;', '' );
+			whatsNew.val( replaceNbsp );
+			whatsNew.css( 'color', 'inherit' );
+		}
+	} );
+
 	if ( typeof rtMedia_update_plupload_config == 'undefined' ) {
 		return false;
 	}
@@ -1397,25 +1409,23 @@ jQuery( document ).ready( function( $ ) {
 				}
 			} );
 
-			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-
-				/*
-				 * add rtmedia_activity_text_with_attachment condition to filter
-				 * if user want media and activity_text both require
-				 * By: Yahil
-				 */
-				if ( '' === jQuery( '#whats-new' ).val().trim() ) {
-					if ( rtmedia_activity_text_with_attachment == 'disable' ) {
-						if ( 0 === jQuery( '#rtmedia_upload_terms_conditions' ).length ) {
-							$( '#whats-new' ).css( 'color', 'transparent' );
-							$( '#whats-new' ).val( '&nbsp;' );
-						}
-					} else {
-						jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
-						jQuery( '#whats-new' ).removeAttr( 'disabled' );
-						return false;
-					}
+			/*
+			 * add rtmedia_activity_text_with_attachment condition to filter
+			 * if user want media and activity_text both require
+			 * By: Yahil
+			 */
+			if ( '' === jQuery( '#whats-new' ).val().trim() ) {
+				if ( rtmedia_activity_text_with_attachment == 'disable' ) {
+					$( '#whats-new' ).css( 'color', 'transparent' );
+					$( '#whats-new' ).val( '&nbsp;' );
+				} else {
+					jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
+					jQuery( '#whats-new' ).removeAttr( 'disabled' );
+					return false;
 				}
+			}
+
+			if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
 				//Call upload event direct when direct upload is enabled (removed UPLOAD button and its triggered event)
 				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', { src: 'activity' } );
 
@@ -1755,6 +1765,7 @@ jQuery( document ).ready( function( $ ) {
 					}
 					rtmedia_add_media_button_post_update.removeAttr( 'disabled' );
 					// Enabled TextBox color back to normal
+					$( '#whats-new' ).val( '' );
 					$( '#whats-new' ).css( 'color', '' );
 
 				};
@@ -2973,7 +2984,7 @@ function rtmedia_disable_popup_navigation( $selector ){
 	} );
 }
 
-/** 
+/**
  * Function that smooth scrolls to the latest comment in rtMedia.
  *  Created on 23-Nov-2020 by Vipin Kumar Dinkar <vipin.dinkar@rtcamp.com>
  */
