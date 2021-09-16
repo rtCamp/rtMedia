@@ -1767,6 +1767,7 @@ jQuery( document ).ready( function( $ ) {
 					}
 					rtmedia_add_media_button_post_update.removeAttr( 'disabled' );
 					// Enabled TextBox color back to normal
+					$( '#whats-new' ).val( '' );
 					$( '#whats-new' ).css( 'color', '' );
 
 				};
