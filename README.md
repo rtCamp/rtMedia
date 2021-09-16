@@ -155,10 +155,10 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 * FIXED
 
-	* Removed default download button for video player
-     * Blank activity generation on uploading unsupported media
-     * Broken links of theme’s under rtMedia settings
-     * PHP Warnings & Notices
+    * Removed default download button for video player
+    * Blank activity generation on uploading unsupported media
+    * Broken links of theme’s under rtMedia settings
+    * PHP Warnings & Notices
 
 ### 4.6.6 [December 30, 2020] ###
 
