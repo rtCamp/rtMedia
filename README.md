@@ -96,7 +96,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 
 #### Important Links ####
 
-* [Project Homepage](https://rtmedio.io/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Project Homepage")
+* [Project Homepage](https://rtmedia.io/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Project Homepage")
 * [Roadmap](https://rtmedia.io/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Roadmap page")
 * [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Documentation page")
 * [FAQ](https://rtmedia.io/faq/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's FAQ page")
@@ -146,6 +146,19 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 ## Changelog ##
+
+### 4.6.7 [September 16, 2021] ###
+
+* Enhancement
+    * Provided media attachment for all levels in activity comment reply
+    * Compatible with WordPress v5.8.1
+
+* FIXED
+
+    * Removed default download button for video player
+    * Blank activity generation on uploading unsupported media
+    * Broken links of themes under rtMedia settings
+    * PHP Warnings & Notices
 
 ### 4.6.6 [December 30, 2020] ###
 

@@ -115,7 +115,7 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 					)
 				);
 
-				wp_localize_script( 'rtmedia-main', 'rtmedia_upload_terms_check_terms_message', $general_upload_terms_error_message );
+				wp_localize_script( 'rtmedia-main', 'rtmedia_upload_terms', array( 'rtmedia_upload_terms_check_terms_message' => $general_upload_terms_error_message ) );
 			}
 		}
 
