@@ -1416,10 +1416,8 @@ jQuery( document ).ready( function( $ ) {
 			 */
 			if ( '' === jQuery( '#whats-new' ).val().trim() ) {
 				if ( rtmedia_activity_text_with_attachment == 'disable' ) {
-					if ( 0 === jQuery( '#rtmedia_upload_terms_conditions' ).length ) {
-						$( '#whats-new' ).css( 'color', 'transparent' );
-						$( '#whats-new' ).val( '&nbsp;' );
-					}
+					$( '#whats-new' ).css( 'color', 'transparent' );
+					$( '#whats-new' ).val( '&nbsp;' );
 				} else {
 					jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
 					jQuery( '#whats-new' ).removeAttr( 'disabled' );
