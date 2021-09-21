@@ -11,7 +11,7 @@ Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & mor
 ![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=MU1JamdmRnppK0hhQy9QMU8wdDJ2MUEyb1ZuS0ljVFQvSHZ6anFvNzUxTT0tLXhUNnliTnZGcE5CcW93N0I1eXdnM3c9PQ==--8c124e667dd0c317618efde1bed2b260000916b6)
 
 
-* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty), [milindmore22](https://profiles.wordpress.org/milindmore22), [thrijith](https://profiles.wordpress.org/thrijith), [abhijitrakas](https://profiles.wordpress.org/abhijitrakas), [sid177](https://profiles.wordpress.org/sid177), [montu3366](https://profiles.wordpress.org/montu3366), [jashwini](https://profiles.wordpress.org/jashwini), [juhise](https://profiles.wordpress.org/juhise), [ravatparmar](https://profiles.wordpress.org/ravatparmar), [dharmin16](https://profiles.wordpress.org/dharmin16), [malavvasita](https://profiles.wordpress.org/malavvasita), [pooja1210](https://profiles.wordpress.org/pooja1210), [krupajnanda](https://profiles.wordpress.org/krupajnanda), [kanumalivad](https://profiles.wordpress.org/kanumalivad), [surajkumarsingh](https://profiles.wordpress.org/surajkumarsingh), [dishitpala](https://profiles.wordpress.org/dishitpala)
+* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty), [milindmore22](https://profiles.wordpress.org/milindmore22), [thrijith](https://profiles.wordpress.org/thrijith), [abhijitrakas](https://profiles.wordpress.org/abhijitrakas), [sid177](https://profiles.wordpress.org/sid177), [montu3366](https://profiles.wordpress.org/montu3366), [jashwini](https://profiles.wordpress.org/jashwini), [juhise](https://profiles.wordpress.org/juhise), [ravatparmar](https://profiles.wordpress.org/ravatparmar), [dharmin16](https://profiles.wordpress.org/dharmin16), [malavvasita](https://profiles.wordpress.org/malavvasita), [pooja1210](https://profiles.wordpress.org/pooja1210), [krupajnanda](https://profiles.wordpress.org/krupajnanda), [kanumalivad](https://profiles.wordpress.org/kanumalivad), [surajkumarsingh](https://profiles.wordpress.org/surajkumarsingh), [dishitpala](https://profiles.wordpress.org/dishitpala), [shobhit2412](https://profiles.wordpress.org/shobhit2412/), [vkd007](https://profiles.wordpress.org/vkd007/), [vaishu.agola27](https://profiles.wordpress.org/vaishuagola27/), [kapilpaul](https://profiles.wordpress.org/kapilpaul/), [opurockey](https://profiles.wordpress.org/opurockey/)
 
 
 * **License:** [GPL v2 or later]( http://www.gnu.org/licenses/gpl-2.0.html)
@@ -96,7 +96,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 
 #### Important Links ####
 
-* [Project Homepage](https://rtmedio.io/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Project Homepage")
+* [Project Homepage](https://rtmedia.io/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Project Homepage")
 * [Roadmap](https://rtmedia.io/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Roadmap page")
 * [Documentation](https://rtmedia.io/docs/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Documentation page")
 * [FAQ](https://rtmedia.io/faq/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's FAQ page")
@@ -146,6 +146,112 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 ## Changelog ##
+
+### 4.6.7 [September 16, 2021] ###
+
+* Enhancement
+    * Provided media attachment for all levels in activity comment reply
+    * Compatible with WordPress v5.8.1
+
+* FIXED
+
+    * Removed default download button for video player
+    * Blank activity generation on uploading unsupported media
+    * Broken links of themes under rtMedia settings
+    * PHP Warnings & Notices
+
+### 4.6.6 [December 30, 2020] ###
+
+* Enhancement
+	* Added fading effect for the media lightbox
+
+* FIXED
+
+	* UI/UX issues
+	* JS errors/notices
+
+### 4.6.5 [November 23, 2020] ###
+
+* FIXED
+
+	* Javascript errors while editing rtMedia image
+	* UI/UX issues
+	* Issue with attachment when creating support ticket
+	* Media not appearing in Profile/Group when uploading from BuddyPress’ sitewide activity stream
+
+### 4.6.4 [July 16, 2020] ###
+
+* Enhancement
+	* Support for Amazon S3 presigned URLs
+	* Add attachment_ids in `rtmedia_after_add_media` action hook
+
+* FIXED
+
+	* Console errors on media editing
+	* Extension getting changed when renaming media before upload
+	* Activities not in sync with other subsites in a multisite network, when each subsite has a separate BuddyPress activity feed
+	* PHP Notices and Warnings
+	* Comment nesting issue with media activities
+	* Wrong timestamp while adding comments
+
+### 4.6.3 [April 30, 2020] ###
+
+* FIXED
+	* Conflict with Yoast SEO plugin
+	* Wrong Date/Time stamp for media
+	* Printing JavaScript code as text when Social Sync addon is active
+
+### 4.6.2 [April 22, 2020] ###
+
+* FIXED
+	* Redirecting to admin's WallPost album
+	* Preview not loading for Docs and Other files in lightbox
+	* Custom css not applying when added from rtMedia settings’ custom css tab
+	* Too many redirections on BuddyPress’ privacy page
+	* Unable to delete media from lightbox and single media page
+	* Likes on media comment not working
+	* PHP errors and warning
+
+### 4.6.1 [April 9, 2020] ###
+
+* Enhancement
+	* Disable the terms of service checkbox when the activity is published
+
+* FIXED
+	* Different language characters not showing up properly on rtMedia pages
+	* HTML warnings of rtMedia contents
+	* Nouveau template tab count bug
+	* Added server side validation for terms of service
+	* Terms of service checkbox conflicting with rtMedia Sidebar Widgets addon
+	* PHPCS errors and warnings
+
+### 4.6.0 [February 17, 2020] ###
+
+* Enhancement
+	* Show long text truncated with read more option and image displayed below the truncated text on activity
+
+* FIXED
+	* Error uploading media in comments with Kleo theme
+	* JavaScript errors
+	* Album styling when masonry style is disabled
+	* The template loaded on media page when nouveau template is set
+	* Compatibility issues with PHP 7.4.1
+	* UI related bugs
+	* Notices and Warnings
+
+### 4.5.11 [December 26, 2019] ###
+
+* Enhancement
+	* Add better styling for albums
+
+* FIXED
+	* Redirection popup on Media upload in Activity stream
+
+### 4.5.10 [December 26, 2019] ###
+
+* FIXED
+	* Warnings on Support page of rtMedia Settings
+	* Issue with rtMedia Update filter on BuddyPress activity wall
 
 ### 4.5.9 [October 29, 2019] ###
 
@@ -1634,8 +1740,8 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.3 ####
-Now upload media in comment & fixed rtMedia shortcode pagination along with several other bugs. Please update/re-save the permalinks after the plugin update.
+#### 4.6.2 ####
+rtMedia 4.6.2 with added fixes for preview not loading of docs and files in lightbox, privacy page redirection on user's profile along with warnings and PHP errors
 
 ## Sponsors ##
 

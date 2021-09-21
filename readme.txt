@@ -1,11 +1,11 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala, shobhit2412, vaishu.agola27, kapilpaul, opurockey, vkd007
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 5.3
-Stable tag: 4.5.9
+Tested up to: 5.8.1
+Stable tag: 4.6.7
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -134,6 +134,124 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
+= 4.6.7 [September 16, 2021] =
+
+* Enhancement
+
+ * Provided media attachment for all levels in activity comment reply
+ * Compatible with WordPress v5.8.1
+
+* FIXED
+
+ * Removed default download button for video player
+ * Blank activity generation on uploading unsupported media
+ * Broken links of theme’s under rtMedia settings
+ * PHP Warnings & Notices
+
+= 4.6.6 [December 30, 2020] =
+
+* Enhancement
+
+ * Added fading effect for the media lightbox
+
+* FIXED
+
+ * UI/UX issues
+ * JS errors/notices
+
+= 4.6.5 [November 23, 2020] =
+
+* FIXED
+
+ * Javascript errors while editing rtMedia image
+ * UI/UX issues
+ * Issue with attachment when creating support ticket
+ * Media not appearing in Profile/Group when uploading from BuddyPress’ sitewide activity stream
+
+= 4.6.4 [July 16, 2020] =
+
+* Enhancement
+
+ * Support for Amazon S3 presigned URLs
+ * Add attachment_ids in `rtmedia_after_add_media` action hook
+
+* FIXED
+
+ * Console errors on media editing
+ * Extension getting changed when renaming media before upload
+ * Activities not in sync with other subsites in a multisite network, when each subsite has a separate BuddyPress activity feed
+ * PHP Notices and Warnings
+ * Comment nesting issue with media activities
+ * Wrong timestamp while adding comments
+
+= 4.6.3 [April 30, 2020] =
+
+* FIXED
+
+ * Conflict with Yoast SEO plugin
+ * Wrong Date/Time stamp for media
+ * Printing JavaScript code as text when Social Sync addon is active
+
+= 4.6.2 [April 22, 2020] =
+
+* FIXED
+
+ * Redirecting to admin's WallPost album
+ * Preview not loading for Docs and Other files in lightbox
+ * Custom css not applying when added from rtMedia settings’ custom css tab
+ * Too many redirections on BuddyPress’ privacy page
+ * Unable to delete media from lightbox and single media page
+ * Likes on media comment not working
+ * PHP errors and warning
+
+= 4.6.1 [April 9, 2020] =
+
+* Enhancement
+
+ * Disable the terms of service checkbox when the activity is published
+
+* FIXED
+
+ * Different language characters not showing up properly on rtMedia pages
+ * HTML warnings of rtMedia contents
+ * Nouveau template tab count bug
+ * Added server side validation for terms of service
+ * Terms of service checkbox conflicting with rtMedia Sidebar Widgets addon
+ * PHPCS errors and warnings
+
+= 4.6.0 [February 17, 2020] =
+
+* Enhancement
+
+ * Show long text truncated with read more option and image displayed below the truncated text on activity
+
+* FIXED
+
+ * Error uploading media in comments with Kleo theme
+ * JavaScript errors
+ * Album styling when masonry style is disabled
+ * The template loaded on media page when nouveau template is set
+ * Compatibility issues with PHP 7.4.1
+ * UI related bugs
+ * Notices and Warnings
+
+= 4.5.11 [December 26, 2019] =
+
+* Enhancement
+
+ * Add better styling for albums
+
+* FIXED
+
+ * Redirection popup on Media upload in Activity stream
+
+= 4.5.10 [December 26, 2019] =
+
+* FIXED
+
+ * Warnings on Support page of rtMedia Settings
+ * Issue with rtMedia Update filter on BuddyPress activity wall
+
 = 4.5.9 [October 29, 2019] =
 
 * Enhancement
@@ -142,8 +260,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * FIXED
 
- * Post Update button issue with BuddyPress Nouveau template 
- * Issue when user uploads the media with link in comment on buddypress activity 
+ * Post Update button issue with BuddyPress Nouveau template
+ * Issue when user uploads the media with link in comment on buddypress activity
 
 = 4.5.8 [August 6, 2019] =
 
@@ -171,8 +289,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  * Issue of entering text in text area when Direct Upload and Upload terms enabled together
  * UI of pagination button height and text field
  * Export/Import button issue in Firefox browser
- * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1 
- * Empty space issue for generated activity when media is uploaded without adding text 
+ * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1
+ * Empty space issue for generated activity when media is uploaded without adding text
  * Other Errors, Warnings and notices
  * Group Activity media are not shown in Group Media tab with BuddyPress Nouveau Template
  * User’s name autosuggestion
@@ -1625,8 +1743,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.5.9 =
-rtMedia 4.5.9, with an addition of new classes in BuddPress Activity based on the uploaded media type, and other minor fixes around BuddPress Activity.
+= 4.6.7 =
+rtMedia 4.6.7 with WordPress 5.8.1 compatibility, enhancement to provide media attachment option for comments and other fixes such as PHP warnings and notices.
+
+= 4.6.6 =
+rtMedia 4.6.6 with enhancement added for media lightbox and some UI/UX fixes and JS fixes.
 
 == Sponsors ==
 

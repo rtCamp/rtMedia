@@ -1,12 +1,12 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Performs actions on comments
+ *
+ * @package    rtMedia
  */
 
 /**
- * Description of RTMediaCommentModel
+ * Class to perform actions on comments.
  *
  * @author Udit Desai <udit.desai@rtcamp.com>
  */
@@ -16,22 +16,23 @@ class RTMediaCommentModel {
 	 * Constructor
 	 *
 	 * @access public
-	 * @return void
 	 */
 	public function __construct() {
-		//initialization
+		// initialization.
 	}
 
 	/**
-	 * Insert attr
+	 * Insert comment
 	 *
 	 * @access public
 	 *
-	 * @param  array $attr
+	 * @param  array $args Contains information on the comment.
+	 *
+	 * @return false|int
 	 */
-	public function insert( $attr ) {
+	public function insert( $args ) {
 
-		return wp_insert_comment( $attr );
+		return wp_insert_comment( $args );
 	}
 
 	/**
@@ -39,11 +40,13 @@ class RTMediaCommentModel {
 	 *
 	 * @access public
 	 *
-	 * @param  array $attr
+	 * @param  array $args Contains information on the comment.
+	 *
+	 * @return int
 	 */
-	public function update( $attr ) {
+	public function update( $args ) {
 
-		return wp_update_comment( $attr, ARRAY_A );
+		return wp_update_comment( $args, ARRAY_A );
 	}
 
 	/**
@@ -51,7 +54,9 @@ class RTMediaCommentModel {
 	 *
 	 * @access public
 	 *
-	 * @param  string $where
+	 * @param  string $where where clause.
+	 *
+	 * @return array|int
 	 */
 	public function get( $where ) {
 
@@ -63,7 +68,9 @@ class RTMediaCommentModel {
 	 *
 	 * @access public
 	 *
-	 * @param  int $id
+	 * @param  int $id Comment id.
+	 *
+	 * @return array|WP_Comment|null
 	 */
 	public function get_by_id( $id ) {
 
@@ -75,7 +82,9 @@ class RTMediaCommentModel {
 	 *
 	 * @access public
 	 *
-	 * @param  int $id
+	 * @param  int $id comment id.
+	 *
+	 * @return bool
 	 */
 	public function delete( $id ) {
 
