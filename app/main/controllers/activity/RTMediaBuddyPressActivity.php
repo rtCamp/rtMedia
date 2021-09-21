@@ -621,17 +621,18 @@ class RTMediaBuddyPressActivity {
 		$rtmedia_privacy = filter_input( INPUT_POST, 'rtmedia-privacy', FILTER_SANITIZE_NUMBER_INT );
 
 		if ( null !== $rtmedia_privacy ) {
-			$privacy = -1;
+
+			// Set Privacy 0 if media privacy is disabled.
+			$privacy = get_rtmedia_default_privacy();
 
 			if ( is_rtmedia_privacy_enable() ) {
 				if ( is_rtmedia_privacy_user_overide() ) {
 					$privacy = $rtmedia_privacy;
-				} else {
-					$privacy = get_rtmedia_default_privacy();
 				}
 			}
 
 			bp_activity_update_meta( $activity_id, 'rtmedia_privacy', $privacy );
+
 			// insert/update activity details in rtmedia activity table.
 			$rtmedia_activity_model = new RTMediaActivityModel();
 
