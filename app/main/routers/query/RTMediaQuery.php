@@ -130,7 +130,7 @@ class RTMediaQuery {
 
 		$this->model = new RTMediaModel();
 
-		$this->interaction = $rtmedia_interaction->routes[ RTMEDIA_MEDIA_SLUG ];
+		$this->interaction = ( ! empty( $rtmedia_interaction->routes[ RTMEDIA_MEDIA_SLUG ] ) ) ? $rtmedia_interaction->routes[ RTMEDIA_MEDIA_SLUG ] : null;
 
 		$this->friendship = new RTMediaFriends();
 
