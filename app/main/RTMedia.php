@@ -1437,13 +1437,13 @@ class RTMedia {
 			$rtmedia_main['rtmedia_masonry_layout'] = 'false';
 		}
 
-		if ( isset( $rtmedia->options['general_display_media'] ) ) {
+		if ( ! empty( $rtmedia->options['general_display_media'] ) ) {
 			$rtmedia_backbone['rtmedia_load_more_or_pagination'] = (string) $rtmedia->options['general_display_media'];
 		} else {
 			$rtmedia_backbone['rtmedia_load_more_or_pagination'] = 'load_more';
 		}
 
-		if ( isset( $rtmedia->options['buddypress_enableOnActivity'] ) ) {
+		if ( ! empty( $rtmedia->options['buddypress_enableOnActivity'] ) ) {
 			$rtmedia_backbone['rtmedia_bp_enable_activity'] = (string) $rtmedia->options['buddypress_enableOnActivity'];
 		} else {
 			$rtmedia_backbone['rtmedia_bp_enable_activity'] = '0';
