@@ -119,7 +119,6 @@
 #whats-new-submit #aw-whats-new-submit {
   font-size: 12px;
   line-height: 18px;
-  padding: 4px 6px;
 }
 
 #whats-new-post-in-box {
@@ -346,6 +345,9 @@ button#rtmedia-add-media-button-post-update .dashicons {
 
 .rtm-form .rtm-field-wrap {
   margin-bottom: 20px;
+}
+.rtm-form .rtm-field-wrap .rtmedia-title-editor {
+  width: 100%;
 }
 
 #buddypress a.rtm-button-back {
@@ -651,7 +653,12 @@ input.imgedit-submit-btn {
 }
 .rtm-tabs a {
   border: 0;
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 5px 15px;
   text-decoration: none;
 }
@@ -865,7 +872,7 @@ button::-moz-focus-inner {
   padding: 0;
   width: 90px;
   height: 110px;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   opacity: 0;
   z-index: 10;
   -webkit-transition: all 300ms ease-out;
@@ -1179,8 +1186,45 @@ img.mfp-img {
   z-index: 2147483647;
 }
 
+.mfp-content {
+  /* Add animation frames */
+}
+@-webkit-keyframes open {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes open {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes close {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes close {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 .mfp-content .rtm-lightbox-container {
   background: #000000;
+  -webkit-animation: open 1s;
+          animation: open 1s;
   margin: 0 auto;
   position: relative;
 }
@@ -1188,6 +1232,11 @@ img.mfp-img {
   /* max-height: 200px;
   overflow-y: auto;
   margin: 5px 0; */
+}
+.mfp-content .rtm-lightbox-container .rtmedia-comment-media-list {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 .mfp-content .rtm-lightbox-container .rtmedia-comment-media-list .mejs-container.mejs-video {
   min-height: 200px;
@@ -1484,7 +1533,7 @@ img.mfp-img {
   margin-left: -4px;
 }
 
-.rtm-comment-list.rtm-comment-list {
+.rtm-comment-list {
   height: 340px;
   list-style: none;
   margin: 0;
@@ -1542,6 +1591,12 @@ img.mfp-img {
 .rtmedia-comment-content p {
   margin: 0;
 }
+.rtmedia-comment-content .rtmedia-comment-media-container {
+  margin: 0;
+}
+.rtmedia-comment-content .rtmedia-comment {
+  margin: auto;
+}
 
 .rtmedia-comment-details {
   line-height: 1.5;
@@ -1551,6 +1606,9 @@ img.mfp-img {
 .rt_media_comment_form textarea {
   display: inline-block;
   margin-bottom: 5px;
+}
+.rt_media_comment_form input[type=submit] {
+  padding: 3px 6px;
 }
 
 .rtmedia-item-comments textarea {
@@ -1605,6 +1663,25 @@ img.mfp-img {
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+li.rtmedia-list-item.media-type-music {
+  display: inline;
+}
+li.rtmedia-list-item.media-type-music .rtmedia-item-title {
+  padding-left: 10px;
+}
+
+li.rtmedia-list-item.media-type-video {
+  display: inline;
+}
+li.rtmedia-list-item.media-type-video .rtmedia-item-title {
+  padding-left: 10px;
+}
+li.rtmedia-list-item.media-type-video .mejs-overlay-play {
+  height: 100% !important;
+  width: 100% !important;
+  margin: auto;
 }
 
 .rtm-single-media.rtm-media-type-video {
@@ -1755,9 +1832,28 @@ img.mfp-img {
   top: 0 !important;
 }
 
+#whats-new-submit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 #aw-whats-new-submit,
 .rtmedia-add-media-button {
   display: block;
+  line-height: initial;
+}
+
+#aw-whats-new-reset {
+  background: #FFFFFF;
+  border: 1px solid #dedede;
+}
+#aw-whats-new-reset:hover {
+  text-decoration: none;
+  border: 1px solid #999;
+  background: #ededed;
+  outline: 0;
+  color: #333;
 }
 
 .rtm-drag-drop-active {
@@ -1849,12 +1945,18 @@ form.rt_media_comment_form .rtmedia-plupload-container {
   margin-left: 8.5%;
 }
 .bp-nouveau .activity-update-form .rtmedia-plupload-container {
-  width: 25%;
+  width: fit-content;
+}
+.bp-nouveau .activity-update-form .rtmedia-upload-terms {
+  float: left;
 }
 .bp-nouveau .activity-update-form .rtmedia-upload-terms #rtmedia_upload_terms_conditions {
   margin-left: 20px;
 }
 .bp-nouveau .activity-update-form #aw-whats-new-submit {
+  margin-top: 15px;
+}
+.bp-nouveau .activity-update-form #aw-whats-new-reset {
   margin-top: 15px;
 }
 
@@ -1913,6 +2015,13 @@ a.rtmedia-comment-link.rtmedia-comments-link {
 
 .rtm-media-type-music .rtmedia-media {
   width: 100%;
+}
+
+#buddypress ul.rtmedia-album-list li.rtmedia-list-item {
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 5px;
+  width: auto;
 }
 
 /*------------------------------------------------------------------------------
@@ -2969,7 +3078,7 @@ a.rtmedia-upload-media-link {
 #buddypress .mejs-controls button {
   padding: 4px 8px;
   border: none;
-  background: transparent url("../../../lib/media-element/mejs-controls.png") no-repeat;
+  background: rgba(0, 0, 0, 0) url("../../../lib/media-element/mejs-controls.png") no-repeat;
 }
 #buddypress .mejs-controls .mejs-play > button {
   background-position: 0 0;

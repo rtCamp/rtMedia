@@ -11,8 +11,29 @@
 
 // Additional Styles
 .mfp-content {
-	.rtm-lightbox-container {
+
+	/* Add animation frames */
+	@keyframes open {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	
+	@keyframes close {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+	
+	.rtm-lightbox-container { 
 		background: $black;
+		animation: open 1s;
 		margin: 0 auto;
 		position: relative;
 
@@ -25,6 +46,10 @@
 		}
 
 		.rtmedia-comment-media-list {
+			overflow: hidden;
+			margin:0;
+			padding:0;
+
 			.mejs-container.mejs-video {
 				min-height: 200px;
 				min-width: 200px;
@@ -390,13 +415,12 @@
 }
 
 .rtm-comment-list {
-	&.rtm-comment-list {
-                height: 340px;
-		list-style: none;
-		margin: 0;
-                overflow: auto;
-		padding: 0;
-	}
+	height: 340px;
+	list-style: none;
+	margin: 0;
+	overflow: auto;
+	padding: 0;
+
 
 	li {
 		background: #edeff4;
@@ -459,6 +483,14 @@
 	p {
 		margin: 0;
 	}
+	
+	.rtmedia-comment-media-container {
+		margin:0;
+	}
+
+	.rtmedia-comment {
+		margin:auto;
+	}
 }
 
 .rtmedia-comment-details {
@@ -471,7 +503,12 @@
 		display: inline-block;
 		margin-bottom: 5px;
 	}
+
+	input[type=submit] {
+		padding: 3px 6px;
+	}
 }
+
 
 .rtmedia-item-comments {
 	textarea {
@@ -534,6 +571,28 @@
 	text-align: left;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+li.rtmedia-list-item.media-type-music {
+	display: inline;
+
+	.rtmedia-item-title{
+		padding-left: 10px;
+	}
+}
+
+li.rtmedia-list-item.media-type-video {
+	display: inline;
+
+	.rtmedia-item-title {
+		padding-left: 10px;
+	}
+
+	.mejs-overlay-play {
+		height: 100% !important;
+		width: 100% !important;
+		margin: auto;
+	}
 }
 
 .rtm-single-media.rtm-media-type-video {

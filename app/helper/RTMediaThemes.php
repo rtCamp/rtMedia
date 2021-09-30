@@ -1,13 +1,22 @@
 <?php
+/**
+ * Class file for RTMediaThemes.
+ *
+ * @package    rtMedia
+ */
 
 /**
- * Description of RTMediaThemes
+ * Class to show rtMedia themes.
  *
  * @author ritz
  */
 class RTMediaThemes {
 
-	// current page
+	/**
+	 * Current page.
+	 *
+	 * @var string
+	 */
 	public static $page;
 
 	/**
@@ -15,7 +24,7 @@ class RTMediaThemes {
 	 *
 	 * @access public
 	 *
-	 * @param $page
+	 * @param string $page page.
 	 *
 	 * @return void
 	 */
@@ -49,8 +58,6 @@ class RTMediaThemes {
 	 *
 	 * @access public
 	 *
-	 * @param  void
-	 *
 	 * @return void
 	 */
 	public function get_themes() {
@@ -74,16 +81,13 @@ class RTMediaThemes {
 	}
 
 	/**
-	 * Show rtmedia_themes_content.
+	 * Show rtMedia details.
 	 *
 	 * @access public
-	 *
-	 * @param  void
 	 *
 	 * @return void
 	 */
 	public function rtmedia_themes_content() {
-
 
 		$rtdating = wp_get_theme( 'rtdating' );
 		if ( $rtdating->exists() ) {
@@ -99,12 +103,12 @@ class RTMediaThemes {
 			$inspirebook_purchase = '<a href="https://rtmedia.io/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy InspireBook</a> | ';
 		}
 
-		$rtmedia_demo_url = 'http://demo.rtmedia.io/';
-		$themes = array(
+		$rtmedia_demo_url = 'https://%s.demo.rtmedia.io/';
+		$themes           = array(
 			'rtdating'    => array(
 				'name'        => esc_html__( 'rtDating', 'buddypress-media' ),
 				'image'       => RTMEDIA_URL . 'app/assets/admin/img/rtDating.png',
-				'demo_url'    => $rtmedia_demo_url . 'rtdating/',
+				'demo_url'    => sprintf( $rtmedia_demo_url, 'rtdating' ),
 				'author'      => esc_html__( 'rtCamp', 'buddypress-media' ),
 				'author_url'  => 'https://rtcamp.com/',
 				'buy_url'     => 'https://rtmedia.io/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
@@ -114,7 +118,7 @@ class RTMediaThemes {
 			'inspirebook' => array(
 				'name'        => esc_html__( 'InspireBook', 'buddypress-media' ),
 				'image'       => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-InspireBook.png',
-				'demo_url'    => $rtmedia_demo_url . 'inspirebook/',
+				'demo_url'    => sprintf( $rtmedia_demo_url, 'inspirebook' ),
 				'author'      => esc_html__( 'rtCamp', 'buddypress-media' ),
 				'author_url'  => 'https://rtcamp.com/',
 				'buy_url'     => 'https://rtmedia.io/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
@@ -124,7 +128,7 @@ class RTMediaThemes {
 			'foodmania'   => array(
 				'name'        => esc_html__( 'Foodmania', 'buddypress-media' ),
 				'image'       => 'https://rtmedia.io/wp-content/uploads/edd/2015/08/foodmania-img1.png',
-				'demo_url'    => $rtmedia_demo_url . 'foodmania/',
+				'demo_url'    => sprintf( $rtmedia_demo_url, 'foodmania' ),
 				'author'      => esc_html__( 'rtCamp', 'buddypress-media' ),
 				'author_url'  => 'https://rtcamp.com/',
 				'buy_url'     => 'https://rtmedia.io/products/foodmania/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
@@ -152,9 +156,9 @@ class RTMediaThemes {
 
 						<div class="theme-actions">
 							<a class="button load-customize hide-if-no-customize"
-							   href="<?php echo esc_url( $theme['demo_url'] ); ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
+								href="<?php echo esc_url( $theme['demo_url'] ); ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
 							<a class="button button-primary load-customize hide-if-no-customize"
-							   href="<?php echo esc_url( $theme['buy_url'] ); ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
+								href="<?php echo esc_url( $theme['buy_url'] ); ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
 						</div>
 
 						<div class="rtm-theme-content hide">
@@ -196,9 +200,9 @@ class RTMediaThemes {
 
 								<div class="theme-actions">
 									<a class="button load-customize hide-if-no-customize"
-									   href="<?php echo esc_url( $theme['demo_url'] ); ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
+										href="<?php echo esc_url( $theme['demo_url'] ); ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
 									<a class="button button-primary load-customize hide-if-no-customize"
-									   href="<?php echo esc_url( $theme['buy_url'] ); ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
+										href="<?php echo esc_url( $theme['buy_url'] ); ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
 								</div>
 							</div>
 						</div>
@@ -212,11 +216,9 @@ class RTMediaThemes {
 	}
 
 	/**
-	 * Show rtmedia_3rd_party_themes_content.
+	 * Show rtMMedia 3rd party themes details.
 	 *
 	 * @access public
-	 *
-	 * @param  void
 	 *
 	 * @return void
 	 */
@@ -286,7 +288,6 @@ class RTMediaThemes {
 		);
 		?>
 
-
 		<div class="theme-browser rtm-theme-browser rendered">
 			<div class="themes rtm-themes clearfix">
 
@@ -305,9 +306,9 @@ class RTMediaThemes {
 
 						<div class="theme-actions">
 							<a class="button load-customize hide-if-no-customize"
-							   href="<?php echo esc_url( $theme['demo_url'] ); ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
+								href="<?php echo esc_url( $theme['demo_url'] ); ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
 							<a class="button button-primary load-customize hide-if-no-customize"
-							   href="<?php echo esc_url( $theme['buy_url'] ); ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
+								href="<?php echo esc_url( $theme['buy_url'] ); ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
 						</div>
 
 						<div class="rtm-theme-content hide">
@@ -349,9 +350,9 @@ class RTMediaThemes {
 
 								<div class="theme-actions">
 									<a class="button load-customize hide-if-no-customize"
-									   href="<?php echo esc_url( $theme['demo_url'] ); ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
+										href="<?php echo esc_url( $theme['demo_url'] ); ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
 									<a class="button button-primary load-customize hide-if-no-customize"
-									   href="<?php echo esc_url( $theme['buy_url'] ); ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
+										href="<?php echo esc_url( $theme['buy_url'] ); ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
 								</div>
 							</div>
 						</div>
@@ -368,8 +369,8 @@ class RTMediaThemes {
 			<h3 class="rtm-option-title"><?php esc_html_e( 'Are you a developer?', 'buddypress-media' ); ?></h3>
 
 			<p>
-				<?php esc_html_e( 'If you have developed a rtMedia compatible theme and would like it to list here, please email us at', 'buddypress-media' ) ?>
-				<a href="mailto:rtmedia@rtcamp.com"><?php esc_html_e( 'rtmedia@rtcamp.com', 'buddypress-media' ) ?></a>.
+				<?php esc_html_e( 'If you have developed a rtMedia compatible theme and would like it to list here, please email us at', 'buddypress-media' ); ?>
+				<a href="mailto:rtmedia@rtcamp.com"><?php esc_html_e( 'rtmedia@rtcamp.com', 'buddypress-media' ); ?></a>.
 			</p>
 		</div>
 		<?php
