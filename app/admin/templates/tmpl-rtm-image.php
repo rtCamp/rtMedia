@@ -1,3 +1,11 @@
+<?php
+/**
+ * Displays image tag.
+ *
+ * @package rtMedia
+ */
+
+?>
 <# if(data.class && '' !== data.class){ #>
 	<img class="bpm-ajax-loader" src="{{data.src}}" /> <strong>{{data.norefresh}}</strong>
 <# } else { #>

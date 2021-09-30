@@ -48,6 +48,9 @@
 		$uploadmedia->uploadMedia( ConstantsPage::$imageName );
 		$uploadmedia->uploadMediaUsingStartUploadButton();
 
+		//Adding wait to check if media is being uploaded
+		$I->wait(2);
+
 		$I->reloadPage();
 
 		$I->scrollTo( ConstantsPage::$mediaPageScrollPos );

@@ -39,7 +39,6 @@
 #whats-new-submit #aw-whats-new-submit {
 	font-size: 12px;
 	line-height: 18px;
-	padding: 4px 6px;
 }
 
 #whats-new-post-in-box {
@@ -74,6 +73,16 @@ body.media.buddypress {
 			color: #767676;
 			margin-left: 50px;
 			padding-left: 15px;
+
+			.rtm-plupload-list {
+				.plupload_queue_li {
+					padding: 5px;
+				}
+				.rtm-upload-edit-desc {
+					background: #fff;
+					border : solid 1px #ccc;
+				}
+			}
 		}
 	}
 }

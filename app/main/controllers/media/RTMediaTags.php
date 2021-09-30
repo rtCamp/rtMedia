@@ -1,39 +1,55 @@
 <?php
+/**
+ * Handles Media tags.
+ *
+ * @package rtMedia
+ */
 
 /**
- * Description of RTMediaTags
- *
- *
+ * Handles Media tags.
  */
 class RTMediaTags {
+
 	/**
+	 * A new instance of the getid3 class
 	 *
-	 * @var object a new instance of the getid3 class
+	 * @var object
 	 */
 	private static $_id3;
 
 	/**
+	 * File to analyze
 	 *
-	 * @var the file to analyze
+	 * @var string
 	 */
 	private $file;
 
 	/**
+	 * Holds a copy of the variable $_id3
 	 *
-	 * @var object holds a copy of the variable $_id3
+	 * @var object
 	 */
 	private $id3;
 
-
 	/**
+	 * Key and value of analyzed file
 	 *
-	 *
-	 * @var array key and value of analyzed file
+	 * @var array
 	 */
 	private $data = null;
 
-
+	/**
+	 * Media duration.
+	 *
+	 * @var array
+	 */
 	private $duration_info = array( 'duration' );
+
+	/**
+	 * Media tags.
+	 *
+	 * @var array
+	 */
 	private $tags = array(
 		'title',
 		'artist',
@@ -46,29 +62,48 @@ class RTMediaTags {
 		'attached_picture',
 		'image',
 	);
+
+	/**
+	 * Readonly tags.
+	 *
+	 * @var array
+	 */
 	private $readonly_tags = array( 'track_total', 'attached_picture', 'image' );
 
-
+	/**
+	 * RTMediaTags constructor.
+	 *
+	 * @param string $file File path.
+	 *
+	 * @throws getid3_exception Exception while initializing id3.
+	 */
 	public function __construct( $file ) {
 
 		$this->file = $file;
 		$this->id3  = self::id3();
 	}
 
+	/**
+	 * Change file path.
+	 *
+	 * @param string $file File path.
+	 */
 	public function update_filepath( $file ) {
 
 		$this->file = $file;
 	}
 
 	/**
-	 *
 	 * Writes data inside  the files after manipulation, mainly mp3 files.
+	 *
+	 * @return bool|WP_Error
+	 * @throws Exception Exception while adding data.
 	 */
 	public function save() {
 
-		include_once( trailingslashit( RTMEDIA_PATH ) . 'lib/getid3/write.php' );
+		include_once trailingslashit( RTMEDIA_PATH ) . 'lib/getid3/write.php';
 
-		$tagwriter                    = new getid3_writetags;
+		$tagwriter                    = new getid3_writetags();
 		$tagwriter->filename          = $this->file;
 		$tagwriter->tag_encoding      = 'UTF-8';
 		$tagwriter->tagformats        = array( 'id3v2.3', 'id3v1' );
@@ -88,19 +123,18 @@ class RTMediaTags {
 		}
 	}
 
-
 	/**
-	 *
 	 * Initialize the getid3 class
 	 *
-	 * @return object
+	 * @return getID3|object
+	 * @throws getid3_exception Exception while initializing getID3.
 	 */
 	public static function id3() {
 
-		include_once( trailingslashit( RTMEDIA_PATH ) . 'lib/getid3/getid3.php' );
+		include_once trailingslashit( RTMEDIA_PATH ) . 'lib/getid3/getid3.php';
 
 		if ( ! self::$_id3 ) {
-			self::$_id3 = new getID3;
+			self::$_id3 = new getID3();
 		}
 
 		return self::$_id3;
@@ -108,12 +142,11 @@ class RTMediaTags {
 
 
 	/**
-	 *
 	 * Sets cover art for mp3 files
 	 *
-	 * @param $data
-	 * @param string $mime
-	 * @param string $description
+	 * @param array  $data Image data.
+	 * @param string $mime Image mime type.
+	 * @param string $description Description of image.
 	 */
 	public function set_art( $data, $mime = 'jpeg', $description = 'Description' ) {
 
@@ -124,11 +157,19 @@ class RTMediaTags {
 		$this->data['attached_picture'] = array();
 
 		$this->data['attached_picture'][0]['data']          = $data;
-		$this->data['attached_picture'][0]['picturetypeid'] = 0x03; // 'Cover (front)'
+		$this->data['attached_picture'][0]['picturetypeid'] = 0x03; // 'Cover (front)'.
 		$this->data['attached_picture'][0]['description']   = $description;
 		$this->data['attached_picture'][0]['mime']          = 'image/' . $mime;
 	}
 
+	/**
+	 * Get tag value.
+	 *
+	 * @param string $key Tag key.
+	 *
+	 * @return array|mixed|null
+	 * @throws Exception Unknown tag for class.
+	 */
 	public function __get( $key ) {
 
 		if ( ! in_array( $key, $this->tags, true ) && ! in_array( $key, $this->duration_info, true ) && ! isset( $this->duration_info[ $key ] ) ) {
@@ -156,6 +197,14 @@ class RTMediaTags {
 		}
 	}
 
+	/**
+	 * Set tag to album.
+	 *
+	 * @param string $key Tag string.
+	 * @param string $value Tag value.
+	 *
+	 * @throws Exception Exception for read only tags.
+	 */
 	public function __set( $key, $value ) {
 
 		if ( ! in_array( $key, $this->tags, true ) ) {
@@ -174,13 +223,12 @@ class RTMediaTags {
 
 
 	/**
-	 *
 	 * Analyze file
 	 */
 	private function analyze() {
 
-		$array_ext  = array( 'ogg', 'm4a', 'mp4', 'webm' );
-		$path_parts = pathinfo( $this->file );
+		$array_ext               = array( 'ogg', 'm4a', 'mp4', 'webm' );
+		$path_parts              = pathinfo( $this->file );
 		$path_parts['extension'] = $path_parts['extension'] ? $path_parts['extension'] : false;
 
 		$data = $this->id3->analyze( $this->file );
@@ -207,7 +255,7 @@ class RTMediaTags {
 
 		if ( strstr( $track, '/' ) ) {
 			list( $track, $track_total ) = explode( '/', $track );
-			$this->data['track_total'] = array( $track_total );
+			$this->data['track_total']   = array( $track_total );
 		}
 
 		$this->data['track'] = array( $track );

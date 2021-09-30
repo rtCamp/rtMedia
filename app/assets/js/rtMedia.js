@@ -1,6 +1,35 @@
 var rtMagnificPopup;
 var rtm_masonry_container;
 var comment_media = false;
+
+jQuery( document ).ready( function () {
+
+	// Need to pass the object[key] as global variable.
+	if ( 'object' === typeof rtmedia_bp ) {
+		for( var key in rtmedia_bp ) {
+			window[key] = rtmedia_bp[key];
+		}
+	}
+
+	if ( 'object' === typeof rtmedia_main ) {
+		for( var key in rtmedia_main ) {
+			window[key] = rtmedia_main[key];
+		}
+	}
+
+	if ( 'object' === typeof rtmedia_upload_terms ) {
+		for( var key in rtmedia_upload_terms ) {
+			window[key] = rtmedia_upload_terms[key];
+		}
+	}
+
+	if ( 'object' === typeof rtmedia_magnific ) {
+		for( var key in rtmedia_magnific ) {
+			window[key] = rtmedia_magnific[key];
+		}
+	}
+});
+
 function apply_rtMagnificPopup( selector ) {
 	jQuery( 'document' ).ready( function( $ ) {
 		var rt_load_more = '';
@@ -853,41 +882,53 @@ jQuery( 'document' ).ready( function( $ ) {
 		});
 	}
 
-	// Delete media from gallery page under the user's profile when user clicks the delete button on the gallery item.
+	/**
+	 * Delete media from gallery page under the user's profile when user clicks the delete button on the gallery item.
+	 * Modified 11-Feb-2020 Adarsh Verma <adarsh.verma@rtcamp.com>
+	 */
 	jQuery( '.rtmedia-container' ).on( 'click', '.rtm-delete-media', function( e ) {
 		e.preventDefault();
-		var confirmation = 'Are you sure you want to delete this media?';
-
-		if ( typeof rtmedia_media_delete_confirmation != 'undefined' ) {
-			confirmation = rtmedia_media_delete_confirmation;
-		}
+		var confirmation = RTMedia_Main_JS.media_delete_confirmation;
 
 		if ( confirm( confirmation ) ) { // If user confirms, send ajax request to delete the selected media
 			var curr_li = jQuery( this ).closest( 'li' );
 			var nonce = jQuery( '#rtmedia_media_delete_nonce' ).val();
+			var media_type = jQuery( this ).parents( '.rtmedia-list-item' ).data( 'media_type' );
 
 			var data = {
 				action: 'delete_uploaded_media',
 				nonce: nonce,
-				media_id: curr_li.attr( 'id' )
+				media_id: curr_li.attr( 'id' ),
+				media_type: media_type
 			};
 
 			jQuery.ajax( {
-				url: ajaxurl,
-				type: 'post',
+				url: RTMedia_Main_JS.rtmedia_ajaxurl,
+				type: 'POST',
 				data: data,
-				success: function( data ) {
+				dataType: 'JSON',
+				success: function( response ) {
 
-					if ( data == '1' ) {
+					if ( 'rtmedia-media-deleted' === response.data.code ) {
 						//Media delete
-						rtmedia_gallery_action_alert_message( rtmedia_main_js_strings.file_delete_success, 'success' );
+						rtmedia_gallery_action_alert_message( RTMedia_Main_JS.media_delete_success, 'success' );
 						curr_li.remove();
-						if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+
+						if ( 'undefined' !== typeof rtmedia_masonry_layout && 'true' === rtmedia_masonry_layout ) {
 							rtm_masonry_reload( rtm_masonry_container );
 						}
+
+						// Update the media count in user profile & group's media tab.
+						jQuery( '#user-media span, #media-groups-li #media span' ).text( response.data.all_media_count );
+
+						// Update the count on sub navigations (Photo, Video & Music)
+						jQuery( '#rtmedia-nav-item-photo span' ).text( response.data.photos_count );
+						jQuery( '#rtmedia-nav-item-music span' ).text( response.data.music_count );
+						jQuery( '#rtmedia-nav-item-video span' ).text( response.data.videos_count );
 					} else { // Show alert message
-						rtmedia_gallery_action_alert_message( rtmedia_file_not_deleted, 'warning' );
+						rtmedia_gallery_action_alert_message( response.data.message, 'warning' );
 					}
+
 				}
 			} );
 		}
@@ -1322,5 +1363,18 @@ jQuery( document ).ready( function () {
 			jQuery( 'body' ).removeClass( 'has-sidebar' );
 		}
 	}
-});
 
+	// remove download option from video.
+	if ( rtmedia_main ) {
+		if ( 'undefined' === rtmedia_main.rtmedia_direct_download_link || ! parseInt( rtmedia_main.rtmedia_direct_download_link ) ) {
+			jQuery( document ).on( 'bp_ajax_request', function ( event ) {
+				setTimeout( function() {
+					jQuery( 'video' ).each( function () {
+						jQuery( this ).attr( 'controlsList', 'nodownload' );
+						jQuery( this ).load();
+					} );
+				}, 200 );
+			} );
+		}
+	}
+});
