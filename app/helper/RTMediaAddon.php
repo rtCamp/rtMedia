@@ -1,27 +1,39 @@
 <?php
 /**
- * Description of RTMediaAddon
+ * Contains class RTMediaAddon
+ * Shows Addons details
  *
  * @package    rtMedia
  * @subpackage Admin
  *
- * @author     Gagandeep Singh <gagandeep.singh@rtcamp.com>
- * @author     Joshua Abenazer <joshua.abenazer@rtcamp.com>
+ * @author     Gagandeep Singh <gagandeep.singh@rtcamp.com>, Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
+
 if ( ! class_exists( 'RTMediaAddon' ) ) {
 
+	/**
+	 * Class to display rtMedia addons.
+	 */
 	class RTMediaAddon {
 
+		/**
+		 * Enquiry link.
+		 *
+		 * @var string
+		 */
 		public $enquiry_link = 'https://rtmedia.io/contact/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
-		// current page
+
+		/**
+		 * Current page.
+		 *
+		 * @var string $page
+		 */
 		public static $page;
 
 		/**
-		 * Show coming_soon_div.
+		 * Show coming soon div.
 		 *
 		 * @access public
-		 *
-		 * @param  void
 		 *
 		 * @return string
 		 */
@@ -30,11 +42,11 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		}
 
 		/**
-		 * Render addons.
+		 * Render add-ons.
 		 *
 		 * @access public
 		 *
-		 * @param  type $page
+		 * @param  string $page Page name.
 		 *
 		 * @return void
 		 */
@@ -68,8 +80,6 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  void
-		 *
 		 * @return void
 		 */
 		public function get_addons() {
@@ -94,7 +104,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  array $args
+		 * @param  array|string $args Arguments.
 		 *
 		 * @return void
 		 */
@@ -509,11 +519,11 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		}
 
 		/**
-		 * themes_content.
+		 * Show themes content.
 		 *
 		 * @access public
 		 *
-		 * @param  array $args
+		 * @param  array|string $args Arguments.
 		 *
 		 * @return void
 		 */
@@ -524,9 +534,9 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		/**
 		 * Define addon.
 		 *
-		 * @global type $rtmedia
+		 * @global mixed $rtmedia
 		 *
-		 * @param  array $args
+		 * @param  array $args Arguments.
 		 *
 		 * @return void
 		 */
@@ -546,46 +556,51 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 				'purchased'    => false,
 			);
 			$args     = wp_parse_args( $args, $defaults );
-			extract( $args );
 
-			$coming_soon ? ' coming-soon' : '';
-
-			if ( $purchased ) {
+			if ( $args['purchased'] ) {
 				$purchase_link = '<span class="rtm-addon-purchased button-primary disabled alignright product_type_simple">' . esc_html__( 'Purchased', 'buddypress-media' ) . '</span>';
 			} else {
-				$purchase_link = '<a class="button-primary alignright product_type_simple"  href="' . esc_url( $buy_now ) . '" target="_blank">' . esc_html__( 'Buy Now', 'buddypress-media' ) . '</a>';
+				$purchase_link = '<a class="button-primary alignright product_type_simple"  href="' . esc_url( $args['buy_now'] ) . '" target="_blank">' . esc_html__( 'Buy Now', 'buddypress-media' ) . '</a>';
 			}
 
-			$coming_soon_div = ( $coming_soon ) ? $this->coming_soon_div() : '';
+			$allowed_html = array(
+				'a'    => array(
+					'href'   => array(),
+					'target' => array(),
+					'class'  => array(),
+				),
+				'span' => array(
+					'class' => array(),
+				),
+			);
+
+			$coming_soon_div = ( ! empty( $args['coming_soon'] ) ) ? $this->coming_soon_div() : '';
 			?>
 			<div class="plugin-card clearfix rtm-plugin-card">
 
 				<div class="plugin-card-top">
-					<a class="rtm-logo" href="<?php echo esc_url( $product_link ); ?>"
-					   title="<?php echo esc_attr( $title ); ?>" target="_blank">
-						<img width="240" height="184" title="<?php echo esc_attr( $title ); ?>"
-						     alt="<?php echo esc_attr( $title ); ?>" src="<?php echo esc_url( $img_src ); ?>"/>
+					<a class="rtm-logo" href="<?php echo esc_url( $args['product_link'] ); ?>" title="<?php echo esc_attr( $args['title'] ); ?>" target="_blank">
+						<img width="240" height="184" title="<?php echo esc_attr( $args['title'] ); ?>" alt="<?php echo esc_attr( $args['title'] ); ?>" src="<?php echo esc_url( $args['img_src'] ); ?>"/>
 					</a>
 
 					<div class="name column-name">
-						<h4><a href="<?php echo esc_url( $product_link ); ?>" title="<?php echo esc_attr( $title ); ?>"
-						       target="_blank"><?php echo esc_html( $title ); ?></a></h4>
+						<h4><a href="<?php echo esc_url( $args['product_link'] ); ?>" title="<?php echo esc_attr( $args['title'] ); ?>" target="_blank"><?php echo esc_html( $args['title'] ); ?></a></h4>
 					</div>
 
 					<div class="desc column-description">
-						<?php echo wp_kses_post( $desc ); ?>
+						<?php echo wp_kses_post( $args['desc'] ); ?>
 					</div>
 				</div>
 
 				<div class="plugin-card-bottom">
 					<span class="price alignleft">
-						<span class="amount"><?php echo esc_html( $price ); ?></span>
+						<span class="amount"><?php echo esc_html( $args['price'] ); ?></span>
 					</span>
 					<?php
-					echo $purchase_link; // @codingStandardsIgnoreLine
+					echo wp_kses( $purchase_link, $allowed_html );
 
-					if ( '' !== $demo_link ) {
-						echo '<a class="alignright rtm-live-demo button"  href="' . esc_url( $demo_link ) . '" title="' . esc_attr( $title ) . '" target="_blank">' . esc_html__( 'Live Demo', 'buddypress-media' ) . '</a>';
+					if ( '' !== $args['demo_link'] ) {
+						echo '<a class="alignright rtm-live-demo button"  href="' . esc_url( $args['demo_link'] ) . '" title="' . esc_attr( $args['title'] ) . '" target="_blank">' . esc_html__( 'Live Demo', 'buddypress-media' ) . '</a>';
 					}
 					?>
 				</div>

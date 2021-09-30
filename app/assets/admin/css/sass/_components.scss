@@ -82,7 +82,19 @@
 				margin-top: 5px !important;
 			}
 		}
+
+		.wp-picker-input-wrap {
+			label {
+				display: inline;
+			}
+		}
+
+		.wp-picker-clear {
+			margin-left : 5px;
+		}
+
 	}
+
 
 	textarea,
 	select,

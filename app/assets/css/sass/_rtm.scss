@@ -111,6 +111,7 @@ form .rtmedia-container .rtm-plupload-list,
 		input.rtm-upload-edit-title {
 			min-width: 100%;
 			margin-top: 1px;
+			display: block;
 		}
 	}
 }
@@ -196,6 +197,10 @@ button#rtmedia-add-media-button-post-update {
 .rtm-form {
 	.rtm-field-wrap {
 		margin-bottom: 20px;
+
+		.rtmedia-title-editor {
+			width: 100%;
+		}
 	}
 
 	.rtmedia-editor-buttons {

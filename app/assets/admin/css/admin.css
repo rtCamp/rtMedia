@@ -250,6 +250,12 @@
 .rtm-option-wrapper .form-table .rtm-form-radio label {
   margin-top: 5px !important;
 }
+.rtm-option-wrapper .form-table .wp-picker-input-wrap label {
+  display: inline;
+}
+.rtm-option-wrapper .form-table .wp-picker-clear {
+  margin-left: 5px;
+}
 .rtm-option-wrapper textarea,
 .rtm-option-wrapper select,
 .rtm-option-wrapper input[type=text],

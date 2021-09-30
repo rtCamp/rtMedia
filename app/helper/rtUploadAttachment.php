@@ -21,14 +21,20 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 	 * @return void.
 	 */
 	function rtmedia_admin_upload() {
+
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+
 			$nonce = filter_input( INPUT_POST, 'rtmedia_admin_upload_nonce' );
 			if ( wp_verify_nonce( $nonce, 'rtmedia-admin-upload' ) ) {
+
 				if ( ! empty( $_FILES ) ) {
+
 					$error = false;
 					$files = array();
+
 					// Get WordPress's uploads directory paths and urls.
 					$wpuploaddir = wp_upload_dir();
+
 					// Folder for uploading temporary debug attachment. i.e SITE_ROOT/wp-content/uploads/rtMedia/tmp.
 					$uploaddir = $wpuploaddir['basedir'] . '/rtMedia/tmp/';
 
@@ -38,21 +44,25 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 							die( 'Failed to create folders...' );
 						}
 					}
-					$allowd_type = array( 'jpg', 'jpeg', 'png', 'gif', 'zip', 'doc', 'docx', 'pdf', 'txt' );
+
+					$allowed_type = array( 'jpg', 'jpeg', 'png', 'gif', 'zip', 'doc', 'docx', 'pdf', 'txt' );
 
 					// Code to check whether the uploaded file is settings json file.
 					$import_export         = false;
 					$import_export_control = sanitize_text_field( filter_input( INPUT_POST, 'import_export_control' ) );
+
 					if ( 'rtFileInput' === $import_export_control ) {
 						$import_export = true;
 					}
 
 					// Move file to target folder.
 					foreach ( $_FILES as $name => $file ) {
+
 						if ( $file['size'] <= 2000000 ) {
 							$ext = pathinfo( basename( $file['name'] ), PATHINFO_EXTENSION );
 
 							if ( $import_export ) {
+
 								if ( 'json' === strtolower( $ext ) && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
 									$uploaded_file = $uploaddir . $file['name'];
 
@@ -61,7 +71,7 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 								} else {
 									$error = true;
 								}
-							} elseif ( in_array( strtolower( $ext ), $allowd_type, true ) && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
+							} elseif ( in_array( strtolower( $ext ), $allowed_type, true ) && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
 								$files[] = $uploaddir . $file['name'];
 							} else {
 								$error = true;
