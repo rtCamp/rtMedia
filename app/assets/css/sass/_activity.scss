@@ -73,11 +73,32 @@
 
 }
 
-// remove border and padding
-#buddypress ul.rtmedia-list li {
-	border-bottom: 0;
-	padding-bottom: 0;
+#buddypress {
+    // Remove border and padding.
+    ul.rtmedia-list {
+        li {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+    }
+
+	// Fix UI for media pl-upload preview.
+	.activity {
+		#activity-stream {
+			li.plupload_queue_li {
+				padding: 5px;
+				.plupload_file_name {
+					.rtm-upload-edit-desc-wrapper{
+						textarea {
+							width: 100px;
+						}
+					}
+				}
+			}
+		}
+	}
 }
+
 
 // hide unnecessory div
 .rtmedia-activity-container {
@@ -106,11 +127,29 @@
 	top: 0 !important;
 }
 
+#whats-new-submit {
+	display: flex;
+}
+
 #aw-whats-new-submit,
 .rtmedia-add-media-button {
 	display: block;
+	line-height: initial;
 
 	// Remove extra space
+}
+
+#aw-whats-new-reset {
+	background: $white;
+	border: 1px solid $border-dark;
+
+	&:hover{
+		text-decoration: none;
+		border: 1px solid #999;
+		background: #ededed;
+		outline: 0;
+		color: #333;
+	}
 }
 
 .rtm-drag-drop-active {
@@ -220,7 +259,11 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 		}
 
 		.rtmedia-plupload-container {
-			width: 25%;
+			width: fit-content;
+		}
+
+		.rtmedia-upload-terms{
+			float: left;
 		}
 
 		.rtmedia-upload-terms #rtmedia_upload_terms_conditions {
@@ -228,6 +271,10 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 		}
 
 		#aw-whats-new-submit {
+			margin-top: 15px;
+		}
+
+		#aw-whats-new-reset {
 			margin-top: 15px;
 		}
 	}
@@ -251,4 +298,29 @@ a.rtmedia-comment-link{
 
 a.rtmedia-comment-link.rtmedia-comments-link{
 	display: initial;
+}
+
+// MediaElement.js poster size fix.
+.mejs-poster.mejs-layer {
+    height: 0!important;
+}
+
+// Media title fix on legacy.
+.bp-legacy {
+	#buddypress {
+		#activity-stream {
+			.rtmedia-item-title{
+				margin: 0px;
+				p {
+					margin : 0px;
+				}
+			}
+
+			.media-type-video {
+				.rtmedia-item-title{
+					margin: -20px;
+				}
+			}
+		}
+	}
 }

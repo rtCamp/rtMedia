@@ -15,7 +15,7 @@
     $I->wantTo( 'To set height and width of video player for activity page' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$mediaSizeSettingsUrl );

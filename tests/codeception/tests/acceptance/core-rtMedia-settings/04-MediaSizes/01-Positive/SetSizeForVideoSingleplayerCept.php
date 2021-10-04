@@ -13,7 +13,7 @@
     $I->wantTo( 'To set height and width of single video player.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$mediaSizeSettingsUrl );
@@ -31,6 +31,7 @@
     $uploadmedia->uploadMediaUsingStartUploadButton();
 
     $I->reloadPage();
+    $I->wait(2);
 
     $I->scrollTo( ConstantsPage::$mediaPageScrollPos );
 

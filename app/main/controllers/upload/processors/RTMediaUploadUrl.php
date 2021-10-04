@@ -1,15 +1,15 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Handle media upload from URL.
+ *
+ * @package rtMedia
  */
 
 /**
- * Description of RTMediaUploadUrl
+ * Class to handle media upload from URL.
  *
  * @author joshua
  */
 class RTMediaUploadUrl {
-	//put your code here
+	// todo:delete if not used anywhere.
 }

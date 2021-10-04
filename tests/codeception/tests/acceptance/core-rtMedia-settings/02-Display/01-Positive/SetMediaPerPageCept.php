@@ -16,7 +16,7 @@
 	$I->wantTo( 'To set the number media per page' );
 
 	$loginPage = new LoginPage( $I );
-	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$loginPage->loginAsAdmin();
 
 	$settings = new DashboardSettingsPage( $I );
 	$settings->gotoSettings( ConstantsPage::$displaySettingsUrl );

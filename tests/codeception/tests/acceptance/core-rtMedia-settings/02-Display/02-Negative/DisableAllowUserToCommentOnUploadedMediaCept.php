@@ -15,7 +15,7 @@
 	$I->wantTo( 'User should not allowed to comment on uploaded media' );
 
 	$loginPage = new LoginPage( $I );
-	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$loginPage->loginAsAdmin();
 
 	$settings = new DashboardSettingsPage( $I );
 	$settings->gotoSettings( ConstantsPage::$displaySettingsUrl );

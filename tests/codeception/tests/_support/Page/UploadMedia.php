@@ -96,7 +96,7 @@ class UploadMedia {
 			$I->waitForElementVisible('.rt_alert_msg', 5);
 			$I->see('Please check terms of service.');
 		}else{
-				$I->waitForElementNotVisible( ConstantsPage::$fileList, 20 );
+				$I->waitForElementNotVisible( ConstantsPage::$fileList, 30 );
 		}
 
 	}

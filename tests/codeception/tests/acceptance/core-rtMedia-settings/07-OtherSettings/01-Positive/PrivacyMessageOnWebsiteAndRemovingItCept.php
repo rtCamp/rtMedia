@@ -13,7 +13,7 @@
     $I->wantTo( 'To check if the privacy Message is seen on website.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$otherSettingsUrl );
@@ -46,11 +46,11 @@
      * Below code is to check if the user clicks on close button in one window and oprning new window should display the privacy message.
      */
 
-    $nick = $I->haveFriend('New Test Window');
-    $nick->does(function(AcceptanceTester $I) {
-         $I->amOnPage('/');
-         $I->waitForElementVisible( ConstantsPage::$siteWidePrivacyNoticeSelector, 10 );
-    });
+    // $nick = $I->haveFriend('New Test Window');
+    // $nick->does(function(AcceptanceTester $I) {
+    //      $I->amOnPage('/');
+    //      $I->waitForElementVisible( ConstantsPage::$siteWidePrivacyNoticeSelector, 10 );
+    // });
 
 
 ?>

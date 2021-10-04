@@ -13,7 +13,7 @@
     $I->wantTo( 'To check if the privacy Message is seen on website.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$otherSettingsUrl );

@@ -15,7 +15,7 @@
 	$I->wantTo( "To disable upload media in comment." );
 
 	$loginPage = new LoginPage( $I );
-	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$loginPage->loginAsAdmin();
 
 	$settings = new DashboardSettingsPage( $I );
 

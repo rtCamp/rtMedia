@@ -14,7 +14,7 @@
     $I->wantTo( 'Enable Upload terms on Activity Page.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$otherSettingsUrl );

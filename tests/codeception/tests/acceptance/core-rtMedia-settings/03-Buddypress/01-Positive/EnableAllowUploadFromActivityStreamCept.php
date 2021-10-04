@@ -16,7 +16,7 @@
     $I->wantTo( 'Check if the user is allowed to upload media from activity stream.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->enableUploadFromActivity();

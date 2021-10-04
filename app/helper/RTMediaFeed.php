@@ -1,21 +1,31 @@
 <?php
+/**
+ * Media feed.
+ *
+ * @package    rtMedia
+ */
 
 /**
- * Description of RTMediaFeed
+ * Class for rtMedia feed operations.
  *
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
 class RTMediaFeed {
 
+	/**
+	 * Feed url.
+	 *
+	 * @var string
+	 */
 	public $feed_url = '';
 
 	/**
-	 * Constructor
+	 * RTMediaFeed Constructor
 	 *
 	 * @access public
 	 *
-	 * @param  string $feed_url
+	 * @param  string $feed_url Feed url.
 	 */
 	public function __construct( $feed_url = '' ) {
 		if ( $feed_url ) {
@@ -26,12 +36,9 @@ class RTMediaFeed {
 	/**
 	 * Get BuddyPress Media Feed from rtmedia.io
 	 */
-
-	/**
-	 */
 	public function fetch_feed() {
-		// Get RSS Feed(s)
-		require_once( ABSPATH . WPINC . '/feed.php' );
+		// Get RSS Feed(s).
+		require_once ABSPATH . WPINC . '/feed.php';
 		$maxitems  = 0;
 		$rss_items = array();
 		// Get a SimplePie feed object from the specified feed source.
@@ -43,7 +50,8 @@ class RTMediaFeed {
 			$rss_items = $rss->get_items( 0, $maxitems );
 		}
 		?>
-		<ul><?php
+		<ul>
+		<?php
 		if ( 0 === $maxitems ) {
 			echo '<li>' . esc_html__( 'No items', 'buddypress-media' ) . '.</li>';
 		} else {
@@ -52,12 +60,14 @@ class RTMediaFeed {
 				?>
 				<li>
 				<a href='<?php echo esc_url( $item->get_permalink() ); ?>?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media'
-				   title='<?php echo esc_attr__( 'Posted ', 'buddypress-media' ) . esc_attr( $item->get_date( 'j F Y | g:i a' ) ); ?>'><?php echo esc_html( $item->get_title() ); ?></a>
-				</li><?php
+					title='<?php echo esc_attr__( 'Posted ', 'buddypress-media' ) . esc_attr( $item->get_date( 'j F Y | g:i a' ) ); ?>'><?php echo esc_html( $item->get_title() ); ?></a>
+				</li>
+				<?php
 			}
 		}
 		?>
-		</ul><?php
+		</ul>
+		<?php
 		if ( DOING_AJAX ) {
 			wp_die();
 		}

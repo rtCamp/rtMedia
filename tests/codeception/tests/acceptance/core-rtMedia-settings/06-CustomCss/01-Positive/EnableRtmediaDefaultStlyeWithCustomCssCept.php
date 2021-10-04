@@ -8,11 +8,14 @@
     use Page\DashboardSettings as DashboardSettingsPage;
     use Page\BuddypressSettings as BuddypressSettingsPage;
 
+    //Adding webdriver namespace to check if it works
+    use Facebook\WebDriver\WebDriverBy;
+
     $I = new AcceptanceTester( $scenario );
     $I->wantTo( 'set custom css style when default rtmedia style is enabled.' );
 
     $loginPage = new LoginPage( $I );
-    $loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+    $loginPage->loginAsAdmin();
 
     $settings = new DashboardSettingsPage( $I );
     $settings->gotoSettings( ConstantsPage::$customCssSettingsUrl );
@@ -25,13 +28,24 @@
         $settings->saveSettings();
     }
 
-    $value = $I->grabValueFrom( ConstantsPage::$cssTextarea );
-    echo "Css text area value = \n" . $value;
+
     $settings->setValue( ConstantsPage::$customCssLabel, ConstantsPage::$cssTextarea, ConstantsPage::$customCssValue );
-    $settings->saveSettings();
+    // $settings->saveSettings();
+    $I->executeJS( "jQuery('.rtm-button-container.bottom .rtmedia-settings-submit').click();" );
+    $I->waitForText( 'Settings saved successfully!', 30 );
+    $temp = $I->grabTextFrom( ConstantsPage::$cssTextarea );
+    echo " \n Text area value = " . $temp;
+
 
     $buddypress = new BuddypressSettingsPage( $I );
-    $buddypress->gotoActivity();
+    $buddypress->gotoMedia();
 
-    $I->seeInSource( ConstantsPage::$customCssValue );
+    $optionDivColor = $I->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webdriver) {
+    return $webdriver->findElement(WebDriverBy::cssSelector('.rtm-media-options '))->getCSSValue('color');
+    });
+
+    echo "\n Option div button color = ". $optionDivColor;
+    echo "\n";
+    $I->assertEquals( $optionDivColor, 'rgba(34, 139, 34, 1)' );
+
 ?>

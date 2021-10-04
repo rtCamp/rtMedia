@@ -15,7 +15,7 @@
 	$I->wantTo( 'To check if masonry layout is enabled.' );
 
 	$loginPage = new LoginPage( $I );
-	$loginPage->loginAsAdmin( ConstantsPage::$userName, ConstantsPage::$password );
+	$loginPage->loginAsAdmin();
 
 	$settings = new DashboardSettingsPage( $I );
 	$settings->gotoSettings( ConstantsPage::$displaySettingsUrl );

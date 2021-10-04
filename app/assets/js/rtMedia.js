@@ -1,6 +1,35 @@
 var rtMagnificPopup;
 var rtm_masonry_container;
 var comment_media = false;
+
+jQuery( document ).ready( function () {
+
+	// Need to pass the object[key] as global variable.
+	if ( 'object' === typeof rtmedia_bp ) {
+		for( var key in rtmedia_bp ) {
+			window[key] = rtmedia_bp[key];
+		}
+	}
+
+	if ( 'object' === typeof rtmedia_main ) {
+		for( var key in rtmedia_main ) {
+			window[key] = rtmedia_main[key];
+		}
+	}
+
+	if ( 'object' === typeof rtmedia_upload_terms ) {
+		for( var key in rtmedia_upload_terms ) {
+			window[key] = rtmedia_upload_terms[key];
+		}
+	}
+
+	if ( 'object' === typeof rtmedia_magnific ) {
+		for( var key in rtmedia_magnific ) {
+			window[key] = rtmedia_magnific[key];
+		}
+	}
+});
+
 function apply_rtMagnificPopup( selector ) {
 	jQuery( 'document' ).ready( function( $ ) {
 		var rt_load_more = '';
@@ -10,6 +39,10 @@ function apply_rtMagnificPopup( selector ) {
 			rt_load_more = rtmedia_load_more;
 		}
 		if ( typeof( rtmedia_lightbox_enabled ) != 'undefined' && rtmedia_lightbox_enabled == '1' ) { // If lightbox is enabled.
+
+			var old_gallery_media;
+			var current_page;
+			var more_media_loaded = false;
 
 			if ( $( '.activity-item .rtmedia-activity-container .rtmedia-list-item > a' ).siblings( 'p' ).children( 'a' ).length > 0 ) {
 				$( '.activity-item .rtmedia-activity-container .rtmedia-list-item > a' ).siblings( 'p' ).children( 'a' ).addClass( 'no-popup' );
@@ -52,6 +85,13 @@ function apply_rtMagnificPopup( selector ) {
 						if ( ( li.is( ':nth-last-child(2)' ) || li.is( ':last-child' ) ) && li.find( 'a' ).hasClass('rtmedia-list-item-a') ) { // If its last second media
 							var last_li = li.next();
 							if ( jQuery( '#rtMedia-galary-next' ).css( 'display' ) == 'block' ) { // If more medias are available
+
+								if ( ! more_media_loaded ) {
+									old_gallery_media = mfp.ev.children();
+									more_media_loaded = true;
+									current_page      = nextpage;
+								}
+
 								jQuery( '#rtMedia-galary-next' ).click(); // Load more
 							}
 						}
@@ -143,6 +183,21 @@ function apply_rtMagnificPopup( selector ) {
                                         },
 					close: function( e ) {
 						//Console.log(e);
+
+						//If more media is loaded in lighbox then remove them set nextpage to default one.
+						if ( more_media_loaded ) {
+
+							mfp.ev.empty();
+							mfp.ev.append( old_gallery_media );
+
+							nextpage          = current_page;
+							more_media_loaded = false;
+
+							if ( nextpage > 1 ) {
+								jQuery( '#rtMedia-galary-next' ).show();
+							}
+						}
+
 						rtmedia_single_page_popup_close();
 					},
 					BeforeChange: function( e ) {
@@ -498,7 +553,7 @@ jQuery( 'document' ).ready( function( $ ) {
 			var css_class = '';
 			if ( res == 'true' ) {
 				message = rtmedia_main_js_strings.privacy_update_success;
-				css_class = 'success';
+				css_class = 'rtmedia-success';
 			} else {
 				message = rtmedia_main_js_strings.privacy_update_error;
 				css_class = 'fail';
@@ -827,41 +882,53 @@ jQuery( 'document' ).ready( function( $ ) {
 		});
 	}
 
-	// Delete media from gallery page under the user's profile when user clicks the delete button on the gallery item.
+	/**
+	 * Delete media from gallery page under the user's profile when user clicks the delete button on the gallery item.
+	 * Modified 11-Feb-2020 Adarsh Verma <adarsh.verma@rtcamp.com>
+	 */
 	jQuery( '.rtmedia-container' ).on( 'click', '.rtm-delete-media', function( e ) {
 		e.preventDefault();
-		var confirmation = 'Are you sure you want to delete this media?';
-
-		if ( typeof rtmedia_media_delete_confirmation != 'undefined' ) {
-			confirmation = rtmedia_media_delete_confirmation;
-		}
+		var confirmation = RTMedia_Main_JS.media_delete_confirmation;
 
 		if ( confirm( confirmation ) ) { // If user confirms, send ajax request to delete the selected media
 			var curr_li = jQuery( this ).closest( 'li' );
 			var nonce = jQuery( '#rtmedia_media_delete_nonce' ).val();
+			var media_type = jQuery( this ).parents( '.rtmedia-list-item' ).data( 'media_type' );
 
 			var data = {
 				action: 'delete_uploaded_media',
 				nonce: nonce,
-				media_id: curr_li.attr( 'id' )
+				media_id: curr_li.attr( 'id' ),
+				media_type: media_type
 			};
 
 			jQuery.ajax( {
-				url: ajaxurl,
-				type: 'post',
+				url: RTMedia_Main_JS.rtmedia_ajaxurl,
+				type: 'POST',
 				data: data,
-				success: function( data ) {
+				dataType: 'JSON',
+				success: function( response ) {
 
-					if ( data == '1' ) {
+					if ( 'rtmedia-media-deleted' === response.data.code ) {
 						//Media delete
-						rtmedia_gallery_action_alert_message( rtmedia_main_js_strings.file_delete_success, 'success' );
+						rtmedia_gallery_action_alert_message( RTMedia_Main_JS.media_delete_success, 'success' );
 						curr_li.remove();
-						if ( typeof rtmedia_masonry_layout != 'undefined' && rtmedia_masonry_layout == 'true' && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+
+						if ( 'undefined' !== typeof rtmedia_masonry_layout && 'true' === rtmedia_masonry_layout ) {
 							rtm_masonry_reload( rtm_masonry_container );
 						}
+
+						// Update the media count in user profile & group's media tab.
+						jQuery( '#user-media span, #media-groups-li #media span' ).text( response.data.all_media_count );
+
+						// Update the count on sub navigations (Photo, Video & Music)
+						jQuery( '#rtmedia-nav-item-photo span' ).text( response.data.photos_count );
+						jQuery( '#rtmedia-nav-item-music span' ).text( response.data.music_count );
+						jQuery( '#rtmedia-nav-item-video span' ).text( response.data.videos_count );
 					} else { // Show alert message
-						rtmedia_gallery_action_alert_message( rtmedia_file_not_deleted, 'warning' );
+						rtmedia_gallery_action_alert_message( response.data.message, 'warning' );
 					}
+
 				}
 			} );
 		}
@@ -1262,16 +1329,52 @@ function rtm_upload_terms_activity() {
 	if ( jQuery( '#rtmedia_upload_terms_conditions' ).length > 0) {
 		// Handle error on click event.
 		jQuery( '#bp-nouveau-activity-form' ).on( 'click', '#aw-whats-new-submit', function ( event ) {
-			if ( false === jQuery( '#rtmedia_upload_terms_conditions' ).prop( 'checked' ) && jQuery( '#whats-new-form #message' ).length === 0 ) {
+			var form = jQuery( '#whats-new-form' );
+			var condition_checkbox = form.find( '#rtmedia_upload_terms_conditions' );
+			if ( 0 !== condition_checkbox.length && false === condition_checkbox.prop( 'checked' ) && form.find( '#message' ).length === 0 ) {
 				event.preventDefault();
-				var selector = jQuery( '.rtmedia-upload-terms' );
+				var selector = form.find( '.rtmedia-upload-terms' );
 				rtp_display_terms_warning( selector, rtmedia_upload_terms_check_terms_message );
 			}
 		});
+
+		var bp_legacy_form = jQuery( '#whats-new-form' );
+
+		// Re-enable hidden inputs disabled in the activity post form.
+		if ( bp_legacy_form.length > 0 ) {
+			// Add upload terms element selector to work when direct upload is enabled.
+			jQuery( '#whats-new-form, #rtmedia_upload_terms_conditions' ).on( 'click', function ( event ) {
+				var hidden_fields = bp_legacy_form.find( 'input:hidden' );
+				hidden_fields.each( function() {
+					jQuery(this).prop( 'disabled', false );
+				} );
+			} );
+		}
 	}
 }
 
 jQuery( document ).ready( function () {
 	// Call function when document loaded.
 	rtm_upload_terms_activity();
+
+	// Avoid Lightbox conflict due to class has-sidebar in theme 2017 v2.1.
+	if( jQuery( 'body' ).hasClass( 'has-sidebar' ) && 0 === jQuery( '#secondary' ).length ) {
+		if ( jQuery( '.rtmedia-single-container' ).length || jQuery( '.rtmedia-container' ).length ) {
+			jQuery( 'body' ).removeClass( 'has-sidebar' );
+		}
+	}
+
+	// remove download option from video.
+	if ( rtmedia_main ) {
+		if ( 'undefined' === rtmedia_main.rtmedia_direct_download_link || ! parseInt( rtmedia_main.rtmedia_direct_download_link ) ) {
+			jQuery( document ).on( 'bp_ajax_request', function ( event ) {
+				setTimeout( function() {
+					jQuery( 'video' ).each( function () {
+						jQuery( this ).attr( 'controlsList', 'nodownload' );
+						jQuery( this ).load();
+					} );
+				}, 200 );
+			} );
+		}
+	}
 });

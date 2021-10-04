@@ -1,11 +1,12 @@
-dist: trusty
+dist: xenial
 language: php
-sudo: required
+os: linux
 php:
-  - 5.5
+  - 7.2
 branches:
   only:
     - develop
+    - pre-release-travis-test
     - pre-release
     # - codeception
 
@@ -23,20 +24,33 @@ before_script:
 
   - export PLUGIN_DIR=$(pwd)
   - sudo rm -rf /etc/mysql/
-  - sudo apt-get -qq purge mysql* graphviz* && sudo apt-get -qq autoremove
+  - sudo rm -rf /var/lib/mysql/
+  - sudo apt-get -qq purge mysql* graphviz*
+  - sudo apt-get --purge remove mysql-server
+  - sudo apt-get --purge remove mysql-client
+  - sudo apt-get --purge remove mysql-common
+  - sudo apt-get autoremove
+  - sudo apt-get autoclean
   - sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
-  - wget -qO ee rt.cx/ee && sudo bash ee
-  - sudo ee stack install
+  - wget -qO wo wops.cc && sudo bash wo
+  - sudo wo stack install --nginx
+  - sudo wo stack install --web
+  - sudo rm /etc/nginx/conf.d/stub_status.conf /etc/nginx/sites-enabled/22222
+  - sudo wo stack restart --nginx
   - sudo wp --yes --allow-root cli update --nightly
-  - sudo ee site create automation.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
+  - sudo wo site create automation.rtmedia.me --wp --user=ADMINUSER --email=krupa.nanda@rtcamp.com --pass=ADMINPASS
   - sudo sed -i '/^127.0.0.1/ s/$/ automation.rtmedia.me/' /etc/hosts
-  - sudo chmod 777 -R /var/www
+  - sudo chown -R $USER:www-data /var/www/automation.rtmedia.me
+  - sudo chmod -R g+s /var/www/automation.rtmedia.me
+  - sudo chmod -R o-rwx /var/www/automation.rtmedia.me
   - cd /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/ && mkdir rtMedia
   - cd $PLUGIN_DIR
   - cp -Rf * /var/www/automation.rtmedia.me/htdocs/wp-content/plugins/rtMedia/
   - cd /var/www/automation.rtmedia.me/htdocs/
-  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.3.2.0.zip
+  - curl -I http://automation.rtmedia.me
+  - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.6.3.0.zip
   - wp plugin activate --all
+  - wp theme activate twentynineteen
   - cd $PLUGIN_DIR
   - cd tests/codeception/tests/_data
   - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
@@ -45,16 +59,22 @@ before_script:
   - unzip BrowserStackLocal-linux-x64.zip
   - nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
   - cd $PLUGIN_DIR/tests/codeception/
-  - composer update
-  - export PATH="$PATH:/home/travis/build/rtMediaWP/rtMedia/tests/codeception/vendor/bin"
+  # - composer update
+  - composer install
+  - export PATH="$PATH:/home/travis/build/rtCamp/rtMedia/tests/codeception/vendor/bin"
     ## PHP_CodeSniffer
-  - pear install pear/PHP_CodeSniffer-2.9.1
+  - git clone https://github.com/squizlabs/PHP_CodeSniffer.git
+  - cd PHP_CodeSniffer
+  - pear install package.xml
+  - cd ../
   - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
+  - git clone git://github.com/PHPCSStandards/PHPCSUtils.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCSUtils
   - phpenv rehash
   - phpcs -i
   - phpenv rehash
   - phpcs --config-set installed_paths $(pear config-get php_dir)/PHP/CodeSniffer/Standards
-  - phpcs --config-set installed_paths $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
+  - phpcs --config-set installed_paths $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility,$(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCSUtils
+  - phpcs --config-show installed_paths
   - phpcs -i
   - phpcs --config-set error_severity 0
   - phpcs --config-set warning_severity 0
@@ -63,22 +83,10 @@ script:
   ## PHP_CodeSniffer
   - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.5 $(find ./tests/acceptance -name '*.php')
   - if find . -name "*.php" ! -path "./node_modules/*" ! -path "./vendor/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
-  # - codecept run acceptance --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/01-Privacy/01-Positive/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/01-Privacy/02-Negative/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/02-Display/01-Positive/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/02-Display/02-Negative/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/03-Buddypress/02-Negative/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/04-MediaSizes/01-Positive/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/05-Types/01-Positive/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/05-Types/02-Negative/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/06-CustomCss/01-Positive/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/01-Positive/ --steps
-  - codecept run tests/acceptance/core-rtMedia-settings/07-OtherSettings/02-Negative/ --steps
+  - codecept run acceptance --steps
 
 after_script:
-  - sudo cat /var/log/ee/ee.log
+  #- sudo cat /var/log/ee/ee.log
 
 #notifications:
 #  slack:

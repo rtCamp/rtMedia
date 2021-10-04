@@ -19,7 +19,8 @@ class Logout {
 		$I->moveMouseOver( ConstantsPage::$adminBarMenuSelector );
 		$I->executeJS( "jQuery('#wp-admin-bar-my-account .ab-sub-wrapper').css({'display':'block'});" );
 		$I->click( ConstantsPage::$logoutLink );
-		$I->waitForElement('#login', 20);
+		// $I->waitForElement('#login', 20);
+		$I->dontSeeElement( ConstantsPage::$logoutLink );
 
 	}
 

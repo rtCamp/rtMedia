@@ -1,29 +1,42 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Show deprecated functions.
+ *
+ * @package    rtMedia
  */
 
 /**
- * Description of rtMediaDeprecated
+ * RTMedia class to show deprecated functions.
  *
  * @author Udit Desai <udit.desai@rtcamp.com>
  */
 class RTMediaDeprecated {
-	//put your code here
+	/**
+	 * Deprecate notice.
+	 *
+	 * @var bool
+	 */
+	public $deprecate_notice = false;
 
-	var $deprecate_notice = false;
-
-	static function uploadshortcode() {
-		//
-		//add_shortcode('rtmedia_uploader', array($this, 'pre_render'));
+	/**
+	 * Upload shortcode.
+	 */
+	public static function uploadshortcode() {
 		$deprecated       = false;
 		$deprecate_notice = '';
-		//      echo self::generate_notice(__METHOD__, $deprecated, $deprecate_notice);
 	}
 
-	static function generate_notice( $method, $deprecated = false, $notice = '' ) {
-		return sprintf( esc_html__( 'Deprecated %s. Please use %s.', 'buddypress-media' ), $deprecated, $method );
+	/**
+	 * Add notice for deprecated method.
+	 *
+	 * @param string $method Method name.
+	 * @param bool   $deprecated Deprecated or not.
+	 * @param string $notice Notice to show.
+	 *
+	 * @return string
+	 */
+	public static function generate_notice( $method, $deprecated = false, $notice = '' ) {
+		// translators: 1: function name, 2: method.
+		return sprintf( esc_html__( 'Deprecated %1$s. Please use %2$s.', 'buddypress-media' ), $deprecated, $method );
 	}
 }
