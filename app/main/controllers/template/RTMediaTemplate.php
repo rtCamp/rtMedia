@@ -293,6 +293,9 @@ class RTMediaTemplate {
 		$return_array['prev'] = rtmedia_page() - 1;
 		$return_array['next'] = ( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() ) ? ( rtmedia_page() + 1 ) : - 1;
 
+		$model = new RTMediaModel();
+		$return_array['media_count'] = $model->get_media_count();
+
 		if ( isset( $rtmedia->options['general_display_media'] ) && 'pagination' === $options['general_display_media'] ) {
 			$return_array ['pagination'] = rtmedia_get_pagination_values();
 		}
