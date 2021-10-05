@@ -1945,6 +1945,7 @@ form.rt_media_comment_form .rtmedia-plupload-container {
   margin-left: 8.5%;
 }
 .bp-nouveau .activity-update-form .rtmedia-plupload-container {
+  width: -webkit-fit-content;
   width: fit-content;
 }
 .bp-nouveau .activity-update-form .rtmedia-upload-terms {

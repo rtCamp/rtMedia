@@ -17,6 +17,7 @@ function rtmedia_delete_uploaded_media() {
 
 	if ( ! empty( $action ) && 'delete_uploaded_media' === $action && ! empty( $media_id ) ) {
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . get_current_user_id() ) ) {
+			$remaining_album     = 0;
 			$remaining_photos    = 0;
 			$remaining_music     = 0;
 			$remaining_videos    = 0;
@@ -28,20 +29,26 @@ function rtmedia_delete_uploaded_media() {
 			if ( class_exists( 'RTMediaNav' ) ) {
 				global $bp;
 				$rtmedia_nav_obj = new RTMediaNav();
+				$model           = new RTMediaModel();
+				$other_count     = 0;
 
 				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 
 					if ( ! empty( $bp->groups->current_group->id ) ) {
-						$counts = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
+						$counts      = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
+						$other_count = $model->get_other_album_count( $bp->groups->current_group->id, 'group' );
+
 					}
 				} else {
 
 					if ( function_exists( 'bp_displayed_user_id' ) ) {
-						$counts = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
+						$counts      = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
+						$other_count = $model->get_other_album_count( bp_displayed_user_id(), 'profile' );
 					}
 				}
 
 				$remaining_all_media = ( ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
+				$remaining_album     = ( isset( $counts['total']['album'] ) ) ? $counts['total']['album'] + $other_count : 0;
 				$remaining_photos    = ( ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
 				$remaining_videos    = ( ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
 				$remaining_music     = ( ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
@@ -54,6 +61,7 @@ function rtmedia_delete_uploaded_media() {
 					'photos_count'    => $remaining_photos,
 					'music_count'     => $remaining_music,
 					'videos_count'    => $remaining_videos,
+					'albums_count'    => $remaining_album,
 				)
 			);
 
