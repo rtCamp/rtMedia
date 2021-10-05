@@ -2051,7 +2051,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 				class : 'button',
 				name  : 'aw-whats-new-submit',
 				id    : 'aw-whats-new-submit',
-				value : 'Post Update'
+				value : new_submit_btn.val()
 			} );
 
 			new_submit_btn.replaceWith( new_button );
