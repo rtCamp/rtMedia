@@ -1533,8 +1533,8 @@ img.mfp-img {
   margin-left: -4px;
 }
 
-.rtm-comment-list {
-  height: 340px;
+.rtm-comment-list.rtm-comment-list {
+  max-height: 340px;
   list-style: none;
   margin: 0;
   overflow: auto;
