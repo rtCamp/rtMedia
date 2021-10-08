@@ -128,17 +128,17 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		 * @access public
 		 */
 		public function set_plugin_data() {
-				$this->plugin_data = $this->get_plugin_data();
-				$this->name        = $this->plugin_data['Name'];
-				$this->title       = $this->plugin_data['Title'];
-				$this->description = $this->plugin_data['Description'];
-				$this->author      = $this->plugin_data['Author'];
-				$this->authoruri   = $this->plugin_data['AuthorURI'];
-				$this->version     = $this->plugin_data['Version'];
-				$this->pluginuri   = $this->plugin_data['PluginURI'];
-				$this->textdomain  = $this->plugin_data['TextDomain'];
-				$this->domain_path = $this->plugin_data['DomainPath'];
-				$this->network     = $this->plugin_data['Network'];
+			$this->plugin_data = $this->get_plugin_data();
+			$this->name        = $this->plugin_data['Name'];
+			$this->title       = $this->plugin_data['Title'];
+			$this->description = $this->plugin_data['Description'];
+			$this->author      = $this->plugin_data['Author'];
+			$this->authoruri   = $this->plugin_data['AuthorURI'];
+			$this->version     = $this->plugin_data['Version'];
+			$this->pluginuri   = $this->plugin_data['PluginURI'];
+			$this->textdomain  = $this->plugin_data['TextDomain'];
+			$this->domain_path = $this->plugin_data['DomainPath'];
+			$this->network     = $this->plugin_data['Network'];
 		}
 
 		/**
