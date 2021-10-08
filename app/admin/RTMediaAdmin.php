@@ -354,7 +354,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							);
 							?>
 						</span>
-						<a href="#" onclick="rtmedia_hide_premium_addon_notice('<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>');" style="float:right"><?php esc_html_e( 'Dismiss', 'buddypress-media' ); ?>></a>
+						<a href="#" onclick="rtmedia_hide_premium_addon_notice('<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>');" style="float:right"><?php esc_html_e( 'Dismiss', 'buddypress-media' ); ?></a>
 					</p>
 				</div>
 				<script type="text/javascript">
