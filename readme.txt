@@ -1216,7 +1216,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * Fix pagging query sql issues
 
 = 3.4.4 =
-* Update german trasalation
+* Update german translation
 * Add support in some strings translations again thanks to [jonasnick](https://github.com/jonasnick) for pull request
 
 = 3.4.3 =
@@ -1285,7 +1285,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 = 3.2.4 =
 * Updated polish,solvak and spanish transalation.
-* Fixed multiple gallery on same page,comment sync for single media in activity, comments visibilty when not-logged in.
+* Fixed multiple gallery on same page,comment sync for single media in activity, comments visibility when not-logged in.
 * Strings made translation ready
 
 = 3.2.3 =

@@ -40,7 +40,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
  2. **BuddyPress Integration** - Find a new media tab under BuddyPress Profiles & Groups.
  3. **BuddyPress Activity Stream** - Attach media to activity status updates just like Facebook.
  4. **Albums** - Organise media into manageable collections. BuddyPress Group albums support collaboration.
- 5. **Responsive** - Album Slideshow (Lightbox), video player, uploads work on mobiles & tablets. Support for swipe guestures.
+ 5. **Responsive** - Album Slideshow (Lightbox), video player, uploads work on mobiles & tablets. Support for swipe gestures.
  6. **Privacy** - Control who can see media files, albums and BuddyPress activities.
  7. **Templating system** - Completely customise rtMedia by modifying the template files. Just copy over the template folder to your theme.
  8. **[Featured Media](https://rtmedia.io/docs/developers/featured-media/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
@@ -310,7 +310,6 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
     * Anchor tag issue for activity generated after adding media.
     * Media upload issue on posting public messages.
     * UI for Member name in media tab.
-    * Issue with redirect attribute value in uploader shortcode.
     * Issue with redirect attribute value in uploader shortcode.
     * Issue with upload terms when sidebar widget is active on activity page.
     * Issue with ‘rtmedia_no_media_found_message_filter’ functionality.
@@ -963,7 +962,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 #### 3.7.33 ####
 * Fix media move in album edit
 * JPEG image quality option
-* Use WordPress' *_metadata functions for meta data
+* Use WordPress' _metadata functions for meta data
 * Fix update activity after thumb set
 
 #### 3.7.32 ####
@@ -1215,7 +1214,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * Fix pagging query sql issues
 
 #### 3.4.4 ####
-* Update german trasalation
+* Update german translation
 * Add support in some strings translations again thanks to [jonasnick](https://github.com/jonasnick) for pull request
 
 #### 3.4.3 ####
@@ -1283,8 +1282,8 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * Bug fixes
 
 #### 3.2.4 ####
-* Updated polish,solvak and spanish transalation.
-* Fixed multiple gallery on same page,comment sync for single media in activity, comments visibilty when not-logged in.
+* Updated polish,solvak and spanish translation.
+* Fixed multiple gallery on same page,comment sync for single media in activity, comments visibility when not-logged in.
 * Strings made translation ready
 
 #### 3.2.3 ####
