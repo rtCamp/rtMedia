@@ -395,25 +395,6 @@
 	}
 }
 
-.rtm-like-comments-info {
-	position: relative;
-
-	&:after {
-		bottom: 100%;
-		left: 15px;
-		border: solid transparent;
-		content: " ";
-		height: 0;
-		width: 0;
-		position: absolute;
-		pointer-events: none;
-		border-color: rgba(237, 239, 244, 0);
-		border-bottom-color: #edeff4;
-		border-width: 4px;
-		margin-left: -4px;
-	}
-}
-
 .rtm-comment-list {
 	&.rtm-comment-list {
 		max-height: 340px;

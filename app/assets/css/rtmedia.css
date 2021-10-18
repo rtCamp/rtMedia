@@ -604,7 +604,8 @@ input.imgedit-submit-btn {
 }
 .privacy_message_wrapper p {
   margin: 20px 25px;
-  width: calc( 100% - 100px );
+  width: -webkit-calc(100% - 100px);
+  width: calc(100% - 100px);
   max-width: 100%;
   font-size: 85%;
   text-align: justify;
@@ -666,7 +667,7 @@ input.imgedit-submit-btn {
 .rtm-tabs .active:after {
   background: #FFFFFF;
   bottom: -1px;
-  content: ' ';
+  content: " ";
   height: 1px;
   left: 0;
   position: absolute;
@@ -723,7 +724,7 @@ input.imgedit-submit-btn {
   box-sizing: border-box;
 }
 .mfp-container:before {
-  content: ' ';
+  content: " ";
   display: inline-block;
   height: 100%;
   vertical-align: middle;
@@ -903,7 +904,7 @@ button::-moz-focus-inner {
 .mfp-arrow:after,
 .mfp-arrow .mfp-b,
 .mfp-arrow .mfp-a {
-  content: '';
+  content: "";
   display: block;
   width: 0;
   height: 0;
@@ -1013,7 +1014,7 @@ img.mfp-img {
 }
 
 .mfp-figure:after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 40px;
@@ -1077,18 +1078,18 @@ img.mfp-img {
   margin-right: auto;
 }
 .mfp-preloader:before {
-  content: 'Loading…';
+  content: "Loading…";
   position: absolute;
   width: 30px;
   height: 30px;
 }
 .mfp-preloader:not(:required):before {
-  content: '';
+  content: "";
   border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, 0.27);
   border-top-color: rgba(255, 255, 255, 0.9);
-  animation: spinner .6s linear infinite;
-  -webkit-animation: spinner .6s linear infinite;
+  animation: spinner 0.6s linear infinite;
+  -webkit-animation: spinner 0.6s linear infinite;
 }
 
 @keyframes spinner {
@@ -1356,7 +1357,7 @@ img.mfp-img {
   bottom: 100%;
   left: 20px;
   border: solid transparent;
-  content: ' ';
+  content: " ";
   height: 0;
   width: 0;
   position: absolute;
@@ -1378,7 +1379,7 @@ img.mfp-img {
   top: 100%;
   right: 22px;
   border: solid transparent;
-  content: ' ';
+  content: " ";
   height: 0;
   width: 0;
   position: absolute;
@@ -1494,24 +1495,6 @@ img.mfp-img {
 .rtmedia-comment-user-pic img {
   height: auto;
   max-width: 100%;
-}
-
-.rtm-like-comments-info {
-  position: relative;
-}
-.rtm-like-comments-info:after {
-  bottom: 100%;
-  left: 15px;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(237, 239, 244, 0);
-  border-bottom-color: #edeff4;
-  border-width: 4px;
-  margin-left: -4px;
 }
 
 .rtm-comment-list.rtm-comment-list {
@@ -1746,7 +1729,7 @@ li.rtmedia-list-item.media-type-video .mejs-overlay-play {
   display: none;
 }
 .rtmedia-activity-container .rtmedia-list.masonry:after {
-  content: '';
+  content: "";
   display: block;
   clear: both;
 }
@@ -2099,7 +2082,7 @@ abbr.required {
   text-decoration: none;
 }
 
-.media-item .describe input[type="text"],
+.media-item .describe input[type=text],
 .media-item .describe textarea {
   width: 460px;
 }
@@ -2717,15 +2700,14 @@ span.imgedit-scale-warn {
   margin: 5px 0 15px;
   background-color: #ffffe0;
   border-color: #e6db55;
-  padding: 0 .6em;
-  -webkit-border-radius: 3px;
+  padding: 0 0.6em;
   border-radius: 3px;
   border-width: 1px;
   border-style: solid;
 }
 
 .bp-media-image-editor-cotnainer div.updated p {
-  margin: .5em 0;
+  margin: 0.5em 0;
   padding: 2px;
 }
 
@@ -2973,12 +2955,12 @@ h2.rtm-gallery-title {
   position: relative;
 }
 .media_search.media_search #media_fatch_loader.load:before {
-  content: '';
+  content: "";
   border-radius: 50%;
   border: 1px solid #aaa;
   border-top-color: rgba(255, 255, 255, 0.9);
-  animation: spinner .8s linear infinite;
-  -webkit-animation: spinner .8s linear infinite;
+  animation: spinner 0.8s linear infinite;
+  -webkit-animation: spinner 0.8s linear infinite;
   position: absolute;
   width: 15px;
   height: 15px;
@@ -3095,14 +3077,14 @@ a.rtmedia-upload-media-link {
 
 .mejs-container .mejs-controls .mejs-time {
   padding: 15px 3px 0;
-  content: '';
+  content: "";
 }
 
 .rtmedia-activity-container .mejs-playpause-button.mejs-play button:before, .rtmedia-activity-container .mejs-playpause-button.mejs-pause button:before, .rtmedia-activity-container .mejs-volume-button.mejs-mute button:before, .rtmedia-activity-container .mejs-fullscreen-button button:before, .rtmedia-media .mejs-playpause-button.mejs-play button:before, .rtmedia-media .mejs-playpause-button.mejs-pause button:before, .rtmedia-media .mejs-volume-button.mejs-mute button:before, .rtmedia-media .mejs-fullscreen-button button:before {
-  content: '';
+  content: "";
 }
 
-@media only screen and (min-width: 1025px) {
+@media only screen and (min-width:1025px) {
   .mfp-content .rtm-lightbox-container {
     display: flex;
     table-layout: fixed;
