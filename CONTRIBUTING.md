@@ -4,7 +4,7 @@ This guide details how to use issues and pull requests to improve rtMedia.
 
 ## Closing policy for issues
 
-Github issue-tracker is used **only** for developer & contributor discussion.
+GitHub issue-tracker is used **only** for developer & contributor discussion.
 
 For support-request/feature-request, please use - https://rtmedia.io/support/
 
