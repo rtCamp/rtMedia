@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,uCAAwC,CACtC,OAAO,CAAE,KAAK,CAEhB,sHAC8C,CAC5C,OAAO,CAAE,YAAY,CACrB,cAAc,CAAE,MAAM,CACtB,MAAM,CAAE,CAAC,CACT,OAAO,CAAE,CAAC,CACV,MAAM,CAAE,OAAO,CACf,KAAK,CAAE,IAAI",
+"sources": ["../../css/rtm-upload-terms.css"],
+"names": [],
+"file": "rtm-upload-terms.min.css"
+}
