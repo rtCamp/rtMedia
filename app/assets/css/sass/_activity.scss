@@ -127,11 +127,29 @@
 	top: 0 !important;
 }
 
+#whats-new-submit {
+	display: flex;
+}
+
 #aw-whats-new-submit,
 .rtmedia-add-media-button {
 	display: block;
+	line-height: initial;
 
 	// Remove extra space
+}
+
+#aw-whats-new-reset {
+	background: $white;
+	border: 1px solid $border-dark;
+
+	&:hover{
+		text-decoration: none;
+		border: 1px solid #999;
+		background: #ededed;
+		outline: 0;
+		color: #333;
+	}
 }
 
 .rtm-drag-drop-active {
@@ -241,7 +259,11 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 		}
 
 		.rtmedia-plupload-container {
-			width: 25%;
+			width: fit-content;
+		}
+
+		.rtmedia-upload-terms{
+			float: left;
 		}
 
 		.rtmedia-upload-terms #rtmedia_upload_terms_conditions {
@@ -249,6 +271,10 @@ form.rt_media_comment_form .rtmedia-plupload-container {
 		}
 
 		#aw-whats-new-submit {
+			margin-top: 15px;
+		}
+
+		#aw-whats-new-reset {
 			margin-top: 15px;
 		}
 	}

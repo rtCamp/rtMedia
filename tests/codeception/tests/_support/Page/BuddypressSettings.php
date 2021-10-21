@@ -132,7 +132,7 @@ class BuddypressSettings {
 		$I->fillField( ConstantsPage::$albumNameTextbox, $albumName );
 
 		/**
-		 * Testing by addng the album desc from pop up only
+		 * Testing by adding the album desc from pop up only
 		 */
 		 $I->seeElement( 'textarea#rtmedia_album_description' );
 		 $I->fillField( 'textarea#rtmedia_album_description', 'test album desc123.' );
