@@ -87,11 +87,13 @@ form .rtmedia-container .rtm-plupload-list,
 
 	img {
 		max-width: 100%;
+		
 	}
 
 	canvas {
 		display: block;
-		max-width: 100%;
+		width: 100px;
+		height: 100px;
 	}
 
 	.rtm-upload-edit-title {
