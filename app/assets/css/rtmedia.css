@@ -89,7 +89,6 @@
 
 #buddypress form#whats-new-form textarea {
   box-sizing: border-box;
-  min-height: 70px;
   width: 100%;
 }
 
