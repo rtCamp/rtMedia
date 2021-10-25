@@ -3206,6 +3206,11 @@ a.rtmedia-upload-media-link {
 .rtl #rtmedia-uploader-form .rtm-plupload-list li, .rtl #rtmedia_uploader_filelist li {
   float: right;
 }
+.rtl #rtmedia-uploader-form .rtm-plupload-list canvas, .rtl #rtmedia_uploader_filelist canvas {
+  display: block;
+  width: 100px;
+  height: 100px;
+}
 .rtl .rtm-page-number {
   float: right;
 }

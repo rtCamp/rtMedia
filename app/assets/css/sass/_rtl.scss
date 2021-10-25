@@ -109,6 +109,13 @@
         li {
             float: right;
         }
+
+        canvas {
+            display: block;
+            width: 100px;
+            height: 100px;
+        }
+
     }
     
     .rtm-page-number {
