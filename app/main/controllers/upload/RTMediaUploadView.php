@@ -226,7 +226,6 @@ class RTMediaUploadView {
 						. apply_filters( 'rtmedia_attach_file_message', '' )
 						. '</button>'
 						. '</div>'
-						. '<br>'
 						. $up_privacy
 						. '</div>'
 						. '</div>'
