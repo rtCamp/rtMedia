@@ -472,7 +472,7 @@ class RTMediaMedia {
 				}
 			}
 
-			if ( ! $core && ! is_admin() ) {
+			if ( ! $core && ! ( isset( $GLOBALS['current_screen'] ) && $GLOBALS['current_screen']->in_admin() ) ) {
 				wp_delete_attachment( $media[0]->media_id, true );
 			}
 

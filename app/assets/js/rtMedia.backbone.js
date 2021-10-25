@@ -312,6 +312,18 @@ jQuery( function( $ ) {
 						jQuery( '#' + current_gallery_id + ' .rtmedia_next_prev br' ).remove();
 						jQuery( '#' + current_gallery_id + ' .rtmedia_next_prev' ).append( response.pagination );
 
+						// Update the media count in user profile & group's media tab.
+						jQuery( '#user-media span, #media-groups-li #media span, #rtmedia-nav-item-all span' ).text( response.media_count.all_media_count );
+
+
+						// Update the count on sub navigations (Albums)
+						jQuery( '#rtmedia-nav-item-albums span' ).text( response.media_count.albums_count );
+
+						// Update the count on sub navigations (Photo, Video & Music)
+						jQuery( '#rtmedia-nav-item-photo span' ).text( response.media_count.photos_count );
+						jQuery( '#rtmedia-nav-item-music span' ).text( response.media_count.music_count );
+						jQuery( '#rtmedia-nav-item-video span' ).text( response.media_count.videos_count );
+
 						if ( jQuery( 'li#rtm-url-upload' ).length === 0 ) {
 							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( 'opacity', '1' );
 							if ( rtMediaHook.call( 'rtmedia_js_uploader_slide_after_gallery_reload' ) ) {
@@ -1538,6 +1550,8 @@ jQuery( document ).ready( function( $ ) {
 				if ( whatsNewPostIn.length ) {
 					object = whatsNewPostIn.val();
 					item_id = 0;
+				} else {
+					object = 'profile';
 				}
 
 				var contextData = jQuery( '#whats-new-post-in-box-items li.bp-activity-object.selected input[type="hidden"]' );
@@ -2037,7 +2051,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 				class : 'button',
 				name  : 'aw-whats-new-submit',
 				id    : 'aw-whats-new-submit',
-				value : 'Post Update'
+				value : new_submit_btn.val()
 			} );
 
 			new_submit_btn.replaceWith( new_button );
