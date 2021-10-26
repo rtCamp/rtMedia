@@ -379,7 +379,7 @@ class RTMediaBuddyPressActivity {
 		$transient_name = 'rtm_filter_blog_activity_' . $blog_id;
 		$activity_ids   = get_site_transient( $transient_name );
 		if ( empty( $activity_ids ) ) {
-			$activities   = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT activity_id FROM { $wpdb->base_prefix }rt_rtm_activity WHERE blog_id!=%d", $blog_id ) );
+			$activities   = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT activity_id FROM {$wpdb->base_prefix}rt_rtm_activity WHERE blog_id!=%d", $blog_id ) );
 			$activity_ids = implode( ',', $activities );
 
 			set_site_transient( $transient_name, $activity_ids );
