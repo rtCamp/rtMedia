@@ -288,7 +288,7 @@ jQuery( function( $ ) {
 							if ( typeof el == 'object' ) {
 								jQuery( el ).find( '.rtmedia_next_prev' ).children( '#rtMedia-galary-next' ).hide();
 							}
-							$("#rtMedia-galary-next").show();
+							$( '#rtMedia-galary-next' ).show();
 						}
 
 						rtMedia.gallery = {};
@@ -325,7 +325,7 @@ jQuery( function( $ ) {
 						jQuery( '#rtmedia-nav-item-video span' ).text( response.media_count.videos_count );
 
 						if ( jQuery( 'li#rtm-url-upload' ).length === 0 ) {
-							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( {"opacity":"1", "height": "auto", "overflow": "auto"} );
+							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( { 'opacity': 1, 'height': 'auto', 'overflow': 'auto' } );
 							if ( rtMediaHook.call( 'rtmedia_js_uploader_slide_after_gallery_reload' ) ) {
 								jQuery( '#rtm-media-gallery-uploader' ).slideUp();
 							}
