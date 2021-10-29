@@ -288,7 +288,6 @@ jQuery( function( $ ) {
 							if ( typeof el == 'object' ) {
 								jQuery( el ).find( '.rtmedia_next_prev' ).children( '#rtMedia-galary-next' ).hide();
 							}
-							$( '#rtMedia-galary-next' ).show();
 						}
 
 						rtMedia.gallery = {};
