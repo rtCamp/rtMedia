@@ -95,7 +95,16 @@ $rand_id = wp_rand( 0, 1000 );
 
 		</ul>
 
-		<div class="rtmedia_next_prev rtm-load-more clearfix">
+	<?php } else { ?>
+		<p class="rtmedia-no-media-found">
+			<?php
+			echo esc_html( apply_filters( 'rtmedia_no_media_found_message_filter', __( 'Sorry !! There\'s no media found for the request !!', 'buddypress-media' ) ) );
+			?>
+		</p>
+		<?php
+	} // End if.
+	?>
+	<div class="rtmedia_next_prev rtm-load-more clearfix">
 			<!-- these links will be handled by backbone -->
 			<?php
 			global $rtmedia;
@@ -117,15 +126,6 @@ $rand_id = wp_rand( 0, 1000 );
 			}
 			?>
 		</div>
-	<?php } else { ?>
-		<p class="rtmedia-no-media-found">
-			<?php
-			echo esc_html( apply_filters( 'rtmedia_no_media_found_message_filter', __( 'Sorry !! There\'s no media found for the request !!', 'buddypress-media' ) ) );
-			?>
-		</p>
-		<?php
-	} // End if.
-	?>
 
 	<?php do_action( 'rtmedia_after_media_gallery' ); ?>
 
