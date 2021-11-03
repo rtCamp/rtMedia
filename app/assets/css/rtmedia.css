@@ -2832,6 +2832,7 @@ h2.rtm-gallery-title {
 .rtm-load-more {
   background: #EEEEEE;
   text-align: center;
+  line-height: 50px;
 }
 .rtmedia-container .rtm-load-more a {
   border: 0;

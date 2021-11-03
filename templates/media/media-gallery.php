@@ -113,9 +113,7 @@ $rand_id = wp_rand( 0, 1000 );
 				rtmedia_media_pagination();
 			} else {
 				$display = '';
-				if ( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() ) {
-					$display = 'display:block;';
-				} else {
+				if ( rtmedia_offset() + rtmedia_per_page_media() > rtmedia_count() ) {
 					$display = 'display:none;';
 				}
 				?>
