@@ -49,7 +49,7 @@ class RTMediaActivity {
 		}
 
 		$this->media         = $media;
-		$this->activity_text = bp_activity_filter_kses( $activity_text );
+		$this->activity_text = wp_kses_post( $activity_text );
 		$this->privacy       = $privacy;
 	}
 
@@ -226,7 +226,7 @@ class RTMediaActivity {
 			}
 		);
 
-		return bp_activity_filter_kses( $activity );
+		return wp_kses_post( $activity );
 	}
 
 	/**
