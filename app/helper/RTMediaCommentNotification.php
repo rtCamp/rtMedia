@@ -32,13 +32,22 @@ class RTMediaCommentNotification extends RTMediaNotification {
 	public function __construct() {
 
 		if ( class_exists( 'BuddyPress' ) ) {
-			$args = array(
-				'component_id'       => 'rt_comment_notifier',
-				'component_slug'     => 'rt_comment',
-				'component_callback' => 'rt_comment_notifications_callback',
-				'component_action'   => $this->component_action,
-			);
-
+			global $rtmedia;
+			$options = $rtmedia->options;
+			if ( 1 === intval( $options['general_enableNotification'] ) ) {
+				$args = array(
+					'component_id'       => 'rt_comment_notifier',
+					'component_slug'     => 'rt_comment',
+					'component_callback' => 'rt_comment_notifications_callback',
+					'component_action'   => $this->component_action,
+				);
+			} else {
+				$args = array(
+					'component_id'     => 'rt_comment_notifier',
+					'component_slug'   => 'rt_comment',
+					'component_action' => $this->component_action,
+				);
+			}
 			parent::__construct( $args );
 
 			add_action( 'bp_init', array( $this, 'init' ) );
