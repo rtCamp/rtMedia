@@ -1,4 +1,5 @@
 .rtl {
+
     #rtSelectPrivacy {
         float: left;
     }
@@ -145,4 +146,34 @@
     .alignright {
         float: left;
     }
+
+    .rtmedia-action-buttons{
+        padding-left: 4px;
+    }
+
+    .rtm-media-options {
+        & > * {
+            border-right: none;
+            &:nth-last-child(1) {
+                border-right: 1px solid #999;
+                padding-right: 4px;
+            }
+        }
+    }
+
+    .rtm-media-options.rtm-media-search-enable {
+        & > * {
+            border-right: none;
+            &:nth-last-child(2) {
+                border-right: 1px solid #999;
+                padding-right: 4px;
+            }
+        }
+    }
+
+    #rtm-modal-container{
+
+        text-align: right;
+    }
+
 }

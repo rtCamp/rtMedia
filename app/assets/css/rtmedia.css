@@ -3237,3 +3237,23 @@ a.rtmedia-upload-media-link {
 .rtl .alignright {
   float: left;
 }
+.rtl .rtmedia-action-buttons {
+  padding-left: 4px;
+}
+.rtl .rtm-media-options > * {
+  border-right: none;
+}
+.rtl .rtm-media-options > *:nth-last-child(1) {
+  border-right: 1px solid #999;
+  padding-right: 4px;
+}
+.rtl .rtm-media-options.rtm-media-search-enable > * {
+  border-right: none;
+}
+.rtl .rtm-media-options.rtm-media-search-enable > *:nth-last-child(2) {
+  border-right: 1px solid #999;
+  padding-right: 4px;
+}
+.rtl #rtm-modal-container {
+  text-align: right;
+}
