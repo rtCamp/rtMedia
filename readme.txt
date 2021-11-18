@@ -115,20 +115,20 @@ You can also check [rtMedia's Live Demo](http://demo.rtmedia.io/?utm_source=read
 http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
-1. Media Settings
-2. Privacy Settings
-3. BuddyPress Settings
-4. Media View
-5. Album View
-6. Uploader
-7. Uploader Thumbnails
-8. Lightbox
-9. Single Media View
-10. Media Edit View
-12. Media Activity
-12. User Privacy Settings
-13. Media Size Settings
-14. Custom CSS settings
+1.  Display Settings
+2.  BuddyPress Settings
+3.  Media Types Settings
+4.  Media Size Settings
+5.  Privacy Settings 
+6.  Other Setiings
+7.  Export/Import Settings
+8.  Media View
+9.  Album View
+10. Uploader
+11. Uploader Thumbnails
+12. Lightbox
+13. Single Media View
+14. Media Edit View
 
 
 == Changelog ==
