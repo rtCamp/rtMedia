@@ -541,6 +541,7 @@ jQuery( function( $ ) {
 			var $media_search_input = $( '#media_search_input' ).val();
 			var $media_search       = $( '#media_search' );
 			var $media_fatch_loader = $( '#media_fatch_loader' );
+			var $media_type         = $( 'input[type="hidden"][name="media_type"]' );
 
 			if ( '' === $media_search_input ) {
 				return false;
@@ -560,6 +561,11 @@ jQuery( function( $ ) {
 			if ( $( '#search_by' ).length > 0 ) {
 				href += '&search_by=' + $( '#search_by' ).val();
 			}
+
+			if ( $media_type.length > 0 && 'album' === $media_type.val() ) {
+				href += '&media_type=' + $media_type.val();
+			}
+
 			href = encodeURI( href );
 
 			change_rtBrowserAddressUrl( href, '' );
