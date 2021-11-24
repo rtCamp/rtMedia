@@ -1236,7 +1236,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				<div id="icon-buddypress-media" class="icon32"><br></div>
 				<div>
 					<h2 class="nav-tab-wrapper"><?php $this->rtmedia_tabs(); ?>
-						<span class="<?php printf( esc_html( $align ) ); ?> by">
+						<span class="<?php echo esc_attr( $align ); ?> by">
 							<a class="rt-link"
 								href="https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media"
 								target="_blank"
