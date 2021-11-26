@@ -89,7 +89,6 @@
 
 #buddypress form#whats-new-form textarea {
   box-sizing: border-box;
-  min-height: 70px;
   width: 100%;
 }
 
@@ -111,9 +110,10 @@
 
 #buddypress form#whats-new-form #whats-new-options select {
   border: 1px solid #ccc;
-  font-size: 13px;
-  margin-top: 0;
-  padding: 3px 2px;
+  font-size: 12px;
+  margin-top: 3px;
+  margin-right: 10px;
+  line-height: 12px;
 }
 
 #whats-new-submit #aw-whats-new-submit {
@@ -252,7 +252,8 @@ form .rtmedia-container .rtm-plupload-list img,
 form .rtmedia-container .rtm-plupload-list canvas,
 #rtmedia_uploader_filelist canvas {
   display: block;
-  max-width: 100%;
+  width: 100px;
+  height: 100px;
 }
 #rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-title,
 form .rtmedia-container .rtm-plupload-list .rtm-upload-edit-title,
@@ -303,6 +304,7 @@ button.rtmedia-comment-media-upload .dashicons {
 
 button#rtmedia-add-media-button-post-update {
   padding: 3px 6px;
+  margin-bottom: 10px;
 }
 button#rtmedia-add-media-button-post-update .dashicons {
   font-size: 18px;
@@ -1528,30 +1530,29 @@ img.mfp-img {
   max-width: 100%;
 }
 
-.rtm-like-comments-info {
-  position: relative;
-}
-.rtm-like-comments-info:after {
-  bottom: 100%;
-  left: 15px;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(237, 239, 244, 0);
-  border-bottom-color: #edeff4;
-  border-width: 4px;
-  margin-left: -4px;
-}
-
-.rtm-comment-list {
-  height: 340px;
+.rtm-comment-list.rtm-comment-list {
+  max-height: 340px;
   list-style: none;
   margin: 0;
   overflow: auto;
   padding: 0;
+}
+.rtm-comment-list li.rtmedia-list-item.media-type-music {
+  display: inline;
+}
+.rtm-comment-list li.rtmedia-list-item.media-type-music .rtmedia-item-title {
+  padding-left: 10px;
+}
+.rtm-comment-list li.rtmedia-list-item.media-type-video {
+  display: inline;
+}
+.rtm-comment-list li.rtmedia-list-item.media-type-video .rtmedia-item-title {
+  padding-left: 10px;
+}
+.rtm-comment-list li.rtmedia-list-item.media-type-video .mejs-overlay-play {
+  height: 100% !important;
+  width: 100% !important;
+  margin: auto;
 }
 .rtm-comment-list li {
   background: #edeff4;
@@ -1676,25 +1677,6 @@ img.mfp-img {
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-li.rtmedia-list-item.media-type-music {
-  display: inline;
-}
-li.rtmedia-list-item.media-type-music .rtmedia-item-title {
-  padding-left: 10px;
-}
-
-li.rtmedia-list-item.media-type-video {
-  display: inline;
-}
-li.rtmedia-list-item.media-type-video .rtmedia-item-title {
-  padding-left: 10px;
-}
-li.rtmedia-list-item.media-type-video .mejs-overlay-play {
-  height: 100% !important;
-  width: 100% !important;
-  margin: auto;
 }
 
 .rtm-single-media.rtm-media-type-video {
@@ -2863,6 +2845,7 @@ h2.rtm-gallery-title {
 .rtm-load-more {
   background: #EEEEEE;
   text-align: center;
+  line-height: 50px;
 }
 .rtmedia-container .rtm-load-more a {
   border: 0;
@@ -3162,6 +3145,11 @@ a.rtmedia-upload-media-link {
     overflow-y: auto; */
   }
 }
+@media screen and (max-width: 562px) {
+  .media_search.media_search {
+    float: left;
+  }
+}
 .rtl #rtSelectPrivacy {
   float: left;
 }
@@ -3237,6 +3225,11 @@ a.rtmedia-upload-media-link {
 .rtl #rtmedia-uploader-form .rtm-plupload-list li, .rtl #rtmedia_uploader_filelist li {
   float: right;
 }
+.rtl #rtmedia-uploader-form .rtm-plupload-list canvas, .rtl #rtmedia_uploader_filelist canvas {
+  display: block;
+  width: 100px;
+  height: 100px;
+}
 .rtl .rtm-page-number {
   float: right;
 }
@@ -3257,4 +3250,24 @@ a.rtmedia-upload-media-link {
 }
 .rtl .alignright {
   float: left;
+}
+.rtl .rtmedia-action-buttons {
+  padding-left: 4px;
+}
+.rtl .rtm-media-options > * {
+  border-right: none;
+}
+.rtl .rtm-media-options > *:nth-last-child(1) {
+  border-right: 1px solid #999;
+  padding-right: 4px;
+}
+.rtl .rtm-media-options.rtm-media-search-enable > * {
+  border-right: none;
+}
+.rtl .rtm-media-options.rtm-media-search-enable > *:nth-last-child(2) {
+  border-right: 1px solid #999;
+  padding-right: 4px;
+}
+.rtl #rtm-modal-container {
+  text-align: right;
 }

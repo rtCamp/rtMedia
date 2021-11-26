@@ -288,7 +288,6 @@ jQuery( function( $ ) {
 							if ( typeof el == 'object' ) {
 								jQuery( el ).find( '.rtmedia_next_prev' ).children( '#rtMedia-galary-next' ).hide();
 							}
-							//$("#rtMedia-galary-next").show();
 						}
 
 						rtMedia.gallery = {};
@@ -325,7 +324,7 @@ jQuery( function( $ ) {
 						jQuery( '#rtmedia-nav-item-video span' ).text( response.media_count.videos_count );
 
 						if ( jQuery( 'li#rtm-url-upload' ).length === 0 ) {
-							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( 'opacity', '1' );
+							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( { 'opacity': 1, 'height': 'auto', 'overflow': 'auto' } );
 							if ( rtMediaHook.call( 'rtmedia_js_uploader_slide_after_gallery_reload' ) ) {
 								jQuery( '#rtm-media-gallery-uploader' ).slideUp();
 							}
@@ -2102,7 +2101,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 				class : 'button',
 				name  : 'aw-whats-new-submit',
 				id    : 'aw-whats-new-submit',
-				value : 'Post Update'
+				value : new_submit_btn.val()
 			} );
 
 			new_submit_btn.replaceWith( new_button );
@@ -2128,6 +2127,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 		upload_progress += '</div>';
 		icon = '<span id="label_' + file.id + '" class="dashicons dashicons-edit" title="' + rtmedia_backbone_strings.rtm_edit_file_name + '"></span>';
 	} else if ( error.code == -600 ) {
+		alert( rtmedia_max_file_msg + uploader.settings.max_file_size );
 		err_msg = ( uploader != '' ) ? rtmedia_max_file_msg + uploader.settings.max_file_size :  window.file_size_info;
 		title = 'title=\'' + err_msg + '\'';
 		icon = '<i class="dashicons dashicons-info" ' + title + '></i>';

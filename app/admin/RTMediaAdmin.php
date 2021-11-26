@@ -155,7 +155,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			);
 			add_action( 'wp_ajax_rtmedia_hide_premium_addon_notice', array( $this, 'rtmedia_hide_premium_addon_notice' ), 1 );
 
-			new RTMediaMediaSizeImporter(); // do not delete this line. We only need to create object of this class if we are in admin section.
+			new RTMediaMediaSizeImporter(); // Do not delete this line. We only need to create object of this class if we are in admin section.
 			if ( class_exists( 'BuddyPress' ) ) {
 				new RTMediaActivityUpgrade();
 			}
@@ -354,7 +354,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							);
 							?>
 						</span>
-						<a href="#" onclick="rtmedia_hide_premium_addon_notice('<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>');" style="float:right"><?php esc_html_e( 'Dismiss', 'buddypress-media' ); ?>></a>
+						<a href="#" onclick="rtmedia_hide_premium_addon_notice('<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>');" style="float:right"><?php esc_html_e( 'Dismiss', 'buddypress-media' ); ?></a>
 					</p>
 				</div>
 				<script type="text/javascript">
@@ -535,50 +535,50 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function check_for_addon_update_notice() {
 			$return_flag = false;
 
-			// check for rtMedia Instagram version.
+			// Check for rtMedia Instagram version.
 			if ( defined( 'RTMEDIA_INSTAGRAM_PATH' ) ) {
 				$plugin_info = get_plugin_data( RTMEDIA_INSTAGRAM_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.14' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_PHOTO_TAGGING_PATH' ) ) {
-				// check for rtMedia Photo Tagging version.
+				// Check for rtMedia Photo Tagging version.
 				$plugin_info = get_plugin_data( RTMEDIA_PHOTO_TAGGING_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.2.14' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_FFMPEG_PATH' ) ) {
-				// check for rtMedia FFPMEG version.
+				// Check for rtMedia FFPMEG version.
 				$plugin_info = get_plugin_data( RTMEDIA_FFMPEG_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.14' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_KALTURA_PATH' ) ) {
-				// check for rtMedia Kaltura version.
+				// Check for rtMedia Kaltura version.
 				$plugin_info = get_plugin_data( RTMEDIA_KALTURA_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '3.0.16' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_PRO_PATH' ) ) {
-				// check for rtMedia Pro version.
+				// Check for rtMedia Pro version.
 				$plugin_info = get_plugin_data( RTMEDIA_PRO_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.6' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_SOCIAL_SYNC_PATH' ) ) {
-				// check for rtMedia Social Sync version.
+				// Check for rtMedia Social Sync version.
 				$plugin_info = get_plugin_data( RTMEDIA_SOCIAL_SYNC_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '1.3.1' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_MEMBERSHIP_PATH' ) ) {
-				// check for rtMedia Membership version.
+				// Check for rtMedia Membership version.
 				$plugin_info = get_plugin_data( RTMEDIA_MEMBERSHIP_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.5' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_WATERMARK_PATH' ) ) {
-				// check for rtMedia Photo Watermak version.
+				// Check for rtMedia Photo Watermak version.
 				$plugin_info = get_plugin_data( RTMEDIA_WATERMARK_PATH . 'index.php' );
 				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '1.1.8' ) ) ) {
 					$return_flag = true;
@@ -1229,13 +1229,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return void
 		 */
 		public function render_page( $page_name, $option_group = null ) {
-			?>
 
+			 $align = is_rtl() ? 'alignleft' : 'alignright';
+			?>
 			<div class="wrap bp-media-admin <?php echo esc_attr( $this->get_current_tab() ); ?>">
 				<div id="icon-buddypress-media" class="icon32"><br></div>
 				<div>
 					<h2 class="nav-tab-wrapper"><?php $this->rtmedia_tabs(); ?>
-						<span class="alignright by">
+						<span class="<?php echo esc_attr( $align ); ?> by">
 							<a class="rt-link"
 								href="https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media"
 								target="_blank"
