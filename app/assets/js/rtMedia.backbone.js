@@ -688,6 +688,8 @@ jQuery( function( $ ) {
                     );
                     jQuery( '#rtm_bpm_success' ).css( {'background': '#98ef98', 'padding': '20px' } );
                     jQuery( '#rtm_bpm_success' ).append( 'Media has been attached with this message!' );
+					jQuery( '#send_reply_button').hide();
+					jQuery( '#send_reply_button_with_media').show();
 				}
 				activity_id = -1;
 				var hook_respo = rtMediaHook.call( 'rtmedia_js_after_files_uploaded' );
@@ -3059,3 +3061,4 @@ const rtMediaScrollComments = () => {
 		commentBox.scrollTo( { top: commentsToScroll, behavior: 'smooth' } );
 	}
 }
+

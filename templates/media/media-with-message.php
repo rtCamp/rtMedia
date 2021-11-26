@@ -13,7 +13,7 @@
 function rtm_bp_message_media_add_upload_media_button() {
 	?>
 	<script>
-		$(function(){
+		jQuery( document ).ready( function(){
 			$("#send-notice").click(function () {
 				if ($(this).is(":checked")) {
 					$("#rtm_show_upload_ui").slideUp();
@@ -23,10 +23,10 @@ function rtm_bp_message_media_add_upload_media_button() {
 			} );
 		} );
 		jQuery( document ).ready( function() {
-			handler = function() {
+			$( '#send_reply_button_with_media' ).click( function() {
 				var order = jQuery( '#messages_order' ).val() || 'ASC',
 					offset = jQuery( '#message-recipients' ).offset();
-				var button = jQuery( 'input#send_reply_button' );
+				var button = jQuery( '#send_reply_button_with_media' );
 				jQuery(button).addClass( 'loading' );
 				jQuery.post( ajaxurl, {
 						action                  : 'messages_send_reply',
@@ -46,6 +46,8 @@ function rtm_bp_message_media_add_upload_media_button() {
 							jQuery('form#send-reply div#message').remove();
 							jQuery("#message_content").val('');
 							jQuery("#rtm_bpm_uploaded_media").removeAttr('value');
+							jQuery( '#send_reply_button').show();
+							jQuery( '#send_reply_button_with_media').hide();
 							if ( 'ASC' == order ) {
 								jQuery('form#send-reply').before( response );
 							} else {
@@ -58,12 +60,42 @@ function rtm_bp_message_media_add_upload_media_button() {
 					}
 					jQuery(button).removeClass('loading');
 				});
-				return false;
-			};
-			$( 'input#send_reply_button' ).unbind( 'click' ).bind( 'click', handler );
+			});
 		});
 
 	</script>
+
+	<span class="primary rtm-media-msg-upload-button rtmedia-upload-media-link"
+		id="rtm_show_upload_ui" title="Upload Media">
+		<i class="dashicons dashicons-upload rtmicon"></i>
+			<?php echo esc_html__( 'Upload Media File', 'buddypress-media' ); ?>
+	</span>
+	<div class="submit">
+			<div class="button" id= "send_reply_button_with_media" style="display:none;"> Send reply with media </div>
+	</div>
+	<div id="rtm-media-gallery-uploader" class="rtm-media-gallery-uploader">
+		<?php
+		rtmedia_uploader(
+			array(
+				'is_up_shortcode' => false,
+				'allow_anonymous' => true,
+				'privacy_enabled' => false,
+				'context'         => 'message-media',
+				'context_id'      => get_current_user_id(),
+			)
+		);
+		?>
+	</div>
+	<input type="hidden" id="rtm_bpm_uploaded_media" name="rtm_bpm_uploaded_media" />
+	<?php
+}
+
+
+/**
+ *  This function will place uploader in BuddyPress compose message form and handle send reply activity.
+ */
+function rtm_bp_message_media_add_upload_media_button_compose() {
+	?>
 
 	<span class="primary rtm-media-msg-upload-button rtmedia-upload-media-link"
 		id="rtm_show_upload_ui" title="Upload Media">
@@ -85,6 +117,7 @@ function rtm_bp_message_media_add_upload_media_button() {
 	</div>
 	<input type="hidden" id="rtm_bpm_uploaded_media" name="rtm_bpm_uploaded_media" />
 	<?php
+
 }
 
 /**
@@ -169,32 +202,14 @@ function show_rtm_bp_msg_media() {
 	}
 }
 
-// Adding rtMedia uploader in BuddyPress compose message form.
-add_action( 'bp_after_messages_compose_content', 'rtm_bp_message_media_add_upload_media_button' );
-// Adding rtMedia uploader in BuddyPress Send Reply form.
-add_action( 'bp_after_message_reply_box', 'rtm_bp_message_media_add_upload_media_button' );
-// Handling BuddyPress send message action by adding MEDIA ID.
-add_action( 'messages_message_sent', 'rtm_add_message_media_params' );
-// Showing media below BuddyPress message.
-add_action( 'bp_after_message_content', 'show_rtm_bp_msg_media' );
-
-
-/**
- * Rtm_bp_message_media_add_button function will add Media attachment button to both Compose message tab and Send a reply in BuddyPress.
- *
- * @return void
- */
-function rtm_bp_message_media_add_button() {
-	?>
-	<label for="rtm_media_message_content"><?php esc_attr_e( 'Attach Media ( Optional )', 'buddypress-media' ); ?></label>
-	<input type="file" name="rtm_media_message_content" id="rtm_media_message_content" />
-
-	<?php
+if ( 'legacy' === bp_get_theme_package_id() ) {
+	// Adding rtMedia uploader in BuddyPress compose message form.
+	add_action( 'bp_after_messages_compose_content', 'rtm_bp_message_media_add_upload_media_button_compose' );
+	// Adding rtMedia uploader in BuddyPress Send Reply form.
+	add_action( 'bp_after_message_reply_box', 'rtm_bp_message_media_add_upload_media_button' );
+	// Handling BuddyPress send message action by adding MEDIA ID.
+	add_action( 'messages_message_sent', 'rtm_add_message_media_params' );
+	// Showing media below BuddyPress message.
+	add_action( 'bp_after_message_content', 'show_rtm_bp_msg_media' );
 }
-
-// Adding Browse button under message in Compose tab.
-add_action( 'bp_after_messages_compose_content', 'rtm_bp_message_media_add_button' );
-
-// Adding Browse button under message in Send reply tab.
-add_action( 'bp_after_message_reply_box', 'rtm_bp_message_media_add_button' );
 
