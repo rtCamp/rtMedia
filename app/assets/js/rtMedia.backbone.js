@@ -2076,6 +2076,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 		upload_progress += '</div>';
 		icon = '<span id="label_' + file.id + '" class="dashicons dashicons-edit" title="' + rtmedia_backbone_strings.rtm_edit_file_name + '"></span>';
 	} else if ( error.code == -600 ) {
+		alert( rtmedia_max_file_msg + uploader.settings.max_file_size );
 		err_msg = ( uploader != '' ) ? rtmedia_max_file_msg + uploader.settings.max_file_size :  window.file_size_info;
 		title = 'title=\'' + err_msg + '\'';
 		icon = '<i class="dashicons dashicons-info" ' + title + '></i>';

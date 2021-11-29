@@ -1229,13 +1229,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return void
 		 */
 		public function render_page( $page_name, $option_group = null ) {
-			?>
 
+			 $align = is_rtl() ? 'alignleft' : 'alignright';
+			?>
 			<div class="wrap bp-media-admin <?php echo esc_attr( $this->get_current_tab() ); ?>">
 				<div id="icon-buddypress-media" class="icon32"><br></div>
 				<div>
 					<h2 class="nav-tab-wrapper"><?php $this->rtmedia_tabs(); ?>
-						<span class="alignright by">
+						<span class="<?php echo esc_attr( $align ); ?> by">
 							<a class="rt-link"
 								href="https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media"
 								target="_blank"

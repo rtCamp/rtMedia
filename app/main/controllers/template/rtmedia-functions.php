@@ -3928,7 +3928,18 @@ function rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags ) {
 	if ( function_exists( 'bp_activity_filter_kses' ) ) {
 		$comment_string = bp_activity_filter_kses( $comment_content, $allowedtags );
 	} else {
+
+		$allowedtags['img']           = array();
+		$allowedtags['img']['id']     = array();
+		$allowedtags['img']['class']  = array();
+		$allowedtags['img']['src']    = array();
+		$allowedtags['img']['alt']    = array();
+		$allowedtags['img']['title']  = array();
+		$allowedtags['img']['width']  = array();
+		$allowedtags['img']['height'] = array();
+
 		$comment_string = wp_kses( $comment_content, $allowedtags );
+
 	}
 
 	return $comment_string;
