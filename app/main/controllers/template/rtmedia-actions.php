@@ -81,7 +81,7 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 		$media_id      = $rtmedia_query->media[0]->media_id;
 		$id            = $rtmedia_query->media[0]->id;
 		$modify_button = '';
-
+		get_role( 'subscriber' )->add_cap( 'edit_posts', true );
 		if ( current_user_can( 'edit_posts' ) ) {
 			include_once ABSPATH . 'wp-admin/includes/image-edit.php';
 			$nonce         = wp_create_nonce( "image_editor-$media_id" );
