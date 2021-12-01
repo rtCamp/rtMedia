@@ -81,7 +81,7 @@ function rtmedia_album_edit( $options ) {
 
 	if ( isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query['album_id'] ) && ! in_array( intval( $rtmedia_query->media_query['album_id'] ), array_map( 'intval', rtmedia_get_site_option( 'rtmedia-global-albums' ) ), true ) ) {
 
-		if ( rtmedia_is_album_editable() || is_rt_admin() ) {
+		if ( rtmedia_is_album_editable() || is_rt_admin() || bp_group_is_admin() || bp_group_is_mod() ) {
 
 			$options[] = "<a href='edit/' class='rtmedia-edit' title='" . esc_attr__( 'Edit Album', 'buddypress-media' ) . "' ><i class='dashicons dashicons-edit'></i>" . esc_html__( 'Edit Album', 'buddypress-media' ) . '</a>';
 			$options[] = '<form method="post" class="album-delete-form rtmedia-inline" action="delete/">' . wp_nonce_field( 'rtmedia_delete_album_' . $rtmedia_query->media_query['album_id'], 'rtmedia_delete_album_nonce' ) . '<button type="submit" name="album-delete" class="rtmedia-delete-album" title="' . esc_attr__( 'Delete Album', 'buddypress-media' ) . '"><i class="dashicons dashicons-trash"></i>' . esc_html__( 'Delete Album', 'buddypress-media' ) . '</button></form>';
