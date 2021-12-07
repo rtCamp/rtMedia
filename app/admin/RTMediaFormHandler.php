@@ -454,16 +454,6 @@ class RTMediaFormHandler {
 				),
 				'group'    => '10',
 			),
-			'general_enableNotification'      => array(
-				'title'    => esc_html__( 'Enable notification on comment', 'buddypress-media' ),
-				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'     => array(
-					'key'   => 'general_enableNotification',
-					'value' => $options['general_enableNotification'],
-					'desc'  => esc_html__( 'This will enable the notification on comment.', 'buddypress-media' ),
-				),
-				'group'    => '10',
-			),
 			'general_enableGallerysearch'     => array(
 				'title'    => esc_html__( 'Enable gallery media search', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
