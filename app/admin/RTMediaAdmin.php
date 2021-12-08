@@ -334,6 +334,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
 				?>
 				<div class="notice is-dismissible updated rtmedia-pro-split-notice">
+				<?php wp_nonce_field( 'rtcamp_pro_split', 'rtm_nonce' ); ?>
 					<p>
 						<span>
 							<?php
@@ -359,7 +360,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				<script type="text/javascript">
 				jQuery( document ).ready( function() {
 					jQuery( '.rtmedia-pro-split-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
-						var data = {action: 'rtmedia_hide_premium_addon_notice', _rtm_nonce: nonce };
+						var data = {action: 'rtmedia_hide_premium_addon_notice', _rtm_nonce: jQuery('#rtm_nonce').val() };
 						jQuery.post( ajaxurl, data, function ( response ) {
 							jQuery('.rtmedia-pro-split-notice').remove();
 						});
@@ -394,7 +395,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ( ! $site_option || 'hide' !== $site_option ) && ( 'inspirebook' !== get_stylesheet() ) ) {
 				rtmedia_update_site_option( 'rtmedia_inspirebook_release_notice', 'show' );
 				?>
-				<div class="notice is-dismissible updated rtmedia-inspire-book-notice">
+				<div class="notice install-transcoder-notice  is-dismissible updated rtmedia-inspire-book-notice">
+				<?php wp_nonce_field( '_install_transcoder_hide_notice_', 'install_transcoder_hide_notice_nonce' ); ?>
 					<p>
 						<span>
 							<a href="https://rtmedia.io/products/inspirebook/" target="_blank">
@@ -406,7 +408,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					</p>
 				</div>
 				<script type="text/javascript">
-					function rtmedia_hide_inspirebook_notice() {
+					jQuery( document ).ready( function() {
+					jQuery( '.rtmedia-inspire-book-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
 						var data = {
 							action: 'rtmedia_hide_inspirebook_release_notice',
 							_rtm_nonce: jQuery('#rtmedia_hide_inspirebook_nonce').val()
@@ -414,7 +417,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						jQuery.post( ajaxurl, data, function ( response ) {
 							jQuery('.rtmedia-inspire-book-notice').remove();
 						});
-					}
+					});
+				});
 				</script>
 				<?php
 			}
