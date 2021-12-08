@@ -1039,7 +1039,7 @@ function rtmedia_edit_allowed() {
 	$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
 
 	if ( ! $flag ) {
-		$flag = is_super_admin();
+		$flag = is_super_admin() || bp_group_is_admin() || bp_group_is_mod();
 	}
 
 	$flag = apply_filters( 'rtmedia_media_edit_priv', $flag );
