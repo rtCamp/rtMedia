@@ -1042,6 +1042,14 @@ function rtmedia_edit_allowed() {
 		$flag = is_super_admin();
 	}
 
+	if ( ! $flag ) {
+		$flag = bp_group_is_admin();
+	}
+
+	if ( ! $flag ) {
+		$flag = bp_group_is_mod();
+	}
+
 	$flag = apply_filters( 'rtmedia_media_edit_priv', $flag );
 
 	return $flag;
