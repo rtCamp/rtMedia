@@ -81,7 +81,6 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 		$media_id      = $rtmedia_query->media[0]->media_id;
 		$id            = $rtmedia_query->media[0]->id;
 		$modify_button = '';
-		get_role( 'subscriber' )->add_cap( 'edit_posts', true );
 		if ( current_user_can( 'edit_posts' ) ) {
 			include_once ABSPATH . 'wp-admin/includes/image-edit.php';
 			$nonce         = wp_create_nonce( "image_editor-$media_id" );
@@ -1002,6 +1001,28 @@ function rtmedia_override_canonical( $redirect_url, $requested_url ) {
 	}
 }
 add_filter( 'redirect_canonical', 'rtmedia_override_canonical', 10, 2 );
+/**
+ * Function rtmedia_check_media_caps checks if user is subscriber & adds capability to modify post
+ *
+ * @param array $all_caps array of user caps.
+ *
+ * @return array
+ */
+function rtmedia_check_media_caps( $all_caps ) {
+
+	global $rtmedia_query;
+	$current_user = wp_get_current_user();
+	if ( ! in_array( 'subscriber', $current_user->roles, true ) ) {
+		return $all_caps;
+	}
+
+	if ( isset( $rtmedia_query->media ) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media[0]->media_type ) && 'photo' === $rtmedia_query->media[0]->media_type && 'photo' === $type ) {
+		$all_caps['edit_posts'] = true;
+	}
+
+	return $all_caps;
+};
+add_filter( 'user_has_cap', 'rtmedia_check_media_caps', 20, 1 );
 
 /**
  * Function rtmedia_gallery_shortcode_json_query_vars Set query vars for json response
