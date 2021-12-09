@@ -395,7 +395,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ( ! $site_option || 'hide' !== $site_option ) && ( 'inspirebook' !== get_stylesheet() ) ) {
 				rtmedia_update_site_option( 'rtmedia_inspirebook_release_notice', 'show' );
 				?>
-				<div class="notice install-transcoder-notice  is-dismissible updated rtmedia-inspire-book-notice">
+				<div class="notice  is-dismissible updated rtmedia-inspire-book-notice">
 				<?php wp_nonce_field( '_install_transcoder_hide_notice_', 'install_transcoder_hide_notice_nonce' ); ?>
 					<p>
 						<span>
