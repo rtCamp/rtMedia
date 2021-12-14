@@ -318,11 +318,10 @@ class RTMediaModel extends RTDBModel {
 		}
 
 		$rtm_post_table = $wpdb->prefix . 'posts';
-		$where          = $wpdb->prepare( " WHERE {$this->table_name}.media_id IN( $sub_sql ) OR (media_type = 'album' AND context_id = %d AND context = 'group')", $group_id );
+		$where          = $wpdb->prepare( " WHERE ( {$this->table_name}.id IN( $sub_sql ) OR (media_type = 'album' AND context_id = %d AND context = 'group') )", $group_id );
 		$where          = apply_filters( 'rtmedia-get-group-album-where-query', $where, $this->table_name );
 		$sql            = "SELECT * FROM {$this->table_name} INNER JOIN {$rtm_post_table} AS post_table ON post_table.id = {$this->table_name}.media_id and post_table.post_type = 'rtmedia_album'";
-
-		$sql .= $where;
+		$sql           .= $where;
 
 		if ( is_multisite() ) {
 			$sql .= $wpdb->prepare( " AND  {$this->table_name}.blog_id = %d ", get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
