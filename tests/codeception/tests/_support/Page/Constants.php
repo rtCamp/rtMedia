@@ -50,7 +50,7 @@ class Constants {
 
 	// Labels
 	public static $strCommentCheckboxLabel = 'Allow user to comment on uploaded media';
-	public static $strEnableGalleryMediaSearchLabel = 'Enable gallery media search';
+	public static $strEnableGalleryMediaSearchLabel = 'Enable search in media page';
 	public static $strDirectUplaodCheckboxLabel = 'Enable Direct Upload';
 	public static $strLightboxCheckboxLabel = 'Use lightbox to display media';
 	public static $numOfMediaLabel = 'Number of media per page';

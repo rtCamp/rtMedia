@@ -1039,7 +1039,7 @@ function rtmedia_edit_allowed() {
 	$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
 
 	if ( ! $flag ) {
-		$flag = is_super_admin();
+		$flag = is_super_admin() || bp_group_is_admin() || bp_group_is_mod();
 	}
 
 	$flag = apply_filters( 'rtmedia_media_edit_priv', $flag );
@@ -2541,7 +2541,7 @@ function rtmedia_group_album_list( $selected_album_id = false ) {
 	if ( $album_objects ) {
 		foreach ( $album_objects as $album ) {
 			if ( ! in_array( $album->id, $global_albums, true ) && ( ( isset( $rtmedia_query->media_query['album_id'] ) && ( $album->id !== $rtmedia_query->media_query['album_id'] ) ) || ! isset( $rtmedia_query->media_query['album_id'] ) ) ) {
-				$option_group .= '<option value="' . esc_attr( $album->id ) . '" ' . selected( $selected_album_id, $album->id ) . '>' . esc_html( $album->media_title ) . '</option>';
+				$option_group .= '<option value="' . esc_attr( $album->id ) . '" ' . selected( $selected_album_id, $album->id, false ) . '>' . esc_html( $album->media_title ) . '</option>';
 			}
 		}
 	}
@@ -3928,7 +3928,18 @@ function rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags ) {
 	if ( function_exists( 'bp_activity_filter_kses' ) ) {
 		$comment_string = bp_activity_filter_kses( $comment_content, $allowedtags );
 	} else {
+
+		$allowedtags['img']           = array();
+		$allowedtags['img']['id']     = array();
+		$allowedtags['img']['class']  = array();
+		$allowedtags['img']['src']    = array();
+		$allowedtags['img']['alt']    = array();
+		$allowedtags['img']['title']  = array();
+		$allowedtags['img']['width']  = array();
+		$allowedtags['img']['height'] = array();
+
 		$comment_string = wp_kses( $comment_content, $allowedtags );
+
 	}
 
 	return $comment_string;

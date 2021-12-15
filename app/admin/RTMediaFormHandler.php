@@ -455,7 +455,7 @@ class RTMediaFormHandler {
 				'group'    => '10',
 			),
 			'general_enableGallerysearch'     => array(
-				'title'    => esc_html__( 'Enable gallery media search', 'buddypress-media' ),
+				'title'    => esc_html__( 'Enable search in media page', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'     => array(
 					'key'   => 'general_enableGallerysearch',
@@ -570,7 +570,7 @@ class RTMediaFormHandler {
 		$general_group[15] = esc_html__( 'List Media View', 'buddypress-media' );
 		$general_group[18] = esc_html__( 'Masonry View', 'buddypress-media' );
 		$general_group[19] = esc_html__( 'Direct Upload', 'buddypress-media' );
-		$general_group[14] = esc_html__( 'Gallery Media Search', 'buddypress-media' );
+		$general_group[14] = esc_html__( 'Media Search', 'buddypress-media' );
 		$general_group     = apply_filters( 'rtmedia_display_content_groups', $general_group );
 		ksort( $general_group );
 		self::render_tab_content( $render_options, $general_group, 20 );
