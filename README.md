@@ -11,7 +11,7 @@ Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & mor
 ![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=MU1JamdmRnppK0hhQy9QMU8wdDJ2MUEyb1ZuS0ljVFQvSHZ6anFvNzUxTT0tLXhUNnliTnZGcE5CcW93N0I1eXdnM3c9PQ==--8c124e667dd0c317618efde1bed2b260000916b6)
 
 
-* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty), [milindmore22](https://profiles.wordpress.org/milindmore22), [thrijith](https://profiles.wordpress.org/thrijith), [abhijitrakas](https://profiles.wordpress.org/abhijitrakas), [sid177](https://profiles.wordpress.org/sid177), [montu3366](https://profiles.wordpress.org/montu3366), [jashwini](https://profiles.wordpress.org/jashwini), [juhise](https://profiles.wordpress.org/juhise), [ravatparmar](https://profiles.wordpress.org/ravatparmar), [dharmin16](https://profiles.wordpress.org/dharmin16), [malavvasita](https://profiles.wordpress.org/malavvasita), [pooja1210](https://profiles.wordpress.org/pooja1210), [krupajnanda](https://profiles.wordpress.org/krupajnanda), [kanumalivad](https://profiles.wordpress.org/kanumalivad), [surajkumarsingh](https://profiles.wordpress.org/surajkumarsingh), [dishitpala](https://profiles.wordpress.org/dishitpala), [shobhit2412](https://profiles.wordpress.org/shobhit2412/), [vkd007](https://profiles.wordpress.org/vkd007/), [vaishu.agola27](https://profiles.wordpress.org/vaishuagola27/), [kapilpaul](https://profiles.wordpress.org/kapilpaul/), [opurockey](https://profiles.wordpress.org/opurockey/), [pavanpatil1](https://profiles.wordpress.org/pavanpatil1/), [pradeep1308](https://profiles.wordpress.org/pradeep1308/)
+* **Contributors:** [rtcamp](http://profiles.wordpress.org/rtcamp), [mangeshp](http://profiles.wordpress.org/mangeshp), [sanket.parmar](http://profiles.wordpress.org/sanket.parmar), [pranalipatel](http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani](http://profiles.wordpress.org/jignesh.nakrani), [manishsongirkar36](http://profiles.wordpress.org/manishsongirkar36), [kiranpotphode](http://profiles.wordpress.org/kiranpotphode), [yahil](http://profiles.wordpress.org/yahil), [1naveengiri](http://profiles.wordpress.org/1naveengiri), [bhargavbhandari90](http://profiles.wordpress.org/bhargavbhandari90), [deepak1191](http://profiles.wordpress.org/deepak1191), [rittesh.patel](http://profiles.wordpress.org/rittesh.patel), [sagarjadhav](http://profiles.wordpress.org/sagarjadhav), [pushpak.pop](http://profiles.wordpress.org/pushpak.pop), [faishal](http://profiles.wordpress.org/faishal), [desaiuditd](http://profiles.wordpress.org/desaiuditd), [rahul286](http://profiles.wordpress.org/rahul286), [JoshuaAbenazer](http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123](http://profiles.wordpress.org/gagan0123), [saurabhshukla](http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar](http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase](http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar](http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul](http://profiles.wordpress.org/neerukoul), [hrishiv90](http://profiles.wordpress.org/hrishiv90), [kanakiyajay](http://profiles.wordpress.org/kanakiyajay), [jarretc](http://profiles.wordpress.org/jarretc), [tobiaskluge](http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal](http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla](http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar](http://profiles.wordpress.org/mehulkaklotar), [tannermirabel](http://profiles.wordpress.org/tannermirabel), [kishores](http://profiles.wordpress.org/kishores), [chandrapatel](http://profiles.wordpress.org/chandrapatel), [rahul3883](http://profiles.wordpress.org/rahul3883/), [nomnom99](http://profiles.wordpress.org/nomnom99), [sayanchakraborty](https://profiles.wordpress.org/sayanchakraborty), [milindmore22](https://profiles.wordpress.org/milindmore22), [thrijith](https://profiles.wordpress.org/thrijith), [abhijitrakas](https://profiles.wordpress.org/abhijitrakas), [sid177](https://profiles.wordpress.org/sid177), [montu3366](https://profiles.wordpress.org/montu3366), [jashwini](https://profiles.wordpress.org/jashwini), [juhise](https://profiles.wordpress.org/juhise), [ravatparmar](https://profiles.wordpress.org/ravatparmar), [dharmin16](https://profiles.wordpress.org/dharmin16), [malavvasita](https://profiles.wordpress.org/malavvasita), [pooja1210](https://profiles.wordpress.org/pooja1210), [krupajnanda](https://profiles.wordpress.org/krupajnanda), [kanumalivad](https://profiles.wordpress.org/kanumalivad), [surajkumarsingh](https://profiles.wordpress.org/surajkumarsingh), [dishitpala](https://profiles.wordpress.org/dishitpala), [shobhit2412](https://profiles.wordpress.org/shobhit2412/), [vkd007](https://profiles.wordpress.org/vkd007/), [vaishu.agola27](https://profiles.wordpress.org/vaishuagola27/), [kapilpaul](https://profiles.wordpress.org/kapilpaul/), [opurockey](https://profiles.wordpress.org/opurockey/), [pavanpatil1](https://profiles.wordpress.org/pavanpatil1/), [pradeep1308](https://profiles.wordpress.org/pradeep1308/), [shardul200](https://profiles.wordpress.org/shardul200/)
 
 
 * **License:** [GPL v2 or later]( http://www.gnu.org/licenses/gpl-2.0.html)
@@ -128,23 +128,38 @@ You can also check [rtMedia's Live Demo](http://demo.rtmedia.io/?utm_source####r
 
 https://www.youtube.com/watch?v=dJrykKQGDcs
 
-1. Media Settings
-2. Privacy Settings
-3. BuddyPress Settings
-4. Media View
-5. Album View
-6. Uploader
-7. Uploader Thumbnails
-8. Lightbox
-9. Single Media View
-10. Media Edit View
-11. Media Activity
-12. User Privacy Settings
-13. Media Size Settings
-14. Custom CSS settings
+1.  Display Settings
+2.  BuddyPress Settings
+3.  Media Types Settings
+4.  Media Size Settings
+5.  Privacy Settings 
+6.  Other Setiings
+7.  Export/Import Settings
+8.  Media View
+9.  Album View
+10. Uploader
+11. Uploader Thumbnails
+12. Lightbox
+13. Single Media View
+14. Media Edit View
 
 
 ## Changelog ##
+
+### 4.6.9 [December , 2021] ###
+
+
+* Enhancement
+
+	* Added album search functionality. 
+	* Added capability to group admin and mod to edit/delete the album.
+
+* FIXED
+
+	* UI/UX issues. 
+	* Able to upload media to comment if the activity steam option is disabled. 
+	* Fixed pagination issue. 
+	* Fixed RTL issues.
 
 ### 4.6.8 [October 26, 2021] ###
 

@@ -333,7 +333,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ( ! $site_option || 'hide' !== $site_option ) ) {
 				rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
 				?>
-				<div class="updated rtmedia-pro-split-notice">
+				<div class="notice is-dismissible updated rtmedia-pro-split-notice">
+				<?php wp_nonce_field( 'rtcamp_pro_split', 'rtm_nonce' ); ?>
 					<p>
 						<span>
 							<?php
@@ -354,20 +355,18 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							);
 							?>
 						</span>
-						<a href="#" onclick="rtmedia_hide_premium_addon_notice('<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>');" style="float:right"><?php esc_html_e( 'Dismiss', 'buddypress-media' ); ?></a>
 					</p>
 				</div>
 				<script type="text/javascript">
-					function rtmedia_hide_premium_addon_notice(nonce) {
-						var data = {action: 'rtmedia_hide_premium_addon_notice', _rtm_nonce: nonce };
-						jQuery.post(ajaxurl, data, function (response) {
-							response = response.trim();
-
-							if (response === "1")
-								jQuery('.rtmedia-pro-split-notice').remove();
+				jQuery( document ).ready( function() {
+					jQuery( '.rtmedia-pro-split-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
+						var data = {action: 'rtmedia_hide_premium_addon_notice', _rtm_nonce: jQuery('#rtm_nonce').val() };
+						jQuery.post( ajaxurl, data, function ( response ) {
+							jQuery('.rtmedia-pro-split-notice').remove();
 						});
-					}
-				</script>
+					});
+				});
+			</script>
 				<?php
 			}
 		}
@@ -396,7 +395,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ( ! $site_option || 'hide' !== $site_option ) && ( 'inspirebook' !== get_stylesheet() ) ) {
 				rtmedia_update_site_option( 'rtmedia_inspirebook_release_notice', 'show' );
 				?>
-				<div class="updated rtmedia-inspire-book-notice">
+				<div class="notice  is-dismissible updated rtmedia-inspire-book-notice">
+				<?php wp_nonce_field( '_install_transcoder_hide_notice_', 'install_transcoder_hide_notice_nonce' ); ?>
 					<p>
 						<span>
 							<a href="https://rtmedia.io/products/inspirebook/" target="_blank">
@@ -404,22 +404,21 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							</a>
 							<?php esc_html_e( ' - First official rtMedia premium theme.', 'buddypress-media' ); ?>
 						</span>
-						<a href="#" onclick="rtmedia_hide_inspirebook_notice()" style="float:right">Dismiss</a>
 						<?php wp_nonce_field( '_rtmedia_hide_inspirebook_notice_', 'rtmedia_hide_inspirebook_nonce' ); ?>
 					</p>
 				</div>
 				<script type="text/javascript">
-					function rtmedia_hide_inspirebook_notice() {
+					jQuery( document ).ready( function() {
+					jQuery( '.rtmedia-inspire-book-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
 						var data = {
 							action: 'rtmedia_hide_inspirebook_release_notice',
 							_rtm_nonce: jQuery('#rtmedia_hide_inspirebook_nonce').val()
 						};
-						jQuery.post(ajaxurl, data, function (response) {
-							response = response.trim();
-							if (response === "1")
-								jQuery('.rtmedia-inspire-book-notice').remove();
+						jQuery.post( ajaxurl, data, function ( response ) {
+							jQuery('.rtmedia-inspire-book-notice').remove();
 						});
-					}
+					});
+				});
 				</script>
 				<?php
 			}
@@ -1229,13 +1228,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return void
 		 */
 		public function render_page( $page_name, $option_group = null ) {
-			?>
 
+			 $align = is_rtl() ? 'alignleft' : 'alignright';
+			?>
 			<div class="wrap bp-media-admin <?php echo esc_attr( $this->get_current_tab() ); ?>">
 				<div id="icon-buddypress-media" class="icon32"><br></div>
 				<div>
 					<h2 class="nav-tab-wrapper"><?php $this->rtmedia_tabs(); ?>
-						<span class="alignright by">
+						<span class="<?php echo esc_attr( $align ); ?> by">
 							<a class="rt-link"
 								href="https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media"
 								target="_blank"

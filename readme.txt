@@ -1,11 +1,11 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala, shobhit2412, vaishu.agola27, kapilpaul, opurockey, vkd007, pavanpatil1, pradeep1308
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala, shobhit2412, vaishu.agola27, kapilpaul, opurockey, vkd007, pavanpatil1, pradeep1308, shardul200
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 5.8.1
-Stable tag: 4.6.8
+Tested up to: 5.8.2
+Stable tag: 4.6.9
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -115,23 +115,38 @@ You can also check [rtMedia's Live Demo](http://demo.rtmedia.io/?utm_source=read
 http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
-1. Media Settings
-2. Privacy Settings
-3. BuddyPress Settings
-4. Media View
-5. Album View
-6. Uploader
-7. Uploader Thumbnails
-8. Lightbox
-9. Single Media View
-10. Media Edit View
-12. Media Activity
-12. User Privacy Settings
-13. Media Size Settings
-14. Custom CSS settings
+1.  Display Settings
+2.  BuddyPress Settings
+3.  Media Types Settings
+4.  Media Size Settings
+5.  Privacy Settings 
+6.  Other Setiings
+7.  Export/Import Settings
+8.  Media View
+9.  Album View
+10. Uploader
+11. Uploader Thumbnails
+12. Lightbox
+13. Single Media View
+14. Media Edit View
 
 
 == Changelog ==
+
+= 4.6.9 [December , 2021] =
+
+* Enhancement
+
+ * Added album search functionality. 
+ * Added capability to group admin and mod to edit/delete the album.
+
+* FIXED
+
+ * UI/UX issues. 
+ * Able to upload media to comment if the activity steam option is disabled. 
+ * Fixed pagination issue. 
+ * Fixed RTL issues. 
+
 
 = 4.6.8 [October 26, 2021] =
 
@@ -1751,8 +1766,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 4.6.8 =
-rtMedia 4.6.8 with some UI/UX fixes
+= 4.6.9 =
+rtMedia 4.6.9 with some enhancements & minor UI/UX fixes.
 
 == Sponsors ==
 

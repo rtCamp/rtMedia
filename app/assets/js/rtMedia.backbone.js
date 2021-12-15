@@ -288,7 +288,6 @@ jQuery( function( $ ) {
 							if ( typeof el == 'object' ) {
 								jQuery( el ).find( '.rtmedia_next_prev' ).children( '#rtMedia-galary-next' ).hide();
 							}
-							//$("#rtMedia-galary-next").show();
 						}
 
 						rtMedia.gallery = {};
@@ -325,7 +324,7 @@ jQuery( function( $ ) {
 						jQuery( '#rtmedia-nav-item-video span' ).text( response.media_count.videos_count );
 
 						if ( jQuery( 'li#rtm-url-upload' ).length === 0 ) {
-							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( 'opacity', '1' );
+							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( { 'opacity': 1, 'height': 'auto', 'overflow': 'auto' } );
 							if ( rtMediaHook.call( 'rtmedia_js_uploader_slide_after_gallery_reload' ) ) {
 								jQuery( '#rtm-media-gallery-uploader' ).slideUp();
 							}
@@ -541,6 +540,7 @@ jQuery( function( $ ) {
 			var $media_search_input = $( '#media_search_input' ).val();
 			var $media_search       = $( '#media_search' );
 			var $media_fatch_loader = $( '#media_fatch_loader' );
+			var $media_type         = $( 'input[type="hidden"][name="media_type"]' );
 
 			if ( '' === $media_search_input ) {
 				return false;
@@ -560,6 +560,11 @@ jQuery( function( $ ) {
 			if ( $( '#search_by' ).length > 0 ) {
 				href += '&search_by=' + $( '#search_by' ).val();
 			}
+
+			if ( $media_type.length > 0 && 'album' === $media_type.val() ) {
+				href += '&media_type=' + $media_type.val();
+			}
+
 			href = encodeURI( href );
 
 			change_rtBrowserAddressUrl( href, '' );
@@ -2077,6 +2082,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 		upload_progress += '</div>';
 		icon = '<span id="label_' + file.id + '" class="dashicons dashicons-edit" title="' + rtmedia_backbone_strings.rtm_edit_file_name + '"></span>';
 	} else if ( error.code == -600 ) {
+		alert( rtmedia_max_file_msg + uploader.settings.max_file_size );
 		err_msg = ( uploader != '' ) ? rtmedia_max_file_msg + uploader.settings.max_file_size :  window.file_size_info;
 		title = 'title=\'' + err_msg + '\'';
 		icon = '<i class="dashicons dashicons-info" ' + title + '></i>';

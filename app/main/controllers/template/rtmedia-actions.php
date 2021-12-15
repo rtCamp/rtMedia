@@ -971,6 +971,7 @@ function add_search_filter( $attr = null ) {
 	}
 }
 add_action( 'rtmedia_media_gallery_actions', 'add_search_filter', 99 );
+add_action( 'rtmedia_album_gallery_actions', 'add_search_filter', 99 );
 
 /**
  * Re-save permalink settings on plugin activation or plugin updates
