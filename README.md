@@ -146,7 +146,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
-### 4.6.9 [December , 2021] ###
+### 4.6.9 [December 16, 2021] ###
 
 
 * Enhancement
