@@ -1066,7 +1066,9 @@ class RTMediaTemplate {
 
 				if ( is_rtmedia_album() && isset( $rtmedia_query->media_query ) && 'edit' === $rtmedia_query->action_query->action
 				) {
-					if ( rtmedia_is_album_editable() || is_rt_admin() || bp_group_is_admin() || bp_group_is_mod() ) {
+					if ( rtmedia_is_album_editable() || is_rt_admin()
+					|| ( function_exits( 'bp_group_is_admin' ) && bp_group_is_admin() )
+					|| ( function_exits( 'bp_group_is_mod' ) && bp_group_is_mod() ) ) {
 						$template = 'album-single-edit';
 					}
 				}

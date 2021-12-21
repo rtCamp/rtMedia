@@ -78,8 +78,8 @@ class RTMediaGalleryItemAction {
 
 				if ( is_rt_admin()
 					|| ( function_exists( 'groups_is_user_mod' ) && groups_is_user_mod( $user_id, $context_id ) )
-					|| bp_group_is_admin()
-					|| bp_group_is_mod()
+					|| ( function_exits( 'bp_group_is_admin' ) && bp_group_is_admin() )
+					|| ( function_exits( 'bp_group_is_mod' ) && bp_group_is_mod() )
 					|| ( isset( $rtmedia_media ) && isset( $rtmedia_media->media_author ) && get_current_user_id() === intval( $rtmedia_media->media_author ) )
 				) {
 					?>

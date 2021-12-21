@@ -1039,7 +1039,21 @@ function rtmedia_edit_allowed() {
 	$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
 
 	if ( ! $flag ) {
-		$flag = is_super_admin() || bp_group_is_admin() || bp_group_is_mod();
+		$flag = is_super_admin();
+	}
+
+	if ( function_exists( 'bp_group_is_admin' ) ) {
+
+		if ( ! $flag ) {
+			$flag = bp_group_is_admin();
+		}
+	}
+
+	if ( function_exists( 'bp_group_is_mod' ) ) {
+
+		if ( ! $flag ) {
+			$flag = bp_group_is_mod();
+		}
 	}
 
 	$flag = apply_filters( 'rtmedia_media_edit_priv', $flag );
