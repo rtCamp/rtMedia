@@ -385,11 +385,13 @@ class RTMediaBuddyPressActivity {
 			set_site_transient( $transient_name, $activity_ids );
 		}
 
-		if ( ! empty( $activity_ids ) ) {
-			if ( current_filter() === 'bp_ajax_querystring' ) {
-				$query_string .= '&exclude=' . $activity_ids;
-			} else {
-				$query_string['exclude'] = $activity_ids;
+		if ( ! is_main_site( $blog_id ) ) { 
+			if ( ! empty( $activity_ids ) ) {
+				if ( current_filter() === 'bp_ajax_querystring' ) {
+					$query_string .= '&exclude=' . $activity_ids;
+				} else {
+					$query_string['exclude'] = $activity_ids;
+				}
 			}
 		}
 
