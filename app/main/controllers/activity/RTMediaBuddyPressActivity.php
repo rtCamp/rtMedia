@@ -1372,13 +1372,13 @@ class RTMediaBuddyPressActivity {
 	 * @param string $content content to be filtered.
 	 */
 	public function rtm_edit_activity_filter( $content ) {
-		if ( strpos( $content, '<span>' ) !== false ) {
+		if ( false !== strpos( $content, '<span>' ) ) {
 			$content = explode( '<span>', $content );
-			$result  = explode( '</span>', $content[1] );
-			return $result[0];
+			$result  = explode( '</span>', ( isset( $content[1] ) ? $content[1] : '' ) );
+			return ( isset( $result[0] ) ? $result[0] : '' );
 		}
 
-		if ( strpos( $content, 'rtmedia-activity-container' ) !== false ) {
+		if ( false !== strpos( $content, 'rtmedia-activity-container' ) ) {
 			return '';
 		}
 
@@ -1394,18 +1394,18 @@ class RTMediaBuddyPressActivity {
 	public function rtm_save_activity_with_media_filter( $content_new, $activity_id ) {
 		$activity = new BP_Activity_Activity( $activity_id );
 		$content  = stripslashes( $activity->content );
-		if ( strpos( $content, '<span>' ) !== false ) {
+		if ( false !== strpos( $content, '<span>' ) ) {
 			$content_new = sprintf( '<span>%s</span>', $content_new );
 			$content_old = explode( '<span>', $content );
-			$content_old = explode( '</span>', $content_old[1] );
-			$content_old = sprintf( '<span>%s</span>', $content_old [0] );
+			$content_old = explode( '</span>', ( isset( $content_old[1] ) ? $content_old[1] : '' ) );
+			$content_old = sprintf( '<span>%s</span>', ( isset( $content_old[0] ) ? $content_old[0] : '' ) );
 			$result      = str_replace( $content_old, $content_new, $content );
 			return $result;
 		}
-		if ( strpos( $content, 'rtmedia-activity-container' ) !== false ) {
+		if ( false !== strpos( $content, 'rtmedia-activity-container' ) ) {
 			$content_new = sprintf( '<span>%s</span>', $content_new );
 			$content     = explode( '<div class="rtmedia-activity-container">', $content );
-			$content     = sprintf( '<div class="rtmedia-activity-container">%1$s%2$s', $content_new, $content[1] );
+			$content     = sprintf( '<div class="rtmedia-activity-container">%1$s%2$s', $content_new, ( isset( $content[1] ) ? $content[1] : '' ) );
 			return $content;
 		}
 		if ( ! empty( $content_new ) ) {
