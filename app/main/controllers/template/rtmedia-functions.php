@@ -2988,7 +2988,7 @@ function get_rtmedia_allowed_upload_type() {
 /**
  * Checking if is admin
  *
- * @return      bool
+ * @return bool
  */
 function is_rt_admin() {
 
@@ -2999,7 +2999,7 @@ function is_rt_admin() {
 /**
  * Checking if is group admin.
  *
- * @return      bool
+ * @return bool
  */
 function rtm_is_bp_group_admin() {
 	return function_exists( 'bp_group_is_admin' ) && bp_group_is_admin();
@@ -3008,7 +3008,7 @@ function rtm_is_bp_group_admin() {
 /**
  * Checking if is group moderator.
  *
- * @return      bool
+ * @return bool
  */
 function rtm_is_bp_group_mod() {
 	return function_exists( 'bp_group_is_mod' ) && bp_group_is_mod();
