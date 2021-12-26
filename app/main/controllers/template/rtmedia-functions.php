@@ -1039,7 +1039,7 @@ function rtmedia_edit_allowed() {
 	$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
 
 	if ( ! $flag ) {
-		$flag = is_super_admin() || bp_group_is_admin() || bp_group_is_mod();
+		$flag = is_super_admin() || rtm_is_bp_group_admin() || rtm_is_bp_group_mod();
 	}
 
 	$flag = apply_filters( 'rtmedia_media_edit_priv', $flag );
@@ -2988,13 +2988,32 @@ function get_rtmedia_allowed_upload_type() {
 /**
  * Checking if is admin
  *
- * @return      bool
+ * @return bool
  */
 function is_rt_admin() {
 
 	return current_user_can( 'list_users' );
 
 }
+
+/**
+ * Checking if is group admin.
+ *
+ * @return bool
+ */
+function rtm_is_bp_group_admin() {
+	return function_exists( 'bp_group_is_admin' ) && bp_group_is_admin();
+}
+
+/**
+ * Checking if is group moderator.
+ *
+ * @return bool
+ */
+function rtm_is_bp_group_mod() {
+	return function_exists( 'bp_group_is_mod' ) && bp_group_is_mod();
+}
+
 
 /**
  * Get media like count
