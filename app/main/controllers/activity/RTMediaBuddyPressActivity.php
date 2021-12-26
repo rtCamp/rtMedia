@@ -76,6 +76,11 @@ class RTMediaBuddyPressActivity {
 			add_action( 'bp_activity_after_save', array( $this, 'bp_activity_after_save' ) );
 			add_action( 'bp_activity_after_delete', array( $this, 'bp_activity_after_delete' ) );
 		}
+
+		if ( defined( 'BUDDYBOSS_EDIT_ACTIVITY_PLUGIN_VERSION' ) ) {
+			add_filter( 'bea_get_activity_content', array( $this, 'rtm_edit_activity_filter' ) );
+			add_filter( 'bea_activity_content', array( $this, 'rtm_save_activity_with_media_filter' ), 10, 2 );
+		}
 	}
 
 	/**
@@ -1361,5 +1366,53 @@ class RTMediaBuddyPressActivity {
 
 		$rtm_activity_model = new RTMediaActivityModel();
 		$rtm_activity_model->set_privacy( $comment_id, $user_id, $privacy_id );
+	}
+
+	/**
+	 * Filter contents to display in edit box if media is present
+	 *
+	 * @param string $content content to be filtered.
+	 */
+	public function rtm_edit_activity_filter( $content ) {
+		if ( false !== strpos( $content, '<span>' ) ) {
+			$content = explode( '<span>', $content );
+			$result  = explode( '</span>', ( isset( $content[1] ) ? $content[1] : '' ) );
+			return ( isset( $result[0] ) ? $result[0] : '' );
+		}
+
+		if ( false !== strpos( $content, 'rtmedia-activity-container' ) ) {
+			return '';
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Filter contents to save after editing.
+	 *
+	 * @param string $content_new content to be filtered.
+	 * @param int    $activity_id activity id of the activity being edited.
+	 */
+	public function rtm_save_activity_with_media_filter( $content_new, $activity_id ) {
+		$activity = new BP_Activity_Activity( $activity_id );
+		$content  = stripslashes( $activity->content );
+		if ( false !== strpos( $content, '<span>' ) ) {
+			$content_new = sprintf( '<span>%s</span>', $content_new );
+			$content_old = explode( '<span>', $content );
+			$content_old = explode( '</span>', ( isset( $content_old[1] ) ? $content_old[1] : '' ) );
+			$content_old = sprintf( '<span>%s</span>', ( isset( $content_old[0] ) ? $content_old[0] : '' ) );
+			$result      = str_replace( $content_old, $content_new, $content );
+			return $result;
+		}
+		if ( false !== strpos( $content, 'rtmedia-activity-container' ) ) {
+			$content_new = sprintf( '<span>%s</span>', $content_new );
+			$content     = explode( '<div class="rtmedia-activity-container">', $content );
+			$content     = sprintf( '<div class="rtmedia-activity-container">%1$s%2$s', $content_new, ( isset( $content[1] ) ? $content[1] : '' ) );
+			return $content;
+		}
+		if ( ! empty( $content_new ) ) {
+			return $content_new;
+		}
+		return $content;
 	}
 }
