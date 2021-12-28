@@ -1,0 +1,30 @@
+on:
+  pull_request: # Run this action when push event triggers.
+    branches: # Run this action on specified branches
+      - rtmedia/automation
+
+name: Run wpe2e test cases # Name of the action
+jobs:
+  Run-wpe2e-TestCase:
+    name: Run wpe2e test Case #
+    runs-on: self-hosted
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+       ref: ${{ github.event.pull_request.head.sha }}
+     
+    - name: Checkout base
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.base.ref }}
+        path: base
+
+    - name: Current directory and listings
+      run: |
+           pwd
+           ls -al
+    - name: Install and config site
+      uses: docker://rtcamp/base-wo:v1.0.0
+      env:
+        RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
