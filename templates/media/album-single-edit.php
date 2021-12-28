@@ -91,7 +91,7 @@ $rtmedia_media = $media[0];
 									</button>
 									<input type="hidden" name="move-selected" value="move">
 									<button type="button" name="delete-selected" class="button rtmedia-delete-selected" title='<?php esc_attr_e( 'Delete Selected media from the album.', 'buddypress-media' ); ?>'>
-										<?php esc_html_e( 'Delee', 'buddypress-media' ); ?>
+										<?php esc_html_e( 'Delete', 'buddypress-media' ); ?>
 									</button>
 								</p>
 
