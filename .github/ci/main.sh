@@ -84,7 +84,7 @@ function install_codeception_package () {
 function installAndRunBSLocal () {
     wget http://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
     unzip BrowserStackLocal-linux-x64.zip
-    nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY 
+    nohup ./BrowserStackLocal --key $BROWSERSTACK_ACCESS_KEY &
 }
 
 # Run test for new deployed site
