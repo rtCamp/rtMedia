@@ -27,12 +27,6 @@ jobs:
         access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
         build-name: 'BUILD_INFO'
         project-name: 'REPO_NAME'
-        
-    - name: 'BrowserStack Local Tunnel Setup'  # Invokes the setup-local action
-      uses: browserstack/github-actions/setup-local@master
-      with:
-        local-testing: start
-        local-identifier: random
 
     - name: Current directory and listings
       run: |
@@ -42,17 +36,6 @@ jobs:
       uses: docker://rtcamp/base-wo:v1.0.0
       env:
         RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
-        
-        
-    - name: 'BrowserStackLocal Stop'  # Terminating the BrowserStackLocal tunnel connection
-      uses: browserstack/github-actions/setup-local@master
-      with:
-        local-testing: stop
-        
-    - name: 'BrowserStackLocal Stop'  # Terminating the BrowserStackLocal tunnel connection
-      uses: browserstack/github-actions/setup-local@master
-      with:
-        local-testing: stop
    
    
 
