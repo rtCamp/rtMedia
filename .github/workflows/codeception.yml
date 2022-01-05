@@ -7,6 +7,7 @@ on:
     branches: # Run this action on specified branches
       - develop
       - add/CI
+      - add/gh-action-for-codeception
 
 name: Run Codeception test cases # Name of the action
 jobs:
