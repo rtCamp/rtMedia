@@ -98,8 +98,6 @@ function main() {
     create_and_configure_base_site
     setup_composers
     install_codeception_package
-    deploy_pr_code_to_site
-    runChromeDriver
     run_codeception_tests
 }
 
