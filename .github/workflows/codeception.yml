@@ -19,7 +19,7 @@ jobs:
       with:
        ref: ${{ github.event.pull_request.head.sha }}
      
-   - name: 'BrowserStack Env Setup'  # Invokes the setup-env action
+    - name: 'BrowserStack Env Setup'  # Invokes the setup-env action
       uses: browserstack/github-actions/setup-env@master
       with:
         username:  ${{ secrets.BROWSERSTACK_USERNAME }}
