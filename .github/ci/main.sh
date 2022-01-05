@@ -86,8 +86,7 @@ function install_codeception_package () {
 function run_codeception_tests () {
     cd $GITHUB_WORKSPACE/tests/codeception
     composer require --dev codeception/module-webdriver:^1.0
-    composer require codeception/module-phpbrowser --dev 
-    composer require browserstack/browserstack-local
+    composer require codeception/module-phpbrowser:^2.0 
     #nohup $Browser/chromedriver --url-base=/wd/hub /dev/null 2>&1 &
     php vendor/bin/codecept run 
 }
