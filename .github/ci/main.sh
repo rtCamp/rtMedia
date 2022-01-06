@@ -56,6 +56,8 @@ function setup_composers(){
 
 # Install codeception dependancy 
 function install_codeception_package () {
+    cd $GITHUB_WORKSPACE/tests/codeception/tests/_data
+    git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
     cd $GITHUB_WORKSPACE/tests/codeception
     composer install | composer update
 }
