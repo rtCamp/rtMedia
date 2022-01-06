@@ -65,7 +65,7 @@ function install_codeception_package () {
 # get rtmedia data
 function getData () {
     cd $GITHUB_WORKSPACE/tests/codeception/tests/_data
-    git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
+    git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git
 }
 
 # install BrowserStack Local
