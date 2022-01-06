@@ -2,7 +2,7 @@ on:
   schedule:
     - cron: "0 0 * * *" 
   workflow_dispatch:
-  push:
+#   push:
   pull_request: # Run this action when push event triggers.
     branches: # Run this action on specified branches
       - develop
