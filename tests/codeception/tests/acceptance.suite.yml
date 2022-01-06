@@ -25,7 +25,7 @@ modules:
                 'os_version': 'big sur'
                 'browserstack.debug': 'true'
                 'browserstack.networkLogs': 'true'
-                'build': '%TRAVIS_BUILD_NUMBER%'
+                'build': 'BUILD_INFO'
                 'project': 'rtMedia Automation - 2022'
                 'browserstack.local': 'true'
                 'browserstack.use_w3c': 'true'
