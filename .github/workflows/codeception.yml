@@ -6,7 +6,8 @@ on:
   # pull_request: # Run this action when push event triggers.
     branches: # Run this action on specified branches
       - develop
-      - add/CI
+      - master
+      - pre-release 
       - add/gh-action-for-codeception
 
 name: Run Codeception test cases # Name of the action
