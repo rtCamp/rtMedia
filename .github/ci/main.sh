@@ -13,12 +13,6 @@ function ee() { wo "$@"; }
 
 #!/bin/sh
 
-# # PATH TO YOUR HOSTS FILE
-# ETC_HOSTS=/etc/hosts
-
-#   #sed -i '/^127.0.0.1/ s/$/ automation.rtmedia.me/' /etc/hosts
-#   echo "$(sed 's/127.0.0.11/8.8.8.8/g' /etc/hosts)" > /etc/hosts
-
 # Start required services for site creation
 function start_services() {
     echo "Starting services"
@@ -66,20 +60,6 @@ function install_codeception_package () {
     composer install | composer update
 }
 
-# # Run chrome driver 
-# function runChromeDriver () {
-#     cd $GITHUB_WORKSPACE/.github/ci
-#     #unzip chromedriver_linux64.zip
-#     #chmod +x chromedriver
-#     #./chromedriver
-#     # unzip BrowserStackLocal-linux-x64.zip 
-#     # chmod +x BrowserStackLocal
-#     #./BrowserStackLocal --key 5aD5jpbRfo9RFnrbPGYE --only-automate	
-#     #nohup ./BrowserStackLocal --key 5aD5jpbRfo9RFnrbPGYE --local-identifier A_UNIQUE_IDENTIFIER_STRING --enable-logging-for-api
-#     # nohup ./BrowserStackLocal --key 5aD5jpbRfo9RFnrbPGYE --local-identifier A_UNIQUE_IDENTIFIER_STRING --enable-logging-for-api
-
-
-# }
 # install BrowserStack Local
 function installAndRunBSLocal () {
     wget http://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
