@@ -3,7 +3,7 @@ on:
     - cron: "0 0 * * *" 
   workflow_dispatch:
   push:
-  # pull_request: # Run this action when push event triggers.
+  pull_request: # Run this action when push event triggers.
     branches: # Run this action on specified branches
       - develop
       - master
