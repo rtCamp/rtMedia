@@ -10,6 +10,7 @@ on:
       - pre-release 
       - add/gh-action-for-codeception
 
+
 name: Run Codeception test cases # Name of the action
 jobs:
   Run-wpe2e-TestCase:
