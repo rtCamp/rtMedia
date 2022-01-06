@@ -62,6 +62,12 @@ function install_codeception_package () {
     composer install | composer update
 }
 
+# get rtmedia data
+function getData () {
+    cd $GITHUB_WORKSPACE/tests/codeception/tests/_data
+    git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
+}
+
 # install BrowserStack Local
 function installAndRunBSLocal () {
     wget http://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
@@ -84,6 +90,7 @@ function main() {
     create_and_configure_base_site
     setup_composers
     install_codeception_package
+    getData
     installAndRunBSLocal
     run_codeception_tests
 }
