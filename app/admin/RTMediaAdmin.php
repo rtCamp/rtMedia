@@ -112,15 +112,15 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				}
 			}
 
-			if ( is_admin() ) {
-				add_action( 'admin_enqueue_scripts', array( $this, 'ui' ) );
-				add_action( 'admin_menu', array( $this, 'menu' ), 1 );
-				add_action( 'init', array( $this, 'bp_admin_tabs' ) );
+			// if ( is_admin() ) {
+			// 	add_action( 'admin_enqueue_scripts', array( $this, 'ui' ) );
+			// 	add_action( 'admin_menu', array( $this, 'menu' ), 1 );
+			// 	add_action( 'init', array( $this, 'bp_admin_tabs' ) );
 
-				if ( is_multisite() ) {
-					add_action( 'network_admin_edit_rtmedia', array( $this, 'save_multisite_options' ) );
-				}
-			}
+			// 	if ( is_multisite() ) {
+			// 		add_action( 'network_admin_edit_rtmedia', array( $this, 'save_multisite_options' ) );
+			// 	}
+			// }
 
 			$this->rtmedia_settings = new RTMediaSettings();
 

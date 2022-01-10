@@ -446,7 +446,7 @@ class RTMediaFormHandler {
 		$render = array(
 			'general_enableComments'          => array(
 				'title'    => esc_html__( 'Allow user to comment on uploaded media', 'buddypress-media' ),
-				'callback' => array( 'RTMediFormHandler', 'checkbox' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args'     => array(
 					'key'   => 'general_enableComments',
 					'value' => $options['general_enableComments'],
