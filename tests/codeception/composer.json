@@ -1,6 +1,6 @@
 {
     "require-dev": {
-        "lucatume/wp-browser": "*",
+        "lucatume/wp-browser": "^2.4",
         "codeception/module-webdriver": "^1.1",
         "codeception/module-asserts": "^1.3"
     }
