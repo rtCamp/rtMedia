@@ -1267,17 +1267,17 @@ class RTMediaFormHandler {
 				),
 				'group'    => 10,
 			),
-			'rtmedia-enable-on-group'                  => array(
-				'title'    => esc_html__( 'Enable media in group', 'buddypress-media' ),
-				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-				'args'     => array(
-					'key'   => 'buddypress_enableOnGroup',
-					'value' => $options['buddypress_enableOnGroup'],
-					'desc'  => esc_html__( 'Enable Media on BuddyPress Groups', 'buddypress-media' ),
-					'id'    => 'rtmedia-enable-on-group',
-				),
-				'group'    => 10,
-			),
+			// 'rtmedia-enable-on-group'                  => array(
+			// 	'title'    => esc_html__( 'Enable media in group', 'buddypress-media' ),
+			// 	'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+			// 	'args'     => array(
+			// 		'key'   => 'buddypress_enableOnGroup',
+			// 		'value' => $options['buddypress_enableOnGroup'],
+			// 		'desc'  => esc_html__( 'Enable Media on BuddyPress Groups', 'buddypress-media' ),
+			// 		'id'    => 'rtmedia-enable-on-group',
+			// 	),
+			// 	'group'    => 10,
+			// ),
 			'rtmedia-enable-on-activity'               => array(
 				'title'    => esc_html__( 'Allow upload from activity stream', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
