@@ -35,6 +35,7 @@ function create_and_configure_base_site () {
     ee site create $SITE_NAME --wp --php74
     cd $SITE_ROOT
     rsync -azh $GITHUB_WORKSPACE/ $SITE_ROOT/wp-content/
+
     echo "127.0.0.1 $SITE_NAME" >> /etc/hosts
     wp user create admin admin@example.com --role=administrator --user_pass=admin --allow-root
     wp plugin install buddypress --allow-root
@@ -42,6 +43,9 @@ function create_and_configure_base_site () {
     wp plugin install buddypress-media --allow-root
     wp plugin activate buddypress-media --allow-root
     cd $GITHUB_WORKSPACE/
+    pwd
+    cd plugins/buddypress-media
+    ls
 }
 
 function setup_composers(){
