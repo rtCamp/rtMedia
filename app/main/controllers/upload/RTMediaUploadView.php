@@ -234,27 +234,27 @@ class RTMediaUploadView {
 						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul>'
 						. '</div>',
 				),
-				'comment'  => array(
-					'title'   => esc_html__( 'File Upload', 'buddypress-media' ),
-					'content' =>
-						'<div class="rtmedia-plupload-container rtmedia-comment-media-main rtmedia-container clearfix">'
-							. '<div id="' . $rtmedia_comment_main . '" class="clearfix">'
-								. '<div class="rtm-upload-button-wrapper">'
-									. '<div id="' . $rtmedia_comment_container . '">'
-									. '</div>'
-									. '<button type="button" class="rtmedia-comment-media-upload" data-media_context="' . $rtmedia_comment_context . '" id="' . $rtmedia_comment_button . '" title="' . apply_filters( 'rtmedia_comment_attach_media_button_title', esc_attr__( 'Attach Media', 'buddypress-media' ) ) . '">'
-										. '<span class="dashicons dashicons-admin-media"></span>'
-										. apply_filters( 'rtmedia_attach_file_message', '' )
-									. '</button>'
-								. '</div>'
-								. $up_privacy
-							. '</div>'
-						. '</div>'
-						. apply_filters( 'rtmedia_uploader_after_comment_upload_button', '' )
-						. '<div class="rtmedia-plupload-notice">'
-							. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="' . $rtmedia_comment_filelist . '"></ul>'
-						. '</div>',
-				),
+				// 'comment'  => array(
+				// 	'title'   => esc_html__( 'File Upload', 'buddypress-media' ),
+				// 	'content' =>
+				// 		'<div class="rtmedia-plupload-container rtmedia-comment-media-main rtmedia-container clearfix">'
+				// 			. '<div id="' . $rtmedia_comment_main . '" class="clearfix">'
+				// 				. '<div class="rtm-upload-button-wrapper">'
+				// 					. '<div id="' . $rtmedia_comment_container . '">'
+				// 					. '</div>'
+				// 					. '<button type="button" class="rtmedia-comment-media-upload" data-media_context="' . $rtmedia_comment_context . '" id="' . $rtmedia_comment_button . '" title="' . apply_filters( 'rtmedia_comment_attach_media_button_title', esc_attr__( 'Attach Media', 'buddypress-media' ) ) . '">'
+				// 						. '<span class="dashicons dashicons-admin-media"></span>'
+				// 						. apply_filters( 'rtmedia_attach_file_message', '' )
+				// 					. '</button>'
+				// 				. '</div>'
+				// 				. $up_privacy
+				// 			. '</div>'
+				// 		. '</div>'
+				// 		. apply_filters( 'rtmedia_uploader_after_comment_upload_button', '' )
+				// 		. '<div class="rtmedia-plupload-notice">'
+				// 			. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="' . $rtmedia_comment_filelist . '"></ul>'
+				// 		. '</div>',
+				// ),
 			),
 			'link_input'  => array(
 				'title'   => esc_html__( 'Insert from URL', 'buddypress-media' ),
