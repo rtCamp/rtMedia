@@ -42,9 +42,8 @@ function create_and_configure_base_site () {
     wp plugin activate buddypress --allow-root
     wp plugin install buddypress-media --allow-root
     wp plugin activate buddypress-media --allow-root
-    cd $GITHUB_WORKSPACE/
     pwd
-    cd plugins/buddypress-media
+    cd wp-content/plugins/buddypress-media
     ls
 }
 
