@@ -81,7 +81,7 @@ function run_codeception_tests () {
     composer require --dev codeception/module-webdriver:^1.0
     composer require codeception/module-phpbrowser:^2.0 
     #nohup $Browser/chromedriver --url-base=/wd/hub /dev/null 2>&1 &
-    php vendor/bin/codecept run 
+    php vendor/bin/codecept run tests/codeception/tests/acceptance/core-rtMedia-settings/03-Buddypress/01-Positive/EnableMediaInCommentCept.php
 }
 
 function main() {
