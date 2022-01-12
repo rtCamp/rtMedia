@@ -34,8 +34,9 @@ function remove_cache_plugins () {
 function create_and_configure_base_site () {
     ee site create $SITE_NAME --wp --php74
     cd $SITE_ROOT
-    rsync -azh $GITHUB_WORKSPACE/ $SITE_ROOT/wp-content/
-
+    rsync -azh $GITHUB_WORKSPACE/ $SITE_ROOT/wp-content/plugins
+    pwd
+    ls
     echo "127.0.0.1 $SITE_NAME" >> /etc/hosts
     wp user create admin admin@example.com --role=administrator --user_pass=admin --allow-root
     wp plugin install buddypress --allow-root
