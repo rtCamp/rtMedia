@@ -1884,6 +1884,7 @@ jQuery( document ).ready( function( $ ) {
 
 				$( '#rtmedia_comment_ul' ).append( data );
 
+				
 				comment_content_el.val( '' );
 
 				if ( widget_id ) {
@@ -1902,6 +1903,9 @@ jQuery( document ).ready( function( $ ) {
 
 				/** Scroll function called */
 				rtMediaScrollComments();
+
+				/** refreshing fragments */
+				galleryObj.reloadView();
 			},
 			error: function( data ) {
 				if ( widget_id ) {
