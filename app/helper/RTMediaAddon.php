@@ -594,23 +594,6 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			);
 			$args     = wp_parse_args( $args, $defaults );
 
-			if ( $args['purchased'] ) {
-				$purchase_link = '<span class="rtm-addon-purchased button-primary disabled alignright product_type_simple">' . esc_html__( 'Purchased', 'buddypress-media' ) . '</span>';
-			} else {
-				$purchase_link = '<a class="button-primary alignright product_type_simple"  href="' . esc_url( $args['buy_now'] ) . '" target="_blank">' . esc_html__( 'Buy Now', 'buddypress-media' ) . '</a>';
-			}
-
-			$allowed_html = array(
-				'a'    => array(
-					'href'   => array(),
-					'target' => array(),
-					'class'  => array(),
-				),
-				'span' => array(
-					'class' => array(),
-				),
-			);
-
 			$coming_soon_div = ( ! empty( $args['coming_soon'] ) ) ? $this->coming_soon_div() : '';
 			?>
 			<div class="plugin-card clearfix rtm-plugin-card">
