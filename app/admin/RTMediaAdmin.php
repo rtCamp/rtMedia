@@ -511,7 +511,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					function rtmedia_hide_addon_update_notice() {
 						var data = {
 							action: 'rtmedia_hide_addon_update_notice',
-							_rtm_nonce: jQuery('#rtmedia-addon-notice').val();
+							_rtm_nonce: jQuery('#rtmedia-addon-notice').val(),
 					};
 						jQuery.post(ajaxurl, data, function (response) {
 							response = response.trim();
