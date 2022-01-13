@@ -1425,7 +1425,7 @@ class RTMedia {
 				$rtmedia_main['rtmedia_masonry_layout'] = 'true';
 
 				if ( isset( $rtmedia->options ) && isset( $rtmedia->options['general_masonry_layout_activity'] ) && 1 === intval( $rtmedia->options['general_masonry_layout_activity'] ) ) {
-					$rt_media_main['rtmedia_masonry_layout_activity'] = 'true';
+					$rtmedia_main['rtmedia_masonry_layout_activity'] = 'true';
 				} else {
 					$rtmedia_main['rtmedia_masonry_layout_activity'] = 'false';
 
