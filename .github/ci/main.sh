@@ -39,9 +39,12 @@ function create_and_configure_base_site () {
     wp user create admin admin@example.com --role=administrator --user_pass=admin --allow-root
     wp plugin install buddypress --allow-root
     wp plugin activate buddypress --allow-root
-    ls
     cd wp-content
     cd plugins
+    ls
+    git clone --branch github.event.pull_request.head.sha --single-branch
+    ls
+    wp plugin activate buddypress-media --allow-root
 }
 
 function setup_composers(){
