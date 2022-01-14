@@ -42,9 +42,9 @@ function create_and_configure_base_site () {
     cd wp-content
     cd plugins
     git clone https://github.com/rtCamp/rtMedia.git 
-    branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+    branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
     echo $branch
-    wp plugin activate buddypress-media --allow-root
+    wp plugin activate rtMedia --allow-root
     ls
 }
 
