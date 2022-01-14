@@ -42,7 +42,8 @@ function create_and_configure_base_site () {
     cd wp-content
     cd plugins
     git clone https://github.com/rtCamp/rtMedia.git 
-    cd rtmMedia
+    ls
+    cd rtMedia
     git checkout github.event.pull_request.head.sha
     wp plugin activate rtMedia --allow-root
     ls
