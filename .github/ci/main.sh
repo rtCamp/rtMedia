@@ -41,7 +41,8 @@ function create_and_configure_base_site () {
     wp plugin activate buddypress --allow-root
     cd wp-content
     cd plugins
-    git clone https://github.com/rtCamp/rtMedia.git --branch github.event.pull_request.head.sha --single-branch 
+    git clone https://github.com/rtCamp/rtMedia.git 
+    git checkout github.event.pull_request.head.sha
     ls
     wp plugin activate buddypress-media --allow-root
     ls
