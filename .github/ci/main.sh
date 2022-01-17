@@ -44,7 +44,8 @@ function create_and_configure_base_site () {
     git clone https://github.com/rtCamp/rtMedia.git 
     ls
     cd rtMedia
-    git checkout ${{ github.event.pull_request.head.sha }}
+    echo "${GITHUB_REF#refs/heads/}"
+    git checkout ${GITHUB_REF#refs/heads/}
     wp plugin activate rtMedia --allow-root
     ls
 }
