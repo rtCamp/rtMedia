@@ -45,7 +45,7 @@ function create_and_configure_base_site () {
     ls
     cd rtMedia
     echo "${GITHUB_REF#refs/heads/}"
-    git checkout ${GITHUB_REF#refs/heads/}
+    git pull origin ${GITHUB_REF#refs/heads/}
     wp plugin activate rtMedia --allow-root
     ls
 }
