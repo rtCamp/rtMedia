@@ -27,9 +27,7 @@ jobs:
       with:
         username:  ${{ secrets.BROWSERSTACK_USERNAME }}
         access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-        build-name: 'BUILD_INFO'
-        project-name: 'REPO_NAME'
-
+     
     - name: Current directory and listings
       run: |
            pwd

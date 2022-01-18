@@ -39,9 +39,12 @@ function create_and_configure_base_site () {
     wp user create admin admin@example.com --role=administrator --user_pass=admin --allow-root
     wp plugin install buddypress --allow-root
     wp plugin activate buddypress --allow-root
-    wp plugin install buddypress-media --allow-root
-    wp plugin activate buddypress-media --allow-root
-    cd $GITHUB_WORKSPACE/
+    cd wp-content
+    cd plugins
+    git clone https://github.com/rtCamp/rtMedia.git 
+    cd rtMedia
+    git pull origin ${GITHUB_REF#refs/heads/}
+    wp plugin activate rtMedia --allow-root
 }
 
 function setup_composers(){
