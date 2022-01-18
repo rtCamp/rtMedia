@@ -27,4 +27,6 @@ modules:
                 'browserstack.networkLogs': 'true'
                 'browserstack.local': 'true'
                 'browserstack.use_w3c': 'true'
+                'build': '%BUILD_INFO%'
+                'project': 'rtMedia Automation - 2022'
                 # 'browserstack.selenium_version': '2.53.0'
