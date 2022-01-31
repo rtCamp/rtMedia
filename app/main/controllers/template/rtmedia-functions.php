@@ -2431,9 +2431,7 @@ function rtmedia_global_album_list( $selected_album_id = false ) {
 	$album_objects = $model->get_media(
 		array(
 			'id' => $global_albums,
-		),
-		false,
-		false
+		)
 	);
 
 	if ( $album_objects ) {
@@ -2532,9 +2530,7 @@ function rtmedia_group_album_list( $selected_album_id = false ) {
 			'context'    => $rtmedia_query->media_query['context'],
 			'context_id' => $rtmedia_query->media_query['context_id'],
 			'media_type' => 'album',
-		),
-		false,
-		false
+		)
 	);
 	$option_group  = '';
 
@@ -2579,13 +2575,7 @@ function rtm_is_album_create_allowed() {
  * @return bool
  */
 function rtm_is_user_allowed_to_create_album( $user_id = false ) {
-
-	if ( ! $user_id ) {
-		$user_id = get_current_user_id();
-	}
-
-	return apply_filters( 'rtm_display_create_album_button', true, $user_id );
-
+	return true;
 }
 
 /**
@@ -2845,9 +2835,7 @@ function can_user_upload_in_group() {
 		$display_flag = true;
 	}
 
-	$display_flag = apply_filters( 'rtm_can_user_upload_in_group', $display_flag );
-
-	return $display_flag;
+	return apply_filters( 'rtm_can_user_upload_in_group', $display_flag );
 
 }
 
@@ -2895,9 +2883,7 @@ function can_user_create_album_in_group( $group_id = false, $user_id = false ) {
 		}
 	}
 
-	$display_flag = apply_filters( 'can_user_create_album_in_group', $display_flag );
-
-	return $display_flag;
+	return apply_filters( 'can_user_create_album_in_group', $display_flag );
 
 }
 
