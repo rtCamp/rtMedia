@@ -511,8 +511,7 @@ class RTMedia {
 		?>
 		.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail {
 		width: <?php echo esc_attr( $media_width ); ?>;
-		height: <?php echo esc_attr( $media_height ); ?>;
-		line-height: <?php echo esc_attr( $media_height ); ?>;
+		max-height: <?php echo esc_attr( $media_height ); ?>;
 		}
 		.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail img {
 		max-width: <?php echo esc_attr( $media_width ); ?>;
