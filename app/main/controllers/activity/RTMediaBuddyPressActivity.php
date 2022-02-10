@@ -734,67 +734,6 @@ class RTMediaBuddyPressActivity {
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ) {
-			$params = array(
-				'url'                 => $url,
-				'runtimes'            => 'html5,flash,html4',
-				'browse_button'       => apply_filters( 'rtmedia_upload_button_id', 'rtmedia-add-media-button-post-update' ),
-				// browse button assigned to "Attach Files" Button.
-				'container'           => 'rtmedia-whts-new-upload-container',
-				'drop_element'        => 'whats-new-textarea',
-				// drag-drop area assigned to activity update textarea.
-				'filters'             => apply_filters(
-					'rtmedia_plupload_files_filter',
-					array(
-						array(
-							'title'      => esc_html__( 'Media Files', 'buddypress-media' ),
-							'extensions' => get_rtmedia_allowed_upload_type(),
-						),
-					)
-				),
-				'max_file_size'       => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
-				'multipart'           => true,
-				'urlstream_upload'    => true,
-				'flash_swf_url'       => includes_url( 'js/plupload/plupload.flash.swf' ),
-				'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
-				'file_data_name'      => 'rtmedia_file',
-				// key passed to $_FILE.
-				'multi_selection'     => true,
-				'multipart_params'    => apply_filters( // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
-					'rtmedia-multi-params',
-					array(
-						'redirect'             => 'no',
-						'redirection'          => 'false',
-						'rtmedia_update'       => 'true',
-						'action'               => 'wp_handle_upload',
-						'_wp_http_referer'     => $request_uri,
-						'mode'                 => 'file_upload',
-						'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ),
-					)
-				),
-				'max_file_size_msg'   => apply_filters(
-					'rtmedia_plupload_file_size_msg',
-					min(
-						array(
-							ini_get( 'upload_max_filesize' ),
-							ini_get( 'post_max_size' ),
-						)
-					)
-				),
-			);
-
-			$params = apply_filters( 'rtmedia_modify_upload_params', $params );
-			wp_enqueue_script( 'rtmedia-backbone', false, '', RTMEDIA_VERSION, true );
-			$is_album        = is_rtmedia_album() ? true : false;
-			$is_edit_allowed = is_rtmedia_edit_allowed() ? true : false;
-
-			$activity = array(
-				'is_album'        => $is_album,
-				'is_edit_allowed' => $is_edit_allowed,
-			);
-			wp_localize_script( 'rtmedia-backbone', 'rtMedia_activity', $activity );
-
-			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
-
 			$upload_view = new RTMediaUploadView( array( 'activity' => true ) );
 			$upload_view->render( 'uploader' );
 		} else {
