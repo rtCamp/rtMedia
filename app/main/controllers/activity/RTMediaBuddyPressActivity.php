@@ -801,7 +801,6 @@ class RTMediaBuddyPressActivity {
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_activity', $activity );
 
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
-
 			$upload_view = new RTMediaUploadView( array( 'activity' => true ) );
 			$upload_view->render( 'uploader' );
 		} else {
