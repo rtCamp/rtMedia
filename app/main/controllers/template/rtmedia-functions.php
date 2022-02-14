@@ -1614,7 +1614,8 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 
 	// phpcs:disable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	if ( ! empty( $context ) && in_array( $context, $wp_default_context, true ) && ! empty( $is_rtmedia_shortcode ) && 'true' === $is_rtmedia_shortcode ) {
-		$post = get_post( intval( $context_id ) );
+		$post = get_post( intval( $context_id ) ); // phpcs:ignore
+
 	}
 
 	$page_url    = 'pg/' . $page_no;
@@ -1661,12 +1662,12 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 				$album_slug = 'rtmedia-album';
 			}
 
-			$post  = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
+			$post  = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) ); // phpcs:ignore
 			$link .= $site_url . $album_slug . '/' . $post->post_name . '/';
 
 		} elseif ( isset( $rtmedia_query->media->media_id ) ) {
 
-			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
+			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) ); // phpcs:ignore
 
 			$link .= $site_url . $post->post_name . '/';
 		}
@@ -1766,11 +1767,11 @@ function rtmedia_get_pagination_values() {
 	$rtmedia_media_pages = '';
 	// phpcs:disable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	if ( 0 === intval( rtmedia_offset() ) ) {
-		$paged = 1;
+		$paged = 1; // phpcs:ignore
 	} elseif ( intval( rtmedia_offset() ) === $per_page ) {
-		$paged = 2;
+		$paged = 2; // phpcs:ignore
 	} else {
-		$paged = ceil( rtmedia_offset() / $per_page ) + 1;
+		$paged = ceil( rtmedia_offset() / $per_page ) + 1; // phpcs:ignore
 	}
 	// phpcs:enable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	$pages = ceil( rtmedia_count() / $per_page );
@@ -2150,8 +2151,7 @@ function get_video_without_thumbs() {
 	global $wpdb;
 
 	$rtmedia_model = new RTMediaModel();
-
-	$results = $wpdb->get_col( $wpdb->prepare( "select media_id from {$rtmedia_model->table_name} where media_type = %s and blog_id = %d and cover_art is null", 'video', get_current_blog_id() ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$results = $wpdb->get_col( $wpdb->prepare( "select media_id from {$rtmedia_model->table_name} where media_type = %s and blog_id = %d and cover_art is null", 'video', get_current_blog_id() ) ); // phpcs:ignore
 
 	return $results;
 
@@ -3824,7 +3824,7 @@ function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_STRING
 	if ( function_exists( 'filter_input' ) && filter_has_var( INPUT_SERVER, $server_key ) ) {
 		$server_val = filter_input( INPUT_SERVER, $server_key, constant( $filter_type ) );
 	} elseif ( isset( $_SERVER[ $server_key ] ) ) {
-		$server_val = $_SERVER[ $server_key ];
+		$server_val = $_SERVER[ $server_key ]; // phpcs:ignore
 	}
 
 	return $server_val;
@@ -3946,7 +3946,6 @@ function rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags ) {
 		$comment_string = wp_kses( $comment_content, $allowedtags );
 
 	}
-
 	return $comment_string;
 }
 
