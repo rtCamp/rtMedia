@@ -390,7 +390,7 @@ class RTMediaBuddyPressActivity {
 			set_site_transient( $transient_name, $activity_ids );
 		}
 
-		if ( ! is_main_site( $blog_id ) ) { 
+		if ( ! is_main_site( $blog_id ) ) {
 			if ( ! empty( $activity_ids ) ) {
 				if ( current_filter() === 'bp_ajax_querystring' ) {
 					$query_string .= '&exclude=' . $activity_ids;
@@ -617,10 +617,10 @@ class RTMediaBuddyPressActivity {
 			// Credit faisal : https://gist.github.com/faishal/c4306ae7267fff976465.
 			$in_str_arr    = array_fill( 0, count( $rtmedia_attached_files ), '%d' );
 			$in_str        = join( ',', $in_str_arr );
-			$sql           = $wpdb->prepare( "update {$media_obj->table_name} set activity_id = %d where blog_id = %d and ", $activity_id, get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			$form_id_where = $wpdb->prepare( "id IN ($in_str)", $rtmedia_attached_files ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+			$sql           = $wpdb->prepare( "update {$media_obj->table_name} set activity_id = %d where blog_id = %d and ", $activity_id, get_current_blog_id() ); // phpcs:ignore
+			$form_id_where = $wpdb->prepare( "id IN ($in_str)", $rtmedia_attached_files ); // phpcs:ignore
 			$sql          .= $form_id_where;
-			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$wpdb->query( $sql ); // phpcs:ignore
 		}
 
 		// hook for rtmedia buddypress after activity posted.
@@ -673,7 +673,6 @@ class RTMediaBuddyPressActivity {
 	 */
 	public function manage_user_last_activity_update( $content, $user_id, $activity_id ) {
 		global $wpdb, $bp;
-
 		// do not proceed if not allowed.
 		if ( ! apply_filters( 'rtm_manage_user_last_activity_update', true, $activity_id ) ) {
 			return;
@@ -707,7 +706,7 @@ class RTMediaBuddyPressActivity {
 					// latest public activity content.
 					$activity_content = bp_activity_get_meta( $public_activity_id, 'bp_activity_text' );
 					if ( empty( $activity_content ) ) {
-						$activity_content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$bp->activity->table_name} WHERE id = %d", $public_activity_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+						$activity_content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$bp->activity->table_name} WHERE id = %d", $public_activity_id ) ); // phpcs:ignore
 					}
 					$activity_content = apply_filters( 'bp_activity_latest_update_content', $activity_content, $activity_content );
 
@@ -729,7 +728,6 @@ class RTMediaBuddyPressActivity {
 	 * After activity post form.
 	 */
 	public function bp_after_activity_post_form() {
-
 		/**
 		 * Filter to enable/disable media upload from the activity.
 		 *
@@ -766,7 +764,8 @@ class RTMediaBuddyPressActivity {
 				'file_data_name'      => 'rtmedia_file',
 				// key passed to $_FILE.
 				'multi_selection'     => true,
-				'multipart_params'    => apply_filters( // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+				'multipart_params'    => apply_filters(
+					// phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 					'rtmedia-multi-params',
 					array(
 						'redirect'             => 'no',
@@ -798,10 +797,10 @@ class RTMediaBuddyPressActivity {
 				'is_album'        => $is_album,
 				'is_edit_allowed' => $is_edit_allowed,
 			);
+
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_activity', $activity );
 
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
-
 			$upload_view = new RTMediaUploadView( array( 'activity' => true ) );
 			$upload_view->render( 'uploader' );
 		} else {
@@ -881,7 +880,7 @@ class RTMediaBuddyPressActivity {
 	public function bp_prefetch_activity_object_data( $activities ) {
 		// If activities array is empty then return.
 		if ( empty( $activities ) ) {
-			return;
+			return null;
 		}
 
 		// To store activity_id.
@@ -972,7 +971,6 @@ class RTMediaBuddyPressActivity {
 				}
 			}
 		}
-
 		return $activities;
 	}
 
