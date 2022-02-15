@@ -4,7 +4,7 @@ set -ex
 
 ######################################################
 ######################## VARS ########################
-SITE_NAME='automation.rtmedia.me'
+SITE_NAME="automation.rtmedia.me"
 SITE_ROOT="/var/www/$SITE_NAME/htdocs"
 SITE_URL="http://$SITE_NAME/"
 
