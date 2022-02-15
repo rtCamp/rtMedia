@@ -5,7 +5,7 @@ set -ex
 ######################################################
 ######################## VARS ########################
 SITE_NAME="automation.rtmedia.me"
-SITE_ROOT="/opt/easyengine/sites/$SITE_NAME/htdocs"
+SITE_ROOT="/var/www/$SITE_NAME/htdocs"
 SITE_URL="http://$SITE_NAME/"
 
 function ee() { wo "$@"; }
