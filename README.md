@@ -150,17 +150,17 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Enhancement
 
-    * Compatible with WordPress latest version v5.9. 
+    * Compatible with latest of WordPress v5.9. 
     * Compatible with latest version of BuddyPress v10.0.0. 
 
 * New Feature
 
-	* Edit media option on activity stream with BP Activity plugin. 
+	* Edit media option on activity stream with [BuddyPress Edit Activity](https://wordpress.org/support/plugin/buddypress-edit-activity/). 
 
 * Fixed
 
     * UI/UX Fixes.
-    * Fix media count not showing issue.
+    * Fix media count not updating issue.
     * Fix fatal error related to Buddypress group if it is not enabled.
 ### 4.6.9 [December 16, 2021] ###
 

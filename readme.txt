@@ -142,12 +142,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * New Feature
 
- * Edit media option on activity stream with BP Activity plugin. 
+ * Edit media option on activity stream with BuddyPress Edit Activity. 
 
 * Fixed
 
  * UI/UX Fixes.
- * Fix media count not showing issue.
+ * Fix media count not updating issue.
  * Fix fatal error related to Buddypress group if it is not enabled.
 
 
