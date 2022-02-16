@@ -76,6 +76,11 @@ class RTMediaBuddyPressActivity {
 			add_action( 'bp_activity_after_save', array( $this, 'bp_activity_after_save' ) );
 			add_action( 'bp_activity_after_delete', array( $this, 'bp_activity_after_delete' ) );
 		}
+
+		if ( defined( 'BUDDYBOSS_EDIT_ACTIVITY_PLUGIN_VERSION' ) ) {
+			add_filter( 'bea_get_activity_content', array( $this, 'rtm_edit_activity_filter' ) );
+			add_filter( 'bea_activity_content', array( $this, 'rtm_save_activity_with_media_filter' ), 10, 2 );
+		}
 	}
 
 	/**
@@ -385,11 +390,13 @@ class RTMediaBuddyPressActivity {
 			set_site_transient( $transient_name, $activity_ids );
 		}
 
-		if ( ! empty( $activity_ids ) ) {
-			if ( current_filter() === 'bp_ajax_querystring' ) {
-				$query_string .= '&exclude=' . $activity_ids;
-			} else {
-				$query_string['exclude'] = $activity_ids;
+		if ( ! is_main_site( $blog_id ) ) {
+			if ( ! empty( $activity_ids ) ) {
+				if ( current_filter() === 'bp_ajax_querystring' ) {
+					$query_string .= '&exclude=' . $activity_ids;
+				} else {
+					$query_string['exclude'] = $activity_ids;
+				}
 			}
 		}
 
@@ -610,10 +617,10 @@ class RTMediaBuddyPressActivity {
 			// Credit faisal : https://gist.github.com/faishal/c4306ae7267fff976465.
 			$in_str_arr    = array_fill( 0, count( $rtmedia_attached_files ), '%d' );
 			$in_str        = join( ',', $in_str_arr );
-			$sql           = $wpdb->prepare( "update {$media_obj->table_name} set activity_id = %d where blog_id = %d and ", $activity_id, get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			$form_id_where = $wpdb->prepare( "id IN ($in_str)", $rtmedia_attached_files ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+			$sql           = $wpdb->prepare( "update {$media_obj->table_name} set activity_id = %d where blog_id = %d and ", $activity_id, get_current_blog_id() ); // phpcs:ignore
+			$form_id_where = $wpdb->prepare( "id IN ($in_str)", $rtmedia_attached_files ); // phpcs:ignore
 			$sql          .= $form_id_where;
-			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$wpdb->query( $sql ); // phpcs:ignore
 		}
 
 		// hook for rtmedia buddypress after activity posted.
@@ -666,7 +673,6 @@ class RTMediaBuddyPressActivity {
 	 */
 	public function manage_user_last_activity_update( $content, $user_id, $activity_id ) {
 		global $wpdb, $bp;
-
 		// do not proceed if not allowed.
 		if ( ! apply_filters( 'rtm_manage_user_last_activity_update', true, $activity_id ) ) {
 			return;
@@ -700,7 +706,7 @@ class RTMediaBuddyPressActivity {
 					// latest public activity content.
 					$activity_content = bp_activity_get_meta( $public_activity_id, 'bp_activity_text' );
 					if ( empty( $activity_content ) ) {
-						$activity_content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$bp->activity->table_name} WHERE id = %d", $public_activity_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+						$activity_content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$bp->activity->table_name} WHERE id = %d", $public_activity_id ) ); // phpcs:ignore
 					}
 					$activity_content = apply_filters( 'bp_activity_latest_update_content', $activity_content, $activity_content );
 
@@ -722,7 +728,6 @@ class RTMediaBuddyPressActivity {
 	 * After activity post form.
 	 */
 	public function bp_after_activity_post_form() {
-
 		/**
 		 * Filter to enable/disable media upload from the activity.
 		 *
@@ -759,7 +764,8 @@ class RTMediaBuddyPressActivity {
 				'file_data_name'      => 'rtmedia_file',
 				// key passed to $_FILE.
 				'multi_selection'     => true,
-				'multipart_params'    => apply_filters( // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+				'multipart_params'    => apply_filters(
+					// phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 					'rtmedia-multi-params',
 					array(
 						'redirect'             => 'no',
@@ -791,10 +797,10 @@ class RTMediaBuddyPressActivity {
 				'is_album'        => $is_album,
 				'is_edit_allowed' => $is_edit_allowed,
 			);
+
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_activity', $activity );
 
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
-
 			$upload_view = new RTMediaUploadView( array( 'activity' => true ) );
 			$upload_view->render( 'uploader' );
 		} else {
@@ -874,7 +880,7 @@ class RTMediaBuddyPressActivity {
 	public function bp_prefetch_activity_object_data( $activities ) {
 		// If activities array is empty then return.
 		if ( empty( $activities ) ) {
-			return;
+			return null;
 		}
 
 		// To store activity_id.
@@ -965,7 +971,6 @@ class RTMediaBuddyPressActivity {
 				}
 			}
 		}
-
 		return $activities;
 	}
 
@@ -1359,5 +1364,53 @@ class RTMediaBuddyPressActivity {
 
 		$rtm_activity_model = new RTMediaActivityModel();
 		$rtm_activity_model->set_privacy( $comment_id, $user_id, $privacy_id );
+	}
+
+	/**
+	 * Filter contents to display in edit box if media is present
+	 *
+	 * @param string $content content to be filtered.
+	 */
+	public function rtm_edit_activity_filter( $content ) {
+		if ( false !== strpos( $content, '<span>' ) ) {
+			$content = explode( '<span>', $content );
+			$result  = explode( '</span>', ( isset( $content[1] ) ? $content[1] : '' ) );
+			return ( isset( $result[0] ) ? $result[0] : '' );
+		}
+
+		if ( false !== strpos( $content, 'rtmedia-activity-container' ) ) {
+			return '';
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Filter contents to save after editing.
+	 *
+	 * @param string $content_new content to be filtered.
+	 * @param int    $activity_id activity id of the activity being edited.
+	 */
+	public function rtm_save_activity_with_media_filter( $content_new, $activity_id ) {
+		$activity = new BP_Activity_Activity( $activity_id );
+		$content  = stripslashes( $activity->content );
+		if ( false !== strpos( $content, '<span>' ) ) {
+			$content_new = sprintf( '<span>%s</span>', $content_new );
+			$content_old = explode( '<span>', $content );
+			$content_old = explode( '</span>', ( isset( $content_old[1] ) ? $content_old[1] : '' ) );
+			$content_old = sprintf( '<span>%s</span>', ( isset( $content_old[0] ) ? $content_old[0] : '' ) );
+			$result      = str_replace( $content_old, $content_new, $content );
+			return $result;
+		}
+		if ( false !== strpos( $content, 'rtmedia-activity-container' ) ) {
+			$content_new = sprintf( '<span>%s</span>', $content_new );
+			$content     = explode( '<div class="rtmedia-activity-container">', $content );
+			$content     = sprintf( '<div class="rtmedia-activity-container">%1$s%2$s', $content_new, ( isset( $content[1] ) ? $content[1] : '' ) );
+			return $content;
+		}
+		if ( ! empty( $content_new ) ) {
+			return $content_new;
+		}
+		return $content;
 	}
 }

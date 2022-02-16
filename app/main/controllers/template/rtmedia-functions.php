@@ -1039,7 +1039,7 @@ function rtmedia_edit_allowed() {
 	$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
 
 	if ( ! $flag ) {
-		$flag = is_super_admin() || bp_group_is_admin() || bp_group_is_mod();
+		$flag = is_super_admin() || rtm_is_bp_group_admin() || rtm_is_bp_group_mod();
 	}
 
 	$flag = apply_filters( 'rtmedia_media_edit_priv', $flag );
@@ -1614,7 +1614,8 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 
 	// phpcs:disable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	if ( ! empty( $context ) && in_array( $context, $wp_default_context, true ) && ! empty( $is_rtmedia_shortcode ) && 'true' === $is_rtmedia_shortcode ) {
-		$post = get_post( intval( $context_id ) );
+		$post = get_post( intval( $context_id ) ); // phpcs:ignore
+
 	}
 
 	$page_url    = 'pg/' . $page_no;
@@ -1661,12 +1662,12 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 				$album_slug = 'rtmedia-album';
 			}
 
-			$post  = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
+			$post  = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) ); // phpcs:ignore
 			$link .= $site_url . $album_slug . '/' . $post->post_name . '/';
 
 		} elseif ( isset( $rtmedia_query->media->media_id ) ) {
 
-			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
+			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) ); // phpcs:ignore
 
 			$link .= $site_url . $post->post_name . '/';
 		}
@@ -1766,11 +1767,11 @@ function rtmedia_get_pagination_values() {
 	$rtmedia_media_pages = '';
 	// phpcs:disable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	if ( 0 === intval( rtmedia_offset() ) ) {
-		$paged = 1;
+		$paged = 1; // phpcs:ignore
 	} elseif ( intval( rtmedia_offset() ) === $per_page ) {
-		$paged = 2;
+		$paged = 2; // phpcs:ignore
 	} else {
-		$paged = ceil( rtmedia_offset() / $per_page ) + 1;
+		$paged = ceil( rtmedia_offset() / $per_page ) + 1; // phpcs:ignore
 	}
 	// phpcs:enable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	$pages = ceil( rtmedia_count() / $per_page );
@@ -2150,8 +2151,7 @@ function get_video_without_thumbs() {
 	global $wpdb;
 
 	$rtmedia_model = new RTMediaModel();
-
-	$results = $wpdb->get_col( $wpdb->prepare( "select media_id from {$rtmedia_model->table_name} where media_type = %s and blog_id = %d and cover_art is null", 'video', get_current_blog_id() ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$results = $wpdb->get_col( $wpdb->prepare( "select media_id from {$rtmedia_model->table_name} where media_type = %s and blog_id = %d and cover_art is null", 'video', get_current_blog_id() ) ); // phpcs:ignore
 
 	return $results;
 
@@ -2431,9 +2431,7 @@ function rtmedia_global_album_list( $selected_album_id = false ) {
 	$album_objects = $model->get_media(
 		array(
 			'id' => $global_albums,
-		),
-		false,
-		false
+		)
 	);
 
 	if ( $album_objects ) {
@@ -2532,9 +2530,7 @@ function rtmedia_group_album_list( $selected_album_id = false ) {
 			'context'    => $rtmedia_query->media_query['context'],
 			'context_id' => $rtmedia_query->media_query['context_id'],
 			'media_type' => 'album',
-		),
-		false,
-		false
+		)
 	);
 	$option_group  = '';
 
@@ -2579,13 +2575,7 @@ function rtm_is_album_create_allowed() {
  * @return bool
  */
 function rtm_is_user_allowed_to_create_album( $user_id = false ) {
-
-	if ( ! $user_id ) {
-		$user_id = get_current_user_id();
-	}
-
-	return apply_filters( 'rtm_display_create_album_button', true, $user_id );
-
+	return true;
 }
 
 /**
@@ -2845,9 +2835,7 @@ function can_user_upload_in_group() {
 		$display_flag = true;
 	}
 
-	$display_flag = apply_filters( 'rtm_can_user_upload_in_group', $display_flag );
-
-	return $display_flag;
+	return apply_filters( 'rtm_can_user_upload_in_group', $display_flag );
 
 }
 
@@ -2895,9 +2883,7 @@ function can_user_create_album_in_group( $group_id = false, $user_id = false ) {
 		}
 	}
 
-	$display_flag = apply_filters( 'can_user_create_album_in_group', $display_flag );
-
-	return $display_flag;
+	return apply_filters( 'can_user_create_album_in_group', $display_flag );
 
 }
 
@@ -2988,13 +2974,32 @@ function get_rtmedia_allowed_upload_type() {
 /**
  * Checking if is admin
  *
- * @return      bool
+ * @return bool
  */
 function is_rt_admin() {
 
 	return current_user_can( 'list_users' );
 
 }
+
+/**
+ * Checking if is group admin.
+ *
+ * @return bool
+ */
+function rtm_is_bp_group_admin() {
+	return function_exists( 'bp_group_is_admin' ) && bp_group_is_admin();
+}
+
+/**
+ * Checking if is group moderator.
+ *
+ * @return bool
+ */
+function rtm_is_bp_group_mod() {
+	return function_exists( 'bp_group_is_mod' ) && bp_group_is_mod();
+}
+
 
 /**
  * Get media like count
@@ -3819,7 +3824,7 @@ function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_STRING
 	if ( function_exists( 'filter_input' ) && filter_has_var( INPUT_SERVER, $server_key ) ) {
 		$server_val = filter_input( INPUT_SERVER, $server_key, constant( $filter_type ) );
 	} elseif ( isset( $_SERVER[ $server_key ] ) ) {
-		$server_val = $_SERVER[ $server_key ];
+		$server_val = $_SERVER[ $server_key ]; // phpcs:ignore
 	}
 
 	return $server_val;
@@ -3941,7 +3946,6 @@ function rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags ) {
 		$comment_string = wp_kses( $comment_content, $allowedtags );
 
 	}
-
 	return $comment_string;
 }
 
