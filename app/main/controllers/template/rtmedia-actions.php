@@ -155,7 +155,6 @@ function rtmedia_gallery_options() {
 	$output         = '';
 	$options        = array();
 	$options        = apply_filters( 'rtmedia_gallery_actions', $options );
-
 	if ( ! empty( $options ) ) {
 		$options_start .= '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
 				<div class="no-js">
