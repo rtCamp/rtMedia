@@ -253,14 +253,16 @@ form .rtmedia-container .rtm-plupload-list .rtm-upload-edit-desc,
   font-size: 12px;
   display: block;
 }
-#rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-title-wrapper label, #rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-desc-wrapper label,
+#rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-title-wrapper label,
+#rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-desc-wrapper label,
 form .rtmedia-container .rtm-plupload-list .rtm-upload-edit-title-wrapper label,
 form .rtmedia-container .rtm-plupload-list .rtm-upload-edit-desc-wrapper label,
 #rtmedia_uploader_filelist .rtm-upload-edit-title-wrapper label,
 #rtmedia_uploader_filelist .rtm-upload-edit-desc-wrapper label {
   display: block;
 }
-#rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-title-wrapper input.rtm-upload-edit-title, #rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-desc-wrapper input.rtm-upload-edit-title,
+#rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-title-wrapper input.rtm-upload-edit-title,
+#rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-desc-wrapper input.rtm-upload-edit-title,
 form .rtmedia-container .rtm-plupload-list .rtm-upload-edit-title-wrapper input.rtm-upload-edit-title,
 form .rtmedia-container .rtm-plupload-list .rtm-upload-edit-desc-wrapper input.rtm-upload-edit-title,
 #rtmedia_uploader_filelist .rtm-upload-edit-title-wrapper input.rtm-upload-edit-title,
@@ -395,7 +397,8 @@ button#rtmedia-add-media-button-post-update .dashicons {
   float: right;
   font-size: 15px;
 }
-.rtm-pagination .rtm-paginate a, .rtm-pagination .rtm-paginate span {
+.rtm-pagination .rtm-paginate a,
+.rtm-pagination .rtm-paginate span {
   display: inline-block;
   line-height: 1;
   margin: 0 2px;
@@ -423,7 +426,7 @@ button#rtmedia-add-media-button-post-update .dashicons {
 
 .rtmedia-upload-not-allowed {
   background-color: #fcf8e3;
-  border-bottom: 1px solid #EEE;
+  border-bottom: 1px solid #eee;
   color: #c09853;
   margin-bottom: 20px;
   padding: 10px 15px;
@@ -495,14 +498,16 @@ button#rtmedia-add-media-button-post-update .dashicons {
   text-align: center;
 }
 
-.rtmedia-text-link-decoration, table.rtmedia-edit-media-list tr td.rtm-edit-media-list-edit a, table.rtmedia-edit-media-list tr td.rtm-edit-media-list-edit span,
+.rtmedia-text-link-decoration, table.rtmedia-edit-media-list tr td.rtm-edit-media-list-edit a,
+table.rtmedia-edit-media-list tr td.rtm-edit-media-list-edit span,
 table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete a,
 table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span,
 table.rtmedia-edit-media-list tr td.rtm-edit-media-list-title a,
 table.rtmedia-edit-media-list tr td.rtm-edit-media-list-title span {
   text-decoration: none;
 }
-.rtmedia-text-link-decoration:hover, table.rtmedia-edit-media-list tr td.rtm-edit-media-list-edit a:hover, table.rtmedia-edit-media-list tr td.rtm-edit-media-list-edit span:hover,
+.rtmedia-text-link-decoration:hover, table.rtmedia-edit-media-list tr td.rtm-edit-media-list-edit a:hover,
+table.rtmedia-edit-media-list tr td.rtm-edit-media-list-edit span:hover,
 table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete a:hover,
 table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span:hover,
 table.rtmedia-edit-media-list tr td.rtm-edit-media-list-title a:hover,
@@ -515,17 +520,17 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-title span:hover {
   overflow-y: auto;
 }
 .rtmedia-container .rtmedia-edit-list-media-table thead tr {
-  background-color: #50A1D7;
+  background-color: #50a1d7;
 }
 .rtmedia-container .rtmedia-edit-list-media-table thead th {
   text-align: center;
-  color: #FFF;
+  color: #fff;
 }
 .rtmedia-container .rtmedia-edit-list-media-table tbody tr:nth-child(odd) {
-  background: #FFF;
+  background: #fff;
 }
 .rtmedia-container .rtmedia-edit-list-media-table tbody tr:nth-child(even) {
-  background: #DCDCDC;
+  background: #dcdcdc;
 }
 
 table.rtmedia-edit-media-list tr {
@@ -564,7 +569,7 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete {
   text-align: center;
 }
 table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
-  color: #FF0000;
+  color: #ff0000;
   cursor: pointer;
   font-size: 13px;
 }
@@ -590,7 +595,8 @@ input.imgedit-submit-btn {
   display: none;
 }
 
-.rtmedia-no-media-found, .rtmedia-list-media {
+.rtmedia-no-media-found,
+.rtmedia-list-media {
   min-height: 95px;
 }
 
@@ -605,8 +611,8 @@ input.imgedit-submit-btn {
 }
 .privacy_message_wrapper p {
   margin: 20px 25px;
-  width: -webkit-calc( 100% - 100px );
-  width: calc( 100% - 100px );
+  width: -webkit-calc(100% - 100px);
+  width: calc(100% - 100px);
   max-width: 100%;
   font-size: 85%;
   text-align: justify;
@@ -638,6 +644,10 @@ input.imgedit-submit-btn {
 
 .hide_privacy_wrapper {
   display: none;
+}
+
+.rtm-activity-privacy-opt {
+  margin-left: 5px;
 }
 
 .rtm-tabs.rtm-tabs {
