@@ -246,6 +246,7 @@ class RTMediaActivity {
 	 */
 	public function media( $media, $type = 'activity' ) {
 		$html = false;
+
 		if ( isset( $media->media_type ) ) {
 			global $rtmedia;
 			if ( 'photo' === $media->media_type ) {

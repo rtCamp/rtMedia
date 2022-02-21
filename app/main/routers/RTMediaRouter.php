@@ -168,8 +168,6 @@ class RTMediaRouter {
 		}
 
 		add_filter( 'the_content', array( &$this, 'rt_replace_the_content' ) );
-		add_filter( 'pre_render_block', array( $this, 'rt_replace_the_content_fse' ), 10, 2 );
-
 		$this->rt_theme_compat_reset_post();
 
 		return apply_filters( 'rtmedia_main_template_include', $template, $new_rt_template );
@@ -223,23 +221,6 @@ class RTMediaRouter {
 		// Return possibly hi-jacked content.
 		return $content;
 		// phpcs:enable Squiz.PHP.NonExecutableCode.Unreachable
-	}
-
-	/**
-	 * "the_content" filter won't work on FSE themes e.g Twenty Twenty-Tow.
-	 * The following add supports for block theme.
-	 *
-	 * @param string $content Content.
-	 * @param array  $parsed_block blocks.
-	 *
-	 * @return string $content
-	 */
-	public function rt_replace_the_content_fse( $content, $parsed_block ) {
-		if ( 'core/post-template' === $parsed_block['blockName'] ) {
-			return $this->rt_replace_the_content();
-		}
-
-		return $content;
 	}
 
 	/**

@@ -1905,9 +1905,7 @@ jQuery( document ).ready( function( $ ) {
 				rtMediaScrollComments();
 
 				/** refreshing fragments */
-				if ( false == $('body').hasClass('activity')) {
-                    galleryObj.reloadView();
-                }
+				galleryObj.reloadView();
 			},
 			error: function( data ) {
 				if ( widget_id ) {
