@@ -1778,9 +1778,6 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 4.6.2 ####
-rtMedia 4.6.2 with added fixes for preview not loading of docs and files in lightbox, privacy page redirection on user's profile along with warnings and PHP errors
-
 ## Sponsors ##
 
 * *[Henry Wright](http://profiles.wordpress.org/henrywright-1)* has kindly sponsored the *Featured Media* feature.
