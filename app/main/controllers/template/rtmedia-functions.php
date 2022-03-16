@@ -204,13 +204,13 @@ function rtmedia_author_profile_pic( $show_link = true, $echo = true, $author_id
 
 		if ( function_exists( 'bp_get_user_has_avatar' ) ) {
 			if ( bp_core_fetch_avatar(
-				     array(
-					     'item_id' => $author_id,
-					     'object'  => 'user',
-					     'no_grav' => false,
-					     'html'    => false,
-				     )
-			     ) !== bp_core_avatar_default()
+				array(
+					'item_id' => $author_id,
+					'object'  => 'user',
+					'no_grav' => false,
+					'html'    => false,
+				)
+			) !== bp_core_avatar_default()
 			) {
 				$profile_pic .= bp_core_fetch_avatar(
 					array(
@@ -702,9 +702,9 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 
 		if ( 'album' === $media_object->media_type || 'photo' !== $media_object->media_type || 'video' === $media_object->media_type ) {
 			$thumbnail_id = ( isset( $media_object->cover_art )
-			                  && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) )   // Cover art might be an absolute URL.
-			                       || ( 0 !== intval( $media_object->cover_art ) )    // Cover art might be a media ID.
-			                  ) ) ? $media_object->cover_art : false;
+							  && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) )   // Cover art might be an absolute URL.
+								   || ( 0 !== intval( $media_object->cover_art ) )    // Cover art might be a media ID.
+							  ) ) ? $media_object->cover_art : false;
 			$thumbnail_id = apply_filters( 'show_custom_album_cover', $thumbnail_id, $media_object->media_type, $media_object->id ); // for rtMedia pro users.
 		} elseif ( 'photo' === $media_object->media_type ) {
 			$thumbnail_id = $media_object->media_id;
@@ -1559,13 +1559,16 @@ function rtmedia_pagination_next_link() {
 
 			// if there are more media than number of media per page to show than $rtmedia_query->media->media_id will be set other wise take media_id of very first media.
 			// For more understanding why array became object check rewind_media() in RTMediaQuery.php file and check it's call.
-			$post_id = ( isset( $rtmedia_query->media->media_id ) ? $rtmedia_query->media->media_id : $rtmedia_query->media[0]->media_id );
-			$post    = get_post( get_post_field( 'post_parent', $post_id ) );
+			if ( ! empty( $rtmedia_query->media ) ) {
 
-			if ( isset( $post->post_name ) ) {
-				$link .= $site_url . $post->post_name . '/';
-			} else {
-				$link .= $site_url;
+				$post_id = ( isset( $rtmedia_query->media->media_id ) ? $rtmedia_query->media->media_id : $rtmedia_query->media[0]->media_id );
+				$post    = get_post( get_post_field( 'post_parent', $post_id ) );
+
+				if ( isset( $post->post_name ) ) {
+					$link .= $site_url . $post->post_name . '/';
+				} else {
+					$link .= $site_url;
+				}
 			}
 		}
 	}
@@ -2167,15 +2170,15 @@ function rtmedia_comment_form() {
 
 	if ( is_user_logged_in() && empty( $comment_media ) ) {
 		?>
-        <form method="post" id="rt_media_comment_form" class="rt_media_comment_form" action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
-            <textarea style="width:100%" placeholder="<?php esc_attr_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"  class="bp-suggestions ac-input"></textarea>
+		<form method="post" id="rt_media_comment_form" class="rt_media_comment_form" action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
+			<textarea style="width:100%" placeholder="<?php esc_attr_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"  class="bp-suggestions ac-input"></textarea>
 
-            <input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit" value="<?php esc_attr_e( 'Comment', 'buddypress-media' ); ?>">
+			<input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit" value="<?php esc_attr_e( 'Comment', 'buddypress-media' ); ?>">
 
 			<?php do_action( 'rtmedia_add_comments_extra' ); ?>
 
 			<?php RTMediaComment::comment_nonce_generator(); ?>
-        </form>
+		</form>
 		<?php
 	}
 
@@ -3046,9 +3049,9 @@ function show_rtmedia_like_counts() {
 			$class = 'hide';
 		}
 		?>
-        <div class='rtmedia-like-info <?php echo esc_attr( $class ); ?>'>
-            <i class="dashicons dashicons-thumbs-up"></i>
-            <span class="rtmedia-like-counter-wrap">
+		<div class='rtmedia-like-info <?php echo esc_attr( $class ); ?>'>
+			<i class="dashicons dashicons-thumbs-up"></i>
+			<span class="rtmedia-like-counter-wrap">
 				<?php
 				if ( class_exists( 'RTMediaLike' ) && function_exists( 'rtmedia_who_like_html' ) ) {
 					$rtmedialike = new RTMediaLike();
@@ -3056,7 +3059,7 @@ function show_rtmedia_like_counts() {
 				}
 				?>
 			</span>
-        </div>
+		</div>
 		<?php
 	}
 
@@ -3989,7 +3992,7 @@ function rtmedia_is_comment_media_single_page( $rtmedia_id ) {
 function rtmedia_view_conversation_of_media( $activity_id ) {
 	if ( function_exists( 'bp_activity_get_permalink' ) ) {
 		?>
-        <span>
+		<span>
 			<a href="<?php echo esc_url( bp_activity_get_permalink( $activity_id ) ); ?>" class="rtmedia-view-conversation" >
 				<?php esc_html_e( 'View Conversation', 'buddypress-media' ); ?>
 			</a>
