@@ -39,7 +39,7 @@ class RTMediaUploadModel {
 	 */
 	public function set_post_object( $upload_params = array() ) {
 		// todo: check what's in POST.
-		$upload_array = empty( $upload_params ) ? $_POST : $upload_params; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		$upload_array = empty( $upload_params ) ? $_POST : $upload_params; // phpcs:ignore
 		$this->upload = wp_parse_args( $upload_array, $this->upload );
 		$this->sanitize_object();
 

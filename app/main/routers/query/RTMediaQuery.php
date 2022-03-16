@@ -1127,8 +1127,8 @@ class RTMediaQuery {
 	/**
 	 * Moves ahead in the loop of media within the album
 	 *
+	 * @return array|string
 	 * @global object $rtmedia_media
-	 * @return object
 	 */
 	public function rtmedia() {
 

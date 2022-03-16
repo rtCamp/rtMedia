@@ -107,7 +107,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 				$return_array['result'] = false;
 
 				global $wpdb;
-				$return_array['total'] = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM  {$this->table_name} WHERE {$column_name} = %s", $arguments[0] ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$return_array['total'] = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM  {$this->table_name} WHERE {$column_name} = %s", $arguments[0] ) ) ); // phpcs:ignore
 
 				if ( $return_array['total'] > 0 ) {
 					$other = '';
@@ -133,7 +133,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 						}
 					}
 
-					$return_array['result'] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$this->table_name} WHERE {$column_name} = %s {$other}", $arguments[0] ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+					$return_array['result'] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$this->table_name} WHERE {$column_name} = %s {$other}", $arguments[0] ), ARRAY_A ); // phpcs:ignore
 				}
 
 				return $return_array;
@@ -160,7 +160,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 				}
 			}
 
-			$wpdb->insert( $this->table_name, $insertdata );
+			$wpdb->insert( $this->table_name, $insertdata ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 
 			return $wpdb->insert_id;
 		}
@@ -178,7 +178,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		public function update( $data, $where ) {
 			global $wpdb;
 
-			return $wpdb->update( $this->table_name, $data, $where );
+			return $wpdb->update( $this->table_name, $data, $where ); // phpcs:ignore
 		}
 
 		/**
@@ -212,7 +212,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 					$col_val_comapare = ( is_array( $colvalue['value'] ) ) ? '(\'' . implode( "','", $colvalue['value'] ) . '\')' : '(\'' . $colvalue['value'] . '\')';
 					$where           .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
 				} else {
-					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				}
 			}
 			$sql = $select . $where;
@@ -235,7 +235,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 				$sql .= $wpdb->prepare( ' LIMIT %d, %d', $offset, $per_page );
 
 			}
-			return $wpdb->get_results( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			return $wpdb->get_results( $sql ); // phpcs:ignore
 		}
 
 		/**
@@ -250,7 +250,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		public function delete( $where ) {
 			global $wpdb;
 
-			return $wpdb->delete( $this->table_name, $where );
+			return $wpdb->delete( $this->table_name, $where ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		}
 	}
 }
