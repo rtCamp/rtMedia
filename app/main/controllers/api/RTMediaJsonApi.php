@@ -347,7 +347,7 @@ class RTMediaJsonApi {
 					'user_id'    => intval( $user_login->ID ),
 					'ip'         => $remote_addr,
 					'token'      => sanitize_text_field( $access_token ),
-					'token_time' => date( 'Y-m-d H:i:s' ),
+					'token_time' => date( 'Y-m-d H:i:s' ), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 				);
 				$rtmapilogin->insert( $login_details );
 				wp_send_json( $this->rtmedia_api_response_object( 'TRUE', $ec_login_success, $msg_login_success, $data ) );

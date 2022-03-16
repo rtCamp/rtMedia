@@ -144,7 +144,7 @@ class RTMediaAlbum {
 	 * @param string   $album_description Album description.
 	 *
 	 * @return int
-	 * @global type     $rtmedia_interaction
+	 * @global int     $rtmedia_interaction
 	 */
 	public function add( $title = '', $author_id = false, $new = true, $post_id = false, $context = false, $context_id = false, $album_description = '' ) {
 
@@ -156,7 +156,7 @@ class RTMediaAlbum {
 
 		// Album Details which will be passed to Database query to add the album.
 		$post_vars = array(
-			'post_title'  => ( empty( $title ) ) ? esc_html__( 'Untitled Album', 'buddypress-media' ) : $title,
+			'post_title'  => empty( $title ) ? esc_html__( 'Untitled Album', 'buddypress-media' ) : $title,
 			'post_type'   => 'rtmedia_album',
 			'post_author' => $author_id,
 			'post_status' => 'hidden',
@@ -207,7 +207,7 @@ class RTMediaAlbum {
 			'privacy'      => null,
 		);
 
-		$attributes  = apply_filters( 'rtmedia_before_save_album_attributes', $attributes, $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		$attributes  = apply_filters( 'rtmedia_before_save_album_attributes', $attributes, $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
 		$rtmedia_id  = $this->media->insert_album( $attributes );
 		$rtmedia_nav = new RTMediaNav();
 		$media_count = $rtmedia_nav->refresh_counts(

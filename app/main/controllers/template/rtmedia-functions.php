@@ -13,9 +13,7 @@
  * @return bool
  */
 function have_rtmedia() {
-
 	global $rtmedia_query;
-
 	return $rtmedia_query->have_media();
 
 }
@@ -53,12 +51,12 @@ function rtmedia() {
 /**
  * Echo the number of media in particular album
  *
- * @global object $rtmedia_media
- * @global array  $rtmedia_backbone
- *
+ * @global object $rtmedia_media rtmedia object.
+ * @global array  $rtmedia_backbone rtmedia backbone
+ * @param int $id id.
  * @return int
  */
-function rtmedia_album_mediacounter() {
+function rtmedia_album_mediacounter( $id = null ) {
 
 	global $rtmedia_backbone;
 
@@ -66,8 +64,8 @@ function rtmedia_album_mediacounter() {
 		echo '<%= media_count %>';
 	} else {
 		global $rtmedia_media;
-
-		return rtm_get_album_media_count( $rtmedia_media->id );
+		$media_id = ! empty( $id ) ? $id : $rtmedia_media->id;
+		return rtm_get_album_media_count( $media_id );
 	}
 
 }
@@ -204,13 +202,13 @@ function rtmedia_author_profile_pic( $show_link = true, $echo = true, $author_id
 
 		if ( function_exists( 'bp_get_user_has_avatar' ) ) {
 			if ( bp_core_fetch_avatar(
-				     array(
-					     'item_id' => $author_id,
-					     'object'  => 'user',
-					     'no_grav' => false,
-					     'html'    => false,
-				     )
-			     ) !== bp_core_avatar_default()
+				array(
+					'item_id' => $author_id,
+					'object'  => 'user',
+					'no_grav' => false,
+					'html'    => false,
+				)
+			) !== bp_core_avatar_default()
 			) {
 				$profile_pic .= bp_core_fetch_avatar(
 					array(
@@ -340,7 +338,6 @@ function rtmedia_id( $media_id = false ) {
 			0,
 			1
 		);
-
 		if ( isset( $media ) && count( $media ) > 0 ) {
 			return $media[0]->id;
 		}
@@ -528,11 +525,12 @@ function rtmedia_cover_art( $id = false ) {
 /**
  * Echo permalink of the media
  *
- * @global array $rtmedia_backbone
+ * @param bool $media_id Media id.
  *
- * @param bool|int $media_id Media id.
+ * @global array $rtmedia_backbone
+ * @return void
  */
-function rtmedia_permalink( $media_id = false ) {
+function rtmedia_permalink( $media_id = null ) {
 
 	global $rtmedia_backbone;
 
@@ -674,9 +672,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 		$media = $model->get_media(
 			array(
 				'id' => $id,
-			),
-			false,
-			false
+			)
 		);
 
 		/**
@@ -701,10 +697,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 	if ( isset( $media_object->media_type ) ) {
 
 		if ( 'album' === $media_object->media_type || 'photo' !== $media_object->media_type || 'video' === $media_object->media_type ) {
-			$thumbnail_id = ( isset( $media_object->cover_art )
-			                  && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) )   // Cover art might be an absolute URL.
-			                       || ( 0 !== intval( $media_object->cover_art ) )    // Cover art might be a media ID.
-			                  ) ) ? $media_object->cover_art : false;
+			$thumbnail_id = ( isset( $media_object->cover_art ) && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) ) || ( 0 !== intval( $media_object->cover_art ) ) ) ) ? $media_object->cover_art : false;
 			$thumbnail_id = apply_filters( 'show_custom_album_cover', $thumbnail_id, $media_object->media_type, $media_object->id ); // for rtMedia pro users.
 		} elseif ( 'photo' === $media_object->media_type ) {
 			$thumbnail_id = $media_object->media_id;
@@ -917,12 +910,12 @@ function rtmedia_album_image( $size = 'thumbnail', $id = false ) {
 /**
  * Get duration for media
  *
- * @global array  $rtmedia_backbone
- * @global object $rtmedia_media
- *
  * @param bool|int $id Media id.
  *
- * @return array|bool|mixed|null|string|void
+ * @return false|string|void
+ * @throws getid3_exception It throws getid3_exception.
+ * @global object  $rtmedia_media
+ * @global array   $rtmedia_backbone
  */
 function rtmedia_duration( $id = false ) {
 
@@ -939,9 +932,7 @@ function rtmedia_duration( $id = false ) {
 		$media = $model->get_media(
 			array(
 				'id' => $id,
-			),
-			false,
-			false
+			)
 		);
 
 		if ( isset( $media[0] ) ) {
@@ -1457,7 +1448,7 @@ function rtmedia_get_media_comment_count( $media_id = false ) {
 		$post_id = rtmedia_media_id( $media_id );
 	}
 
-	$comment_count = $wpdb->get_results( $wpdb->prepare( "SELECT count(*) FROM $wpdb->comments WHERE comment_post_ID = %d", $post_id ), ARRAY_N );
+	$comment_count = $wpdb->get_results( $wpdb->prepare( "SELECT count(*) FROM $wpdb->comments WHERE comment_post_ID = %d", $post_id ), ARRAY_N ); // phpcs:ignore
 
 	if ( is_array( $comment_count ) && is_array( $comment_count[0] ) && isset( $comment_count[0][0] ) ) {
 		return $comment_count[0][0];
@@ -2055,7 +2046,7 @@ function update_activity_after_thumb_set( $id ) {
 		$activity_text               = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
 		$obj_activity->activity_text = $activity_text;
 		$activity_content            = $obj_activity->create_activity_html();
-
+        // phpcs:ignore
 		$wpdb->update(
 			$bp->activity->table_name,
 			array(
@@ -2095,7 +2086,7 @@ function rtmedia_update_content_of_comment_media( $media_id, $activity_content )
 
 			// check is activity id is empty or not.
 			if ( isset( $activity_id ) && ! empty( $activity_id ) ) {
-				$update = $wpdb->update( $wpdb->base_prefix . 'bp_activity', array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
+				$update = $wpdb->update( $wpdb->base_prefix . 'bp_activity', array( 'content' => $activity_content ), array( 'id' => $activity_id ) ); // phpcs:ignore
 			}
 
 			// update comment content.
@@ -2108,7 +2099,7 @@ function rtmedia_update_content_of_comment_media( $media_id, $activity_content )
 				$activity_content = str_replace( 'rtmedia-list-item', 'rtmedia-comment-media-list-item', $activity_content );
 				$activity_content = str_replace( 'rtmedia-list', 'rtmedia-comment-media-list', $activity_content );
 				$activity_content = str_replace( 'rtmedia-comment-media-list-item', 'rtmedia-list-item', $activity_content );
-				$update           = $wpdb->update( $wpdb->base_prefix . 'comments', array( 'comment_content' => $activity_content ), array( 'comment_ID' => $comment_id ) );
+				$update           = $wpdb->update( $wpdb->base_prefix . 'comments', array( 'comment_content' => $activity_content ), array( 'comment_ID' => $comment_id ) ); // phpcs:ignore
 			}
 		}
 	}
@@ -2151,7 +2142,7 @@ function get_video_without_thumbs() {
 	global $wpdb;
 
 	$rtmedia_model = new RTMediaModel();
-	$results = $wpdb->get_col( $wpdb->prepare( "select media_id from {$rtmedia_model->table_name} where media_type = %s and blog_id = %d and cover_art is null", 'video', get_current_blog_id() ) ); // phpcs:ignore
+	$results = $wpdb->get_col( $wpdb->prepare( "select media_id from $rtmedia_model->table_name where media_type = %s and blog_id = %d and cover_art is null", 'video', get_current_blog_id() ) ); // phpcs:ignore
 
 	return $results;
 
@@ -2167,15 +2158,15 @@ function rtmedia_comment_form() {
 
 	if ( is_user_logged_in() && empty( $comment_media ) ) {
 		?>
-        <form method="post" id="rt_media_comment_form" class="rt_media_comment_form" action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
-            <textarea style="width:100%" placeholder="<?php esc_attr_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"  class="bp-suggestions ac-input"></textarea>
+		<form method="post" id="rt_media_comment_form" class="rt_media_comment_form" action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
+			<textarea style="width:100%" placeholder="<?php esc_attr_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"  class="bp-suggestions ac-input"></textarea>
 
-            <input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit" value="<?php esc_attr_e( 'Comment', 'buddypress-media' ); ?>">
+			<input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit" value="<?php esc_attr_e( 'Comment', 'buddypress-media' ); ?>">
 
 			<?php do_action( 'rtmedia_add_comments_extra' ); ?>
 
 			<?php RTMediaComment::comment_nonce_generator(); ?>
-        </form>
+		</form>
 		<?php
 	}
 
@@ -2612,7 +2603,7 @@ function rtmedia_is_album_editable() {
  */
 function rtmedia_sub_nav() {
 
-	// phpcs:disable WordPress.NamingConventions.ValidVariableName.NotSnakeCase
+	// phpcs:disable WordPress.NamingConventions.ValidVariableName.NotSnakeCase, WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 	global $rtMediaNav;
 
 	$rtMediaNav = new RTMediaNav();
@@ -3046,9 +3037,9 @@ function show_rtmedia_like_counts() {
 			$class = 'hide';
 		}
 		?>
-        <div class='rtmedia-like-info <?php echo esc_attr( $class ); ?>'>
-            <i class="dashicons dashicons-thumbs-up"></i>
-            <span class="rtmedia-like-counter-wrap">
+		<div class='rtmedia-like-info <?php echo esc_attr( $class ); ?>'>
+			<i class="dashicons dashicons-thumbs-up"></i>
+			<span class="rtmedia-like-counter-wrap">
 				<?php
 				if ( class_exists( 'RTMediaLike' ) && function_exists( 'rtmedia_who_like_html' ) ) {
 					$rtmedialike = new RTMediaLike();
@@ -3056,7 +3047,7 @@ function show_rtmedia_like_counts() {
 				}
 				?>
 			</span>
-        </div>
+		</div>
 		<?php
 	}
 
@@ -3772,7 +3763,7 @@ function rtmedia_get_allowed_upload_types_array() {
 function rtmedia_add_media( $upload_params = array() ) {
 
 	if ( empty( $upload_params ) ) {
-		$upload_params = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		$upload_params = $_POST; // phpcs:ignore
 	}
 
 	$upload_model = new RTMediaUploadModel();
@@ -3989,7 +3980,7 @@ function rtmedia_is_comment_media_single_page( $rtmedia_id ) {
 function rtmedia_view_conversation_of_media( $activity_id ) {
 	if ( function_exists( 'bp_activity_get_permalink' ) ) {
 		?>
-        <span>
+		<span>
 			<a href="<?php echo esc_url( bp_activity_get_permalink( $activity_id ) ); ?>" class="rtmedia-view-conversation" >
 				<?php esc_html_e( 'View Conversation', 'buddypress-media' ); ?>
 			</a>
@@ -4526,6 +4517,7 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 	$activities           = wp_cache_get( $activities_cache_key, 'activity_exporter' );
 
 	if ( false === $activities ) {
+        // phpcs:ignore
 		$activities = $wpdb->get_results(
 			$wpdb->prepare(
 				'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='rtmedia_update'  LIMIT %d OFFSET %d",
@@ -4554,7 +4546,7 @@ function rtmedia_activity_exporter( $email_address, $page = 1 ) {
 		$activity_count      = wp_cache_get( $activity_count_key, 'activity_exporter' );
 
 		if ( false === $activity_results || false === $activity_count ) {
-			$activity_results = $wpdb->get_results( $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $activity_id ) );
+			$activity_results = $wpdb->get_results( $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $activity_id ) ); // phpcs:ignore
 			$activity_count   = $wpdb->num_rows;
 
 			wp_cache_set( $activity_cache_key, $activity_results, 'activity_exporter', 300 );
@@ -4645,6 +4637,7 @@ function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
 	$media_count      = wp_cache_get( $media_count_key, 'upload_exporter' );
 
 	if ( false === $media || false === $media_count ) {
+        // phpcs:ignore
 		$media       = $wpdb->get_results(
 			$wpdb->prepare(
 				'SELECT media.media_id, media.media_title, media.upload_date, album.media_title AS album_title FROM ' . $wpdb->prefix . 'rt_rtm_media AS media, ' . $wpdb->prefix . 'rt_rtm_media AS album WHERE media.album_id=album.id AND media.activity_id=0 AND media.media_author=%d LIMIT %d OFFSET %d',
@@ -4750,6 +4743,7 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 	$comments                   = wp_cache_get( $activity_comment_cache_key, 'comments_exporter' );
 
 	if ( false === $comments || false === $comment_count ) {
+        // phpcs:ignore
 		$comments      = $wpdb->get_results(
 			$wpdb->prepare(
 				'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='activity_comment'  LIMIT %d OFFSET %d",
@@ -4778,6 +4772,7 @@ function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
 		$comment_results   = wp_cache_get( $comment_cache_key, 'comments_exporter' );
 
 		if ( false === $comment_results ) {
+            // phpcs:ignore
 			$comment_results = $wpdb->get_results( $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $comment_id ) );
 			wp_cache_set( $comment_cache_key, $comment_results, 'comments_exporter', 300 );
 		}
@@ -5057,7 +5052,7 @@ function rtmedia_eraser( $email_address, $page = 1 ) {
 		$number * ( $page - 1 )
 	);
 
-	$media_ids = $wpdb->get_col( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$media_ids = $wpdb->get_col( $query ); // phpcs:ignore
 
 	foreach ( $media_ids as $media_id ) {
 
@@ -5126,7 +5121,7 @@ function rtmedia_album_eraser( $email_address, $page = 1 ) {
 		$number
 	);
 
-	$items_removed = $wpdb->query( $query );
+	$items_removed = $wpdb->query( $query ); // phpcs:ignore
 
 	$query = $wpdb->prepare(
 		'DELETE FROM ' . $wpdb->prefix . "posts WHERE post_type='rtmedia_album' AND post_author=%d AND ID NOT IN (" . $default_album_postid_str . ') LIMIT %d',
@@ -5134,9 +5129,8 @@ function rtmedia_album_eraser( $email_address, $page = 1 ) {
 		$number
 	);
 
-	$items_removed += $wpdb->query( $query );
-	// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
-	$done = ( $items_removed < $number );
+	$items_removed += $wpdb->query( $query ); // phpcs:ignore
+	$done           = ( $items_removed < $number );
 
 	return array(
 		'items_removed'  => $items_removed,
