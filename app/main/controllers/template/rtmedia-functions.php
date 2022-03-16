@@ -696,8 +696,10 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 
 	if ( isset( $media_object->media_type ) ) {
 
-		if ( 'album' === $media_object->media_type || 'photo' !== $media_object->media_type || 'video' === $media_object->media_type ) {
-			$thumbnail_id = ( isset( $media_object->cover_art ) && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) ) || ( 0 !== intval( $media_object->cover_art ) ) ) ) ? $media_object->cover_art : false;
+		if ( 'photo' !== $media_object->media_type ) {
+			$thumbnail_id = ( isset( $media_object->cover_art ) && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) )
+					|| ( 0 !== intval( $media_object->cover_art ) ) ) )
+				? $media_object->cover_art : false;
 			$thumbnail_id = apply_filters( 'show_custom_album_cover', $thumbnail_id, $media_object->media_type, $media_object->id ); // for rtMedia pro users.
 		} elseif ( 'photo' === $media_object->media_type ) {
 			$thumbnail_id = $media_object->media_id;
@@ -1550,13 +1552,16 @@ function rtmedia_pagination_next_link() {
 
 			// if there are more media than number of media per page to show than $rtmedia_query->media->media_id will be set other wise take media_id of very first media.
 			// For more understanding why array became object check rewind_media() in RTMediaQuery.php file and check it's call.
-			$post_id = ( isset( $rtmedia_query->media->media_id ) ? $rtmedia_query->media->media_id : $rtmedia_query->media[0]->media_id );
-			$post    = get_post( get_post_field( 'post_parent', $post_id ) );
+			if ( ! empty( $rtmedia_query->media ) ) {
 
-			if ( isset( $post->post_name ) ) {
-				$link .= $site_url . $post->post_name . '/';
-			} else {
-				$link .= $site_url;
+				$post_id = ( isset( $rtmedia_query->media->media_id ) ? $rtmedia_query->media->media_id : $rtmedia_query->media[0]->media_id );
+				$post    = get_post( get_post_field( 'post_parent', $post_id ) );
+
+				if ( isset( $post->post_name ) ) {
+					$link .= $site_url . $post->post_name . '/';
+				} else {
+					$link .= $site_url;
+				}
 			}
 		}
 	}
