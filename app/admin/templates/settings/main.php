@@ -38,17 +38,18 @@
 				?>
 
 				<div class="rtm-button-container bottom">
+
 					<div class="rtm-social-links alignleft">
-						<a href= <?php echo esc_url( 'http://twitter.com/rtMediaWP' ); ?> class="twitter" target="_blank">
+						<a href="http://twitter.com/rtMediaWP" class="twitter" target="_blank">
 							<span class="dashicons dashicons-twitter"></span>
 						</a>
-						<a href= <?php echo esc_url( 'https://www.facebook.com/rtmediawp' ); ?> class="facebook" target="_blank">
+						<a href="https://www.facebook.com/rtmediawp" class="facebook" target="_blank">
 							<span class="dashicons dashicons-facebook"></span>
 						</a>
-						<a href= <?php echo esc_url( 'http://profiles.wordpress.org/rtcamp' ); ?> class="wordpress" target="_blank">
+						<a href="http://profiles.wordpress.org/rtcamp" class="wordpress" target="_blank">
 							<span class="dashicons dashicons-wordpress"></span>
 						</a>
-						<a href= <?php echo esc_url( 'https://rtmedia.io/feed/' ); ?> class="rss" target="_blank">
+						<a href="https://rtmedia.io/feed/" class="rss" target="_blank">
 							<span class="dashicons dashicons-rss"></span>
 						</a>
 					</div>
