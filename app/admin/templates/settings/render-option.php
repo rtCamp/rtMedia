@@ -49,7 +49,7 @@
 </table>
 
 <?php
-if ( isset( $option['after_content'] ) && '' !== $option['after_content'] ) {
+if ( ! empty( $option['after_content'] ) ) {
 	?>
 	<div class="rtm-message rtm-notice">
 		<?php

@@ -179,7 +179,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$show_notice = get_site_option( 'install_transcoder_admin_notice', 1 );
 			if ( '1' === $show_notice || 1 === $show_notice ) :
 
-				include RTMEDIA_PATH . 'app/admin/templates/notices/transcoder.php';
+				require_once RTMEDIA_PATH . 'app/admin/templates/notices/transcoder.php';
 
 			endif;
 		}
@@ -306,7 +306,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ( ! $site_option || 'hide' !== $site_option ) ) {
 				rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
 
-				include RTMEDIA_PATH . 'app/admin/templates/notices/premium-addon.php';
+				require_once RTMEDIA_PATH . 'app/admin/templates/notices/premium-addon.php';
 			}
 		}
 
@@ -334,7 +334,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ( ! $site_option || 'hide' !== $site_option ) && ( 'inspirebook' !== get_stylesheet() ) ) {
 				rtmedia_update_site_option( 'rtmedia_inspirebook_release_notice', 'show' );
 
-				include RTMEDIA_PATH . 'app/admin/templates/notices/inspirebook-release.php';
+				require_once RTMEDIA_PATH . 'app/admin/templates/notices/inspirebook-release.php';
 			}
 		}
 
@@ -412,7 +412,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				}
 				rtmedia_update_site_option( 'rtmedia-addon-update-notice-3_8', 'show' );
 
-				include RTMEDIA_PATH . 'app/admin/templates/notices/addon-update.php';
+				require_once RTMEDIA_PATH . 'app/admin/templates/notices/addon-update.php';
 			}
 		}
 
@@ -519,7 +519,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function rtmedia_dashboard_widget_function() {
 
-			include RTMEDIA_PATH . 'app/admin/templates/dashboard-widgets/right-now.php';
+			require_once RTMEDIA_PATH . 'app/admin/templates/dashboard-widgets/right-now.php';
 		}
 
 		/**
@@ -1044,7 +1044,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						$settings_sub_tabs = $this->settings_sub_tabs();
 					}
 
-					include RTMEDIA_PATH . 'app/admin/templates/settings/main.php';
+					require_once RTMEDIA_PATH . 'app/admin/templates/settings/main.php';
 					?>
 
 					<div class="metabox-holder bp-media-metabox-holder rtm-sidebar">
@@ -1325,7 +1325,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			ob_start();
 
-			include RTMEDIA_PATH . 'app/admin/templates/settings/sidebar-addons.php';
+			require_once RTMEDIA_PATH . 'app/admin/templates/settings/sidebar-addons.php';
 
 			$addons = ob_get_clean();
 
@@ -1333,7 +1333,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			ob_start();
 
-			include RTMEDIA_PATH . 'app/admin/templates/settings/sidebar-branding.php';
+			require_once RTMEDIA_PATH . 'app/admin/templates/settings/sidebar-branding.php';
 
 			$branding = ob_get_clean();
 
@@ -1502,7 +1502,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$upload_filetypes = explode( ' ', $upload_filetypes );
 			$flag             = false;
 
-			include RTMEDIA_PATH . 'app/admin/templates/notices/upload-file-types.php';
+			require_once RTMEDIA_PATH . 'app/admin/templates/notices/upload-file-types.php';
 		}
 
 		/**
@@ -1557,7 +1557,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_9_4', 'show' );
 				if ( is_dir( get_template_directory() . '/rtmedia' ) ) {
 
-					include RTMEDIA_PATH . 'app/admin/templates/notices/update-template.php';
+					require_once RTMEDIA_PATH . 'app/admin/templates/notices/update-template.php';
 				}
 			}
 		}
@@ -1600,7 +1600,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$tab_position_class = 'rtm-horizotanl-tabs';
 			}
 
-			include RTMEDIA_PATH . 'app/admin/templates/settings/admin-ui.php';
+			require_once RTMEDIA_PATH . 'app/admin/templates/settings/admin-ui.php';
 		}
 
 		/**

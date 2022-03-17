@@ -97,12 +97,14 @@
 <div class="rtm-meta-container">
 	<ul class="rtm-meta-links">
 		<li><b><?php esc_html_e( 'rtMedia Links:', 'buddypress-media' ); ?></b></li>
-		<li><a href="<?php echo esc_url( 'https://rtmedia.io/' ); ?>"><?php esc_html_e( 'Homepage', 'buddypress-media' ); ?></a></li>
+		<li><a href="https://rtmedia.io/"><?php esc_html_e( 'Homepage', 'buddypress-media' ); ?></a></li>
 		<li>
-			<a href="<?php echo esc_url( admin_url( 'admin.php?page=rtmedia-support#rtmedia-general' ) ); ?>"><?php esc_html_e( 'Free Support', 'buddypress-media' ); ?></a>
+			<a href="<?php echo esc_url( admin_url( 'admin.php?page=rtmedia-support#rtmedia-general' ) ); ?>">
+				<?php esc_html_e( 'Free Support', 'buddypress-media' ); ?>
+			</a>
 		</li>
 		<li>
-			<a href="<?php echo esc_url( 'https://rtmedia.io/products/category/plugins/' ); ?>"><?php esc_html_e( 'Premium Addons', 'buddypress-media' ); ?></a>
+			<a href="'https://rtmedia.io/products/category/plugins/"><?php esc_html_e( 'Premium Addons', 'buddypress-media' ); ?></a>
 		</li>
 	</ul>
 </div>
