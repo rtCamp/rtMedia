@@ -7,11 +7,11 @@
 
 ?>
 
-<div class="notice  is-dismissible updated rtmedia-inspire-book-notice">
+<div class="notice is-dismissible updated rtmedia-inspire-book-notice">
 	<?php wp_nonce_field( '_install_transcoder_hide_notice_', 'install_transcoder_hide_notice_nonce' ); ?>
 	<p>
 		<span>
-			<a href="<?php echo esc_url( 'https://rtmedia.io/products/inspirebook/' ); ?>" target="_blank">
+			<a href="https://rtmedia.io/products/inspirebook/" target="_blank">
 				<b><?php esc_html_e( 'Meet InspireBook', 'buddypress-media' ); ?></b>
 			</a>
 			<?php esc_html_e( ' - First official rtMedia premium theme.', 'buddypress-media' ); ?>

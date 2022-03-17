@@ -7,7 +7,7 @@
 
 ?>
 
-<table class="form-table" <?php echo ( isset( $option['depends'] ) && '' !== $option['depends'] ) ? 'data-depends="' . esc_attr( $option['depends'] ) . '"' : ''; ?>>
+<table class="form-table" <?php echo ( ! empty( $option['depends'] ) ) ? 'data-depends="' . esc_attr( $option['depends'] ) . '"' : ''; ?>>
 	<tr>
 		<th>
 			<?php
@@ -49,7 +49,7 @@
 </table>
 
 <?php
-if ( isset( $option['after_content'] ) && '' !== $option['after_content'] ) {
+if ( ! empty( $option['after_content'] ) ) {
 	?>
 	<div class="rtm-message rtm-notice">
 		<?php

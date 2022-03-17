@@ -85,7 +85,7 @@
 							<span class="rtm-tooltip rtm-extensions">
 								<i class="dashicons dashicons-info"></i>
 								<span class="rtm-tip">
-									<strong><?php echo esc_html__( 'File Extensions', 'buddypress-media' ); ?></strong><br/>
+									<strong><?php esc_html_e( 'File Extensions', 'buddypress-media' ); ?></strong><br/>
 									<hr/>
 									<?php echo esc_html( $extensions ); ?>
 								</span>

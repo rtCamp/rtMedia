@@ -11,7 +11,7 @@
 	<p>
 		<strong><?php esc_html_e( 'rtMedia:', 'buddypress-media' ); ?></strong>
 		<?php esc_html_e( 'Please update all premium add-ons that you have purchased from', 'buddypress-media' ); ?>
-		<a href="<?php echo esc_url( 'https://rtmedia.io/my-account/' ); ?>" target="_blank"><?php esc_html_e( 'your account', 'buddypress-media' ); ?></a>.
+		<a href="https://rtmedia.io/my-account/" target="_blank"><?php esc_html_e( 'your account', 'buddypress-media' ); ?></a>.
 		<a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right"><?php esc_html_e( 'Dismiss', 'buddypress-media' ); ?></a>
 		<?php wp_nonce_field( 'rtmedia-addon-update-notice-3_8', 'rtmedia-addon-notice' ); ?>
 	</p>
