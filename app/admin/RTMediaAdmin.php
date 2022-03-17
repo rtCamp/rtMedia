@@ -246,9 +246,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 				// translators: 1. Title.
 				$action['view'] = sprintf(
-						'<a href="%1$s" title="%2$s" rel="permalink">%3$s</a>',
+					'<a href="%1$s" title="%2$s" rel="permalink">%3$s</a>',
 					esc_url( $link ),
-					esc_attr( sprintf( 'View "%s"', $title ) ),
+					sprintf( 'View "%s"', $title ),
 					esc_html__( 'View', 'buddypress-media' )
 				);
 			}
@@ -511,7 +511,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return void
 		 */
 		public function rtmedia_advertisement() {
-			$src = RTMEDIA_URL . 'app/assets/admin/img/rtMedia-pro-ad.png'
+			$src = RTMEDIA_URL . 'app/assets/admin/img/rtMedia-pro-ad.png';
 			?>
 			<div class='rtmedia-admin-ad'>
 				<a href='https://rtmedia.io/products/rtmedia-pro/' target='_blank' title='rtMedia Pro'>
@@ -578,7 +578,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function plugin_add_settings_link( $links ) {
 
 			$settings_link = sprintf(
-					'<a href="%1$s">%2$s</a>',
+				'<a href="%1$s">%2$s</a>',
 				esc_url( admin_url( 'admin.php?page=rtmedia-settings' ) ),
 				esc_html__( 'Settings', 'buddypress-media' )
 			);
@@ -1050,7 +1050,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					<h2 class="nav-tab-wrapper"><?php $this->rtmedia_tabs(); ?>
 						<span class="<?php echo esc_attr( $align ); ?> by">
 							<a class="rt-link" href="https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank" title="rtCamp : <?php esc_attr_e( 'Empowering The Web With WordPress', 'buddypress-media' ); ?>">
-								<img src="<?php echo esc_url( RTMEDIA_URL ); ?>app/assets/admin/img/rtcamp-logo.png" alt="rtCamp"/>
+								<img src="<?php echo esc_url( RTMEDIA_URL . 'app/assets/admin/img/rtcamp-logo.png' ); ?>" alt="rtCamp"/>
 							</a>
 						</span>
 					</h2>
@@ -1522,9 +1522,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( plugin_basename( RTMEDIA_PATH . 'index.php' ) === $plugin_file ) {
 
 				$plugin_meta[] = sprintf(
-					'<a href=https://rtmedia.io/products/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="%1$s">%2$s</a>',
-					esc_attr__( 'Premium Add-ons', 'buddypress-media' ),
-					esc_html__( 'Premium Add-ons', 'buddypress-media' )
+					'<a href="https://rtmedia.io/products/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="%1$s">%1$s</a>',
+					esc_attr__( 'Premium Add-ons', 'buddypress-media' )
 				);
 			}
 
@@ -1679,7 +1678,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$license_doc = 'https://rtmedia.io/docs/license/';
 
 				// translators: 1. Account page and link.
-				$message = sprintf( __( 'Your license keys can be found on <a href="%1$s">my-account</a> page. For more details, please refer to <a href="%2$s">License documentation</a> page.', 'buddypress-media' ), $my_account, $license_doc );
+				$message = sprintf(
+					__( 'Your license keys can be found on <a href="%1$s">my-account</a> page. For more details, please refer to <a href="%2$s">License documentation</a> page.', 'buddypress-media' ),
+					$my_account,
+					$license_doc
+				);
+
 				echo '<div class="notice"><p>' . wp_kses( $message, $args ) . '</p></div>';
 
 				return;
