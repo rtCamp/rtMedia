@@ -248,7 +248,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$action['view'] = sprintf(
 					'<a href="%1$s" title="%2$s" rel="permalink">%3$s</a>',
 					esc_url( $link ),
-					sprintf( 'View "%s"', $title ),
+					esc_html( sprintf( 'View "%s"', $title ) ),
 					esc_html__( 'View', 'buddypress-media' )
 				);
 			}
@@ -1684,7 +1684,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					$license_doc
 				);
 
-				echo '<div class="notice"><p>' . wp_kses( $message, $args ) . '</p></div>';
+				printf( '<div class="notice"><p>%1$s</p></div>', wp_kses( $message, $args ) );
 
 				return;
 			}
