@@ -38,6 +38,7 @@
 				?>
 
 				<div class="rtm-button-container bottom">
+
 					<div class="rtm-social-links alignleft">
 						<a href="http://twitter.com/rtMediaWP" class="twitter" target="_blank">
 							<span class="dashicons dashicons-twitter"></span>
