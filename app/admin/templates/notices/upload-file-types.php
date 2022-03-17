@@ -5,7 +5,7 @@
  * @package rtMedia
  */
 
-if ( isset( $rtmedia->options['images_enabled'] ) && $rtmedia->options['images_enabled'] ) {
+if ( ! empty( $rtmedia->options['images_enabled'] ) ) {
 	$not_supported_image = array_diff( array( 'jpg', 'jpeg', 'png', 'gif' ), $upload_filetypes );
 	if ( ! empty( $not_supported_image ) ) {
 		?>
@@ -16,7 +16,9 @@ if ( isset( $rtmedia->options['images_enabled'] ) && $rtmedia->options['images_e
 				// translators: 1. Not supported image types.
 				printf( esc_html__( 'You have images enabled on rtMedia but your network allowed filetypes do not permit uploading of %s. Click ', 'buddypress-media' ), esc_html( implode( ', ', $not_supported_image ) ) );
 				?>
-				<a href='<?php echo esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ); ?>'><?php esc_html_e( 'here', 'buddypress-media' ); ?></a>
+				<a href="<?php echo esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ); ?>">
+					<?php esc_html_e( 'here', 'buddypress-media' ); ?>
+				</a>
 				<?php esc_html_e( ' to change your settings manually.', 'buddypress-media' ); ?>
 				<br />
 				<strong><?php esc_html_e( 'Recommended:', 'buddypress-media' ); ?></strong>
@@ -29,13 +31,15 @@ if ( isset( $rtmedia->options['images_enabled'] ) && $rtmedia->options['images_e
 	}
 }
 
-if ( isset( $rtmedia->options['videos_enabled'] ) && $rtmedia->options['videos_enabled'] ) {
+if ( ! empty( $rtmedia->options['videos_enabled'] ) ) {
 	if ( ! in_array( 'mp4', $upload_filetypes, true ) ) {
 		?>
 		<div class="error upload-filetype-network-settings-error">
 			<p>
 				<?php esc_html_e( 'You have video enabled on BuddyPress Media but your network allowed filetypes do not permit uploading of mp4. Click ', 'buddypress-media' ); ?>
-				<a href='<?php echo esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ); ?>'><?php esc_html_e( 'here', 'buddypress-media' ); ?></a>
+				<a href="<?php echo esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ); ?>">
+					<?php esc_html_e( 'here', 'buddypress-media' ); ?>
+				</a>
 				<?php esc_html_e( ' to change your settings manually.', 'buddypress-media' ); ?>
 				<br />
 				<strong><?php esc_html_e( 'Recommended:', 'buddypress-media' ); ?></strong>
@@ -48,13 +52,15 @@ if ( isset( $rtmedia->options['videos_enabled'] ) && $rtmedia->options['videos_e
 	}
 }
 
-if ( isset( $rtmedia->options['audio_enabled'] ) && $rtmedia->options['audio_enabled'] ) {
+if ( ! empty( $rtmedia->options['audio_enabled'] ) ) {
 	if ( ! in_array( 'mp3', $upload_filetypes, true ) ) {
 		?>
 		<div class="error upload-filetype-network-settings-error">
 			<p>
 				<?php esc_html_e( 'You have audio enabled on BuddyPress Media but your network allowed filetypes do not permit uploading of mp3. Click ', 'buddypress-media' ); ?>
-				<a href='<?php echo esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ); ?>'><?php esc_html_e( 'here', 'buddypress-media' ); ?></a>
+				<a href="<?php echo esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ); ?>">
+					<?php esc_html_e( 'here', 'buddypress-media' ); ?>
+				</a>
 				<?php esc_html_e( ' to change your settings manually.', 'buddypress-media' ); ?>
 				<br />
 				<strong><?php esc_html_e( 'Recommended:', 'buddypress-media' ); ?></strong>

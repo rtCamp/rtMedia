@@ -12,15 +12,14 @@
 	<p>
 		<span>
 			<?php
-			$product_page = 'https://rtmedia.io/products/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
-
 			// translators: 1. Product page link.
-			$message = sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page );
+			$message = sprintf(
+					__( 'Check 30+ premium rtMedia add-ons on our <a href="%1$s">store</a>.', 'buddypress-media' ),
+				'https://rtmedia.io/products/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media'
+			);
 			?>
 			<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
-			<?php
-			echo wp_kses( $message, array( 'a' => array( 'href' => array(), ), ) );
-			?>
+			<?php echo wp_kses( $message, array( 'a' => array( 'href' => array(), ), ) ); ?>
 		</span>
 	</p>
 </div>

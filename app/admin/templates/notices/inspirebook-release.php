@@ -7,7 +7,7 @@
 
 ?>
 
-<div class="notice  is-dismissible updated rtmedia-inspire-book-notice">
+<div class="notice is-dismissible updated rtmedia-inspire-book-notice">
 	<?php wp_nonce_field( '_install_transcoder_hide_notice_', 'install_transcoder_hide_notice_nonce' ); ?>
 	<p>
 		<span>
