@@ -135,7 +135,11 @@ class RTMediaMediaSizeImporter {
 			'strong' => array(),
 		);
 
-		echo '<div class="' . esc_attr( $type ) . ' rtmedia-media-size-import-error">' . wp_kses( $message, $allowed_html ) . '</div>';
+		printf(
+			'<div class="%1$s rtmedia-media-size-import-error">%2$s</div>',
+			esc_attr( $type ),
+			wp_kses( $message, $allowed_html )
+		);
 	}
 
 	/**
@@ -151,9 +155,21 @@ class RTMediaMediaSizeImporter {
 			<h2><?php esc_html_e( 'rtMedia: Import Media Size', 'buddypress-media' ); ?></h2>
 			<?php
 			wp_nonce_field( 'rtmedia_media_size_import_nonce', 'rtmedia_media_size_import_nonce' );
-			// translators: %s: Estimated.
-			echo '<span class="pending">' . sprintf( esc_html__( '%s (estimated)', 'buddypress-media' ), esc_html( rtmedia_migrate_formatseconds( $total - $done ) ) ) . '</span><br />';
-			echo '<span class="finished">' . esc_html( $done ) . '</span>/<span class="total">' . esc_html( $total ) . '</span>';
+
+			// translators: %1$s: Pending count, %2$s: Estimated.
+			printf(
+				'<span class="pending">%1$s %2$s</span><br />',
+				esc_html( rtmedia_migrate_formatseconds( $total - $done ) ),
+				esc_html__( '(estimated)', 'buddypress-media' )
+			);
+
+			// translators: %1$s: Finished count, %2$s: Total count.
+			printf(
+				'<span class="finished">%1$s</span>/<span class="total">%2$s</span>',
+				esc_html( $done ),
+				esc_html( $total )
+			);
+
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
 
 			$temp = $prog->progress( $done, $total );

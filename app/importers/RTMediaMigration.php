@@ -100,9 +100,8 @@ class RTMediaMigration {
 	 * @param string $type Message tpe.
 	 */
 	public function create_notice( $message, $type = 'error' ) {
-		?>
-		<div class="<?php echo esc_attr( $type ); ?>"><?php echo esc_html( $message ); ?></div>
-		<?php
+
+		printf( '<div class="%1$s">%2$s</div>', esc_attr( $type ), esc_html( $message ) );
 	}
 
 	/**
@@ -535,8 +534,20 @@ class RTMediaMigration {
 			<hr/>
 
 			<?php
-			echo '<span class="pending">' . esc_html( $this->format_seconds( $total - $done ) ) . '</span><br />';
-			echo '<span class="finished">' . esc_html( $done ) . '</span>/<span class="total">' . esc_html( $total ) . '</span>';
+
+			// translators: %1$s: Pending count.
+			printf(
+				'<span class="pending">%1$s</span><br />',
+				esc_html( $this->format_seconds( $total - $done ) )
+			);
+
+			// translators: %1$s: Finished count, %2$s: Total count.
+			printf(
+				'<span class="finished">%1$s</span>/<span class="total">%2$s</span>',
+				esc_html( $done ),
+				esc_html( $total )
+			);
+
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
 
 			$temp = $prog->progress( $done, $total );
