@@ -53,7 +53,7 @@
 			}
 			$k++;
 			if ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) {
-				$icon = '<i class="' . esc_attr( $tab['icon'] ) . '"></i>';
+				$icon = sprintf( '<i class="%1$s"></i>', esc_attr( $tab['icon'] ) );
 			}
 			$tab_without_hash = explode( '#', $tab['href'] );
 			$tab_without_hash = $tab_without_hash[1];

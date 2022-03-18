@@ -104,7 +104,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="'https://rtmedia.io/products/category/plugins/"><?php esc_html_e( 'Premium Addons', 'buddypress-media' ); ?></a>
+			<a href="https://rtmedia.io/products/category/plugins/"><?php esc_html_e( 'Premium Addons', 'buddypress-media' ); ?></a>
 		</li>
 	</ul>
 </div>
