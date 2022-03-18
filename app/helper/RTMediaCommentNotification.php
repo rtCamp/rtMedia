@@ -94,7 +94,12 @@ class RTMediaCommentNotification extends RTMediaNotification {
 			);
 
 			if ( 'string' === $format ) {
-				return '<a href="' . esc_url( $return['link'] ) . '">' . esc_html( $return['text'] ) . '</a>';
+
+				return sprintf(
+					'<a href="%1$s">%2$s</a>',
+					esc_url( $return['link'] ),
+					esc_html( $return['text'] )
+				);
 			} else {
 				return $return;
 			}

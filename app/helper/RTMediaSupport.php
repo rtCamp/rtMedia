@@ -62,10 +62,15 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			if ( isset( $info ) && '1' === $info && is_admin() ) {
 				if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'rtmedia-download-debuginfo' ) ) {
+
 					wp_die(
-						'<h1>' . esc_html__( 'Cheatin\' uh?', 'buddypress-media' ) . '</h1>' .
-						'<p>' . esc_html__( 'Can not verify request source.', 'buddypress-media' ) . '</p>'
+						sprintf(
+							'<h1>%1$s</h1><p>%2$s</p>',
+							esc_html__( 'Cheatin\' uh?', 'buddypress-media' ),
+							esc_html__( 'Can not verify request source.', 'buddypress-media' )
+						)
 					);
+
 				} else {
 					// download the debug info.
 					$this->download_debuginfo_as_text();
@@ -431,9 +436,14 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			}
 			$content = apply_filters( 'rtmedia_migration_content_filter', $content );
 			if ( $flag ) {
-				$content .= ' <div class="rtmedia-migration-support">';
-				$content .= ' <p>' . esc_html__( 'Click', 'buddypress-media' ) . ' <a href="' . esc_url( get_admin_url() ) . 'admin.php?page=rtmedia-migration">' . esc_html__( 'here', 'buddypress-media' ) . '</a>' . esc_html__( 'here to migrate media from rtMedia 2.x to rtMedia 3.0+.', 'buddypress-media' ) . '</p>';
-				$content .= '</div>';
+
+				$content .= sprintf(
+					'<div class="rtmedia-migration-support"><p>%1$s <a href="%2$s">%3$s</a> %4$s</p></div>',
+					esc_html__( 'Click', 'buddypress-media' ),
+					esc_url( get_admin_url() ) . 'admin.php?page=rtmedia-migration',
+					esc_html__( 'here', 'buddypress-media' ),
+					esc_html__( 'to migrate media from rtMedia 2.x to rtMedia 3.0+.', 'buddypress-media' )
+				);
 			}
 			?>
 			<div id="rtmedia-migration-html">
@@ -470,22 +480,20 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			if ( 'premium_support' === $form ) {
 				if ( ! has_filter( 'rtmedia_license_tabs' ) && ! has_action( 'rtmedia_addon_license_details' ) ) {
-					$content  = '<h3 class="rtm-option-title">' . esc_html( $meta_title ) . '</h3>';
-					$content .= '<p>' .
-						sprintf(
-							// translators: %s: link.
-							esc_html__( 'If your site has some issues due to rtMedia and you want support, feel free to create a support topic on %s', 'buddypress-media' ),
-							'<a target="_blank" href="https://rtmedia.io/support/">' . esc_html__( 'rtMedia Support Page', 'buddypress-media' ) . '</a>.'
-						) .
-						'</p>';
 
-					$content .= '<p>' .
-						sprintf(
-							// translators: %s: Github link.
-							esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on %s', 'buddypress-media' ),
-							'<a target="_blank" href="https://github.com/rtMediaWP/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.'
-						) .
-						'</p>';
+					$content = sprintf( '<h3 class="rtm-option-title">%1$s</h3>', esc_html( $meta_title ) );
+
+					$content .= sprintf(
+						'<p>%1$s <a target="_blank" href="https://rtmedia.io/support/">%2$s</a></p>',
+						esc_html__( 'If your site has some issues due to rtMedia and you want support, feel free to create a support topic on', 'buddypress-media' ),
+						esc_html__( 'rtMedia Support Page', 'buddypress-media' )
+					);
+
+					$content .= sprintf(
+						'<p>%1$s <a target="_blank" href="https://github.com/rtMediaWP/rtmedia/issues/new">%2$s</a></p>',
+						esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on', 'buddypress-media' ),
+						esc_html__( 'GitHub', 'buddypress-media' )
+					);
 
 					echo wp_kses( $content, RTMedia::expanded_allowed_tags() );
 				} else {
@@ -594,9 +602,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		public function submit_request() {
 			$nonce = filter_input( INPUT_POST, 'support_wpnonce', FILTER_SANITIZE_STRING );
 			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'rtmedia-support-request' ) ) {
+
 				wp_die(
-					'<h1>' . esc_html__( 'Cheatin\' uh?', 'buddypress-media' ) . '</h1>' .
-					'<p>' . esc_html__( 'Can not verify request source.', 'buddypress-media' ) . '</p>'
+					sprintf(
+						'<h1>%1$s</h1><p>%2$s</p>',
+						esc_html__( 'Cheatin\' uh?', 'buddypress-media' ),
+						esc_html__( 'Can not verify request source.', 'buddypress-media' )
+					)
 				);
 			}
 
@@ -708,24 +720,38 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					unlink( $attachment_file );
 				}
 				echo '<div class="rtmedia-success" style="margin:10px 0;">';
+
 				if ( 'new_feature' === sanitize_text_field( $form_data['request_type'] ) ) {
-					echo '<p>' . esc_html__( 'Thank you for your Feedback/Suggestion.', 'buddypress-media' ) . '</p>';
+
+					printf( '<p>%1$s</p>', esc_html__( 'Thank you for your Feedback/Suggestion.', 'buddypress-media' ) );
+
 				} else {
-					echo '<p>' . esc_html__( 'Thank you for posting your support request.', 'buddypress-media' ) . '</p>';
-					echo '<p>' . esc_html__( 'We will get back to you shortly.', 'buddypress-media' ) . '</p>';
+
+					printf(
+						'<p>%1$s</p><p>%2$s</p>',
+						esc_html__( 'Thank you for posting your support request.', 'buddypress-media' ),
+						esc_html__( 'We will get back to you shortly.', 'buddypress-media' )
+					);
 				}
+
 				echo '</div>';
+
 			} else {
+
 				echo '<div class="rtmedia-error">';
-				echo '<p>' . esc_html__( 'Your server failed to send an email.', 'buddypress-media' ) . '</p>';
-				echo '<p>' . esc_html__( 'Kindly contact your server support to fix this.', 'buddypress-media' ) . '</p>';
-				echo '<p>' .
-					sprintf(
-						// translators: %s: rtmedia link.
-						esc_html__( 'You can alternatively create a support request %s', 'buddypress-media' ),
-						'<a target="_blank" href="https://rtmedia.io/premium-support/">' . esc_html__( 'here', 'buddypress-media' ) . '</a>.'
-					) .
-					'</p>';
+
+				printf(
+					'<p>%1$s</p><p>%2$s</p>',
+					esc_html__( 'Your server failed to send an email.', 'buddypress-media' ),
+					esc_html__( 'Kindly contact your server support to fix this.', 'buddypress-media' )
+				);
+
+				printf(
+					'<p>%1$s <a target="_blank" href="https://rtmedia.io/premium-support/">%2$s</a></p>',
+					esc_html__( 'You can alternatively create a support request', 'buddypress-media' ),
+					esc_html__( 'here', 'buddypress-media' )
+				);
+
 				echo '</div>';
 			}
 			die();

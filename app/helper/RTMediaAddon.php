@@ -38,7 +38,10 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 * @return string
 		 */
 		public function coming_soon_div() {
-			return '<div class="coming-soon coming-soon-l"></div> <a class="coming-soon coming-soon-r" href="' . esc_url( $this->enquiry_link ) . '" target="_blank"></a>';
+			return sprintf(
+				'<div class="coming-soon coming-soon-l"></div> <a class="coming-soon coming-soon-r" href="%1$s" target="_blank"></a>',
+				esc_url( $this->enquiry_link )
+			);
 		}
 
 		/**
@@ -528,7 +531,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 * @return void
 		 */
 		public function themes_content( $args = '' ) {
-			echo '<h3>' . esc_html__( 'Coming Soon !!', 'buddypress-media' ) . '</h3>';
+			printf( '<h3>%1$s</h3>', esc_html__( 'Coming Soon !!', 'buddypress-media' ) );
 		}
 
 		/**
@@ -558,9 +561,17 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			$args     = wp_parse_args( $args, $defaults );
 
 			if ( $args['purchased'] ) {
-				$purchase_link = '<span class="rtm-addon-purchased button-primary disabled alignright product_type_simple">' . esc_html__( 'Purchased', 'buddypress-media' ) . '</span>';
+				$purchase_link = sprintf(
+					'<span class="rtm-addon-purchased button-primary disabled alignright product_type_simple">%1$s</span>',
+					esc_html__( 'Purchased', 'buddypress-media' )
+				);
 			} else {
-				$purchase_link = '<a class="button-primary alignright product_type_simple"  href="' . esc_url( $args['buy_now'] ) . '" target="_blank">' . esc_html__( 'Buy Now', 'buddypress-media' ) . '</a>';
+
+				$purchase_link = sprintf(
+					'<a class="button-primary alignright product_type_simple" href="%1$s" target="_blank">%2$s</a>',
+					esc_url( $args['buy_now'] ),
+					esc_html__( 'Buy Now', 'buddypress-media' )
+				);
 			}
 
 			$allowed_html = array(
@@ -600,7 +611,13 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					echo wp_kses( $purchase_link, $allowed_html );
 
 					if ( '' !== $args['demo_link'] ) {
-						echo '<a class="alignright rtm-live-demo button"  href="' . esc_url( $args['demo_link'] ) . '" title="' . esc_attr( $args['title'] ) . '" target="_blank">' . esc_html__( 'Live Demo', 'buddypress-media' ) . '</a>';
+
+						printf(
+							'<a class="alignright rtm-live-demo button" href="%1$s" title="%2$s" target="_blank">%3$s</a>',
+							esc_url( $args['demo_link'] ),
+							esc_attr( $args['title'] ),
+							esc_html__( 'Live Demo', 'buddypress-media' )
+						);
 					}
 					?>
 				</div>
