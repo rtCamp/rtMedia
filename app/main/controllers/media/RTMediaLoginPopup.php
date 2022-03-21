@@ -45,7 +45,17 @@ class RTMediaLoginPopup {
 	 */
 	public function rtmedia_add_upload_album_button_popup() {
 		if ( ! is_user_logged_in() ) {
-			echo '<span><a href="#rtmedia-login-register-modal" class="primary rtmedia-upload-media-link rtmedia-modal-link" id="rtmedia-login-register-modal" title="' . esc_attr( apply_filters( 'rtm_album_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ) . '"><i class="dashicons dashicons-upload"></i>' . esc_html( apply_filters( 'rtm_album_upload_label', __( 'Upload', 'buddypress-media' ) ) ) . '</a></span>';
+
+			printf(
+				'<span>
+					<a href="#rtmedia-login-register-modal" class="primary rtmedia-upload-media-link rtmedia-modal-link" id="rtmedia-login-register-modal" title="%1$s">
+						<i class="dashicons dashicons-upload"></i>%2$s
+					</a>
+				</span>',
+				esc_attr( apply_filters( 'rtm_album_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ),
+				esc_html( apply_filters( 'rtm_album_upload_label', __( 'Upload', 'buddypress-media' ) ) )
+			);
+
 		}
 	}
 
