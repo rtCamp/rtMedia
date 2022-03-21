@@ -191,7 +191,13 @@ class RTMediaBuddyPressActivity {
 					$content = $first_div->ownerDocument->saveHTML( $first_div ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Can't change property name.
 
 					// Append read more link and text.
-					$return = sprintf( '%1$s<span class="activity-read-more" id="%2$s"><a href="%3$s" rel="nofollow">%4$s</a></span>', $content, $id, bp_get_activity_thread_permalink(), $readmore );
+					$return = sprintf(
+						'%1$s<span class="activity-read-more" id="%2$s"><a href="%3$s" rel="nofollow">%4$s</a></span>',
+						$content,
+						$id,
+						bp_get_activity_thread_permalink(),
+						$readmore
+					);
 
 					return $return;
 				}
@@ -804,7 +810,18 @@ class RTMediaBuddyPressActivity {
 			$upload_view = new RTMediaUploadView( array( 'activity' => true ) );
 			$upload_view->render( 'uploader' );
 		} else {
-			echo "<div class='rtmedia-upload-not-allowed'>" . wp_kses( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ), 'activity' ), RTMediaUpload::$wp_kses_allowed_tags ) . '</div>';
+
+			printf(
+				'<div class="rtmedia-upload-not-allowed">%1$s</div>',
+				wp_kses(
+					apply_filters(
+						'rtmedia_upload_not_allowed_message',
+						esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ),
+						'activity'
+					),
+					RTMediaUpload::$wp_kses_allowed_tags
+				)
+			);
 		}
 	}
 
@@ -929,7 +946,11 @@ class RTMediaBuddyPressActivity {
 				$index = $activity_index_array[ $a ];
 
 				// Generating user_link with display name.
-				$user_link = '<a href="' . esc_url( $activities[ $index ]->primary_link ) . '">' . esc_html( $activities[ $index ]->display_name ) . '</a>';
+				$user_link = sprintf(
+					'<a href="%1$s">%2$s</a>',
+					esc_url( $activities[ $index ]->primary_link ),
+					esc_html( $activities[ $index ]->display_name )
+				);
 
 				if ( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) {
 					// Counting media linked with activity.
@@ -1002,18 +1023,30 @@ class RTMediaBuddyPressActivity {
 
 					// Create activity on media like.
 					$user     = get_userdata( $user_id );
-					$username = '<a href="' . esc_url( get_rtmedia_user_link( $user_id ) ) . '">' . esc_html( $user->display_name ) . '</a>';
+					$username = sprintf(
+						'<a href="%1$s">%2$s</a>',
+						esc_url( get_rtmedia_user_link( $user_id ) ),
+						esc_html( $user->display_name )
+					);
 
 					$media_author = $obj->owner;
 
 					$primary_link = get_rtmedia_permalink( $media_id );
 
 					$media_const = 'RTMEDIA_' . strtoupper( $obj->media->media_type ) . '_LABEL';
-					$media_str   = '<a href="' . esc_url( $primary_link ) . '">' . esc_html( constant( $media_const ) ) . '</a>';
+					$media_str   = sprintf(
+						'<a href="%1$s">%2$s</a>',
+						esc_url( $primary_link ),
+						esc_html( constant( $media_const ) )
+					);
 
 					if ( 'group' === $media_obj->context ) {
 						$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
-						$group_name = '<a href="' . esc_url( bp_get_group_permalink( $group_data ) ) . '">' . esc_html( $group_data->name ) . '</a>';
+						$group_name = sprintf(
+							'<a href="%1$s">%2$s</a>',
+							esc_url( bp_get_group_permalink( $group_data ) ),
+							esc_html( $group_data->name )
+						);
 						// translators: 1: username, 2: media, 3: group name.
 						$action = sprintf( esc_html__( '%1$s liked a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
 					} else {
@@ -1022,7 +1055,11 @@ class RTMediaBuddyPressActivity {
 							$action = sprintf( esc_html__( '%1$s liked their %2$s', 'buddypress-media' ), $username, $media_str );
 						} else {
 							$media_author_data = get_userdata( $media_author );
-							$media_author_name = '<a href="' . esc_url( get_rtmedia_user_link( $media_author ) ) . '">' . esc_html( $media_author_data->display_name ) . '</a>';
+							$media_author_name = sprintf(
+								'<a href="%1$s">%2$s</a>',
+								esc_url( get_rtmedia_user_link( $media_author ) ),
+								esc_html( $media_author_data->display_name )
+							);
 							// translators: 1: username, 2: author, 3: media.
 							$action = sprintf( esc_html__( '%1$s liked %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
 						}
@@ -1101,18 +1138,30 @@ class RTMediaBuddyPressActivity {
 
 					$user_id  = $params['user_id'];
 					$user     = get_userdata( $user_id );
-					$username = '<a href="' . esc_url( get_rtmedia_user_link( $user_id ) ) . '">' . esc_html( $user->display_name ) . '</a>';
+					$username = sprintf(
+						'<a href="%1$s">%2$s</a>',
+						esc_url( get_rtmedia_user_link( $user_id ) ),
+						esc_html( $user->display_name )
+					);
 
 					$primary_link = get_rtmedia_permalink( $media_id );
 
 					$media_const = 'RTMEDIA_' . strtoupper( $media_obj->media_type ) . '_LABEL';
-					$media_str   = '<a href="' . esc_url( $primary_link ) . '">' . constant( $media_const ) . '</a>';
+					$media_str   = sprintf(
+						'<a href="%1$s">%2$s</a>',
+						esc_url( $primary_link ),
+						constant( $media_const )
+					);
 
 					$media_author = $media_obj->media_author;
 
 					if ( 'group' === $media_obj->context ) {
 						$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
-						$group_name = '<a href="' . esc_url( bp_get_group_permalink( $group_data ) ) . '">' . esc_html( $group_data->name ) . '</a>';
+						$group_name = sprintf(
+							'<a href="%1$s">%2$s</a>',
+							esc_url( bp_get_group_permalink( $group_data ) ),
+							esc_html( $group_data->name )
+						);
 						// translators: 1: username, 2: media, 3: group name.
 						$action = sprintf( esc_html__( '%1$s commented on a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
 					} else {
@@ -1122,7 +1171,11 @@ class RTMediaBuddyPressActivity {
 							$action = sprintf( esc_html__( '%1$s commented on their %2$s', 'buddypress-media' ), $username, $media_str );
 						} else {
 							$media_author_data = get_userdata( $media_author );
-							$media_author_name = '<a href="' . esc_url( get_rtmedia_user_link( $media_author ) ) . '">' . esc_html( $media_author_data->display_name ) . '</a>';
+							$media_author_name = sprintf(
+								'<a href="%1$s">%2$s</a>',
+								esc_url( get_rtmedia_user_link( $media_author ) ),
+								esc_html( $media_author_data->display_name )
+							);
 							// translators: 1: username, 2: author, 3: media.
 							$action = sprintf( esc_html__( '%1$s commented on %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
 						}

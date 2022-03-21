@@ -108,7 +108,22 @@ class RTMediaGalleryItemAction {
 		$context_id = $media_array->context_id;
 		$user_id    = get_current_user_id();
 
-		$media_array->media_actions = "<div class='rtmedia-gallery-item-actions'><a href='" . esc_url( $media_array->rt_permalink ) . "edit' class='no-popup' target='_blank' title='" . esc_attr__( 'Edit this media', 'buddypress-media' ) . "'><i class='dashicons dashicons-edit'></i>" . esc_html__( 'Edit', 'buddypress-media' ) . "</a><a href='#' class='no-popup rtm-delete-media' title='" . esc_attr__( 'Delete this media', 'buddypress-media' ) . "' ><i class='dashicons dashicons-trash'></i>" . esc_html__( 'Delete', 'buddypress-media' ) . '</a></div>';
+		$media_array->media_actions = sprintf(
+			'<div class="rtmedia-gallery-item-actions">
+				<a href="%1$sedit" class="no-popup" target="_blank" title="%2$s">
+					<i class="dashicons dashicons-edit"></i>%3$s
+				</a>
+				<a href="#" class="no-popup rtm-delete-media" title="%4$s">
+					<i class="dashicons dashicons-trash"></i>%5$s
+				</a>
+			</div>',
+			esc_url( $media_array->rt_permalink ),
+			esc_attr__( 'Edit this media', 'buddypress-media' ),
+			esc_html__( 'Edit', 'buddypress-media' ),
+			esc_attr__( 'Delete this media', 'buddypress-media' ),
+			esc_html__( 'Delete', 'buddypress-media' )
+		);
+
 		if ( ! ( is_rt_admin() || ( function_exists( 'groups_is_user_mod' ) && groups_is_user_mod( $user_id, $context_id ) ) || intval( $media_array->media_author ) === get_current_user_id() ) ) {
 			$media_array->media_actions = '';
 		}

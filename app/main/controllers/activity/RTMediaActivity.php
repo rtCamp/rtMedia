@@ -264,12 +264,24 @@ class RTMediaActivity {
 					$poster = '';
 				}
 				if ( empty( $youtube_url ) ) {
-					$html = '<video %s src="%s" width="%d" height="%d" type="video/mp4" class="%s" id="rt_media_video_%s" controls="controls" preload="none"></video>';
-					$html = sprintf( $html, $poster, esc_url( wp_get_attachment_url( $media->media_id ) ), esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_width'] ), esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_height'] ), $video_class, esc_attr( $media->id ) );
+					$html = sprintf(
+						'<video %1$s src="%2$s" width="%3$d" height="%4$d" type="video/mp4" class="%5$s" id="rt_media_video_%6$s" controls="controls" preload="none"></video>',
+						$poster,
+						esc_url( wp_get_attachment_url( $media->media_id ) ),
+						esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_width'] ),
+						esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_height'] ),
+						$video_class,
+						esc_attr( $media->id )
+					);
 				}
 			} elseif ( 'music' === $media->media_type ) {
-				$html = '<audio src="%s" width="%d" height="0" type="audio/mp3" class="wp-audio-shortcode" id="rt_media_audio_%s" controls="controls" preload="none"></audio>';
-				$html = sprintf( $html, esc_url( wp_get_attachment_url( $media->media_id ) ), esc_attr( $rtmedia->options['defaultSizes_music_activityPlayer_width'] ), esc_attr( $media->id ) );
+
+				$html = sprintf(
+					'<audio src="%1$s" width="%2$d" height="0" type="audio/mp3" class="wp-audio-shortcode" id="rt_media_audio_%3$s" controls="controls" preload="none"></audio>',
+					esc_url( wp_get_attachment_url( $media->media_id ) ),
+					esc_attr( $rtmedia->options['defaultSizes_music_activityPlayer_width'] ),
+					esc_attr( $media->id )
+				);
 			}
 		}
 
