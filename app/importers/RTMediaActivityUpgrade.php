@@ -272,14 +272,13 @@ class RTMediaActivityUpgrade {
 			<?php
 			wp_nonce_field( 'rtmedia_media_activity_upgrade_nonce', 'rtmedia_media_activity_upgrade_nonce' );
 
-			// translators: %1$s: Pending count, %2$s: Estimated.
 			printf(
+				// translators: %2$s: Estimated.
 				'<span class="pending">%1$s %2$s</span><br />',
 				esc_html( rtmedia_migrate_formatseconds( $total - $done ) ),
 				esc_html__( '(estimated)', 'buddypress-media' )
 			);
 
-			// translators: %1$s: Finished count, %2$s: Total count.
 			printf(
 				'<span class="finished">%1$s</span>/<span class="total">%2$s</span>',
 				esc_html( $done ),

@@ -534,14 +534,11 @@ class RTMediaMigration {
 			<hr/>
 
 			<?php
-
-			// translators: %1$s: Pending count.
 			printf(
 				'<span class="pending">%1$s</span><br />',
 				esc_html( $this->format_seconds( $total - $done ) )
 			);
 
-			// translators: %1$s: Finished count, %2$s: Total count.
 			printf(
 				'<span class="finished">%1$s</span>/<span class="total">%2$s</span>',
 				esc_html( $done ),
