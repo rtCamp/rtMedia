@@ -329,9 +329,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function rtmedia_premium_addon_notice() {
 			$site_option = rtmedia_get_site_option( 'rtmedia_premium_addon_notice' );
 
+			$premium_addon_notice = apply_filters( 'rt_premium_addon_notice', true );
 			if ( ( ! $site_option || 'hide' !== $site_option ) ) {
-				rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
-				?>
+				if ( true === $premium_addon_notice ) {
+					rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
+					?>
 				<div class="notice is-dismissible updated rtmedia-pro-split-notice">
 					<?php wp_nonce_field( 'rtcamp_pro_split', 'rtm_nonce' ); ?>
 					<p>
@@ -340,7 +342,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							$product_page = esc_url( 'https://rtmedia.io/products/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' );
 
 							// translators: 1. Product page link.
-							$message = sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page );
+							$message = apply_filters( 'rt_premium_addon_notice_message', sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page ), $product_page );
 							?>
 							<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
 							<?php
@@ -366,7 +368,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						});
 					});
 				</script>
-				<?php
+					<?php
+				}
 			}
 		}
 
