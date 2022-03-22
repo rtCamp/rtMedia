@@ -197,7 +197,11 @@ function rtmedia_author_profile_pic( $show_link = true, $echo = true, $author_id
 		$profile_pic = '';
 
 		if ( $show_link ) {
-			$profile_pic .= "<a href='" . esc_url( get_rtmedia_user_link( $author_id ) ) . "' title='" . esc_attr( rtmedia_get_author_name( $author_id ) ) . "'>";
+			$profile_pic .= sprintf(
+				'<a href="%1$s" title="%2$s">',
+				esc_url( get_rtmedia_user_link( $author_id ) ),
+				esc_attr( rtmedia_get_author_name( $author_id ) )
+			);
 		}
 
 		$size = apply_filters( 'rtmedia_single_media_profile_picture_size', 90 );
@@ -223,7 +227,11 @@ function rtmedia_author_profile_pic( $show_link = true, $echo = true, $author_id
 					)
 				);
 			} else {
-				$profile_pic .= "<img src='" . esc_url( bp_core_avatar_default() ) . "' width='" . esc_attr( $size ) . "'  height='" . esc_attr( $size ) . "' />";
+				$profile_pic .= sprintf(
+					'<img src="%1$s" width="%2$s" height="%2$s" />',
+					esc_url( bp_core_avatar_default() ),
+					esc_attr( $size )
+				);
 			}
 		} else {
 			$profile_pic .= get_avatar( $author_id, $size );
@@ -262,7 +270,12 @@ function rtmedia_author_name( $show_link = true ) {
 		$show_link = apply_filters( 'rtmedia_single_media_show_profile_name_link', $show_link );
 
 		if ( $show_link ) {
-			echo "<a href='" . esc_url( get_rtmedia_user_link( $rtmedia_media->media_author ) ) . "' title='" . esc_attr( rtmedia_get_author_name( $rtmedia_media->media_author ) ) . "'>";
+
+			printf(
+				'<a href="%1$s" title="%2$s">',
+				esc_url( get_rtmedia_user_link( $rtmedia_media->media_author ) ),
+				esc_attr( rtmedia_get_author_name( $rtmedia_media->media_author ) )
+			);
 		}
 
 		echo esc_html( rtmedia_get_author_name( $rtmedia_media->media_author ) );
@@ -601,13 +614,21 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			if ( empty( $youtube_url ) ) {
 
 				// added poster for showing thumbnail and changed preload value to fix rtMedia GL-209.
-				$html_video = '<video poster="%s" src="%s" %s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%s" controls="controls" preload="metadata"></video>';
-				$html      .= sprintf( $html_video, esc_url( $rtmedia_media->cover_art ), esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ), esc_attr( $size ), esc_attr( $rtmedia_media->id ) );
+				$html .= sprintf(
+					'<video poster="%1$s" src="%2$s" %3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata"></video>',
+					esc_url( $rtmedia_media->cover_art ),
+					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
+					esc_attr( $size ),
+					esc_attr( $rtmedia_media->id )
+				);
 
 			} else {
 
-				$html_video = '<video width="640" height="360" class="url-video" id="video-id-%s" preload="none"><source type="video/youtube" src="%s" /></video>';
-				$html      .= sprintf( $html_video, esc_attr( $rtmedia_media->id ), esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ) );
+				$html .= sprintf(
+					'<video width="640" height="360" class="url-video" id="video-id-%1$s" preload="none"><source type="video/youtube" src="%2$s" /></video>',
+					esc_attr( $rtmedia_media->id ),
+					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) )
+				);
 
 			}
 
@@ -623,8 +644,12 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 				$size = '';
 			}
 
-			$audio_html = '<audio src="%s" %s type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_%s" controls="controls" preload="none"></audio>';
-			$html       = sprintf( $audio_html, esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ), esc_attr( $size ), esc_attr( $rtmedia_media->id ) );
+			$html = sprintf(
+				'<audio src="%1$s" %2$s type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_%3$s" controls="controls" preload="none"></audio>',
+				esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
+				esc_attr( $size ),
+				esc_attr( $rtmedia_media->id )
+			);
 		} else {
 			$html = false;
 		}
@@ -971,7 +996,7 @@ function rtmedia_duration( $id = false ) {
 		}
 
 		$duration = str_replace( '-:--', '', $duration );
-		$duration = '<span class="rtmedia_time" >' . esc_attr( $duration ) . '</span>';
+		$duration = sprintf( '<span class="rtmedia_time" >%1$s</span>', esc_attr( $duration ) );
 	}
 
 	return $duration;
@@ -1077,9 +1102,17 @@ function rtmedia_title_input() {
 	$html  = '';
 
 	if ( 'edit' === rtmedia_request_action() ) {
-		$html .= '<input type="text" class="rtmedia-title-editor" name="' . esc_attr( $name ) . '" id="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '">';
+		$html .= sprintf(
+			'<input type="text" class="rtmedia-title-editor" name="%1$s" id="%1$s" value="%2$s">',
+			esc_attr( $name ),
+			esc_attr( $value )
+		);
 	} else {
-		$html .= '<h2 name="' . esc_attr( $name ) . '" id="' . esc_attr( $name ) . '">' . esc_html( $value ) . '</h2>';
+		$html .= sprintf(
+			'<h2 name="%1$s" id="%1$s">%2$s</h2>',
+			esc_attr( $name ),
+			esc_html( $value )
+		);
 	}
 
 	$html .= '';
@@ -1128,10 +1161,19 @@ function rtmedia_description_input( $editor = true, $echo = false ) {
 
 			$html .= ob_get_clean();
 		} else {
-			$html .= '<div name="' . esc_attr( $name ) . '" id="' . esc_attr( $name ) . '">' . wp_kses_post( $value ) . '</div>';
+			$html .= sprintf(
+				'<div name="%1$s" id="%1$s">%2$s</div>',
+				esc_attr( $name ),
+				wp_kses_post( $value )
+			);
 		}
 	} else {
-		$html .= "<textarea name='" . esc_attr( $name ) . "' id='" . esc_attr( $name ) . "' class='rtmedia-desc-textarea'>" . esc_textarea( $value ) . '</textarea>';
+
+		$html .= sprintf(
+			'<textarea name="%1$s" id="%1$s" class="rtmedia-desc-textarea">%2$s</textarea>',
+			esc_attr( $name ),
+			esc_textarea( $value )
+		);
 	}
 
 	$html .= '';
@@ -1274,15 +1316,22 @@ function rtmedia_current_media() {
 function rtmedia_edit_form() {
 
 	if ( is_user_logged_in() && rtmedia_edit_allowed() ) {
-		$edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons" >' . esc_html__( 'Edit', 'buddypress-media' ) . '</button>';
-		$edit_button = apply_filters( 'rtmedia_edit_button_filter', $edit_button );
-		$button      = '<form action="' . esc_url( get_rtmedia_permalink( rtmedia_id() ) ) . 'edit/">' . $edit_button . '</form>';
 
-		return $button;
+		$edit_button = sprintf(
+			'<button type="submit" class="rtmedia-edit rtmedia-action-buttons">%1$s</button>',
+			esc_html__( 'Edit', 'buddypress-media' )
+		);
+
+		$edit_button = apply_filters( 'rtmedia_edit_button_filter', $edit_button );
+
+		return sprintf(
+			'<form action="%1$sedit/">%2$s</form>',
+			esc_url( get_rtmedia_permalink( rtmedia_id() ) ),
+			$edit_button
+		);
 	}
 
 	return false;
-
 }
 
 /**
@@ -1293,9 +1342,19 @@ function rtmedia_actions() {
 	$actions = array();
 
 	if ( is_user_logged_in() && rtmedia_edit_allowed() ) {
-		$edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons button" >' . esc_html__( 'Edit', 'buddypress-media' ) . '</button>';
+
+		$edit_button = sprintf(
+			'<button type="submit" class="rtmedia-edit rtmedia-action-buttons button" >%1$s</button>',
+			esc_html__( 'Edit', 'buddypress-media' )
+		);
+
 		$edit_button = apply_filters( 'rtmedia_edit_button_filter', $edit_button );
-		$actions[]   = '<form action="' . esc_url( get_rtmedia_permalink( rtmedia_id() ) ) . 'edit/">' . $edit_button . '</form>';
+
+		$actions[] = sprintf(
+			'<form action="%1$sedit/">%2$s</form>',
+			esc_url( get_rtmedia_permalink( rtmedia_id() ) ),
+			$edit_button
+		);
 	}
 
 	$actions = apply_filters( 'rtmedia_action_buttons_before_delete', $actions );
@@ -1340,7 +1399,11 @@ function rtmedia_comments( $echo = true ) {
 
 	if ( empty( $comment_media ) ) {
 
-		$html         = '<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="' . esc_url( get_rtmedia_permalink( rtmedia_id() ) ) . 'delete-comment/">';
+		$html = sprintf(
+			'<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="%1$sdelete-comment/">',
+			esc_url( get_rtmedia_permalink( rtmedia_id() ) )
+		);
+
 		$comments     = get_comments(
 			array(
 				'post_id' => $rtmedia_media->media_id,
@@ -1359,7 +1422,13 @@ function rtmedia_comments( $echo = true ) {
 		if ( ! empty( $comment_list ) ) {
 			$html .= $comment_list;
 		} else {
-			$html .= "<li id='rtmedia-no-comments' class='rtmedia-no-comments'>" . apply_filters( 'rtmedia_single_media_no_comment_messege', esc_html__( 'There are no comments on this media yet.', 'buddypress-media' ) ) . '</li>';
+			$html .= sprintf(
+				'<li id="rtmedia-no-comments" class="rtmedia-no-comments">%1$s</li>',
+				apply_filters(
+					'rtmedia_single_media_no_comment_messege',
+					esc_html__( 'There are no comments on this media yet.', 'buddypress-media' )
+				)
+			);
 		}
 
 		$html .= '</ul>';
@@ -1394,8 +1463,11 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 		if ( $i < $hide ) {
 			$class = 'hide';
 			if ( 0 === $i ) {
-				// translators: %s Count of comments.
-				echo '<div class="rtmedia-like-info"><span id="rtmedia_show_all_comment"> ' . sprintf( esc_html__( 'Show all %s comments', 'buddypress-media' ), esc_html( $count ) ) . ' </span></div>';
+				printf(
+					'<div class="rtmedia-like-info"><span id="rtmedia_show_all_comment">%1$s</span></div>',
+					// translators: %s Count of comments.
+					sprintf( esc_html__( 'Show all %s comments', 'buddypress-media' ), esc_html( $count ) )
+				);
 			}
 		}
 	}
@@ -1404,7 +1476,13 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 	$html .= '<li class="rtmedia-comment ' . $class . ' ">';
 
 	if ( $comment['user_id'] ) {
-		$user_link   = "<a href='" . esc_url( get_rtmedia_user_link( $comment['user_id'] ) ) . "' title='" . esc_attr( rtmedia_get_author_name( $comment['user_id'] ) ) . "'>" . esc_html( rtmedia_get_author_name( $comment['user_id'] ) ) . '</a>';
+
+		$user_link   = sprintf(
+			'<a href="%1$s" title="%2$s">%3$s</a>',
+			esc_url( get_rtmedia_user_link( $comment['user_id'] ) ),
+			esc_attr( rtmedia_get_author_name( $comment['user_id'] ) ),
+			esc_html( rtmedia_get_author_name( $comment['user_id'] ) )
+		);
 		$user_name   = apply_filters( 'rtmedia_comment_author_name', $user_link, $comment );
 		$profile_pic = rtmedia_author_profile_pic( true, false, $comment['user_id'] );
 	} else {
@@ -1428,7 +1506,12 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 	$html .= '<div class="rtmedia-comment-extra">' . apply_filters( 'rtmedia_comment_extra', '', $comment ) . '</div>';
 
 	if ( is_rt_admin() || ( isset( $comment['user_id'] ) && ( get_current_user_id() === intval( $comment['user_id'] ) || intval( $rtmedia_media->media_author ) === get_current_user_id() ) ) || apply_filters( 'rtmedia_allow_comment_delete', false ) ) { // show delete button for comment author and admins.
-		$html .= '<i data-id="' . esc_attr( $comment['comment_ID'] ) . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt" title="' . esc_attr__( 'Delete Comment', 'buddypress-media' ) . '"></i>';
+
+		$html .= sprintf(
+			'<i data-id="%1$s" class="rtmedia-delete-comment dashicons dashicons-no-alt" title="%2$s"></i>',
+			esc_attr( $comment['comment_ID'] ),
+			esc_attr__( 'Delete Comment', 'buddypress-media' )
+		);
 	}
 
 	$html .= '<div class="clear"></div></div></div></li>';
