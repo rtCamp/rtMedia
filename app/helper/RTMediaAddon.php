@@ -619,7 +619,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 						?>
 					</span>
 					<span class="rtm-addon-purchased alignright product_type_simple">
-						<a href="#" class="button button-primary"><?php echo esc_html__( 'Get this', 'buddypress-media' ); ?></a>
+						<a href="<?php echo esc_url( 'https://rtmedia.io/rtmedia-premium' ); ?>" class="button button-primary"><?php echo esc_html__( 'Get this', 'buddypress-media' ); ?></a>
 					</span>
 					<?php
 					if ( '' !== $args['demo_link'] ) {
