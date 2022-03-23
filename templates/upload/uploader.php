@@ -153,6 +153,8 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
  * @param string $key   Input key.
  * @param string $value Input value.
  *
+ * since 4.6.11
+ *
  * @return void
  */
 function rtmedia_uploader_hidden_fields( $key, $value ) {

@@ -319,12 +319,12 @@ class RTMediaNav {
 				<a id="rtmedia-nav-item-albums" href="%2$s">%3$s<span class="count">%4$s</span></a>
 			</li>',
 				esc_attr( $albums ),
-				esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/album/',
+				esc_url( trailingslashit( $link ) . RTMEDIA_MEDIA_SLUG . '/album/' ),
 				esc_html( $album_label ),
 				esc_html( ( isset( $counts['total']['album'] ) ) ? rtmedia_number_to_human_readable( $counts['total']['album'] ) : 0 )
 			);
 
-			echo apply_filters( 'rtmedia_sub_nav_albums', $html_li );// @codingStandardsIgnoreLine
+			echo apply_filters( 'rtmedia_sub_nav_albums', $html_li ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		foreach ( $rtmedia->allowed_types as $type ) {
@@ -383,7 +383,7 @@ class RTMediaNav {
 				esc_html( ( isset( $counts['total'][ $type['name'] ] ) ) ? rtmedia_number_to_human_readable( $counts['total'][ $type['name'] ] ) : 0 )
 			);
 
-			echo apply_filters( 'rtmedia_sub_nav_' . $type['name'], $nav_li, $type['name'] ); // @codingStandardsIgnoreLine
+			echo apply_filters( 'rtmedia_sub_nav_' . $type['name'], $nav_li, $type['name'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		do_action( 'add_extra_sub_nav' );
