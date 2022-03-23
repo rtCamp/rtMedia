@@ -2316,7 +2316,12 @@ function rtmedia_delete_form( $echo = true ) {
 
 			do_action( 'rtmedia_media_single_delete_form' );
 
-			echo '<button type="submit" title="' . esc_attr__( 'Delete Media', 'buddypress-media' ) . '" class="rtmedia-delete-media rtmedia-action-buttons button">' . esc_html__( 'Delete', 'buddypress-media' ) . '</button></form>';
+			printf(
+				'<button type="submit" title="%1$s" class="rtmedia-delete-media rtmedia-action-buttons button">%2$s</button></form>',
+				esc_attr__( 'Delete Media', 'buddypress-media' ),
+				esc_html__( 'Delete', 'buddypress-media' )
+			);
+
 		} else {
 			$output          = $html;
 			$rtm_nonce       = RTMediaMedia::media_nonce_generator( rtmedia_id(), false );
@@ -2325,7 +2330,12 @@ function rtmedia_delete_form( $echo = true ) {
 
 			do_action( 'rtmedia_media_single_delete_form' );
 
-			$output .= $rtm_nonce_field . '<button type="submit" title="' . esc_attr__( 'Delete Media', 'buddypress-media' ) . '" class="rtmedia-delete-media rtmedia-action-buttons button">' . esc_html__( 'Delete', 'buddypress-media' ) . '</button></form>';
+			$output .= $rtm_nonce_field;
+			$output .= sprintf(
+				'<button type="submit" title="%1$s" class="rtmedia-delete-media rtmedia-action-buttons button">%2$s</button></form>',
+				esc_attr__( 'Delete Media', 'buddypress-media' ),
+				esc_html__( 'Delete', 'buddypress-media' )
+			);
 
 			return $output;
 		}
@@ -2355,7 +2365,18 @@ function rtmedia_uploader( $attr = '' ) {
 			}
 		}
 	} else {
-		echo "<div class='rtmedia-upload-not-allowed'>" . wp_kses( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ), 'media_gallery' ), RTMediaUpload::$wp_kses_allowed_tags ) . '</div>';
+
+		printf(
+			'<div class="rtmedia-upload-not-allowed">%1$s</div>',
+			wp_kses(
+				apply_filters(
+					'rtmedia_upload_not_allowed_message',
+					esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ),
+					'media_gallery'
+				),
+				RTMediaUpload::$wp_kses_allowed_tags
+			)
+		);
 	}
 
 }
@@ -2526,7 +2547,12 @@ function rtmedia_global_album_list( $selected_album_id = false ) {
 				$selected = 'selected="selected"';
 			}
 
-			$option .= '<option value="' . esc_attr( $album->id ) . '" ' . $selected . '>' . esc_html( $album->media_title ) . '</option>';
+			$option .= sprintf(
+				'<option value="%1$s" %2$s>%3$s</option>',
+				esc_attr( $album->id ),
+				$selected,
+				esc_html( $album->media_title )
+			);
 		}
 	}
 
@@ -2568,7 +2594,13 @@ function rtmedia_user_album_list( $get_all = false, $selected_album_id = false )
 		foreach ( $album_objects as $album ) {
 			if ( ! in_array( $album->id, array_map( 'intval', $global_albums ), true ) && ( ( isset( $rtmedia_query->media_query['album_id'] ) && ( $album->id !== $rtmedia_query->media_query['album_id'] || $get_all ) ) || ! isset( $rtmedia_query->media_query['album_id'] ) ) ) {
 				if ( 'profile' === $album->context ) {
-					$profile_option .= '<option value="' . esc_attr( $album->id ) . '" ' . selected( $selected_album_id, $album->id, false ) . '>' . esc_html( $album->media_title ) . '</option>';
+
+					$profile_option .= sprintf(
+						'<option value="%1$s" %2$s>%3$s</option>',
+						esc_attr( $album->id ),
+						selected( $selected_album_id, $album->id, false ),
+						esc_html( $album->media_title )
+					);
 				}
 			}
 		}
@@ -2577,11 +2609,21 @@ function rtmedia_user_album_list( $get_all = false, $selected_album_id = false )
 	$option = apply_filters( 'rtmedia_global_albums_in_uploader', "$global_option" );
 
 	if ( '' !== $profile_option ) {
-		$option .= "<optgroup label='" . esc_attr__( 'Profile Albums', 'buddypress-media' ) . " ' value = 'profile'>$profile_option</optgroup>";
+
+		$option .= sprintf(
+			'<optgroup label="%1$s" value="profile">%2$s</optgroup>',
+			esc_attr__( 'Profile Albums', 'buddypress-media' ),
+			$profile_option
+		);
 	}
 
 	if ( '' !== $option_group && class_exists( 'BuddyPress' ) ) {
-		$option .= "<optgroup label='" . esc_attr__( 'Group Albums', 'buddypress-media' ) . "' value = 'group'>$option_group</optgroup>";
+
+		$option .= sprintf(
+			'<optgroup label="%1$s" value="group">%2$s</optgroup>',
+			esc_attr__( 'Group Albums', 'buddypress-media' ),
+			$option_group
+		);
 	}
 
 	if ( $option ) {
@@ -2620,7 +2662,13 @@ function rtmedia_group_album_list( $selected_album_id = false ) {
 	if ( $album_objects ) {
 		foreach ( $album_objects as $album ) {
 			if ( ! in_array( $album->id, $global_albums, true ) && ( ( isset( $rtmedia_query->media_query['album_id'] ) && ( $album->id !== $rtmedia_query->media_query['album_id'] ) ) || ! isset( $rtmedia_query->media_query['album_id'] ) ) ) {
-				$option_group .= '<option value="' . esc_attr( $album->id ) . '" ' . selected( $selected_album_id, $album->id, false ) . '>' . esc_html( $album->media_title ) . '</option>';
+
+				$option_group .= sprintf(
+					'<option value="%1$s" %2$s>%3$s</option>',
+					esc_attr( $album->id ),
+					selected( $selected_album_id, $album->id, false ),
+					esc_html( $album->media_title )
+				);
 			}
 		}
 	}
@@ -2803,7 +2851,12 @@ function rtmedia_edit_media_privacy_ui() {
 	if ( isset( $rtmedia_query->media ) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media['0'] ) ) {
 		if ( isset( $rtmedia_query->media['0']->privacy ) && 80 !== intval( $rtmedia_query->media['0']->privacy ) ) {
 			if ( $privacy && empty( $comment_media ) ) {
-				return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . esc_html__( 'Privacy : ', 'buddypress-media' ) . '</label>' . $privacy . '</div>';
+
+				return sprintf(
+					'<div class="rtmedia-edit-privacy rtm-field-wrap"><label for="privacy">%1$s</label> : %2$s</div>',
+					esc_html__( 'Privacy', 'buddypress-media' ),
+					$privacy
+				);
 			}
 		}
 	}
@@ -3354,7 +3407,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 		}
 
 		if ( ! empty( $title ) && ! empty( $icon ) ) {
-			$privacy = "<i class='" . esc_attr( $icon ) . "' title='" . esc_attr( $title ) . "'></i>";
+			$privacy = sprintf( '<i class="%1$s" title="%2$s"></i>', esc_attr( $icon ), esc_attr( $title ) );
 		}
 	}
 

@@ -281,7 +281,18 @@ class RTMediaNav {
 		if ( ! isset( $rtmedia_query->action_query->media_type ) && ! isset( $rtmedia_query->query['media_type'] ) ) {
 			$all = 'current selected';
 		}
-		echo apply_filters( 'rtmedia_sub_nav_all', '<li id="rtmedia-nav-item-all-li" class="' . esc_attr( $all ) . '"><a id="rtmedia-nav-item-all" href="' . esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/">' . esc_html__( 'All', 'buddypress-media' ) . '<span class="count">' . esc_html( ( isset( $counts['total']['all'] ) ) ? rtmedia_number_to_human_readable( $counts['total']['all'] ) : 0 ) . '</span>' . '</a></li>' );// @codingStandardsIgnoreLine
+
+		$html_li = sprintf(
+			'<li id="rtmedia-nav-item-all-li" class="%1$s">
+				<a id="rtmedia-nav-item-all" href="%2$s">%3$s<span class="count">%4$s</span></a>
+			</li>',
+			esc_attr( $all ),
+			esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/',
+			esc_html__( 'All', 'buddypress-media' ),
+			esc_html( ( isset( $counts['total']['all'] ) ) ? rtmedia_number_to_human_readable( $counts['total']['all'] ) : 0 )
+		);
+
+		echo apply_filters( 'rtmedia_sub_nav_all', $html_li ); // @codingStandardsIgnoreLine
 		if ( ! isset( $rtmedia_query->action_query->action ) || empty( $rtmedia_query->action_query->action ) ) {
 			$default = true;
 		}
@@ -302,7 +313,18 @@ class RTMediaNav {
 
 			$counts['total']['album'] = $counts['total']['album'] + $other_count;
 			$album_label              = esc_html__( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'buddypress-media' );
-			echo apply_filters( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" class="' . esc_attr( $albums ) . '"><a id="rtmedia-nav-item-albums" href="' . esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/album/">' . esc_html( $album_label ) . '<span class="count">' . esc_html( ( isset( $counts['total']['album'] ) ) ? rtmedia_number_to_human_readable( $counts['total']['album'] ) : 0 ) . '</span>' . '</a></li>' );// @codingStandardsIgnoreLine
+
+			$html_li = sprintf(
+				'<li id="rtmedia-nav-item-albums-li" class="%1$s">
+				<a id="rtmedia-nav-item-albums" href="%2$s">%3$s<span class="count">%4$s</span></a>
+			</li>',
+				esc_attr( $albums ),
+				esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/album/',
+				esc_html( $album_label ),
+				esc_html( ( isset( $counts['total']['album'] ) ) ? rtmedia_number_to_human_readable( $counts['total']['album'] ) : 0 )
+			);
+
+			echo apply_filters( 'rtmedia_sub_nav_albums', $html_li );// @codingStandardsIgnoreLine
 		}
 
 		foreach ( $rtmedia->allowed_types as $type ) {
@@ -346,13 +368,22 @@ class RTMediaNav {
 			}
 
 			$type_label = esc_html__( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'buddypress-media' );
-			echo apply_filters( 'rtmedia_sub_nav_' . $type['name'], '<li id="rtmedia-nav-item-' . esc_attr( $type['name'] ) // @codingStandardsIgnoreLine
-				. '-' . esc_attr( $context ) . '-' . esc_attr( $context_id ) . '-li" ' . $selected
-				. '><a id="rtmedia-nav-item-' . esc_attr( $type['name'] ) . '" href="' . esc_url(
-					$profile_link . RTMEDIA_MEDIA_SLUG . '/'
-				. constant( 'RTMEDIA_' . $name . '_SLUG' ) . '/' ) . '">'
-				. $type_label . '<span class="count">' . esc_html( ( isset( $counts['total'][ $type['name'] ] ) ) ? rtmedia_number_to_human_readable( $counts['total'][ $type['name'] ] ) : 0 ) . '</span>' . '</a></li>', $type['name']
+
+			$nav_li = sprintf(
+				'<li id="rtmedia-nav-item-%1$s-%2$s-%3$s-li" %4$s>
+					<a id="rtmedia-nav-item-%5$s" href="%6$s">%7$s<span class="count">%8$s</span></a>
+				</li>',
+				esc_attr( $type['name'] ),
+				esc_attr( $context ),
+				esc_attr( $context_id ),
+				$selected,
+				esc_attr( $type['name'] ),
+				esc_url( $profile_link . RTMEDIA_MEDIA_SLUG . '/' . constant( 'RTMEDIA_' . $name . '_SLUG' ) . '/' ),
+				$type_label,
+				esc_html( ( isset( $counts['total'][ $type['name'] ] ) ) ? rtmedia_number_to_human_readable( $counts['total'][ $type['name'] ] ) : 0 )
 			);
+
+			echo apply_filters( 'rtmedia_sub_nav_' . $type['name'], $nav_li, $type['name'] ); // @codingStandardsIgnoreLine
 		}
 
 		do_action( 'add_extra_sub_nav' );
