@@ -287,7 +287,7 @@ class RTMediaNav {
 				<a id="rtmedia-nav-item-all" href="%2$s">%3$s<span class="count">%4$s</span></a>
 			</li>',
 			esc_attr( $all ),
-			esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/',
+			esc_url( trailingslashit( $link ) . RTMEDIA_MEDIA_SLUG . '/' ),
 			esc_html__( 'All', 'buddypress-media' ),
 			esc_html( ( isset( $counts['total']['all'] ) ) ? rtmedia_number_to_human_readable( $counts['total']['all'] ) : 0 )
 		);
