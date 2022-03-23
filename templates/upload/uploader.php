@@ -153,7 +153,7 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
  * @param string $key   Input key.
  * @param string $value Input value.
  *
- * since 4.6.11
+ * @since 4.6.11
  *
  * @return void
  */
