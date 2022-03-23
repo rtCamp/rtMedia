@@ -443,17 +443,6 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					'purchased'    => ( defined( 'RTMEDIA_MYCRED_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-mycred/index.php' ) ) ? true : false,
 				),
 				array(
-					'title'        => esc_html__( 'CubePoints', 'buddypress-media' ),
-					'img_src'      => $rtcamp_upload_url . 'edd/2015/06/rtmedia-cubepoints.jpg',
-					'product_link' => 'https://rtmedia.io/products/rtmedia-cubepoints/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'desc'         => '<p>' . esc_html__( 'If you are using CubePoints plugin on your website than rtMedia CubePoint add-on can be integrate with that plugin to setup point management system for rtMedia related activities.', 'buddypress-media' ) . '</p>',
-					'price'        => '$49',
-					'demo_link'    => $rtmedia_demo_url . '?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'buy_now'      => 'https://rtmedia.io/products/rtmedia-cubepoints/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'category'     => 'general',
-					'purchased'    => ( defined( 'RTMEDIA_CUBEPOINTS_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-cubepoints/index.php' ) ) ? true : false,
-				),
-				array(
 					'title'        => esc_html__( 'Social Sync', 'buddypress-media' ),
 					'img_src'      => $rtcamp_upload_url . 'edd/2015/08/rtMedia-Social-Sync.png',
 					'product_link' => 'https://rtmedia.io/products/rtmedia-social-sync/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
