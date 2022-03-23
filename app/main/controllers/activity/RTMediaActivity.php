@@ -184,7 +184,7 @@ class RTMediaActivity {
 		}
 
 		$media_container_start = sprintf(
-			'<ul class="%s %s rtmedia-activity-media-length-%s %s">',
+			'<ul class="%1$s %2$s rtmedia-activity-media-length-%3$s %4$s">',
 			esc_attr( $media_container_start_class ),
 			esc_attr( $rtmedia_activity_ul_class ),
 			esc_attr( $count ),

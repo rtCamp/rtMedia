@@ -94,8 +94,7 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 			include_once ABSPATH . 'wp-admin/includes/image-edit.php';
 			$nonce         = wp_create_nonce( "image_editor-$media_id" );
 			$modify_button = sprintf(
-				'<p><input type="button" class="button rtmedia-image-edit" id="imgedit-open-btn-%1$s" onclick="imageEdit.open( %2$s, %3$s )" value="%4$s"> <span class="spinner"></span></p>',
-				esc_attr( $media_id ),
+				'<p><input type="button" class="button rtmedia-image-edit" id="imgedit-open-btn-%1$s" onclick="imageEdit.open( %1$s, %2$s )" value="%3$s"> <span class="spinner"></span></p>',
 				esc_attr( $media_id ),
 				esc_attr( $nonce ),
 				esc_attr__( 'Modify Image', 'buddypress-media' )
@@ -895,7 +894,11 @@ function add_search_filter( $attr = null ) {
 		}
 
 		$html  = "<form method='post' id='media_search_form' class='media_search'>";
-		$html .= "<input type='text' id='media_search_input' value='" . esc_attr( $search_value ) . "' class='media_search_input' name='media_search' value='' placeholder='" . __( 'Search Media', 'buddypress-media' ) . "'>";
+		$html .= sprintf(
+			'<input type="text" id="media_search_input" value="%1$s" placeholder="%2$s" class="media_search_input" name="media_search">',
+			esc_attr( $search_value ),
+			__( 'Search Media', 'buddypress-media' )
+		);
 		$html .= "<span id='media_fatch_loader'></span>";
 
 		$search_by = '';
@@ -1088,7 +1091,7 @@ function rtmedia_after_media_swipe_tooltip() {
 		?>
 			<div id="mobile-swipe-overlay">
 				<div class="swipe-icon">
-					<img src="<?php echo esc_url( RTMEDIA_URL . '/app/assets/img/swipe-tooltip.png' ); ?>" />
+					<img src="<?php echo esc_url( RTMEDIA_URL . '/app/assets/img/swipe-tooltip.png' ); ?>" alt="" />
 				</div>
 				<p class="swipe-tootlip"><?php esc_html_e( 'Please swipe for more media.', 'buddypress-media' ); ?></p>
 			</div>

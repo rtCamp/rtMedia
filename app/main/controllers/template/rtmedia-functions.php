@@ -996,7 +996,7 @@ function rtmedia_duration( $id = false ) {
 		}
 
 		$duration = str_replace( '-:--', '', $duration );
-		$duration = sprintf( '<span class="rtmedia_time" >%1$s</span>', esc_attr( $duration ) );
+		$duration = sprintf( '<span class="rtmedia_time">%1$s</span>', esc_attr( $duration ) );
 	}
 
 	return $duration;
@@ -1344,7 +1344,7 @@ function rtmedia_actions() {
 	if ( is_user_logged_in() && rtmedia_edit_allowed() ) {
 
 		$edit_button = sprintf(
-			'<button type="submit" class="rtmedia-edit rtmedia-action-buttons button" >%1$s</button>',
+			'<button type="submit" class="rtmedia-edit rtmedia-action-buttons button">%1$s</button>',
 			esc_html__( 'Edit', 'buddypress-media' )
 		);
 
@@ -1867,57 +1867,12 @@ function rtmedia_get_pagination_values() {
 
 	if ( 1 !== intval( $pages ) ) {
 
-		$rtmedia_media_pages .= "<div class='rtm-pagination clearfix'>";
-		$rtmedia_media_pages .= "<div class='rtmedia-page-no rtm-page-number'>";
-		$rtmedia_media_pages .= "<span class='rtm-label'>";
-		$rtmedia_media_pages .= esc_html( apply_filters( 'rtmedia_goto_page_label', esc_html__( 'Go to page no : ', 'buddypress-media' ) ) );
-		$rtmedia_media_pages .= '</span>';
-		$rtmedia_media_pages .= "<input type='hidden' id='rtmedia_first_page' value='1' />";
-		$rtmedia_media_pages .= "<input type='hidden' id='rtmedia_last_page' value='" . esc_attr( $pages ) . "' />";
-		$rtmedia_media_pages .= "<input type='number' value='" . esc_attr( $paged ) . "' min='1' max='" . esc_attr( $pages ) . "' class='rtm-go-to-num' id='rtmedia_go_to_num' />";
-		$rtmedia_media_pages .= "<a class='rtmedia-page-link button' data-page-type='num' data-page-base-url='" . $page_base_url . "' href='#'>" . esc_html__( 'Go', 'buddypress-media' ) . '</a>';
-		$rtmedia_media_pages .= "</div><div class='rtm-paginate'>";
+		ob_start();
 
-		if ( $paged > 1 && $showitems < $pages ) {
-			$page_url = ( ( rtmedia_page() - 1 ) === 1 ) ? '' : $page_base_url . ( rtmedia_page() - 1 );
+		require_once RTMEDIA_PATH . 'app/main/templates/media-pagination.php';
 
-			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='prev' href='" . esc_url( $page_url ) . "'><i class='dashicons dashicons-arrow-left-alt2'></i></a>";
-		}
+		$rtmedia_media_pages = ob_get_clean();
 
-		if ( $paged > 2 && $paged > $range + 1 && $showitems < $pages ) {
-			$page_url = $page_base_url . '1';
-
-			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='1' href='" . esc_url( $page_url ) . "'>1</a>";
-			if ( $paged > 3 ) {
-				$rtmedia_media_pages .= '<span>...</span>';
-			}
-		}
-
-		for ( $i = 1; $i <= $pages; $i ++ ) {
-			if ( 1 !== $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
-				$page_url = $page_base_url . $i;
-
-				$rtmedia_media_pages .= ( $paged === $i ) ? "<span class='current'>" . esc_html( $i ) . '</span>' : "<a class='rtmedia-page-link' data-page-type='page' data-page='" . esc_attr( $i ) . "' href='" . esc_url( $page_url ) . "' class='inactive' >" . esc_html( $i ) . '</a>';
-			}
-		}
-
-		if ( $paged < $pages - 1 && $paged + $range - 1 < $pages && $showitems < $pages ) {
-			$page_url = $page_base_url . $pages;
-
-			if ( $paged + 2 < $pages ) {
-				$rtmedia_media_pages .= '<span>...</span>';
-			}
-
-			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='" . esc_attr( $pages ) . "' href='" . esc_url( $page_url ) . "'>" . esc_html( $pages ) . '</a>';
-		}
-
-		if ( $paged < $pages && $showitems < $pages ) {
-			$page_url = $page_base_url . ( rtmedia_page() + 1 );
-
-			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='next' href='" . esc_url( $page_url ) . "'><i class='dashicons dashicons-arrow-right-alt2'></i></a>";
-		}
-
-		$rtmedia_media_pages .= '</div></div>';
 	} // End if.
 
 	return $rtmedia_media_pages;
@@ -2676,7 +2631,12 @@ function rtmedia_group_album_list( $selected_album_id = false ) {
 	$option = $global_option;
 
 	if ( ! empty( $option_group ) ) {
-		$option .= "<optgroup label='" . esc_attr__( 'Group Albums', 'buddypress-media' ) . "' value = 'group'>$option_group</optgroup>";
+
+		$option .= sprintf(
+			'<optgroup label="%1$s" value="group">%2$s</optgroup>',
+			esc_attr__( 'Group Albums', 'buddypress-media' ),
+			$option_group
+		);
 	}
 
 	if ( $option ) {
@@ -5125,7 +5085,7 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 		$item_id     = 'media-like' . $like->id;
 		$group_id    = 'media-like';
 		$media_url   = wp_get_attachment_url( $like->media_id );
-		$media_url   = "<a href='" . esc_url( $media_url ) . "'>" . esc_url( $media_url ) . '</a>';
+		$media_url   = sprintf( '<a href="%1$s">%1$s</a>', esc_url( $media_url ) );
 		$group_label = esc_html__( 'rtMedia Media Likes', 'buddypress-media' );
 
 		$data = array(
