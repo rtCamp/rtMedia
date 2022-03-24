@@ -13,7 +13,6 @@
 	wp_nonce_field( 'rtmedia_media_size_import_nonce', 'rtmedia_media_size_import_nonce' );
 
 	printf(
-	// translators: %2$s: Estimated.
 		'<span class="pending">%1$s %2$s</span><br />',
 		esc_html( rtmedia_migrate_formatseconds( $total - $done ) ),
 		esc_html__( '(estimated)', 'buddypress-media' )

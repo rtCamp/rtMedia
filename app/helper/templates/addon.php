@@ -39,7 +39,7 @@
 		<?php
 		echo wp_kses( $purchase_link, $allowed_html );
 
-		if ( '' !== $args['demo_link'] ) {
+		if ( ! empty( $args['demo_link'] ) ) {
 
 			printf(
 				'<a class="alignright rtm-live-demo button" href="%1$s" title="%2$s" target="_blank">%3$s</a>',
