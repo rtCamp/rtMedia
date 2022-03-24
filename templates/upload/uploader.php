@@ -31,31 +31,52 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 
 					foreach ( $attr as $key => $value ) {
 
-						if ( 'context' === $key ) {
-							echo '<input type="hidden" name="context" value="' . esc_attr( $value ) . '" />';
-						} elseif ( 'context_id' === $key ) {
-							echo '<input type="hidden" name="context_id" value="' . esc_attr( $value ) . '" />';
-						} elseif ( 'privacy' === $key ) {
-							echo '<input type="hidden" name="privacy" value="' . esc_attr( $value ) . '" />';
-						} elseif ( 'album_id' === $key ) {
-							echo '<input type="hidden" name="album_id" value="' . esc_attr( $value ) . '" />';
-						} elseif ( 'title' === $key ) {
-							echo '<p class="rtmedia-file-upload-p rtmedia-file-upload-title"><input type="text" name="title" /></p>';
-						} elseif ( 'description' === $key ) {
-							echo '<p class="rtmedia-file-upload-p rtmedia-file-upload-desc"><textarea name="description"></textarea></p>';
-						} else {
-							echo "<input type='hidden' id='rt_upload_hf_" . esc_attr( sanitize_key( $key ) ) . "' value='" . esc_attr( $value ) . "' name ='" . esc_attr( $key ) . "' />";
+						switch ( $key ) {
+
+							case 'context':
+							case 'context_id':
+							case 'privacy':
+							case 'album_id':
+								rtmedia_uploader_hidden_fields( $key, $value );
+
+								break;
+
+							case 'title':
+								echo '<p class="rtmedia-file-upload-p rtmedia-file-upload-title"><input type="text" name="title" /></p>';
+
+								break;
+
+							case 'description':
+								echo '<p class="rtmedia-file-upload-p rtmedia-file-upload-desc"><textarea name="description"></textarea></p>';
+
+								break;
+
+							default:
+								printf(
+									'<input type="hidden" id="rt_upload_hf_%1$s" value="%2$s" name="%3$s" />',
+									esc_attr( sanitize_key( $key ) ),
+									esc_attr( $value ),
+									esc_attr( $key )
+								);
 						}
 					}
 				}
 
 				if ( isset( $attr['rtmedia_upload_allow_multiple'] ) && true === $attr['rtmedia_upload_allow_multiple'] ) {
 					?>
-					<div class="rtm-file-input-container"><p class="rtmedia-file-upload-p"><input type="file" name="rtmedia_file_multiple[]" multiple="true" class="rtm-simple-file-input" id="rtmedia_simple_file_input" /></p></div>
+					<div class="rtm-file-input-container">
+						<p class="rtmedia-file-upload-p">
+							<input type="file" name="rtmedia_file_multiple[]" multiple="true" class="rtm-simple-file-input" id="rtmedia_simple_file_input" />
+						</p>
+					</div>
 					<?php
 				} else {
 					?>
-					<div class="rtm-file-input-container"><p class="rtmedia-file-upload-p"><input type="file" name="rtmedia_file" class="rtm-simple-file-input" id="rtmedia_simple_file_input" /></p></div>
+					<div class="rtm-file-input-container">
+						<p class="rtmedia-file-upload-p">
+							<input type="file" name="rtmedia_file" class="rtm-simple-file-input" id="rtmedia_simple_file_input" />
+						</p>
+					</div>
 					<?php
 				}
 
@@ -101,20 +122,15 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 
 						foreach ( $attr as $key => $value ) {
 
-							if ( 'context' === $key ) {
-								echo '<input type="hidden" name="context" value="' . esc_attr( $value ) . '" />';
-							}
+							switch ( $key ) {
 
-							if ( 'context_id' === $key ) {
-								echo '<input type="hidden" name="context_id" value="' . esc_attr( $value ) . '" />';
-							}
+								case 'context':
+								case 'context_id':
+								case 'privacy':
+								case 'album_id':
+									rtmedia_uploader_hidden_fields( $key, $value );
 
-							if ( 'privacy' === $key ) {
-								echo '<input type="hidden" name="privacy" value="' . esc_attr( $value ) . '" />';
-							}
-
-							if ( 'album_id' === $key ) {
-								echo '<input type="hidden" name="album_id" value="' . esc_attr( $value ) . '" />';
+									break;
 							}
 						}
 					}
@@ -130,3 +146,20 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 	</div>
 	<?php
 }
+
+/**
+ * Display hidden fields.
+ *
+ * @param string $key   Input key.
+ * @param string $value Input value.
+ *
+ * @since 4.6.11
+ *
+ * @return void
+ */
+function rtmedia_uploader_hidden_fields( $key, $value ) {
+
+	printf( '<input type="hidden" name="%1$s" value="%2$s" />', esc_attr( $key ), esc_attr( $value ) );
+}
+
+

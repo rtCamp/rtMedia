@@ -82,7 +82,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$button = $this->render();
 
 		if ( $button ) {
-			echo '<span>' . wp_kses( $button, RTMedia::expanded_allowed_tags() ) . '</span>';
+			printf( '<span>%1$s</span>', wp_kses( $button, RTMedia::expanded_allowed_tags() ) );
 		}
 	}
 
@@ -99,7 +99,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$button = $this->render();
 
 		if ( $button ) {
-			echo '<span>' . wp_kses( $button, RTMedia::expanded_allowed_tags() ) . '</span>';
+			printf( '<span>%1$s</span>', wp_kses( $button, RTMedia::expanded_allowed_tags() ) );
 		}
 	}
 
