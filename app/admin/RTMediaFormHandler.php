@@ -432,8 +432,8 @@ class RTMediaFormHandler {
 	 */
 	public static function display_render_options( $options ) {
 		$radios               = array();
-		$radios['load_more']  = '<strong>' . esc_html__( 'Load More', 'buddypress-media' ) . '</strong>';
-		$radios['pagination'] = '<strong>' . esc_html__( 'Pagination', 'buddypress-media' ) . '</strong>';
+		$radios['load_more']  = sprintf( '<strong>%1$s</strong>', esc_html__( 'Load More', 'buddypress-media' ) );
+		$radios['pagination'] = sprintf( '<strong>%1$s</strong>', esc_html__( 'Pagination', 'buddypress-media' ) );
 
 		if ( is_plugin_active( 'regenerate-thumbnails/regenerate-thumbnails.php' ) ) {
 			$regenerate_link = admin_url( '/tools.php?page=regenerate-thumbnails' );

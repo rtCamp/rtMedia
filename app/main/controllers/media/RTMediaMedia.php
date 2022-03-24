@@ -778,7 +778,11 @@ class RTMediaMedia {
 		$activity         = new RTMediaActivity( $media->id, $media->privacy, $activity_text );
 		$activity_content = $activity->create_activity_html();
 		$user             = get_userdata( $media->media_author );
-		$username         = '<a href="' . esc_url( get_rtmedia_user_link( $media->media_author ) ) . '">' . esc_html( $user->display_name ) . '</a>';
+		$username         = sprintf(
+			'<a href="%1$s">%2$s</a>',
+			esc_url( get_rtmedia_user_link( $media->media_author ) ),
+			esc_html( $user->display_name )
+		);
 		$count            = is_array( $id ) ? count( $id ) : 1;
 		$media_const      = 'RTMEDIA_' . strtoupper( $media->media_type );
 		if ( $count > 1 ) {

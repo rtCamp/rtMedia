@@ -68,35 +68,12 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 			do_action( 'rtmedia_group_media_control_create' );
 
 			global $rtmedia;
-			$options = $rtmedia->options; ?>
-			<div class='rtmedia-group-media-settings'>
-			<?php if ( isset( $options['general_enableAlbums'] ) && 1 === intval( $options['general_enableAlbums'] ) ) {   // album is enabled. ?>
+			$options = $rtmedia->options;
 
-					<h4><?php esc_html_e( 'Album Creation Control', 'buddypress-media' ); ?></h4>
-					<p><?php esc_html_e( 'Who can create Albums in this group?', 'buddypress-media' ); ?></p>
-					<div class="radio">
-						<label>
-							<input name="rt_album_creation_control" type="radio" id="rt_media_group_level_all" checked="checked" value="all">
-							<strong><?php esc_html_e( 'All Group Members', 'buddypress-media' ); ?></strong>
-						</label>
-						<label>
-							<input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators" value="moderators">
-							<strong><?php esc_html_e( 'Group Admins and Mods only', 'buddypress-media' ); ?></strong>
-						</label>
-						<label>
-							<input name="rt_album_creation_control" type="radio" id="rt_media_group_level_admin" value="admin">
-							<strong><?php esc_html_e( 'Group Admin only', 'buddypress-media' ); ?></strong>
-						</label>
-					</div>
+			require_once RTMEDIA_PATH . 'app/main/templates/media-group-create-screen.php';
 
-				<?php } ?>
-
-				<?php do_action( 'rtmedia_playlist_creation_settings_create_group' ); ?>
-			</div>
-			<?php
 			wp_nonce_field( 'groups_create_save_' . $this->slug );
 		}
-
 
 		/**
 		 * Save group media details.
@@ -147,40 +124,13 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 
 			// HOOK to add PER GROUP MEDIA enable/diable option in rtMedia PRO.
 			do_action( 'rtmedia_group_media_control_edit' );
-			?>
 
-				<div class='rtmedia-group-media-settings'>
+			global $rtmedia;
+			$options = $rtmedia->options;
 
-					<?php
-					global $rtmedia;
-					$options = $rtmedia->options;
-					if ( isset( $options['general_enableAlbums'] ) && 1 === intval( $options['general_enableAlbums'] ) ) {  // album is enabled.
-						?>
+			require_once RTMEDIA_PATH . 'app/main/templates/media-group-edit-screen.php';
 
-						<h4><?php esc_html_e( 'Album Creation Control', 'buddypress-media' ); ?></h4>
-						<p><?php esc_html_e( 'Who can create Albums in this group?', 'buddypress-media' ); ?></p>
-						<div class="radio">
-							<label>
-								<input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators"  value="all"<?php checked( $current_level, 'all', true ); ?>>
-								<strong><?php esc_html_e( 'All Group Members', 'buddypress-media' ); ?></strong>
-							</label>
-							<label>
-								<input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators" value="moderators" <?php checked( $current_level, 'moderators', true ); ?>>
-								<strong><?php esc_html_e( 'Group Admins and Mods only', 'buddypress-media' ); ?></strong>
-							</label>
-							<label>
-								<input name="rt_album_creation_control" type="radio" id="rt_media_group_level_admin" value="admin" <?php checked( $current_level, 'admin', true ); ?>>
-								<strong><?php esc_html_e( 'Group Admin only', 'buddypress-media' ); ?></strong>
-							</label>
-						</div>
-						<hr>
-					<?php } ?>
-
-					<?php do_action( 'rtmedia_playlist_creation_settings_groups_edit' ); ?>
-				</div>
-				<input type="submit" name="save" value="<?php esc_attr_e( 'Save Changes', 'buddypress-media' ); ?>" />
-				<?php
-				wp_nonce_field( 'groups_edit_save_' . $this->slug );
+			wp_nonce_field( 'groups_edit_save_' . $this->slug );
 		}
 
 		/**
@@ -236,7 +186,7 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 				bp_core_add_message( esc_html__( 'Settings saved successfully', 'buddypress-media' ) );
 			}
 
-				bp_core_redirect( bp_get_group_permalink( $bp->groups->current_group ) . '/admin/' . $this->slug );
+			bp_core_redirect( bp_get_group_permalink( $bp->groups->current_group ) . '/admin/' . $this->slug );
 		}
 
 		/**
