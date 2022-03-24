@@ -181,33 +181,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		public function service_selector() {
 			// todo: nonce required.
 			$form = filter_input( INPUT_POST, 'form', FILTER_SANITIZE_STRING );
-			?>
-			<div>
-				<form name="rtmedia_service_select_form" method="post">
-					<p>
-						<label class="bp-media-label"
-							for="select_support"><?php esc_html_e( 'Service', 'buddypress-media' ); ?>:</label>
 
-						<select name="rtmedia_service_select">
-							<option value="premium_support" <?php selected( $form, 'premium_support' ); ?>>
-								<?php esc_html_e( 'Premium Support', 'buddypress-media' ); ?>
-							</option>
-
-							<option value="bug_report" <?php selected( $form, 'bug_report' ); ?>>
-								<?php esc_html_e( 'Bug Report', 'buddypress-media' ); ?>
-							</option>
-
-							<option value="new_feature" <?php selected( $form, 'new_feature' ); ?>>
-								<?php esc_html_e( 'New Feature', 'buddypress-media' ); ?>
-							</option>
-						</select>
-
-						<input name="support_submit" value="<?php esc_attr_e( 'Submit', 'buddypress-media' ); ?>" type="submit" class="button"/>
-
-					</p>
-				</form>
-			</div>
-			<?php
+			require_once RTMEDIA_PATH . 'app/helper/templates/service-sector.php';
 		}
 
 		/**
@@ -372,34 +347,10 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				),
 				'br' => array(),
 			);
-			?>
-			<div id="debug-info" class="rtm-option-wrapper">
-			<h3 class="rtm-option-title"><?php esc_html_e( 'Debug Info', 'buddypress-media' ); ?></h3>
-			<table class="form-table rtm-debug-info">
-				<tbody>
-				<?php
-				if ( $this->debug_info ) {
-					foreach ( $this->debug_info as $configuration => $value ) {
-						?>
-						<tr>
-						<th scope="row"><?php echo esc_html( $configuration ); ?></th>
-						<td><?php echo wp_kses( $value, $allowed_html ); ?></td>
-						</tr>
-						<?php
-					}
-				}
-				?>
-				</tbody>
-			</table>
-			<div class="rtm-download-debuginfo">
-				<form action="<?php echo esc_url( admin_url( 'admin.php?page=rtmedia-support#debug' ) ); ?>" method="post">
-					<?php wp_nonce_field( 'rtmedia-download-debuginfo', 'download_debuginfo_wpnonce' ); ?>
-					<input type="hidden" name="download_debuginfo" id="download_debuginfo" value="1" />
-					<input type="submit" value="<?php esc_html_e( 'Download Debug Info', 'buddypress-media' ); ?>" class="button button-primary" />
-				</form>
-			</div>
-			</div>
-			<?php
+
+			$debug_info = $this->debug_info;
+
+			require_once RTMEDIA_PATH . 'app/helper/templates/debug-info.php';
 		}
 
 		/**
@@ -504,92 +455,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					$remote_addr     = rtm_get_server_var( 'REMOTE_ADDR', 'FILTER_VALIDATE_IP' );
 					$server_software = rtm_get_server_var( 'SERVER_SOFTWARE', 'FILTER_SANITIZE_STRING' );
 					$http_user_agent = rtm_get_server_var( 'HTTP_USER_AGENT', 'FILTER_SANITIZE_STRING' );
-					?>
-					<h3 class="rtm-option-title"><?php echo esc_html( $meta_title ); ?></h3>
-					<div id="support-form" class="bp-media-form rtm-support-form rtm-option-wrapper">
 
-						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label"
-								for="name"><?php esc_html_e( 'Name', 'buddypress-media' ); ?></label>
-							<input class="bp-media-input" id="name" type="text" name="name" value="" required/>
-							<span class="rtm-tooltip">
-								<i class="dashicons dashicons-info"></i>
-								<span class="rtm-tip">
-									<?php esc_html_e( 'Use actual user name which used during purchased.', 'buddypress-media' ); ?>
-								</span>
-							</span>
-						</div>
-
-						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label"
-								for="email"><?php esc_html_e( 'Email', 'buddypress-media' ); ?></label>
-							<input id="email" class="bp-media-input" type="text" name="email" value="" required/>
-							<span class="rtm-tooltip">
-								<i class="dashicons dashicons-info"></i>
-								<span class="rtm-tip">
-									<?php esc_html_e( 'Use email id which used during purchased', 'buddypress-media' ); ?>
-								</span>
-							</span>
-						</div>
-
-						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label"
-								for="website"><?php esc_html_e( 'Website', 'buddypress-media' ); ?></label>
-							<input id="website" class="bp-media-input" type="text" name="website"
-								value="<?php echo esc_url( isset( $website ) ? $website : get_bloginfo( 'url' ) ); ?>"
-								required/>
-						</div>
-
-						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label"
-								for="subject"><?php esc_html_e( 'Subject', 'buddypress-media' ); ?></label>
-							<input id="subject" class="bp-media-input" type="text" name="subject"
-								value="<?php echo esc_attr( isset( $subject ) ? esc_attr( $subject ) : '' ); ?>"
-								required/>
-						</div>
-
-						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label"
-								for="details"><?php esc_html_e( 'Details', 'buddypress-media' ); ?></label>
-							<textarea id="details" class="bp-media-textarea" name="details"
-									required><?php echo esc_html( isset( $details ) ? esc_textarea( $details ) : '' ); ?></textarea>
-
-							<input type="hidden" name="request_type" value="<?php echo esc_attr( $form ); ?>"/>
-							<input type="hidden" name="request_id"
-								value="<?php echo esc_attr( wp_create_nonce( date( 'YmdHis' ) ) ); ?>"/>
-							<input type="hidden" name="server_address" value="<?php echo esc_attr( $server_addr ); ?>"/>
-							<input type="hidden" name="ip_address" value="<?php echo esc_attr( $remote_addr ); ?>"/>
-							<input type="hidden" name="server_type" value="<?php echo esc_attr( $server_software ); ?>"/>
-							<input type="hidden" name="user_agent" value="<?php echo esc_attr( $http_user_agent ); ?>"/>
-
-							<?php
-							// Adding nonce for file upload.
-							$nonce = wp_create_nonce( 'rtmedia-admin-upload' );
-							?>
-							<input type="hidden" id="rtmedia_admin_upload_nonce" value="<?php echo esc_attr( $nonce ); ?>" />
-							<input type="hidden" name="debuglog_temp_path" id="debuglog_temp_path" />
-						</div>
-
-						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label"
-								for="subject"><?php esc_html_e( 'Attachment', 'buddypress-media' ); ?></label>
-							<input id="debuglog" class="bp-media-input" type="file" name="debuglog" />
-							<span class="rtm-tooltip">
-								<i class="dashicons dashicons-info"></i>
-								<span class="rtm-tip">
-									<?php esc_html_e( 'Allowed file types are : images, documents and texts.', 'buddypress-media' ); ?>
-								</span>
-							</span>
-						</div>
-					</div><!-- .submit-bug-box -->
-
-					<div class="rtm-form-filed rtm-button-wrapper clearfix">
-						<?php wp_nonce_field( 'rtmedia-support-request', 'support_wpnonce' ); ?>
-						<?php submit_button( 'Submit', 'primary', 'rtmedia-submit-request', false ); ?>
-						<?php submit_button( 'Cancel', 'secondary', 'cancel-request', false ); ?>
-					</div>
-
-					<?php
+					require_once RTMEDIA_PATH . 'app/helper/templates/support-form.php';
 				}
 			}
 		}
@@ -634,63 +501,12 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				$mail_type = 'Bug Report';
 				$title     = esc_html__( 'rtMedia Contact from', 'buddypress-media' );
 			}
-			$message = '<html>
-				<head>
-					<title>' . wp_strip_all_tags( $title . get_bloginfo( 'name' ) ) . '</title>
-				</head>
-				<body>
-					<table>
-						<tr>
-							<td>Name</td><td>' . wp_strip_all_tags( $form_data['name'] ) . '</td>
-						</tr>
-						<tr>
-							<td>Email</td><td>' . wp_strip_all_tags( $form_data['email'] ) . '</td>
-						</tr>
-						<tr>
-							<td>Website</td><td>' . wp_strip_all_tags( $form_data['website'] ) . '</td>
-						</tr>
-						<tr>
-							<td>Subject</td><td>' . wp_strip_all_tags( $form_data['subject'] ) . '</td>
-						</tr>
-						<tr>
-							<td>Details</td><td>' . wp_strip_all_tags( $form_data['details'] ) . '</td>
-						</tr>
-						<tr>
-							<td>Request ID</td><td>' . wp_strip_all_tags( $form_data['request_id'] ) . '</td>
-						</tr>
-						<tr>
-							<td>Server Address</td><td>' . wp_strip_all_tags( $form_data['server_address'] ) . '</td>
-						</tr>
-						<tr>
-							<td>IP Address</td><td>' . wp_strip_all_tags( $form_data['ip_address'] ) . '</td>
-						</tr>
-						<tr>
-							<td>Server Type</td><td>' . wp_strip_all_tags( $form_data['server_type'] ) . '</td>
-						</tr>
-						<tr>
-							<td>User Agent</td><td>' . wp_strip_all_tags( $form_data['user_agent'] ) . '</td>
-						</tr>';
-			if ( 'bug_report' === sanitize_text_field( $form_data['request_type'] ) ) {
-				$message .= '<tr>
-									<td>WordPress Admin Username</td><td>' . wp_strip_all_tags( $form_data['wp_admin_username'] ) . '</td>
-								</tr>
-								<tr>
-									<td>WordPress Admin Password</td><td>' . wp_strip_all_tags( $form_data['wp_admin_pwd'] ) . '</td>
-								</tr>
-								<tr>
-									<td>SSH FTP Host</td><td>' . wp_strip_all_tags( $form_data['ssh_ftp_host'] ) . '</td>
-								</tr>
-								<tr>
-									<td>SSH FTP Username</td><td>' . wp_strip_all_tags( $form_data['ssh_ftp_username'] ) . '</td>
-								</tr>
-								<tr>
-									<td>SSH FTP Password</td><td>' . wp_strip_all_tags( $form_data['ssh_ftp_pwd'] ) . '</td>
-								</tr>
-									';
-			}
-			$message .= '</table>';
-			$message .= '</body>
-				</html>';
+
+			ob_start();
+
+			require_once RTMEDIA_PATH . 'app/helper/templates/submit-request.php';
+
+			$message = ob_get_clean();
 
 			add_filter( 'wp_mail_content_type', array( $this, 'rtmedia_mail_content_type' ) );
 

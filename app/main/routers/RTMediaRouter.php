@@ -341,12 +341,20 @@ class RTMediaRouter {
 			if ( bp_is_group() ) {
 				$dummy['post_type'] = 'bp_group';
 				if ( 'bp-default' !== get_option( 'stylesheet' ) ) {
-					$dummy['post_title'] = '<a href="' . esc_url( bp_get_group_permalink( groups_get_current_group() ) ) . '">' . bp_get_current_group_name() . '</a>';
+					$dummy['post_title'] = sprintf(
+						'<a href="%1$s">%2$s</a>',
+						esc_url( bp_get_group_permalink( groups_get_current_group() ) ),
+						bp_get_current_group_name()
+					);
 				}
 			} else {
 				$dummy['post_type'] = 'bp_member';
 				if ( 'bp-default' !== get_option( 'stylesheet' ) ) {
-					$dummy['post_title'] = '<a href="' . esc_url( bp_get_displayed_user_link() ) . '">' . bp_get_displayed_user_fullname() . '</a>';
+					$dummy['post_title'] = sprintf(
+						'<a href="%1$s">%2$s</a>',
+						esc_url( bp_get_displayed_user_link() ),
+						bp_get_displayed_user_fullname()
+					);
 				}
 			}
 		} else {
