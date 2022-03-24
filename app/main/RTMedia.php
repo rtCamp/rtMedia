@@ -1204,7 +1204,12 @@ class RTMedia {
 	public function create_table_error_notice() {
 		global $rtmedia_error;
 		$rtmedia_error = true;
-		echo "<div class='error'><p><strong>" . esc_html__( 'rtMedia', 'buddypress-media' ) . '</strong>' . esc_html__( ": Can't Create Database table. Please check create table permission.", 'buddypress-media' ) . '</p></div>';
+
+		printf(
+			'<div class="error"><p><strong>%1$s</strong>%2$s</p></div>',
+			esc_html__( 'rtMedia', 'buddypress-media' ),
+			esc_html__( ': Can\'t Create Database table. Please check create table permission.', 'buddypress-media' )
+		);
 	}
 
 	/**
@@ -2160,18 +2165,11 @@ function rtm_plugin_privacy_information() {
 
 	if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
 		ob_start();
-		?>
-		<p>We collect your information during the checkout process on your purchase. The information collected from you may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing.</p>
-		<h2>Handling this data will also allow us to:</h2>
-		<p>- Send you important service information.<br/>
-		- Respond to your queries or complaints.<br/>
-		- Set up and administer your account, provide technical and/or customer support, and to verify your identity.</p>
-		<h2>Additionally we may also collect the following information:</h2>
-		<p>- Your comments and product reviews if you choose to leave them on our website.
-		- Account email/password to allow you to access your account, if you have one.
-		- If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.</p>
-		<?php
+
+		require_once RTMEDIA_PATH . 'app/main/templates/policy-information.php';
+
 		$policy = ob_get_clean();
+
 		wp_add_privacy_policy_content(
 			__( 'rtMedia', 'buddypress-media' ),
 			wp_kses_post( $policy )

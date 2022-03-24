@@ -178,20 +178,13 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 
 			$general_upload_terms_page_link = $options['general_upload_terms_page_link'];
 			$general_upload_terms_message   = $options['general_upload_terms_message'];
+
 			ob_start();
-			?>
-			<div class="rtmedia-upload-terms">
-				<input type="checkbox" name="rtmedia_upload_terms_conditions" id="<?php echo esc_attr( $id ); ?>" />
-				<label for="<?php echo esc_attr( $id ); ?>">
-				<?php echo esc_html( apply_filters( 'rtmedia_upload_terms_service_agree_label', __( 'I agree to', 'buddypress-media' ) ) ); ?>
-				<a href='<?php echo esc_url( $general_upload_terms_page_link ); ?>' target='_blank'>
-				<?php echo esc_html( apply_filters( 'rtmedia_upload_terms_service_link_label', $general_upload_terms_message ) ); ?>
-				</a>
-				</label>
-			</div>
-			<?php
+
+			require_once RTMEDIA_PATH . 'app/main/templates/media-upload-terms.php';
 
 			$content = ob_get_clean();
+
 			return $content;
 		}
 	}
