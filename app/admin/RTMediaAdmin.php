@@ -319,6 +319,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( ! is_rtmedia_vip_plugin() ) {
 					$this->rtmedia_inspirebook_release_notice();
 					$this->rtmedia_premium_addon_notice();
+					$this->rtmedia_addon_update_notice();
 				}
 			}
 		}
@@ -329,9 +330,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function rtmedia_premium_addon_notice() {
 			$site_option = rtmedia_get_site_option( 'rtmedia_premium_addon_notice' );
 
+			$premium_addon_notice = apply_filters( 'rt_premium_addon_notice', true );
 			if ( ( ! $site_option || 'hide' !== $site_option ) ) {
-				rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
-				?>
+				if ( true === $premium_addon_notice ) {
+					rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
+					?>
 				<div class="notice is-dismissible updated rtmedia-pro-split-notice">
 					<?php wp_nonce_field( 'rtcamp_pro_split', 'rtm_nonce' ); ?>
 					<p>
@@ -340,7 +343,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							$product_page = esc_url( 'https://rtmedia.io/products/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' );
 
 							// translators: 1. Product page link.
-							$message = sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page );
+							$message = apply_filters( 'rt_premium_addon_notice_message', sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page ), $product_page );
 							?>
 							<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
 							<?php
@@ -366,7 +369,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						});
 					});
 				</script>
-				<?php
+					<?php
+				}
 			}
 		}
 
@@ -497,27 +501,37 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				}
 				rtmedia_update_site_option( 'rtmedia-addon-update-notice-3_8', 'show' );
 				?>
-				<div class="error rtmedia-addon-upate-notice">
+				<div class="notice error is-dismissible rtmedia-addon-update-notice">
 					<p>
-						<strong><?php esc_html_e( 'rtMedia:', 'buddypress-media' ); ?></strong>
-						<?php esc_html_e( 'Please update all premium add-ons that you have purchased from', 'buddypress-media' ); ?>
-						<a href="<?php echo esc_url( 'https://rtmedia.io/my-account/' ); ?>" target="_blank"><?php esc_html_e( 'your account', 'buddypress-media' ); ?></a>.
-						<a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right"><?php esc_html_e( 'Dismiss', 'buddypress-media' ); ?></a>
+					<?php
+						$message = apply_filters( 'rt_addon_update_notice', sprintf( __( ' rtMedia Premium update is available. Please update it from the plugins or download it from <a href = "https://rtmedia.io/my-account/" target="_blank" >your account</a>', 'buddypress-media' ) ) ); ?>
+						<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
+						<?php
+						echo wp_kses(
+							$message,
+							array(
+								'a' => array(
+									'href' => array(),
+									'target' => array(),
+								),
+							)
+						);
+						?>
 						<?php wp_nonce_field( 'rtmedia-addon-update-notice-3_8', 'rtmedia-addon-notice' ); ?>
 					</p>
 				</div>
 				<script type="text/javascript">
-					function rtmedia_hide_addon_update_notice() {
+					jQuery( document ).ready( function() {
+						jQuery( '.rtmedia-addon-update-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
 						var data = {
 							action: 'rtmedia_hide_addon_update_notice',
 							_rtm_nonce: jQuery('#rtmedia-addon-notice').val(),
 					};
 						jQuery.post(ajaxurl, data, function (response) {
-							response = response.trim();
-							if (response === "1")
-								jQuery('.rtmedia-addon-upate-notice').remove();
+								jQuery('.rtmedia-addon-update-notice').remove();
 						});
-					}
+					});
+					});
 				</script>
 				<?php
 			}
