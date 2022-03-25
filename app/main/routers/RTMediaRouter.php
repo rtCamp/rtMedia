@@ -373,7 +373,7 @@ class RTMediaRouter {
 		}
 
 		// Set the $post global.
-		$post = new WP_Post( (object) $dummy ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+		$post = new WP_Post( (object) $dummy ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited, WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		// Copy the new post global into the main $wp_query .
 		$wp_query->post  = $post;

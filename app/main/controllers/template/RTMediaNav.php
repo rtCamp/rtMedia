@@ -130,7 +130,7 @@ class RTMediaNav {
 				$slug               = apply_filters( 'rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG );
 				$media_tab_position = apply_filters( 'rtmedia_group_media_tab_position', 99 );
 
-				//to solve an issue of Media Tab is not showing in version 10.0.0
+				// to solve an issue of Media Tab is not showing in version 10.0.0.
 				$bp->version = floatval( $bp->version );
 
 				if ( isset( $bp->version ) && $bp->version > '2.5.3' ) {
@@ -254,18 +254,18 @@ class RTMediaNav {
 			}
 			global $bp;
 			$counts = $this->actual_counts( $bp->groups->current_group->id, 'group' );
+
 		} else {
 			if ( class_exists( 'BuddyPress' ) && isset( $rtmedia->options['buddypress_enableOnProfile'] ) && 0 === intval( $rtmedia->options['buddypress_enableOnProfile'] ) ) {
 				return;
 			}
 			$counts = $this->actual_counts();
+
 		}
 
 		$default = false;
 		if ( function_exists( 'bp_is_group' ) && bp_is_group() && $user_group_status ) {
-			$link        = get_rtmedia_group_link( bp_get_group_id() );
-			$model       = new RTMediaModel();
-			$other_count = $model->get_other_album_count( bp_get_group_id(), 'group' );
+			$link = get_rtmedia_group_link( bp_get_group_id() );
 		} else {
 
 			if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
@@ -273,9 +273,8 @@ class RTMediaNav {
 			} elseif ( get_query_var( 'author' ) ) {
 				$link = get_rtmedia_user_link( get_query_var( 'author' ) );
 			}
-			$model       = new RTMediaModel();
-			$other_count = $model->get_other_album_count( bp_displayed_user_id(), 'profile' );
 		}
+		$other_count = count( rtmedia_global_albums() );
 
 		$all = '';
 		if ( ! isset( $rtmedia_query->action_query->media_type ) && ! isset( $rtmedia_query->query['media_type'] ) ) {
@@ -298,21 +297,20 @@ class RTMediaNav {
 		}
 
 		$albums = '';
-		//condition to keep "Album" tab active
+		// condition to keep "Album" tab active.
 		if ( array_key_exists( 'media_type', $rtmedia_query->query ) && isset( $rtmedia_query->query['media_type'] ) && ( 'album' === $rtmedia_query->query['media_type'] ) ) {
-			 $albums = 'current selected';
+			$albums = 'current selected';
 		} elseif ( isset( $rtmedia_query->action_query->media_type ) && ( 'album' === $rtmedia_query->action_query->media_type ) ) {
-			 $albums = 'current selected';
+			$albums = 'current selected';
 		}
 
 		if ( is_rtmedia_album_enable() ) {
-
 			if ( ! isset( $counts['total']['album'] ) ) {
 				$counts['total']['album'] = 0;
 			}
 
 			$counts['total']['album'] = $counts['total']['album'] + $other_count;
-			$album_label              = esc_html__( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'buddypress-media' );
+			$album_label              = defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : esc_html__( 'Albums', 'buddypress-media' );
 
 			$html_li = sprintf(
 				'<li id="rtmedia-nav-item-albums-li" class="%1$s">
@@ -367,7 +365,7 @@ class RTMediaNav {
 				);
 			}
 
-			$type_label = esc_html__( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'buddypress-media' );
+			$type_label = defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'];
 
 			$nav_li = sprintf(
 				'<li id="rtmedia-nav-item-%1$s-%2$s-%3$s-li" %4$s>
@@ -559,7 +557,6 @@ class RTMediaNav {
 		}
 
 		$media_count['total'] = $total;
-
 		return $media_count;
 	}
 
@@ -632,7 +629,7 @@ class RTMediaNav {
 
 		global $bp;
 
-		$media = [];
+		$media = array();
 
 		// If current component is `groups` then fetch its media.
 		if ( 'groups' === $value ) {
@@ -677,7 +674,7 @@ class RTMediaNav {
 
 		global $bp;
 
-		$media = [];
+		$media = array();
 
 		// If current component is `groups` then fetch its media.
 		if ( 'groups' === $value ) {

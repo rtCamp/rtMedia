@@ -1,7 +1,7 @@
 <?php
 /**
  * Template to display rtMedia Gallery.
- * A stand alone template that renders the gallery/uploader on the page.
+ * A stand-alone template that renders the gallery/uploader on the page.
  *
  * @package rtMedia
  * @author saurabh
@@ -43,8 +43,8 @@ class RTMediaTemplate {
 	public function enqueue_scripts() {
 		wp_enqueue_script( 'rtmedia-backbone' );
 
-		$is_album        = is_rtmedia_album() ? true : false;
-		$is_edit_allowed = is_rtmedia_edit_allowed() ? true : false;
+		$is_album        = is_rtmedia_album();
+		$is_edit_allowed = is_rtmedia_edit_allowed();
 
 		wp_localize_script( 'rtmedia-backbone', 'is_album', array( $is_album ) );
 		wp_localize_script( 'rtmedia-backbone', 'is_edit_allowed', array( $is_edit_allowed ) );
@@ -209,7 +209,7 @@ class RTMediaTemplate {
 	public function add_hidden_fields_in_gallery() {
 		global $rtmedia_query;
 
-		$is_on_home  = ( is_front_page() ) ? true : false;
+		$is_on_home  = is_front_page();
 		$return_str  = "<input name='rtmedia_shortcode' value='true' type='hidden' />";
 		$return_str .= "<input name='is_on_home' value='$is_on_home' type='hidden' />";
 
@@ -234,8 +234,6 @@ class RTMediaTemplate {
 
 		if ( 'json' === $rtmedia_query->format ) {
 			$this->json_output();
-		} else {
-			return;
 		}
 	}
 
@@ -266,11 +264,11 @@ class RTMediaTemplate {
 		if ( $rtmedia_query->media ) {
 
 			// Remove all filters used for search functionality to avoid modifying query for current media results.
-			remove_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query', 10 );
-			remove_filter( 'rtmedia-get-album-where-query', 'rtmedia_search_fillter_where_query', 10 );
-			remove_filter( 'rtmedia-get-group-album-where-query', 'rtmedia_search_fillter_where_query', 10 );
+			remove_filter( 'rtmedia-model-where-query', 'rtmedia_search_fillter_where_query' );
+			remove_filter( 'rtmedia-get-album-where-query', 'rtmedia_search_fillter_where_query' );
+			remove_filter( 'rtmedia-get-group-album-where-query', 'rtmedia_search_fillter_where_query' );
 			remove_filter( 'rtmedia-model-join-query', 'rtmedia_search_fillter_join_query', 11 );
-			remove_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns', 10 );
+			remove_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns' );
 
 			foreach ( $rtmedia_query->media as $key => $media ) {
 
@@ -301,7 +299,7 @@ class RTMediaTemplate {
 		$return_array['prev'] = rtmedia_page() - 1;
 		$return_array['next'] = ( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() ) ? ( rtmedia_page() + 1 ) : - 1;
 
-		$model = new RTMediaModel();
+		$model                       = new RTMediaModel();
 		$return_array['media_count'] = $model->get_media_count();
 
 		if ( isset( $rtmedia->options['general_display_media'] ) && 'pagination' === $options['general_display_media'] ) {
@@ -320,7 +318,7 @@ class RTMediaTemplate {
 	public function check_return_edit() {
 		global $rtmedia_query;
 
-		if ( 'edit' === $rtmedia_query->action_query->action && count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		if ( 'edit' === $rtmedia_query->action_query->action && count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification
 			$this->save_edit();
 		}
 
@@ -408,7 +406,7 @@ class RTMediaTemplate {
 							// Replacing the filename with new effected filename.
 							$activity_content = str_replace( $rtmedia_filepath_old, $thumbnailinfo[0], $activity_content_new );
 
-							$wpdb->update( $bp->activity->table_name, array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
+							$wpdb->update( $bp->activity->table_name, array( 'content' => $activity_content ), array( 'id' => $activity_id ) ); // phpcs:ignore
 						}
 					}
 				}
@@ -598,7 +596,7 @@ class RTMediaTemplate {
 			return;
 		}
 
-		if ( ! count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		if ( ! count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification
 			return;
 		}
 
@@ -904,7 +902,7 @@ class RTMediaTemplate {
 				if ( ! empty( $_rt_ajax ) ) {
 					global $wpdb;
 
-					$comments = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_ID = %d limit 100", $id ), ARRAY_A );
+					$comments = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_ID = %d limit 100", $id ), ARRAY_A ); // phpcs:ignore
 					// @todo: Change a.rtmedia-comment-like-click attribute to data-comment-id from data-comment_id in rtmedia-likes (https://github.com/rtCamp/rtmedia-likes) addon.
 					echo rmedia_single_comment( $comments ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains data-* attributes.
 					exit;
@@ -984,7 +982,7 @@ class RTMediaTemplate {
 	/**
 	 * Validates all the attributes for gallery shortcode
 	 *
-	 * @global type $rtmedia
+	 * @global RTMedia $rtmedia
 	 *
 	 * @param array $attr Attributes array.
 	 *
@@ -1084,7 +1082,7 @@ class RTMediaTemplate {
 						$template = 'media-single-edit';
 					}
 				} else {
-					return;
+					return null;
 				}
 			}
 
@@ -1151,22 +1149,22 @@ class RTMediaTemplate {
 			'rt_media_thumbnail'      => array(
 				'width'  => $rtmedia->options['defaultSizes_photo_thumbnail_width'],
 				'height' => $rtmedia->options['defaultSizes_photo_thumbnail_height'],
-				'crop'   => ( 0 === intval( $rtmedia->options['defaultSizes_photo_thumbnail_crop'] ) ) ? false : true,
+				'crop'   => ! ( ( 0 === intval( $rtmedia->options['defaultSizes_photo_thumbnail_crop'] ) ) ),
 			),
 			'rt_media_activity_image' => array(
 				'width'  => $rtmedia->options['defaultSizes_photo_medium_width'],
 				'height' => $rtmedia->options['defaultSizes_photo_medium_height'],
-				'crop'   => ( 0 === intval( $rtmedia->options['defaultSizes_photo_medium_crop'] ) ) ? false : true,
+				'crop'   => ! ( ( 0 === intval( $rtmedia->options['defaultSizes_photo_medium_crop'] ) ) ),
 			),
 			'rt_media_single_image'   => array(
 				'width'  => $rtmedia->options['defaultSizes_photo_large_width'],
 				'height' => $rtmedia->options['defaultSizes_photo_large_height'],
-				'crop'   => ( 0 === intval( $rtmedia->options['defaultSizes_photo_large_crop'] ) ) ? false : true,
+				'crop'   => ! ( ( 0 === intval( $rtmedia->options['defaultSizes_photo_large_crop'] ) ) ),
 			),
 			'rt_media_featured_image' => array(
 				'width'  => $rtmedia->options['defaultSizes_featured_default_width'],
 				'height' => $rtmedia->options['defaultSizes_featured_default_height'],
-				'crop'   => ( 0 === intval( $rtmedia->options['defaultSizes_featured_default_crop'] ) ) ? false : true,
+				'crop'   => ! ( ( 0 === intval( $rtmedia->options['defaultSizes_featured_default_crop'] ) ) ),
 			),
 		);
 

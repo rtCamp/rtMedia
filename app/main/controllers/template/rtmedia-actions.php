@@ -407,14 +407,14 @@ function update_group_media_privacy( $group_id ) {
 
 			if ( 'public' !== $group->status ) {
 				// when group settings are updated and is private/hidden, set media privacy to 20.
-				$update_sql = $wpdb->prepare( "UPDATE {$model->table_name} SET privacy = '20' where context='group' AND context_id=%d AND privacy <> 80 ", $group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$update_sql = $wpdb->prepare( "UPDATE $model->table_name SET privacy = '20' where context='group' AND context_id=%d AND privacy <> 80 ", $group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared
 			} else {
 				// when group settings are updated and is private/hidden, set media privacy to 0.
-				$update_sql = $wpdb->prepare( "UPDATE {$model->table_name} SET privacy = '0' where context='group' AND context_id=%d AND privacy <> 80 ", $group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$update_sql = $wpdb->prepare( "UPDATE $model->table_name SET privacy = '0' where context='group' AND context_id=%d AND privacy <> 80 ", $group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared
 			}
 
 			// update the medias.
-			$wpdb->query( $update_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$wpdb->query( $update_sql ); // phpcs:ignore
 		}
 	}
 
@@ -661,9 +661,11 @@ function rtm_get_album_media_count( $album_id ) {
 
 /**
  * HTML markup for displaying Media Count of album in album list gallery
+ *
+ * @param int $media_id media_id.
+ * @param int $album_id album_id.
  */
-function rtm_album_media_count() {
-
+function rtm_album_media_count( $media_id, $album_id ) {
 	$rtmedia_album_count_status = array(
 		'status'        => true,
 		'before_string' => '',
@@ -681,13 +683,13 @@ function rtm_album_media_count() {
 
 	if ( isset( $rtmedia_album_count_status ) && $rtmedia_album_count_status['status'] ) {
 		?>
-		<div class="rtmedia-album-media-count" title="<?php echo esc_attr( rtmedia_album_mediacounter() . ' ' . RTMEDIA_MEDIA_LABEL ); ?>">
-			<?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . esc_html( rtmedia_album_mediacounter() ) . esc_html( $rtmedia_album_count_status['after_string'] ); ?>
+		<div class="rtmedia-album-media-count" title="<?php echo esc_attr( rtmedia_album_mediacounter( $album_id ) . ' ' . RTMEDIA_MEDIA_LABEL ); ?>">
+			<?php echo esc_html( $rtmedia_album_count_status['before_string'] ) . esc_html( rtmedia_album_mediacounter( $album_id ) ) . esc_html( $rtmedia_album_count_status['after_string'] ); ?>
 		</div>
 		<?php
 	}
 }
-add_action( 'rtmedia_after_album_gallery_item', 'rtm_album_media_count' );
+add_action( 'rtmedia_after_album_gallery_item', 'rtm_album_media_count', 10, 2 );
 
 /**
  * Get the information ( status, expiry date ) of all the installed addons and store in site option
@@ -749,8 +751,8 @@ function rt_check_addon_status() {
 			do_action( 'rtmedia_before_addon_activate', $addon, $addon_active );
 
 			if ( isset( $addon_active->expires ) && 'lifetime' !== $addon_active->expires ) {
-				$now        = current_time( 'timestamp' );
-				$expiration = strtotime( $addon_active->expires, current_time( 'timestamp' ) );
+				$now        = current_time( 'timestamp' ); // phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
+				$expiration = strtotime( $addon_active->expires, current_time( 'timestamp' ) ); // phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
 
 				// For regularly check for license key is expired from store or not.
 				// Check if last verification attempt is expired or not.
@@ -810,7 +812,7 @@ function rtmedia_addons_admin_notice() {
 
 	if ( 'rtmedia_page_rtmedia-license' === $screen->id ) {
 
-		if ( isset( $_POST ) && count( $_POST ) > 0 ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		if ( isset( $_POST ) && count( $_POST ) > 0 ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
 			?>
 			<div class="notice notice-success is-dismissible">
 				<p><?php esc_html_e( 'Settings has been saved successfully.', 'buddypress-media' ); ?></p>
@@ -912,11 +914,11 @@ function add_search_filter( $attr = null ) {
 		if ( isset( $search_by ) && $search_by ) {
 			$html .= "<select id='search_by' class='search_by'>";
 
-			if ( ! rtm_check_member_type() || strpos( $_SERVER['REQUEST_URI'], 'members' ) || ( isset( $attr['media_author'] ) && $attr['media_author'] ) ) {
+			if ( ! rtm_check_member_type() || strpos( $_SERVER['REQUEST_URI'], 'members' ) || ( isset( $attr['media_author'] ) && $attr['media_author'] ) ) { // phpcs:ignore
 				unset( $search_by['member_type'] );
 			}
 
-			if ( strpos( $_SERVER['REQUEST_URI'], 'members' ) ) {
+			if ( strpos( $_SERVER['REQUEST_URI'], 'members' ) ) { // phpcs:ignore
 				unset( $search_by['author'] );
 			}
 
@@ -924,7 +926,7 @@ function add_search_filter( $attr = null ) {
 				unset( $search_by['attribute'] );
 			}
 
-			if ( strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {
+			if ( strpos( $_SERVER['REQUEST_URI'], 'attribute' ) ) {// phpcs:ignore
 				unset( $search_by['attribute'] );
 			}
 

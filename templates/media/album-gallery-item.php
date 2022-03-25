@@ -53,6 +53,6 @@ if ( isset( $is_edit_allowed[0] ) ) {
 	/**
 	 * Fires after album gallery item.
 	 */
-	do_action( 'rtmedia_after_album_gallery_item' );
+	do_action( 'rtmedia_after_album_gallery_item', rtmedia_id(), null );
 	?>
 </li> <!-- End of .rtmedia-list-item -->
