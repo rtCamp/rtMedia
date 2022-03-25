@@ -11,8 +11,9 @@
 <div id="support-form" class="bp-media-form rtm-support-form rtm-option-wrapper">
 
 	<div class="rtm-form-filed clearfix">
-		<label class="bp-media-label"
-			for="name"><?php esc_html_e( 'Name', 'buddypress-media' ); ?></label>
+		<label class="bp-media-label" for="name">
+			<?php esc_html_e( 'Name', 'buddypress-media' ); ?>
+		</label>
 		<input class="bp-media-input" id="name" type="text" name="name" value="" required/>
 		<span class="rtm-tooltip">
 			<i class="dashicons dashicons-info"></i>
@@ -23,8 +24,9 @@
 	</div>
 
 	<div class="rtm-form-filed clearfix">
-		<label class="bp-media-label"
-			for="email"><?php esc_html_e( 'Email', 'buddypress-media' ); ?></label>
+		<label class="bp-media-label" for="email">
+			<?php esc_html_e( 'Email', 'buddypress-media' ); ?>
+		</label>
 		<input id="email" class="bp-media-input" type="text" name="email" value="" required/>
 		<span class="rtm-tooltip">
 			<i class="dashicons dashicons-info"></i>
@@ -35,17 +37,21 @@
 	</div>
 
 	<div class="rtm-form-filed clearfix">
-		<label class="bp-media-label"
-			for="website"><?php esc_html_e( 'Website', 'buddypress-media' ); ?></label>
+		<label class="bp-media-label" for="website">
+			<?php esc_html_e( 'Website', 'buddypress-media' ); ?>
+		</label>
 		<input id="website" class="bp-media-input" type="text" name="website"
-			value="<?php echo esc_url( isset( $website ) ? $website : get_bloginfo( 'url' ) ); ?>" required />
+			value="<?php echo esc_url( isset( $website ) ? $website : get_bloginfo( 'url' ) ); ?>"
+			required />
 	</div>
 
 	<div class="rtm-form-filed clearfix">
-		<label class="bp-media-label"
-			for="subject"><?php esc_html_e( 'Subject', 'buddypress-media' ); ?></label>
+		<label class="bp-media-label" for="subject">
+			<?php esc_html_e( 'Subject', 'buddypress-media' ); ?>
+		</label>
 		<input id="subject" class="bp-media-input" type="text" name="subject"
-			value="<?php echo esc_attr( isset( $subject ) ? esc_attr( $subject ) : '' ); ?>" required />
+			value="<?php echo esc_attr( isset( $subject ) ? esc_attr( $subject ) : '' ); ?>"
+			required />
 	</div>
 
 	<div class="rtm-form-filed clearfix">
@@ -56,7 +62,7 @@
 
 		<input type="hidden" name="request_type" value="<?php echo esc_attr( $form ); ?>"/>
 		<input type="hidden" name="request_id"
-			value="<?php echo esc_attr( wp_create_nonce( date( 'YmdHis' ) ) ); ?>" />
+			value="<?php echo esc_attr( wp_create_nonce( date( 'YmdHis' ) ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date ?>" />
 		<input type="hidden" name="server_address" value="<?php echo esc_attr( $server_addr ); ?>"/>
 		<input type="hidden" name="ip_address" value="<?php echo esc_attr( $remote_addr ); ?>"/>
 		<input type="hidden" name="server_type" value="<?php echo esc_attr( $server_software ); ?>"/>
@@ -71,7 +77,9 @@
 	</div>
 
 	<div class="rtm-form-filed clearfix">
-		<label class="bp-media-label" for="subject"><?php esc_html_e( 'Attachment', 'buddypress-media' ); ?></label>
+		<label class="bp-media-label" for="subject">
+			<?php esc_html_e( 'Attachment', 'buddypress-media' ); ?>
+		</label>
 		<input id="debuglog" class="bp-media-input" type="file" name="debuglog" />
 		<span class="rtm-tooltip">
 			<i class="dashicons dashicons-info"></i>
