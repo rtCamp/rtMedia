@@ -268,6 +268,6 @@ class RTMediaActivityUpgrade {
 		$done       = $total - $pending;
 		$admin_ajax = admin_url( 'admin-ajax.php' );
 
-		require_once RTMEDIA_PATH . 'app/importers/templates/activity-upgrade.php';
+		include RTMEDIA_PATH . 'app/importers/templates/activity-upgrade.php';
 	}
 }

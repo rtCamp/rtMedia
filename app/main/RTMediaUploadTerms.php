@@ -181,7 +181,7 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 
 			ob_start();
 
-			require_once RTMEDIA_PATH . 'app/main/templates/media-upload-terms.php';
+			include RTMEDIA_PATH . 'app/main/templates/media-upload-terms.php';
 
 			$content = ob_get_clean();
 

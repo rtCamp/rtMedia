@@ -508,7 +508,7 @@ class RTMediaPrivacy {
 		}
 		global $rtmedia;
 
-		require_once RTMEDIA_PATH . 'app/main/templates/privacy-content.php';
+		include RTMEDIA_PATH . 'app/main/templates/privacy-content.php';
 	}
 
 	/**

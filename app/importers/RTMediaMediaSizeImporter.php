@@ -162,7 +162,7 @@ class RTMediaMediaSizeImporter {
 		$total   = $this->get_total_count();
 		$done    = $total - $pending;
 
-		require_once RTMEDIA_PATH . 'app/importers/templates/media-size-importer.php';
+		include RTMEDIA_PATH . 'app/importers/templates/media-size-importer.php';
 	}
 
 	/**

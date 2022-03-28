@@ -103,7 +103,7 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 
 		$image_path = rtmedia_image( 'rt_media_activity_image', $id, false );
 
-		require_once RTMEDIA_PATH . 'app/main/templates/image-editor-content.php';
+		include RTMEDIA_PATH . 'app/main/templates/image-editor-content.php';
 	}
 }
 add_action( 'rtmedia_add_edit_tab_content', 'rtmedia_image_editor_content', 12, 1 );
@@ -203,7 +203,7 @@ function rtmedia_create_album_modal() {
 			&& true === $rtmedia_query->is_gallery_shortcode ) ) || apply_filters( 'rtmedia_load_add_album_modal', false )
 	) {
 
-		require_once RTMEDIA_PATH . 'app/main/templates/create-album-modal.php';
+		include RTMEDIA_PATH . 'app/main/templates/create-album-modal.php';
 	}
 }
 add_action( 'rtmedia_before_media_gallery', 'rtmedia_create_album_modal' );
@@ -234,7 +234,7 @@ function rtmedia_merge_album_modal() {
 
 	if ( $album_list && ! empty( $rtmedia_query->media_query['album_id'] ) ) {
 
-		require_once RTMEDIA_PATH . 'app/main/templates/merge-album-modal.php';
+		include RTMEDIA_PATH . 'app/main/templates/merge-album-modal.php';
 	}
 
 }
@@ -499,7 +499,7 @@ function rtmedia_admin_pages_content( $page ) {
 
 	if ( 'rtmedia-hire-us' === $page ) {
 
-		require_once RTMEDIA_PATH . 'app/main/templates/admin-pages-content.php';
+		include RTMEDIA_PATH . 'app/main/templates/admin-pages-content.php';
 	}
 
 }

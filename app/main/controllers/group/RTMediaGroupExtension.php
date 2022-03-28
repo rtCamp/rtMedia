@@ -70,7 +70,7 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 			global $rtmedia;
 			$options = $rtmedia->options;
 
-			require_once RTMEDIA_PATH . 'app/main/templates/media-group-create-screen.php';
+			include RTMEDIA_PATH . 'app/main/templates/media-group-create-screen.php';
 
 			wp_nonce_field( 'groups_create_save_' . $this->slug );
 		}
@@ -128,7 +128,7 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 			global $rtmedia;
 			$options = $rtmedia->options;
 
-			require_once RTMEDIA_PATH . 'app/main/templates/media-group-edit-screen.php';
+			include RTMEDIA_PATH . 'app/main/templates/media-group-edit-screen.php';
 
 			wp_nonce_field( 'groups_edit_save_' . $this->slug );
 		}

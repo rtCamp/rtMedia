@@ -1865,7 +1865,7 @@ function rtmedia_get_pagination_values() {
 
 		ob_start();
 
-		require_once RTMEDIA_PATH . 'app/main/templates/media-pagination.php';
+		include RTMEDIA_PATH . 'app/main/templates/media-pagination.php';
 
 		$rtmedia_media_pages = ob_get_clean();
 

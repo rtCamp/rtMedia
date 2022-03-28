@@ -182,7 +182,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			// todo: nonce required.
 			$form = filter_input( INPUT_POST, 'form', FILTER_SANITIZE_STRING );
 
-			require_once RTMEDIA_PATH . 'app/helper/templates/service-sector.php';
+			include RTMEDIA_PATH . 'app/helper/templates/service-sector.php';
 		}
 
 		/**
@@ -350,7 +350,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			$debug_info = $this->debug_info;
 
-			require_once RTMEDIA_PATH . 'app/helper/templates/debug-info.php';
+			include RTMEDIA_PATH . 'app/helper/templates/debug-info.php';
 		}
 
 		/**
@@ -456,7 +456,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					$server_software = rtm_get_server_var( 'SERVER_SOFTWARE', 'FILTER_SANITIZE_STRING' );
 					$http_user_agent = rtm_get_server_var( 'HTTP_USER_AGENT', 'FILTER_SANITIZE_STRING' );
 
-					require_once RTMEDIA_PATH . 'app/helper/templates/support-form.php';
+					include RTMEDIA_PATH . 'app/helper/templates/support-form.php';
 				}
 			}
 		}
@@ -504,7 +504,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			ob_start();
 
-			require_once RTMEDIA_PATH . 'app/helper/templates/submit-request.php';
+			include RTMEDIA_PATH . 'app/helper/templates/submit-request.php';
 
 			$message = ob_get_clean();
 

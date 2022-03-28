@@ -2166,7 +2166,7 @@ function rtm_plugin_privacy_information() {
 	if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
 		ob_start();
 
-		require_once RTMEDIA_PATH . 'app/main/templates/policy-information.php';
+		include RTMEDIA_PATH . 'app/main/templates/policy-information.php';
 
 		$policy = ob_get_clean();
 

@@ -138,7 +138,7 @@ class RTMediaThemes {
 			),
 		);
 
-		require_once RTMEDIA_PATH . 'app/helper/templates/themes-content.php';
+		include RTMEDIA_PATH . 'app/helper/templates/themes-content.php';
 	}
 
 	/**
@@ -213,6 +213,6 @@ class RTMediaThemes {
 			),
 		);
 
-		require_once RTMEDIA_PATH . 'app/helper/templates/3rd-party-themes-content.php';
+		include RTMEDIA_PATH . 'app/helper/templates/3rd-party-themes-content.php';
 	}
 }
