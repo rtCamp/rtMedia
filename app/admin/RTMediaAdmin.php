@@ -1780,7 +1780,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function plugin_meta_premium_addon_link( $plugin_meta, $plugin_file ) {
 			if ( plugin_basename( RTMEDIA_PATH . 'index.php' ) === $plugin_file ) {
-				$plugin_meta[] = '<a href=https://rtmedia.io/products/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="' . esc_attr__( 'Premium Add-ons', 'buddypress-media' ) . '">' . esc_html__( 'Premium Add-ons', 'buddypress-media' ) . '</a>';
+				$plugin_meta[] = '<a href=https://rtmedia.io/products/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="' . esc_attr__( 'Premium Plugin', 'buddypress-media' ) . '">' . esc_html__( 'Premium Plugin', 'buddypress-media' ) . '</a>';
 			}
 
 			return $plugin_meta;
@@ -2100,7 +2100,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( empty( $addon['args']['status'] ) || 'valid' !== $addon['args']['status'] ) {
 					$message = sprintf(
 					// translators: 1. License page link.
-						__( 'We found an invalid or expired license key for an rtMedia add-on. Please go to the <a href="%1$s">Licenses page</a> to fix this issue.', 'buddypress-media' ),
+						__( 'We found an invalid or expired license key for rtMedia Premium. Please go to the <a href="%1$s">Licenses page</a> to fix this issue.', 'buddypress-media' ),
 						admin_url( 'admin.php?page=rtmedia-license' )
 					);
 					echo '<div class="error"><p>' . wp_kses( $message, $args ) . '</p></div>';
