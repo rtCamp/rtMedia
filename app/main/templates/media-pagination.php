@@ -12,7 +12,7 @@
 	<div class="rtmedia-page-no rtm-page-number">
 
 		<span class="rtm-label">
-			<?php esc_html( apply_filters( 'rtmedia_goto_page_label', esc_html__( 'Go to page no : ', 'buddypress-media' ) ) ); ?>
+			<?php echo esc_html( apply_filters( 'rtmedia_goto_page_label', esc_html__( 'Go to page no : ', 'buddypress-media' ) ) ); ?>
 		</span>
 
 		<input type="hidden" id="rtmedia_first_page" value="1" />
@@ -51,14 +51,17 @@
 			if ( 1 !== $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
 				$page_url = $page_base_url . $i;
 
-				$rtmedia_media_pages .= ( $paged === $i )
-					? sprintf( '<span class="current">%1$s</span>', esc_html( $i ) )
-					: sprintf(
-						'<a class="rtmedia-page-link" data-page-type="page" data-page="%1$s" href="%2$s" class="inactive">%3$s</a>',
-						esc_attr( $i ),
-						esc_url( $page_url ),
-						esc_html( $i )
-					);
+				if ( $paged === $i ) {
+					?>
+					<span class="current"><?php echo esc_html( $i ); ?></span>
+					<?php
+				} else {
+					?>
+					<a class="rtmedia-page-link" data-page-type="page" data-page="<?php echo esc_attr( $i ); ?>" href="<?php echo esc_url( $page_url ); ?>" class="inactive">
+						<?php echo esc_html( $i ); ?>
+					</a>
+					<?php
+				}
 			}
 		}
 
