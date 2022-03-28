@@ -21,7 +21,7 @@
 			class="rtm-go-to-num" id="rtmedia_go_to_num" />
 
 		<a class="rtmedia-page-link button" data-page-type="num" data-page-base-url="<?php echo esc_url( $page_base_url ); ?>" href="#">
-			<?php esc_html__( 'Go', 'buddypress-media' ); ?>
+			<?php esc_html_e( 'Go', 'buddypress-media' ); ?>
 		</a>
 
 	</div>
