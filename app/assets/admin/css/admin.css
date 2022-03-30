@@ -140,6 +140,7 @@
   padding: 2px 0px;
   background: #2e81be;
   border-color: #2e81be;
+  border-radius: 3px;
   color: #fff;
 }
 #mc-embedded-subscribe:hover, #mc-embedded-subscribe:focus {
