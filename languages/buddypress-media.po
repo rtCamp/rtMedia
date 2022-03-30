@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.10\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2022-03-28 12:07:35+00:00\n"
+"POT-Creation-Date: 2022-03-29 14:38:23+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -361,129 +361,117 @@ msgstr ""
 msgid "Post to Twitter Now"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1614
-msgid "Post to Twitter"
-msgstr ""
-
-#: app/admin/RTMediaAdmin.php:1615
+#: app/admin/RTMediaAdmin.php:1618
 msgid "Share on Facebook Now"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1615
-msgid "Share on Facebook"
-msgstr ""
-
-#: app/admin/RTMediaAdmin.php:1616
+#: app/admin/RTMediaAdmin.php:1622
 msgid "Rate rtMedia on Wordpress.org"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1616
-msgid "Rate on Wordpress.org"
-msgstr ""
-
-#: app/admin/RTMediaAdmin.php:1617
+#: app/admin/RTMediaAdmin.php:1626
 msgid "Subscribe to our Feeds"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1620
+#: app/admin/RTMediaAdmin.php:1632
 msgid "Spread the Word"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1626 app/admin/RTMediaAdmin.php:1633
+#: app/admin/RTMediaAdmin.php:1638 app/admin/RTMediaAdmin.php:1645
 msgid "Subscribe"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1682
+#: app/admin/RTMediaAdmin.php:1694
 msgid "Unable to read file!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1694 app/admin/RTMediaAdmin.php:1701
+#: app/admin/RTMediaAdmin.php:1706 app/admin/RTMediaAdmin.php:1713
 msgid "Invalid JSON Supplied!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1707
+#: app/admin/RTMediaAdmin.php:1719
 msgid "Invalid JSON Supplied. The JSON you supplied is not exported from rtMedia!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1717
+#: app/admin/RTMediaAdmin.php:1729
 msgid "Data passed for settings is unchanged!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1721
+#: app/admin/RTMediaAdmin.php:1733
 msgid "rtMedia Settings imported successfully!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1724
+#: app/admin/RTMediaAdmin.php:1736
 msgid "Could not update rtMedia Settings"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1759
+#: app/admin/RTMediaAdmin.php:1771
 msgid "Thank you for your time."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1783
+#: app/admin/RTMediaAdmin.php:1795
 msgid "Premium Plugin"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1807
+#: app/admin/RTMediaAdmin.php:1819
 #. translators: 1. Not supported image types.
 msgid ""
 "You have images enabled on rtMedia but your network allowed filetypes do "
 "not permit uploading of %s. Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1809 app/admin/RTMediaAdmin.php:1827
-#: app/admin/RTMediaAdmin.php:1845 app/admin/RTMediaFormHandler.php:628
+#: app/admin/RTMediaAdmin.php:1821 app/admin/RTMediaAdmin.php:1839
+#: app/admin/RTMediaAdmin.php:1857 app/admin/RTMediaFormHandler.php:628
 #: app/helper/RTMediaSettings.php:342 app/helper/RTMediaSupport.php:445
 #: app/helper/RTMediaSupport.php:736
 msgid "here"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1810 app/admin/RTMediaAdmin.php:1828
-#: app/admin/RTMediaAdmin.php:1846
+#: app/admin/RTMediaAdmin.php:1822 app/admin/RTMediaAdmin.php:1840
+#: app/admin/RTMediaAdmin.php:1858
 msgid " to change your settings manually."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1812 app/admin/RTMediaAdmin.php:1830
-#: app/admin/RTMediaAdmin.php:1848
+#: app/admin/RTMediaAdmin.php:1824 app/admin/RTMediaAdmin.php:1842
+#: app/admin/RTMediaAdmin.php:1860
 msgid "Recommended:"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1813 app/admin/RTMediaAdmin.php:1831
-#: app/admin/RTMediaAdmin.php:1849
+#: app/admin/RTMediaAdmin.php:1825 app/admin/RTMediaAdmin.php:1843
+#: app/admin/RTMediaAdmin.php:1861
 msgid "Update Network Settings Automatically"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1826
+#: app/admin/RTMediaAdmin.php:1838
 msgid ""
 "You have video enabled on BuddyPress Media but your network allowed "
 "filetypes do not permit uploading of mp4. Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1844
+#: app/admin/RTMediaAdmin.php:1856
 msgid ""
 "You have audio enabled on BuddyPress Media but your network allowed "
 "filetypes do not permit uploading of mp3. Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1865
+#: app/admin/RTMediaAdmin.php:1877
 msgid "Network settings updated successfully."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1927
+#: app/admin/RTMediaAdmin.php:1939
 msgid ""
 "Please update rtMedia template files if you have overridden the default "
 "rtMedia templates in your theme. If not, you can ignore and hide this "
 "notice."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1927
+#: app/admin/RTMediaAdmin.php:1939
 #: app/importers/RTMediaMediaSizeImporter.php:104
 #: app/importers/RTMediaMigration.php:92
 msgid "Hide"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:2087
+#: app/admin/RTMediaAdmin.php:2099
 #. translators: 1. Account page and link.
 msgid ""
 "Your license keys can be found on <a href=\"%1$s\">my-account</a> page. For "
@@ -491,7 +479,7 @@ msgid ""
 "page."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:2103
+#: app/admin/RTMediaAdmin.php:2115
 #. translators: 1. License page link.
 msgid ""
 "We found an invalid or expired license key for rtMedia Premium. Please go "
@@ -1438,7 +1426,7 @@ msgstr ""
 msgid "Live Demo"
 msgstr ""
 
-#: app/helper/RTMediaAdminWidget.php:40
+#: app/helper/RTMediaAdminWidget.php:50
 msgid "Argument missing. id is required."
 msgstr ""
 
@@ -1466,39 +1454,43 @@ msgstr ""
 msgid "rtMedia Addons"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:96
+#: app/helper/RTMediaLicense.php:97
 msgid ""
 "Activate rtMedia Premium with your license key to get support and automatic "
 "update from your WordPress dashboard."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:107
+#: app/helper/RTMediaLicense.php:102
+msgid "Enter your license key to activate"
+msgstr ""
+
+#: app/helper/RTMediaLicense.php:109
 msgid "Deactivate License"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:110
+#: app/helper/RTMediaLicense.php:112
 msgid "Activate License"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:156
+#: app/helper/RTMediaLicense.php:160
 #. translators: %s: Expiry date.
 msgid "Your license key expired on %s. Please renew your license key."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:166
+#: app/helper/RTMediaLicense.php:170
 msgid ""
 "Your license key has been disabled. Please contact support for more "
 "information."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:176
+#: app/helper/RTMediaLicense.php:180
 #. translators: %s: Account page link.
 msgid ""
 "Invalid license. Please <a href=\"%s\" target=\"_blank\">visit your account "
 "page</a> and verify it."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:192
+#: app/helper/RTMediaLicense.php:196
 #. translators: 1: Add-on name, 2:My account page link.
 msgid ""
 "Your %1$s is not active for this URL. Please <a href=\"%2$s\" "
@@ -1506,39 +1498,39 @@ msgid ""
 "URLs."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:205
+#: app/helper/RTMediaLicense.php:209
 #. translators: %s: Add-on name.
 msgid "This appears to be an invalid license key for %s."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:215
+#: app/helper/RTMediaLicense.php:219
 #. translators: %s: Account link.
 msgid ""
 "Your license key has reached its activation limit. <a href=\"%s\">View "
 "possible upgrades</a> now."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:225
+#: app/helper/RTMediaLicense.php:229
 #. translators: %s: Account link.
 msgid ""
 "Your license is not activable, please visit <a href=\"%s\">your account "
 "page</a>."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:233 app/helper/RTMediaLicense.php:288
+#: app/helper/RTMediaLicense.php:237 app/helper/RTMediaLicense.php:292
 msgid "To receive updates, please enter your valid license key."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:251
+#: app/helper/RTMediaLicense.php:255
 msgid "License key never expires."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:261
+#: app/helper/RTMediaLicense.php:265
 #. translators: 1: Expiry date.
 msgid "Your license key expires soon! It expires on %1$s. Renew your license key."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:273
+#: app/helper/RTMediaLicense.php:277
 #. translators: %s: Expiry date.
 msgid "Your license key expires on %s."
 msgstr ""
