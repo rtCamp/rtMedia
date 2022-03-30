@@ -92,9 +92,7 @@ class RTMediaTemplate {
 	 */
 	public function set_template( $template = false, $shortcode_attr = false ) {
 		global $rtmedia_query, $rtmedia_interaction, $rtmedia_media;
-
 		do_action( 'rtmedia_pre_template' );
-
 		if ( isset( $rtmedia_query->action_query->action ) ) {
 			do_action( 'rtmedia_pre_action_' . $rtmedia_query->action_query->action );
 		} else {
@@ -118,7 +116,6 @@ class RTMediaTemplate {
 			$this->check_return_merge();
 			$this->check_return_comments();
 			$this->check_delete_comments();
-
 			if ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode && isset( $shortcode_attr['name'] ) && 'gallery' === $shortcode_attr['name'] ) {
 				$valid = $this->sanitize_gallery_attributes( $shortcode_attr['attr'] );
 

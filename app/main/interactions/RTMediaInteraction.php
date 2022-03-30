@@ -48,7 +48,8 @@ class RTMediaInteraction {
 		add_action( 'init', array( $this, 'flush_rules' ) );
 
 		// set up interaction and routes.
-		add_action( 'template_redirect', array( $this, 'init' ), 99 );
+		add_action( 'template_redirect', array( $this, 'init' ), 9999 );
+		//add_action( 'bp_loaded', array( $this, 'init' ), 0 );
 
 		add_filter( 'wp_title', array( $this, 'set_title' ), 99999, 2 );
 		add_filter( 'wpseo_opengraph_title', array( $this, 'set_title' ), 9999, 1 );
@@ -99,17 +100,18 @@ class RTMediaInteraction {
 
 		// filter to add custom slugs for routes.
 		$this->slugs = apply_filters( 'rtmedia_default_routes', $this->slugs );
+
 	}
 
 	/**
 	 * Add rewrite rules with RTMedia slugs.
 	 */
 	public static function rewrite_rules() {
-		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/([0-9]*)/([^/]*)/?', 'index.php?media_id=$matches[1]&action=$matches[2]', 'bottom' );
-		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/([0-9]*)/pg/([0-9]*)/?', 'index.php?media_id=$matches[1]&pg=$matches[2]', 'bottom' );
-		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/nonce/([^/]*)/?', 'index.php?nonce_type=$matches[1]', 'bottom' );
-		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/([A-Za-z]*)/pg/([0-9]*)/?', 'index.php?media_type=$matches[1]&pg=$matches[2]', 'bottom' );
-		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/pg/([0-9]*)/?', 'index.php?pg=$matches[1]', 'bottom' );
+		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/([0-9]*)/([^/]*)/?', 'index.php?media_id=$matches[1]&action=$matches[2]', 'top' );
+		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/([0-9]*)/pg/([0-9]*)/?', 'index.php?media_id=$matches[1]&pg=$matches[2]', 'top' );
+		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/nonce/([^/]*)/?', 'index.php?nonce_type=$matches[1]', 'top' );
+		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/([A-Za-z]*)/pg/([0-9]*)/?', 'index.php?media_type=$matches[1]&pg=$matches[2]', 'top' );
+		add_rewrite_rule( '^/' . RTMEDIA_MEDIA_SLUG . '/pg/([0-9]*)/?', 'index.php?pg=$matches[1]', 'top' );
 		do_action( 'rtmedia_add_rewrite_rules' );
 	}
 
@@ -177,6 +179,7 @@ class RTMediaInteraction {
 
 		// set the context property.
 		$this->context = $context_object;
+
 	}
 
 	/**
@@ -194,13 +197,14 @@ class RTMediaInteraction {
 	public function set_query() {
 
 		global $rtmedia_query;
-
 		if ( $this->routes[ RTMEDIA_MEDIA_SLUG ]->is_template() ) {
-			$args          = array(
+			$args = array(
 				'context'    => $this->context->type,
 				'context_id' => $this->context->id,
 			);
-			$args          = apply_filters( 'rtmedia_query_filter', $args );
+			$args = apply_filters( 'rtmedia_query_filter', $args );
+			//error_log( 'Inside settings query');
+			//error_log( print_r( $args, 1));
 			$rtmedia_query = new RTMediaQuery( $args );
 		}
 	}

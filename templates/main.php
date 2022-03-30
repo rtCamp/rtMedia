@@ -35,12 +35,22 @@ if ( 'nouveau' === $bp_template && ! $rt_ajax_request && function_exists( 'bp_no
 // if it's not an ajax request, load headers.
 if ( ! $rt_ajax_request ) {
 	// if this is a BuddyPress page, set template type to buddypress to load appropriate headers.
-	if ( class_exists( 'BuddyPress' ) && ! bp_is_blog_page() && apply_filters( 'rtm_main_template_buddypress_enable', true ) ) {
+
+	if (class_exists( 'BuddyPress' ) && ! bp_is_blog_page() && apply_filters( 'rtm_main_template_buddypress_enable', true ) ) {
 		$template_type = 'buddypress';
 	} else {
 		$template_type = '';
 	}
-
+	error_log( 'did bp_parse_query?');
+	if ( did_action( 'bp_parse_query') ) {
+        error_log( 'bp_parse_query already fired');
+    }else{
+        error_log( 'bp_parse_query not fired yet');
+    }
+    error_log( print_r( $template_type, 1));
+    error_log( print_r( $bp_template, 1));
+    error_log( ' bp_displayed_user_id()');
+    error_log( print_r( bp_displayed_user_id(), 1));
 	// When Nouveau is active.
 	if ( 'nouveau' === $bp_template ) {
 

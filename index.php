@@ -56,7 +56,30 @@ if ( ! defined( 'RTMEDIA_BASE_NAME' ) ) {
 	 */
 	define( 'RTMEDIA_BASE_NAME', plugin_basename( __FILE__ ) );
 }
+add_action( 'init', function () {
+	add_filter('rewrite_rules_array', 'move_media_top');
 
+});
+
+
+function move_media_top($rules) {
+	//error_log( print_r( $rules, 1));
+	$tk= '';
+	$tv = '';
+	foreach ($rules as $rule => $rewrite) {
+
+		if ( '[^/]+/([^/]+)/media(/(.*))?/?$' === $rule ) {
+			$tk = $rule; $tv = $rewrite;
+			unset( $rules[$rule]);
+		}
+
+	}
+	if ( !empty( $tk) ) {
+		$rules = array($tk => $tv) + $rules;
+	}
+	//error_log( print_r( $rules, 1));
+	return $rules;
+}
 /**
  * Auto Loader Function
  *

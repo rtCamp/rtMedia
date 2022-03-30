@@ -73,9 +73,12 @@ class RTMediaRouter {
 	 */
 	public function is_template() {
 		global $wp_query, $rtmedia_query;
-
+		//error_log( print_r( $this->slug, 1));
+		//error_log( print_r( isset( $wp_query->query_vars[ $this->slug ] ), 1));
+		//error_log( print_r( $rtmedia_query, 1));
 		$return = isset( $wp_query->query_vars[ $this->slug ] );
 		$return = apply_filters( 'rtmedia_return_is_template', $return, $this->slug );
+
 		if ( $return ) {
 			if ( isset( $wp_query->query_vars['action'] ) && 'bp_avatar_upload' === $wp_query->query_vars['action'] ) {
 				$return = false;
@@ -98,7 +101,15 @@ class RTMediaRouter {
 			$wp_query->is_404 = false;
 			$return           = true;
 		}
-
+		//error_log( 'What is $return, 404');
+		//
+		//error_log( print_r( $return, 1));
+		//error_log( print_r( $wp_query->is_404, 1));
+		// mimic result
+		//$wp_query->is_404 = false;
+		//$return           = true;
+		//$wp_query->query_vars['media'] = '';
+		//end mimic
 		return $return;
 	}
 
@@ -129,7 +140,6 @@ class RTMediaRouter {
 	 * @return string File path of the template file to be loaded
 	 */
 	public function template_include( $template ) {
-
 		// if it is not our route, return the default template early.
 		if ( ! $this->is_template() ) {
 			return $template;
@@ -145,11 +155,13 @@ class RTMediaRouter {
 		global $new_rt_template;
 		$new_rt_template = $template_load->set_template( $template );
 
+
 		$new_rt_template = apply_filters( 'rtmedia_' . $this->slug . '_include', $new_rt_template );
+
 		global $rt_ajax_request;
 		$rt_ajax_request = false;
 
-		$req_with = rtm_get_server_var( 'HTTP_X_REQUESTED_WITH', 'FILTER_SANITIZE_STRING' );
+		$req_with = rtm_get_server_var( 'HTTP_X_REQUESTED_WITH' );
 
 		// check if it is an ajax request.
 		if (
@@ -193,7 +205,6 @@ class RTMediaRouter {
 	public function rt_replace_the_content( $content = '' ) {
 		// Do we have new content to replace the old content?
 		global $new_rt_template, $rt_template_content;
-
 		if ( ! isset( $rt_template_content ) ) {
 			ob_start();
 			load_template( $new_rt_template );

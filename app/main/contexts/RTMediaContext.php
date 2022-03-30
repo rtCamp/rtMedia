@@ -32,26 +32,19 @@ class RTMediaContext {
 	public $id;
 
 	/**
-	 * RTMediaContext constructor.
+	 * RTMediaContext constructor. Set current request context
 	 *
 	 * @return RTMediaContext
 	 */
 	public function __construct() {
-		$this->set_context();
-
-		return $this;
-	}
-
-	/**
-	 * Set current request context
-	 */
-	public function set_context() {
 		if ( class_exists( 'BuddyPress' ) ) {
 			$this->set_bp_context();
 		} else {
 			$this->set_wp_context();
 		}
+		return $this;
 	}
+
 
 	/**
 	 * Set WordPress context
@@ -90,7 +83,13 @@ class RTMediaContext {
 	 * Set BuddyPress context
 	 */
 	public function set_bp_context() {
-		if ( bp_is_blog_page() && ! is_home() ) {
+		//add_action( 'bp_parse_query', array( $this, 'fix_bp_plugin_issue' ), 99 );
+		$this->fix_bp_plugin_issue();
+
+	}
+
+	public function fix_bp_plugin_issue() {
+		if ( ! is_home() && bp_is_blog_page() ) {
 			$this->set_wp_context();
 		} else {
 			$this->set_bp_component_context();
@@ -111,7 +110,7 @@ class RTMediaContext {
 			}
 		}
 		$this->id = $this->get_current_bp_component_id();
-		if ( null === $this->id ) {
+		if ( null === $this->id || 0 === $this->id ) {
 			global $bp;
 			$this->id = $bp->loggedin_user->id;
 		}
