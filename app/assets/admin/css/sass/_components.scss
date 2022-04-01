@@ -14,6 +14,18 @@
 	letter-spacing: 0.5px;
 }
 
+.theme-browser {
+	.theme {
+		.theme-actions {
+			position: absolute;
+			top: unset;
+			transform: translateY(-100%);
+			right: 0;
+			padding: 9px 15px;
+		}
+	}
+}
+
 .rtm-setting-title {
 	border-bottom: 1px solid $light;
 	font-size: 22px;
