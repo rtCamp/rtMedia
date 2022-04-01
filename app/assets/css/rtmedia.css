@@ -355,7 +355,7 @@ button#rtmedia-add-media-button-post-update .dashicons {
 }
 
 #buddypress a.rtm-button-back {
-  padding: 3px 10px;
+  padding: 4.8px 10px;
 }
 #buddypress div.rtmedia-page-no.rtm-page-number a.rtmedia-page-link.button {
   padding: 5px 10px;
@@ -2508,6 +2508,7 @@ td.imgedit-settings input {
 .wp_attachment_image .button,
 .A1B1 .button {
   float: left;
+  margin: 10px 0px;
 }
 
 .no-js .wp_attachment_image .button {
@@ -2537,7 +2538,7 @@ td.imgedit-settings input {
 }
 
 .imgedit-crop {
-  margin: 0 8px 0 0;
+  margin: 0 3px 0 0;
 }
 
 .imgedit-crop.disabled:hover {
@@ -2561,7 +2562,7 @@ td.imgedit-settings input {
 }
 
 .imgedit-rright {
-  margin: 0 8px 0 3px;
+  margin: 0 3px 0 3px;
 }
 
 .imgedit-rright.disabled:hover {
@@ -2597,7 +2598,7 @@ td.imgedit-settings input {
 }
 
 .imgedit-undo {
-  margin: 0 3px;
+  margin: 5px 3px 0px 0px;
 }
 
 .imgedit-undo.disabled:hover {
@@ -2609,7 +2610,7 @@ td.imgedit-settings input {
 }
 
 .imgedit-redo {
-  margin: 0 8px 0 3px;
+  margin: 5px 0px 0px 3px;
 }
 
 .imgedit-redo.disabled:hover {
