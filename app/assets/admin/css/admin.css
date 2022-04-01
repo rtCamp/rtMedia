@@ -1178,6 +1178,11 @@ input[type=checkbox]:checked ~ .switch-handle {
   .rtmedia-settings-submit {
     margin-bottom: 0 !important;
   }
+
+  .upload_attachment {
+    width: 230px;
+    padding: 0 !important;
+  }
 }
 @media only screen and (min-width: 641px) {
   .rtm-pro-feature-list li:nth-child(3n+1) {
