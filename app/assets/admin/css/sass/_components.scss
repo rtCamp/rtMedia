@@ -497,3 +497,29 @@ form.license-form {
 		padding-bottom: 10px;
 	}
 }
+
+.upload_attachment {
+	height: 37px;
+	background: #fff;
+	border-radius: 7px;
+	border: 1px solid #8c8f94;
+	width: 350px;
+	outline: none;
+	padding: 0 !important;
+}
+
+::-webkit-file-upload-button {
+	color: #fff;
+	height: 35px;
+	margin-right: 20px;
+	background: #2271b1;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	border: none;
+	outline: none;
+
+	&:hover {
+		background: #135e96;
+		cursor: pointer;
+	}
+}
