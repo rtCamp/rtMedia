@@ -1612,7 +1612,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			// translators: 1. Home url.
 			$message = sprintf( esc_html__( 'I use @rtMediaWP http://rt.cx/rtmedia on %s', 'buddypress-media' ), home_url() );
 			$addons  = '<div id="social" class="rtm-social-share">
-						<a href="http://twitter.com/home/?status=' . esc_attr( $message ) . '" class="button twitter" target= "_blank" title="' . esc_attr__( 'Post to Twitter Now', 'buddypress-media' ) . '">
+						<a href="http://twitter.com/share?text=' . esc_attr( $message ) . '" class="button twitter" target= "_blank" title="' . esc_attr__( 'Post to Twitter Now', 'buddypress-media' ) . '">
 							<span class="dashicons dashicons-twitter"></span>
 							<span class="icon-message">' . esc_html__( 'Post to Twitter', 'buddypress-media' ) . '</span>
 						</a>
