@@ -77,12 +77,24 @@ $container-min-height: 300px;
 
 #mce-EMAIL {
 	width: 100%;
+	background: #f6f7f7;
 }
 
 #mc-embedded-subscribe {
 	display: block;
 	margin: 10px auto 0;
 	width: 100%;
+	padding: 2px 0px;
+	background: #2e81be;
+	border-color:#2e81be;
+	border-radius: 3px;
+	color: #fff;
+	
+	&:hover, &:focus {
+		background: #0c73bd;
+		border-color:#0c73bd;
+		color: #fff;
+	}
 }
 
 .license-row {
