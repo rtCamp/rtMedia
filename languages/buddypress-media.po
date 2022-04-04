@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.10\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2022-04-04 12:15:00+00:00\n"
+"POT-Creation-Date: 2022-04-04 15:37:59+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1470,43 +1470,43 @@ msgstr ""
 msgid "Activate "
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:107
+#: app/helper/RTMediaLicense.php:105
 msgid ""
 " with your license key to get support and automatic update from your "
 "WordPress dashboard."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:114
+#: app/helper/RTMediaLicense.php:112
 msgid "Enter your license key to activate"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:121
+#: app/helper/RTMediaLicense.php:119
 msgid "Deactivate License"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:124
+#: app/helper/RTMediaLicense.php:122
 msgid "Activate License"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:172
+#: app/helper/RTMediaLicense.php:170
 #. translators: %s: Expiry date.
 msgid "Your license key expired on %s. Please renew your license key."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:182
+#: app/helper/RTMediaLicense.php:180
 msgid ""
 "Your license key has been disabled. Please contact support for more "
 "information."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:192
+#: app/helper/RTMediaLicense.php:190
 #. translators: %s: Account page link.
 msgid ""
 "Invalid license. Please <a href=\"%s\" target=\"_blank\">visit your account "
 "page</a> and verify it."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:208
+#: app/helper/RTMediaLicense.php:206
 #. translators: 1: Add-on name, 2:My account page link.
 msgid ""
 "Your %1$s is not active for this URL. Please <a href=\"%2$s\" "
@@ -1514,39 +1514,39 @@ msgid ""
 "URLs."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:221
+#: app/helper/RTMediaLicense.php:219
 #. translators: %s: Add-on name.
 msgid "This appears to be an invalid license key for %s."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:231
+#: app/helper/RTMediaLicense.php:229
 #. translators: %s: Account link.
 msgid ""
 "Your license key has reached its activation limit. <a href=\"%s\">View "
 "possible upgrades</a> now."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:241
+#: app/helper/RTMediaLicense.php:239
 #. translators: %s: Account link.
 msgid ""
 "Your license is not activable, please visit <a href=\"%s\">your account "
 "page</a>."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:249 app/helper/RTMediaLicense.php:304
+#: app/helper/RTMediaLicense.php:247 app/helper/RTMediaLicense.php:302
 msgid "To receive updates, please enter your valid license key."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:267
+#: app/helper/RTMediaLicense.php:265
 msgid "License key never expires."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:277
+#: app/helper/RTMediaLicense.php:275
 #. translators: 1: Expiry date.
 msgid "Your license key expires soon! It expires on %1$s. Renew your license key."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:289
+#: app/helper/RTMediaLicense.php:287
 #. translators: %s: Expiry date.
 msgid "Your license key expires on %s."
 msgstr ""
