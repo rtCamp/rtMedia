@@ -1079,7 +1079,7 @@ input[type=checkbox]:checked ~ .switch-handle {
 #rtm-plugins .plugin-card-top {
   padding: 10px;
   min-height: 165px;
-  top: 15px;
+  top: 20px;
 }
 #rtm-plugins .plugin-card-bottom a.button {
   color: #fff;
