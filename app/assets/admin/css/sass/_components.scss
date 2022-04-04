@@ -14,6 +14,18 @@
 	letter-spacing: 0.5px;
 }
 
+.theme-browser {
+	.theme {
+		.theme-actions {
+			position: absolute;
+			top: unset;
+			transform: translateY(-100%);
+			right: 0;
+			padding: 9px 15px;
+		}
+	}
+}
+
 .rtm-setting-title {
 	border-bottom: 1px solid $light;
 	font-size: 22px;
@@ -592,5 +604,32 @@ form.license-form {
 		margin-top: 0;
 		padding-top: 0;
 		padding-bottom: 10px;
+	}
+}
+
+// Support form attachment design
+.upload_attachment {
+	height: 37px;
+	background: #fff;
+	border-radius: 7px;
+	border: 1px solid #8c8f94;
+	width: 350px;
+	outline: none;
+	padding: 0 !important;
+}
+
+::-webkit-file-upload-button {
+	color: #fff;
+	height: 35px;
+	margin-right: 20px;
+	background: #2271b1;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	border: none;
+	outline: none;
+
+	&:hover {
+		background: #135e96;
+		cursor: pointer;
 	}
 }
