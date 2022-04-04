@@ -12,7 +12,7 @@
 		img {
 			height: auto;
 			/*margin: -10px 0 0 -10px;*/
-			max-width: 120px;
+			max-width: 110px;
 		}
 	}
 
@@ -52,6 +52,23 @@
 	}
 	.plugin-card-top {
 		padding: 10px;
+		min-height: 165px;
+		top: 15px;
+	}
+	
+	.plugin-card-bottom {
+		a.button {
+			color: #fff;
+			font-size: 14px;
+			background: #2e81be;
+			border-color: #2e81be;
+
+			&:hover, &:focus {
+				background: #0c73bd;
+				border-color: #0c73bd;
+				color: #fff;
+			}
+		}
 	}
 }
 

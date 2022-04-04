@@ -1047,7 +1047,7 @@ input[type=checkbox]:checked ~ .switch-handle {
 .rtm-plugin-card.plugin-card .rtm-logo img {
   height: auto;
   /*margin: -10px 0 0 -10px;*/
-  max-width: 120px;
+  max-width: 110px;
 }
 .rtm-plugin-card.plugin-card .desc, .rtm-plugin-card.plugin-card .name {
   margin-left: 0;
@@ -1078,6 +1078,19 @@ input[type=checkbox]:checked ~ .switch-handle {
 }
 #rtm-plugins .plugin-card-top {
   padding: 10px;
+  min-height: 165px;
+  top: 15px;
+}
+#rtm-plugins .plugin-card-bottom a.button {
+  color: #fff;
+  font-size: 14px;
+  background: #2e81be;
+  border-color: #2e81be;
+}
+#rtm-plugins .plugin-card-bottom a.button:hover, #rtm-plugins .plugin-card-bottom a.button:focus {
+  background: #0c73bd;
+  border-color: #0c73bd;
+  color: #fff;
 }
 
 .rtm-encoding-table {
