@@ -94,7 +94,17 @@ class RTMediaLicense {
 					<span><?php echo esc_html( $tab['title'] ); ?></span>
 				</h4>
 				<div class="license-inner-message">
-					<p><?php esc_html_e( 'Activate rtMedia Premium with your license key to get support and automatic update from your WordPress dashboard.', 'buddypress-media' ); ?></p>
+					<p>
+					<?php
+						esc_html_e( 'Activate ', 'buddypress-media' );
+					?>
+					<strong>
+						<?php echo ( isset( $tab['title'] ) ) ? esc_html( $tab['title'] ) : 'Plugin'; ?>
+					</strong>
+					<?php
+						esc_html_e( ' with your license key to get support and automatic update from your WordPress dashboard.', 'buddypress-media' );
+					?>
+					</p>
 				</div>
 
 				<div class="license-inner">
