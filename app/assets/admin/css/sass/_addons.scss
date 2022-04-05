@@ -12,7 +12,7 @@
 		img {
 			height: auto;
 			/*margin: -10px 0 0 -10px;*/
-			max-width: 120px;
+			max-width: 110px;
 		}
 	}
 
@@ -52,6 +52,8 @@
 	}
 	.plugin-card-top {
 		padding: 10px;
+		min-height: 165px;
+		top: 20px;
 	}
 }
 
