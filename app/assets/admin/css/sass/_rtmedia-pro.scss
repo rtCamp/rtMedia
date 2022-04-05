@@ -82,3 +82,24 @@
 	font-size: 14px;
 	margin-bottom: 24px;
 }
+
+ol.rtm-hire-points {
+	padding-left: 1rem;
+	list-style-type: disclosure-closed;
+	> li {
+		font-size: initial;
+		background: #fff;
+		border: 2px solid #eee;
+		border-radius: 0.5rem;
+		box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+		margin-top: 1rem;
+		padding: 1rem 1rem 1rem 1rem;
+	}
+
+	.dashicons {
+		color: #2e81be;
+		font-size: 25px;
+		margin-right: 10px;
+		line-height: 20px;
+	}
+}
