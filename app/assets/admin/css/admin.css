@@ -221,18 +221,23 @@
   padding: 9px 15px;
 }
 
+.dashicons-groups {
+  font-size: 25px;
+  margin-right: 10px;
+}
+
 .rtm-setting-title {
   border-bottom: 1px solid #EEEEEE;
   font-size: 22px;
   font-weight: 400;
   line-height: 1;
   margin-bottom: 20px;
-  margin-top: 0;
+  margin-top: 2px;
   padding-bottom: 14px;
   display: none;
 }
 .rtm-setting-title.rtm-show {
-  display: block;
+  display: inline-block;
 }
 
 .rtm-option-wrapper {
@@ -631,9 +636,10 @@
   border-bottom: 1px solid #ddd;
   margin: 0;
   padding: 15px 10px;
-  font-size: 18px;
+  font-size: 20px;
 }
 .rtm-addon-license .license-inner-message p {
+  font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.5px;
 }

@@ -510,6 +510,7 @@ function rtmedia_admin_pages_content( $page ) {
 	if ( 'rtmedia-hire-us' === $page ) {
 		?>
 		<div class="rtm-hire-us-container rtm-page-container">
+			<span class="dashicons dashicons-groups"></span>
 			<h3 class="rtm-setting-title rtm-show"><?php esc_html_e( 'You can consider rtMedia Team for following :', 'buddypress-media' ); ?></h3>
 			<ol class="rtm-hire-points">
 				<li><?php esc_html_e( 'rtMedia Customization ( in Upgrade Safe manner )', 'buddypress-media' ); ?></li>
