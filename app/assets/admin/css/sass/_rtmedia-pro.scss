@@ -80,12 +80,12 @@
 
 .rtm-hire-points {
 	font-size: 14px;
+	margin-left: 0px;
 	margin-bottom: 24px;
 }
 
 ol.rtm-hire-points {
-	padding-left: 1rem;
-	list-style-type: disclosure-closed;
+	list-style-type: none;
 	> li {
 		font-size: initial;
 		background: #fff;
@@ -99,7 +99,7 @@ ol.rtm-hire-points {
 	.dashicons {
 		color: #2e81be;
 		font-size: 25px;
-		margin-right: 10px;
+		margin-right: 15px;
 		line-height: 20px;
 	}
 }
