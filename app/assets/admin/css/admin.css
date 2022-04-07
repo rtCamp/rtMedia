@@ -221,18 +221,23 @@
   padding: 9px 15px;
 }
 
+.dashicons-groups {
+  font-size: 25px;
+  margin-right: 10px;
+}
+
 .rtm-setting-title {
   border-bottom: 1px solid #EEEEEE;
   font-size: 22px;
   font-weight: 400;
   line-height: 1;
   margin-bottom: 20px;
-  margin-top: 0;
+  margin-top: 2px;
   padding-bottom: 14px;
   display: none;
 }
 .rtm-setting-title.rtm-show {
-  display: block;
+  display: inline-block;
 }
 
 .rtm-option-wrapper {
@@ -631,9 +636,10 @@
   border-bottom: 1px solid #ddd;
   margin: 0;
   padding: 15px 10px;
-  font-size: 18px;
+  font-size: 20px;
 }
 .rtm-addon-license .license-inner-message p {
+  font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.5px;
 }
@@ -1202,7 +1208,27 @@ input[type=checkbox]:checked ~ .switch-handle {
 
 .rtm-hire-points {
   font-size: 14px;
+  margin-left: 0px;
   margin-bottom: 24px;
+}
+
+ol.rtm-hire-points {
+  list-style-type: none;
+}
+ol.rtm-hire-points > li {
+  font-size: initial;
+  background: #fff;
+  border: 2px solid #eee;
+  border-radius: 0.5rem;
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0, 0, 0, 0.05), 0 0.5rem 1.125rem rgba(75, 0, 0, 0.05);
+  margin-top: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
+}
+ol.rtm-hire-points .dashicons {
+  color: #2e81be;
+  font-size: 25px;
+  margin-right: 15px;
+  line-height: 20px;
 }
 
 @media only screen and (min-width: 1025px) {
