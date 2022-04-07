@@ -86,15 +86,30 @@ class RTMediaLicense {
 		$license_status_id = $args['status_id'];
 		$license_data      = get_option( 'edd_' . $el_id . '_active', '' );
 		?>
-		<div class="large-4 medium-6 small-12 license-column">
+		<div class="small-12 license-column">
 
 			<div class="rtm-addon-license">
 				<h4 class="title">
+					<span class="dashicons dashicons-privacy"></span>
 					<span><?php echo esc_html( $tab['title'] ); ?></span>
 				</h4>
+				<div class="license-inner-message">
+					<p>
+					<?php
+						esc_html_e( 'Activate ', 'buddypress-media' );
+					?>
+					<strong>
+						<?php echo ( isset( $tab['title'] ) ) ? esc_html( $tab['title'] ) : 'Plugin'; ?>
+					</strong>
+					<?php
+						esc_html_e( ' with your license key to get support and automatic update from your WordPress dashboard.', 'buddypress-media' );
+					?>
+					</p>
+				</div>
 
 				<div class="license-inner">
-					<input id="<?php echo esc_attr( $license_key_id ); ?>" name="<?php echo esc_attr( $license_key_id ); ?>" type="text" class="regular-text" value="<?php echo esc_attr( $license ); ?>" />
+					<span class="dashicons dashicons-admin-network"></span>
+					<input id="<?php echo esc_attr( $license_key_id ); ?>" name="<?php echo esc_attr( $license_key_id ); ?>" type="text" class="regular-text" value="<?php echo esc_attr( $license ); ?>" placeholder="<?php echo esc_attr__( 'Enter your license key to activate', 'buddypress-media' ); ?>" />
 					<?php
 					$nonce_action = 'edd_' . $el_id . '_nonce';
 					$nonce_name   = 'edd_' . $el_id . '_nonce';
@@ -112,7 +127,9 @@ class RTMediaLicense {
 
 					<input type="submit" class="button-secondary" name="<?php echo esc_attr( $btn_name ); ?>" value="<?php echo esc_attr( $btn_val ); ?>" />
 
-					<?php
+				</div><!-- End of .license-inner -->
+
+				<?php
 					/**
 					 * Classes to be append with `license-message` ***
 					 * warning
@@ -121,8 +138,8 @@ class RTMediaLicense {
 					 * alert
 					 */
 					self::render_license_message( $license_data, $tab['title'] );
-					?>
-				</div><!-- End of .license-inner -->
+				?>
+
 			</div><!-- End of .rtm-addon-license -->
 		</div><!-- End of .license-column -->
 		<?php

@@ -319,6 +319,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( ! is_rtmedia_vip_plugin() ) {
 					$this->rtmedia_inspirebook_release_notice();
 					$this->rtmedia_premium_addon_notice();
+					$this->rtmedia_addon_update_notice();
 				}
 			}
 		}
@@ -329,9 +330,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function rtmedia_premium_addon_notice() {
 			$site_option = rtmedia_get_site_option( 'rtmedia_premium_addon_notice' );
 
+			$premium_addon_notice = apply_filters( 'rt_premium_addon_notice', true );
 			if ( ( ! $site_option || 'hide' !== $site_option ) ) {
-				rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
-				?>
+				if ( true === $premium_addon_notice ) {
+					rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
+					?>
 				<div class="notice is-dismissible updated rtmedia-pro-split-notice">
 					<?php wp_nonce_field( 'rtcamp_pro_split', 'rtm_nonce' ); ?>
 					<p>
@@ -340,7 +343,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							$product_page = esc_url( 'https://rtmedia.io/products/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' );
 
 							// translators: 1. Product page link.
-							$message = sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page );
+							$message = apply_filters( 'rt_premium_addon_notice_message', sprintf( __( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ), $product_page ), $product_page );
 							?>
 							<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
 							<?php
@@ -366,7 +369,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						});
 					});
 				</script>
-				<?php
+					<?php
+				}
 			}
 		}
 
@@ -497,27 +501,38 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				}
 				rtmedia_update_site_option( 'rtmedia-addon-update-notice-3_8', 'show' );
 				?>
-				<div class="error rtmedia-addon-upate-notice">
+				<div class="notice error is-dismissible rtmedia-addon-update-notice">
 					<p>
-						<strong><?php esc_html_e( 'rtMedia:', 'buddypress-media' ); ?></strong>
-						<?php esc_html_e( 'Please update all premium add-ons that you have purchased from', 'buddypress-media' ); ?>
-						<a href="<?php echo esc_url( 'https://rtmedia.io/my-account/' ); ?>" target="_blank"><?php esc_html_e( 'your account', 'buddypress-media' ); ?></a>.
-						<a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right"><?php esc_html_e( 'Dismiss', 'buddypress-media' ); ?></a>
+					<?php
+						$message = apply_filters( 'rt_addon_update_notice', sprintf( __( ' rtMedia Premium update is available. Please update it from the plugins or download it from <a href = "https://rtmedia.io/my-account/" target="_blank" >your account</a>', 'buddypress-media' ) ) );
+					?>
+						<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
+						<?php
+						echo wp_kses(
+							$message,
+							array(
+								'a' => array(
+									'href' => array(),
+									'target' => array(),
+								),
+							)
+						);
+						?>
 						<?php wp_nonce_field( 'rtmedia-addon-update-notice-3_8', 'rtmedia-addon-notice' ); ?>
 					</p>
 				</div>
 				<script type="text/javascript">
-					function rtmedia_hide_addon_update_notice() {
+					jQuery( document ).ready( function() {
+						jQuery( '.rtmedia-addon-update-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
 						var data = {
 							action: 'rtmedia_hide_addon_update_notice',
 							_rtm_nonce: jQuery('#rtmedia-addon-notice').val(),
 					};
 						jQuery.post(ajaxurl, data, function (response) {
-							response = response.trim();
-							if (response === "1")
-								jQuery('.rtmedia-addon-upate-notice').remove();
+								jQuery('.rtmedia-addon-update-notice').remove();
 						});
-					}
+					});
+					});
 				</script>
 				<?php
 			}
@@ -1597,10 +1612,23 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			// translators: 1. Home url.
 			$message = sprintf( esc_html__( 'I use @rtMediaWP http://rt.cx/rtmedia on %s', 'buddypress-media' ), home_url() );
 			$addons  = '<div id="social" class="rtm-social-share">
-						<p><a href="http://twitter.com/home/?status=' . esc_attr( $message ) . '" class="button twitter" target= "_blank" title="' . esc_attr__( 'Post to Twitter Now', 'buddypress-media' ) . '">' . esc_html__( 'Post to Twitter', 'buddypress-media' ) . '<span class="dashicons dashicons-twitter"></span></a></p>
-						<p><a href="https://www.facebook.com/sharer/sharer.php?u=https://rtmedia.io/" class="button facebook" target="_blank" title="' . esc_attr__( 'Share on Facebook Now', 'buddypress-media' ) . '">' . esc_html__( 'Share on Facebook', 'buddypress-media' ) . '<span class="dashicons dashicons-facebook"></span></a></p>
-						<p><a href="https://wordpress.org/support/plugin/buddypress-media/reviews/#new-post" class="button wordpress" target= "_blank" title="' . esc_attr__( 'Rate rtMedia on Wordpress.org', 'buddypress-media' ) . '">' . esc_html__( 'Rate on Wordpress.org', 'buddypress-media' ) . '<span class="dashicons dashicons-wordpress"></span></a></p>
-						<p><a href="' . sprintf( '%s', 'https://rtmedia.io/feed/' ) . '" class="button rss" target="_blank" title="' . esc_attr__( 'Subscribe to our Feeds', 'buddypress-media' ) . '">' . esc_html__( 'Subscribe to our Feeds', 'buddypress-media' ) . '<span class="dashicons dashicons-rss"></span></a></p>
+						<a href="http://twitter.com/share?text=' . esc_attr( $message ) . '" class="button twitter" target= "_blank" title="' . esc_attr__( 'Post to Twitter Now', 'buddypress-media' ) . '">
+							<span class="dashicons dashicons-twitter"></span>
+							<span class="icon-message">' . esc_html__( 'Post to Twitter', 'buddypress-media' ) . '</span>
+						</a>
+						<a href="https://www.facebook.com/sharer/sharer.php?u=https://rtmedia.io/" class="button facebook" target="_blank" title="' . esc_attr__( 'Share on Facebook Now', 'buddypress-media' ) . '">
+							<span class="dashicons dashicons-facebook"></span>
+							<span class="icon-message">' . esc_html__( 'Post to Facebook', 'buddypress-media' ) . '</span>
+						</a>
+						<a href="https://wordpress.org/support/plugin/buddypress-media/reviews/#new-post" class="button wordpress" target= "_blank" title="' . esc_attr__( 'Rate rtMedia on Wordpress.org', 'buddypress-media' ) . '">
+							<span class="dashicons dashicons-wordpress"></span>
+							<span class="icon-message">' . esc_html__( 'Rate us on Wordpress.org', 'buddypress-media' ) . '</span>
+							
+						</a>
+						<a href="' . sprintf( '%s', 'https://rtmedia.io/feed/' ) . '" class="button rss" target="_blank" title="' . esc_attr__( 'Subscribe to our Feeds', 'buddypress-media' ) . '">
+							<span class="dashicons dashicons-rss"></span>
+							<span class="icon-message">' . esc_html__( 'Subscribe to our Feeds', 'buddypress-media' ) . '</span>
+						</a>
 						</div>';
 
 			new RTMediaAdminWidget( 'spread-the-word', esc_html__( 'Spread the Word', 'buddypress-media' ), $addons );
@@ -1766,7 +1794,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function plugin_meta_premium_addon_link( $plugin_meta, $plugin_file ) {
 			if ( plugin_basename( RTMEDIA_PATH . 'index.php' ) === $plugin_file ) {
-				$plugin_meta[] = '<a href=https://rtmedia.io/products/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="' . esc_attr__( 'Premium Add-ons', 'buddypress-media' ) . '">' . esc_html__( 'Premium Add-ons', 'buddypress-media' ) . '</a>';
+				$plugin_meta[] = '<a href=https://rtmedia.io/products/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="' . esc_attr__( 'Premium Plugin', 'buddypress-media' ) . '">' . esc_html__( 'Premium Plugin', 'buddypress-media' ) . '</a>';
 			}
 
 			return $plugin_meta;
@@ -2086,7 +2114,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( empty( $addon['args']['status'] ) || 'valid' !== $addon['args']['status'] ) {
 					$message = sprintf(
 					// translators: 1. License page link.
-						__( 'We found an invalid or expired license key for an rtMedia add-on. Please go to the <a href="%1$s">Licenses page</a> to fix this issue.', 'buddypress-media' ),
+						__( 'We found an invalid or expired license key for rtMedia Premium. Please go to the <a href="%1$s">Licenses page</a> to fix this issue.', 'buddypress-media' ),
 						admin_url( 'admin.php?page=rtmedia-license' )
 					);
 					echo '<div class="error"><p>' . wp_kses( $message, $args ) . '</p></div>';

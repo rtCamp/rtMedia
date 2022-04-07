@@ -575,7 +575,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						<div class="rtm-form-filed clearfix">
 							<label class="bp-media-label"
 								for="subject"><?php esc_html_e( 'Attachment', 'buddypress-media' ); ?></label>
-							<input id="debuglog" class="bp-media-input" type="file" name="debuglog" />
+							<input id="debuglog" class="bp-media-input upload_attachment" type="file" name="debuglog" />
 							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info"></i>
 								<span class="rtm-tip">
