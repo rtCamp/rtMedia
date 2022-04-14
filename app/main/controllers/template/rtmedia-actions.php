@@ -1096,12 +1096,27 @@ function rtmedia_pre_get_posts( $query ) {
 		$wp_query->query['attachment']      = $bp_group;
 		$wp_query->query_vars['attachment'] = $bp_group;
 
-		$wp_query->query[ $bp_group_action ]      = '';
-		$wp_query->query_vars[ $bp_group_action ] = get_query_var( 'bp_group_action_variables' );
+		if ( ! empty( $bp_group_action ) ) {
+			$wp_query->query[ $bp_group_action ]      = '';
+			$wp_query->query_vars[ $bp_group_action ] = get_query_var( 'bp_group_action_variables' );
+		}
 
 		unset( $wp_query->queried_object );
 		unset( $wp_query->queried_object_id );
+
+	} elseif ( get_query_var( 'bp_activities' ) ) {
+
+		$bp_activity_action = get_query_var( 'bp_activity_action' );
+
+		if ( ! empty( $bp_activity_action ) ) {
+			$wp_query->query[ $bp_activity_action ]      = '';
+			$wp_query->query_vars[ $bp_activity_action ] = '';
+		}
 	}
+
+//	error_log( '========= $wp_query NAME  ========' );
+//	error_log( print_r( $wp_query, true ) );
+//	error_log( '========= $wp_query NAME END ========' );
 }
 add_action( 'pre_get_posts', 'rtmedia_pre_get_posts', 9999 );
 
