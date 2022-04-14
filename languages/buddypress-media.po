@@ -1466,43 +1466,47 @@ msgstr ""
 msgid "rtMedia Addons"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:97
+#: app/helper/RTMediaLicense.php:99
+msgid "Activate "
+msgstr ""
+
+#: app/helper/RTMediaLicense.php:105
 msgid ""
-"Activate rtMedia Premium with your license key to get support and automatic "
-"update from your WordPress dashboard."
-msgstr ""
-
-#: app/helper/RTMediaLicense.php:102
-msgid "Enter your license key to activate"
-msgstr ""
-
-#: app/helper/RTMediaLicense.php:109
-msgid "Deactivate License"
+" with your license key to get support and automatic update from your "
+"WordPress dashboard."
 msgstr ""
 
 #: app/helper/RTMediaLicense.php:112
+msgid "Enter your license key to activate"
+msgstr ""
+
+#: app/helper/RTMediaLicense.php:119
+msgid "Deactivate License"
+msgstr ""
+
+#: app/helper/RTMediaLicense.php:122
 msgid "Activate License"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:160
+#: app/helper/RTMediaLicense.php:170
 #. translators: %s: Expiry date.
 msgid "Your license key expired on %s. Please renew your license key."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:170
+#: app/helper/RTMediaLicense.php:180
 msgid ""
 "Your license key has been disabled. Please contact support for more "
 "information."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:180
+#: app/helper/RTMediaLicense.php:190
 #. translators: %s: Account page link.
 msgid ""
 "Invalid license. Please <a href=\"%s\" target=\"_blank\">visit your account "
 "page</a> and verify it."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:196
+#: app/helper/RTMediaLicense.php:206
 #. translators: 1: Add-on name, 2:My account page link.
 msgid ""
 "Your %1$s is not active for this URL. Please <a href=\"%2$s\" "
@@ -1510,39 +1514,39 @@ msgid ""
 "URLs."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:209
+#: app/helper/RTMediaLicense.php:219
 #. translators: %s: Add-on name.
 msgid "This appears to be an invalid license key for %s."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:219
+#: app/helper/RTMediaLicense.php:229
 #. translators: %s: Account link.
 msgid ""
 "Your license key has reached its activation limit. <a href=\"%s\">View "
 "possible upgrades</a> now."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:229
+#: app/helper/RTMediaLicense.php:239
 #. translators: %s: Account link.
 msgid ""
 "Your license is not activable, please visit <a href=\"%s\">your account "
 "page</a>."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:237 app/helper/RTMediaLicense.php:292
+#: app/helper/RTMediaLicense.php:247 app/helper/RTMediaLicense.php:302
 msgid "To receive updates, please enter your valid license key."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:255
+#: app/helper/RTMediaLicense.php:265
 msgid "License key never expires."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:265
+#: app/helper/RTMediaLicense.php:275
 #. translators: 1: Expiry date.
 msgid "Your license key expires soon! It expires on %1$s. Renew your license key."
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:277
+#: app/helper/RTMediaLicense.php:287
 #. translators: %s: Expiry date.
 msgid "Your license key expires on %s."
 msgstr ""
@@ -3107,58 +3111,58 @@ msgstr ""
 msgid "Close (Esc)"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:513
+#: app/main/controllers/template/rtmedia-actions.php:514
 msgid "You can consider rtMedia Team for following :"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:515
+#: app/main/controllers/template/rtmedia-actions.php:516
 msgid "rtMedia Customization ( in Upgrade Safe manner )"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:516
+#: app/main/controllers/template/rtmedia-actions.php:517
 msgid "WordPress/BuddyPress Theme Design and Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:517
+#: app/main/controllers/template/rtmedia-actions.php:518
 msgid "WordPress/BuddyPress Plugin Development"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:520
+#: app/main/controllers/template/rtmedia-actions.php:521
 msgid "Contact Us"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:617
 #: app/main/controllers/template/rtmedia-actions.php:618
+#: app/main/controllers/template/rtmedia-actions.php:619
 msgid "Previous"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:619
 #: app/main/controllers/template/rtmedia-actions.php:620
+#: app/main/controllers/template/rtmedia-actions.php:621
 #: templates/media/album-single-edit.php:142
 msgid "Next"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:827
+#: app/main/controllers/template/rtmedia-actions.php:828
 msgid "Settings has been saved successfully."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:831
+#: app/main/controllers/template/rtmedia-actions.php:832
 msgid "Refresh the page in case if license data is not showing correct."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:850
+#: app/main/controllers/template/rtmedia-actions.php:851
 msgid "Posted a status update"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:852
+#: app/main/controllers/template/rtmedia-actions.php:853
 msgid "rtMedia Updates"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:908
+#: app/main/controllers/template/rtmedia-actions.php:909
 msgid "Search Media"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:1103
+#: app/main/controllers/template/rtmedia-actions.php:1104
 msgid "Please swipe for more media."
 msgstr ""
 
