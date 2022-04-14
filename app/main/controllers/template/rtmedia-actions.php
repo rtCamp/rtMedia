@@ -1113,10 +1113,6 @@ function rtmedia_pre_get_posts( $query ) {
 			$wp_query->query_vars[ $bp_activity_action ] = '';
 		}
 	}
-
-//	error_log( '========= $wp_query NAME  ========' );
-//	error_log( print_r( $wp_query, true ) );
-//	error_log( '========= $wp_query NAME END ========' );
 }
 add_action( 'pre_get_posts', 'rtmedia_pre_get_posts', 9999 );
 
