@@ -1370,7 +1370,9 @@ class RTMedia {
 
 		$rtmedia_media_thumbs = array();
 		foreach ( $this->allowed_types as $key_type => $value_type ) {
-			$rtmedia_media_thumbs[ $key_type ] = $value_type['thumbnail'];
+			if ( isset( $value_type['thumbnail'] ) ) {
+				$rtmedia_media_thumbs[ $key_type ] = $value_type['thumbnail'];
+			}
 		}
 
 		/**
