@@ -1051,10 +1051,6 @@ function rtmedia_pre_get_posts( $query ) {
 		return;
 	}
 
-//	error_log( '========= $wp_query NAME  ========' );
-//	error_log( print_r( $wp_query, true ) );
-//	error_log( '========= $wp_query NAME END ========' );
-
 	if ( get_query_var( 'bp_members' ) ) {
 
 		$bp_member           = get_query_var( 'bp_member' );
