@@ -520,7 +520,7 @@ class RTMediaTemplate {
 
 			$_selected_arr = filter_input_array( INPUT_POST, $filters );
 			$_selected     = $_selected_arr['selected'];
-			if ( isset( $submit ) ) {
+			if ( ! empty( $submit ) ) {
 				$data_array = array( 'media_title', 'description', 'privacy' );
 				$data       = rtmedia_sanitize_object( $_POST, $data_array );
 				$album      = $model->get_media( array( 'id' => $rtmedia_query->media_query['album_id'] ), false, false );
