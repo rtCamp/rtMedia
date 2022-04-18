@@ -240,7 +240,7 @@ class RTMediaNav {
 	 * Add submenus for My account.
 	 */
 	public function sub_nav() {
-		global $rtmedia, $rtmedia_query;
+		global $rtmedia, $rtmedia_query, $wp;
 
 		$active_components = bp_get_option( 'bp-active-components' );
 		if ( isset( $active_components['groups'] ) ) {
@@ -296,6 +296,10 @@ class RTMediaNav {
 		if ( is_rtmedia_album_enable() ) {
 			if ( ! isset( $counts['total']['album'] ) ) {
 				$counts['total']['album'] = 0;
+			}
+
+			if ( false === strpos( $wp->query_vars['pagename'], 'groups' ) ) {
+				$counts['total']['album'] = $counts['total']['album'] + $other_count;
 			}
 
 			$album_label = defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : esc_html__( 'Albums', 'buddypress-media' );
