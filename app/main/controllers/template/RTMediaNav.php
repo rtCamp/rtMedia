@@ -277,6 +277,7 @@ class RTMediaNav {
 
 		$global_albums = rtmedia_global_albums();
 
+		// Return the album count if the album has media in it.
 		$global_albums = array_filter(
 			$global_albums,
 			function( $album_id ) {
