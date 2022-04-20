@@ -107,8 +107,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
 				}
 			} else {
-				if ( 1 === intval( $rtmedia->options['general_showAdminMenu'] ) ) {
-					add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
+				if ( is_array( $rtmedia->options ) ) {
+					if ( 1 === intval( $rtmedia->options['general_showAdminMenu'] ) ) {
+						add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
+					}
 				}
 			}
 
