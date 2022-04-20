@@ -240,7 +240,7 @@ class RTMediaNav {
 	 * Add submenus for My account.
 	 */
 	public function sub_nav() {
-		global $rtmedia, $rtmedia_query, $wp;
+		global $rtmedia, $rtmedia_query;
 
 		$active_components = bp_get_option( 'bp-active-components' );
 		if ( isset( $active_components['groups'] ) ) {
