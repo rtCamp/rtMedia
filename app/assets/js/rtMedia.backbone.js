@@ -1811,8 +1811,8 @@ jQuery( document ).ready( function( $ ) {
 				}
 
 				options.data += '&rtmedia-privacy=' + dynamic_privacy;
-				var orignalSuccess = originalOptions.success;
-				options.success = function( response ) {
+				var orignalSuccess = originalOptions.done;
+				options.done = function( response ) {
 					orignalSuccess( response );
 					if ( response[0] + response[1] == '-1' ) {
 						//Error
@@ -1905,7 +1905,7 @@ jQuery( document ).ready( function( $ ) {
 				rtMediaScrollComments();
 
 				/** refreshing fragments */
-				if ( false == $('body').hasClass('activity')) {
+				if ( false == $( 'body' ).hasClass( 'activity' ) && false == $( 'body' ).hasClass( 'groups' ) ) {
                     galleryObj.reloadView();
                 }
 			},
