@@ -334,14 +334,14 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$debug_info['[php.ini] memory_limit']        = esc_html( ini_get( 'memory_limit' ) );
 			$debug_info['Installed Plugins']             = $this->get_plugin_info();
 			$active_theme                                = wp_get_theme();
-			$debug_info['Theme Name']                    = esc_html( $active_theme->Name ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
-			$debug_info['Theme Version']                 = esc_html( $active_theme->Version ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$debug_info['Theme Name']                    = esc_html( $active_theme->Name ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar, WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			$debug_info['Theme Version']                 = esc_html( $active_theme->Version ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar, WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			$debug_info['Author URL']                    = esc_url( $active_theme->{'Author URI'} );
 			$debug_info['Template Overrides']            = implode( ', <br/>', $this->rtmedia_scan_template_files( RTMEDIA_PATH . '/templates/' ) );
 
 			global $wpdb;
 			$rtmedia_model = new RTMediaModel();
-			$results       = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id = %d group by media_type limit 100", get_current_blog_id() ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$results       = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id = %d group by media_type limit 100", get_current_blog_id() ) ); // phpcs:ignore
 
 			if ( $results ) {
 				foreach ( $results as $media ) {
@@ -558,7 +558,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 							<input type="hidden" name="request_type" value="<?php echo esc_attr( $form ); ?>"/>
 							<input type="hidden" name="request_id"
-								value="<?php echo esc_attr( wp_create_nonce( date( 'YmdHis' ) ) ); ?>"/>
+								value="<?php echo esc_attr( wp_create_nonce( date( 'YmdHis' ) ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date ?>"/>
 							<input type="hidden" name="server_address" value="<?php echo esc_attr( $server_addr ); ?>"/>
 							<input type="hidden" name="ip_address" value="<?php echo esc_attr( $remote_addr ); ?>"/>
 							<input type="hidden" name="server_type" value="<?php echo esc_attr( $server_software ); ?>"/>
@@ -575,7 +575,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						<div class="rtm-form-filed clearfix">
 							<label class="bp-media-label"
 								for="subject"><?php esc_html_e( 'Attachment', 'buddypress-media' ); ?></label>
-							<input id="debuglog" class="bp-media-input" type="file" name="debuglog" />
+							<input id="debuglog" class="bp-media-input upload_attachment" type="file" name="debuglog" />
 							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info"></i>
 								<span class="rtm-tip">
@@ -782,8 +782,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$plugin_info                                 = explode( ',', $this->get_plugin_info() );
 			$debug_info['Installed Plugins']             = implode( ', ' . PHP_EOL . str_repeat( ' ', 49 ), $plugin_info );
 			$active_theme                                = wp_get_theme();
-			$debug_info['Theme Name']                    = esc_html( $active_theme->Name ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
-			$debug_info['Theme Version']                 = esc_html( $active_theme->Version ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$debug_info['Theme Name']                    = esc_html( $active_theme->Name ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar, WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			$debug_info['Theme Version']                 = esc_html( $active_theme->Version ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar, WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			$debug_info['Author URL']                    = esc_url( $active_theme->{'Author URI'} );
 			$debug_info['Template Overrides']            = implode( ', ' . PHP_EOL . str_repeat( ' ', 50 ), $this->rtmedia_scan_template_files( RTMEDIA_PATH . '/templates/' ) );
 			$rtmedia_options                             = get_option( 'rtmedia-options' );

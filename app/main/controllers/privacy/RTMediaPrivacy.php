@@ -584,7 +584,7 @@ class RTMediaPrivacy {
 						if ( isset( $friends ) && ! empty( $friends ) ) {
 							$in_str_arr = array_fill( 0, count( $friends ), '%d' );
 							$in_str     = join( ',', $in_str_arr );
-							$where     .= $wpdb->prepare( " OR ({$this->rtm_activity_table_alias}.privacy=40 AND a.user_id IN ({$in_str}) )", $friends ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+							$where     .= $wpdb->prepare( " OR ({$this->rtm_activity_table_alias}.privacy=40 AND a.user_id IN ({$in_str}) )", $friends ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 						}
 					}
 				}
@@ -597,7 +597,7 @@ class RTMediaPrivacy {
 
 			$select_sql .= " ,{$this->rtm_activity_table_alias}.privacy ";
 
-			$from_sql = $wpdb->prepare( " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_activity_model->table_name} {$this->rtm_activity_table_alias} ON ( a.id = {$this->rtm_activity_table_alias}.activity_id and ra.blog_id = %d ) ", get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$from_sql = $wpdb->prepare( " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_activity_model->table_name} {$this->rtm_activity_table_alias} ON ( a.id = {$this->rtm_activity_table_alias}.activity_id and ra.blog_id = %d ) ", get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 			// removed NOT EXISTS check for `rtmedia_privacy` activty meta value.
 			// check git history for more details ;).
@@ -633,7 +633,7 @@ class RTMediaPrivacy {
 			}
 
 			$media_table = "SELECT *, max( privacy ) as max_privacy from {$rtmedia_model->table_name} group by activity_id";
-			$from_sql    = $wpdb->prepare( " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN ( $media_table ) m ON ( a.id = m.activity_id AND m.blog_id = %d ) ", get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$from_sql    = $wpdb->prepare( " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN ( $media_table ) m ON ( a.id = m.activity_id AND m.blog_id = %d ) ", get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$where_sql   = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR ( {$where} ) )";
 			$newsql      = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
 		}
@@ -663,7 +663,7 @@ class RTMediaPrivacy {
 			$rtmedia_activity_model = new RTMediaActivityModel();
 			if ( strpos( $sql, $rtmedia_activity_model->table_name ) === false ) {
 				$select_sql .= " ,{$this->rtm_activity_table_alias}.privacy ";
-				$from_sql    = $wpdb->prepare( " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_activity_model->table_name} {$this->rtm_activity_table_alias} ON ( a.id = {$this->rtm_activity_table_alias}.activity_id and ra.blog_id = %d ) ", get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$from_sql    = $wpdb->prepare( " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_activity_model->table_name} {$this->rtm_activity_table_alias} ON ( a.id = {$this->rtm_activity_table_alias}.activity_id and ra.blog_id = %d ) ", get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				$sql         = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
 			}
 		}

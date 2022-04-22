@@ -1,16 +1,14 @@
 <?php
-/*
-  Plugin Name: rtMedia for WordPress, BuddyPress and bbPress
-  Plugin URI: https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
-  Description: This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!
-  Version: 4.6.10
-  Author: rtCamp
-  Text Domain: buddypress-media
-  Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
-  Domain Path: /languages/
- */
-
 /**
+ * Plugin Name: rtMedia for WordPress, BuddyPress and bbPress
+ * Plugin URI: https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
+ * Description: This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!
+ * Version: 4.6.11
+ * Author: rtCamp
+ * Text Domain: buddypress-media
+ * Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
+ * Domain Path: /languages/
+ *
  * Main file, contains the plugin metadata and activation processes
  *
  * @package    BuddyPressMedia
@@ -21,7 +19,7 @@ if ( ! defined( 'RTMEDIA_VERSION' ) ) {
 	/**
 	 * The version of the plugin
 	 */
-	define( 'RTMEDIA_VERSION', '4.6.10' );
+	define( 'RTMEDIA_VERSION', '4.6.11' );
 }
 
 if ( ! defined( 'RTMEDIA_PATH' ) ) {

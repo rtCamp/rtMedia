@@ -15,7 +15,7 @@ class RTMediaTags {
 	 *
 	 * @var object
 	 */
-	private static $_id3;
+	private static $_id3; // phpcs:ignore
 
 	/**
 	 * File to analyze
@@ -242,7 +242,6 @@ class RTMediaTags {
 		if ( isset( $data['id3v2']['APIC'] ) ) {
 			$this->data['attached_picture'] = array( $data['id3v2']['APIC'][0] );
 		}
-
 		if ( isset( $data['tags']['id3v2']['track_number'] ) ) {
 			$track = $data['tags']['id3v2']['track_number'][0];
 		} else {
@@ -251,6 +250,10 @@ class RTMediaTags {
 			} else {
 				$track = null;
 			}
+		}
+
+		if ( isset( $data['tags']['id3v2']['totaltracks'] ) ) {
+			$this->data['track_total'] = array( $data['tags']['id3v2']['totaltracks'][0] );
 		}
 
 		if ( strstr( $track, '/' ) ) {

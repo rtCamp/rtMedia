@@ -130,7 +130,7 @@ class RTMediaNav {
 				$slug               = apply_filters( 'rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG );
 				$media_tab_position = apply_filters( 'rtmedia_group_media_tab_position', 99 );
 
-				//to solve an issue of Media Tab is not showing in version 10.0.0
+				// to solve an issue of Media Tab is not showing in version 10.0.0.
 				$bp->version = floatval( $bp->version );
 
 				if ( isset( $bp->version ) && $bp->version > '2.5.3' ) {
@@ -254,18 +254,18 @@ class RTMediaNav {
 			}
 			global $bp;
 			$counts = $this->actual_counts( $bp->groups->current_group->id, 'group' );
+
 		} else {
 			if ( class_exists( 'BuddyPress' ) && isset( $rtmedia->options['buddypress_enableOnProfile'] ) && 0 === intval( $rtmedia->options['buddypress_enableOnProfile'] ) ) {
 				return;
 			}
 			$counts = $this->actual_counts();
+
 		}
 
 		$default = false;
 		if ( function_exists( 'bp_is_group' ) && bp_is_group() && $user_group_status ) {
-			$link        = get_rtmedia_group_link( bp_get_group_id() );
-			$model       = new RTMediaModel();
-			$other_count = $model->get_other_album_count( bp_get_group_id(), 'group' );
+			$link = get_rtmedia_group_link( bp_get_group_id() );
 		} else {
 
 			if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
@@ -273,9 +273,19 @@ class RTMediaNav {
 			} elseif ( get_query_var( 'author' ) ) {
 				$link = get_rtmedia_user_link( get_query_var( 'author' ) );
 			}
-			$model       = new RTMediaModel();
-			$other_count = $model->get_other_album_count( bp_displayed_user_id(), 'profile' );
 		}
+
+		$global_albums = rtmedia_global_albums();
+
+		// Return the album count if the album has media in it.
+		$global_albums = array_filter(
+			$global_albums,
+			function( $album_id ) {
+				return (int) rtm_get_album_media_count( $album_id ) > 0;
+			}
+		);
+
+		$other_count = count( $global_albums );
 
 		$all = '';
 		if ( ! isset( $rtmedia_query->action_query->media_type ) && ! isset( $rtmedia_query->query['media_type'] ) ) {
@@ -287,21 +297,21 @@ class RTMediaNav {
 		}
 
 		$albums = '';
-		//condition to keep "Album" tab active
+		// condition to keep "Album" tab active.
 		if ( array_key_exists( 'media_type', $rtmedia_query->query ) && isset( $rtmedia_query->query['media_type'] ) && ( 'album' === $rtmedia_query->query['media_type'] ) ) {
-			 $albums = 'current selected';
+			$albums = 'current selected';
 		} elseif ( isset( $rtmedia_query->action_query->media_type ) && ( 'album' === $rtmedia_query->action_query->media_type ) ) {
-			 $albums = 'current selected';
+			$albums = 'current selected';
 		}
 
 		if ( is_rtmedia_album_enable() ) {
-
 			if ( ! isset( $counts['total']['album'] ) ) {
 				$counts['total']['album'] = 0;
 			}
 
 			$counts['total']['album'] = $counts['total']['album'] + $other_count;
-			$album_label              = esc_html__( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'buddypress-media' );
+
+			$album_label = defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : esc_html__( 'Albums', 'buddypress-media' );
 			echo apply_filters( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" class="' . esc_attr( $albums ) . '"><a id="rtmedia-nav-item-albums" href="' . esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/album/">' . esc_html( $album_label ) . '<span class="count">' . esc_html( ( isset( $counts['total']['album'] ) ) ? rtmedia_number_to_human_readable( $counts['total']['album'] ) : 0 ) . '</span>' . '</a></li>' );// @codingStandardsIgnoreLine
 		}
 
@@ -345,13 +355,15 @@ class RTMediaNav {
 				);
 			}
 
-			$type_label = esc_html__( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'buddypress-media' );
+			$type_label = defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'];
 			echo apply_filters( 'rtmedia_sub_nav_' . $type['name'], '<li id="rtmedia-nav-item-' . esc_attr( $type['name'] ) // @codingStandardsIgnoreLine
 				. '-' . esc_attr( $context ) . '-' . esc_attr( $context_id ) . '-li" ' . $selected
 				. '><a id="rtmedia-nav-item-' . esc_attr( $type['name'] ) . '" href="' . esc_url(
 					$profile_link . RTMEDIA_MEDIA_SLUG . '/'
-				. constant( 'RTMEDIA_' . $name . '_SLUG' ) . '/' ) . '">'
-				. $type_label . '<span class="count">' . esc_html( ( isset( $counts['total'][ $type['name'] ] ) ) ? rtmedia_number_to_human_readable( $counts['total'][ $type['name'] ] ) : 0 ) . '</span>' . '</a></li>', $type['name']
+					. constant( 'RTMEDIA_' . $name . '_SLUG' ) . '/'
+				) . '">'
+				. esc_html( $type_label ) . '<span class="count">' . esc_html( ( isset( $counts['total'][ $type['name'] ] ) ) ? rtmedia_number_to_human_readable( $counts['total'][ $type['name'] ] ) : 0 ) . '</span></a></li>',
+				$type['name']
 			);
 		}
 
@@ -528,7 +540,6 @@ class RTMediaNav {
 		}
 
 		$media_count['total'] = $total;
-
 		return $media_count;
 	}
 
@@ -601,7 +612,7 @@ class RTMediaNav {
 
 		global $bp;
 
-		$media = [];
+		$media = array();
 
 		// If current component is `groups` then fetch its media.
 		if ( 'groups' === $value ) {
@@ -646,7 +657,7 @@ class RTMediaNav {
 
 		global $bp;
 
-		$media = [];
+		$media = array();
 
 		// If current component is `groups` then fetch its media.
 		if ( 'groups' === $value ) {

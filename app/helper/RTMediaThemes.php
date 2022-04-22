@@ -158,7 +158,7 @@ class RTMediaThemes {
 							<a class="button load-customize hide-if-no-customize"
 								href="<?php echo esc_url( $theme['demo_url'] ); ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
 							<a class="button button-primary load-customize hide-if-no-customize"
-								href="<?php echo esc_url( $theme['buy_url'] ); ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
+								href="<?php echo esc_url( $theme['buy_url'] ); ?>" target="_blank"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
 						</div>
 
 						<div class="rtm-theme-content hide">
