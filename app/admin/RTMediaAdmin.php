@@ -553,49 +553,49 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			// Check for rtMedia Instagram version.
 			if ( defined( 'RTMEDIA_INSTAGRAM_PATH' ) ) {
 				$plugin_info = get_plugin_data( RTMEDIA_INSTAGRAM_PATH . 'index.php' );
-				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.14' ) ) ) {
+				if ( ! empty( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.14' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_PHOTO_TAGGING_PATH' ) ) {
 				// Check for rtMedia Photo Tagging version.
 				$plugin_info = get_plugin_data( RTMEDIA_PHOTO_TAGGING_PATH . 'index.php' );
-				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.2.14' ) ) ) {
+				if ( ! empty( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.2.14' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_FFMPEG_PATH' ) ) {
 				// Check for rtMedia FFPMEG version.
 				$plugin_info = get_plugin_data( RTMEDIA_FFMPEG_PATH . 'index.php' );
-				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.14' ) ) ) {
+				if ( ! empty( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.14' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_KALTURA_PATH' ) ) {
 				// Check for rtMedia Kaltura version.
 				$plugin_info = get_plugin_data( RTMEDIA_KALTURA_PATH . 'index.php' );
-				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '3.0.16' ) ) ) {
+				if ( ! empty( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '3.0.16' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_PRO_PATH' ) ) {
 				// Check for rtMedia Pro version.
 				$plugin_info = get_plugin_data( RTMEDIA_PRO_PATH . 'index.php' );
-				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.6' ) ) ) {
+				if ( ! empty( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.6' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_SOCIAL_SYNC_PATH' ) ) {
 				// Check for rtMedia Social Sync version.
 				$plugin_info = get_plugin_data( RTMEDIA_SOCIAL_SYNC_PATH . 'index.php' );
-				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '1.3.1' ) ) ) {
+				if ( ! empty( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '1.3.1' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_MEMBERSHIP_PATH' ) ) {
 				// Check for rtMedia Membership version.
 				$plugin_info = get_plugin_data( RTMEDIA_MEMBERSHIP_PATH . 'index.php' );
-				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.5' ) ) ) {
+				if ( ! empty( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '2.1.5' ) ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_WATERMARK_PATH' ) ) {
 				// Check for rtMedia Photo Watermak version.
 				$plugin_info = get_plugin_data( RTMEDIA_WATERMARK_PATH . 'index.php' );
-				if ( isset( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '1.1.8' ) ) ) {
+				if ( ! empty( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '1.1.8' ) ) ) {
 					$return_flag = true;
 				}
 			}
