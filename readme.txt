@@ -133,7 +133,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.6.11 [April 26, 2022] =
+= 4.6.11 [April 27, 2022] =
 
 * Enhancement
 
