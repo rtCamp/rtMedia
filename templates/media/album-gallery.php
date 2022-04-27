@@ -53,7 +53,10 @@ $rand_id = wp_rand( 0, 1000 );
 		?>
 
 		<!-- addClass 'rtmedia-list-media' for work properly selectbox -->
-		<ul class="rtmedia-list-media rtmedia-list rtmedia-album-list clearfix">
+		<?php
+		if ( have_rtmedia() ) {
+			?>
+			<ul class="rtmedia-list-media rtmedia-list rtmedia-album-list clearfix">
 			<?php
 			while ( have_rtmedia() ) :
 				rtmedia();
@@ -97,9 +100,15 @@ $rand_id = wp_rand( 0, 1000 );
 					<?php
 				}
 			}
-
 			?>
 		</ul>
+		<?php } else { ?>
+		<p class="rtmedia-no-media-found">
+			<?php
+			echo esc_html( apply_filters( 'rtmedia_no_media_found_message_filter', __( 'Sorry !! There\'s no media found for the request !!', 'buddypress-media' ) ) );
+			?>
+		</p>
+		<?php } ?>
 
 		<div class="rtmedia_next_prev rtm-load-more clearfix">
 			<!-- these links will be handled by backbone -->

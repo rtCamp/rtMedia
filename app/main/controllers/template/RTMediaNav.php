@@ -274,7 +274,18 @@ class RTMediaNav {
 				$link = get_rtmedia_user_link( get_query_var( 'author' ) );
 			}
 		}
-		$other_count = count( rtmedia_global_albums() );
+
+		$global_albums = rtmedia_global_albums();
+
+		// Return the album count if the album has media in it.
+		$global_albums = array_filter(
+			$global_albums,
+			function( $album_id ) {
+				return (int) rtm_get_album_media_count( $album_id ) > 0;
+			}
+		);
+
+		$other_count = count( $global_albums );
 
 		$all = '';
 		if ( ! isset( $rtmedia_query->action_query->media_type ) && ! isset( $rtmedia_query->query['media_type'] ) ) {
@@ -299,7 +310,8 @@ class RTMediaNav {
 			}
 
 			$counts['total']['album'] = $counts['total']['album'] + $other_count;
-			$album_label              = defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : esc_html__( 'Albums', 'buddypress-media' );
+
+			$album_label = defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : esc_html__( 'Albums', 'buddypress-media' );
 			echo apply_filters( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" class="' . esc_attr( $albums ) . '"><a id="rtmedia-nav-item-albums" href="' . esc_url( trailingslashit( $link ) ) . RTMEDIA_MEDIA_SLUG . '/album/">' . esc_html( $album_label ) . '<span class="count">' . esc_html( ( isset( $counts['total']['album'] ) ) ? rtmedia_number_to_human_readable( $counts['total']['album'] ) : 0 ) . '</span>' . '</a></li>' );// @codingStandardsIgnoreLine
 		}
 
