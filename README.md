@@ -54,43 +54,49 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 
  - **[Audio/Video Transcoding Service](https://wordpress.org/plugins/transcoder/ "Audio/Video Transcoding Service")** - If free plan is not enough for you, there is monthly subscription service also. Easiest to setup.
 
-#### rtMedia Premium Addons ####
+## rtMedia Premium ##
 
- 1. **[Instagram-Effects](https://rtmedia.io/products/rtmedia-photo-filters/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Instagram Addon")** - Users can apply Instagram like filters to photos.
- 2. **[Photo-Tagging](https://rtmedia.io/products/rtmedia-photo-tagging/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Photo-Tagging Addon")** - Users can tag their friends/other users in photos.
- 3. **[Photo-Watermark](https://rtmedia.io/products/rtmedia-photo-watermark/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Photo Watermark Addon")** - rtMedia Photo Watermark add-on let you watermarked or copyright your uploaded photos.)
- 4. **[Membership](https://rtmedia.io/products/rtmedia-membership/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Membership")** - It provides membership functionality in your site.
- 5. **[Social-Sync](https://rtmedia.io/products/rtmedia-social-sync/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Social Sync")** - It allows you to import media from your Facebook account.
- 6. **[myCRED-Points](https://rtmedia.io/products/rtmedia-mycred/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia myCRED")** - It allows you to integrate rtMedia with myCRED and award virtual points for various rtMedia activities, like media upload, likes, deleted, albums creation, playlist, etc.
- 7. **[Playlists](https://rtmedia.io/products/rtmedia-playlists/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Playlists")** - This plugin is used to create a playlist for uploaded music file with rtMedia.
- 8. **[Favorites](https://rtmedia.io/products/rtmedia-favorites/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Favorites")** - This plugin allows users to create their own list of favorite media.
- 9. **[Moderation](https://rtmedia.io/products/rtmedia-moderation/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Moderation")** - This plugin is for reporting media if user find offensive.
- 10. **[Custom-Attributes](https://rtmedia.io/products/rtmedia-custom-attributes/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Custom Attributes")** - This plugin is for categorizing media using attributes defined by site owner when uploading.
- 11. **[Docs-and-Other-files](https://rtmedia.io/products/rtmedia-docs-files/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Docs and Other files")** - This plugin allows uploading for doc, pdf and other file types such as zip, tar, etc.
- 12. **[Default-Albums](https://rtmedia.io/products/rtmedia-default-albums/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Default Albums")** - This plugin allows the creation of multiple default albums for rtMedia uploads.
- 13. **[Podcast-Feed](https://rtmedia.io/products/rtmedia-podcast-feed/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Podcast (RSS and Atom feeds)")** - Read rtMedia uploads from iTunes as well as any RSS feed-reader/podcasting software.
- 14. **[Restrictions](https://rtmedia.io/products/rtmedia-restrictions/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Restrictions")** - Site admin can set limits in terms of total size & file count.
- 15. **[bbPress-Attachments](https://rtmedia.io/products/rtmedia-bbpress-attachments/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia bbPress Attachments")** - Attach media files to bbPress forum topics and replies.
- 16. **[WordPress-Sitewide-Gallery](https://rtmedia.io/products/rtmedia-wordpress-sitewide-gallery/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia WordPress Sitewide Gallery")** - Site admin can create and upload media into WordPress album.
- 17. **[WordPress-Comment-Attachments](https://rtmedia.io/products/rtmedia-wordpress-comment-attachments/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia WordPress Comment Attachments")** - Allow users to upload a media file in WordPress comment attachment box.
- 18. **[Social-Sharing](https://rtmedia.io/products/rtmedia-social-sharing/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Social Sharing")** - Share uploaded media on social network sites like Facebook, twitter, linkedin, Google+. This addon integrate with [rtSocial](https://wordpress.org/plugins/rtsocial/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media) plugin.
- 19. **[Sidebar-Widgets](https://rtmedia.io/products/rtmedia-sidebar-widgets/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Sidebar Widgets")** - This addon provide widgets to upload media and display gallery for rtMedia plugin.
- 20. **[5-Star-Ratings](https://rtmedia.io/products/rtmedia-star-ratings/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia 5 Star Ratings")** - User can rate the media files from 1 to 5 star.
- 21. **[Edit-Mp3-Info-(ID3 Tags)](https://rtmedia.io/products/rtmedia-edit-mp3-info/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia - Edit Mp3 Info (ID3 Tags)")** - Allow user to edit MP3 FIle Audio tags (ID 3 tags).
- 22. **[Sorting](https://rtmedia.io/products/rtmedia-sorting/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Sorting")** - Sort uploaded media based on file size, ascending/descending title, upload date of media.
- 23. **[Bulk-Edit](https://rtmedia.io/products/rtmedia-bulk-edit/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Bulk Edit")** - Allow users to move files from one album to another, change attributes, change privacy, delete files in bulk.
- 24. **[BuddyPress-Profile-Picture](https://rtmedia.io/products/rtmedia-buddypress-profile-picture/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia BuddyPress Profile Picture")** - Allow users to set their profile picture from existing uploaded media file.
- 25. **[Album-Cover-Art](https://rtmedia.io/products/rtmedia-album-cover-art/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Album Cover Art")** - Allow users to set album cover from uploaded image.
- 26. **[Direct-Download-Link](https://rtmedia.io/products/rtmedia-direct-download-link/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Direct Download Link")** - This addon provide a download button for all the uploaded media.
- 27. **[Upload-by-URL](https://rtmedia.io/products/rtmedia-upload-by-url/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Upload by URL")** - Allow users to upload media using absolute URL.
- 28. **[Likes](https://rtmedia.io/products/rtmedia-likes/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Likes")** - This add-on let you know who liked media. User can also see which media file he/she liked under user profile.
- 29. **[Activity-URL-Preview](https://rtmedia.io/products/rtmedia-activity-url-preview/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Activity URL Preview")** - This addon provides a preview of the URL that is shared and shows up on BuddyPress activity.
- 30. **[View-Counter](https://rtmedia.io/products/rtmedia-view-counter/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia View Counter")** - Enable view count for all the uploaded media.
- 31. **[Shortcode-Generator](https://rtmedia.io/products/rtmedia-shortcode-generator/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Shortcode Generator")** - The shortcode generator button added in WordPress post and page editor for all the rtMedia shortcodes.
- 32. **[Album-Privacy](https://rtmedia.io/products/rtmedia-album-privacy/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Album Privacy")** - Set album privacy when user create new albums or edit album.
- 33. **[BuddyPress-Group-Media-Control](https://rtmedia.io/products/rtmedia-buddypress-group-media-control/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia BuddyPress Group Media Control")** - Allow group owner to provide media upload feature for their group.
- 34. **[Set-Custom-Thumbnail-for-Audio/Video](https://rtmedia.io/products/rtmedia-set-custom-thumbnail-for-audiovideo/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Set Custom Thumbnail for Audio/Video")** - Allow media owner to change the thumbnail of uploaded audio/video files.
- 35. **[rtMedia-SEO](https://rtmedia.io/products/rtmedia-seo/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia SEO")** - Generate XML sitemap of all the public media files uploaded via rtMedia plugin, also compatible with [Yoast-SEO](https://wordpress.org/plugins/wordpress-seo/ "Yoast SEO") plugin if you are already using on your site.
+rtMedia Premium comes with some exciting advanced features along with it. Gain access to 18 powerful features with a single [rtMedia Premium]("https://rtmedia.io/rtmedia-premium/") purchase:
+
+ 1. **Default-Albums** – This plugin allows the creation of multiple default albums for rtMedia uploads.
+ 2. **Sidebar-Widgets** – This addon provides widgets to upload media and display gallery for rtMedia plugin.
+ 3. **BuddyPress-Profile-Picture** – Allow users to set their profile picture from an existing uploaded media file.
+ 4. **5-Star-Ratings** – Users can rate the media files from 1 to 5 stars.
+ 5. **Upload-by-URL** – Allow users to upload media using absolute URL.
+ 6. **Photo-Filters** – Users can apply Instagram like filters to photos.
+ 7. **Favorites** – This feature allows users to create their own list of favorite media.
+ 8. **Sorting** – Sort uploaded media based on file size, ascending/descending title, upload date of media.
+ 9. **Playlists** – This plugin is used to create a playlist for uploaded music files with rtMedia.
+ 10. **Bulk-Edit** – Allow users to move files from one album to another, change attributes, change privacy, delete files in bulk.
+ 11. **myCRED-Points** – It allows you to integrate rtMedia with myCRED and award virtual points for various rtMedia activities, like media upload, likes, deleted, albums creation, playlist, etc.
+ 12. **BuddyPress-Group-Media-Control** – Allow group owners to provide media upload features for their group.
+ 13. **Album-Cover-Art** – Allow users to set album cover from uploaded image.
+ 14. **Podcast-Feed** – Read rtMedia uploads from iTunes as well as any RSS feed-reader/podcasting software.
+ 15. **WordPress-Sitewide-Gallery** – Site admin can create and upload media into WordPress albums.
+ 16. **Album-Privacy** – Set album privacy when users create new albums or edit albums.
+ 17. **Direct-Download-Link** – This addon provides a download button for all the uploaded media.
+ 18. **Upload-by-URL** – Save your users time by allowing them to upload media files to your site directly from a URL.
+
+ ### Achieve a lot more with 18 premium add-ons ###
+
+ 1. **Docs-and-Other-files** – This plugin allows uploading for doc, pdf and other file types such as zip, tar, etc.
+ 2. **bbPress-Attachments** – Attach media files to bbPress forum topics and replies.
+ 3. **Activity-URL-Preview** – This addon provides a preview of the URL that is shared and shows up on BuddyPress activity.
+ 4. **Photo-Tagging** – Users can tag their friends/other users in photos.
+ 5. **Restrictions** – Site admin can set limits in terms of total size & file count.
+ 6. **Social-Sync** – It allows you to import media from your Facebook account.
+ 7. **Moderation** – This plugin is for reporting media if users find it offensive.
+ 8. **Social-Sharing** – Share uploaded media on social network sites like Facebook, twitter, linkedin, Google+. This add-on integrates with the rtSocial plugin.
+ 9. **SEO** – Generate XML sitemap of all the public media files uploaded via rtMedia plugin, also compatible with [Yoast-SEO]("https://wordpress.org/plugins/wordpress-seo/") plugin if you are already using it on your site.
+ 10. **WordPress-Comment-Attachments** – Allow users to upload a media file in WordPress comment attachment box.
+ 11. **Photo-Watermark** – rtMedia Photo Watermark add-on lets you watermark or copyright your uploaded photos.
+ 12. **Shortcode-Generator** – The shortcode generator button added in WordPress post and page editor for all the rtMedia shortcodes.
+ 13. **Membership** – It provides membership functionality in your site.
+ 14. **Custom-Attributes** – This plugin is for categorizing media using attributes defined by the site owner when uploading.
+ 15. **Likes** – This add-on lets you know who likes the media. Users can also see which media file he/she likes under the user profile.
+ 16. **Custom-Thumbnail-for-Audio/Video** – Allow media owners to change the thumbnail of uploaded audio/video files.
+ 17. **View-Counter** – Enable view count for all the uploaded media.
+ 18. **Edit-Mp3-Info-(ID3 Tags)** – Allow users to edit MP3 FIle Audio tags (ID 3 tags).
 
 
 #### Important Links ####
