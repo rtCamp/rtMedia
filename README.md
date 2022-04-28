@@ -56,7 +56,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 
 ## rtMedia Premium ##
 
-rtMedia Premium comes with some exciting advanced features along with it. Gain access to 18 powerful features with a single [rtMedia Premium]("https://rtmedia.io/rtmedia-premium/") purchase:
+rtMedia Premium comes with some exciting advanced features along with it. Gain access to 18 powerful features with a single [rtMedia Premium](https://rtmedia.io/rtmedia-premium/) purchase:
 
  1. **Default-Albums** – This plugin allows the creation of multiple default albums for rtMedia uploads.
  2. **Sidebar-Widgets** – This addon provides widgets to upload media and display gallery for rtMedia plugin.
@@ -87,7 +87,7 @@ rtMedia Premium comes with some exciting advanced features along with it. Gain a
  6. **Social-Sync** – It allows you to import media from your Facebook account.
  7. **Moderation** – This plugin is for reporting media if users find it offensive.
  8. **Social-Sharing** – Share uploaded media on social network sites like Facebook, twitter, linkedin, Google+. This add-on integrates with the rtSocial plugin.
- 9. **SEO** – Generate XML sitemap of all the public media files uploaded via rtMedia plugin, also compatible with [Yoast-SEO]("https://wordpress.org/plugins/wordpress-seo/") plugin if you are already using it on your site.
+ 9. **SEO** – Generate XML sitemap of all the public media files uploaded via rtMedia plugin, also compatible with [Yoast-SEO](https://wordpress.org/plugins/wordpress-seo/) plugin if you are already using it on your site.
  10. **WordPress-Comment-Attachments** – Allow users to upload a media file in WordPress comment attachment box.
  11. **Photo-Watermark** – rtMedia Photo Watermark add-on lets you watermark or copyright your uploaded photos.
  12. **Shortcode-Generator** – The shortcode generator button added in WordPress post and page editor for all the rtMedia shortcodes.
