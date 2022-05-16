@@ -261,7 +261,7 @@ class RTMediaActivity {
 				if ( $cover_art ) {
 					$poster = 'poster = "' . esc_url( $cover_art ) . '"';
 				} else {
-					$poster = '';
+					$poster = 'poster = "' . esc_url( $rtmedia->allowed_types['video']['thumbnail'] ) . '"';
 				}
 				if ( empty( $youtube_url ) ) {
 					$html = '<video %s src="%s" width="%d" height="%d" type="video/mp4" class="%s" id="rt_media_video_%s" controls="controls" preload="none"></video>';
