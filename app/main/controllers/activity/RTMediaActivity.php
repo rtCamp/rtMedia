@@ -261,10 +261,10 @@ class RTMediaActivity {
 				if ( $cover_art ) {
 					$poster = 'poster = "' . esc_url( $cover_art ) . '"';
 				} else {
-					$poster = 'poster = "' . esc_url( $rtmedia->allowed_types['video']['thumbnail'] ) . '"';
+					$poster = '';
 				}
 				if ( empty( $youtube_url ) ) {
-					$html = '<video %s src="%s" width="%d" height="%d" type="video/mp4" class="%s" id="rt_media_video_%s" controls="controls" preload="none"></video>';
+					$html = '<video %s src="%s" width="%d" height="%d" type="video/mp4" class="%s" id="rt_media_video_%s" controls="controls" preload="metadata"></video>';
 					$html = sprintf( $html, $poster, esc_url( wp_get_attachment_url( $media->media_id ) ), esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_width'] ), esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_height'] ), $video_class, esc_attr( $media->id ) );
 				}
 			} elseif ( 'music' === $media->media_type ) {
