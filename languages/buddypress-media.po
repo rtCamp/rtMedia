@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.11\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2022-04-22 11:03:37+00:00\n"
+"POT-Creation-Date: 2022-05-18 10:44:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2336,7 +2336,7 @@ msgstr ""
 msgid "Public - Visible to the world"
 msgstr ""
 
-#: app/main/RTMedia.php:869 app/main/controllers/template/RTMediaNav.php:294
+#: app/main/RTMedia.php:869 app/main/controllers/template/RTMediaNav.php:284
 #: app/main/controllers/template/rtmedia-functions.php:139
 msgid "All"
 msgstr ""
@@ -2351,7 +2351,7 @@ msgstr ""
 #: app/main/RTMedia.php:885 app/main/RTMedia.php:1412
 #: app/main/controllers/media/RTMediaAlbum.php:55
 #: app/main/controllers/media/RTMediaAlbum.php:67
-#: app/main/controllers/template/RTMediaNav.php:314
+#: app/main/controllers/template/RTMediaNav.php:304
 msgid "Albums"
 msgstr ""
 
