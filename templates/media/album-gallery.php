@@ -54,7 +54,7 @@ $rand_id = wp_rand( 0, 1000 );
 
 		<!-- addClass 'rtmedia-list-media' for work properly selectbox -->
 		<?php
-		if ( have_rtmedia() ) {
+		if ( have_rtmedia() || ! empty( $album_objects ) ) {
 			?>
 			<ul class="rtmedia-list-media rtmedia-list rtmedia-album-list clearfix">
 			<?php
