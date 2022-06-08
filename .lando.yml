@@ -25,8 +25,10 @@ services:
     build_as_root:
       - curl -sL https://deb.nodesource.com/setup_14.x | bash -
       - apt-get install -y nodejs
+      - npm install -g npm@latest
     build:
       - wp core download --force --skip-content
+      - npm install
     run:
       - wp config create --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --dbhost=database --skip-check --force
       - wp config set WP_DEBUG true --raw
@@ -40,6 +42,10 @@ services:
           wp core install --url=https://$LANDO_APP_NAME.$LANDO_DOMAIN --title=$LANDO_APP_NAME --admin_user=rtcamp --admin_email=lando@rtcamp.com --admin_password=goodwork
           wp theme install --activate twentytwenty
           wp plugin install --activate query-monitor
+          wp rewrite structure '/%postname%/'
+          # Not activating rtMedia directly when building containers because it does not allow us to debug 
+          # issues that are specific to first time plugin activation
+          # wp plugin activate buddypress-media
         fi
   mailhog:
     type: mailhog
@@ -52,3 +58,7 @@ tooling:
     cmd:
       - appserver: /app/.lando/xdebug.sh
     user: root
+  node:
+    service: appserver
+  npm:
+    service: appserver
