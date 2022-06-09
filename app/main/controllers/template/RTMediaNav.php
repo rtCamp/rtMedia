@@ -275,7 +275,19 @@ class RTMediaNav {
 			}
 		}
 
-		$other_count = count( rtmedia_global_albums() );
+		$global_albums = rtmedia_global_albums();
+
+		// Return the album count if the album has media in it.
+		if ( function_exists( 'bp_is_group' ) && bp_is_group() && $user_group_status ) {
+			$global_albums = array_filter(
+				$global_albums,
+				function( $album_id ) {
+					return (int) rtm_get_album_media_count( $album_id ) > 0;
+				}
+			);
+		}
+
+		$other_count = count( $global_albums );
 
 		$all = '';
 		if ( ! isset( $rtmedia_query->action_query->media_type ) && ! isset( $rtmedia_query->query['media_type'] ) ) {
