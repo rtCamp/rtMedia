@@ -923,7 +923,7 @@ jQuery( 'document' ).ready( function( $ ) {
                         jQuery( '#user-media span, #media-groups-li #media span, #rtmedia-nav-item-all span' ).text( response.data.all_media_count );
 
                         // Update the count on sub navigations (Albums)
-                        jQuery( '#rtmedia-nav-item-albums span' ).text( response.data.albums_count );
+                        // jQuery( '#rtmedia-nav-item-albums span' ).text( response.data.albums_count );
 
                         // Update the count on sub navigations (Photo, Video & Music)
                         jQuery( '#rtmedia-nav-item-photo span' ).text( response.data.photos_count );
