@@ -838,10 +838,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					array(
 						'id'     => 'rt-media-addons',
 						'parent' => 'rtMedia',
-						'title'  => esc_html__( 'Addons', 'buddypress-media' ),
+						'title'  => esc_html__( 'Premium', 'buddypress-media' ),
 						'href'   => admin_url( 'admin.php?page=rtmedia-addons' ),
 						'meta'   => array(
-							'title'  => esc_html__( 'Addons', 'buddypress-media' ),
+							'title'  => esc_html__( 'Premium', 'buddypress-media' ),
 							'target' => '_self',
 						),
 					)
@@ -1043,8 +1043,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			add_submenu_page(
 				'rtmedia-settings',
-				esc_html__( 'Addons', 'buddypress-media' ),
-				esc_html__( 'Addons', 'buddypress-media' ),
+				esc_html__( 'Premium', 'buddypress-media' ),
+				esc_html__( 'Premium', 'buddypress-media' ),
 				'manage_options',
 				'rtmedia-addons',
 				array(
@@ -1399,7 +1399,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				),
 				array(
 					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-addons' ), 'admin.php' ) ) ),
-					'name' => esc_html__( 'Addons', 'buddypress-media' ),
+					'name' => esc_html__( 'Premium', 'buddypress-media' ),
 					'slug' => 'rtmedia-addons',
 				),
 			);
