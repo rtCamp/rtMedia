@@ -31,7 +31,7 @@ class RTMediaNav {
 		add_action( 'admin_bar_menu', array( $this, 'admin_nav' ), $order );
 
 		if ( class_exists( 'BuddyPress' ) ) {
-			add_action( 'bp_setup_nav', array( $this, 'custom_media_nav_tab' ), 10, 1 );
+			add_action( 'bp_parse_query', array( $this, 'custom_media_nav_tab' ), 99, 1 );
 			add_filter( 'bp_nouveau_nav_has_count', array( $this, 'rtmedia_bp_nouveau_nav_has_count' ), 10, 3 );
 			add_filter( 'bp_nouveau_get_nav_count', array( $this, 'rtmedia_bp_nouveau_get_nav_count' ), 10, 3 );
 		}
