@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.11\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.12\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2022-05-18 10:44:17+00:00\n"
+"POT-Creation-Date: 2022-06-15 07:59:48+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -154,7 +154,7 @@ msgstr ""
 #: app/admin/RTMediaAdmin.php:841 app/admin/RTMediaAdmin.php:844
 #: app/admin/RTMediaAdmin.php:1046 app/admin/RTMediaAdmin.php:1047
 #: app/admin/RTMediaAdmin.php:1402
-msgid "Addons"
+msgid "Premium"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:867 app/admin/RTMediaAdmin.php:870
@@ -1082,7 +1082,7 @@ msgid "User's Favorites:"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:91 app/helper/RTMediaAddon.php:92
-msgid "Plugins"
+msgid "Premium Features"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:116
@@ -2336,7 +2336,7 @@ msgstr ""
 msgid "Public - Visible to the world"
 msgstr ""
 
-#: app/main/RTMedia.php:869 app/main/controllers/template/RTMediaNav.php:284
+#: app/main/RTMedia.php:869 app/main/controllers/template/RTMediaNav.php:296
 #: app/main/controllers/template/rtmedia-functions.php:139
 msgid "All"
 msgstr ""
@@ -2351,7 +2351,7 @@ msgstr ""
 #: app/main/RTMedia.php:885 app/main/RTMedia.php:1412
 #: app/main/controllers/media/RTMediaAlbum.php:55
 #: app/main/controllers/media/RTMediaAlbum.php:67
-#: app/main/controllers/template/RTMediaNav.php:304
+#: app/main/controllers/template/RTMediaNav.php:316
 msgid "Albums"
 msgstr ""
 
@@ -3168,7 +3168,7 @@ msgstr ""
 msgid "Search Media"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-actions.php:1104
+#: app/main/controllers/template/rtmedia-actions.php:1178
 msgid "Please swipe for more media."
 msgstr ""
 
