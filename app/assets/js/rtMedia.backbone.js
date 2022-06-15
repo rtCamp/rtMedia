@@ -316,7 +316,7 @@ jQuery( function( $ ) {
 
 
 						// Update the count on sub navigations (Albums)
-						jQuery( '#rtmedia-nav-item-albums span' ).text( response.media_count.albums_count );
+						// jQuery( '#rtmedia-nav-item-albums span' ).text( response.media_count.albums_count );
 
 						// Update the count on sub navigations (Photo, Video & Music)
 						jQuery( '#rtmedia-nav-item-photo span' ).text( response.media_count.photos_count );

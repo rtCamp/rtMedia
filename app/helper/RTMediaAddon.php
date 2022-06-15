@@ -88,8 +88,8 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 
 			if ( ! is_rtmedia_vip_plugin() ) {
 				$tabs[] = array(
-					'title'    => esc_html__( 'Plugins', 'buddypress-media' ),
-					'name'     => esc_html__( 'Plugins', 'buddypress-media' ),
+					'title'    => esc_html__( 'Premium Features', 'buddypress-media' ),
+					'name'     => esc_html__( 'Premium Features', 'buddypress-media' ),
 					'href'     => '#rtm-plugins',
 					'icon'     => 'dashicons-admin-plugins',
 					'callback' => array( $this, 'plugins_content' ),
