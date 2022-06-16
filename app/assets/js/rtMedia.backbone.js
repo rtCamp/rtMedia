@@ -316,7 +316,7 @@ jQuery( function( $ ) {
 
 
 						// Update the count on sub navigations (Albums)
-						jQuery( '#rtmedia-nav-item-albums span' ).text( response.media_count.albums_count );
+						// jQuery( '#rtmedia-nav-item-albums span' ).text( response.media_count.albums_count );
 
 						// Update the count on sub navigations (Photo, Video & Music)
 						jQuery( '#rtmedia-nav-item-photo span' ).text( response.media_count.photos_count );
@@ -1811,8 +1811,8 @@ jQuery( document ).ready( function( $ ) {
 				}
 
 				options.data += '&rtmedia-privacy=' + dynamic_privacy;
-				var orignalSuccess = originalOptions.success;
-				options.success = function( response ) {
+				var orignalSuccess = originalOptions.done;
+				options.done = function( response ) {
 					orignalSuccess( response );
 					if ( response[0] + response[1] == '-1' ) {
 						//Error

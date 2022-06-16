@@ -31,7 +31,7 @@ class RTMediaNav {
 		add_action( 'admin_bar_menu', array( $this, 'admin_nav' ), $order );
 
 		if ( class_exists( 'BuddyPress' ) ) {
-			add_action( 'bp_init', array( $this, 'custom_media_nav_tab' ), 10, 1 );
+			add_action( 'bp_parse_query', array( $this, 'custom_media_nav_tab' ), 99, 1 );
 			add_filter( 'bp_nouveau_nav_has_count', array( $this, 'rtmedia_bp_nouveau_nav_has_count' ), 10, 3 );
 			add_filter( 'bp_nouveau_get_nav_count', array( $this, 'rtmedia_bp_nouveau_get_nav_count' ), 10, 3 );
 		}
@@ -274,7 +274,20 @@ class RTMediaNav {
 				$link = get_rtmedia_user_link( get_query_var( 'author' ) );
 			}
 		}
-		$other_count = count( rtmedia_global_albums() );
+
+		$global_albums = rtmedia_global_albums();
+
+		// Return the album count if the album has media in it.
+		if ( function_exists( 'bp_is_group' ) && bp_is_group() && $user_group_status ) {
+			$global_albums = array_filter(
+				$global_albums,
+				function( $album_id ) {
+					return (int) rtm_get_album_media_count( $album_id ) > 0;
+				}
+			);
+		}
+
+		$other_count = count( $global_albums );
 
 		$all = '';
 		if ( ! isset( $rtmedia_query->action_query->media_type ) && ! isset( $rtmedia_query->query['media_type'] ) ) {

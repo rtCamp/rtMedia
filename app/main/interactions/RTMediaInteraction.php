@@ -48,7 +48,7 @@ class RTMediaInteraction {
 		add_action( 'init', array( $this, 'flush_rules' ) );
 
 		// set up interaction and routes.
-		add_action( 'template_redirect', array( $this, 'init' ), 99 );
+		add_action( 'template_redirect', array( $this, 'init' ), 9999 );
 
 		add_filter( 'wp_title', array( $this, 'set_title' ), 99999, 2 );
 		add_filter( 'wpseo_opengraph_title', array( $this, 'set_title' ), 9999, 1 );

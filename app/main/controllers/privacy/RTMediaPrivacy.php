@@ -34,7 +34,7 @@ class RTMediaPrivacy {
 	public function __construct( $flag = true ) {
 
 		if ( is_rtmedia_privacy_enable() && $flag ) {
-			add_action( 'bp_init', array( $this, 'add_nav' ) );
+			add_action( 'bp_setup_nav', array( $this, 'add_nav' ) );
 			add_action( 'bp_template_content', array( $this, 'content' ) );
 			add_filter( 'bp_activity_get_user_join_filter', array( $this, 'activity_privacy' ), 10, 6 );
 

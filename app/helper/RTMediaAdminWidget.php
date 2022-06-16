@@ -30,10 +30,24 @@ if ( ! class_exists( 'RTMediaAdminWidget' ) ) {
 				<div class="postbox" id="<?php echo esc_attr( $id ); ?>">
 					<?php
 					if ( $title ) {
-						?>
-						<h3 class="hndle"><span><?php echo esc_html( $title ); ?></span></h3>
-					<?php } ?>
-					<div class="inside"><?php echo wp_kses( $content, RTMedia::expanded_allowed_tags() ); ?></div>
+						if ( 'spread-the-word' === $id ) {
+							?>
+							<h3 class="hndle"><span class="dashicons dashicons-share"></span><span><?php echo esc_html( $title ); ?></span></h3>
+							<?php
+						} elseif ( 'branding' === $id ) {
+							?>
+							<h3 class="hndle"><span class="dashicons dashicons-bell"></span><span><?php echo esc_html( $title ); ?></span></h3>
+							<?php
+						} else {
+							?>
+							<h3 class="hndle"><span><?php echo esc_html( $title ); ?></span></h3>
+							<?php
+						}
+					}
+					?>
+					<div class="inside">
+						<?php echo wp_kses( $content, RTMedia::expanded_allowed_tags() ); ?>
+					</div>
 				</div>
 				<?php
 			} else {

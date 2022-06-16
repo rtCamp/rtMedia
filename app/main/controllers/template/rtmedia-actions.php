@@ -1028,6 +1028,80 @@ function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
 add_action( 'pre_get_posts', 'rtmedia_gallery_shortcode_json_query_vars', 99 );
 
 /**
+ * Handles the conflicting between - BuddyPress Rewrites and rtMedia plugins.
+ *
+ * @param object $query WP query object.
+ */
+function rtmedia_pre_get_posts( $query ) {
+
+	global $wp_query;
+
+	if ( ! $query->is_main_query() ) {
+		return;
+	}
+
+	if ( get_query_var( 'bp_members' ) ) {
+
+		$bp_member           = get_query_var( 'bp_member' );
+		$bp_member_component = get_query_var( 'bp_member_component' );
+
+		if ( $bp_member && ( 'media' === $bp_member_component || 'upload' === $bp_member_component ) ) {
+
+			$wp_query->query['attachment']      = $bp_member;
+			$wp_query->query_vars['attachment'] = $bp_member;
+
+			unset( $wp_query->queried_object );
+			unset( $wp_query->queried_object_id );
+
+			$wp_query->set( 'tax_query', '' );
+
+			$wp_query->query[ $bp_member_component ] = '';
+
+			$action = get_query_var( 'bp_member_action' );
+
+			if ( 'media' === $bp_member_component ) {
+
+				$action_variable = get_query_var( 'bp_member_action_variables' );
+
+				if ( ! empty( $action_variable ) ) {
+					$action = $action . '/' . $action_variable;
+				}
+			}
+
+			$wp_query->query_vars[ $bp_member_component ] = $action;
+		}
+	} elseif ( get_query_var( 'bp_groups' ) ) {
+
+		$bp_group        = get_query_var( 'bp_group' );
+		$bp_group_action = get_query_var( 'bp_group_action' );
+
+		if ( $bp_group && 'media' === $bp_group_action || 'upload' === $bp_group_action ) {
+
+			$wp_query->query['attachment']      = $bp_group;
+			$wp_query->query_vars['attachment'] = $bp_group;
+
+			if ( ! empty( $bp_group_action ) ) {
+				$wp_query->query[ $bp_group_action ]      = '';
+				$wp_query->query_vars[ $bp_group_action ] = get_query_var( 'bp_group_action_variables' );
+			}
+
+			unset( $wp_query->queried_object );
+			unset( $wp_query->queried_object_id );
+		}
+
+	} elseif ( get_query_var( 'bp_activities' ) ) {
+
+		$bp_activity_action = get_query_var( 'bp_activity_action' );
+
+		if ( ! empty( $bp_activity_action ) ) {
+			$wp_query->query[ $bp_activity_action ]      = '';
+			$wp_query->query_vars[ $bp_activity_action ] = '';
+		}
+	}
+}
+add_action( 'pre_get_posts', 'rtmedia_pre_get_posts', 9999 );
+
+/**
  * Rule for pagination for rtmedia gallery shortcode
  */
 function rtmedia_gallery_shortcode_rewrite_rules() {
