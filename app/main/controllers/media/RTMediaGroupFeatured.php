@@ -229,15 +229,32 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 					$image_array   = image_downsize( $featured->media_id, 'rt_media_thumbnail' );
 					$content_extra = 'poster="' . esc_url( $image_array[0] ) . '" ';
 				}
-				$content = '<video class="bp-media-featured-media wp-video-shortcode"' . esc_attr( $content_extra ) . 'src="' . esc_url( wp_get_attachment_url( $featured->media_id ) ) . '" width="' . esc_attr( $this->settings['width'] ) . '" height="' . esc_attr( $this->settings['height'] ) . '" type="video/mp4" id="bp_media_video_' . esc_attr( $this->featured ) . '" controls="controls" preload="true"></video>';
+
+				$content = sprintf(
+					'<video class="bp-media-featured-media wp-video-shortcode" %1$s src="%2$s" width="%3$s" height="%4$s" type="video/mp4" id="bp_media_video_%5$s" controls="controls" preload="true"></video>',
+					esc_attr( $content_extra ),
+					esc_url( wp_get_attachment_url( $featured->media_id ) ),
+					esc_attr( $this->settings['width'] ),
+					esc_attr( $this->settings['height'] ),
+					esc_attr( $this->featured )
+				);
 				break;
 			case 'music':
-				$content = '<audio class="bp-media-featured-media wp-audio-shortcode" src="' . esc_url( wp_get_attachment_url( $featured->media_id ) ) . '" width="' . esc_attr( $this->settings['width'] ) . '" type="audio/mp3" id="bp_media_audio_' . esc_attr( $this->featured ) . '" controls="controls" preload="none"></audio>';
+				$content = sprintf(
+					'<audio class="bp-media-featured-media wp-audio-shortcode" src="%1$s" width="%2$s" type="audio/mp3" id="bp_media_audio_%3$s" controls="controls" preload="none"></audio>',
+					esc_url( wp_get_attachment_url( $featured->media_id ) ),
+					esc_attr( $this->settings['width'] ),
+					esc_attr( $this->featured )
+				);
 				break;
 			case 'photo':
 				$this->generate_featured_size( $featured->media_id );
 				$image_array = image_downsize( $featured->media_id, 'rt_media_featured_image' );
-				$content     = '<img src="' . esc_url( $image_array[0] ) . '" alt="' . esc_attr( $featured->media_title ) . '" />';
+				$content     = sprintf(
+					'<img src="%1$s" alt="%2$s" />',
+					esc_url( $image_array[0] ),
+					esc_attr( $featured->media_title )
+				);
 				break;
 			default:
 				return false;

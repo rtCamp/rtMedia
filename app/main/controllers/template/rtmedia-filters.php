@@ -51,7 +51,11 @@ function rtmedia_create_album( $options ) {
 	if ( true === $display ) {
 		add_action( 'rtmedia_before_media_gallery', 'rtmedia_create_album_modal' );
 
-		$options[] = "<a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='" . esc_attr__( 'Create New Album', 'buddypress-media' ) . "'><i class='dashicons dashicons-plus-alt'></i>" . esc_html__( 'Add Album', 'buddypress-media' ) . '</a>';
+		$options[] = sprintf(
+			'<a href="#rtmedia-create-album-modal" class="rtmedia-reveal-modal rtmedia-modal-link"  title="%1$s"><i class="dashicons dashicons-plus-alt"></i>%2$s</a>',
+			esc_attr__( 'Create New Album', 'buddypress-media' ),
+			esc_html__( 'Add Album', 'buddypress-media' )
+		);
 	}
 
 	return $options;
@@ -85,8 +89,22 @@ function rtmedia_album_edit( $options ) {
 		|| rtm_is_bp_group_admin()
 		|| rtm_is_bp_group_mod() ) {
 
-			$options[] = "<a href='edit/' class='rtmedia-edit' title='" . esc_attr__( 'Edit Album', 'buddypress-media' ) . "' ><i class='dashicons dashicons-edit'></i>" . esc_html__( 'Edit Album', 'buddypress-media' ) . '</a>';
-			$options[] = '<form method="post" class="album-delete-form rtmedia-inline" action="delete/">' . wp_nonce_field( 'rtmedia_delete_album_' . $rtmedia_query->media_query['album_id'], 'rtmedia_delete_album_nonce' ) . '<button type="submit" name="album-delete" class="rtmedia-delete-album" title="' . esc_attr__( 'Delete Album', 'buddypress-media' ) . '"><i class="dashicons dashicons-trash"></i>' . esc_html__( 'Delete Album', 'buddypress-media' ) . '</button></form>';
+			$options[] = sprintf(
+				'<a href="edit/" class="rtmedia-edit" title="%1$s" ><i class="dashicons dashicons-edit"></i>%2$s</a>',
+				esc_attr__( 'Edit Album', 'buddypress-media' ),
+				esc_html__( 'Edit Album', 'buddypress-media' )
+			);
+
+			$form  = '<form method="post" class="album-delete-form rtmedia-inline" action="delete/">';
+			$form .= wp_nonce_field( 'rtmedia_delete_album_' . $rtmedia_query->media_query['album_id'], 'rtmedia_delete_album_nonce' );
+			$form .= sprintf(
+				'<button type="submit" name="album-delete" class="rtmedia-delete-album" title="%1$s"><i class="dashicons dashicons-trash"></i>%2$s</button>',
+				esc_attr__( 'Delete Album', 'buddypress-media' ),
+				esc_html__( 'Delete Album', 'buddypress-media' )
+			);
+			$form .= '</form>';
+
+			$options[] = $form;
 
 			if ( is_rtmedia_group_album() ) {
 				$album_list = rtmedia_group_album_list();
@@ -95,7 +113,12 @@ function rtmedia_album_edit( $options ) {
 			}
 
 			if ( $album_list ) {
-				$options[] = '<a href="#rtmedia-merge" class="rtmedia-reveal-modal rtmedia-modal-link" title="' . esc_attr__( 'Merge Album', 'buddypress-media' ) . '"><i class="dashicons dashicons-randomize"></i>' . esc_html__( 'Merge Album', 'buddypress-media' ) . '</a>';
+
+				$options[] = sprintf(
+					'<a href="#rtmedia-merge" class="rtmedia-reveal-modal rtmedia-modal-link" title="%1$s"><i class="dashicons dashicons-randomize"></i>%2$s</a>',
+					esc_attr__( 'Merge Album', 'buddypress-media' ),
+					esc_html__( 'Merge Album', 'buddypress-media' )
+				);
 			}
 		}
 	}
