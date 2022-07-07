@@ -142,3 +142,6 @@ require_once 'app/admin/RTMediaUploadTermsAdmin.php';
 
 // Call file of upload terms to provide I agree button in uploader.
 require_once 'app/main/RTMediaUploadTerms.php';
+
+// Require deactivation survey installer.
+require_once RTMEDIA_PATH . '/lib/deactivation-survey/deactivation-survey.php';
