@@ -1,12 +1,12 @@
 .rt-deactivate-modal {
     position: fixed;
 	width: 550px;
-	height: 320px;
+	height: auto;
 	background: #fff;
-	top: 0%;
+	top: 25%;
 	left: 0%;
 	margin: auto auto;
-	bottom: 0;
+	bottom: auto;
 	right: 0;
     box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
 }
@@ -22,7 +22,7 @@
 	background-color: rgba( 0,0,0, 0.3 );
 }
 .rt-modal-head {
-	padding: 15px 30px;
+	padding: 25px 30px;
 	border-bottom: 1px solid #eee;
 }
 .rt-modal-head h2 {
@@ -39,4 +39,8 @@
 	justify-content: space-between;
 	align-items: center;
 	border-top: 1px solid #eee;
+}
+.rt-deactivate-others-input {
+	width: 100%;
+	margin-top: 10px;;
 }

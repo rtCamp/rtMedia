@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.12\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2022-07-04 06:50:43+00:00\n"
+"POT-Creation-Date: 2022-07-18 14:40:28+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3471,6 +3471,10 @@ msgstr ""
 #: app/main/deprecated/RTMediaDeprecated.php:40
 #. translators: 1: function name, 2: method.
 msgid "Deprecated %1$s. Please use %2$s."
+msgstr ""
+
+#: lib/deactivation-survey/deactivation-survey.php:71
+msgid "If you have a moment, please let us know why you are deactivating: "
 msgstr ""
 
 #: templates/main.php:70 templates/main.php:143
