@@ -486,7 +486,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					$return_flag = true;
 				}
 			} elseif ( defined( 'RTMEDIA_WATERMARK_PATH' ) ) {
-				// Check for rtMedia Photo Watermak version.
+				// Check for rtMedia Photo Watermark version.
 				$plugin_info = get_plugin_data( RTMEDIA_WATERMARK_PATH . 'index.php' );
 				if ( ! empty( $plugin_info['Version'] ) && ( - 1 === version_compare( $plugin_info['Version'], '1.1.8' ) ) ) {
 					$return_flag = true;

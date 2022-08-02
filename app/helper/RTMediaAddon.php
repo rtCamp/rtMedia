@@ -497,7 +497,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					'doc_link'     => 'https://rtmedia.io/docs/addons/rtmedia-watermark/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'buy_now'      => 'https://rtmedia.io/products/rtmedia-photo-watermark/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'category'     => 'photo',
-					'purchased'    => ( defined( 'RTMEDIA_WATERMARK_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-photo-watermak/index.php' ) ) ? true : false,
+					'purchased'    => ( defined( 'RTMEDIA_WATERMARK_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-photo-watermark/index.php' ) ) ? true : false,
 				),
 				array(
 					'title'        => esc_html__( 'Photo Tagging', 'buddypress-media' ),
