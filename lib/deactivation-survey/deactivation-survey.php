@@ -9,21 +9,8 @@ class Deactivation_Survey {
      *
      * @var string
      */
-    public $api_url = 'https://rtmedia-dev.rtm.rt.gw/wp-json/rtps/v1/survey'; // Replace the API Url by the production API Url.
+    private $api_url = 'https://rtmedia-dev.rtm.rt.gw/wp-json/rtps/v1'; // Replace the API Url by the production API Url.
 
-    /**
-     * Basic Auth Username
-     *
-     * @var string
-     */
-    private $auth_user = 'rabiul'; // Replace the admin user by the production admin user.
-
-    /**
-     * Basic Auth Password.
-     *
-     * @var string
-     */
-    private $auth_password = 'SxQf 1BT0 bYcZ YU3d cQkS aT3Z'; // Replcae the auth token by the production auth token.
 
     /**
      * Constructor function.
@@ -102,28 +89,34 @@ class Deactivation_Survey {
             'user_email'  => $user['email'],
         ];
 
-        $auth_user     = $this->auth_user;
-        $auth_password = $this->auth_password;
-
-        $options = [
-            'body'             => $data,
-            'headers'          => [
-                'Content-type' => "application/x-www-form-urlencoded",
-                'Authorization' => "Basic " . base64_encode("${auth_user}:${auth_password}")
-            ],
-            'timeout'          => 60,
-            'redirection'      => 5,
-            'httpversion'      => '1.0',
-            'sslverify'        => false,
-            'data_format'      => 'body'
-        ];
-
-        $api_response = wp_remote_post( $this->api_url, $options );
+        $api_response = wp_remote_get( $this->api_url . '/auth_access' );
         $response     = json_decode( wp_remote_retrieve_body( $api_response ) );
 
-        if ( 'integer' === gettype( $response ) ) {
-            echo wp_json_encode( 'success' );
+        if ( null !== $response && ! empty( $response ) ) {
+            $auth_user     = $response->auth_username;
+            $auth_password = $response->auth_password;
+
+            $options = [
+                'body'             => $data,
+                'headers'          => [
+                    'Content-type' => "application/x-www-form-urlencoded",
+                    'Authorization' => "Basic " . base64_encode("${auth_user}:${auth_password}")
+                ],
+                'timeout'          => 60,
+                'redirection'      => 5,
+                'httpversion'      => '1.0',
+                'sslverify'        => false,
+                'data_format'      => 'body'
+            ];
+
+            $api_response = wp_remote_post( $this->api_url . '/survey', $options );
+            $response     = json_decode( wp_remote_retrieve_body( $api_response ) );
+    
+            if ( 'integer' === gettype( $response ) ) {
+                echo wp_json_encode( 'success' );
+            }
         }
+
         wp_die();
     }
 
