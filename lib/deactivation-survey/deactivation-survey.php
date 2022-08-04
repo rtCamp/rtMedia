@@ -37,10 +37,10 @@ class Deactivation_Survey {
             wp_enqueue_script( 'rt-deactivation-survey' );
     
             $reasons = [
-                'I could\'t understand how to make it work.',
+                'I couldn\'t understand how to make it work.',
                 'I found a better plugin.',
-                'The plugin is greate but I need spicific features, that you do\'t support.',
-                'The plugin is\'t working.',
+                'The plugin is great but I need spicific features, that you don\'t support.',
+                'The plugin isn\'t working.',
                 'It\'s not what I was looking for.',
                 'The plugin didn\'t work as expected.',
             ];
