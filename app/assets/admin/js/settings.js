@@ -87,6 +87,8 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	/* Form validation check */
+	//jQuery( 'input[name="rtmedia-options[general_albumsPerUser]"]').on( 'change', function() {
+		
 
 	jQuery('.rtmedia-settings-submit').on( 'click', function (e)  {
 
@@ -97,6 +99,13 @@ jQuery( document ).ready( function ( $ ) {
 		});
 
 		var checkValidation = $( '#bp_media_settings_form' )[0].checkValidity();
+
+		var albumperuser = $('input[name="rtmedia-options[general_albumsPerUser]"]');
+		var check = albumperuser.val();
+		if(check == '') {
+			albumperuser.val(0);
+		}
+		console.log(check);
 
 		if ( false === checkValidation ) {
 
