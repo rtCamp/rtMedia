@@ -87,7 +87,7 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	/* Form validation check */
-	
+
 	jQuery('.rtmedia-settings-submit').on( 'click', function (e)  {
 
 		var rtmTabContent = $( '.rtm-content' );
@@ -103,7 +103,6 @@ jQuery( document ).ready( function ( $ ) {
 		if(check == '') {
 			albumperuser.val(0);
 		}
-		console.log(check);
 
 		if ( false === checkValidation ) {
 
