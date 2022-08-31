@@ -86,8 +86,8 @@ jQuery( document ).ready( function ( $ ) {
 
 	} );
 
-	/* Form validation check */		
-
+	/* Form validation check */
+	
 	jQuery('.rtmedia-settings-submit').on( 'click', function (e)  {
 
 		var rtmTabContent = $( '.rtm-content' );
