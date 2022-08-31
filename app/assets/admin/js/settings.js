@@ -86,9 +86,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	} );
 
-	/* Form validation check */
-	//jQuery( 'input[name="rtmedia-options[general_albumsPerUser]"]').on( 'change', function() {
-		
+	/* Form validation check */		
 
 	jQuery('.rtmedia-settings-submit').on( 'click', function (e)  {
 
