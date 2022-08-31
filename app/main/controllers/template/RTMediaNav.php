@@ -133,7 +133,7 @@ class RTMediaNav {
 				// to solve an issue of Media Tab is not showing in version 10.0.0.
 				$bp->version = floatval( $bp->version );
 
-				if ( isset( $bp->version ) && $bp->version > '2.5.3' ) {
+				if ( isset( $bp->version ) && version_compare( $bp->version, '2.5.3', 'gt' ) ) {
 
 					/**
 					 * As from BuddyPress 2.6, you can't access $bp->bp_options_nav directly.
