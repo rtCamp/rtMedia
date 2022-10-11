@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.12\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2022-06-15 07:59:48+00:00\n"
+"POT-Creation-Date: 2022-08-01 11:54:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3484,7 +3484,6 @@ msgstr ""
 #: templates/media/album-gallery.php:108 templates/media/album-gallery.php:137
 #: templates/media/media-gallery.php:101
 #: templates/media/media-single-edit.php:74
-#: templates/media/media-single.php:212
 msgid "Sorry !! There's no media found for the request !!"
 msgstr ""
 
@@ -3557,6 +3556,10 @@ msgstr ""
 
 #: templates/media/media-single.php:75
 msgid "under"
+msgstr ""
+
+#: templates/media/media-single.php:212
+msgid "Sorry !! This media has been reported !!"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
