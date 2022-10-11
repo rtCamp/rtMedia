@@ -98,6 +98,12 @@ jQuery( document ).ready( function ( $ ) {
 
 		var checkValidation = $( '#bp_media_settings_form' )[0].checkValidity();
 
+		var albumperuser = $('input[name="rtmedia-options[general_albumsPerUser]"]');
+		var check = albumperuser.val();
+		if(check == '') {
+			albumperuser.val(0);
+		}
+
 		if ( false === checkValidation ) {
 
 			var focused = $( ':invalid' );
