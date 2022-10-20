@@ -5,6 +5,22 @@
  * @package rtMedia
  */
 
+/**
+ * Display hidden fields.
+ *
+ * @param string $key   Input key.
+ * @param string $value Input value.
+ *
+ * @since 4.6.11
+ *
+ * @return void
+ */
+if ( ! function_exists( 'rtmedia_uploader_hidden_fields' ) ) {
+	function rtmedia_uploader_hidden_fields( $key, $value ) {
+	
+		printf( '<input type="hidden" name="%1$s" value="%2$s" />', esc_attr( $key ), esc_attr( $value ) );
+	}
+}
 if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 
 	<div class="rtmedia-container rtmedia-uploader-div">
@@ -146,20 +162,4 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 	</div>
 	<?php
 }
-
-/**
- * Display hidden fields.
- *
- * @param string $key   Input key.
- * @param string $value Input value.
- *
- * @since 4.6.11
- *
- * @return void
- */
-function rtmedia_uploader_hidden_fields( $key, $value ) {
-
-	printf( '<input type="hidden" name="%1$s" value="%2$s" />', esc_attr( $key ), esc_attr( $value ) );
-}
-
 
