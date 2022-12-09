@@ -75,11 +75,27 @@ class RTMediaUploadView {
 			} elseif ( is_rtmedia_album_enable() && $rtmedia_query && is_rtmedia_gallery() ) {
 
 				if ( isset( $rtmedia_query->query['context'] ) && 'profile' === $rtmedia_query->query['context'] ) {
-					$album = '<span> <label> <i class="dashicons dashicons-format-gallery"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select></span>';
+
+					$album = sprintf(
+						'<span>
+							<label><i class="dashicons dashicons-format-gallery"></i>%1$s: </label>
+							<select name="album" class="rtmedia-user-album-list">%2$s</select>
+						</span>',
+						esc_html__( 'Album', 'buddypress-media' ),
+						rtmedia_user_album_list()
+					);
 				}
 
 				if ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
-					$album = '<span> <label> <i class="dashicons dashicons-format-gallery"></i>' . esc_html__( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list() . '</select></span>';
+
+					$album = sprintf(
+						'<span>
+							<label><i class="dashicons dashicons-format-gallery"></i>%1$s: </label>
+							<select name="album" class="rtmedia-user-album-list">%2$s</select>
+						</span>',
+						esc_html__( 'Album', 'buddypress-media' ),
+						rtmedia_group_album_list()
+					);
 				}
 			}
 		}
@@ -129,7 +145,11 @@ class RTMediaUploadView {
 				$up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy' );
 
 				if ( $up_privacy ) {
-					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility'></i>" . esc_html__( 'Privacy:', 'buddypress-media' ) . '</label>' . $up_privacy . '</span>';
+					$privacy = sprintf(
+						'<span><label for="privacy"><i class="dashicons dashicons-visibility"></i>%1$s</label>%2$s</span>',
+						esc_html__( 'Privacy:', 'buddypress-media' ),
+						$up_privacy
+					);
 				}
 			}
 		}

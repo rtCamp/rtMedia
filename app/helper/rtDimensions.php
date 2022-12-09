@@ -158,7 +158,10 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 		}
 
 		if ( $attributes['desc'] && $attributes['show_desc'] ) {
-			$html .= '<span class="clearfix large-offset-3 description">' . esc_html( $attributes['desc'] ) . '</span>';
+			$html .= sprintf(
+				'<span class="clearfix large-offset-3 description">%1$s</span>',
+				esc_html( $attributes['desc'] )
+			);
 		}
 
 		if ( isset( $attributes['label'] ) ) {

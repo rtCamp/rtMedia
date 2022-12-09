@@ -273,7 +273,11 @@ class RTMediaUploadEndpoint {
 							if ( ! empty( $same_medias[0] ) && ! empty( $activity_id ) ) {
 								global $wpdb, $bp;
 								$user     = get_userdata( $same_medias[0]->media_author );
-								$username = '<a href="' . esc_url( get_rtmedia_user_link( $same_medias[0]->media_author ) ) . '">' . esc_html( $user->display_name ) . '</a>';
+								$username = sprintf(
+									'<a href="%1$s">%2$s</a>',
+									esc_url( get_rtmedia_user_link( $same_medias[0]->media_author ) ),
+									esc_html( $user->display_name )
+								);
 
 								// translators: 1: Username, 2: Number of medias, 3: Media slug.
 								$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $username, count( $same_medias ), RTMEDIA_MEDIA_SLUG );

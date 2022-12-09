@@ -86,6 +86,58 @@ jQuery( document ).ready( function ( $ ) {
 
 	} );
 
+	/* Form validation check */
+
+	jQuery('.rtmedia-settings-submit').on( 'click', function (e)  {
+
+		var rtmTabContent = $( '.rtm-content' );
+
+		rtmTabContent.each( function () {
+			$(this).removeClass( 'hide' );
+		});
+
+		var checkValidation = $( '#bp_media_settings_form' )[0].checkValidity();
+
+		var albumperuser = $('input[name="rtmedia-options[general_albumsPerUser]"]');
+		var check = albumperuser.val();
+		if(check == '') {
+			albumperuser.val(0);
+		}
+
+		if ( false === checkValidation ) {
+
+			var focused = $( ':invalid' );
+			var parentTab = focused.closest( '.rtm-content' ).addClass( 'active' );
+
+			rtmTabContent.each( function () {
+				if ( $(this).attr( 'id' ) !== parentTab.attr( 'id' ) ) {
+				$(this).addClass( 'hide' );
+				}
+			});
+
+			var seoSiteMap = focused.closest( '.form-table' );
+			if ( seoSiteMap.css( 'display' ) === 'none'  && seoSiteMap.attr( 'data-depends' ) === 'general_enableSitemap' ) {
+				focused.val(10);
+				$( '.rtmedia-settings-submit' ).trigger( 'click' );
+				return;
+			}
+
+			var tabLocation = '#' + parentTab.attr('id'); 
+			$(location).attr( 'href', tabLocation );
+			
+		} else {
+
+			var url = $(location).attr( 'href' );
+			var id = url.substring( url.lastIndexOf( '#' ) + 1 );
+			rtmTabContent.each( function () {
+				if ( $(this).attr( 'id' ) !== id ) {
+				$(this).addClass( 'hide' );
+				}
+			});
+		}
+
+	});
+
 	/* Submit Request */
 
 	bp_media_settings_box.on( 'submit', '#bp_media_settings_form, .rtmedia-settings-submit', function ( e ) {
