@@ -152,6 +152,20 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.13 [December 12, 2022] ###
+
+* Enhancement
+   
+    * Compatible with WordPress latest version 6.1.1
+    * Compatible with PHP 8.0.0 
+    * Refactored code base.
+
+* Fixed
+    
+	* Fixed save settings not working issue.
+    * Fixed media tab not visible on groups page.
+
+  
 ### 4.6.12 [June 16, 2022] ###
 
 * Enhancement
