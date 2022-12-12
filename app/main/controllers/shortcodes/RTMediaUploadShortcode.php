@@ -110,7 +110,11 @@ class RTMediaUploadShortcode {
 
 			if ( self::display_allowed() || ( isset( $attr['allow_anonymous'] ) && true === $attr['allow_anonymous'] ) ) {
 				if ( ! _device_can_upload() ) {
-					echo '<p>' . esc_html_e( 'The web browser on your device cannot be used to upload files.', 'buddypress-media' ) . '</p>';
+
+					printf(
+						'<p>%1$s</p>',
+						esc_html__( 'The web browser on your device cannot be used to upload files.', 'buddypress-media' )
+					);
 					return;
 				}
 				ob_start();
@@ -122,7 +126,18 @@ class RTMediaUploadShortcode {
 				return ob_get_clean();
 			}
 		} else {
-			echo "<div class='rtmedia-upload-not-allowed'>" . wp_kses( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ), 'uploader_shortcode' ), RTMediaUpload::$wp_kses_allowed_tags ) . '</div>';
+
+			printf(
+				'<div class="rtmedia-upload-not-allowed">%1$s</div>',
+				wp_kses(
+					apply_filters(
+						'rtmedia_upload_not_allowed_message',
+						esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ),
+						'uploader_shortcode'
+					),
+					RTMediaUpload::$wp_kses_allowed_tags
+				)
+			);
 		}
 	}
 }

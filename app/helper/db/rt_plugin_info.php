@@ -149,10 +149,14 @@ if ( ! class_exists( 'rt_plugin_info' ) ) {
 		 * @param string $path Path.
 		 */
 		public function set_current_plugin_path( $path ) {
+
 			if ( null !== $path ) {
+
 				$this->plugin_path = $path;
+
 			} else {
-				$this->plugin_path = realpath( plugin_dir_path( __FILE__ ) . '../../index.php' );
+
+				$this->plugin_path = sprintf( '%s/index.php', untrailingslashit( RTMEDIA_PATH ) );
 			}
 		}
 	}

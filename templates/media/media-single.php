@@ -207,9 +207,9 @@
 			</div>
 
 		<?php else : ?>
-			<p class="rtmedia-no-media-found">
+			<p class="rtmedia-no-media-found rtmedia-reported">
 				<?php
-				echo esc_html( apply_filters( 'rtmedia_no_media_found_message_filter', __( 'Sorry !! There\'s no media found for the request !!', 'buddypress-media' ) ) );
+				echo esc_html( apply_filters( 'rtmedia_no_media_found_message_filter', __( 'Sorry !! This media has been reported !!', 'buddypress-media' ) ) );
 				?>
 			</p>
 		<?php endif; ?>
