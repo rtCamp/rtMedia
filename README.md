@@ -162,7 +162,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Fixed
     
-	* Fixed save settings not working issue.
+    * Fixed save settings not working issue.
     * Fixed media tab not visible on groups page.
 
   
