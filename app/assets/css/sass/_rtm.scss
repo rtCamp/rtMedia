@@ -52,7 +52,7 @@
 
 		img {
 			display: inline-block;
-			height: 150px !important;
+			max-height: inherit;
 			// Remove extra white space below image.
 		}
 	}

@@ -202,7 +202,7 @@ body.media.buddypress {
 }
 .rtmedia-list-item > a .rtmedia-item-thumbnail img {
   display: inline-block;
-  height: 150px !important;
+  max-height: inherit;
 }
 
 #rtmedia-uploader-form .rtm-plupload-list,
