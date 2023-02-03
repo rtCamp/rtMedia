@@ -38,7 +38,10 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 * @return string
 		 */
 		public function coming_soon_div() {
-			return '<div class="coming-soon coming-soon-l"></div> <a class="coming-soon coming-soon-r" href="' . esc_url( $this->enquiry_link ) . '" target="_blank"></a>';
+			return sprintf(
+				'<div class="coming-soon coming-soon-l"></div> <a class="coming-soon coming-soon-r" href="%1$s" target="_blank"></a>',
+				esc_url( $this->enquiry_link )
+			);
 		}
 
 		/**
@@ -494,7 +497,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					'doc_link'     => 'https://rtmedia.io/docs/addons/rtmedia-watermark/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'buy_now'      => 'https://rtmedia.io/products/rtmedia-photo-watermark/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'category'     => 'photo',
-					'purchased'    => ( defined( 'RTMEDIA_WATERMARK_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-photo-watermak/index.php' ) ) ? true : false,
+					'purchased'    => ( defined( 'RTMEDIA_WATERMARK_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-photo-watermark/index.php' ) ) ? true : false,
 				),
 				array(
 					'title'        => esc_html__( 'Photo Tagging', 'buddypress-media' ),
@@ -553,7 +556,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 * @return void
 		 */
 		public function themes_content( $args = '' ) {
-			echo '<h3>' . esc_html__( 'Coming Soon !!', 'buddypress-media' ) . '</h3>';
+			printf( '<h3>%1$s</h3>', esc_html__( 'Coming Soon !!', 'buddypress-media' ) );
 		}
 
 		/**
@@ -583,41 +586,8 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			$args     = wp_parse_args( $args, $defaults );
 
 			$coming_soon_div = ( ! empty( $args['coming_soon'] ) ) ? $this->coming_soon_div() : '';
-			?>
-			<div class="plugin-card clearfix rtm-plugin-card">
 
-				<div class="plugin-card-top">
-					<a class="rtm-logo" href="<?php echo esc_url( $args['product_link'] ); ?>" title="<?php echo esc_attr( $args['title'] ); ?>" target="_blank">
-						<img width="240" height="184" title="<?php echo esc_attr( $args['title'] ); ?>" alt="<?php echo esc_attr( $args['title'] ); ?>" src="<?php echo esc_url( $args['img_src'] ); ?>"/>
-					</a>
-
-					<div class="name column-name">
-						<h4><a href="<?php echo esc_url( $args['product_link'] ); ?>" title="<?php echo esc_attr( $args['title'] ); ?>" target="_blank"><?php echo esc_html( $args['title'] ); ?></a></h4>
-					</div>
-
-					<div class="desc column-description">
-						<?php echo wp_kses_post( $args['desc'] ); ?>
-					</div>
-				</div>
-
-				<div class="plugin-card-bottom">
-					<span class="price alignleft">
-						<?php
-							echo '<a class="alignright rtm-doc-link button"  href="' . esc_url( $args['doc_link'] ) . '" title="' . esc_attr( $args['title'] ) . '" target="_blank">' . esc_html__( 'Docs', 'buddypress-media' ) . '</a>';
-						?>
-					</span>
-					<span class="rtm-addon-purchased alignright product_type_simple">
-						<a href="<?php echo esc_url( 'https://rtmedia.io/rtmedia-premium' ); ?>" class="button button-primary"><?php echo esc_html__( 'Get this', 'buddypress-media' ); ?></a>
-					</span>
-					<?php
-					if ( '' !== $args['demo_link'] ) {
-						echo '<a class="alignright rtm-live-demo button"  href="' . esc_url( $args['demo_link'] ) . '" title="' . esc_attr( $args['title'] ) . '" target="_blank">' . esc_html__( 'Live Demo', 'buddypress-media' ) . '</a>';
-					}
-					?>
-				</div>
-			</div>
-			<?php
+			include RTMEDIA_PATH . 'app/helper/templates/addon.php';
 		}
 	}
-
 }

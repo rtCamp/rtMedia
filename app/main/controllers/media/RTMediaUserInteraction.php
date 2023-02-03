@@ -304,24 +304,39 @@ class RTMediaUserInteraction {
 			$icon     = '';
 
 			if ( ! $this->is_clickable() ) {
-				$disabled = ' disabled';
+				$disabled = 'disabled';
 			}
 
 			if ( isset( $this->icon_class ) && '' !== $this->icon_class ) {
-				$icon = "<i class='" . esc_attr( $this->icon_class ) . "'></i>";
+				$icon = sprintf( '<i class="%1$s"></i>', esc_attr( $this->icon_class ) );
 			}
 
 			$button_start = '<form action="' . esc_url( $link ) . '">';
 			$button_label = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
-			$button       = '<button type="submit" id="rtmedia-' . esc_attr( $this->action ) . '-button-' . esc_attr( $this->media->id ) . '" class="rtmedia-' . esc_attr( $this->action )
-			. ' rtmedia-action-buttons button' . esc_attr( $disabled ) . '" title="' . esc_attr( $button_label ) . '">' . $icon . '<span>' . esc_html( $button_label ) . '</span></button>';
+			$button       = sprintf(
+				'<button type="submit" id="rtmedia-%1$s-button-%2$s" class="rtmedia-%3$s rtmedia-action-buttons button %4$s" title="%5$s">%6$s<span>%7$s</span></button>',
+				esc_attr( $this->action ),
+				esc_attr( $this->media->id ),
+				esc_attr( $this->action ),
+				esc_attr( $disabled ),
+				esc_attr( $button_label ),
+				$icon,
+				esc_html( $button_label )
+			);
 
 			/**
 			 * Like button is displayed more then 1 time on same page, so giving this button ID will result
 			 * in HTML warnings.
 			 */
 			if ( 'like' === $this->action ) {
-				$button = '<button type="submit" class="rtmedia-' . esc_attr( $this->action ) . ' rtmedia-action-buttons button' . esc_attr( $disabled ) . '" title="' . esc_attr( $button_label ) . '">' . $icon . '<span>' . esc_html( $button_label ) . '</span></button>';
+				$button = sprintf(
+					'<button type="submit" class="rtmedia-%1$s rtmedia-action-buttons button %2$s" title="%3$s">%4$s<span>%5$s</span></button>',
+					esc_attr( $this->action ),
+					esc_attr( $disabled ),
+					esc_attr( $button_label ),
+					$icon,
+					esc_html( $button_label )
+				);
 			}
 
 			// Filter the button as required.

@@ -45,7 +45,17 @@ class RTMediaLoginPopup {
 	 */
 	public function rtmedia_add_upload_album_button_popup() {
 		if ( ! is_user_logged_in() ) {
-			echo '<span><a href="#rtmedia-login-register-modal" class="primary rtmedia-upload-media-link rtmedia-modal-link" id="rtmedia-login-register-modal" title="' . esc_attr( apply_filters( 'rtm_album_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ) . '"><i class="dashicons dashicons-upload"></i>' . esc_html( apply_filters( 'rtm_album_upload_label', __( 'Upload', 'buddypress-media' ) ) ) . '</a></span>';
+
+			printf(
+				'<span>
+					<a href="#rtmedia-login-register-modal" class="primary rtmedia-upload-media-link rtmedia-modal-link" id="rtmedia-login-register-modal" title="%1$s">
+						<i class="dashicons dashicons-upload"></i>%2$s
+					</a>
+				</span>',
+				esc_attr( apply_filters( 'rtm_album_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ),
+				esc_html( apply_filters( 'rtm_album_upload_label', __( 'Upload', 'buddypress-media' ) ) )
+			);
+
 		}
 	}
 
@@ -64,7 +74,16 @@ class RTMediaLoginPopup {
 					<p><?php esc_html_e( 'You need to be logged in to upload Media or to create Album.', 'buddypress-media' ); ?></p>
 
 					<p>
-						<?php echo esc_html__( 'Click', 'buddypress-media' ) . ' <a href="' . esc_url( wp_login_url( $uri ) ) . '" title="' . esc_attr__( 'Login', 'buddypress-media' ) . '">' . esc_html__( 'HERE', 'buddypress-media' ) . '</a>' . esc_html__( ' to login.', 'buddypress-media' ); ?>
+						<?php
+						printf(
+							'%1$s <a href="%2$s" title="%3$s">%4$s</a> %5$s',
+							esc_html__( 'Click', 'buddypress-media' ),
+							esc_url( wp_login_url( $uri ) ),
+							esc_attr__( 'Login', 'buddypress-media' ),
+							esc_html__( 'HERE', 'buddypress-media' ),
+							esc_html__( 'to login.', 'buddypress-media' )
+						);
+						?>
 					</p>
 				</div>
 			</div>

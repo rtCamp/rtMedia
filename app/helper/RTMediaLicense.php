@@ -65,7 +65,12 @@ class RTMediaLicense {
 
 		if ( ! $addon_installed ) {
 			?>
-			<div class="rtm-license-404"><?php esc_html_e( 'You may be interested in', 'buddypress-media' ); ?> <a href="<?php echo esc_url( admin_url( 'admin.php?page=rtmedia-addons' ) ); ?>"><?php esc_html_e( 'rtMedia Addons', 'buddypress-media' ); ?></a>.</div>
+			<div class="rtm-license-404">
+				<?php esc_html_e( 'You may be interested in ', 'buddypress-media' ); ?>
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=rtmedia-addons' ) ); ?>">
+					<?php esc_html_e( 'rtMedia Addons', 'buddypress-media' ); ?>
+				</a>.
+			</div>
 			<?php
 		}
 	}
@@ -309,7 +314,12 @@ class RTMediaLicense {
 		if ( ! empty( $messages ) ) {
 			foreach ( $messages as $message ) {
 
-				$html .= '<div class="license-message ' . esc_attr( $class ) . ' ' . esc_attr( $license_status ) . '">' . $message . '</div>';
+				$html .= sprintf(
+					'<div class="license-message %1$s %2$s">%3$s</div>',
+					esc_attr( $class ),
+					esc_attr( $license_status ),
+					$message
+				);
 
 			}
 		}

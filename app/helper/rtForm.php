@@ -299,7 +299,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 
 			if ( isset( $attributes['desc'] ) ) {
 
-				$html = '<span class="clearfix large-offset-3 description">' . esc_html( $attributes['desc'] ) . '</span>';
+				$html = sprintf(
+					'<span class="clearfix large-offset-3 description">%1$s</span>',
+					esc_html( $attributes['desc'] )
+				);
 
 				return $html;
 			}
@@ -438,16 +441,28 @@ if ( ! class_exists( 'rtForm' ) ) {
 				}
 
 				$data = '';
+
 				switch ( $element ) {
+
 					case 'rtRadio':
 						$data = '<input type="radio" ' . $checked . ' ';
+
 						break;
+
 					case 'rtCheckbox':
 						$data = '<input type="checkbox" ' . $checked . ' ' . $switch . ' ';
+
 						break;
+
 					case 'rtSelect':
 						$selected = ( $attrib['selected'] ) ? 'selected=selected' : '';
-						$data     = '<option value="' . esc_attr( $attrib['value'] ) . '" ' . $selected . '>' . esc_html( $attrib['key'] ) . '</option>';
+						$data     = sprintf(
+							'<option value="%1$s" %2$s>%3$s</option>',
+							esc_attr( $attrib['value'] ),
+							$selected,
+							esc_html( $attrib['key'] )
+						);
+
 						break;
 				}
 
@@ -461,7 +476,11 @@ if ( ! class_exists( 'rtForm' ) ) {
 
 					if ( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ) {
 
-						$data = '<div class="rt-switch switch-square" data-on-label="<i class=\'fui-check\'></i>" data-off-label="<i class=\'fui-cross\'></i>">' . $data . '</div>';
+						$data = sprintf(
+							'<div class="rt-switch switch-square" data-on-label="<i class=\'fui-check\'></i>" data-off-label="<i class=\'fui-cross\'></i>">%1$s</div>',
+							$data
+						);
+
 					} else {
 						if ( ( isset( $attrib['switch'] ) && $attrib['switch'] ) || ( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ) ) {
 
@@ -550,7 +569,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 				$label_class = 'class="' . esc_attr( implode( ' ', $class ) ) . '"';
 			}
 
-			$data = '<label for="' . esc_attr( $this->element_id ) . '" ' . $label_class . '>';
+			$data = sprintf( '<label for="%1$s" %2$s>', esc_attr( $this->element_id ), $label_class );
 
 			if ( 'rtRadio' === $element || 'rtCheckbox' === $element ) {
 				$data .= $html . ' ' . $label;
@@ -628,7 +647,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 				$html = '<button class="rtm-form-button button button-primary button-small">Browse File</button>';
 
 				// Starting the input tag.
-				$html .= '<input type="hidden" id="rtmedia_admin_upload_nonce" value="' . esc_attr( $nonce ) . '" />';
+				$html .= sprintf(
+					'<input type="hidden" id="rtmedia_admin_upload_nonce" value="%1$s" />',
+					esc_attr( $nonce )
+				);
 				$html .= '<input type="file" ';
 
 				// Generating attributes.
@@ -638,7 +660,12 @@ if ( ! class_exists( 'rtForm' ) ) {
 				$html .= ' />';
 
 				if ( ! empty( $attributes['name'] ) && ! empty( $attributes['value'] ) ) {
-					$html .= '<input type="hidden" name="rtmedia-options[' . esc_attr( $attributes['name'] ) . '_hid]" value="' . esc_attr( $attributes['value'] ) . '" />';
+
+					$html .= sprintf(
+						'<input type="hidden" name="rtmedia-options[%1$s_hid]" value="%2$s" />',
+						esc_attr( $attributes['name'] ),
+						esc_attr( $attributes['value'] )
+					);
 				}
 
 				if ( ! empty( $attributes['value'] ) ) {
@@ -648,7 +675,11 @@ if ( ! class_exists( 'rtForm' ) ) {
 					if ( file_exists( $img_path ) && ! empty( $img_src[0] ) ) {
 						$html .= '<span class="rtm-file-preview">';
 						$html .= sprintf( '<img src="%s" width="100">', esc_url( $img_src[0] ) );
-						$html .= '<a href="#" class="no-popup rtm-delete-preview" title="' . esc_attr__( 'Delete this file', 'buddypress-media' ) . '" data-media_type="' . $attributes['name'] . '">';
+						$html .= sprintf(
+							'<a href="#" class="no-popup rtm-delete-preview" title="%1$s" data-media_type="%2$s">',
+							esc_attr__( 'Delete this file', 'buddypress-media' ),
+							$attributes['name']
+						);
 						$html .= '<i class="remove-from-queue dashicons dashicons-dismiss"></i>';
 						$html .= '</a></span>';
 					}
@@ -1395,7 +1426,10 @@ if ( ! class_exists( 'rtForm' ) ) {
 			$html = '<button class="rtm-form-button button button-primary button-small">Browse File</button>';
 
 			// Starting the input tag.
-			$html .= '<input type="hidden" id="rtmedia_admin_upload_nonce" value="' . esc_attr( $nonce ) . '" />';
+			$html .= sprintf(
+				'<input type="hidden" id="rtmedia_admin_upload_nonce" value="%1$s" />',
+				esc_attr( $nonce )
+			);
 			$html .= '<input type="file" ';
 
 			// generating attributes.

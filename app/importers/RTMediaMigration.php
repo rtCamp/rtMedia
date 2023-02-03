@@ -89,7 +89,18 @@ class RTMediaMigration {
 	 */
 	public function add_migration_notice() {
 		if ( current_user_can( 'manage_options' ) ) {
-			$this->create_notice( '<p><strong>' . esc_html__( 'rtMedia', 'buddypress-media' ) . '</strong>: ' . esc_html__( 'Please Migrate your Database', 'buddypress-media' ) . " <a href='" . esc_url( admin_url( 'admin.php?page=rtmedia-migration&force=true' ) ) . "'>" . esc_html__( 'Click Here', 'buddypress-media' ) . "</a>.  <a href='" . esc_url( admin_url( 'admin.php?page=rtmedia-migration&hide=true' ) ) . "' style='float:right'>" . esc_html__( 'Hide', 'buddypress-media' ) . '</a> </p>' );
+
+			$this->create_notice(
+				sprintf(
+					'<p><strong>%1$s</strong>: %2$s<a href="%3$s">%4$s</a>. <a href="%5$s" style="float: right;">%6$s</a></p>',
+					esc_html__( 'rtMedia', 'buddypress-media' ),
+					esc_html__( 'Please Migrate your Database', 'buddypress-media' ),
+					esc_url( admin_url( 'admin.php?page=rtmedia-migration&force=true' ) ),
+					esc_html__( 'Click Here', 'buddypress-media' ),
+					esc_url( admin_url( 'admin.php?page=rtmedia-migration&hide=true' ) ),
+					esc_html__( 'Hide', 'buddypress-media' )
+				)
+			);
 		}
 	}
 
@@ -100,9 +111,8 @@ class RTMediaMigration {
 	 * @param string $type Message tpe.
 	 */
 	public function create_notice( $message, $type = 'error' ) {
-		?>
-		<div class="<?php echo esc_attr( $type ); ?>"><?php echo esc_html( $message ); ?></div>
-		<?php
+
+		printf( '<div class="%1$s">%2$s</div>', esc_attr( $type ), esc_html( $message ) );
 	}
 
 	/**
@@ -479,7 +489,11 @@ class RTMediaMigration {
 
 		if ( isset( $rtmedia_error ) && true === $rtmedia_error ) {
 			?>
-			<div class="error"><p><?php echo esc_html__( 'Please Resolve create database error before migration.', 'buddypress-media' ); ?></p></div>
+			<div class="error">
+				<p>
+					<?php echo esc_html__( 'Please Resolve create database error before migration.', 'buddypress-media' ); ?>
+				</p>
+			</div>
 			<?php
 		}
 
@@ -535,8 +549,17 @@ class RTMediaMigration {
 			<hr/>
 
 			<?php
-			echo '<span class="pending">' . esc_html( $this->format_seconds( $total - $done ) ) . '</span><br />';
-			echo '<span class="finished">' . esc_html( $done ) . '</span>/<span class="total">' . esc_html( $total ) . '</span>';
+			printf(
+				'<span class="pending">%1$s</span><br />',
+				esc_html( $this->format_seconds( $total - $done ) )
+			);
+
+			printf(
+				'<span class="finished">%1$s</span>/<span class="total">%2$s</span>',
+				esc_html( $done ),
+				esc_html( $total )
+			);
+
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
 
 			$temp = $prog->progress( $done, $total );

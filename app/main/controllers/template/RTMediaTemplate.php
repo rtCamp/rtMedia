@@ -215,7 +215,11 @@ class RTMediaTemplate {
 
 		if ( $rtmedia_query->original_query && is_array( $rtmedia_query->original_query ) ) {
 			foreach ( $rtmedia_query->original_query as $key => $val ) {
-				$return_str .= '<input name="' . esc_attr( $key ) . '" value="' . esc_attr( $val ) . '" type="hidden" />';
+				$return_str .= sprintf(
+					'<input name="%1$s" value="%2$s" type="hidden" />',
+					esc_attr( $key ),
+					esc_attr( $val )
+				);
 			}
 		}
 

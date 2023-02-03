@@ -432,8 +432,8 @@ class RTMediaFormHandler {
 	 */
 	public static function display_render_options( $options ) {
 		$radios               = array();
-		$radios['load_more']  = '<strong>' . esc_html__( 'Load More', 'buddypress-media' ) . '</strong>';
-		$radios['pagination'] = '<strong>' . esc_html__( 'Pagination', 'buddypress-media' ) . '</strong>';
+		$radios['load_more']  = sprintf( '<strong>%1$s</strong>', esc_html__( 'Load More', 'buddypress-media' ) );
+		$radios['pagination'] = sprintf( '<strong>%1$s</strong>', esc_html__( 'Pagination', 'buddypress-media' ) );
 
 		if ( is_plugin_active( 'regenerate-thumbnails/regenerate-thumbnails.php' ) ) {
 			$regenerate_link = admin_url( '/tools.php?page=regenerate-thumbnails' );
@@ -821,174 +821,9 @@ class RTMediaFormHandler {
 		$options = self::extract_settings( 'allowedTypes', $rtmedia->options );
 
 		$render_data = self::types_render_options( $options );
-		?>
-		<div class="rtm-option-wrapper">
-			<?php do_action( 'rtmedia_media_type_setting_message' ); ?>
 
-			<h3 class="rtm-option-title">
-				<?php esc_html_e( 'Media Types Settings', 'buddypress-media' ); ?>
-			</h3>
+		include RTMEDIA_PATH . 'app/admin/templates/settings/media-types.php';
 
-			<table class="form-table">
-
-				<?php do_action( 'rtmedia_type_settings_before_heading' ); ?>
-
-				<tr>
-					<th>
-						<strong><?php esc_html_e( 'Media Type', 'buddypress-media' ); ?></strong>
-					</th>
-
-					<th>
-
-						<span class="rtm-tooltip bottom">
-							<strong class="rtm-title"><?php esc_html_e( 'Allow Upload', 'buddypress-media' ); ?></strong>
-							<span class="rtm-tip-top">
-								<?php esc_html_e( 'Allows you to upload a particular media type on your post.', 'buddypress-media' ); ?>
-							</span>
-						</span>
-					</th>
-
-					<th>
-
-						<span class="rtm-tooltip bottom">
-							<strong class="rtm-title"><?php esc_html_e( 'Set Featured', 'buddypress-media' ); ?></strong>
-							<span class="rtm-tip-top">
-								<?php esc_html_e( 'Place a specific media as a featured content on the post.', 'buddypress-media' ); ?>
-							</span>
-						</span>
-					</th>
-
-					<?php do_action( 'rtmedia_type_setting_columns_title' ); ?>
-				</tr>
-
-				<?php
-				do_action( 'rtmedia_type_settings_after_heading' );
-
-				foreach ( $render_data as $key => $section ) {
-					if ( isset( $section['settings_visibility'] ) && true === $section['settings_visibility'] ) {
-						do_action( 'rtmedia_type_settings_before_body' );
-
-						// allow upload.
-						$uplaod_args           = array(
-							'key'   => 'allowedTypes_' . $key . '_enabled',
-							'value' => $section['enabled'],
-						);
-						$allow_upload_checkbox = self::checkbox( $uplaod_args, false );
-						$allow_upload_checkbox = apply_filters( 'rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox, $key, $uplaod_args );
-
-						// allow featured.
-						$featured_args     = array(
-							'key'   => 'allowedTypes_' . $key . '_featured',
-							'value' => $section['featured'],
-						);
-						$featured_checkbox = self::checkbox( $featured_args, false );
-						$featured_checkbox = apply_filters( 'rtmedia_filter_featured_checkbox', $featured_checkbox, $key );
-
-						if ( ! isset( $section['extn'] ) || ! is_array( $section['extn'] ) ) {
-							$section['extn'] = array();
-						}
-
-						$extensions = implode( ', ', $section['extn'] );
-						?>
-
-						<tr>
-							<td>
-								<?php
-								echo esc_html( $section['name'] );
-
-								if ( 'other' !== $key ) {
-									?>
-									<span class="rtm-tooltip rtm-extensions">
-										<i class="dashicons dashicons-info"></i>
-										<span class="rtm-tip">
-											<strong><?php echo esc_html__( 'File Extensions', 'buddypress-media' ); ?></strong><br/>
-											<hr/>
-											<?php echo esc_html( $extensions ); ?>
-										</span>
-									</span>
-									<?php
-								}
-								?>
-							</td>
-
-							<td>
-								<span class="rtm-field-wrap">
-									<?php
-									// escaping done into inner function.
-									echo wp_kses(
-										$allow_upload_checkbox,
-										array(
-											'span'  => array(
-												'class'    => array(),
-												'data-on'  => array(),
-												'data-off' => array(),
-											),
-											'label' => array(
-												'for'   => array(),
-												'class' => array(),
-											),
-											'input' => array(
-												'type'    => array(),
-												'checked' => array(),
-												'data-toggle' => array(),
-												'id'      => array(),
-												'name'    => array(),
-												'value'   => array(),
-											),
-										)
-									);
-									?>
-								</span>
-							</td>
-
-							<td>
-								<?php
-								// escaping done into inner function.
-								echo wp_kses(
-									$featured_checkbox,
-									array(
-										'span'  => array(
-											'class'    => array(),
-											'data-on'  => array(),
-											'data-off' => array(),
-										),
-										'label' => array(
-											'for'   => array(),
-											'class' => array(),
-										),
-										'input' => array(
-											'type'        => array(),
-											'checked'     => array(),
-											'data-toggle' => array(),
-											'id'          => array(),
-											'name'        => array(),
-											'value'       => array(),
-										),
-									)
-								);
-								?>
-							</td>
-
-							<?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ); ?>
-						</tr>
-
-						<?php do_action( 'rtmedia_other_type_settings_textarea', $key ); ?>
-
-						<?php
-						do_action( 'rtmedia_type_settings_after_body', $key, $section );
-					} else {
-						echo '<tr class="hide">';
-						echo '<td colspan="3">';
-						echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . esc_attr( $key ) . "_enabled]'>";
-						echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . esc_html( $key ) . "_featured]'>";
-						echo '</td>';
-						echo '</tr>';
-					}
-				}
-				?>
-			</table>
-		</div>
-		<?php
 		do_action( 'rtmedia_after_bp_settings' );
 		do_action( 'rtmedia_after_media_types_settings' );
 	}
@@ -1032,66 +867,9 @@ class RTMediaFormHandler {
 		global $rtmedia;
 		$options     = self::extract_settings( 'defaultSizes', $rtmedia->options );
 		$render_data = self::sizes_render_options( $options );
-		?>
 
-		<div class="rtm-option-wrapper rtm-img-size-setting">
-			<h3 class="rtm-option-title">
-				<?php esc_html_e( 'Media Size Settings', 'buddypress-media' ); ?>
-			</h3>
+		include RTMEDIA_PATH . 'app/admin/templates/settings/media-sizes.php';
 
-			<table class="form-table">
-				<tr>
-					<th><strong><?php esc_html_e( 'Category', 'buddypress-media' ); ?></strong></th>
-					<th><strong><?php esc_html_e( 'Entity', 'buddypress-media' ); ?></strong></th>
-					<th><strong><?php esc_html_e( 'Width', 'buddypress-media' ); ?></strong></th>
-					<th><strong><?php esc_html_e( 'Height', 'buddypress-media' ); ?></strong></th>
-					<th><strong><?php esc_html_e( 'Crop', 'buddypress-media' ); ?></strong></th>
-				</tr>
-
-				<?php
-				foreach ( $render_data as $parent_key => $section ) {
-					$entities = $section;
-					unset( $entities['title'] );
-					$count    = 0;
-					$row_span = count( $entities );
-					foreach ( $entities as $entity ) {
-						?>
-						<tr>
-							<?php
-							if ( 0 === $count ) {
-								?>
-								<td class="rtm-row-title" rowspan="<?php echo esc_attr( $row_span ); ?>">
-									<?php echo esc_html( ucfirst( $section['title'] ) ); ?>
-								</td>
-								<?php
-							}
-							?>
-							<td>
-								<?php echo esc_html( ucfirst( $entity['title'] ) ); ?>
-							</td>
-
-							<?php
-							$args = array(
-								'key' => 'defaultSizes_' . $parent_key . '_' . $entity['title'],
-							);
-							foreach ( $entity as $child_key => $value ) {
-								if ( 'title' !== $child_key ) {
-									$args[ $child_key ] = $value;
-								}
-							}
-							self::dimensions( $args );
-							?>
-						</tr>
-						<?php
-						$count ++;
-					}
-				}
-				?>
-			</table>
-
-		</div>
-
-		<?php
 		$options = $rtmedia->options;
 
 		$render_jpeg_image_quality = array(
@@ -1564,70 +1342,8 @@ class RTMediaFormHandler {
 	 * @param array $option existing options array.
 	 */
 	public static function render_option_content( $option ) {
-		?>
 
-		<table class="form-table" <?php echo ( isset( $option['depends'] ) && '' !== $option['depends'] ) ? 'data-depends="' . esc_attr( $option['depends'] ) . '"' : ''; ?> >
-			<tr>
-				<th>
-					<?php
-					echo wp_kses(
-						$option['title'],
-						array(
-							'a' => array(
-								'id'     => array(),
-								'href'   => array(),
-								'target' => array(),
-							),
-						)
-					);
-					?>
-				</th>
-				<td>
-					<fieldset>
-						<span
-							class="rtm-field-wrap"><?php call_user_func( $option['callback'], $option['args'] ); ?></span>
-						<span class="rtm-tooltip">
-							<i class="dashicons dashicons-info"></i>
-							<span class="rtm-tip">
-								<?php
-								echo wp_kses(
-									( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA',
-									array(
-										'a' => array(
-											'id'     => array(),
-											'href'   => array(),
-											'target' => array(),
-										),
-									)
-								);
-								?>
-							</span>
-						</span>
-					</fieldset>
-				</td>
-			</tr>
-		</table>
-
-		<?php
-		if ( isset( $option['after_content'] ) && '' !== $option['after_content'] ) {
-			?>
-			<div class="rtm-message rtm-notice">
-				<?php
-				echo wp_kses(
-					wpautop( $option['after_content'] ),
-					array(
-						'a' => array(
-							'id'     => array(),
-							'href'   => array(),
-							'target' => array(),
-						),
-						'p' => array(),
-					)
-				);
-				?>
-			</div>
-			<?php
-		}
+		include RTMEDIA_PATH . 'app/admin/templates/settings/render-option.php';
 	}
 }
 

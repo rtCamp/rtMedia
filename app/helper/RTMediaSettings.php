@@ -292,33 +292,57 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		public function network_notices() {
 			$flag = 1;
 			if ( rtmedia_get_site_option( 'rtm-media-enable', false ) ) {
-				echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . esc_html( rtmedia_get_site_option( 'rtm-media-enable' ) ) . '</strong></p></div>';
+
+				printf(
+					'<div id="setting-error-bpm-media-enable" class="error"><p><strong>%1$s</strong></p></div>',
+					esc_html( rtmedia_get_site_option( 'rtm-media-enable' ) )
+				);
 				delete_site_option( 'rtm-media-enable' );
 				$flag = 0;
 			}
 			if ( rtmedia_get_site_option( 'rtm-media-type', false ) ) {
-				echo '<div id="setting-error-bpm-media-type" class="error"><p><strong>' . esc_html( rtmedia_get_site_option( 'rtm-media-type' ) ) . '</strong></p></div>';
+
+				printf(
+					'<div id="setting-error-bpm-media-type" class="error"><p><strong>%1$s</strong></p></div>',
+					esc_html( rtmedia_get_site_option( 'rtm-media-type' ) )
+				);
 				delete_site_option( 'rtm-media-type' );
 				$flag = 0;
 			}
 			if ( rtmedia_get_site_option( 'rtm-media-default-count', false ) ) {
-				echo '<div id="setting-error-bpm-media-default-count" class="error"><p><strong>' . esc_html( rtmedia_get_site_option( 'rtm-media-default-count' ) ) . '</strong></p></div>';
+				printf(
+					'<div id="setting-error-bpm-media-default-count" class="error"><p><strong>%1$s</strong></p></div>',
+					esc_html( rtmedia_get_site_option( 'rtm-media-default-count' ) )
+				);
 				delete_site_option( 'rtm-media-default-count' );
 				$flag = 0;
 			}
 
 			if ( rtmedia_get_site_option( 'rtm-recount-success', false ) ) {
-				echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . esc_html( rtmedia_get_site_option( 'rtm-recount-success' ) ) . '</strong></p></div>';
+
+				printf(
+					'<div id="setting-error-bpm-recount-success" class="updated"><p><strong>%1$s</strong></p></div>',
+					esc_html( rtmedia_get_site_option( 'rtm-recount-success' ) )
+				);
 				delete_site_option( 'rtm-recount-success' );
 				$flag = 0;
+
 			} elseif ( rtmedia_get_site_option( 'rtm-recount-fail', false ) ) {
-				echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . esc_html( rtmedia_get_site_option( 'rtm-recount-fail' ) ) . '</strong></p></div>';
+
+				printf(
+					'<div id="setting-error-bpm-recount-fail" class="error"><p><strong>%1$s</strong></p></div>',
+					esc_html( rtmedia_get_site_option( 'rtm-recount-fail' ) )
+				);
 				delete_site_option( 'rtm-recount-fail' );
 				$flag = 0;
 			}
 
 			if ( get_site_option( 'rtm-settings-saved' ) && $flag ) {
-				echo '<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>' . esc_html( get_site_option( 'rtm-settings-saved' ) ) . '</strong></p></div>';
+
+				printf(
+					'<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>%1$s</strong></p></div>',
+					esc_html( get_site_option( 'rtm-settings-saved' ) )
+				);
 			}
 
 			delete_site_option( 'rtm-settings-saved' );
@@ -335,13 +359,14 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$allowed_types = rtmedia_get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
 			$allowed_types = explode( ' ', $allowed_types );
 			$allowed_types = implode( ', ', $allowed_types );
-			echo '<span class="description">' .
-				sprintf(
-					// translators: %s: link.
-					esc_html__( 'Currently your network allows uploading of the following file types. You can change the settings %s', 'buddypress-media' ),
-					'<a href="' . esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ) . '">' . esc_html__( 'here', 'buddypress-media' ) . '</a><br /><code>' . esc_html( $allowed_types ) . '</code>'
-				) .
-				'</span>';
+
+			printf(
+				'<span class="description">%1$s <a href="%2$s">%3$s</a><br /><code>%4$s</code></span>',
+				esc_html__( 'Currently your network allows uploading of the following file types. You can change the settings', 'buddypress-media' ),
+				esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ),
+				esc_html__( 'here', 'buddypress-media' ),
+				esc_html( $allowed_types )
+			);
 		}
 
 		/**
@@ -401,11 +426,13 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				$regenerate_link = wp_nonce_url( admin_url( 'update.php?action=install-plugin&plugin=regenerate-thumbnails' ), 'install-plugin_regenerate-thumbnails' );
 			}
 
-			echo '<span class="description">' . esc_html__( 'If you make changes to width, height or crop settings, you must use ', 'buddypress-media' ) .
-				'<a href="' . esc_url( $regenerate_link ) . '">' . esc_html__( 'Regenerate Thumbnail Plugin', 'buddypress-media' ) . '</a>' .
-				esc_html__( ' to regenerate old images.', 'buddypress-media' ) .
-				'</span>';
-			echo '<div class="clearfix">&nbsp;</div>';
+			printf(
+				'<span class="description">%1$s <a href="%2$s">%3$s</a> %4$s</span><div class="clearfix">&nbsp;</div>',
+				esc_html__( 'If you make changes to width, height or crop settings, you must use', 'buddypress-media' ),
+				esc_url( $regenerate_link ),
+				esc_html__( 'Regenerate Thumbnail Plugin', 'buddypress-media' ),
+				esc_html__( ' to regenerate old images.', 'buddypress-media' )
+			);
 		}
 
 		/**
@@ -422,8 +449,12 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 					( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) )
 				);
 
-				echo '<div class="error"><p>' . esc_html__( 'BuddyPress Media 2.6 requires a database upgrade. ', 'buddypress-media' ) .
-					'<a href="' . esc_url( $url ) . '">' . esc_html__( 'Update Database', 'buddypress-media' ) . '.</a></p></div>';
+				printf(
+					'<div class="error"><p>%1$s <a href="%2$s">%3$s</a></p></div>',
+					esc_html__( 'BuddyPress Media 2.6 requires a database upgrade.', 'buddypress-media' ),
+					esc_url( $url ),
+					esc_html__( 'Update Database', 'buddypress-media' )
+				);
 			}
 		}
 
@@ -435,12 +466,18 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 * @return void
 		 */
 		public function rtmedia_support_intro() {
-			echo '<p>' . esc_html__( 'If your site has some issues due to rtMedia and you want one on one support then you can create a support topic on the ', 'buddypress-media' ) .
-				'<a target="_blank" href="https://rtmedia.io/support/">' . esc_html__( 'rtMedia Support Page', 'buddypress-media' ) . '</a>.' .
-				'</p>';
-			echo '<p>' . esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on ', 'buddypress-media' ) .
-				'<a target="_blank" href="https://github.com/rtMediaWP/rtmedia/issues/new">' . esc_html__( 'GitHub', 'buddypress-media' ) . '</a>.' .
-				'</p>';
+
+			printf(
+				'<p>%1$s <a target="_blank" href="https://rtmedia.io/support/">%2$s</a></p>',
+				esc_html__( 'If your site has some issues due to rtMedia and you want one on one support then you can create a support topic on the', 'buddypress-media' ),
+				esc_html__( 'rtMedia Support Page', 'buddypress-media' )
+			);
+
+			printf(
+				'<p>%1$s <a target="_blank" href="https://github.com/rtMediaWP/rtmedia/issues/new">%2$s</a></p>',
+				esc_html__( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on', 'buddypress-media' ),
+				esc_html__( 'GitHub', 'buddypress-media' )
+			);
 		}
 	}
 
