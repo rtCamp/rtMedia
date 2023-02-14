@@ -1232,6 +1232,17 @@ class RTMedia {
 		// Dashicons: Needs if not loaded by WP.
 		wp_enqueue_style( 'dashicons' );
 
+		// Emoji Picker Assets.
+		wp_enqueue_script(
+			'rtmedia-emoji-picker',
+			RTMEDIA_URL . 'app/assets/js/vendors/emoji-picker.js',
+			array(
+				'jquery',
+			),
+			RTMEDIA_VERSION,
+			true
+		);
+
 		// Dont enqueue rtmedia.min.css if default styles is checked false in rtmedia settings.
 		$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
 
@@ -1266,6 +1277,7 @@ class RTMedia {
 				array(
 					'jquery',
 					'rt-mediaelement-wp',
+					'rtmedia-emoji-picker'
 				),
 				RTMEDIA_VERSION,
 				true
@@ -1277,6 +1289,7 @@ class RTMedia {
 				array(
 					'jquery',
 					'rt-mediaelement-wp',
+					'rtmedia-emoji-picker',
 				),
 				RTMEDIA_VERSION,
 				true
