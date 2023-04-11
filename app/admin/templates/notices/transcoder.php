@@ -22,15 +22,15 @@
 	</p>
 </div>
 <script type="text/javascript">
-    jQuery( document ).ready( function() {
-        jQuery( '.install-transcoder-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
-            var data = {
-                action: 'install_transcoder_hide_admin_notice',
-                install_transcoder_notice_nonce: jQuery('#install_transcoder_hide_notice_nonce').val()
-            };
-            jQuery.post( ajaxurl, data, function ( response ) {
-                jQuery('.install-transcoder-notice').remove();
-            });
-        });
-    });
+	jQuery( document ).ready( function() {
+		jQuery( '.install-transcoder-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
+			var data = {
+				action: 'install_transcoder_hide_admin_notice',
+				install_transcoder_notice_nonce: jQuery('#install_transcoder_hide_notice_nonce').val()
+			};
+			jQuery.post( ajaxurl, data, function ( response ) {
+				jQuery('.install-transcoder-notice').remove();
+			});
+		});
+	});
 </script>

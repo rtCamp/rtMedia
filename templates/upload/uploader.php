@@ -17,7 +17,7 @@
  */
 if ( ! function_exists( 'rtmedia_uploader_hidden_fields' ) ) {
 	function rtmedia_uploader_hidden_fields( $key, $value ) {
-	
+
 		printf( '<input type="hidden" name="%1$s" value="%2$s" />', esc_attr( $key ), esc_attr( $value ) );
 	}
 }
