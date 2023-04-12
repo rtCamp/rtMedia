@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class RTMedia {
 
+
 	/**
 	 * Default thumbnail url fallback for all media types
 	 *
@@ -204,7 +205,6 @@ class RTMedia {
 						'%/rtMedia/%'
 					);
 					$wpdb->query( $sql );
-					// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 				}
 			}
 		}
@@ -602,7 +602,6 @@ class RTMedia {
 
 		// loop through each type.
 		foreach ( $allowed_types as $key => &$type ) {
-
 			if ( ! isset( $type['name'] ) || // check if a name is set.
 				empty( $type['name'] ) ||
 				// commented this section for playlist // !isset($type['extn']) || // check if file extensions are set.
@@ -912,7 +911,6 @@ class RTMedia {
 			return;
 		}
 		foreach ( $this->allowed_types as $type ) {
-
 			if ( ! isset( $type['name'] ) || '' === $type['name'] ) {
 				continue;
 			}
@@ -1125,7 +1123,7 @@ class RTMedia {
 
 		// Hack for plupload default name.
 		if ( ! empty( $action ) && ! empty( $mode ) && 'file_upload' === $mode ) {
-			unset( $_POST['name'] ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+			unset( $_POST['name'] ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
 		}
 
 		global $rtmedia_error;
@@ -1434,7 +1432,6 @@ class RTMedia {
 					$rtmedia_main['rtmedia_masonry_layout_activity'] = 'true';
 				} else {
 					$rtmedia_main['rtmedia_masonry_layout_activity'] = 'false';
-
 				}
 			} else {
 				$rtmedia_main['rtmedia_masonry_layout'] = 'false';
@@ -1584,7 +1581,7 @@ class RTMedia {
 		$options = $rtmedia->options;
 		// Previously done with rtmedia_custom_css() method on wp_head hook.
 		if ( ! empty( $options['styles_custom'] ) ) {
-			wp_register_style( 'rtmedia-custom-css', false );
+			wp_register_style( 'rtmedia-custom-css', false, '', '' ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
 			wp_enqueue_style( 'rtmedia-custom-css' );
 			$css = stripslashes( wp_filter_nohtml_kses( $options['styles_custom'] ) );
 			wp_add_inline_style( 'rtmedia-custom-css', $css );
@@ -1661,7 +1658,6 @@ class RTMedia {
 
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
 		}
-
 	}
 
 	/**
@@ -1699,7 +1695,6 @@ class RTMedia {
 		if ( isset( $post_id ) ) {
 			$sizes = $this->unset_bp_media_image_sizes_details( $sizes );
 		} elseif ( isset( $id ) ) {
-
 			// For Regenerate Thumbnails Plugin.
 			$model  = new RTMediaModel();
 			$result = $model->get( array( 'media_id' => intval( wp_unslash( $id ) ) ) );
@@ -1750,7 +1745,6 @@ class RTMedia {
 
 		// For Regenerate Thumbnails Plugin.
 		if ( ! empty( $post_id ) ) {
-
 			$parent_id = get_post_field( 'post_parent', $post_id );
 			if ( ! empty( $parent_id ) ) {
 				$post_type = get_post_field( 'post_type', $parent_id );
@@ -2127,7 +2121,7 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
  * Function to show privacy message provided from rtMedia settings in front end.
  */
 function rtm_privacy_message_on_website() {
-	global $rtmedia;
+	 global $rtmedia;
 	$options = $rtmedia->options;
 
 	$rtm_privacy_message_options = array(
@@ -2164,7 +2158,6 @@ add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
  * Function to add privacy policy information in WordPress policy section.
  */
 function rtm_plugin_privacy_information() {
-
 	if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
 		ob_start();
 

@@ -14,10 +14,10 @@
 			<?php
 			$product_page = esc_url( 'https://rtmedia.io/products/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' );
 
-			// translators: 1. Product page link.
 			$message = apply_filters(
 				'rt_premium_addon_notice_message',
 				sprintf(
+						/* translators: %s: Product page link. */
 					__( 'Check 30+ premium rtMedia add-ons on our <a href="%s">store</a>.', 'buddypress-media' ),
 					$product_page
 				),

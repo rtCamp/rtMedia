@@ -12,6 +12,7 @@
  */
 class RTMediaMediaSizeImporter {
 
+
 	/**
 	 * RTMediaMediaSizeImporter constructor.
 	 */
@@ -101,7 +102,6 @@ class RTMediaMediaSizeImporter {
 	 */
 	public function add_rtmedia_media_size_import_notice() {
 		if ( current_user_can( 'manage_options' ) ) {
-
 			$this->create_notice(
 				sprintf(
 					'<p><strong>rtMedia</strong>: %1$s <a href="%2$s">%3$s</a> %4$s. <a href="#" onclick="rtmedia_hide_media_size_import_notice()" style="float: right;">%5$s</a></p>',
@@ -179,7 +179,7 @@ class RTMediaMediaSizeImporter {
 
 		if ( $media_id ) {
 			$media_id      = intval( $media_id );
-			$query_pending = $wpdb->prepare( "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other') AND id > %d", $media_id ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$query_pending = $wpdb->prepare( "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other') AND id > %d", $media_id );
 		}
 
 		$pending_count = $wpdb->get_results( $query_pending ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -218,10 +218,10 @@ class RTMediaMediaSizeImporter {
 		global $wpdb;
 		if ( check_ajax_referer( 'rtmedia_media_size_import_nonce', 'nonce' ) ) {
 			$rtmedia_model = new RTMediaModel();
-			$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $limit ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $limit );
 			$lastid        = filter_input( INPUT_POST, 'last_id', FILTER_SANITIZE_NUMBER_INT );
 			if ( ! empty( $lastid ) ) {
-				$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where id > %d AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $lastid, $limit ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where id > %d AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $lastid, $limit );
 			}
 			$result = $wpdb->get_results( $get_media_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			if ( $result && count( $result ) > 0 ) {
@@ -232,7 +232,6 @@ class RTMediaMediaSizeImporter {
 			echo '0';
 			wp_die();
 		}
-
 	}
 
 	/**
