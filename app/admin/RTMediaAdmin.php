@@ -569,7 +569,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$sorted_dashboard = array_merge( $example_widget_backup, $normal_dashboard );
 
 			// Save the sorted array back into the original metaboxes.
-			$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+			$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited, WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
 
 		/**
@@ -1324,7 +1324,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function save_multisite_options() {
 			global $rtmedia_admin;
-			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
 
 			$rtmedia_options = filter_input( INPUT_POST, 'rtmedia_options' );
 			if ( isset( $rtmedia_options ) ) {
@@ -1683,12 +1683,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$my_account  = 'https://rtmedia.io/my-account';
 				$license_doc = 'https://rtmedia.io/docs/license/';
 
-				// translators: 1. Account page and link.
 				$message = sprintf(
+				/* translators: 1$s: Account page and link. 2$s: License documentation page link. */
 					__( 'Your license keys can be found on <a href="%1$s">my-account</a> page. For more details, please refer to <a href="%2$s">License documentation</a> page.', 'buddypress-media' ),
 					$my_account,
 					$license_doc
-				);
+				); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 
 				printf( '<div class="notice"><p>%1$s</p></div>', wp_kses( $message, $args ) );
 
