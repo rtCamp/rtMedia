@@ -793,6 +793,10 @@ class RTMediaMedia {
 
 		$media_str = constant( $media_const );
 
+		if ( 'Music' === $media_str ) {
+			$media_str = esc_html__( 'Sound', 'buddypress-media' );
+		}
+
 		// translators: 1: username, 2: media type, 3: media name, 4: total media.
 		$action        = sprintf( ( 1 === $count ) ? esc_html__( '%1$s added a %2$s', 'buddypress-media' ) : esc_html__( '%1$s added %4$d %3$s', 'buddypress-media' ), $username, $media->media_type, $media_str, $count );
 		$action        = apply_filters( 'rtmedia_buddypress_action_text_fitler', $action, $username, $count, $user->display_name, $media->media_type );

@@ -963,6 +963,10 @@ class RTMediaBuddyPressActivity {
 					$media_const .= '_LABEL';
 					if ( defined( $media_const ) ) {
 						$media_str = constant( $media_const );
+
+						if ( 'Music' === $media_str ) {
+							$media_str = esc_html__( 'Sound', 'buddypress-media' );
+						}
 					} else {
 						$media_str = RTMEDIA_MEDIA_SLUG;
 					}
