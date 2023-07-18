@@ -1,14 +1,14 @@
-# Copyright (C) 2022 rtCamp
+# Copyright (C) 2023 rtCamp
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.13\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2022-12-12 07:09:00+00:00\n"
+"POT-Creation-Date: 2023-07-18 13:57:10+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
 "Last-Translator: rtMedia <rtmedia@rtcamp.com>\n"
 "Language-Team: rtMedia <rtmedia@rtcamp.com>\n"
 "Language: en\n"
@@ -2585,15 +2585,20 @@ msgstr ""
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:975
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:968
 #: app/main/controllers/media/RTMediaMedia.php:797
+msgid "Sound"
+msgstr ""
+
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:979
+#: app/main/controllers/media/RTMediaMedia.php:801
 #. translators: 1: user link, 2: media.
 #. translators: 1: username, 2: media type, 3: media name, 4: total media.
 msgid "%1$s added a %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:983
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:986
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:987
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:990
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:283
 #. translators: 1: user link, 2: media count, 3: media.
 #. translators: 1: user link, 2: media count, 3: rtMedia slug.
@@ -2601,32 +2606,32 @@ msgstr ""
 msgid "%1$s added %2$d %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1051
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1055
 #. translators: 1: username, 2: media, 3: group name.
 msgid "%1$s liked a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1055
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1059
 #. translators: 1: username, 2: media.
 msgid "%1$s liked their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1064
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1068
 #. translators: 1: username, 2: author, 3: media.
 msgid "%1$s liked %2$s's %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1166
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1170
 #. translators: 1: username, 2: media, 3: group name.
 msgid "%1$s commented on a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1171
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1175
 #. translators: 1: username, 2: media.
 msgid "%1$s commented on their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1180
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1184
 #. translators: 1: username, 2: author, 3: media.
 msgid "%1$s commented on %2$s's %3$s"
 msgstr ""
@@ -2985,7 +2990,7 @@ msgstr ""
 msgid "Error creating attachment for the media file, please try again"
 msgstr ""
 
-#: app/main/controllers/media/RTMediaMedia.php:797
+#: app/main/controllers/media/RTMediaMedia.php:801
 msgid "%1$s added %4$d %3$s"
 msgstr ""
 
