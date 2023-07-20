@@ -264,9 +264,11 @@ class RTMediaGalleryShortcode {
 			if ( $authorized_member ) {  // if current user has access to view the gallery (when context is 'group').
 				global $rtmedia_query;
 
-				if ( ! $rtmedia_query ) {
-					$rtmedia_query = new RTMediaQuery( $attr['attr'] );
-				}
+				/**
+				 * Need to create new RTMediaQuery object to avoid conflict with previous shortcode query.
+				 * Otherwise, it will use previous query and will get wrong result.
+				 */
+				$rtmedia_query = new RTMediaQuery( $attr['attr'] );
 
 				do_action( 'rtmedia_shortcode_action', $attr['attr'] );// do extra stuff with attributes.
 				$page_number                         = ( get_query_var( 'pg' ) ) ? get_query_var( 'pg' ) : 1; // get page number.
