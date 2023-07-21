@@ -32,7 +32,7 @@
 }
 #rtmedia_dashboard_widget .rtm-meta-links li:after {
   background: #ddd;
-  content: " ";
+  content: ' ';
   height: 14px;
   position: absolute;
   right: -1px;

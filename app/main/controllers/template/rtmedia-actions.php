@@ -1088,7 +1088,6 @@ function rtmedia_pre_get_posts( $query ) {
 			unset( $wp_query->queried_object );
 			unset( $wp_query->queried_object_id );
 		}
-
 	} elseif ( get_query_var( 'bp_activities' ) ) {
 
 		$bp_activity_action = get_query_var( 'bp_activity_action' );
