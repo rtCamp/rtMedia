@@ -158,10 +158,19 @@ class RTMediaGalleryShortcode {
 	 * Render a shortcode according to the attributes passed with it
 	 *
 	 * @param bool|array $attr Shortcode attributes.
+	 * @param null       $content Shortcode content.
+	 * @param string     $shortcode_tag Shortcode tag.
 	 *
 	 * @return bool|string
 	 */
-	public static function render( $attr ) {
+	public static function render( $attr, $content = null, $shortcode_tag = '' ) {
+		static $run_shortcode = false;
+
+		if ( true === $run_shortcode ) {
+			return '';
+		}
+
+		$run_shortcode = true;
 
 		if ( self::display_allowed() ) {
 
