@@ -25,6 +25,8 @@ class RTMediaGalleryShortcode {
 		add_shortcode( 'rtmedia_gallery', array( 'RTMediaGalleryShortcode', 'render' ) );
 		add_action( 'wp_ajax_rtmedia_get_template', array( &$this, 'ajax_rtmedia_get_template' ) );
 		add_action( 'wp_ajax_nopriv_rtmedia_get_template', array( &$this, 'ajax_rtmedia_get_template' ) );
+		add_action( 'admin_notices', array( 'RTMediaGalleryShortcode', 'rtmedia_gallery_shortcode_admin_notice' ) );
+		add_action( 'enqueue_block_editor_assets', array( 'RTMediaGalleryShortcode', 'rtmedia_gallery_shortcode_block_editor_assets' ) );
 	}
 
 	/**
@@ -158,10 +160,19 @@ class RTMediaGalleryShortcode {
 	 * Render a shortcode according to the attributes passed with it
 	 *
 	 * @param bool|array $attr Shortcode attributes.
+	 * @param null       $content Shortcode content.
+	 * @param string     $shortcode_tag Shortcode tag.
 	 *
 	 * @return bool|string
 	 */
-	public static function render( $attr ) {
+	public static function render( $attr, $content = null, $shortcode_tag = '' ) {
+		static $run_shortcode = false;
+
+		if ( true === $run_shortcode ) {
+			return '';
+		}
+
+		$run_shortcode = true;
 
 		if ( self::display_allowed() ) {
 
@@ -358,5 +369,36 @@ class RTMediaGalleryShortcode {
 		$where .= ' AND (' . $table_name . '.privacy = "0" OR ' . $table_name . '.privacy is NULL ) ';
 
 		return $where;
+	}
+
+	/**
+	 * Display admin notice for rtMedia Gallery shortcode.
+	 */
+	public static function rtmedia_gallery_shortcode_admin_notice() {
+		?>
+			<div class="notice notice-warning is-dismissible">
+				<p>
+					<?php esc_html_e( 'rtMedia Gallery shortcode can be used only once.', 'buddypress-media' ); ?>
+				</p>
+			</div>
+		<?php
+	}
+
+	/**
+	 * Enqueue block editor assets for rtMedia Gallery shortcode.
+	 */
+	public static function rtmedia_gallery_shortcode_block_editor_assets() {
+		wp_enqueue_script(
+			'rtmedia-gallery-shortcode',
+			RTMEDIA_URL . 'app/assets/js/rtmedia-gallery-shortcode.js',
+			array(
+				'jquery',
+			),
+			RTMEDIA_VERSION,
+			true
+		);
+
+		// localizing the script for the rtMedia Gallery shortcode.
+		wp_localize_script( 'rtmedia-gallery-shortcode', 'rtmedia_gallery_shortcode', array( 'notice_message' => esc_html__( 'rtMedia Gallery shortcode can be used only once.', 'buddypress-media' ) ) );
 	}
 }
