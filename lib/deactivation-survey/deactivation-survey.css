@@ -1,0 +1,46 @@
+.rt-deactivate-modal {
+    position: fixed;
+	width: 550px;
+	height: auto;
+	background: #fff;
+	top: 25%;
+	left: 0%;
+	margin: auto auto;
+	bottom: auto;
+	right: 0;
+    box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
+}
+.rt-modal-wrapper {
+	position: absolute;
+	width: calc(100%+20px);
+	height: 110%;
+	z-index: 10000;
+	top: 0;
+	left: -20px;
+	bottom: 0;
+	right: 0;
+	background-color: rgba( 0,0,0, 0.3 );
+}
+.rt-modal-head {
+	padding: 25px 30px;
+	border-bottom: 1px solid #eee;
+}
+.rt-modal-head h2 {
+	margin: 0;
+	line-height: 1.5;
+	font-size: 20px;
+}
+.rt-modal-body {
+	padding: 15px 30px;
+}
+.rt-modal-footer {
+	padding: 15px 30px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-top: 1px solid #eee;
+}
+.rt-deactivate-others-input {
+	width: 100%;
+	margin-top: 10px;;
+}
