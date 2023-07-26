@@ -10,7 +10,7 @@
 $rand_id = wp_rand( 0, 1000 );
 
 ?>
-<div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo intval( $rand_id ); ?>">
+<div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo intval( $rand_id ); ?>" data-gallery>
 	<?php do_action( 'rtmedia_before_media_gallery' ); ?>
 	<?php
 	$album_title = get_rtmedia_gallery_title();
