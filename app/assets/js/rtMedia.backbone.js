@@ -7,6 +7,7 @@ var objUploadView;
 var rtmedia_load_template_flag = true;
 var rtmedia_add_media_button_post_update = false;
 
+var __ = wp.i18n.__;
 
 jQuery( document ).ready( function () {
 
@@ -494,21 +495,22 @@ jQuery( function( $ ) {
 		}
 	} );
 
-	rtMedia.rtPaginationView = Backbone.View.extend( {
+	rtMedia.rtNumericalPaginationView = Backbone.View.extend( {
 		events: {
-			'click .rtmedia-page-link': 'handleClick'
+			'click .rtmedia-page-link': 'loadPageByNumber',
+			'keypress #rtmedia_go_to_num': 'paginationKeyPress'
 		},
 
-		initialize: function () {
-			this.listenTo(this.collection, 'reset', this.render);
+		initialize: function (options) {
+			this.getPage = options.getPage;
+
 			this.listenTo(this.collection, 'change', this.render);
-			this.listenTo(this.collection, 'add', this.render);
 
 			this.render();
 		},
 
 		render: function () {
-			console.log('rendering pagination');
+			console.log('rendering numerical pagination', rtmedia_load_more_or_pagination);
 			var currentPage = this.collection.currentPage;
 			var totalPages = this.collection.totalPages;
 
@@ -545,25 +547,125 @@ jQuery( function( $ ) {
 			html += '<a class="' + (currentPage === totalPages ? 'current ' : '') + 'rtmedia-page-link" data-page-type="next" href="#"><i class="dashicons dashicons-arrow-right-alt2"></i></a>';
 
 			this.$el.find('.rtm-paginate').html(html);
+			this.$el.show();
+			this.$el.parent().find('.rtm-media-loading').hide();
+
+			this.$el.find( '#rtmedia_go_to_num' ).val(currentPage);
+
 			return this;
 		},
 
-		handleClick: function (event) {
+		loading: function () {
+			if( this.$el.parent().find('.rtm-media-loading').length === 0 ) {
+				var html = '<div class="rtm-media-loading"><img src="' + rMedia_loading_media + '"></div>';
+				this.$el.parent().append(html);
+			}
+
+			this.$el.parent().find('.rtm-media-loading').show();
+			this.$el.hide();
+		},
+
+		loadPageByNumber: function( event ) {
 			event.preventDefault();
-			console.log('clicked');
+
+			var target = this.$el.find( event.target );
+
+			if(target.hasClass('dashicons')) {
+				target = target.parent();
+			}
+
+			if( target.hasClass('current') ) {
+				return;
+			}
+
+			this.loading();
+
+			var page = 1;
+			var pageType = target.data( 'page-type' );
+			var lastPage = this.collection.totalPages;
+			var goToNumVal = parseInt( this.$el.find( '#rtmedia_go_to_num' ).val(), 10 );
+
+			if ( 'page' === pageType ) {
+				page = target.data( 'page' );
+			} else if ( 'prev' === pageType ) {
+				page = Math.max(1, -1 === this.collection.nextPage ? lastPage - 1 : this.collection.nextPage - 2);
+			} else if ( 'next' === pageType ) {
+				page = -1 !== this.collection.nextPage ? this.collection.nextPage : 1;
+			} else if ( 'num' === pageType ) {
+				page = goToNumVal > lastPage ? lastPage : goToNumVal;
+			}
+
+			this.getPage( page, true );
+		},
+
+		paginationKeyPress: function( event ) {
+			if ( event.keyCode === 13 ) {
+				event.preventDefault();
+
+				var go_to_num_val = parseInt( this.$el.find( '#rtmedia_go_to_num' ).val(), 10 );
+
+				var page =  go_to_num_val > this.collection.totalPages ? this.collection.totalPages : go_to_num_val;
+
+				if( page === this.collection.currentPage ) {
+					return;
+				}
+
+				this.loading();
+
+				this.getPage( page, true );
+			}
 		}
-	} );
+	});
+
+	rtMedia.rtLoadMorePaginationView = Backbone.View.extend( {
+		events: {
+			'click': 'loadNextPage'
+		},
+
+		initialize: function (options) {
+			this.getPage = options.getPage;
+
+			this.listenTo(this.collection, 'add', this.render);
+
+			this.render();
+		},
+
+		render: function () {
+			console.log('rendering load more pagination', rtmedia_load_more_or_pagination);
+
+			this.$el.show();
+			this.$el.parent().find('.rtm-media-loading').hide();
+
+			if( -1 === this.collection.nextPage ) {
+				this.$el.hide();
+			}
+
+			return this;
+		},
+
+		loading: function () {
+			if( this.$el.parent().find('.rtm-media-loading').length === 0 ) {
+				var html = '<div class="rtm-media-loading"><img src="' + rMedia_loading_media + '"></div>';
+				this.$el.parent().append(html);
+			}
+
+			this.$el.parent().find('.rtm-media-loading').show();
+			this.$el.hide();
+		},
+
+		loadNextPage: function (event) {
+			event.preventDefault();
+
+			this.loading();
+
+			this.getPage( this.collection.nextPage, true );
+		}
+	});
 
 	// rtMedia Gallery View
 	rtMedia.rtGalleryView = Backbone.View.extend( {
 		template_url: template_url,
 		is_template_loaded: false,
-
-		events: {
-			'click .rtmedia_next_prev #rtMedia-galary-next': 'loadNextPage',
-			'keypress #rtmedia_go_to_num': 'paginationKeyPress',
-			'click .rtmedia-page-link': 'loadNextPageByNumber'
-		},
 
 		initialize: function (options) {
 			var that = this;
@@ -584,11 +686,27 @@ jQuery( function( $ ) {
 				that.is_template_loaded = true;
 
 				that.collection = new rtMedia.rtGalleryCollection();
+
 				that.collection.totalPages = parseInt( that.$el.find( '#rtmedia_last_page' ).val(), 10 );
-				that.rtPaginationView = new rtMedia.rtPaginationView({
-					el: that.$el.find('.rtm-pagination'),
-					collection: that.collection
-				});
+
+				if( 'NaN' === that.collection.totalPages.toString() ) {
+					that.collection.totalPages = 1;
+				}
+
+				if( 'undefined' !== typeof rtmedia_load_more_or_pagination && 'pagination' === rtmedia_load_more_or_pagination ) {
+					that.rtPaginationView = new rtMedia.rtNumericalPaginationView({
+						el: that.$el.find('.rtm-pagination'),
+						collection: that.collection,
+						getPage: that.getPage.bind(that)
+					});
+				} else {
+					that.rtPaginationView = new rtMedia.rtLoadMorePaginationView({
+						el: that.$el.find('#rtMedia-galary-next'),
+						collection: that.collection,
+						getPage: that.getPage.bind(that)
+					});
+				}
+
 				that.render();
 			} );
 
@@ -599,15 +717,9 @@ jQuery( function( $ ) {
 				return this;
 			}
 
-			this.$el.find( '.rtmedia_next_prev').append( '<div class=\'rtm-media-loading\'><img src=\'' + rMedia_loading_media + '\' /></div>' );
-			this.$el.find( '.rtm-media-loading').hide();
-
 			// if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && 0 == jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length ) {
 			// 	rtm_masonry_reload( rtm_masonry_container );
 			// }
-			// $( '#media_fatch_loader' ).removeClass('load');
-
-			this.rtPaginationView.render();
 
 			return this;
 		},
@@ -628,51 +740,6 @@ jQuery( function( $ ) {
 			$.each( data, function( key, media ) {
 				list.append( that.template( media ) );
 			} );
-		},
-
-		loadNextPageByNumber: function( event ) {
-			event.preventDefault();
-
-			var page = 1;
-			var pageType = this.$el.find( event.target ).data( 'page-type' );
-			var lastPage = parseInt( this.$el.find( '#rtmedia_last_page' ).val(), 10 );
-			var goToNumVal = parseInt( this.$el.find( '#rtmedia_go_to_num' ).val(), 10 );
-
-			if ( 'page' === pageType ) {
-				page = this.$el.find( event.target ).data( 'page' );
-			} else if ( 'prev' === pageType ) {
-				page = Math.max(1, -1 === this.collection.nextPage ? lastPage - 1 : this.collection.nextPage - 2);
-			} else if ( 'next' === pageType ) {
-				page = -1 !== this.collection.nextPage ? this.collection.nextPage : 1;
-			} else if ( 'num' === pageType ) {
-				page = goToNumVal > lastPage ? lastPage : goToNumVal;
-			}
-
-			this.getPage( page, true );
-		},
-
-		paginationKeyPress: function( event ) {
-			if ( event.keyCode === 13 ) {
-				event.preventDefault();
-
-				this.$el.find( ' .rtm-media-loading' ).show();
-
-				var go_to_num_val = parseInt( this.$el.find( '#rtmedia_go_to_num' ).val(), 10 );
-				var last_page_val = parseInt( this.$el.find( '#rtmedia_last_page' ).val(), 10 );
-
-				this.collection.nextPage =  go_to_num_val > last_page_val ? last_page_val : go_to_num_val;
-
-				this.loadNextPage( event, true );
-			}
-		},
-
-		loadNextPage: function (event, replace) {
-			event.preventDefault();
-
-			this.$el.find( '.rtm-media-loading').show();
-			this.$el.find( '.rtmedia_next_prev #rtMedia-galary-next').hide();
-
-			this.getPage( this.collection.nextPage, replace );
 		},
 
 		getPage: function( page, replace ) {
@@ -723,22 +790,7 @@ jQuery( function( $ ) {
 						this.collection.add( response.data );
 					}
 
-					if( this.collection.nextPage === -1 ) {
-						this.$el.find( '.rtm-media-loading').remove();
-						this.$el.find( '.rtmedia_next_prev #rtMedia-galary-next').hide();
-					}
-					else {
-						this.$el.find( '.rtm-media-loading').hide();
-						this.$el.find( '.rtmedia_next_prev #rtMedia-galary-next').show();
-					}
-
 					rtMediaHook.call( 'rtmedia_after_gallery_load' );
-
-					// this.$el.find( ' .rtmedia_next_prev .rtm-pagination' ).remove();
-					// this.$el.find( ' .rtmedia_next_prev .clear' ).remove();
-					// this.$el.find( ' .rtmedia_next_prev .rtm-media-loading' ).remove();
-					// this.$el.find( ' .rtmedia_next_prev br' ).remove();
-					// this.$el.find( ' .rtmedia_next_prev' ).append( response.pagination );
 
 					// Update the media count in user profile & group's media tab.
 					jQuery( '#user-media span, #media-groups-li #media span, #rtmedia-nav-item-all span, #rtmedia-nav-item-albums span' ).text( response.media_count.all_media_count );
@@ -789,59 +841,7 @@ jQuery( function( $ ) {
 		rtMediaScrollComments();
 	} );
 
-	//
-	// 	$( document ).on( 'click', '.rtmedia-page-link', function( e ) {
-	//
-	// 		/* Get current clicked href value */
-	// 		href = $( this ).attr( 'href' );
-	//
-	// 		var current_gallery = $(this).parents( '.rtmedia-container' );
-	// 		var current_gallery_id = current_gallery.attr( 'id' );
-	//
-	// 		if ( $( '#' + current_gallery_id + ' .rtm-media-loading' ).length == 0 ) {
-	// 				$( '#' + current_gallery_id + ' .rtm-pagination' ).before( '<div class=\'rtm-media-loading\'><img src=\'' + rMedia_loading_media + '\' /></div>' );
-	// 			} else {
-	// 				$( '#' + current_gallery_id + ' .rtm-media-loading' ).show();
-	// 			}
-	//
-	// 			e.preventDefault();
-	// 			if ( $( this ).data( 'page-type' ) == 'page' ) {
-	// 				nextpage = $( this ).data( 'page' );
-	// 			} else if ( $( this ).data( 'page-type' ) == 'prev' ) {
-	// 				if ( nextpage == -1 ) {
-	// 					nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_last_page' ).val() ) - 1;
-	// 				} else {
-	// 					nextpage -= 2;
-	// 				}
-	// 			} else if ( $( this ).data( 'page-type' ) == 'num' ) {
-	// 				if ( parseInt( $( '#' + current_gallery_id + ' #rtmedia_go_to_num' ).val() ) > parseInt( $( '#rtmedia_last_page' ).val() ) ) {
-	// 					nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_last_page' ).val() );
-	// 				} else {
-	// 					nextpage = parseInt( $( '#' + current_gallery_id + ' #rtmedia_go_to_num' ).val() );
-	// 			}
-	//
-	// 			/* Set page url for input type num pagination */
-	// 			page_base_url = $( this ).data( 'page-base-url' );
-	// 			href = page_base_url + nextpage;
-	// 			}
-	//
-	// 		var media_search_input = $( '#media_search_input' );
-	// 		if( check_condition( 'search' ) ) {
-	// 			if ( media_search_input.length > 0 && '' !== media_search_input.val() ) {
-	// 				var search_val = check_url( 'search' );
-	// 				href += '?search=' + search_val;
-	//
-	// 				if( check_condition( 'search_by' ) ) {
-	// 					var search_by = check_url( 'search_by' );
-	// 					href += '&search_by=' + search_by;
-	// 				}
-	// 			}
-	// 		}
-	//
-	// 		change_rtBrowserAddressUrl( href, '' );
-	// 		galleryObj.getNext( nextpage, $( this ).closest( '.rtmedia-container' ).parent(), $( this ).closest( '.rtm-pagination' ) );
-	// 	} );
-	//
+
 	// 	$( document ).on( 'submit', 'form#media_search_form', function( e ) {
 	// 		e.preventDefault();
 	//

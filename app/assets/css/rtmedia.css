@@ -2848,6 +2848,9 @@ h2.rtm-gallery-title {
 .rtm-load-more .rtm-media-loading {
   padding: 10px 0;
 }
+.rtm-load-more #rtMedia-galary-next {
+  padding: 10px;
+}
 
 .rtm-media-options.rtm-media-search-enable > *:nth-last-child(2) {
   border-right: none;
