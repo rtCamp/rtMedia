@@ -471,13 +471,6 @@ jQuery( function( $ ) {
 					url = window.location.pathname.substr( 0, window.location.pathname.lastIndexOf( 'pg/' ) );
 				}
 			}
-			if ( ! this.upload_sync && this.nextPage >= 1 ) {
-				if ( url.substr( url.length - 1 ) != '/' ) {
-					url += '/';
-				}
-
-				url += 'pg/' + this.nextPage + '/';
-			}
 
 			return url;
 		}
@@ -504,7 +497,7 @@ jQuery( function( $ ) {
 		initialize: function (options) {
 			this.getPage = options.getPage;
 
-			this.listenTo(this.collection, 'change', this.render);
+			this.listenTo(this.collection, 'reset', this.render);
 
 			this.render();
 		},
@@ -588,11 +581,12 @@ jQuery( function( $ ) {
 			if ( 'page' === pageType ) {
 				page = target.data( 'page' );
 			} else if ( 'prev' === pageType ) {
-				page = Math.max(1, -1 === this.collection.nextPage ? lastPage - 1 : this.collection.nextPage - 2);
+				page = Math.max(1, this.collection.currentPage-1);
 			} else if ( 'next' === pageType ) {
-				page = -1 !== this.collection.nextPage ? this.collection.nextPage : 1;
+				page = Math.min(lastPage, this.collection.currentPage+1);
 			} else if ( 'num' === pageType ) {
-				page = goToNumVal > lastPage ? lastPage : goToNumVal;
+				page = Math.min(lastPage, goToNumVal);
+				page = Math.max(1, page);
 			}
 
 			this.getPage( page, true );
@@ -625,7 +619,7 @@ jQuery( function( $ ) {
 		initialize: function (options) {
 			this.getPage = options.getPage;
 
-			this.listenTo(this.collection, 'add', this.render);
+			this.listenTo(this.collection, 'reset', this.render);
 
 			this.render();
 		},
@@ -658,9 +652,76 @@ jQuery( function( $ ) {
 
 			this.loading();
 
+			console.log('loading next page', this.collection);
+
 			this.getPage( this.collection.nextPage, true );
 		}
 	});
+
+	rtMedia.rtSearchView = Backbone.View.extend( {
+		events: {
+			'submit': 'searchMedia',
+			'click #media_search_remove': 'removeSearch'
+		},
+
+		initialize: function (options) {
+			this.getPage = options.getPage;
+
+			this.listenTo(this.collection, 'reset', this.render);
+		},
+
+		render: function () {
+			var search_term = check_url( 'search' );
+
+			search_term = search_term ? search_term : '';
+
+			search_term = decodeURIComponent( search_term );
+
+			this.$el.find( '#media_search_input' ).val( search_term );
+
+			this.$el.find( '#media_fatch_loader' ).removeClass('load');
+
+			if( check_condition( 'search' ) && '' !== $( '#media_search_input' ).val() ) {
+				this.$el.find( '#media_search_remove' ).show();
+			}
+			else {
+				this.$el.find( '#media_search_remove' ).hide();
+			}
+
+			return this;
+		},
+
+		loading: function () {
+			this.$el.find( '#media_fatch_loader' ).addClass('load');
+		},
+
+		searchMedia: function( event ) {
+			event.preventDefault();
+			console.log('searching media');
+
+			this.loading();
+
+			var search_term = this.$el.find( '#media_search_input' ).val().trim();
+
+			var href = window.location.pathname;
+
+			if( search_term ) {
+				href += '?search=' + search_term;
+			}
+
+			change_rtBrowserAddressUrl( encodeURI( href ) );
+
+			this.getPage( 1, 'pagination' === rtmedia_load_more_or_pagination );
+		},
+
+		removeSearch: function( event ) {
+			this.$el.find( '#media_search_input' ).val('');
+			this.$el.find( '#media_search_remove' ).hide();
+
+			this.searchMedia( event );
+		}
+	});
+
 
 	// rtMedia Gallery View
 	rtMedia.rtGalleryView = Backbone.View.extend( {
@@ -707,6 +768,12 @@ jQuery( function( $ ) {
 					});
 				}
 
+				that.rtSearchView = new rtMedia.rtSearchView({
+					el: $('form#media_search_form'),
+					collection: that.collection,
+					getPage: that.getPage.bind(that)
+				});
+
 				that.render();
 			} );
 
@@ -743,10 +810,6 @@ jQuery( function( $ ) {
 		},
 
 		getPage: function( page, replace ) {
-			if ( page === this.collection.nextPage-1 ) {
-				return ;
-			}
-
 			var query = {
 				json: true,
 				rtmedia_page: page
@@ -840,72 +903,6 @@ jQuery( function( $ ) {
 		/** Scroll function called */
 		rtMediaScrollComments();
 	} );
-
-
-	// 	$( document ).on( 'submit', 'form#media_search_form', function( e ) {
-	// 		e.preventDefault();
-	//
-	// 		var $media_search_input = $( '#media_search_input' ).val();
-	// 		var $media_search       = $( '#media_search' );
-	// 		var $media_fatch_loader = $( '#media_fatch_loader' );
-	// 		var $media_type         = $( 'input[type="hidden"][name="media_type"]' );
-	//
-	// 		if ( '' === $media_search_input ) {
-	// 			return false;
-	// 		}
-	//
-	// 		$media_search.css( 'cursor', 'pointer');
-	// 		$media_fatch_loader.addClass('load');
-	// 		nextpage = 1;
-	//
-	// 		var href = window.location.href;
-	// 		// Remove query string.
-	// 		if ( href.indexOf('?') > -1) {
-	// 			href = window.location.pathname;
-	// 		}
-	//
-	// 		href += '?search=' + $media_search_input;
-	// 		if ( $( '#search_by' ).length > 0 ) {
-	// 			href += '&search_by=' + $( '#search_by' ).val();
-	// 		}
-	//
-	// 		if ( $media_type.length > 0 && 'album' === $media_type.val() ) {
-	// 			href += '&media_type=' + $media_type.val();
-	// 		}
-	//
-	// 		href = encodeURI( href );
-	//
-	// 		change_rtBrowserAddressUrl( href, '' );
-	// 		galleryObj.getNext( nextpage, $( this ).closest( '.rtmedia-container' ).parent() );
-	//
-	// 		$( '#media_search_remove' ).show();
-	// 	} );
-	//
-	// 	// media search remove
-	// 	$( document ).on( 'click', '#media_search_remove', function( e ) {
-	// 		$( '#media_search' ).css( 'cursor', 'not-allowed');
-	// 		$( '#media_fatch_loader' ).addClass('load');
-	// 		jQuery( '#media_search_input' ).val('');
-	// 		nextpage = 1;
-	// 		var href = window.location.pathname;
-	// 		if ( check_condition( '/pg' ) ) {
-	// 			remove_index = href.indexOf('pg');
-	// 			remove_href =  href.substring( remove_index );
-	// 			href = href.replace( remove_href, '' );
-	// 		}
-	//
-	// 		change_rtBrowserAddressUrl( href, '' );
-	// 		galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent());
-	// 		$( '#media_search_remove' ).hide();
-	// 	} );
-	//
-	// 	if ( window.location.pathname.indexOf( rtmedia_media_slug ) != -1 ) {
-	// 		var tempNext = window.location.pathname.substring( window.location.pathname.lastIndexOf( 'pg/' ) + 5, window.location.pathname.lastIndexOf( '/' ) );
-	// 		if ( isNaN( tempNext ) === false ) {
-	// 			nextpage = parseInt( tempNext ) + 1;
-	// 		}
-	// 	}
-	//
 
 
 		window.UploadView = Backbone.View.extend( {
