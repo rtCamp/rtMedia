@@ -816,22 +816,8 @@ jQuery( function( $ ) {
 						reload: that.reload.bind(that)
 					});
 				}
-
-				that.render();
 			} );
 
-		},
-
-		render: function() {
-			if (this.is_template_loaded === false) {
-				return this;
-			}
-
-			// if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && 0 == jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length ) {
-			// 	rtm_masonry_reload( rtm_masonry_container );
-			// }
-
-			return this;
 		},
 
 		reload: function() {
@@ -847,10 +833,9 @@ jQuery( function( $ ) {
 				list.html( '' );
 			}
 
-			// if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && 0 == jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length ) {
-			// 	rtm_masonry_reload( rtm_masonry_container );
-			// 	console.log('--');
-			// }
+			if ( 'undefined' != typeof rtmedia_masonry_layout && 'true' == rtmedia_masonry_layout && ! list.hasClass('.rtm-no-masonry' ) ) {
+				rtm_masonry_reload( rtm_masonry_container );
+			}
 
 			$.each( data, function( key, media ) {
 				list.append( that.template( media ) );
