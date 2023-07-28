@@ -302,9 +302,7 @@ class RTMediaTemplate {
 		$model                       = new RTMediaModel();
 		$return_array['media_count'] = $model->get_media_count();
 
-		if ( isset( $rtmedia->options['general_display_media'] ) && 'pagination' === $options['general_display_media'] ) {
-			$return_array ['pagination'] = rtmedia_get_pagination_values();
-		}
+		$return_array['total_pages'] = rtmedia_total_pages();
 
 		echo wp_json_encode( $return_array );
 		die;

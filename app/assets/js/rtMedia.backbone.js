@@ -462,10 +462,10 @@ jQuery( function( $ ) {
 		url: function() {
 			var temp = window.location.pathname;
 			var url = '';
-			if ( temp.indexOf( '/' + rtmedia_media_slug + '/' ) == -1 ) {
+			if ( temp.indexOf( '/' + rtmedia_media_slug + '/' ) === -1 ) {
 				url = rtmedia_media_slug + '/';
 			} else {
-				if ( temp.indexOf( 'pg/' ) == -1 ) {
+				if ( temp.indexOf( 'pg/' ) === -1 ) {
 					url = temp;
 				} else {
 					url = window.location.pathname.substr( 0, window.location.pathname.lastIndexOf( 'pg/' ) );
@@ -550,7 +550,7 @@ jQuery( function( $ ) {
 
 		loading: function () {
 			if( this.$el.parent().find('.rtm-media-loading').length === 0 ) {
-				var html = '<div class="rtm-media-loading"><img src="' + rMedia_loading_media + '"></div>';
+				var html = '<div class="rtm-media-loading"><img alt="Loading" src="' + rMedia_loading_media + '"></div>';
 				this.$el.parent().append(html);
 			}
 
@@ -639,7 +639,7 @@ jQuery( function( $ ) {
 
 		loading: function () {
 			if( this.$el.parent().find('.rtm-media-loading').length === 0 ) {
-				var html = '<div class="rtm-media-loading"><img src="' + rMedia_loading_media + '"></div>';
+				var html = '<div class="rtm-media-loading"><img alt="Loading" src="' + rMedia_loading_media + '"></div>';
 				this.$el.parent().append(html);
 			}
 
@@ -842,6 +842,7 @@ jQuery( function( $ ) {
 				success: (function( model, response ) {
 					this.collection.currentPage = page;
 					this.collection.nextPage = response.next;
+					this.collection.totalPages = response.total_pages;
 
 					// append data to the view
 					this.appendData( response.data, replace );
