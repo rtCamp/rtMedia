@@ -458,6 +458,8 @@ jQuery( function( $ ) {
 		nextPage: 2,
 		currentPage: 1,
 		totalPages: 1,
+		sortBy: 'date',
+		sortOrder: 'DESC',
 		upload_sync: false,
 		url: function() {
 			var temp = window.location.pathname;
@@ -722,6 +724,32 @@ jQuery( function( $ ) {
 		}
 	});
 
+	rtMedia.rtSortView = Backbone.View.extend( {
+		events: {
+			'click li .rtm-sort-option': 'reloadGallery'
+		},
+
+		initialize: function ( options ) {
+			this.reload = options.reload;
+		},
+
+		reloadGallery: function ( event ) {
+			event.preventDefault();
+
+			var target = this.$el.find( event.target );
+
+			var sortBy = target.data( 'sort' );
+			var sortOrder = target.data( 'order' );
+
+			sortBy = !sortBy ? 'date' : sortBy;
+			sortOrder = !sortOrder ? 'DESC' : sortOrder;
+
+			this.collection.sortBy = sortBy;
+			this.collection.sortOrder = sortOrder;
+
+			this.reload();
+		}
+	});
 
 	// rtMedia Gallery View
 	rtMedia.rtGalleryView = Backbone.View.extend( {
@@ -768,11 +796,26 @@ jQuery( function( $ ) {
 					});
 				}
 
-				that.rtSearchView = new rtMedia.rtSearchView({
-					el: $('form#media_search_form'),
-					collection: that.collection,
-					getPage: that.getPage.bind(that)
-				});
+				// Global View
+				var searchForm = $( 'form#media_search_form' );
+
+				if ( searchForm.length > 0 ) {
+					that.rtSearchView = new rtMedia.rtSearchView({
+						el: searchForm,
+						collection: that.collection,
+						getPage: that.getPage.bind(that)
+					});
+				}
+
+				var sortElement = that.$el.find( '.rtm-options' );
+
+				if( sortElement.length > 0 ) {
+					that.rtSortView = new rtMedia.rtSortView({
+						el: sortElement,
+						collection: that.collection,
+						reload: that.reload.bind(that)
+					});
+				}
 
 				that.render();
 			} );
@@ -789,6 +832,11 @@ jQuery( function( $ ) {
 			// }
 
 			return this;
+		},
+
+		reload: function() {
+			console.log('reload gallery');
+			this.getPage( 1, 'pagination' === rtmedia_load_more_or_pagination );
 		},
 
 		appendData: function( data, replace ) {
@@ -812,14 +860,18 @@ jQuery( function( $ ) {
 		getPage: function( page, replace ) {
 			var query = {
 				json: true,
-				rtmedia_page: page
+				rtmedia_page: page,
+				sort_by: this.collection.sortBy,
+				sort_order: this.collection.sortOrder
 			};
 
-			this.$el.siblings( 'input[type=hidden]' ).each( function() {
-				if ( $( this ).attr( 'name' ) ) {
-					query[ $( this ).attr( 'name' ) ] = $( this ).val();
-				}
-			} );
+			if( this.$el.parent( '.rtmedia_gallery_wrapper' ).length > 0 ) {
+				this.$el.siblings( 'input[type=hidden]' ).each( function() {
+					if ( $( this ).attr( 'name' ) ) {
+						query[ $( this ).attr( 'name' ) ] = $( this ).val();
+					}
+				} );
+			}
 
 			if( check_condition( 'search' ) && '' !== $( '#media_search_input' ).val() ) {
 				var search = check_url( 'search' );
