@@ -2223,18 +2223,29 @@ function rtmedia_comment_form() {
 	if ( is_user_logged_in() && empty( $comment_media ) ) {
 		?>
 		<form method="post" id="rt_media_comment_form" class="rt_media_comment_form" action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
-			<textarea style="width:100%" placeholder="<?php esc_attr_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"  class="bp-suggestions ac-input"></textarea>
-
+			<textarea style="width:100%" placeholder="<?php esc_attr_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"  class="bp-suggestions ac-input emojiable-option"></textarea>
 			<input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit" value="<?php esc_attr_e( 'Comment', 'buddypress-media' ); ?>">
-
 			<?php do_action( 'rtmedia_add_comments_extra' ); ?>
 
 			<?php RTMediaComment::comment_nonce_generator(); ?>
 		</form>
+		<script>
+			(function($) {
+				$( '#comment_content' ).emoji( { place: 'after' } );
+			})(jQuery);
+		</script>
 		<?php
 	}
 
 }
+
+/**
+ * Disable the emoji's.
+ */
+function rt_disable_emojis() {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+}
+add_action( 'init', 'rt_disable_emojis' );
 
 /**
  * Get cover srt using media ID

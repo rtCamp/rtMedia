@@ -19,7 +19,7 @@
 			global $wpdb;
 			$results = wp_cache_get( 'rt-stats', 'rt-dashboard' );
 			if ( false === $results ) {
-				$results = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id=%d group by media_type", get_current_blog_id() ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$results = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id=%d group by media_type", get_current_blog_id() ) );
 				wp_cache_set( 'stats', $results, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
 			if ( $results ) {
@@ -58,7 +58,7 @@
 			<?php
 			$with_media_count = wp_cache_get( 'with_media', 'rt-dashboard' );
 			if ( false === $with_media_count ) {
-				$with_media_count = $wpdb->get_var( "select count(distinct media_author) from {$rtmedia_model->table_name}" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$with_media_count = $wpdb->get_var( "select count(distinct media_author) from {$rtmedia_model->table_name}" );
 				wp_cache_set( 'with_media', $with_media_count, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
 			?>
@@ -67,9 +67,9 @@
 				<td class="t"><?php esc_html_e( 'With Media', 'buddypress-media' ); ?></td>
 			</tr>
 			<?php
-			$comments = wp_cache_get( 'comments', 'rt-dashboard' );
+			$comments = wp_cache_get( 'comments', 'rt-dashboard' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			if ( false === $comments ) {
-				$comments = $wpdb->get_var( "select count(*) from {$wpdb->comments} where comment_post_ID in ( select media_id from {$rtmedia_model->table_name} )" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$comments = $wpdb->get_var( "select count(*) from {$wpdb->comments} where comment_post_ID in ( select media_id from {$rtmedia_model->table_name} )" ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				wp_cache_set( 'comments', $comments, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
 			?>
@@ -80,7 +80,7 @@
 			<?php
 			$likes = wp_cache_get( 'likes', 'rt-dashboard' );
 			if ( false === $likes ) {
-				$likes = $wpdb->get_var( "select sum(likes) from {$rtmedia_model->table_name}" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$likes = $wpdb->get_var( "select sum(likes) from {$rtmedia_model->table_name}" );
 				wp_cache_set( 'likes', $likes, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
 			?>

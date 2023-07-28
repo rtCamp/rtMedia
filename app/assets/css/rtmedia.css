@@ -1608,12 +1608,42 @@ img.mfp-img {
   margin-top: -3px;
 }
 
+.rt_media_comment_form {
+  position: relative;
+}
 .rt_media_comment_form textarea {
   display: inline-block;
   margin-bottom: 5px;
 }
 .rt_media_comment_form input[type=submit] {
   padding: 3px 6px;
+}
+.rt_media_comment_form .rt-emoji-picker {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  opacity: 0.5;
+}
+.rt_media_comment_form .rt-emoji-picker:hover {
+  opacity: 1;
+}
+.rt_media_comment_form .rt-emoji-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  left: 5px;
+  right: 5px;
+  top: 25px;
+  padding: 10px;
+  z-index: 1000;
+}
+.rt_media_comment_form .rt-emoji-grid span {
+  padding: 1px;
 }
 
 .rtmedia-item-comments textarea {

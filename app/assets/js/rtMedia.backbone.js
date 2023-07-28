@@ -2438,6 +2438,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 		title = 'title=\'' + err_msg + '\'';
 		icon = '<i class="dashicons dashicons-info" ' + title + '></i>';
 	} else if ( error.code == -601 ) {
+		alert( error.message + '. ' + window.file_extn_info );
 		err_msg = error.message + '. ' + window.file_extn_info;
 		title = 'title=\'' + err_msg + '\'';
 		icon = '<i class="dashicons dashicons-info" ' + title + '></i>';
@@ -2467,7 +2468,9 @@ function rtmedia_selected_file_list( plupload, file, uploader, error, comment_me
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '</li>';
 
-	jQuery( rtmedia_plupload_file ).appendTo( rtmedia_uploader_filelist );
+	if ( error.code !== -601 && error.code !== -600 ) {
+		jQuery( rtmedia_plupload_file ).appendTo( rtmedia_uploader_filelist );
+	}
 
 	if ( comment_media_id ) {
 		jQuery( '#rtmedia-comment-media-upload-' + comment_media_id ).focus();
@@ -3367,3 +3370,17 @@ const rtMediaScrollComments = () => {
 		commentBox.scrollTo( { top: commentsToScroll, behavior: 'smooth' } );
 	}
 }
+
+/* Add max size limit message beside upload button */
+const rtMediaMaxSizeMessage = () => {
+	const buttonContainer = document.getElementById( 'rtmedia-action-update' );
+	if ( undefined !== buttonContainer ) {
+		const msg = document.createElement('span');
+		msg.textContent = 'Max. File Size: ' + rtMedia_update_plupload_config.max_file_size;
+		msg.style.fontSize = '12px';
+		msg.style.opacity = '0.7'; 
+		buttonContainer.appendChild(msg);
+	}
+}
+
+rtMediaMaxSizeMessage();
