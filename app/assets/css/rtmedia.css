@@ -298,6 +298,12 @@ button#rtmedia-add-media-button-post-update .dashicons {
   line-height: 20px;
 }
 
+.plupload_file_thumb img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
 .plupload_file_name {
   font-size: 11px;
   font-weight: bold;
