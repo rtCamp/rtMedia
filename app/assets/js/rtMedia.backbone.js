@@ -289,6 +289,11 @@ jQuery( function( $ ) {
 			this.$el.hide();
 		},
 
+		removeLoading: function () {
+			this.$el.parent().find('.rtm-media-loading').hide();
+			this.$el.show();
+		},
+
 		loadPageByNumber: function( event ) {
 			event.preventDefault();
 
@@ -378,6 +383,11 @@ jQuery( function( $ ) {
 			this.$el.hide();
 		},
 
+		removeLoading: function () {
+			this.$el.parent().find('.rtm-media-loading').hide();
+			this.$el.show();
+		},
+
 		loadNextPage: function (event) {
 			event.preventDefault();
 
@@ -385,7 +395,7 @@ jQuery( function( $ ) {
 
 			console.log('loading next page', this.collection);
 
-			this.getPage( this.collection.nextPage, true );
+			this.getPage( this.collection.nextPage, false );
 		}
 	});
 
@@ -612,6 +622,8 @@ jQuery( function( $ ) {
 
 					// append data to the view
 					this.appendData( response.data, replace );
+
+					this.rtPaginationView.removeLoading();
 
 					if(replace) {
 						this.collection.reset( response.data );
