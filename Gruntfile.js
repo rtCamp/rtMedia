@@ -32,7 +32,7 @@ module.exports = function ( grunt ) {
 			dist: {
 				options: {
 					style: 'expanded',
-					sourcemap: 'none'
+					sourceMap: false
 				},
 				files: {
 					'app/assets/admin/css/admin.css': 'app/assets/admin/css/sass/admin.scss',
@@ -43,7 +43,7 @@ module.exports = function ( grunt ) {
 			minify: {
 				options: {
 					style: 'compressed',
-					sourcemap: 'none'
+					sourceMap: false
 				},
 				files: {
 					'app/assets/admin/css/admin.min.css': 'app/assets/admin/css/sass/admin.scss',

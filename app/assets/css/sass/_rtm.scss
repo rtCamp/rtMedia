@@ -47,12 +47,10 @@
 	}
 
 	.rtmedia-item-thumbnail {
-		width: 150px;
 		text-align: center;
 
 		img {
 			display: inline-block;
-			max-height: inherit;
 			// Remove extra white space below image.
 		}
 	}
@@ -267,6 +265,14 @@ button#rtmedia-add-media-button-post-update {
 
 		a.rtmedia-page-link {
 			padding: 8px;
+		}
+
+		.current {
+			color: #888;
+		}
+
+		a.rtmedia-page-link__num.current {
+			background: #fff;
 		}
 	}
 

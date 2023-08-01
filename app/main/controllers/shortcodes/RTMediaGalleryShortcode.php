@@ -66,6 +66,7 @@ class RTMediaGalleryShortcode {
 				'backbone',
 				// Whole rtmedia-backbone file is dependent on rtmedia-main  file (eg. rtMediaHook).
 				'rtmedia-main',
+				'wp-i18n',
 			),
 			RTMEDIA_VERSION,
 			true

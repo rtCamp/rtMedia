@@ -1287,6 +1287,27 @@ function rtmedia_page() {
 }
 
 /**
+ * Get the total number of pages of media in the pagination
+ *
+ * @return int
+ */
+function rtmedia_total_pages() {
+
+	global $rtmedia, $rtmedia_query;
+
+	$general_options = $rtmedia->options;
+	$per_page        = $general_options['general_perPageMedia'];
+
+	if ( isset( $rtmedia_query->query['per_page'] ) ) {
+		$per_page = $rtmedia_query->query['per_page'];
+	}
+
+	$per_page = intval( $per_page );
+
+	return intval( ceil( rtmedia_count() / $per_page ) );
+}
+
+/**
  * Get the current media number in the album pool
  *
  * @global RTMediaQuery $rtmedia_query
