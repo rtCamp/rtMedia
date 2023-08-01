@@ -1,6 +1,7 @@
 jQuery(document).ready(function($) {
     var rtFileModel = Backbone.Model.extend({
         defaults: {
+            id: '',
             file: null
         },
 
@@ -12,6 +13,7 @@ jQuery(document).ready(function($) {
             file.title = file.name.substring(0, file.name.lastIndexOf('.')) || '';
 
             this.set('file', file);
+            this.set('id', file.id);
 
             this.on('edit', this.editFileData, this);
         },
@@ -41,8 +43,9 @@ jQuery(document).ready(function($) {
                     </div>
                 <div class="plupload_file_name rtm-edit-box">
                   <span class="plupload_file_name_wrapper"><%= title %></span>
-                  <i title="Edit File Data" class="rtm-open-edit-box dashicons dashicons-edit"></i>
-                  <i title="Save Change" class="rtm-close-edit-box dashicons dashicons-yes rtm-file-edit"></i>
+                  <i title="<%= rtmedia_backbone_strings.rtm_edit_file_name %>" class="rtm-btn rtm-edit rtm-open-edit-box dashicons dashicons-edit"></i>
+                  <i title="<%= rtmedia_backbone_strings.rtm_save_file_name %>" class="rtm-btn rtm-save rtm-close-edit-box dashicons dashicons-yes rtm-file-edit"></i>
+                  <i class="rtm-btn rtm-error dashicons dashicons-info"></i>
                   <div class="plupload_file_fields rtm-file-edit">
                     <div class="rtm-upload-edit-title-wrapper">
                         <label for="rtm-file-title-<%= id %>"><%= rtmedia_edit_media_info_upload.title %></label>
@@ -71,17 +74,17 @@ jQuery(document).ready(function($) {
         },
 
         render: function () {
-            this.$el.html(this.template(this.model.get('file')));
+            var file = this.model.get('file');
+            this.$el.html( this.template( file ) );
 
             this.setThumbnail();
-            this.setProgress(40);
+            this.setProgress( file.progress || 0 );
             this.closeEditBox();
+            this.setButton();
 
             // TODO: handle file upload error.
 
-            // if ( ! this.error ) {
-            //     icon = '<span id="label_' + file.id + '" class="dashicons dashicons-edit" title="' + rtmedia_backbone_strings.rtm_edit_file_name + '"></span>';
-            // } else if ( error.code == -600 ) {
+            // if ( error.code == -600 ) {
             //     alert( rtmedia_max_file_msg + uploader.settings.max_file_size );
             //     err_msg = ( uploader != '' ) ? rtmedia_max_file_msg + uploader.settings.max_file_size :  window.file_size_info;
             //     title = 'title=\'' + err_msg + '\'';
@@ -141,6 +144,29 @@ jQuery(document).ready(function($) {
             progress = Math.max(progress, 0);
 
             this.$el.find('.plupload_file_progress').css('width', progress + '%');
+        },
+
+        setButton: function () {
+            var file = this.model.get('file');
+
+            this.$el.find( '.rtm-btn' ).hide();
+
+            if( ! file.error ) {
+                this.$el.find('.rtm-edit').show();
+                return ;
+            }
+
+            var err_msg = '';
+
+            if ( file.error.code === -600 ) {
+                var max_file_size = rtMedia_plupload.rtMedia_plupload_config.max_file_size;
+                err_msg = rtmedia_max_file_msg + max_file_size;
+            } else if ( file.error.code === -601 ) {
+                err_msg = rtmedia_file_extension_error_msg + '. ' + window.file_extn_info;
+            }
+
+            window.alert( err_msg );
+            this.$el.find('.rtm-error').attr('title', err_msg).show();
         },
 
         closeEditBox: function () {
@@ -208,7 +234,7 @@ jQuery(document).ready(function($) {
     var rtFileUploader = Backbone.View.extend({
         events: {
             // 'click .rtm-uploader-tabs li': 'tabSwitch',
-            // 'click #rtMedia-start-upload': 'startUpload'
+            'click .start-media-upload': 'startUpload'
         },
 
         initialize: function () {
@@ -219,9 +245,13 @@ jQuery(document).ready(function($) {
             });
             this.uploader = null;
 
+            this.listenTo( this.collection, 'add', this.updateUploader );
+            this.listenTo( this.collection, 'remove', this.updateUploader );
+            this.listenTo( this.collection, 'reset', this.updateUploader );
+
             this.initUploader();
 
-            this.collection.add( { file: { name: 'test.dmg', size: 1000, id: 'o_erewfwwe534r34rt43', type: 'file/dmg' } } );
+            // this.collection.add( { file: { name: 'test.dmg', size: 1000, id: 'o_erewfwwe534r34rt43', type: 'file/dmg' } } );
         },
 
         initUploader: function() {
@@ -231,8 +261,24 @@ jQuery(document).ready(function($) {
             this.uploader = new plupload.Uploader( config );
 
             this.uploader.bind('FilesAdded', this.onFilesAdded.bind(this) );
+            this.uploader.bind('UploadProgress', this.onUploadProgress.bind(this) );
+            this.uploader.bind('Error', this.onUploadError.bind(this) );
 
             this.uploader.init();
+        },
+
+        updateUploader: function () {
+            var button = this.$el.find( '.start-media-upload' );
+
+            if ( this.collection.length ) {
+                button.show();
+            } else {
+                button.hide();
+            }
+        },
+
+        startUpload: function () {
+            this.uploader.start();
         },
 
         onFilesAdded: function( uploader, files ) {
@@ -241,6 +287,37 @@ jQuery(document).ready(function($) {
             files.forEach( function( file ) {
                 self.collection.add( { file: file } );
             } );
+
+            return false;
+        },
+
+        onUploadProgress: function( uploader, file ) {
+            var model = this.collection.findWhere( { id: file.id } );
+
+            if ( model ) {
+                model.set( 'file', file );
+            }
+
+            console.log( file );
+        },
+
+        onUploadError: function( uploader, error ) {
+            console.log( error );
+
+            if( error.file ) {
+                var model = this.collection.findWhere( { id: error.file.id } );
+
+                if ( model ) {
+                    var file = error.file;
+                    file.error = error;
+                    model.set( 'file', file );
+                }
+            }
+
+            // jQuery( '.plupload_delete' ).on( 'click', function( e ) {
+            //     e.preventDefault();
+            //     jQuery( this ).parent().parent( 'li' ).remove();
+            // } );
         }
 
     });

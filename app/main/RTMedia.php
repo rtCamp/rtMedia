@@ -1275,7 +1275,7 @@ class RTMedia {
 				array(
 					'jquery',
 					'rt-mediaelement-wp',
-					'rtmedia-emoji-picker'
+					'rtmedia-emoji-picker',
 				),
 				RTMEDIA_VERSION,
 				true
@@ -1416,6 +1416,7 @@ class RTMedia {
 		// Localizing strings for rtMedia.backbone.js.
 		$rtmedia_backbone_strings = array(
 			'rtm_edit_file_name' => esc_html__( 'Edit File Name', 'buddypress-media' ),
+			'rtm_save_file_name' => esc_html__( 'Save Changes', 'buddypress-media' ),
 		);
 
 		// Localise fot rtmedia-backcone js.
