@@ -3,7 +3,18 @@ jQuery(document).ready(function($) {
     var rtUploaderModel = Backbone.Model.extend( {
         initialize: function( options ) {
             this.renderFiles = options.renderFiles;
-            this.files = [];
+            this.files = [
+                {
+                    id: 'o_asdfghjldasdawq123123',
+                    name: '37456_Hold-On.mp3',
+                    size: 154200
+                },
+                {
+                    id: 'o_1h6nsvh421iqb2fgvmn11uhcvuj',
+                    name: 'pexels-angelica-reyn-7116676.jpg',
+                    size: 5314178
+                }
+            ];
 
             this.uploader = new plupload.Uploader( options.config );
             this.uploader.bind( 'FilesAdded', this.filesAdded, this );
@@ -35,11 +46,11 @@ jQuery(document).ready(function($) {
               <li class="plupload_file ui-state-default plupload_queue_li" id="<%= id %>" title="">
                 <div id="file_thumb_<%= id %>" class="plupload_file_thumb"></div>
                 <div class="plupload_file_status">
-                <div class="plupload_file_progress ui-widget-header" style="width: 10%;"></div>
-                </div>
+                    <div class="plupload_file_progress ui-widget-header"></div>
+                    </div>
                 <div class="plupload_file_name" title="<%= name %>">
                   <span class="plupload_file_name_wrapper"><%= name %></span>
-                  <i class="dashicons dashicons-info"></i>
+                  <i class="dashicons"></i>
                 </div>
                 <div class="plupload_file_action">
                   <div class="plupload_action_icon ui-icon">
@@ -55,6 +66,8 @@ jQuery(document).ready(function($) {
 
         initialize: function( options ) {
             this.file = options.file;
+            this.error = this.file.error;
+            this.uploader = options.uploader;
 
             this.render();
         },
@@ -63,7 +76,24 @@ jQuery(document).ready(function($) {
             this.$el.html( this.template( this.file ) );
 
             this.setThumbnail();
-            this.setProgress( 0 );
+            this.setProgress( 40 );
+            this.setActionButton();
+
+            // TODO: handle file upload error.
+
+            // if ( ! this.error ) {
+            //     icon = '<span id="label_' + file.id + '" class="dashicons dashicons-edit" title="' + rtmedia_backbone_strings.rtm_edit_file_name + '"></span>';
+            // } else if ( error.code == -600 ) {
+            //     alert( rtmedia_max_file_msg + uploader.settings.max_file_size );
+            //     err_msg = ( uploader != '' ) ? rtmedia_max_file_msg + uploader.settings.max_file_size :  window.file_size_info;
+            //     title = 'title=\'' + err_msg + '\'';
+            //     icon = '<i class="dashicons dashicons-info" ' + title + '></i>';
+            // } else if ( error.code == -601 ) {
+            //     alert( error.message + '. ' + window.file_extn_info );
+            //     err_msg = error.message + '. ' + window.file_extn_info;
+            //     title = 'title=\'' + err_msg + '\'';
+            //     icon = '<i class="dashicons dashicons-info" ' + title + '></i>';
+            // }
 
             return this;
         },
@@ -72,7 +102,7 @@ jQuery(document).ready(function($) {
             var type = this.file.type;
             var media_title = this.file.name;
             var ext = media_title.substring(media_title.lastIndexOf('.') + 1, media_title.length);
-            var thumb_element_id = '#file_thumb_' + this.file.id;
+            var thumbnail = this.$el.find( '.plupload_file_thumb' );
 
             if (/image/i.test(type)) {
                 var media_thumbnail = '';
@@ -83,7 +113,7 @@ jQuery(document).ready(function($) {
                     media_thumbnail = URL.createObjectURL( this.file.getNative() );
                 }
 
-                $('<img />', {src: media_thumbnail}).appendTo( thumb_element_id );
+                $( "<img alt='thumbnail' >" ).attr( 'src', media_thumbnail ).appendTo( thumbnail );
             } else {
                 $.each(rtmedia_exteansions, function (key, value) {
                     if (value.indexOf(ext) >= 0) {
@@ -97,11 +127,35 @@ jQuery(document).ready(function($) {
                             media_thumbnail = rtmedia_media_thumbs[key];
                         }
 
-                        $('<img />', {src: media_thumbnail}).appendTo( thumb_element_id );
+                        $( "<img alt='thumbnail' >" ).attr( 'src', media_thumbnail ).appendTo( thumbnail );
 
                         return false;
                     }
                 });
+            }
+        },
+
+        setProgress: function ( progress ) {
+            progress = Number.isNaN( progress ) ? 0 : parseInt( progress, 10 );
+
+            progress = Math.min( progress, 100 );
+            progress = Math.max( progress, 0 );
+
+            this.$el.find( '.plupload_file_progress' ).css( 'width', progress + '%' );
+        },
+
+        setActionButton: function() {
+            var button = this.$el.find( '.plupload_file_name i' );
+
+            if ( ! this.error ) {
+                button.addClass( 'dashicons-edit' );
+                button.attr( 'title', rtmedia_backbone_strings.rtm_edit_file_name );
+            } else if ( this.error.code === -600 ) {
+                button.addClass( 'dashicons-info' );
+                button.attr( 'title', rtmedia_max_file_msg + this.uploader.settings.max_file_size );
+            } else if ( this.error.code === -601 ) {
+                button.addClass( 'dashicons-info' );
+                button.attr( 'title', this.error.message + '. ' + window.file_extn_info );
             }
         }
     });
@@ -123,16 +177,19 @@ jQuery(document).ready(function($) {
             } );
 
             // this.warningOfExtension();
+            this.renderFiles();
         },
 
         renderFiles: function() {
             var list = this.$el.find( '#rtmedia_uploader_filelist' );
+            var that = this;
 
             list.empty();
 
             this.model.files.forEach( function( file ) {
                 list.append( new rtFileView( {
-                    selectedFile: file
+                    file: file,
+                    uploader: that.model.uploader
                 } ).$el );
             });
         }
