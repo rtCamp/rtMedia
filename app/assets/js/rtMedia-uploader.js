@@ -1,46 +1,36 @@
 jQuery(document).ready(function($) {
-
-    var rtUploaderModel = Backbone.Model.extend( {
-        initialize: function( options ) {
-            this.renderFiles = options.renderFiles;
-            this.files = [
-                {
-                    id: 'o_asdfghjldasdawq123123',
-                    name: '37456_Hold-On.mp3',
-                    size: 154200
-                },
-                {
-                    id: 'o_1h6nsvh421iqb2fgvmn11uhcvuj',
-                    name: 'pexels-angelica-reyn-7116676.jpg',
-                    size: 5314178
-                }
-            ];
-
-            this.uploader = new plupload.Uploader( options.config );
-            this.uploader.bind( 'FilesAdded', this.filesAdded, this );
-            this.uploader.init();
+    var rtFileModel = Backbone.Model.extend({
+        defaults: {
+            file: null
         },
 
-        filesAdded: function( uploader, selectedFiles ) {
-            var files = this.files;
-            files = files.concat( selectedFiles );
+        initialize: function () {
+            var file = this.get('file');
 
-            // remove duplicate files
-            files = _.uniq( files, function( file ) {
-                return file.name;
-            } );
+            // custom properties
+            file.description = file.description || '';
+            file.title = file.name.substring(0, file.name.lastIndexOf('.')) || '';
 
-            this.files = files;
+            this.set('file', file);
 
-            console.log( this.files );
+            this.on('edit', this.editFileData, this);
+        },
 
-            this.renderFiles();
+        editFileData: function (newData) {
+            this.set('file', _.extend(this.get('file'), newData));
+
+            this.trigger('change');
         }
     });
 
-    var rtFileView = Backbone.View.extend( {
+    var rtFileView = Backbone.View.extend({
         tagName: 'div',
-        className: 'file-item',
+        className: 'rtm-preview-file-item',
+
+        events: {
+            'click .rtm-edit-box .rtm-open-edit-box': 'openEditBox',
+            'click .rtm-edit-box .rtm-close-edit-box': 'saveEditedData'
+        },
 
         template: _.template(`
               <li class="plupload_file ui-state-default plupload_queue_li" id="<%= id %>" title="">
@@ -48,36 +38,43 @@ jQuery(document).ready(function($) {
                 <div class="plupload_file_status">
                     <div class="plupload_file_progress ui-widget-header"></div>
                     </div>
-                <div class="plupload_file_name" title="<%= name %>">
-                  <span class="plupload_file_name_wrapper"><%= name %></span>
-                  <i class="dashicons"></i>
+                <div class="plupload_file_name rtm-edit-box">
+                  <span class="plupload_file_name_wrapper"><%= title %></span>
+                  <i title="Edit File Data" class="rtm-open-edit-box dashicons dashicons-edit"></i>
+                  <i title="Save Change" class="rtm-close-edit-box dashicons dashicons-yes rtm-file-edit"></i>
+                  <div class="plupload_file_fields rtm-file-edit">
+                    <div class="rtm-upload-edit-title-wrapper">
+                        <label for="rtm-file-title-<%= id %>"><%= rtmedia_edit_media_info_upload.title %></label>
+                        <input type="text" class="rtm-upload-edit-title" id="rtm-file-title-<%= id %>" value="<%= title %>" />
+                    </div>
+                    <div class="rtm-upload-edit-desc-wrapper">
+                        <label for="rtm-file-desc-<%= id %>"><%= rtmedia_edit_media_info_upload.description %></label>
+                        <textarea class="rtm-upload-edit-desc" id="rtm-file-desc-<%= id %>"></textarea>
+                    </div>
+                  </div>
                 </div>
                 <div class="plupload_file_action">
                   <div class="plupload_action_icon ui-icon">
-                    <span class="remove-from-queue dashicons dashicons-dismiss"></span>
+                    <span class="rtm-remove-from-queue dashicons dashicons-dismiss"></span>
                   </div>
                 </div>
                 <div class="plupload_file_size">
                   <%= plupload.formatSize(size).toUpperCase() %>
                 </div>
-                <div class="plupload_file_fields"></div>
               </li>
         `),
 
-        initialize: function( options ) {
-            this.file = options.file;
-            this.error = this.file.error;
-            this.uploader = options.uploader;
-
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
             this.render();
         },
 
         render: function () {
-            this.$el.html( this.template( this.file ) );
+            this.$el.html(this.template(this.model.get('file')));
 
             this.setThumbnail();
-            this.setProgress( 40 );
-            this.setActionButton();
+            this.setProgress(40);
+            this.closeEditBox();
 
             // TODO: handle file upload error.
 
@@ -98,22 +95,23 @@ jQuery(document).ready(function($) {
             return this;
         },
 
-        setThumbnail: function() {
-            var type = this.file.type;
-            var media_title = this.file.name;
+        setThumbnail: function () {
+            var file = this.model.get('file');
+            var type = file.type;
+            var media_title = file.name;
             var ext = media_title.substring(media_title.lastIndexOf('.') + 1, media_title.length);
-            var thumbnail = this.$el.find( '.plupload_file_thumb' );
+            var thumbnail = this.$el.find('.plupload_file_thumb');
 
             if (/image/i.test(type)) {
                 var media_thumbnail = '';
 
                 if (ext === 'gif') {
-                    media_thumbnail = this.file.getNative();
+                    media_thumbnail =  file.getNative();
                 } else {
-                    media_thumbnail = URL.createObjectURL( this.file.getNative() );
+                    media_thumbnail = URL.createObjectURL( file.getNative() );
                 }
 
-                $( "<img alt='thumbnail' >" ).attr( 'src', media_thumbnail ).appendTo( thumbnail );
+                $("<img alt='thumbnail' >").attr('src', media_thumbnail).appendTo(thumbnail);
             } else {
                 $.each(rtmedia_exteansions, function (key, value) {
                     if (value.indexOf(ext) >= 0) {
@@ -127,7 +125,7 @@ jQuery(document).ready(function($) {
                             media_thumbnail = rtmedia_media_thumbs[key];
                         }
 
-                        $( "<img alt='thumbnail' >" ).attr( 'src', media_thumbnail ).appendTo( thumbnail );
+                        $("<img alt='thumbnail' >").attr('src', media_thumbnail).appendTo(thumbnail);
 
                         return false;
                     }
@@ -135,71 +133,117 @@ jQuery(document).ready(function($) {
             }
         },
 
-        setProgress: function ( progress ) {
-            progress = Number.isNaN( progress ) ? 0 : parseInt( progress, 10 );
+        setProgress: function (progress) {
+            progress = Number.isNaN(progress) ? 0 : parseInt(progress, 10);
 
-            progress = Math.min( progress, 100 );
-            progress = Math.max( progress, 0 );
+            progress = Math.min(progress, 100);
+            progress = Math.max(progress, 0);
 
-            this.$el.find( '.plupload_file_progress' ).css( 'width', progress + '%' );
+            this.$el.find('.plupload_file_progress').css('width', progress + '%');
         },
 
-        setActionButton: function() {
-            var button = this.$el.find( '.plupload_file_name i' );
+        closeEditBox: function () {
+            this.$el.find('.rtm-edit-box').children().show();
+            this.$el.find('.rtm-file-edit').hide();
+        },
 
-            if ( ! this.error ) {
-                button.addClass( 'dashicons-edit' );
-                button.attr( 'title', rtmedia_backbone_strings.rtm_edit_file_name );
-            } else if ( this.error.code === -600 ) {
-                button.addClass( 'dashicons-info' );
-                button.attr( 'title', rtmedia_max_file_msg + this.uploader.settings.max_file_size );
-            } else if ( this.error.code === -601 ) {
-                button.addClass( 'dashicons-info' );
-                button.attr( 'title', this.error.message + '. ' + window.file_extn_info );
+        openEditBox: function () {
+            this.$el.find('.rtm-edit-box').children().hide();
+            this.$el.find('.rtm-file-edit').show();
+
+            // load values
+            this.$el.find('.rtm-upload-edit-title').val(this.model.get('file').title);
+            this.$el.find('.rtm-upload-edit-desc').val(this.model.get('file').description);
+        },
+
+        saveEditedData: function () {
+            this.closeEditBox();
+
+            var newData = {
+                title: this.$el.find('.rtm-upload-edit-title').val(),
+                description: this.$el.find('.rtm-upload-edit-desc').val()
+            };
+
+            this.model.trigger( 'edit', newData );
+        }
+    });
+
+    var rtFileCollection = Backbone.Collection.extend({
+        model: rtFileModel,
+
+        add: function ( data ) {
+            var allNames = this.models.map( function ( model ) {
+                return model.get( 'file' ).name;
+            });
+
+            if( allNames.indexOf( data.file.name ) === -1 ) {
+                Backbone.Collection.prototype.add.call( this, data );
             }
         }
     });
 
-    var rtUploaderView = Backbone.View.extend( {
-        events: {
-            'click .rtm-uploader-tabs li': 'tabSwitch',
-            'click #rtMedia-start-upload': 'startUpload'
+    var rtFileCollectionView = Backbone.View.extend({
+        initialize: function () {
+            this.listenTo(this.collection, 'add', this.addOne);
+            this.listenTo(this.collection, 'reset', this.addAll);
         },
 
-        initialize: function() {
-            var config = rtMedia_plupload.rtMedia_plupload_config;
+        addOne: function (file) {
+            var view = new rtFileView({ model: file });
+            this.$el.append(view.render().el);
+        },
 
+        addAll: function () {
+            this.$el.empty();
+            this.collection.forEach(this.addOne, this);
+        }
+    });
+
+    var rtFileUploader = Backbone.View.extend({
+        events: {
+            // 'click .rtm-uploader-tabs li': 'tabSwitch',
+            // 'click #rtMedia-start-upload': 'startUpload'
+        },
+
+        initialize: function () {
+            this.collection = new rtFileCollection();
+            this.collectionView = new rtFileCollectionView({
+                collection: this.collection,
+                el: this.$el.find( '#rtmedia_uploader_filelist' )
+            });
+            this.uploader = null;
+
+            this.initUploader();
+
+            this.collection.add( { file: { name: 'test.dmg', size: 1000, id: 'o_erewfwwe534r34rt43', type: 'file/dmg' } } );
+        },
+
+        initUploader: function() {
+            var config = rtMedia_plupload.rtMedia_plupload_config;
             config.browse_button = this.$el.find( '#rtMedia-upload-button' ).get(0);
 
-            this.model = new rtUploaderModel( {
-                config: config,
-                renderFiles: this.renderFiles.bind( this )
-            } );
+            this.uploader = new plupload.Uploader( config );
 
-            // this.warningOfExtension();
-            this.renderFiles();
+            this.uploader.bind('FilesAdded', this.onFilesAdded.bind(this) );
+
+            this.uploader.init();
         },
 
-        renderFiles: function() {
-            var list = this.$el.find( '#rtmedia_uploader_filelist' );
-            var that = this;
+        onFilesAdded: function( uploader, files ) {
+            var self = this;
 
-            list.empty();
-
-            this.model.files.forEach( function( file ) {
-                list.append( new rtFileView( {
-                    file: file,
-                    uploader: that.model.uploader
-                } ).$el );
-            });
+            files.forEach( function( file ) {
+                self.collection.add( { file: file } );
+            } );
         }
+
     });
 
     /**
      * Attach View and Model to all uploader instances
      */
     $('.rtmedia-container-wrapper__uploader').each(function() {
-        new rtUploaderView( {
+        new rtFileUploader( {
             containerId: $(this).attr('id'),
             el: $(this)
         } );
