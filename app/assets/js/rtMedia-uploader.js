@@ -29,7 +29,8 @@ jQuery(document).ready(function($) {
 
         events: {
             'click .rtm-edit-box .rtm-open-edit-box': 'openEditBox',
-            'click .rtm-edit-box .rtm-close-edit-box': 'saveEditedData'
+            'click .rtm-edit-box .rtm-close-edit-box': 'saveEditedData',
+            'click .rtm-remove-from-queue': 'removeFile'
         },
 
         template: _.template(`
@@ -165,6 +166,11 @@ jQuery(document).ready(function($) {
             };
 
             this.model.trigger( 'edit', newData );
+        },
+
+        removeFile: function () {
+            this.model.collection.remove(this.model);
+            this.remove();
         }
     });
 
