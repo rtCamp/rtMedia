@@ -726,14 +726,22 @@ jQuery( function( $ ) {
 		// 	}
 		//
 		// } );
+
+
+	if ( typeof rtmedia_upload_type_filter == 'object' && rtmedia_upload_type_filter.length > 0 ) {
+		rtMedia_plupload_config.filters[0].extensions = rtmedia_upload_type_filter.join();
+	}
+
 		//
-		// if ( $( '#rtMedia-upload-button' ).length > 0 ) {
+		//if ( $( '#rtMedia-upload-button' ).length > 0 ) { // TODO:     see below
 		// 	if ( typeof rtmedia_upload_type_filter == 'object' && rtmedia_upload_type_filter.length > 0 ) {
 		// 		rtMedia_plupload_config.filters[0].extensions = rtmedia_upload_type_filter.join();
 		// 	}
 		// 	uploaderObj = new UploadView( rtMedia_plupload_config );
 		// 	uploaderObj.initUploader();
 		//
+
+
 		// 	var rtnObj = '';
 		// 	var redirect_request = false;
 		//
@@ -771,6 +779,9 @@ jQuery( function( $ ) {
 		// 		window.onbeforeunload = null;
 		// 	} );
 		//
+	// TODO: Remaining code
+
+
 		// 	uploaderObj.uploader.bind( 'FilesAdded', function( up, files ) {
 		// 		var upload_size_error = false;
 		// 		var upload_error = '';
@@ -932,6 +943,9 @@ jQuery( function( $ ) {
 		//
 		// 	} );
 		//
+	// TODO:Done
+
+
 		// 	uploaderObj.uploader.bind( 'Error', function( up, err ) {
 		//
 		// 		if ( err.code == -600 ) { //File size error // if file size is greater than server's max allowed size
@@ -960,6 +974,10 @@ jQuery( function( $ ) {
 		// 		return false;
 		//
 		// 	} );
+
+	// Todo: Done
+
+
 		//
 		// 	jQuery( '.start-media-upload' ).on( 'click', function( e ) {
 		// 		e.preventDefault();
@@ -968,6 +986,9 @@ jQuery( function( $ ) {
 		// 		if ( search_box.length > 0 ) {
 		// 			search_box.val('');
 		// 		}
+	// TODO: above code remain
+
+
 		//
 		// 		/**
 		// 		* To check if any media file is selected or not for uploading
@@ -980,8 +1001,12 @@ jQuery( function( $ ) {
 		// 			}
 		// 			uploaderObj.uploadFiles();
 		// 		}
+
+
 		// 	} );
 		//
+
+
 		// 	uploaderObj.uploader.bind( 'UploadProgress', function( up, file ) {
 		// 		//$("#" + file.id + " .plupload_file_status").html(file.percent + "%");
 		// 		//$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_uploading_msg + '( ' + file.percent + '% )' );
@@ -1004,6 +1029,9 @@ jQuery( function( $ ) {
 		// 			return message;
 		// 		};
 		// 	} );
+	// TODO: done
+
+
 		//
 		// 	uploaderObj.uploader.bind( 'BeforeUpload', function( up, file ) {
 		// 		// We send terms conditions data on backend to validate this on server side.
@@ -1040,6 +1068,9 @@ jQuery( function( $ ) {
 		//
 		// 			rtMediaHook.call( 'rtmedia_js_before_file_upload', [up, file] );
 		// 	} );
+	// TODO: Done
+
+
 		//
 		// 	uploaderObj.uploader.bind( 'FileUploaded', function( up, file, res ) {
 		// 		if ( /MSIE (\d+\.\d+);/.test( navigator.userAgent ) ) { //Test for MSIE x.x;
@@ -1082,6 +1113,9 @@ jQuery( function( $ ) {
 		// 		lastfile = files[files.length - 1];
 		//
 		// 	} );
+	// TODO: done
+
+
 		//
 		// 	uploaderObj.uploader.refresh();//Refresh the uploader for opera/IE fix on media page
 		//
@@ -1090,11 +1124,14 @@ jQuery( function( $ ) {
 		// 	} );
 		// 	$( '#rtMedia-start-upload' ).hide();
 		//
-		// 	jQuery( document ).on( 'click', '#rtm_show_upload_ui', function() {
-		// 		jQuery( '#rtm-media-gallery-uploader' ).slideToggle();
-		// 		uploaderObj.uploader.refresh();//Refresh the uploader for opera/IE fix on media page
-		// 		jQuery( '#rtm_show_upload_ui' ).toggleClass( 'primary' );
-		// 	} );
+
+	// TODO: line added ------------
+		if ( $( '#rtm_show_upload_ui' ).length > 0 ) {
+			jQuery(document).on('click', '#rtm_show_upload_ui', function () {
+				jQuery('#rtm-media-gallery-uploader').slideToggle();
+				jQuery('#rtm_show_upload_ui').toggleClass('primary');
+			});
+
 		// } else {
 		// 	jQuery( document ).on( 'click', '#rtm_show_upload_ui', function() {
 		// 		/*
@@ -1112,7 +1149,11 @@ jQuery( function( $ ) {
 		// 		jQuery( '#rtm-media-gallery-uploader' ).slideToggle();
 		// 		jQuery( '#rtm_show_upload_ui' ).toggleClass( 'primary' );
 		// 	} );
-		// }
+
+
+		}
+
+
 		//
 		// jQuery( document ).on( 'click', '.plupload_delete .rtmedia-delete-uploaded-media', function() {
 		// 	var that = $( this );
@@ -1133,6 +1174,7 @@ jQuery( function( $ ) {
 		// 		} );
 		// 	}
 		// } );
+	// TODO: Related to comment.
 
 } );
 

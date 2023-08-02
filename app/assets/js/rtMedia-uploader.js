@@ -26,6 +26,10 @@ jQuery(document).ready(function($) {
 
         editFileData: function (newData) {
             this.set('file', _.extend(this.get('file'), newData));
+        },
+
+        destroy: function () {
+            this.collection.remove(this);
         }
     });
 
@@ -82,6 +86,7 @@ jQuery(document).ready(function($) {
             this.$el.html( this.template( file ) );
 
             this.setThumbnail();
+            console.log( file, 'prog' );
             this.setProgress( file.percent || 0 );
             this.closeEditBox();
             this.setButton();
@@ -130,6 +135,14 @@ jQuery(document).ready(function($) {
         },
 
         setProgress: function (progress) {
+            var customProgressbar = null;
+
+            rtMediaHook.call( 'rtm_custom_progress_bar_content', [ this.model.get( 'file' ), customProgressbar ] );
+
+            if( customProgressbar ) {
+                this.$el.find( '.plupload_file_status' ).html( customProgressbar );
+            }
+
             progress = Number.isNaN(progress) ? 0 : parseInt(progress, 10);
 
             progress = Math.min(progress, 100);
@@ -155,6 +168,9 @@ jQuery(document).ready(function($) {
                 err_msg = rtmedia_max_file_msg + max_file_size;
             } else if ( file.error.code === -601 ) {
                 err_msg = rtmedia_file_extension_error_msg;
+            }
+            else {
+                err_msg = file.error.message || 'Something went wrong!';
             }
 
             this.$el.find('.rtm-error').attr('title', err_msg).show();
@@ -186,7 +202,7 @@ jQuery(document).ready(function($) {
         },
 
         removeFile: function () {
-            this.model.collection.remove(this.model);
+            this.model.destroy();
             this.remove();
         }
     });
@@ -196,6 +212,12 @@ jQuery(document).ready(function($) {
 
         modelId: function (attributes) {
             return attributes.file.name;
+        },
+
+        initialize: function() {
+            this.on('remove', function( model ) {
+                console.log( 'Bye Bye', model );
+            });
         }
     });
 
@@ -230,11 +252,26 @@ jQuery(document).ready(function($) {
             });
             this.uploader = null;
 
-            this.listenTo( this.collection, 'add remove reset change', this.updateUploader );
+            this.listenTo( this.collection, 'add reset change', this.updateUploader );
+            this.listenTo( this.collection, 'remove', this.removeFile );
 
             this.initUploader();
 
-            // this.collection.add( { file: { name: 'test.dmg', size: 1000, id: 'o_erewfwwe534r34rt43', type: 'file/dmg' } } );
+            /**
+             * Max file size and allowed file formats info.
+             */
+            window.file_size_info = rtmedia_max_file_msg + this.uploader.settings.max_file_size_msg;
+
+            var file_extension;
+            if ( rtmedia_version_compare( rtm_wp_version, '3.9' ) ) { // Plupload getting updated in 3.9
+                file_extension = this.uploader.settings.filters.mime_types[0].extensions;
+            } else {
+                file_extension = this.uploader.settings.filters[0].extensions;
+            }
+
+            window.file_extn_info = rtmedia_allowed_file_formats + ' : ' + file_extension.split( ',' ).join( ', ' );
+
+            this.$el.find( '.rtm-file-size-limit' ).attr( 'title', window.file_size_info + '\n' + window.file_extn_info );
         },
 
         initUploader: function() {
@@ -247,21 +284,55 @@ jQuery(document).ready(function($) {
             this.uploader.bind( 'UploadProgress', this.onUploadProgress.bind(this) );
             this.uploader.bind( 'Error', this.onUploadError.bind(this) );
             this.uploader.bind( 'UploadComplete', this.onUploadComplete.bind(this) );
+            this.uploader.bind( 'BeforeUpload', this.onBeforeUpload.bind(this) );
+            this.uploader.bind( 'FileUploaded', this.onFileUploaded.bind(this) );
+
+            if ( config.filters[0].extensions.length === 0 ) {
+                this.uploader.bind( 'Browse', this.onBrowse.bind(this) );
+            }
 
             this.uploader.init();
         },
 
         updateUploader: function () {
-            var button = this.$el.find( '.start-media-upload' );
+            var upload_button = this.$el.find( '.start-media-upload' );
+            var browse_button = this.$el.find( '.rtmedia-upload-input' );
 
-            if ( this.collection.length ) {
-                button.show();
+            if ( this.collection.length && this.uploader.files.length ) {
+                browse_button.attr( 'value', rtmedia_add_more_files_msg );
+
+                if ( typeof rtmedia_direct_upload_enabled !== 'undefined' && rtmedia_direct_upload_enabled === '1' ) {
+                    upload_button.hide();
+                    setTimeout( (function () {
+                        this.startUpload();
+                    }).bind(this), 2000 );
+                } else {
+                    upload_button.show();
+                    upload_button.focus();
+                }
+
             } else {
-                button.hide();
+                browse_button.attr( 'value', rtmedia_select_your_files_msg );
+                upload_button.hide();
             }
         },
 
+        removeFile: function ( model ) {
+            var file = model.get( 'file' );
+            this.uploader.removeFile( file );
+
+            this.updateUploader();
+        },
+
         startUpload: function () {
+            var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', { src: 'uploader' } );
+
+            // TODO: check policy before upload
+
+            if ( allow_upload === false ) {
+                return false;
+            }
+
             this.uploader.start();
         },
 
@@ -271,7 +342,15 @@ jQuery(document).ready(function($) {
             files.forEach( function( file ) {
                 var isDuplicate = self.collection.findWhere( { name: file.name } );
 
-                if ( isDuplicate ) {
+                var hook_result = rtMediaHook.call( 'rtmedia_js_file_added', [ uploader, file ] );
+
+                console.log( file );
+
+                if( hook_result === false ) {
+                    window.alert( 'Upload Size exceed!' );
+                }
+
+                if ( hook_result === false || isDuplicate ) {
                     uploader.removeFile( file );
                     return;
                 }
@@ -279,59 +358,24 @@ jQuery(document).ready(function($) {
                 self.collection.add( { file: file } );
             } );
 
-            // var upload_size_error = false;
-            // 		var upload_error = '';
-            // 		var upload_error_sep = '';
-            // 		var upload_remove_array = [ ];
-            //
-            // 		var select_btn = jQuery( '.rtmedia-upload-input' );
-            // 		var upload_start_btn = jQuery('.start-media-upload');
-
-            		// $.each( files, function( i, file ) {
-            		// 	//Set file title along with file
-            		// 	rtm_file_name_array = file.name.split( '.' );
-            		// 	file.title = rtm_file_name_array[0];
-                    //
-            		// 	var hook_respo = rtMediaHook.call( 'rtmedia_js_file_added', [ up, file, '#rtmedia_uploader_filelist' ] );
-                    //
-            		// 	if ( hook_respo == false ) {
-            		// 		file.status = -1;
-            		// 		upload_remove_array.push( file.id );
-            		// 		return true;
-            		// 	}
-                    //
-            		// 	// select_btn.attr( 'value', rtmedia_add_more_files_msg );
-            		// 	// if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-            		// 	// 	upload_start_btn.hide();
-            		// 	// } else {
-            		// 	// 	upload_start_btn.show();
-            		// 	// }
-            		// } );
-
-
-            		// rtMediaHook.call( 'rtmedia_js_after_files_added', [ up, files ] );
-                    //
-            		// if ( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-            		// 	var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', { src: 'uploader' } );
-            		// 	if ( allow_upload == false ) {
-            		// 		return false;
-            		// 	}
-            		// 	uploaderObj.uploadFiles();
-            		// }
-                    //
-            		// upload_start_btn.focus();
-
             return true;
         },
 
         onUploadProgress: function( uploader, file ) {
-            var model = this.collection.findWhere( { id: file.id } );
+            var model = this.collection.findWhere( { name: file.name } );
 
             if ( model ) {
                 model.set( 'file', file );
+                console.log( 'model', model );
             }
 
             console.log( file );
+
+            if( ! window.onbeforeunload ) {
+                window.onbeforeunload = function() {
+                    return rtmedia_upload_progress_error_message;
+                };
+            }
         },
 
         onUploadError: function( uploader, error ) {
@@ -345,19 +389,19 @@ jQuery(document).ready(function($) {
         },
 
         onUploadComplete: function( uploader, files ) {
-            // activity_id = -1;
-            // var hook_respo = rtMediaHook.call( 'rtmedia_js_after_files_uploaded' );
-            // if ( typeof rtmedia_gallery_reload_on_upload != 'undefined' && rtmedia_gallery_reload_on_upload == '1' ) { //Reload gallery view when upload completes if enabled( by default enabled)
-            //     if ( hook_respo != false ) {
-            //         galleryObj.reloadView();
-            //     }
-            // }
+            // activity_id = -1; TODO: not??
 
             this.collection.reset();
-            window.rtGalleryObjects.forEach( function ( rtGalleryObject ) {
-                rtGalleryObject.reload();
-            } );
 
+            var hook_respo = rtMediaHook.call( 'rtmedia_js_after_files_uploaded' );
+
+            if ( typeof rtmedia_gallery_reload_on_upload !== 'undefined' && rtmedia_gallery_reload_on_upload === '1' ) { //Reload gallery view when upload completes if enabled( by default enabled)
+                if ( hook_respo !== false ) {
+                    window.rtGalleryObjects.forEach( function ( rtGalleryObject ) {
+                        rtGalleryObject.reload();
+                    } );
+                }
+            }
 
             // apply_rtMagnificPopup( jQuery( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' ) );
 
@@ -372,7 +416,92 @@ jQuery(document).ready(function($) {
             //     }
             // }
 
+            window.onbeforeunload = null;
+        },
+
+        onBrowse: function ( uploader ) {
+            rtmedia_gallery_action_alert_message( rtmedia_media_disabled_error_message, 'warning' );
+        },
+
+        onBeforeUpload: function ( uploader, file ) {
+            rtMediaHook.call( 'rtmedia_js_before_upload', { uploader: uploader, file: file, src: 'uploader' } );
+
+            uploader.settings.multipart_params.title = file.title;
+            uploader.settings.multipart_params.description = file.description;
+
+            var privacy = this.$el.find( '#rtm-file_upload-ui select.privacy' ).val();
+            if ( privacy !== undefined ) {
+                uploader.settings.multipart_params.privacy = privacy;
+            }
+
+            var redirection = this.$el.find( '#rt_upload_hf_redirect' );
+            if ( 0 < redirection.length ) {
+            	uploader.settings.multipart_params.redirect    = uploader.files.length;
+                uploader.settings.multipart_params.redirection = redirection.val();
+            }
+
+            this.$el.find( '#rtmedia-uploader-form input[type=hidden]' ).each( function() {
+                uploader.settings.multipart_params[$( this ).attr( 'name' )] = $( this ).val();
+            } );
+
+            uploader.settings.multipart_params.activity_id = -1;
+            if ( this.$el.find( '#rtmedia-uploader-form .rtmedia-user-album-list' ).length > 0 ) {
+                uploader.settings.multipart_params.album_id = this.$el.find( '#rtmedia-uploader-form .rtmedia-user-album-list' ).find( ':selected' ).val();
+            } else if ( this.$el.find( '#rtmedia-uploader-form .rtmedia-current-album' ).length > 0 ) {
+                uploader.settings.multipart_params.album_id = this.$el.find( '#rtmedia-uploader-form .rtmedia-current-album' ).val();
+            }
+
+            rtMediaHook.call( 'rtmedia_js_before_file_upload', [ uploader, file ] );
+        },
+
+        onFileUploaded: function( uploader, file, response ) {
+            if ( /MSIE (\d+\.\d+);/.test( navigator.userAgent ) ) { //Test for MSIE x.x;
+                var ieversion = new Number( RegExp.$1 ); // Capture x.x portion and store as a number
+
+                if ( ieversion < 10 ) {
+                    if ( typeof response.response !== 'undefined' ) {
+                        response.status = 200;
+                    }
+                }
+            }
+
+
+            		// try {
+            		// 	rtnObj = JSON.parse( res.response );
+            		// 	uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
+            		// 	activity_id = rtnObj.activity_id;
+            		// 	if ( rtnObj.permalink != '' ) {
+            		// 		$( "#" + file.id + " .plupload_file_name" ).html( "<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.title.substring( 0, 40 ).replace( /(<([^>]+)>)/ig, "" ) + "</a>" );
+            		// 		$( "#" + file.id + " .plupload_media_edit" ).html( "<a href='" + rtnObj.permalink + "edit' target='_blank'><span title='" + rtmedia_edit_media + "'><i class='dashicons dashicons-edit'></i> " + rtmedia_edit + "</span></a>" );
+            		// 		$( "#" + file.id + " .plupload_delete" ).html( "<span id='" + rtnObj.media_id + "' class='rtmedia-delete-uploaded-media dashicons dashicons-dismiss' title='" + rtmedia_delete + "'></span>" );
+            		// 	}
+                    //
+            		// } catch ( e ) {
+            		// 	// Console.log('Invalid Activity ID');
+            		// }
+                    // TODO: remain
+
+            		if ( response.status === 200 || response.status === 302 ) {
+                        this.upload_count++;
+
+            			rtMediaHook.call( 'rtmedia_js_after_file_upload', [ uploader, file, response.response ] );
+            		} else {
+            			var model = this.collection.findWhere( { name: file.name } );
+
+                        file.error = {
+                            code: -700,
+                            message: rtmedia_upload_failed_msg
+                        };
+
+                        model.set( 'file', file );
+            		}
+
+
+            // 		files = up.files;
+            // 		lastfile = files[files.length - 1];
+            // TODO: ???
         }
+
     });
 
     /**
