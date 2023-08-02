@@ -298,9 +298,13 @@ button#rtmedia-add-media-button-post-update .dashicons {
   line-height: 20px;
 }
 
-.plupload_file_thumb img {
+.plupload_file_thumb {
   width: 100px;
   height: 100px;
+}
+.plupload_file_thumb img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 

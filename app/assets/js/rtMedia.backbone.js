@@ -7,6 +7,8 @@ var objUploadView;
 var rtmedia_load_template_flag = true;
 var rtmedia_add_media_button_post_update = false;
 
+window.rtGalleryObjects = [];
+
 var __ = wp.i18n.__;
 
 jQuery( document ).ready( function () {
@@ -646,9 +648,12 @@ jQuery( function( $ ) {
 
 	$(document).ready( function() {
 		var galleryContainers = $('[data-gallery]');
+		window.rtGalleryObjects = [];
+
 		galleryContainers.each(function () {
 			var containerId = $(this).attr('id');
-			new rtMedia.rtGalleryView({ containerId: containerId }).setElement(this).render();
+			var rtGalleryObject = new rtMedia.rtGalleryView({ containerId: containerId, el: this });
+			window.rtGalleryObjects.push( rtGalleryObject );
 		});
 	});
 
@@ -671,7 +676,7 @@ jQuery( function( $ ) {
 		rtMediaScrollComments();
 	} );
 
-		//
+
 		// window.UploadView = Backbone.View.extend( {
 		// 	events: {
 		// 		'click #rtMedia-start-upload': 'uploadFiles'
@@ -718,13 +723,6 @@ jQuery( function( $ ) {
 		// 		}
 		//
 		// 		return this;
-		// 	},
-		// 	uploadFiles: function( e ) {
-		// 		if ( e != undefined ) {
-		// 			e.preventDefault();
-		// 		}
-		// 		this.uploader.start();
-		// 		return false;
 		// 	}
 		//
 		// } );

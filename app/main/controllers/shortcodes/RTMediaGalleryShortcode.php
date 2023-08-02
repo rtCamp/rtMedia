@@ -100,7 +100,7 @@ class RTMediaGalleryShortcode {
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
 
-		$upload_max_size = ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M';
+		$upload_max_size = ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'MB';
 		$params          = array(
 			'url'                 => $url,
 			'runtimes'            => 'html5,flash,html4',

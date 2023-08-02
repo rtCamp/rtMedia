@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.13\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2023-07-28 12:06:30+00:00\n"
+"POT-Creation-Date: 2023-08-02 06:52:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,7 +70,7 @@ msgstr ""
 #: app/admin/RTMediaAdmin.php:623 app/admin/RTMediaAdmin.php:1105
 #: app/admin/RTMediaAdmin.php:1106 app/importers/RTMediaActivityUpgrade.php:189
 #: app/importers/RTMediaMigration.php:96 app/main/RTMedia.php:1208
-#: app/main/RTMedia.php:2182
+#: app/main/RTMedia.php:2183
 msgid "rtMedia"
 msgstr ""
 
@@ -2303,7 +2303,7 @@ msgstr ""
 msgid "rtMedia: Import Media Size"
 msgstr ""
 
-#: app/main/RTMedia.php:163 app/main/RTMedia.php:1532 app/main/RTMedia.php:1625
+#: app/main/RTMedia.php:163 app/main/RTMedia.php:1533 app/main/RTMedia.php:1626
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:760
 #: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:114
 #: app/main/controllers/upload/processors/RTMediaUploadFile.php:246
@@ -2353,12 +2353,12 @@ msgstr ""
 
 #: app/main/RTMedia.php:880 app/main/controllers/media/RTMediaAlbum.php:56
 #: app/main/controllers/template/rtmedia-actions.php:127
-#: app/main/controllers/upload/RTMediaUploadView.php:84
-#: app/main/controllers/upload/RTMediaUploadView.php:96
+#: app/main/controllers/upload/RTMediaUploadView.php:89
+#: app/main/controllers/upload/RTMediaUploadView.php:101
 msgid "Album"
 msgstr ""
 
-#: app/main/RTMedia.php:884 app/main/RTMedia.php:1428
+#: app/main/RTMedia.php:884 app/main/RTMedia.php:1429
 #: app/main/controllers/media/RTMediaAlbum.php:55
 #: app/main/controllers/media/RTMediaAlbum.php:67
 #: app/main/controllers/template/RTMediaNav.php:326
@@ -2553,23 +2553,29 @@ msgstr ""
 msgid "Edit File Name"
 msgstr ""
 
-#: app/main/RTMedia.php:1429
-msgid "Privacy updated successfully."
+#: app/main/RTMedia.php:1419 app/main/templates/media-group-edit-screen.php:41
+#: app/main/templates/privacy-content.php:37
+#: templates/media/album-single-edit.php:69
+msgid "Save Changes"
 msgstr ""
 
 #: app/main/RTMedia.php:1430
+msgid "Privacy updated successfully."
+msgstr ""
+
+#: app/main/RTMedia.php:1431
 msgid "Couldn't change privacy, please try again."
 msgstr ""
 
-#: app/main/RTMedia.php:1468
+#: app/main/RTMedia.php:1469
 msgid "There are some uploads in progress. Do you want to cancel them?"
 msgstr ""
 
-#: app/main/RTMedia.php:1470
+#: app/main/RTMedia.php:1471
 msgid "Media upload is disabled. Please Enable at least one media type to proceed."
 msgstr ""
 
-#: app/main/RTMedia.php:1581
+#: app/main/RTMedia.php:1582
 msgid "Adding media in Comments is not allowed"
 msgstr ""
 
@@ -2581,7 +2587,7 @@ msgstr ""
 
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:819
 #: app/main/controllers/media/RTMediaComment.php:213
-#: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:135
+#: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:137
 #: app/main/controllers/template/rtmedia-functions.php:2357
 msgid "You are not allowed to upload/attach media."
 msgstr ""
@@ -2911,7 +2917,7 @@ msgid "Untitled Album"
 msgstr ""
 
 #: app/main/controllers/media/RTMediaComment.php:191
-#: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:116
+#: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:118
 msgid "The web browser on your device cannot be used to upload files."
 msgstr ""
 
@@ -3319,39 +3325,39 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:150
+#: app/main/controllers/upload/RTMediaUploadView.php:155
 msgid "Privacy:"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:159
-#: app/main/controllers/upload/RTMediaUploadView.php:220
-#: app/main/controllers/upload/RTMediaUploadView.php:237
-#: app/main/controllers/upload/RTMediaUploadView.php:258
+#: app/main/controllers/upload/RTMediaUploadView.php:164
+#: app/main/controllers/upload/RTMediaUploadView.php:225
+#: app/main/controllers/upload/RTMediaUploadView.php:242
+#: app/main/controllers/upload/RTMediaUploadView.php:263
 msgid "File Upload"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:163
+#: app/main/controllers/upload/RTMediaUploadView.php:168
 msgid "Select your files"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:164
+#: app/main/controllers/upload/RTMediaUploadView.php:169
 msgid "or"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:164
+#: app/main/controllers/upload/RTMediaUploadView.php:169
 msgid "Drop your files here"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:216
+#: app/main/controllers/upload/RTMediaUploadView.php:221
 msgid "Start upload"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:244
-#: app/main/controllers/upload/RTMediaUploadView.php:265
+#: app/main/controllers/upload/RTMediaUploadView.php:249
+#: app/main/controllers/upload/RTMediaUploadView.php:270
 msgid "Attach Media"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:280
+#: app/main/controllers/upload/RTMediaUploadView.php:285
 msgid "Insert from URL"
 msgstr ""
 
@@ -3455,12 +3461,6 @@ msgstr ""
 #: app/main/templates/media-group-create-screen.php:29
 #: app/main/templates/media-group-edit-screen.php:29
 msgid "Group Admin only"
-msgstr ""
-
-#: app/main/templates/media-group-edit-screen.php:41
-#: app/main/templates/privacy-content.php:37
-#: templates/media/album-single-edit.php:69
-msgid "Save Changes"
 msgstr ""
 
 #: app/main/templates/media-pagination.php:15
