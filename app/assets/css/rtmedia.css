@@ -223,10 +223,25 @@ form .rtmedia-container .rtm-plupload-list li,
   z-index: 1;
   position: relative;
 }
+#rtmedia-uploader-form .rtm-plupload-list li.upload-success,
+form .rtmedia-container .rtm-plupload-list li.upload-success,
+#rtmedia_uploader_filelist li.upload-success {
+  border: 1px solid dodgerblue;
+}
 #rtmedia-uploader-form .rtm-plupload-list li.upload-error,
 form .rtmedia-container .rtm-plupload-list li.upload-error,
 #rtmedia_uploader_filelist li.upload-error {
   border: 1px solid red;
+}
+#rtmedia-uploader-form .rtm-plupload-list li.upload-progress,
+form .rtmedia-container .rtm-plupload-list li.upload-progress,
+#rtmedia_uploader_filelist li.upload-progress {
+  border: 1px solid green;
+}
+#rtmedia-uploader-form .rtm-plupload-list li.upload-queue,
+form .rtmedia-container .rtm-plupload-list li.upload-queue,
+#rtmedia_uploader_filelist li.upload-queue {
+  border: 1px solid yellow;
 }
 #rtmedia-uploader-form .rtm-plupload-list img,
 form .rtmedia-container .rtm-plupload-list img,
@@ -353,6 +368,8 @@ button#rtmedia-add-media-button-post-update .dashicons {
   line-height: 15px;
   text-align: center;
   word-wrap: initial;
+  -webkit-transition: width 0.5s ease-out;
+          transition: width 0.5s ease-out;
 }
 
 .rtm-form .rtm-field-wrap {

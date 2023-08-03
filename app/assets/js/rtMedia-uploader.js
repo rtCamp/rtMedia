@@ -1,8 +1,11 @@
 jQuery(document).ready(function($) {
+    window.uploaderObjs = {};
+
     var rtFileModel = Backbone.Model.extend({
         defaults: {
             name: '',
-            file: null
+            file: null,
+            error: false
         },
 
         set: function (key, val, options) {
@@ -20,6 +23,7 @@ jQuery(document).ready(function($) {
 
             this.set('file', file);
             this.set('name', file.name);
+            this.set('error', !!file.error);
 
             this.on('edit', this.editFileData, this);
         },
@@ -29,13 +33,17 @@ jQuery(document).ready(function($) {
         },
 
         destroy: function () {
+            if( this.get('file').status === plupload.UPLOADING ) {
+                return;
+            }
+
             this.collection.remove(this);
         }
     });
 
     var rtFileView = Backbone.View.extend({
-        tagName: 'div',
-        className: 'rtm-preview-file-item',
+        tagName: 'li',
+        className: 'plupload_file ui-state-default plupload_queue_li',
 
         events: {
             'click .rtm-edit-box .rtm-open-edit-box': 'openEditBox',
@@ -44,7 +52,6 @@ jQuery(document).ready(function($) {
         },
 
         template: _.template(`
-              <li class="plupload_file ui-state-default plupload_queue_li" id="<%= id %>" title="">
                 <div id="file_thumb_<%= id %>" class="plupload_file_thumb"></div>
                 <div class="plupload_file_status">
                     <div class="plupload_file_progress ui-widget-header"></div>
@@ -73,11 +80,11 @@ jQuery(document).ready(function($) {
                 <div class="plupload_file_size">
                   <%= plupload.formatSize(size).toUpperCase() %>
                 </div>
-              </li>
         `),
 
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'remove', this.remove );
             this.render();
         },
 
@@ -86,10 +93,10 @@ jQuery(document).ready(function($) {
             this.$el.html( this.template( file ) );
 
             this.setThumbnail();
-            console.log( file, 'prog' );
             this.setProgress( file.percent || 0 );
             this.closeEditBox();
             this.setButton();
+            this.setStatus();
 
             return this;
         },
@@ -174,6 +181,23 @@ jQuery(document).ready(function($) {
             this.$el.find('.rtm-error').attr('title', err_msg).show();
         },
 
+        setStatus: function () {
+            var file = this.model.get('file');
+            var status = file.status;
+
+            this.$el.removeClass('upload-success upload-progress upload-queue upload-error');
+
+            if (status === plupload.DONE) {
+                this.$el.addClass('upload-success');
+            } else if (status === plupload.UPLOADING) {
+                this.$el.addClass('upload-progress');
+            } else if (status === plupload.QUEUED) {
+                this.$el.addClass('upload-queue');
+            } else if (status === plupload.FAILED || file.error) {
+                this.$el.addClass('upload-error');
+            }
+        },
+
         closeEditBox: function () {
             this.$el.find('.rtm-edit-box').children().show();
             this.$el.find('.rtm-file-edit').hide();
@@ -201,7 +225,6 @@ jQuery(document).ready(function($) {
 
         removeFile: function () {
             this.model.destroy();
-            this.remove();
         }
     });
 
@@ -210,12 +233,6 @@ jQuery(document).ready(function($) {
 
         modelId: function (attributes) {
             return attributes.file.name;
-        },
-
-        initialize: function() {
-            this.on('remove', function( model ) {
-                console.log( 'Bye Bye', model );
-            });
         }
     });
 
@@ -326,13 +343,15 @@ jQuery(document).ready(function($) {
                 'rtmedia_js_upload_file',
                 {
                     src: 'uploader',
-                    terms_element: this.$el.find( '.rtmedia_upload_terms_conditions' )
+                    terms_element: this.$el.find( '#rtmedia_upload_terms_conditions' )
                 }
             );
 
             if ( allow_upload === false ) {
                 return false;
             }
+
+            this.$el.find('.rt_alert_msg').remove();
 
             this.uploader.start();
         },
@@ -343,17 +362,20 @@ jQuery(document).ready(function($) {
             files.forEach( function( file ) {
                 var isDuplicate = self.collection.findWhere( { name: file.name } );
 
-                var hook_result = rtMediaHook.call( 'rtmedia_js_file_added', [ uploader, file ] );
-
-                console.log( file );
-
-                if( hook_result === false ) {
-                    window.alert( 'Upload Size exceed!' );
-                }
-
-                if ( hook_result === false || isDuplicate ) {
+                if ( isDuplicate ) {
                     uploader.removeFile( file );
                     return;
+                }
+
+                var hook_result = rtMediaHook.call( 'rtmedia_js_file_added', [ uploader, file ] );
+
+                if( hook_result === false ) {
+                    uploader.removeFile( file );
+                    file.status = plupload.FAILED;
+
+                    file.error = {
+                        message: window.plupload_error_message || 'Invalid File!'
+                    };
                 }
 
                 self.collection.add( { file: file } );
@@ -367,10 +389,7 @@ jQuery(document).ready(function($) {
 
             if ( model ) {
                 model.set( 'file', file );
-                console.log( 'model', model );
             }
-
-            console.log( file );
 
             if( ! window.onbeforeunload ) {
                 window.onbeforeunload = function() {
@@ -380,8 +399,6 @@ jQuery(document).ready(function($) {
         },
 
         onUploadError: function( uploader, error ) {
-            console.log( error );
-
             if( error.file ) {
                 var file = error.file;
                 file.error = error;
@@ -453,18 +470,17 @@ jQuery(document).ready(function($) {
 
             if ( response.status === 200 || response.status === 302 ) {
                 this.upload_count++;
-
-                rtMediaHook.call( 'rtmedia_js_after_file_upload', [ uploader, file, response.response ] );
             } else {
-                var model = this.collection.findWhere( { name: file.name } );
-
                 file.error = {
                     code: -700,
                     message: rtmedia_upload_failed_msg
                 };
-
-                model.set( 'file', file );
             }
+
+            rtMediaHook.call( 'rtmedia_js_after_file_upload', [ uploader, file, response.response ] );
+
+            var model = this.collection.findWhere( { name: file.name } );
+            model.set( 'file', file );
         }
 
     });
@@ -473,9 +489,11 @@ jQuery(document).ready(function($) {
      * Attach View and Model to all uploader instances
      */
     $('.rtmedia-container-wrapper__uploader').each(function() {
-        new rtFileUploader( {
+        var uploader = new rtFileUploader( {
             containerId: $(this).attr('id'),
             el: $(this)
         } );
+
+        window.uploaderObjs[ $(this).attr('id') ] = uploader;
     });
 });

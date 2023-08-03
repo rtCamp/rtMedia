@@ -75,8 +75,20 @@ form .rtmedia-container .rtm-plupload-list,
 		z-index: 1;
 		position: relative;
 
+		&.upload-success {
+			border: 1px solid dodgerblue;
+		}
+
 		&.upload-error {
 			border: 1px solid red;
+		}
+
+		&.upload-progress {
+			border: 1px solid green;
+		}
+
+		&.upload-queue {
+			border: 1px solid yellow;
 		}
 	}
 
@@ -201,6 +213,7 @@ button#rtmedia-add-media-button-post-update {
 	line-height: 15px;
 	text-align: center;
 	word-wrap: initial;
+	transition: width .5s ease-out;
 }
 
 .rtm-form {
