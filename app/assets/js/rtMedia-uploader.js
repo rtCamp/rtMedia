@@ -91,8 +91,6 @@ jQuery(document).ready(function($) {
             this.closeEditBox();
             this.setButton();
 
-            // TODO: handle file upload error.
-
             return this;
         },
 
@@ -240,7 +238,6 @@ jQuery(document).ready(function($) {
 
     var rtFileUploader = Backbone.View.extend({
         events: {
-            // 'click .rtm-uploader-tabs li': 'tabSwitch',
             'click .start-media-upload': 'startUpload'
         },
 
@@ -325,9 +322,13 @@ jQuery(document).ready(function($) {
         },
 
         startUpload: function () {
-            var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', { src: 'uploader' } );
-
-            // TODO: check policy before upload
+            var allow_upload = rtMediaHook.call(
+                'rtmedia_js_upload_file',
+                {
+                    src: 'uploader',
+                    terms_element: this.$el.find( '.rtmedia_upload_terms_conditions' )
+                }
+            );
 
             if ( allow_upload === false ) {
                 return false;
@@ -389,8 +390,6 @@ jQuery(document).ready(function($) {
         },
 
         onUploadComplete: function( uploader, files ) {
-            // activity_id = -1; TODO: not??
-
             this.collection.reset();
 
             var hook_respo = rtMediaHook.call( 'rtmedia_js_after_files_uploaded' );
@@ -402,19 +401,6 @@ jQuery(document).ready(function($) {
                     } );
                 }
             }
-
-            // apply_rtMagnificPopup( jQuery( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' ) );
-
-            // var redirection = $( '#rt_upload_hf_redirect' );
-            //
-            // if( '' !== rtnObj && 'undefined' !== typeof( rtnObj.redirect_url ) && null !== rtnObj.redirect_url ) {
-            //     if ( uploaderObj.upload_count === up.files.length
-            //         && 0 < redirection.length
-            //         && 'true' === redirection.val()
-            //         && 0 === rtnObj.redirect_url.indexOf( 'http' ) ) {
-            //         redirect_request = true;
-            //     }
-            // }
 
             window.onbeforeunload = null;
         },
@@ -465,41 +451,20 @@ jQuery(document).ready(function($) {
                 }
             }
 
+            if ( response.status === 200 || response.status === 302 ) {
+                this.upload_count++;
 
-            		// try {
-            		// 	rtnObj = JSON.parse( res.response );
-            		// 	uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
-            		// 	activity_id = rtnObj.activity_id;
-            		// 	if ( rtnObj.permalink != '' ) {
-            		// 		$( "#" + file.id + " .plupload_file_name" ).html( "<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.title.substring( 0, 40 ).replace( /(<([^>]+)>)/ig, "" ) + "</a>" );
-            		// 		$( "#" + file.id + " .plupload_media_edit" ).html( "<a href='" + rtnObj.permalink + "edit' target='_blank'><span title='" + rtmedia_edit_media + "'><i class='dashicons dashicons-edit'></i> " + rtmedia_edit + "</span></a>" );
-            		// 		$( "#" + file.id + " .plupload_delete" ).html( "<span id='" + rtnObj.media_id + "' class='rtmedia-delete-uploaded-media dashicons dashicons-dismiss' title='" + rtmedia_delete + "'></span>" );
-            		// 	}
-                    //
-            		// } catch ( e ) {
-            		// 	// Console.log('Invalid Activity ID');
-            		// }
-                    // TODO: remain
+                rtMediaHook.call( 'rtmedia_js_after_file_upload', [ uploader, file, response.response ] );
+            } else {
+                var model = this.collection.findWhere( { name: file.name } );
 
-            		if ( response.status === 200 || response.status === 302 ) {
-                        this.upload_count++;
+                file.error = {
+                    code: -700,
+                    message: rtmedia_upload_failed_msg
+                };
 
-            			rtMediaHook.call( 'rtmedia_js_after_file_upload', [ uploader, file, response.response ] );
-            		} else {
-            			var model = this.collection.findWhere( { name: file.name } );
-
-                        file.error = {
-                            code: -700,
-                            message: rtmedia_upload_failed_msg
-                        };
-
-                        model.set( 'file', file );
-            		}
-
-
-            // 		files = up.files;
-            // 		lastfile = files[files.length - 1];
-            // TODO: ???
+                model.set( 'file', file );
+            }
         }
 
     });
