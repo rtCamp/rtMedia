@@ -676,11 +676,12 @@ jQuery( function( $ ) {
 		rtMediaScrollComments();
 	} );
 
-	// run only if it is a media page or album gallery
+	var currentRoute = typeof wp.data !== 'undefined' ? wp.data.select('core').getCurrentRoute() : null;
 
+	var isPostOrPage = currentRoute && (currentRoute.name === 'post' || currentRoute.name === 'page');
+	var isMediaPage = !! window.location.pathname.match('^/members/[A-Za-z]+/media/([A-Za-z]+/)?$');
 
-
-	if( $('.rtmedia-container-wrapper__uploader').length > 0 ) {
+	if( isPostOrPage || isMediaPage ) {
 		if ( typeof rtmedia_upload_type_filter == 'object' && rtmedia_upload_type_filter.length > 0 ) {
 			rtMedia_plupload_config.filters[0].extensions = rtmedia_upload_type_filter.join();
 		}
@@ -1162,8 +1163,12 @@ jQuery( function( $ ) {
 /** Activity Update Js **/
 
 jQuery( document ).ready( function( $ ) {
+	var currentRoute = typeof wp.data !== 'undefined' ? wp.data.select('core').getCurrentRoute() : null;
 
-	if( $('.rtmedia-container-wrapper__uploader').length >0 ) {
+	var isPostOrPage = currentRoute && (currentRoute.name === 'post' || currentRoute.name === 'page');
+	var isMediaPage = !! window.location.pathname.match('^/members/[A-Za-z]+/media/([A-Za-z]+/)?$');
+
+	if( isPostOrPage || isMediaPage ) {
 		return ;
 	}
 

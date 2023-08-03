@@ -489,11 +489,19 @@ jQuery(document).ready(function($) {
      * Attach View and Model to all uploader instances
      */
     $('.rtmedia-container-wrapper__uploader').each(function() {
-        var uploader = new rtFileUploader( {
+
+        var currentRoute = typeof wp.data !== 'undefined' ? wp.data.select('core').getCurrentRoute() : null;
+
+        var isPostOrPage = currentRoute && (currentRoute.name === 'post' || currentRoute.name === 'page');
+        var isMediaPage = !! window.location.pathname.match('^/members/[A-Za-z]+/media/([A-Za-z]+/)?$');
+
+        if( ! isPostOrPage && ! isMediaPage ) {
+            return ;
+        }
+
+        window.uploaderObjs[ $(this).attr('id') ] = new rtFileUploader( {
             containerId: $(this).attr('id'),
             el: $(this)
         } );
-
-        window.uploaderObjs[ $(this).attr('id') ] = uploader;
     });
 });
