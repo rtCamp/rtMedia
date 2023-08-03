@@ -1275,7 +1275,7 @@ class RTMedia {
 				array(
 					'jquery',
 					'rt-mediaelement-wp',
-					'rtmedia-emoji-picker'
+					'rtmedia-emoji-picker',
 				),
 				RTMEDIA_VERSION,
 				true
@@ -1373,6 +1373,7 @@ class RTMedia {
 		$rtmedia_main['rtmedia_edit_media']                         = __( 'Edit Media', 'buddypress-media' );
 		$rtmedia_main['rtmedia_remove_from_queue']                  = __( 'Remove from queue', 'buddypress-media' );
 		$rtmedia_main['rtmedia_add_more_files_msg']                 = __( 'Add more files', 'buddypress-media' );
+		$rtmedia_main['rtmedia_select_your_files_msg']              = __( 'Select your files', 'buddypress-media' );
 		$rtmedia_main['rtmedia_file_extension_error_msg']           = __( 'File not supported', 'buddypress-media' );
 		$rtmedia_main['rtmedia_more']                               = __( 'more', 'buddypress-media' );
 		$rtmedia_main['rtmedia_less']                               = __( 'less', 'buddypress-media' );
@@ -1416,6 +1417,7 @@ class RTMedia {
 		// Localizing strings for rtMedia.backbone.js.
 		$rtmedia_backbone_strings = array(
 			'rtm_edit_file_name' => esc_html__( 'Edit File Name', 'buddypress-media' ),
+			'rtm_save_file_name' => esc_html__( 'Save Changes', 'buddypress-media' ),
 		);
 
 		// Localise fot rtmedia-backcone js.

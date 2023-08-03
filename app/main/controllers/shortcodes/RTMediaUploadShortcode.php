@@ -43,6 +43,8 @@ class RTMediaUploadShortcode {
 		if ( is_callable( "RTMediaDeprecated::{$method_name}", true, $callable_name ) ) {
 			$this->deprecated = RTMediaDeprecated::$method_name();
 		}
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'rtmedia_uploader_enqueue_scripts' ) );
 	}
 
 	/**
@@ -139,5 +141,21 @@ class RTMediaUploadShortcode {
 				)
 			);
 		}
+	}
+
+	/**
+	 * Enqueue scripts and styles for uploader
+	 *
+	 * @return void
+	 */
+	public function rtmedia_uploader_enqueue_scripts() {
+		// This script is used to create the Uploader View using Backbone JS.
+		wp_enqueue_script(
+			'rtmedia-uploader',
+			RTMEDIA_URL . 'app/assets/js/rtMedia-uploader.js',
+			array( 'plupload', 'rtmedia-backbone' ),
+			RTMEDIA_VERSION,
+			true
+		);
 	}
 }

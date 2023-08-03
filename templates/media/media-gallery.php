@@ -10,7 +10,7 @@
 $rand_id = wp_rand( 0, 1000 );
 
 ?>
-<div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo intval( $rand_id ); ?>">
+<div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo intval( $rand_id ); ?>" data-gallery>
 	<?php do_action( 'rtmedia_before_media_gallery' ); ?>
 	<?php
 	$album_title = get_rtmedia_gallery_title();
@@ -119,6 +119,7 @@ $rand_id = wp_rand( 0, 1000 );
 					$display = 'display:none;';
 				}
 				?>
+				<input type="hidden" id="rtmedia_last_page" value="<?php echo esc_attr( $pages ); ?>" />
 				<a id="rtMedia-galary-next" style="<?php echo esc_attr( $display ); ?>" href="<?php esc_url( rtmedia_pagination_next_link() ); ?>">
 					<?php esc_html_e( 'Load More', 'buddypress-media' ); ?>
 				</a>

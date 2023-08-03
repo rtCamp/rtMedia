@@ -47,12 +47,10 @@
 	}
 
 	.rtmedia-item-thumbnail {
-		width: 150px;
 		text-align: center;
 
 		img {
 			display: inline-block;
-			max-height: inherit;
 			// Remove extra white space below image.
 		}
 	}
@@ -77,8 +75,20 @@ form .rtmedia-container .rtm-plupload-list,
 		z-index: 1;
 		position: relative;
 
+		&.upload-success {
+			border: 1px solid dodgerblue;
+		}
+
 		&.upload-error {
 			border: 1px solid red;
+		}
+
+		&.upload-progress {
+			border: 1px solid green;
+		}
+
+		&.upload-queue {
+			border: 1px solid yellow;
 		}
 	}
 
@@ -146,6 +156,17 @@ button#rtmedia-add-media-button-post-update {
 	}
 }
 
+.plupload_file_thumb {
+	width: 100px;
+	height: 100px;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
 .plupload_file_name {
 	font-size: 11px;
 	font-weight: bold;
@@ -192,6 +213,7 @@ button#rtmedia-add-media-button-post-update {
 	line-height: 15px;
 	text-align: center;
 	word-wrap: initial;
+	transition: width .5s ease-out;
 }
 
 .rtm-form {
@@ -267,6 +289,14 @@ button#rtmedia-add-media-button-post-update {
 
 		a.rtmedia-page-link {
 			padding: 8px;
+		}
+
+		.current {
+			color: #888;
+		}
+
+		a.rtmedia-page-link__num.current {
+			background: #fff;
 		}
 	}
 

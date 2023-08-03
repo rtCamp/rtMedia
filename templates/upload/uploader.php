@@ -152,8 +152,6 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 					}
 					?>
 
-					<input type="submit" id='rtMedia-start-upload' name="rtmedia-upload" value="<?php echo esc_attr( RTMEDIA_UPLOAD_LABEL ); ?>" />
-
 				</div>
 			</div>
 			<?php

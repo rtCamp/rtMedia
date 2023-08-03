@@ -854,11 +854,10 @@ jQuery( 'document' ).ready( function( $ ) {
         rtm_masonry_container.masonry( {
             itemSelector: '.rtmedia-list-item'
         } );
-        setInterval( function() {
+        setTimeout( function() {
             jQuery.each( jQuery( '.rtmedia-list.masonry .rtmedia-item-title' ), function( i, item ) {
                 jQuery( item ).width( jQuery( item ).siblings( '.rtmedia-item-thumbnail' ).children( 'img' ).width() );
             } );
-            rtm_masonry_reload( rtm_masonry_container );
         }, 1000 );
         jQuery.each( jQuery( '.rtmedia-list.masonry .rtmedia-item-title' ), function( i, item ) {
             jQuery( item ).width( jQuery( item ).siblings( '.rtmedia-item-thumbnail' ).children( 'img' ).width() );

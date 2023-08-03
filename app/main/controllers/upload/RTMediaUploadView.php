@@ -68,6 +68,11 @@ class RTMediaUploadView {
 		global $rtmedia_query;
 		$album = '';
 
+		$random_id = wp_rand( 0, 1000 );
+
+		// Uploader wrapper start.
+		echo "<div class='rtmedia-container-wrapper rtmedia-container-wrapper__uploader' id='rtmedia-container-wrapper-" . intval( $random_id ) . "'>";
+
 		if ( apply_filters( 'rtmedia_render_select_album_upload', true ) ) {
 
 			if ( $rtmedia_query && isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query['album_id'] ) && is_rtmedia_album( $rtmedia_query->media_query['album_id'] ) ) {
@@ -333,6 +338,9 @@ class RTMediaUploadView {
 
 		$upload_helper = new RTMediaUploadHelper();
 		include $this->locate_template( $template_name );
+
+		// Uploader wrapper end.
+		echo '</div>';
 	}
 
 	/**

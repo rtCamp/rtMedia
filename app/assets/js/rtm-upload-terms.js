@@ -89,6 +89,11 @@ if ( 'object' === typeof rtMediaHook ) {
         var isTermsEnabled = false;
 
         var terms = jQuery( '#rtmedia_upload_terms_conditions' );
+
+        if ( args.terms_element ) {
+            terms = args.terms_element;
+        }
+
         if ( 'uploader' === src ) {
 
             if ( 0 === terms.length ) {
