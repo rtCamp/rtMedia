@@ -463,7 +463,7 @@ class RTMediaTemplate {
 	 * Show success message for media update.
 	 */
 	public function media_update_success_messege() {
-		$message = apply_filters( 'rtmedia_update_media_message', esc_html__( 'Media updated Sucessfully', 'buddypress-media' ), false );
+		$message = apply_filters( 'rtmedia_update_media_message', esc_html__( 'Media updated Successfully', 'buddypress-media' ), false );
 		$html    = "<div class='rtmedia-success media-edit-messge'>" . esc_html( $message ) . '</div>';
 		echo wp_kses( apply_filters( 'rtmedia_update_media_message_html', $html, $message, false ), RTMedia::expanded_allowed_tags() );
 	}
