@@ -114,9 +114,11 @@ class Deactivation_Survey {
     
             if ( 'integer' === gettype( $response ) ) {
                 echo wp_json_encode( 'success' );
+				wp_die();
             }
         }
 
+	    echo wp_json_encode( 'failed' );
         wp_die();
     }
 
