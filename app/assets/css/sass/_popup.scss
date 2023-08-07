@@ -526,9 +526,8 @@
 	}
 
 	.rt-emoji-grid {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: repeat( auto-fill, minmax( 24px, 1fr ) );
 		left: 5px;
 		right: 5px;
 		top: 25px;
@@ -537,6 +536,10 @@
 
 		span {
 			padding: 1px;
+		}
+
+		br {
+			display: none;
 		}
 	}
 }
