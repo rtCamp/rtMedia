@@ -86,7 +86,7 @@ class RTMediaMediaSizeImporter {
 			return;
 		}
 		if ( $pending > 0 ) {
-			$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+			$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( ! ( isset( $page ) && 'rtmedia-migration-media-size-import' === $page ) ) {
 				$site_option = get_site_option( 'rtmedia_media_size_import_notice' );
 				if ( ! $site_option || 'hide' !== $site_option ) {

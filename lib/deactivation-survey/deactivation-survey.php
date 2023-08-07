@@ -77,7 +77,7 @@ class Deactivation_Survey {
 
         // Filter the inputs.
         $site_url = filter_input( INPUT_POST, 'site_url', FILTER_SANITIZE_URL );
-        $reason   = filter_input( INPUT_POST, 'reason', FILTER_SANITIZE_STRING );
+        $reason   = filter_input( INPUT_POST, 'reason', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
         $user     = filter_input( INPUT_POST, 'user', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
         $data = [

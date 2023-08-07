@@ -89,8 +89,8 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 			 * Add playlist Save functionality
 			 * By: Yahil
 			 */
-			$rt_album_creation_control      = sanitize_text_field( filter_input( INPUT_POST, 'rt_album_creation_control', FILTER_SANITIZE_STRING ) );
-			$rtmp_playlist_creation_control = sanitize_text_field( filter_input( INPUT_POST, 'rtmp_playlist_creation_control', FILTER_SANITIZE_STRING ) );
+			$rt_album_creation_control      = sanitize_text_field( filter_input( INPUT_POST, 'rt_album_creation_control', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+			$rtmp_playlist_creation_control = sanitize_text_field( filter_input( INPUT_POST, 'rtmp_playlist_creation_control', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 			/**
 			 * Save details 'ALBUM CREATION CONTROL' and 'PLAYLIST CREATION CONTROL'
@@ -143,7 +143,7 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 		public function edit_screen_save( $group_id = null ) {
 			global $bp;
 
-			$is_save = sanitize_text_field( filter_input( INPUT_POST, 'save', FILTER_SANITIZE_STRING, FILTER_FLAG_EMPTY_STRING_NULL ) );
+			$is_save = sanitize_text_field( filter_input( INPUT_POST, 'save', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_EMPTY_STRING_NULL ) );
 
 			/**
 			 * Updated the following condition
@@ -160,8 +160,8 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 			 * Add PLAYLIST CREATION CONTROL save functionality
 			 * By: Yahil
 			 */
-			$rt_album_creation_control      = sanitize_text_field( filter_input( INPUT_POST, 'rt_album_creation_control', FILTER_SANITIZE_STRING ) );
-			$rtmp_playlist_creation_control = sanitize_text_field( filter_input( INPUT_POST, 'rtmp_playlist_creation_control', FILTER_SANITIZE_STRING ) );
+			$rt_album_creation_control      = sanitize_text_field( filter_input( INPUT_POST, 'rt_album_creation_control', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+			$rtmp_playlist_creation_control = sanitize_text_field( filter_input( INPUT_POST, 'rtmp_playlist_creation_control', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 			check_admin_referer( 'groups_edit_save_' . $this->slug );
 

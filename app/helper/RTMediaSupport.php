@@ -51,14 +51,14 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			}
 
 			$this->curr_sub_tab = 'support';
-			$tab                = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_STRING );
+			$tab                = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( isset( $tab ) ) {
 				$this->curr_sub_tab = $tab;
 			}
 
 			// Check if download debug info request is made or not.
-			$nonce = filter_input( INPUT_POST, 'download_debuginfo_wpnonce', FILTER_SANITIZE_STRING );
-			$info  = filter_input( INPUT_POST, 'download_debuginfo', FILTER_SANITIZE_STRING );
+			$nonce = filter_input( INPUT_POST, 'download_debuginfo_wpnonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$info  = filter_input( INPUT_POST, 'download_debuginfo', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 			if ( isset( $info ) && '1' === $info && is_admin() ) {
 				if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'rtmedia-download-debuginfo' ) ) {
@@ -180,7 +180,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 */
 		public function service_selector() {
 			// todo: nonce required.
-			$form = filter_input( INPUT_POST, 'form', FILTER_SANITIZE_STRING );
+			$form = filter_input( INPUT_POST, 'form', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 			include RTMEDIA_PATH . 'app/helper/templates/service-sector.php';
 		}
@@ -195,7 +195,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 * @return void
 		 */
 		public function call_get_form( $page = '' ) {
-			$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+			$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( isset( $page ) && 'rtmedia-support' === $page ) {
 				if ( 'support' === $this->curr_sub_tab ) {
 					echo "<div id='rtmedia_service_contact_container' class='rtm-support-container'><form name='rtmedia_service_contact_detail' method='post'>";
@@ -413,7 +413,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		public function get_form( $form = '' ) {
 			// todo: nonce required.
 			if ( empty( $form ) ) {
-				$form = filter_input( INPUT_POST, 'form' . FILTER_SANITIZE_STRING );
+				$form = filter_input( INPUT_POST, 'form' . FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 				$form = isset( $form ) ? $form : 'premium_support';
 			}
 			$meta_title = '';
@@ -449,12 +449,12 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					echo wp_kses( $content, RTMedia::expanded_allowed_tags() );
 				} else {
 					$website         = filter_input( INPUT_POST, 'website', FILTER_SANITIZE_URL );
-					$subject         = filter_input( INPUT_POST, 'subject', FILTER_SANITIZE_STRING );
-					$details         = filter_input( INPUT_POST, 'details', FILTER_SANITIZE_STRING );
+					$subject         = filter_input( INPUT_POST, 'subject', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+					$details         = filter_input( INPUT_POST, 'details', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 					$server_addr     = rtm_get_server_var( 'SERVER_ADDR', 'FILTER_VALIDATE_IP' );
 					$remote_addr     = rtm_get_server_var( 'REMOTE_ADDR', 'FILTER_VALIDATE_IP' );
-					$server_software = rtm_get_server_var( 'SERVER_SOFTWARE', 'FILTER_SANITIZE_STRING' );
-					$http_user_agent = rtm_get_server_var( 'HTTP_USER_AGENT', 'FILTER_SANITIZE_STRING' );
+					$server_software = rtm_get_server_var( 'SERVER_SOFTWARE', 'FILTER_SANITIZE_FULL_SPECIAL_CHARS' );
+					$http_user_agent = rtm_get_server_var( 'HTTP_USER_AGENT', 'FILTER_SANITIZE_FULL_SPECIAL_CHARS' );
 
 					include RTMEDIA_PATH . 'app/helper/templates/support-form.php';
 				}
@@ -467,7 +467,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 * @return void
 		 */
 		public function submit_request() {
-			$nonce = filter_input( INPUT_POST, 'support_wpnonce', FILTER_SANITIZE_STRING );
+			$nonce = filter_input( INPUT_POST, 'support_wpnonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'rtmedia-support-request' ) ) {
 
 				wp_die(

@@ -344,7 +344,7 @@ class RTMediaTemplate {
 
 		global $rtmedia_query;
 
-		$nonce = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_media_nonce', FILTER_SANITIZE_STRING ) );
+		$nonce = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_media_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->action_query->id ) ) {
 
@@ -381,7 +381,7 @@ class RTMediaTemplate {
 
 			$state = $media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[0]->media_id );
 
-			$rtmedia_filepath_old = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-filepath-old', FILTER_SANITIZE_STRING ) );
+			$rtmedia_filepath_old = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-filepath-old', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			if ( isset( $rtmedia_filepath_old ) ) {
 				$is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $rtmedia_filepath_old );
 
@@ -505,15 +505,15 @@ class RTMediaTemplate {
 	public function save_album_edit() {
 		global $rtmedia_query;
 
-		$nonce = wp_unslash( filter_input( INPUT_POST, 'rtmedia_media_nonce', FILTER_SANITIZE_STRING ) );
+		$nonce = wp_unslash( filter_input( INPUT_POST, 'rtmedia_media_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->media_query['album_id'] ) ) {
 			$media = new RTMediaMedia();
 			$model = new RTMediaModel();
 
-			$submit         = sanitize_text_field( filter_input( INPUT_POST, 'submit', FILTER_SANITIZE_STRING ) );
-			$_move_selected = sanitize_text_field( filter_input( INPUT_POST, 'move-selected', FILTER_SANITIZE_STRING ) );
-			$_album         = sanitize_text_field( filter_input( INPUT_POST, 'album', FILTER_SANITIZE_STRING ) );
+			$submit         = sanitize_text_field( filter_input( INPUT_POST, 'submit', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+			$_move_selected = sanitize_text_field( filter_input( INPUT_POST, 'move-selected', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+			$_album         = sanitize_text_field( filter_input( INPUT_POST, 'album', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 			$filters = array(
 				'selected' => array(
@@ -615,7 +615,7 @@ class RTMediaTemplate {
 	 * Delete multiple mmedia.
 	 */
 	public function bulk_delete() {
-		$nonce            = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_bulk_delete_nonce', FILTER_SANITIZE_STRING ) );
+		$nonce            = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_bulk_delete_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 		$_wp_http_referer = filter_input( INPUT_POST, '_wp_http_referer', FILTER_SANITIZE_URL );
 		$media            = new RTMediaMedia();
 
@@ -647,7 +647,7 @@ class RTMediaTemplate {
 	public function single_delete() {
 		global $rtmedia_query;
 
-		$nonce = wp_unslash( filter_input( INPUT_POST, 'rtmedia_media_nonce', FILTER_SANITIZE_STRING ) );
+		$nonce = wp_unslash( filter_input( INPUT_POST, 'rtmedia_media_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->media[0]->id ) ) {
 			$id = $_POST;
@@ -698,7 +698,7 @@ class RTMediaTemplate {
 	public function album_delete() {
 		global $rtmedia_query;
 
-		$nonce = wp_unslash( filter_input( INPUT_POST, 'rtmedia_delete_album_nonce', FILTER_SANITIZE_STRING ) );
+		$nonce = wp_unslash( filter_input( INPUT_POST, 'rtmedia_delete_album_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_delete_album_' . $rtmedia_query->media_query['album_id'] ) ) {
 			$media          = new RTMediaMedia();
@@ -735,7 +735,7 @@ class RTMediaTemplate {
 			return;
 		}
 
-		$nonce    = wp_unslash( filter_input( INPUT_POST, 'rtmedia_merge_album_nonce', FILTER_SANITIZE_STRING ) );
+		$nonce    = wp_unslash( filter_input( INPUT_POST, 'rtmedia_merge_album_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 		$album_id = filter_input( INPUT_POST, 'album', FILTER_VALIDATE_INT );
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_merge_album_' . $rtmedia_query->media_query['album_id'] ) ) {
@@ -785,8 +785,8 @@ class RTMediaTemplate {
 			 * /media/comments [POST]
 			 * Post a comment to the album by post id
 			 */
-			$nonce           = wp_unslash( filter_input( INPUT_POST, 'rtmedia_comment_nonce', FILTER_SANITIZE_STRING ) );
-			$comment_content = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'comment_content', FILTER_SANITIZE_STRING ) ) );
+			$nonce           = wp_unslash( filter_input( INPUT_POST, 'rtmedia_comment_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+			$comment_content = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'comment_content', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 
 			if ( wp_verify_nonce( $nonce, 'rtmedia_comment_nonce' ) ) {
 				$comment_activity_id = false;
@@ -897,7 +897,7 @@ class RTMediaTemplate {
 						);
 					}
 				}
-				$_rt_ajax = sanitize_text_field( filter_input( INPUT_POST, 'rtajax', FILTER_SANITIZE_STRING ) );
+				$_rt_ajax = sanitize_text_field( filter_input( INPUT_POST, 'rtajax', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 				if ( ! empty( $_rt_ajax ) ) {
 					global $wpdb;

@@ -127,7 +127,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 	public function process() {
 
 		$actions    = $this->model->get( array( 'id' => $this->action_query->id ) );
-		$like_nonce = sanitize_text_field( filter_input( INPUT_POST, 'like_nonce', FILTER_SANITIZE_STRING ) );
+		$like_nonce = sanitize_text_field( filter_input( INPUT_POST, 'like_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( ! wp_verify_nonce( $like_nonce, 'rtm_media_like_nonce' . $this->media->id ) ) {
 			die();
@@ -213,7 +213,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$rtmedia_points_media_id = $this->action_query->id;
 		do_action( 'rtmedia_after_like_media', $this );
 
-		$is_json = sanitize_text_field( filter_input( INPUT_POST, 'json', FILTER_SANITIZE_STRING ) );
+		$is_json = sanitize_text_field( filter_input( INPUT_POST, 'json', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( ! empty( $is_json ) && 'true' === $is_json ) {
 			wp_send_json( $return );
