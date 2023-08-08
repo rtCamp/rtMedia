@@ -116,6 +116,20 @@ class RTMediaQuery {
 	public $friendship;
 
 	/**
+	 * Flag to check if the query is for upload shortcode
+	 *
+	 * @var bool
+	 */
+	public $is_upload_shortcode;
+
+	/**
+	 * Store the current media object like as we WordPress store the current post object in loop.
+	 *
+	 * @var bool
+	 */
+	public $rtmedia;
+
+	/**
 	 * Initialise the query
 	 *
 	 * @param array|bool $args The query arguments.

@@ -2827,6 +2827,8 @@ function rtmedia_edit_media_privacy_ui() {
 			}
 		}
 	}
+
+	return false;
 }
 
 /**
