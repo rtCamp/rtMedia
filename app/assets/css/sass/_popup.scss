@@ -526,17 +526,24 @@
 	}
 
 	.rt-emoji-grid {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: repeat( auto-fill, minmax( 24px, 1fr ) );
 		left: 5px;
 		right: 5px;
 		top: 25px;
 		padding: 10px;
 		z-index: 1000;
+		max-height: 160px;
+		overflow: auto;
+		height: min-content;
+		text-align: center;
 
 		span {
 			padding: 1px;
+		}
+
+		br {
+			display: none;
 		}
 	}
 }
