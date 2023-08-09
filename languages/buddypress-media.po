@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.13\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2023-08-01 06:17:26+00:00\n"
+"POT-Creation-Date: 2023-08-09 12:39:22+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3133,12 +3133,12 @@ msgid "Merge Album"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:960
-#: app/main/controllers/template/rtmedia-functions.php:4770
+#: app/main/controllers/template/rtmedia-functions.php:4772
 msgid "rtMedia Shortcode Uploads"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:964
-#: app/main/controllers/template/rtmedia-functions.php:4651
+#: app/main/controllers/template/rtmedia-functions.php:4653
 msgid "rtMedia Activities"
 msgstr ""
 
@@ -3147,12 +3147,12 @@ msgid "rtMedia Comments"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:972
-#: app/main/controllers/template/rtmedia-functions.php:4999
+#: app/main/controllers/template/rtmedia-functions.php:5001
 msgid "rtMedia Media Views"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:976
-#: app/main/controllers/template/rtmedia-functions.php:5100
+#: app/main/controllers/template/rtmedia-functions.php:5102
 msgid "rtMedia Media Likes"
 msgstr ""
 
@@ -3199,123 +3199,123 @@ msgstr ""
 msgid "Group Albums"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3193
+#: app/main/controllers/template/rtmedia-functions.php:3195
 msgid "You like this"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3207
+#: app/main/controllers/template/rtmedia-functions.php:3209
 msgid "You and "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3230
+#: app/main/controllers/template/rtmedia-functions.php:3232
 msgid " person likes this"
 msgid_plural " people like this"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3350
+#: app/main/controllers/template/rtmedia-functions.php:3352
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3355
+#: app/main/controllers/template/rtmedia-functions.php:3357
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3360
+#: app/main/controllers/template/rtmedia-functions.php:3362
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3365
+#: app/main/controllers/template/rtmedia-functions.php:3367
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3370
+#: app/main/controllers/template/rtmedia-functions.php:3372
 msgid "Blocked temporarily"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3428
+#: app/main/controllers/template/rtmedia-functions.php:3430
 #. translators: %s: count of hour/minute/second.
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3450
+#: app/main/controllers/template/rtmedia-functions.php:3452
 #. translators: %s: number of seconds.
 msgid "%s second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3455
+#: app/main/controllers/template/rtmedia-functions.php:3457
 #. translators: %s: number of minutes.
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3460
+#: app/main/controllers/template/rtmedia-functions.php:3462
 #. translators: %s: number of hours.
 msgid "%s hour"
 msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4097
+#: app/main/controllers/template/rtmedia-functions.php:4099
 #. translators: %s: date format, see http:php.net/date.
 msgid "View Conversation"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4677
+#: app/main/controllers/template/rtmedia-functions.php:4679
 msgid "Activity Date"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4681
+#: app/main/controllers/template/rtmedia-functions.php:4683
 msgid "Activity Content"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4685
-#: app/main/controllers/template/rtmedia-functions.php:4909
+#: app/main/controllers/template/rtmedia-functions.php:4687
+#: app/main/controllers/template/rtmedia-functions.php:4911
 msgid "Attachments"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4779
+#: app/main/controllers/template/rtmedia-functions.php:4781
 msgid "Media Upload Date"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4783
+#: app/main/controllers/template/rtmedia-functions.php:4785
 msgid "Media Title"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4787
-#: app/main/controllers/template/rtmedia-functions.php:5003
-#: app/main/controllers/template/rtmedia-functions.php:5104
+#: app/main/controllers/template/rtmedia-functions.php:4789
+#: app/main/controllers/template/rtmedia-functions.php:5005
+#: app/main/controllers/template/rtmedia-functions.php:5106
 msgid "Media URL"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4791
+#: app/main/controllers/template/rtmedia-functions.php:4793
 msgid "Album Title"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4880
+#: app/main/controllers/template/rtmedia-functions.php:4882
 msgid "rtMedia Activity Comments"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4901
+#: app/main/controllers/template/rtmedia-functions.php:4903
 msgid "Comment Date"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4905
+#: app/main/controllers/template/rtmedia-functions.php:4907
 msgid "Comment Content"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:5007
+#: app/main/controllers/template/rtmedia-functions.php:5009
 msgid "Number of Views"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:5011
+#: app/main/controllers/template/rtmedia-functions.php:5013
 msgid "Date of First View"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:5108
+#: app/main/controllers/template/rtmedia-functions.php:5110
 msgid "Date"
 msgstr ""
 
