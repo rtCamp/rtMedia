@@ -130,6 +130,20 @@ class RTMediaQuery {
 	public $rtmedia;
 
 	/**
+	 * Store the album object, if the query is for album media.
+	 *
+	 * @var mixed
+	 */
+	public $album;
+
+	/**
+	 * Query vars.
+	 *
+	 * @var mixed
+	 */
+	public $query_vars;
+
+	/**
 	 * Initialise the query
 	 *
 	 * @param array|bool $args The query arguments.
