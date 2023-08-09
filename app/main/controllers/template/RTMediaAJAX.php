@@ -31,14 +31,14 @@ class RTMediaAJAX {
 	 * Create album.
 	 */
 	public function create_album() {
-		$nonce        = sanitize_text_field( filter_input( INPUT_POST, 'create_album_nonce', FILTER_SANITIZE_STRING ) );
-		$_name        = sanitize_text_field( filter_input( INPUT_POST, 'name', FILTER_SANITIZE_STRING ) );
-		$_description = sanitize_text_field( filter_input( INPUT_POST, 'description', FILTER_SANITIZE_STRING ) );
+		$nonce        = sanitize_text_field( filter_input( INPUT_POST, 'create_album_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$_name        = sanitize_text_field( filter_input( INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$_description = sanitize_text_field( filter_input( INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		$return['error'] = false;
 		if ( wp_verify_nonce( $nonce, 'rtmedia_create_album_nonce' ) && isset( $_name ) && $_name && is_rtmedia_album_enable() ) {
 
-			$_context    = sanitize_text_field( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING ) );
+			$_context    = sanitize_text_field( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			$_context_id = filter_input( INPUT_POST, 'context_id', FILTER_SANITIZE_NUMBER_INT );
 
 			if ( ! empty( $_context ) && 'group' === $_context ) {

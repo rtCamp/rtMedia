@@ -29,8 +29,8 @@ class RTMediaMigration {
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 		add_action( 'wp_ajax_bp_media_rt_db_migration', array( $this, 'migrate_to_new_db' ) );
 
-		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
-		$hide = filter_input( INPUT_GET, 'hide', FILTER_SANITIZE_STRING );
+		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$hide = filter_input( INPUT_GET, 'hide', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		if ( isset( $page ) && 'rtmedia-migration' === $page && isset( $hide ) && 'true' === $hide ) {
 			$this->hide_migration_notice();
@@ -41,7 +41,7 @@ class RTMediaMigration {
 			return true;
 		}
 
-		$force = filter_input( INPUT_GET, 'force', FILTER_SANITIZE_STRING );
+		$force = filter_input( INPUT_GET, 'force', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		if ( isset( $force ) && 'true' === $force ) {
 			$pending = false;
 		} else {

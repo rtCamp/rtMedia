@@ -31,7 +31,7 @@ class RTMediaGalleryShortcode {
 	 * Get template for json response.
 	 */
 	public function ajax_rtmedia_get_template() {
-		$template = sanitize_text_field( filter_input( INPUT_GET, 'template', FILTER_SANITIZE_STRING ) );
+		$template = sanitize_text_field( filter_input( INPUT_GET, 'template', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( ! empty( $template ) ) {
 			$template_url = RTMediaTemplate::locate_template( $template, 'media/', false );

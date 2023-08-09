@@ -714,7 +714,7 @@ function rt_check_addon_status() {
 			if ( ! empty( $addon_data ) && is_object( $addon_data ) && empty( $addon['args']['license_key'] ) ) {
 				if ( isset( $addon_data->success ) && isset( $addon_data->license ) ) {
 
-					$activate_addon = sanitize_text_field( filter_input( INPUT_POST, 'edd_' . $addon_id . '_license_key', FILTER_SANITIZE_STRING ) );
+					$activate_addon = sanitize_text_field( filter_input( INPUT_POST, 'edd_' . $addon_id . '_license_key', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 					if ( ( isset( $activate_addon ) && '' === $activate_addon ) || '' === $addon_data->success || 'invalid' === $addon_data->license ) {
 						delete_option( 'edd_' . $addon_id . '_license_status' );
@@ -777,7 +777,7 @@ function rt_check_addon_status() {
 				}
 			}
 
-			$activate = sanitize_text_field( filter_input( INPUT_POST, 'edd_' . $addon_id . '_license_activate', FILTER_SANITIZE_STRING ) );
+			$activate = sanitize_text_field( filter_input( INPUT_POST, 'edd_' . $addon_id . '_license_activate', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 			// Listen for activate button to be clicked.
 			// Also check if information about the addon in already fetched from the store.
@@ -884,10 +884,10 @@ function add_search_filter( $attr = null ) {
 			return;
 		}
 
-		$search_value = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search', FILTER_SANITIZE_STRING ) ) );
+		$search_value = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 
 		if ( empty( $search_by ) ) {
-			$search_value = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'search', FILTER_SANITIZE_STRING ) ) );
+			$search_value = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 		}
 
 		$html  = "<form method='post' id='media_search_form' class='media_search'>";
@@ -933,7 +933,7 @@ function add_search_filter( $attr = null ) {
 				unset( $search_by['author'] );
 			}
 
-			$search_by_var = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search_by', FILTER_SANITIZE_STRING ) ) );
+			$search_by_var = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'search_by', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 
 			foreach ( $search_by as $key => $value ) {
 				$selected = ( isset( $search_by_var ) && $search_by_var === $key ? 'selected' : '' );
@@ -1011,8 +1011,8 @@ function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
 		$pagename = explode( '/', $wp_query->query_vars['pagename'] );
 	}
 
-	$is_json              = sanitize_text_field( filter_input( INPUT_GET, 'json', FILTER_SANITIZE_STRING ) );
-	$is_rtmedia_shortcode = sanitize_text_field( filter_input( INPUT_GET, 'rtmedia_shortcode', FILTER_SANITIZE_STRING ) );
+	$is_json              = sanitize_text_field( filter_input( INPUT_GET, 'json', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+	$is_rtmedia_shortcode = sanitize_text_field( filter_input( INPUT_GET, 'rtmedia_shortcode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 	if ( ! empty( $pagename ) && ! empty( $is_json ) && 'true' === $is_json && ! empty( $is_rtmedia_shortcode ) && 'true' === $is_rtmedia_shortcode ) {
 		$pagename                         = $pagename[0];

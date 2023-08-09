@@ -39,10 +39,10 @@ class RTMediaUploadEndpoint {
 			include get_404_template();
 		} else {
 
-			$nonce         = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'rtmedia_upload_nonce', FILTER_SANITIZE_STRING ) ) );
-			$mode          = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_STRING ) ) );
-			$_redirection  = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'redirection', FILTER_SANITIZE_STRING ) ) );
-			$_redirect     = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'redirect', FILTER_SANITIZE_STRING ) ) );
+			$nonce         = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'rtmedia_upload_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
+			$mode          = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
+			$_redirection  = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'redirection', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
+			$_redirect     = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'redirect', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 			$_activity_id  = filter_input( INPUT_POST, 'activity_id', FILTER_VALIDATE_INT );
 			$_redirect_url = filter_input( INPUT_POST, 'redirect', FILTER_SANITIZE_NUMBER_INT );
 
@@ -52,9 +52,9 @@ class RTMediaUploadEndpoint {
 			if ( ! empty( $rtmedia->options['activity_enable_upload_terms'] ) ) {
 
 				// When media comment is uploaded, comment_media_activity_id will be there, so we check if it's not there.
-				$activity_request = wp_unslash( filter_input( INPUT_POST, 'activity_terms_condition_request', FILTER_SANITIZE_STRING ) );
+				$activity_request = wp_unslash( filter_input( INPUT_POST, 'activity_terms_condition_request', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 				if ( ! empty( $activity_request ) ) {
-					$terms_condition = wp_unslash( filter_input( INPUT_POST, 'activity_terms_condition', FILTER_SANITIZE_STRING ) );
+					$terms_condition = wp_unslash( filter_input( INPUT_POST, 'activity_terms_condition', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 					if ( empty( $terms_condition ) ) {
 						// This will be uploaded by JavaScript only so we send json response.
 						wp_send_json_error( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
@@ -65,10 +65,10 @@ class RTMediaUploadEndpoint {
 			// When activity upload terms are enabled on media upload page, we check whether someone has removed the html element or not.
 			if ( ! empty( $rtmedia->options['general_enable_upload_terms'] ) ) {
 
-				$uploader_request = wp_unslash( filter_input( INPUT_POST, 'uploader_terms_condition_request', FILTER_SANITIZE_STRING ) );
+				$uploader_request = wp_unslash( filter_input( INPUT_POST, 'uploader_terms_condition_request', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 				// We check for all other contexts, group and profile is checked above.
 				if ( ! empty( $uploader_request ) ) {
-					$terms_condition = wp_unslash( filter_input( INPUT_POST, 'uploader_terms_condition', FILTER_SANITIZE_STRING ) );
+					$terms_condition = wp_unslash( filter_input( INPUT_POST, 'uploader_terms_condition', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 					if ( empty( $terms_condition ) ) {
 						// This will be uploaded by JavaScript only so we send json response.
 						wp_send_json_error( esc_html__( 'Terms and Conditions checkbox not found!', 'buddypress-media' ) );
@@ -248,7 +248,7 @@ class RTMediaUploadEndpoint {
 						// Following will not apply to activity uploads. For first time activity won't be generated.
 						// Create activity first and pass activity id in response.
 						// todo rtmedia_media_single_activity filter. It will create 2 activity with same media if uploaded from activity page.
-						$_rtmedia_update = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_update', FILTER_SANITIZE_STRING ) );
+						$_rtmedia_update = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_update', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 						if ( ( -1 === intval( $activity_id ) && ( ! ( isset( $_rtmedia_update ) && 'true' === $_rtmedia_update ) ) ) || $allow_single_activity ) {
 							$activity_id = $media_obj->insert_activity( $media[0]->media_id, $media[0] );
@@ -350,8 +350,8 @@ class RTMediaUploadEndpoint {
 			// Ha ha ha.
 			ob_end_clean();
 			// check for simple.
-			$rtmedia_update = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_update', FILTER_SANITIZE_STRING ) );
-			$_user_agent    = rtm_get_server_var( 'HTTP_USER_AGENT', 'FILTER_SANITIZE_STRING' );
+			$rtmedia_update = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_update', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+			$_user_agent    = rtm_get_server_var( 'HTTP_USER_AGENT', 'FILTER_SANITIZE_FULL_SPECIAL_CHARS' );
 
 			/**
 			 * If(redirect)

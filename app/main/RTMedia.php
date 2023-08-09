@@ -1118,8 +1118,8 @@ class RTMedia {
 		$album        = new RTMediaAlbum();
 		$global_album = $album->get_default();
 
-		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
-		$mode   = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_STRING ) );
+		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$mode   = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		// Hack for plupload default name.
 		if ( ! empty( $action ) && ! empty( $mode ) && 'file_upload' === $mode ) {

@@ -85,8 +85,8 @@ class RTMediaMedia {
 	 */
 	public function verify_nonce( $mode ) {
 
-		$nonce = sanitize_text_field( filter_input( INPUT_POST, "rtmedia_{$mode}_media_nonce", FILTER_SANITIZE_STRING ) );
-		$mode  = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_STRING ) );
+		$nonce = sanitize_text_field( filter_input( INPUT_POST, "rtmedia_{$mode}_media_nonce", FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$mode  = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( empty( $mode ) ) {
 			$mode = '';
@@ -377,7 +377,7 @@ class RTMediaMedia {
 				}
 			}
 
-			$post_comment = sanitize_text_field( filter_input( INPUT_POST, 'comment_id', FILTER_SANITIZE_STRING ) );
+			$post_comment = sanitize_text_field( filter_input( INPUT_POST, 'comment_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 			// delete comment if media is in the comment.
 			if ( class_exists( 'RTMediaTemplate' ) && isset( $media[0]->id ) && empty( $post_comment ) ) {

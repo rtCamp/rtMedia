@@ -301,7 +301,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 			$return['error']  = esc_html__( 'Media type is not allowed', 'buddypress-media' );
 		}
 
-		$is_json = sanitize_text_field( filter_input( INPUT_POST, 'json', FILTER_SANITIZE_STRING ) );
+		$is_json = sanitize_text_field( filter_input( INPUT_POST, 'json', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( isset( $is_json ) && 'true' === $is_json ) {
 			wp_send_json( $return );

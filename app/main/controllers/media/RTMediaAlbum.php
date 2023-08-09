@@ -107,8 +107,8 @@ class RTMediaAlbum {
 	 */
 	public function verify_nonce( $mode ) {
 
-		$nonce = sanitize_text_field( filter_input( INPUT_POST, "rtmedia_{$mode}_album_nonce", FILTER_SANITIZE_STRING ) );
-		$mode  = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_STRING ) );
+		$nonce = sanitize_text_field( filter_input( INPUT_POST, "rtmedia_{$mode}_album_nonce", FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$mode  = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( empty( $mode ) ) {
 			$mode = '';
