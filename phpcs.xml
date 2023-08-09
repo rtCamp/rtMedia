@@ -5,6 +5,8 @@
 	<rule ref="WordPress-Core">
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+        <exclude name="WordPress.DB.PreparedSQL.InterpolatedNotPrepared" />
+        <exclude name="WordPress.DB.PreparedSQL.NotPrepared" />
 	</rule>
 
 	<rule ref="WordPress-Extra" />

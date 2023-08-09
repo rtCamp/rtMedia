@@ -104,6 +104,55 @@ class RTMediaUserInteraction {
 	public $plural;
 
 	/**
+	 * Whether the action is countable.
+	 *
+	 * @var bool
+	 */
+	public $countable;
+
+	/**
+	 * Whether the action is single.
+	 *
+	 * @var bool
+	 */
+	public $single;
+
+	/**
+	 * Whether the action is repeatable.
+	 *
+	 * @var bool
+	 */
+	public $repeatable;
+
+	/**
+	 * Whether the action is undoable.
+	 *
+	 * @var bool
+	 */
+	public $undoable;
+
+	/**
+	 * Icon class.
+	 *
+	 * @var string
+	 */
+	public $icon_class;
+
+	/**
+	 * Person label.
+	 *
+	 * @var string
+	 */
+	public $person_label;
+
+	/**
+	 * Person plural label.
+	 *
+	 * @var string
+	 */
+	public $person_plural_label;
+
+	/**
 	 * Initialise the user interaction
 	 *
 	 * @param array $args Arguments array.

@@ -113,7 +113,7 @@ class RTMediaPrivacy {
 	 */
 	public function rtm_change_activity_privacy() {
 
-		$nonce       = sanitize_text_field( filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_STRING ) );
+		$nonce       = sanitize_text_field( filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 		$privacy     = filter_input( INPUT_POST, 'privacy', FILTER_SANITIZE_NUMBER_INT );
 		$activity_id = filter_input( INPUT_POST, 'activity_id', FILTER_SANITIZE_NUMBER_INT );
 
@@ -463,8 +463,8 @@ class RTMediaPrivacy {
 			return;
 		}
 
-		$default_privacy = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_STRING ) );
-		$nonce           = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_STRING ) );
+		$default_privacy = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-default-privacy', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$nonce           = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_member_settings_privacy', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		// Old condition won't work as we've added sanitize_text_field for $default_privacy.
 		// We can't perform empty as 0 could be the possible value, so we check for empty string instead.
