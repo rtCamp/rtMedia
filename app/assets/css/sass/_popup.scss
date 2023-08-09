@@ -533,6 +533,10 @@
 		top: 25px;
 		padding: 10px;
 		z-index: 1000;
+		max-height: 160px;
+		overflow: auto;
+		height: min-content;
+		text-align: center;
 
 		span {
 			padding: 1px;
