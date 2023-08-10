@@ -9,7 +9,7 @@ class Deactivation_Survey {
      *
      * @var string
      */
-    private $api_url = 'https://rtmedia-dev.rtm.rt.gw/wp-json/rtps/v1'; // Replace the API Url by the production API Url.
+    private $api_url = 'https://rtmedia.io/wp-json/rtps/v1'; // Replace the API Url by the production API Url.
 
 
     /**
