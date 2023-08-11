@@ -152,7 +152,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
-### 4.6.14 [August 10, 2023] ###
+### 4.6.14 [August 11, 2023] ###
 
 * Enhancement
 
