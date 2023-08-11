@@ -208,7 +208,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				echo '</script>';
 			}
 
-			$page_name = sanitize_text_field( filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING ) );
+			$page_name = sanitize_text_field( filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 			if ( ! empty( $page_name ) && 'rtmedia-settings' === $page_name ) {
 				/**
@@ -569,7 +569,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$sorted_dashboard = array_merge( $example_widget_backup, $normal_dashboard );
 
 			// Save the sorted array back into the original metaboxes.
-			$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+			$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited, WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
 
 		/**
@@ -1030,7 +1030,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return string
 		 */
 		public static function get_current_tab() {
-			$page_name = sanitize_text_field( filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING ) );
+			$page_name = sanitize_text_field( filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			return isset( $page_name ) ? $page_name : 'rtmedia-settings';
 		}
 
@@ -1324,7 +1324,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function save_multisite_options() {
 			global $rtmedia_admin;
-			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
 
 			$rtmedia_options = filter_input( INPUT_POST, 'rtmedia_options' );
 			if ( isset( $rtmedia_options ) ) {
@@ -1479,8 +1479,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function convert_videos_mailchimp_send() {
 			// todo: nonce required.
-			$interested = sanitize_text_field( filter_input( INPUT_POST, 'linkback', FILTER_SANITIZE_STRING ) );
-			$choice     = sanitize_text_field( filter_input( INPUT_POST, 'choice', FILTER_SANITIZE_STRING ) );
+			$interested = sanitize_text_field( filter_input( INPUT_POST, 'linkback', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+			$choice     = sanitize_text_field( filter_input( INPUT_POST, 'choice', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			$url        = filter_input( INPUT_POST, 'url', FILTER_SANITIZE_URL );
 			$email      = filter_input( INPUT_POST, 'email', FILTER_SANITIZE_EMAIL );
 
@@ -1510,7 +1510,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * Function to save Video transcoding survey response.
 		 */
 		public function video_transcoding_survey_response() {
-			$survey_done = filter_input( INPUT_GET, 'survey-done', FILTER_SANITIZE_STRING );
+			$survey_done = filter_input( INPUT_GET, 'survey-done', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( isset( $survey_done ) && ( md5( 'survey-done' ) === $survey_done ) ) {
 				rtmedia_update_site_option( 'rtmedia-survey', 0 );
 			}
@@ -1655,7 +1655,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return array $removable_query_args
 		 */
 		public function removable_query_args( $removable_query_args ) {
-			$page_name = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+			$page_name = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( isset( $page_name ) && 'rtmedia-settings' === $page_name ) {
 				$removable_query_args[] = 'settings-saved';
 			}
@@ -1672,7 +1672,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function rtm_addon_license_notice() {
 
-			$page_name = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+			$page_name = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			$args      = array(
 				'a' => array(
 					'href' => array(),
@@ -1683,12 +1683,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$my_account  = 'https://rtmedia.io/my-account';
 				$license_doc = 'https://rtmedia.io/docs/license/';
 
-				// translators: 1. Account page and link.
 				$message = sprintf(
+				/* translators: 1$s: Account page and link. 2$s: License documentation page link. */
 					__( 'Your license keys can be found on <a href="%1$s">my-account</a> page. For more details, please refer to <a href="%2$s">License documentation</a> page.', 'buddypress-media' ),
 					$my_account,
 					$license_doc
-				);
+				); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 
 				printf( '<div class="notice"><p>%1$s</p></div>', wp_kses( $message, $args ) );
 

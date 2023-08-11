@@ -79,7 +79,7 @@ class RTMediaActivityUpgrade {
 		}
 
 		rtmedia_update_site_option( 'rtmedia_media_activity_upgrade_pending', $pending );
-		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		if ( $pending > 0 ) {
 			if ( ! ( isset( $page ) && 'rtmedia-activity-upgrade' === $page ) ) {

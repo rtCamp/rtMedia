@@ -24,7 +24,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			if ( ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				add_action( 'admin_init', array( $this, 'settings' ) );
 
-				$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_STRING );
+				$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 				if ( isset( $rtmedia_option_save ) ) {
 					add_action( 'init', array( $this, 'settings' ) );
 				}
@@ -214,7 +214,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$options          = $this->sanitize_options( $options );
 			$rtmedia->options = $options;
 			// Save Settings first then proceed.
-			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_STRING );
+			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( isset( $rtmedia_option_save ) && current_user_can( 'manage_options' ) ) {
 				$options               = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 				$options               = $this->sanitize_before_save_options( $options );
@@ -226,7 +226,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 					flush_rewrite_rules( false );
 				}
 				$settings_saved = '';
-				$setting_save   = filter_input( INPUT_GET, 'settings-saved', FILTER_SANITIZE_STRING );
+				$setting_save   = filter_input( INPUT_GET, 'settings-saved', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 				if ( ! isset( $setting_save ) ) {
 					$settings_saved = '&settings-saved=true';
 				}

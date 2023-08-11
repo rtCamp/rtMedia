@@ -253,7 +253,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( self::table_exists( $table ) ) {
-			return $wpdb->get_results( "SELECT COUNT(DISTINCT owner_id) as users, COUNT(id) as media FROM {$table}" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			return $wpdb->get_results( "SELECT COUNT(DISTINCT owner_id) as users, COUNT(id) as media FROM {$table}" );
 		}
 
 		return 0;
@@ -286,7 +286,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                                             AND activity.type =  'bp_album_picture'
                                             AND album.import_status =0
                                         )b"
-			); // phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
+			); // phpcs:enable WordPress.DB.PreparedSQL.NotPrepared WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
 
 		return 0;
@@ -425,9 +425,9 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 			if ( $imported_media_id ) {
 				$comments += (int) self::update_recorded_time_and_comments( $imported_media_id, $bp_album_item->id, "{$wpdb->base_prefix}bp_album" );
 
-				$bp_album_media_id = $wpdb->get_var( "SELECT activity.id from $activity_table as activity INNER JOIN $table as album ON ( activity.item_id = album.id ) WHERE activity.item_id = $bp_album_item->id AND activity.component = 'album' AND activity.type='bp_album_picture'" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$bp_album_media_id = $wpdb->get_var( "SELECT activity.id from $activity_table as activity INNER JOIN $table as album ON ( activity.item_id = album.id ) WHERE activity.item_id = $bp_album_item->id AND activity.component = 'album' AND activity.type='bp_album_picture'" );
 				$wpdb->update( $table, array( 'old_activity_id' => $bp_album_media_id ), array( 'id' => $bp_album_item->id ), array( '%d' ), array( '%d' ) );
-				$bp_new_activity_id = $wpdb->get_var( "SELECT id from $activity_table WHERE item_id = $imported_media_id AND component = 'activity' AND type='activity_update' AND secondary_item_id=0" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$bp_new_activity_id = $wpdb->get_var( "SELECT id from $activity_table WHERE item_id = $imported_media_id AND component = 'activity' AND type='activity_update' AND secondary_item_id=0" );
 				$wpdb->update( $table, array( 'new_activity_id' => $bp_new_activity_id ), array( 'id' => $bp_album_item->id ), array( '%d' ), array( '%d' ) );
 
 				if ( $wpdb->update(

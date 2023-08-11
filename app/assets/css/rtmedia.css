@@ -202,7 +202,7 @@ body.media.buddypress {
 }
 .rtmedia-list-item > a .rtmedia-item-thumbnail img {
   display: inline-block;
-  height: 150px !important;
+  max-height: inherit;
 }
 
 #rtmedia-uploader-form .rtm-plupload-list,
@@ -1604,12 +1604,44 @@ img.mfp-img {
   margin-top: -3px;
 }
 
+.rt_media_comment_form {
+  position: relative;
+}
 .rt_media_comment_form textarea {
   display: inline-block;
   margin-bottom: 5px;
 }
 .rt_media_comment_form input[type=submit] {
   padding: 3px 6px;
+}
+.rt_media_comment_form .rt-emoji-picker {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  opacity: 0.5;
+}
+.rt_media_comment_form .rt-emoji-picker:hover {
+  opacity: 1;
+}
+.rt_media_comment_form .rt-emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(24px, 1fr));
+  left: 5px;
+  right: 5px;
+  top: 25px;
+  padding: 10px;
+  z-index: 1000;
+  max-height: 160px;
+  overflow: auto;
+  height: -webkit-min-content;
+  height: min-content;
+  text-align: center;
+}
+.rt_media_comment_form .rt-emoji-grid span {
+  padding: 1px;
+}
+.rt_media_comment_form .rt-emoji-grid br {
+  display: none;
 }
 
 .rtmedia-item-comments textarea {

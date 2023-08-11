@@ -72,7 +72,7 @@ class RTMediaContext {
 
 			$wp_default_context = array( 'page', 'post' );
 
-			$context = sanitize_text_field( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_STRING ) );
+			$context = sanitize_text_field( filter_input( INPUT_POST, 'context', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 			if ( ! empty( $context ) && in_array( $context, $wp_default_context, true ) ) {
 				$this->type = $context;

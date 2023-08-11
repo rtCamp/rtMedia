@@ -116,6 +116,34 @@ class RTMediaQuery {
 	public $friendship;
 
 	/**
+	 * Flag to check if the query is for upload shortcode
+	 *
+	 * @var bool
+	 */
+	public $is_upload_shortcode;
+
+	/**
+	 * Store the current media object like as we WordPress store the current post object in loop.
+	 *
+	 * @var bool
+	 */
+	public $rtmedia;
+
+	/**
+	 * Store the album object, if the query is for album media.
+	 *
+	 * @var mixed
+	 */
+	public $album;
+
+	/**
+	 * Query vars.
+	 *
+	 * @var mixed
+	 */
+	public $query_vars;
+
+	/**
 	 * Initialise the query
 	 *
 	 * @param array|bool $args The query arguments.
@@ -298,7 +326,7 @@ class RTMediaQuery {
 	 */
 	public function set_json_format() {
 
-		$json = sanitize_text_field( filter_input( INPUT_GET, 'json', FILTER_SANITIZE_STRING ) );
+		$json = sanitize_text_field( filter_input( INPUT_GET, 'json', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( ! empty( $json ) ) {
 			$this->format = 'json';
@@ -337,7 +365,7 @@ class RTMediaQuery {
 		$format         = '';
 		$pageno         = 1;
 
-		$json = sanitize_text_field( filter_input( INPUT_GET, 'json', FILTER_SANITIZE_STRING ) );
+		$json = sanitize_text_field( filter_input( INPUT_GET, 'json', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		// Get page number for json response.
 		if ( ! empty( $json ) ) {
@@ -376,7 +404,7 @@ class RTMediaQuery {
 
 				$modifier_type = 'id';
 
-				$request_action = sanitize_text_field( filter_input( INPUT_POST, 'request_action', FILTER_SANITIZE_STRING ) );
+				$request_action = sanitize_text_field( filter_input( INPUT_POST, 'request_action', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 				// this block is unnecessary, please delete, asap.
 				if ( 'delete' === $request_action ) {
 
@@ -575,7 +603,7 @@ class RTMediaQuery {
 			)
 		);
 
-		$rtmedia_shortcode = sanitize_text_field( filter_input( INPUT_GET, 'rtmedia_shortcode', FILTER_SANITIZE_STRING ) );
+		$rtmedia_shortcode = sanitize_text_field( filter_input( INPUT_GET, 'rtmedia_shortcode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( ! empty( $rtmedia_shortcode ) ) {
 			$query_data = $_REQUEST; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification

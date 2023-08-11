@@ -479,10 +479,10 @@ class RTMediaBuddyPressActivity {
 		global $rtmedia;
 
 		// Check if this is not a comment.
-		$action = wp_unslash( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
+		$action = wp_unslash( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 		// When activity upload terms are enabled on activity page, we check whether someone has removed the html element or not.
 		if ( 'post_update' === $action && ! empty( $rtmedia->options['activity_enable_upload_terms'] ) ) {
-			$term = wp_unslash( filter_input( INPUT_POST, 'rtmedia_upload_terms_conditions', FILTER_SANITIZE_STRING ) );
+			$term = wp_unslash( filter_input( INPUT_POST, 'rtmedia_upload_terms_conditions', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			if ( empty( $term ) ) {
 
 				// We set error object in buddypress, so it'll show error on activity page.
@@ -1185,8 +1185,8 @@ class RTMediaBuddyPressActivity {
 					$comment_media    = false;
 					$comment_media_id = false;
 
-					$post_action          = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) );
-					$post_comment_content = sanitize_text_field( filter_input( INPUT_POST, 'comment_content', FILTER_SANITIZE_STRING ) );
+					$post_action          = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+					$post_comment_content = sanitize_text_field( filter_input( INPUT_POST, 'comment_content', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 					// if activity is add from comment media.
 					if ( ! empty( $post_comment_content ) || ! empty( $post_action ) ) {
@@ -1196,7 +1196,7 @@ class RTMediaBuddyPressActivity {
 							remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
 
 							// comment content.
-							$comment_content = sanitize_text_field( filter_input( INPUT_POST, 'content', FILTER_SANITIZE_STRING ) );
+							$comment_content = sanitize_text_field( filter_input( INPUT_POST, 'content', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 						} elseif ( ! empty( $post_comment_content ) ) {
 							// comment content.
 							$comment_content = $post_comment_content;
