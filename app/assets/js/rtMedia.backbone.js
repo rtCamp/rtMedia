@@ -3029,7 +3029,7 @@ const rtMediaScrollComments = () => {
 /* Add max size limit message beside upload button */
 const rtMediaMaxSizeMessage = () => {
 	const buttonContainer = document.getElementById( 'rtmedia-action-update' );
-	if ( undefined !== buttonContainer ) {
+	if ( buttonContainer ) {
 		const msg = document.createElement('span');
 		msg.textContent = 'Max. File Size: ' + rtMedia_update_plupload_config.max_file_size;
 		msg.style.fontSize = '12px';
