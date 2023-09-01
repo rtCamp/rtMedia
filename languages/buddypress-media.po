@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.14\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2023-08-10 05:27:52+00:00\n"
+"POT-Creation-Date: 2023-09-01 06:08:49+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -288,39 +288,43 @@ msgstr ""
 msgid "Subscribe"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1428
+#: app/admin/RTMediaAdmin.php:1408
+msgid "You do not have permission to export settings."
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:1433
 msgid "Unable to read file!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1440 app/admin/RTMediaAdmin.php:1447
+#: app/admin/RTMediaAdmin.php:1445 app/admin/RTMediaAdmin.php:1452
 msgid "Invalid JSON Supplied!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1453
+#: app/admin/RTMediaAdmin.php:1458
 msgid "Invalid JSON Supplied. The JSON you supplied is not exported from rtMedia!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1463
+#: app/admin/RTMediaAdmin.php:1468
 msgid "Data passed for settings is unchanged!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1467
+#: app/admin/RTMediaAdmin.php:1472
 msgid "rtMedia Settings imported successfully!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1470
+#: app/admin/RTMediaAdmin.php:1475
 msgid "Could not update rtMedia Settings"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1505
+#: app/admin/RTMediaAdmin.php:1510
 msgid "Thank you for your time."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1532
+#: app/admin/RTMediaAdmin.php:1537
 msgid "Premium Add-ons"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1688
+#: app/admin/RTMediaAdmin.php:1693
 #. translators: 1$s: Account page and link. 2$s: License documentation page
 #. link.
 msgid ""
@@ -329,7 +333,7 @@ msgid ""
 "page."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1708
+#: app/admin/RTMediaAdmin.php:1713
 #. translators: 1. License page link.
 msgid ""
 "We found an invalid or expired license key for rtMedia Premium. Please go "
@@ -1899,15 +1903,19 @@ msgstr ""
 msgid "The method expects an array in arguments for %s provided."
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:80
+#: app/helper/rtUploadAttachment.php:32
+msgid "You are not allowed to upload file."
+msgstr ""
+
+#: app/helper/rtUploadAttachment.php:85
 msgid "You can not upload more than 2 MB."
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:86
+#: app/helper/rtUploadAttachment.php:91
 msgid "There was an error uploading your files"
 msgstr ""
 
-#: app/helper/rtUploadAttachment.php:90
+#: app/helper/rtUploadAttachment.php:95
 msgid "Form was submitted"
 msgstr ""
 
