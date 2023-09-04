@@ -152,6 +152,14 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.15 [September 4, 2023] ###
+
+* Fixed
+
+	* Fixed security issue.
+	* Fixed console error related to max file size.
+
+
 ### 4.6.14 [August 11, 2023] ###
 
 * Enhancement

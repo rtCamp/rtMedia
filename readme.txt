@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 6.3
-Stable tag: 4.6.14
+Stable tag: 4.6.15
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -132,6 +132,14 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.6.15 [September 4, 2023] =
+
+* Fixed
+
+ * Fixed security issue.
+ * Fixed console error related to max file size.
+
 
 = 4.6.14 [August 11, 2023] =
 
@@ -1840,6 +1848,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
+
+= 4.6.15 =
+rtMedia 4.6.15 with minor security fixes.
 
 = 4.6.14 =
 rtMedia 4.6.14 with some new features & minor UI/UX fixes.
