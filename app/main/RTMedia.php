@@ -449,9 +449,7 @@ class RTMedia {
 			height: 100% !important;
 			}
 
-			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video,
-			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video video,
-			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video .mejs-overlay-play{
+			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video video {
 			width: 100% !important;
 			height: 100% !important;
 			}
@@ -1221,6 +1219,11 @@ class RTMedia {
 		$rtmedia_bp_tpl   = array();
 
 		$bp_template = get_option( '_bp_theme_package_id' );
+
+        // enqueue script only for activity page
+        if ( isset( $bp->current_component ) && 'activity' === $bp->current_component ) {
+            wp_enqueue_script( 'rtmedia-activity', RTMEDIA_URL . 'app/assets/js/rtMedia.activity.js', array( 'bp-nouveau' ), RTMEDIA_VERSION, true );
+        }
 
 		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION, true );
 		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
