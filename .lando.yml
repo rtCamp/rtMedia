@@ -1,0 +1,64 @@
+name: rtmedia
+recipe: wordpress
+config:
+  via: nginx
+  php: 7.4
+  webroot: wordpress
+  database: mariadb
+  xdebug: true
+  config:
+    php: .lando/php.ini
+services:
+  appserver:
+    overrides:
+      environment:
+        # Make this environment variable empty or else runtime xdebug mode change will not work
+        XDEBUG_MODE: ''
+        # Support debugging Drush with XDEBUG.
+        PHP_IDE_CONFIG: "serverName=appserver"
+        PROFILER_OUTPUT_DIR: "profiler-output" # If changing this value, change in .gitignore also
+      volumes:
+        - '.lando/wp-cli.yml:/wp-cli.yml'
+        - '.:/app/wordpress/wp-content/plugins/buddypress-media'
+        - '/app/wordpress/wp-content/plugins/buddypress-media/wordpress'
+        - '/app/wordpress/wp-content/plugins/buddypress-media/node_modules'
+    build_as_root:
+      - curl -sL https://deb.nodesource.com/setup_14.x | bash -
+      - apt-get install -y nodejs
+      - npm install -g npm@latest
+    build:
+      - wp core download --force --skip-content
+      - npm install
+    run:
+      - wp config create --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --dbhost=database --skip-check --force
+      - wp config set WP_DEBUG true --raw
+      - wp config set WP_DEBUG_LOG true --raw
+      - wp config set WP_DEBUG_DISPLAY false --raw
+      - wp config set WP_DISABLE_FATAL_ERROR_HANDLER true --raw
+      - wp config set WP_ENVIRONMENT_TYPE 'local'
+      - sleep 2 # For some reason, we have to wait at least a second till database is up.
+      - | # If core is not installed, install it
+        if ! wp core is-installed; then
+          wp core install --url=https://$LANDO_APP_NAME.$LANDO_DOMAIN --title=$LANDO_APP_NAME --admin_user=rtcamp --admin_email=lando@rtcamp.com --admin_password=goodwork
+          wp theme install --activate twentytwenty
+          wp plugin install --activate query-monitor
+          wp rewrite structure '/%postname%/'
+          # Not activating rtMedia directly when building containers because it does not allow us to debug 
+          # issues that are specific to first time plugin activation
+          # wp plugin activate buddypress-media
+        fi
+  mailhog:
+    type: mailhog
+    portforward: false
+    hogfrom:
+      - appserver
+tooling:
+  xdebug:
+    description: Loads Xdebug in the selected mode.
+    cmd:
+      - appserver: /app/.lando/xdebug.sh
+    user: root
+  node:
+    service: appserver
+  npm:
+    service: appserver
