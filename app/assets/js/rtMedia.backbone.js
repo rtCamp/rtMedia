@@ -1751,20 +1751,8 @@ jQuery( document ).ready( function( $ ) {
 						objUploadView.uploader.refresh();
 						$( '#rtmedia-whts-new-upload-container > div' ).css( { 'top': '0', 'left': '0' } );
 						$( '#whats-new-form #rtMedia-update-queue-list' ).html( '' );
-						//$("#div-attache-rtmedia").hide();
+
 						apply_rtMagnificPopup( jQuery( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' ) );
-						// jQuery( 'ul.activity-list li.rtmedia_update:first-child .wp-audio-shortcode, ul.activity-list li.rtmedia_update:first-child .wp-video-shortcode' ).mediaelementplayer( {
-						// 	// This is required to work with new MediaElement version.
-                        //                                 classPrefix: 'mejs-',
-                        //                                 // If the <video width> is not specified, this is the default
-						// 	defaultVideoWidth: 480,
-						// 	// If the <video height> is not specified, this is the default
-						// 	defaultVideoHeight: 270
-						// 	// If set, overrides <video width>
-						// 	//videoWidth: 1,
-						// 	// if set, overrides <video height>
-						// 	//videoHeight: 1
-						// } );
 
 						// For BuddyPress New Template hacks
 						jQuery( '.plupload_filelist_content.rtm-plupload-list' ).html('');
