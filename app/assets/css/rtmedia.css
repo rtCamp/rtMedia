@@ -1537,8 +1537,8 @@ img.mfp-img {
   padding-left: 10px;
 }
 .rtm-comment-list li.rtmedia-list-item.media-type-video .mejs-overlay-play {
-  height: 100%;
-  width: 100%;
+  height: 100% !important;
+  width: 100% !important;
   margin: auto;
 }
 .rtm-comment-list li {
@@ -1992,6 +1992,10 @@ a.rtmedia-comment-link {
 
 a.rtmedia-comment-link.rtmedia-comments-link {
   display: initial;
+}
+
+.mejs-poster.mejs-layer {
+  height: 0 !important;
 }
 
 .bp-legacy #buddypress #activity-stream .rtmedia-item-title {
@@ -3106,6 +3110,9 @@ a.rtmedia-upload-media-link {
   border: none;
   background: rgba(0, 0, 0, 0) url("../../../lib/media-element/mejs-controls.png") no-repeat;
   width: 20px;
+}
+#buddypress .mejs-controls button:hover, #buddypress .mejs-controls button:focus, #buddypress .mejs-controls button:active {
+  background: rgba(0, 0, 0, 0.2) url("../../../lib/media-element/mejs-controls.png") no-repeat;
 }
 #buddypress .mejs-controls .mejs-play > button {
   background-position: 0 0;
