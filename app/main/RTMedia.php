@@ -1220,11 +1220,6 @@ class RTMedia {
 
 		$bp_template = get_option( '_bp_theme_package_id' );
 
-        // enqueue script only for activity page
-        if ( isset( $bp->current_component ) && 'activity' === $bp->current_component ) {
-            wp_enqueue_script( 'rtmedia-activity', RTMEDIA_URL . 'app/assets/js/rtMedia.activity.js', array( 'bp-nouveau' ), RTMEDIA_VERSION, true );
-        }
-
 		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION, true );
 		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement-wp', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.min.css', '', RTMEDIA_VERSION );
@@ -1674,6 +1669,17 @@ class RTMedia {
 
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
 		}
+
+		wp_enqueue_script(
+			'rtmedia-activity',
+			RTMEDIA_URL . 'app/assets/js/rtMedia.activity.js',
+			array(
+				'bp-nouveau',
+				'rtmedia-backbone'
+			),
+			RTMEDIA_VERSION,
+			true
+		);
 	}
 
 	/**
