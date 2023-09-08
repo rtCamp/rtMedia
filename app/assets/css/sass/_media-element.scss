@@ -11,6 +11,11 @@
 			padding: 4px 8px;
 			border: none;
 			background: rgba(0, 0, 0, 0) url('../../../lib/media-element/mejs-controls.png') no-repeat;
+			width: 20px;
+
+			&:hover, &:focus, &:active {
+				background: rgba(0, 0, 0, 0.2) url('../../../lib/media-element/mejs-controls.png') no-repeat;
+			}
 		}
 
 		.mejs-play > button {
