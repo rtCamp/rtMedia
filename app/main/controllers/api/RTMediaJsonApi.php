@@ -1103,8 +1103,8 @@ class RTMediaJsonApi {
 		$ec_no_file  = 140001;
 		$msg_no_file = esc_html__( 'no file', 'buddypress-media' );
 
-		$ec_invalid_file_string  = 140005;
-		$msg_invalid_file_string = esc_html__( 'invalid file string', 'buddypress-media' );
+		$ec_invalid_file_type  = 140007;
+		$msg_invalid_file_type = esc_html__( 'invalid file type. jpeg and png are allowed.', 'buddypress-media' );
 
 		$ec_image_type_missing  = 140006;
 		$msg_image_type_missing = esc_html__( 'image type missing', 'buddypress-media' );
@@ -1118,10 +1118,22 @@ class RTMediaJsonApi {
 		$ec_look_updated  = 140004;
 		$msg_look_updated = esc_html__( 'media updated', 'buddypress-media' );
 
-		$rtmedia_file = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_file', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 		$image_type   = sanitize_text_field( filter_input( INPUT_POST, 'image_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-		$title        = sanitize_text_field( filter_input( INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$mime_type    = "";
+
+		if ( in_array( $image_type, array( 'jpeg', 'jpg' ), true ) ) {
+			$mime_type = 'image/jpeg';
+		}
+		else if ( 'png' === $image_type ) {
+			$mime_type = 'image/png';
+		} else {
+			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_file_type, $msg_invalid_file_type ) );
+		}
+
+		$title        = sanitize_title( filter_input( INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 		$description  = sanitize_text_field( filter_input( INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+
+		$rtmedia_file = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_file', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		$updated       = false;
 		$uploaded_look = false;
@@ -1136,6 +1148,8 @@ class RTMediaJsonApi {
 			}
 			if ( empty( $title ) ) {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_file_title, $msg_no_file_title ) );
+			} else {
+				$title .= wp_generate_password( 12, false );
 			}
 		}
 
@@ -1155,23 +1169,30 @@ class RTMediaJsonApi {
 
 			// Process rtmedia_file.
 			$img          = $rtmedia_file;
-			$str_replace  = 'data:image/' . $image_type . ';base64,';
+			$str_replace  = 'data:' . $mime_type . ';base64,';
 			$img          = str_replace( $str_replace, '', $img );
 			$rtmedia_file = base64_decode( $img ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 
-			if ( ! $rtmedia_file ) {
-				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_file_string, $msg_invalid_file_string ) );
+			// check if file is valid image.
+			$actual_file_info = getimagesizefromstring( $rtmedia_file );
+
+			if ( ! $actual_file_info || ! isset( $actual_file_info['mime'] ) || ! in_array( $actual_file_info['mime'], array( 'image/jpeg', 'image/png' ), true ) ) {
+				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_image, $msg_invalid_image ) );
 			}
 
-			define( 'UPLOAD_DIR_LOOK', sys_get_temp_dir() . '/' );
+			define( 'UPLOAD_DIR_LOOK', sys_get_temp_dir() );
 
 			$tmp_name = UPLOAD_DIR_LOOK . $title;
 			$file     = $tmp_name . '.' . $image_type;
 			$success  = file_put_contents( $file, $rtmedia_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
 
+			if ( ! $success ) {
+				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_image, $msg_invalid_image ) );
+			}
+
 			add_filter( 'upload_dir', array( $this, 'api_new_media_upload_dir' ) );
 			$new_look         = wp_upload_bits( $title . '.' . $image_type, null, $rtmedia_file );
-			$new_look['type'] = 'image/' . $image_type;
+			$new_look['type'] = $mime_type;
 			remove_filter( 'upload_dir', array( $this, 'api_new_media_upload_dir' ) );
 
 			foreach ( $new_look as $key => $value ) {
