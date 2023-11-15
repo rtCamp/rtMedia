@@ -449,9 +449,7 @@ class RTMedia {
 			height: 100% !important;
 			}
 
-			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video,
-			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video video,
-			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video .mejs-overlay-play{
+			.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video video {
 			width: 100% !important;
 			height: 100% !important;
 			}
@@ -1671,6 +1669,17 @@ class RTMedia {
 
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
 		}
+
+		wp_enqueue_script(
+			'rtmedia-activity',
+			RTMEDIA_URL . 'app/assets/js/rtMedia.activity.js',
+			array(
+				'bp-nouveau',
+				'rtmedia-backbone'
+			),
+			RTMEDIA_VERSION,
+			true
+		);
 	}
 
 	/**
