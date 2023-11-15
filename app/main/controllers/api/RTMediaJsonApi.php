@@ -138,20 +138,6 @@ class RTMediaJsonApi {
 	public $msg_api_disabled = 'API disabled by site administrator';
 
 	/**
-	 * Error code for permission denied.
-	 *
-	 * @var int
-	 */
-	public $ec_permission_denied = 600010;
-
-	/**
-	 * Error message for permission denied.
-	 *
-	 * @var string
-	 */
-	public $msg_permission_denied = 'permission denied';
-
-	/**
 	 * Object of RTMediaJsonApiFunctions class to handle api requests.
 	 *
 	 * @var object
@@ -1093,10 +1079,6 @@ class RTMediaJsonApi {
 	 * Function to handle media upload request.
 	 */
 	public function rtmedia_api_process_rtmedia_upload_media_request() {
-
-		if ( ! current_user_can( 'upload_files' ) ) {
-			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_permission_denied, $this->msg_permission_denied ) );
-		}
 
 		$this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
 		// Error Codes for new look.
