@@ -758,7 +758,13 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
 
-		$search                = sanitize_text_field( urldecode( wp_unslash( filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) ) );
+		$raw_search = wp_unslash( filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+
+		if ( 'string' !== gettype( $raw_search ) ) {
+			$raw_search = "";
+		}
+
+		$search                = sanitize_text_field( urldecode( $raw_search ) );
 		$search_by             = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'search_by', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 		$media_type            = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'media_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 		$rtmedia_current_album = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'rtmedia-current-album', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );

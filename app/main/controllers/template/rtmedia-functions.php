@@ -950,8 +950,7 @@ function rtmedia_duration( $id = false ) {
 
 	if ( ! empty( $rtmedia_backbone['backbone'] ) ) {
 		echo '<%= duration %>';
-
-		return;
+		return '';
 	}
 
 	if ( $id ) {
@@ -965,7 +964,7 @@ function rtmedia_duration( $id = false ) {
 		if ( isset( $media[0] ) ) {
 			$media_object = $media[0];
 		} else {
-			return false;
+			return '';
 		}
 	} else {
 		global $rtmedia_media;
