@@ -4,8 +4,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 6.3
-Stable tag: 4.6.15
+Tested up to: 6.4
+Stable tag: 4.6.16
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -132,6 +132,19 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.6.16 [November 16, 2023] =
+
+* Enhancement
+
+ * Compatible with WordPress latest version 6.4
+
+* Fixed
+
+ * Fixed PHP deprecation warnings.
+ * Fixed BuddyPress Versioning issue
+ * Fixed Security issue.
+ * Fixed Video player UI issues.
 
 = 4.6.15 [September 4, 2023] =
 
@@ -1848,6 +1861,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
+
+= 4.6.16 =
+rtMedia 4.6.16 with enhanced security and minor bug fixes.
 
 = 4.6.15 =
 rtMedia 4.6.15 with minor security fixes.
