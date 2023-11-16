@@ -152,6 +152,19 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.16 [November 16, 2023] ###
+
+* Enhancement
+
+	* Compatible with WordPress latest version 6.4
+
+* Fixed
+
+	* Fixed PHP deprecation warnings. 
+    * Fixed BuddyPress Versioning issue 
+    * Fixed Security issue. 
+    * Fixed Video player UI issues.
+
 ### 4.6.15 [September 4, 2023] ###
 
 * Fixed
