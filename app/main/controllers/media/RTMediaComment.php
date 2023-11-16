@@ -199,8 +199,14 @@ class RTMediaComment {
 					$template = 'comment-media';
 				}
 
+				ob_start();
+
 				$view = new RTMediaUploadView( $attr );
-				echo wp_kses( $view->render( $template ), RTMedia::expanded_allowed_tags() );
+				$view->render( $template );
+
+				$buffer = ob_get_clean();
+
+				echo wp_kses( $buffer, RTMedia::expanded_allowed_tags() );
 
 			}
 		} else {
