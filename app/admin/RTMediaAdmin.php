@@ -1434,10 +1434,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				wp_send_json( $response );
 			}
 
-			ob_start();
-			include $file_path;
-
-			$settings_data_json = ob_get_clean();
+			$settings_data_json_string = file_get_contents( $file_path );
+			$settings_data_json = json_decode( $settings_data_json_string, true );
 			wp_delete_file( $file_path );
 
 			if ( empty( $settings_data_json ) ) {
