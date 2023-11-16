@@ -951,7 +951,7 @@ function rtmedia_duration( $id = false ) {
 	if ( ! empty( $rtmedia_backbone['backbone'] ) ) {
 		echo '<%= duration %>';
 
-		return;
+		return false;
 	}
 
 	if ( $id ) {
