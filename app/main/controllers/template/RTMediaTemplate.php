@@ -147,58 +147,54 @@ class RTMediaTemplate {
 			} else {
 				return $this->get_default_template();
 			}
-		} else {
-			if ( ! $shortcode_attr ) {
+		} elseif ( ! $shortcode_attr ) {
 				return $this->get_default_template();
-			} else {
-				if ( 'gallery' === $shortcode_attr['name'] ) {
-					$valid = $this->sanitize_gallery_attributes( $shortcode_attr['attr'] );
+		} elseif ( 'gallery' === $shortcode_attr['name'] ) {
+				$valid = $this->sanitize_gallery_attributes( $shortcode_attr['attr'] );
 
-					if ( $valid ) {
-						if ( is_array( $shortcode_attr['attr'] ) ) {
-							$this->update_global_query( $shortcode_attr['attr'] );
-						}
-
-						global $rtaccount;
-
-						if ( ! isset( $rtaccount ) ) {
-							$rtaccount = 0;
-						}
-
-						$include_uploader = false;
-
-						if ( isset( $shortcode_attr['attr'] ) && isset( $shortcode_attr['attr']['uploader'] ) ) {
-							$include_uploader = $shortcode_attr['attr']['uploader'];
-
-							unset( $shortcode_attr['attr']['uploader'] );
-						}
-
-						if ( 'before' === $include_uploader ) {
-							echo wp_kses( RTMediaUploadShortcode::pre_render( $shortcode_attr['attr'] ), RTMedia::expanded_allowed_tags() );
-						}
-
-						echo "<div class='rtmedia_gallery_wrapper'>";
-
-						$this->add_hidden_fields_in_gallery();
-
-						$gallery_template = apply_filters( 'rtmedia-before-template', $template, $shortcode_attr ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
-
-						// check if file exists.
-						if ( file_exists( $this->locate_template( $gallery_template ) ) ) {
-							include $this->locate_template( $gallery_template );
-						}
-
-						echo '</div>';
-
-						if ( 'after' === $include_uploader || 'true' === $include_uploader ) {
-							echo wp_kses( RTMediaUploadShortcode::pre_render( $shortcode_attr['attr'] ), RTMedia::expanded_allowed_tags() );
-						}
-					} else {
-						echo esc_html__( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
-
-						return false;
-					}
+			if ( $valid ) {
+				if ( is_array( $shortcode_attr['attr'] ) ) {
+					$this->update_global_query( $shortcode_attr['attr'] );
 				}
+
+				global $rtaccount;
+
+				if ( ! isset( $rtaccount ) ) {
+					$rtaccount = 0;
+				}
+
+				$include_uploader = false;
+
+				if ( isset( $shortcode_attr['attr'] ) && isset( $shortcode_attr['attr']['uploader'] ) ) {
+					$include_uploader = $shortcode_attr['attr']['uploader'];
+
+					unset( $shortcode_attr['attr']['uploader'] );
+				}
+
+				if ( 'before' === $include_uploader ) {
+					echo wp_kses( RTMediaUploadShortcode::pre_render( $shortcode_attr['attr'] ), RTMedia::expanded_allowed_tags() );
+				}
+
+				echo "<div class='rtmedia_gallery_wrapper'>";
+
+				$this->add_hidden_fields_in_gallery();
+
+				$gallery_template = apply_filters( 'rtmedia-before-template', $template, $shortcode_attr ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+
+				// check if file exists.
+				if ( file_exists( $this->locate_template( $gallery_template ) ) ) {
+					include $this->locate_template( $gallery_template );
+				}
+
+				echo '</div>';
+
+				if ( 'after' === $include_uploader || 'true' === $include_uploader ) {
+					echo wp_kses( RTMediaUploadShortcode::pre_render( $shortcode_attr['attr'] ), RTMedia::expanded_allowed_tags() );
+				}
+			} else {
+				echo esc_html__( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
+
+				return false;
 			}
 		}
 	}
@@ -602,12 +598,10 @@ class RTMediaTemplate {
 
 		if ( isset( $rtmedia_query->action_query->default ) && 'delete' === $rtmedia_query->action_query->default ) {
 			$this->bulk_delete();
-		} else {
-			if ( is_rtmedia_single() ) {
+		} elseif ( is_rtmedia_single() ) {
 				$this->single_delete();
-			} elseif ( is_rtmedia_album() ) {
-				$this->album_delete();
-			}
+		} elseif ( is_rtmedia_album() ) {
+			$this->album_delete();
 		}
 	}
 
@@ -666,8 +660,8 @@ class RTMediaTemplate {
 				$group       = groups_get_group( array( 'group_id' => $media_obj[0]->context_id ) );
 				$parent_link = bp_get_group_permalink( $group );
 				$context     = 'group';
-			} elseif ( function_exists( 'bp_core_get_user_domain' ) ) {
-				$parent_link = bp_core_get_user_domain( $post->media_author );
+			} elseif ( function_exists( 'bp_members_get_user_url' ) ) {
+				$parent_link = bp_members_get_user_url( $post->media_author );
 				$context     = 'profile';
 			} else {
 				$parent_link = get_author_posts_url( $post->media_author );
@@ -1000,12 +994,10 @@ class RTMediaTemplate {
 				$flag = $flag && true;
 
 				unset( $attr['media_type'] );
-			} else {
-				if ( 'album' === strtolower( $attr['media_type'] ) ) {
+			} elseif ( 'album' === strtolower( $attr['media_type'] ) ) {
 					$flag = $flag && true;
-				} else {
-					$flag = $flag && in_array( $attr['media_type'], $allowed_type_names, true );
-				}
+			} else {
+				$flag = $flag && in_array( $attr['media_type'], $allowed_type_names, true );
 			}
 		}
 
@@ -1074,16 +1066,14 @@ class RTMediaTemplate {
 						$template = 'album-single-edit';
 					}
 				}
-			} else {
-				if ( is_rtmedia_single() ) {
+			} elseif ( is_rtmedia_single() ) {
 					$template = 'media-single';
 
-					if ( 'edit' === $rtmedia_query->action_query->action ) {
-						$template = 'media-single-edit';
-					}
-				} else {
-					return null;
+				if ( 'edit' === $rtmedia_query->action_query->action ) {
+					$template = 'media-single-edit';
 				}
+			} else {
+				return null;
 			}
 
 			$template = apply_filters( 'rtmedia_template_filter', $template );
@@ -1115,21 +1105,20 @@ class RTMediaTemplate {
 			} else {
 				$located = trailingslashit( get_stylesheet_directory() ) . $path . $template_name;
 			}
-		} else {
-			if ( file_exists( trailingslashit( get_template_directory() ) . $path . $template_name ) ) {
-				if ( $url ) {
-					$located = trailingslashit( get_template_directory_uri() ) . $path . $template_name;
-				} else {
-					$located = trailingslashit( get_template_directory() ) . $path . $template_name;
-				}
+		} elseif ( file_exists( trailingslashit( get_template_directory() ) . $path . $template_name ) ) {
+			if ( $url ) {
+				$located = trailingslashit( get_template_directory_uri() ) . $path . $template_name;
 			} else {
-				if ( $url ) {
-					$located = trailingslashit( RTMEDIA_URL ) . $ogpath . $template_name;
-				} else {
-					$located = trailingslashit( RTMEDIA_PATH ) . $ogpath . $template_name;
-				}
-				$located = apply_filters( 'rtmedia_located_template', $located, $url, $ogpath, $template_name ); // filter for rtmedia pro.
+				$located = trailingslashit( get_template_directory() ) . $path . $template_name;
 			}
+		} else {
+			if ( $url ) {
+				$located = trailingslashit( RTMEDIA_URL ) . $ogpath . $template_name;
+			} else {
+				$located = trailingslashit( RTMEDIA_PATH ) . $ogpath . $template_name;
+			}
+			$located = apply_filters( 'rtmedia_located_template', $located, $url, $ogpath, $template_name ); // filter for rtmedia pro.
+
 		}
 
 		return $located;

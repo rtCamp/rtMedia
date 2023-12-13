@@ -173,7 +173,6 @@ class RTMediaRouter {
 		$this->rt_theme_compat_reset_post();
 
 		return apply_filters( 'rtmedia_main_template_include', $template, $new_rt_template );
-
 	}
 
 	/**
@@ -352,7 +351,7 @@ class RTMediaRouter {
 				if ( 'bp-default' !== get_option( 'stylesheet' ) ) {
 					$dummy['post_title'] = sprintf(
 						'<a href="%1$s">%2$s</a>',
-						esc_url( bp_get_displayed_user_link() ),
+						esc_url( bp_displayed_user_url() ),
 						bp_get_displayed_user_fullname()
 					);
 				}
@@ -398,7 +397,6 @@ class RTMediaRouter {
 		if ( ! $wp_query->is_404() ) {
 			status_header( 200 );
 		}
-
 	}
 
 	/**

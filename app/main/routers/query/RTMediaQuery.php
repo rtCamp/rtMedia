@@ -191,7 +191,6 @@ class RTMediaQuery {
 	 * Initialise the default args for the query
 	 */
 	public function init() {
-
 	}
 
 	/**
@@ -221,10 +220,8 @@ class RTMediaQuery {
 		 */
 		if ( ! isset( $this->action_query->id ) || $this->is_album() ) {
 			return false;
-		} else {
-			if ( isset( $this->query['media_type'] ) && 'album' === $this->query['media_type'] ) {
+		} elseif ( isset( $this->query['media_type'] ) && 'album' === $this->query['media_type'] ) {
 				return false;
-			}
 		}
 
 		return true;
@@ -456,19 +453,17 @@ class RTMediaQuery {
 					if ( array_key_exists( $second_modifier, $this->actions ) ) {
 
 						$action = $second_modifier;
-					} else {
-						if ( 'pg' === $second_modifier ) {
-							if ( isset( $raw_query[2] ) && is_numeric( $raw_query[2] ) ) {
-								$pageno = $raw_query[2];
-							} elseif ( 'edit' === $raw_query[2] ) {
-								/**
-								 * Fix for URL
-								 * like http://website.com/members/<user>/media/2/pg/edit/
-								 *
-								 * Fix for 'pg' (pagination) in URL
-								 */
-								$action = 'edit';
-							}
+					} elseif ( 'pg' === $second_modifier ) {
+						if ( isset( $raw_query[2] ) && is_numeric( $raw_query[2] ) ) {
+							$pageno = $raw_query[2];
+						} elseif ( 'edit' === $raw_query[2] ) {
+							/**
+							 * Fix for URL
+							 * like http://website.com/members/<user>/media/2/pg/edit/
+							 *
+							 * Fix for 'pg' (pagination) in URL
+							 */
+							$action = 'edit';
 						}
 					}
 					break;
@@ -701,7 +696,6 @@ class RTMediaQuery {
 		remove_filter( 'rtmedia-before-template', array( &$this, 'register_set_gallery_template_filter' ), 10, 2 );
 
 		return 'album-gallery';
-
 	}
 
 	/**
@@ -799,10 +793,8 @@ class RTMediaQuery {
 					unset( $this->media_query['context'] );
 					unset( $this->media_query['context_id'] );
 				}
-			} else {
-				if ( 'group' === $this->media_query['context'] ) {
+			} elseif ( 'group' === $this->media_query['context'] ) {
 					$group_id = $this->media_query['context_id'];
-				}
 			}
 
 			// Multiple context_id support.
@@ -895,7 +887,6 @@ class RTMediaQuery {
 		} else {
 			return $pre_media;
 		}
-
 	}
 
 	/**
@@ -1024,10 +1015,8 @@ class RTMediaQuery {
 				}
 			}
 			restore_current_blog();
-		} else {
-			if ( ! ( 'comments' === $this->action_query->action && ! isset( $this->action_query->id ) ) ) {
+		} elseif ( ! ( 'comments' === $this->action_query->action && ! isset( $this->action_query->id ) ) ) {
 				$this->populate_post_data( $this->media );
-			}
 		}
 		if ( $this->shortcode_global ) {
 			remove_filter(
@@ -1039,7 +1028,6 @@ class RTMediaQuery {
 				10
 			);
 		}
-
 	}
 
 	/**
@@ -1171,7 +1159,6 @@ class RTMediaQuery {
 		$rtmedia_media = $this->next_media();
 
 		return $rtmedia_media;
-
 	}
 
 	/**
@@ -1197,8 +1184,8 @@ class RTMediaQuery {
 		global $rtmedia_media;
 		$parent_link = '';
 
-		if ( function_exists( 'bp_core_get_user_domain' ) ) {
-			$parent_link = bp_core_get_user_domain( $rtmedia_media->media_author );
+		if ( function_exists( 'bp_members_get_user_url' ) ) {
+			$parent_link = bp_members_get_user_url( $rtmedia_media->media_author );
 		} else {
 			$parent_link = get_author_posts_url( $rtmedia_media->media_author );
 		}

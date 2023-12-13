@@ -720,8 +720,8 @@ class RTMedia {
 	 */
 	public function get_user_link( $user ) {
 
-		if ( function_exists( 'bp_core_get_user_domain' ) ) {
-			$parent_link = bp_core_get_user_domain( $user );
+		if ( function_exists( 'bp_members_get_user_url' ) ) {
+			$parent_link = bp_members_get_user_url( $user );
 		} else {
 			$parent_link = get_author_posts_url( $user );
 		}
@@ -1273,7 +1273,7 @@ class RTMedia {
 				array(
 					'jquery',
 					'rt-mediaelement-wp',
-					'rtmedia-emoji-picker'
+					'rtmedia-emoji-picker',
 				),
 				RTMEDIA_VERSION,
 				true
@@ -1675,7 +1675,7 @@ class RTMedia {
 			RTMEDIA_URL . 'app/assets/js/rtMedia.activity.js',
 			array(
 				'bp-nouveau',
-				'rtmedia-backbone'
+				'rtmedia-backbone',
 			),
 			RTMEDIA_VERSION,
 			true
@@ -1976,7 +1976,7 @@ class RTMedia {
  *
  * @return string
  */
-function parentlink_global_album( $id ) {
+function parentlink_global_album( $id ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed
 	$global_albums = RTMediaAlbum::get_globals();
 	$parent_link   = '';
 
@@ -2025,15 +2025,13 @@ function get_rtmedia_permalink( $id ) {
 				$parent_link = get_rtmedia_user_link( $media[0]->media_author );
 			}
 		}
-	} else {
-		if ( isset( $media[0]->context ) && function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
+	} elseif ( isset( $media[0]->context ) && function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
 			$parent_link = get_rtmedia_group_link( $media[0]->context_id );
-		} else {
-			// check for global album.
-			$parent_link = parentlink_global_album( $id );
-			if ( '' === $parent_link && isset( $media[0]->media_author ) ) {
-							$parent_link = get_rtmedia_user_link( $media[0]->media_author );
-			}
+	} else {
+		// check for global album.
+		$parent_link = parentlink_global_album( $id );
+		if ( '' === $parent_link && isset( $media[0]->media_author ) ) {
+						$parent_link = get_rtmedia_user_link( $media[0]->media_author );
 		}
 	}
 
@@ -2065,8 +2063,8 @@ function get_rtmedia_permalink( $id ) {
  * @return string
  */
 function get_rtmedia_user_link( $id ) {
-	if ( function_exists( 'bp_core_get_user_domain' ) ) {
-		$parent_link = bp_core_get_user_domain( $id );
+	if ( function_exists( 'bp_members_get_user_url' ) ) {
+		$parent_link = bp_members_get_user_url( $id );
 	} else {
 		$parent_link = get_author_posts_url( $id );
 	}
