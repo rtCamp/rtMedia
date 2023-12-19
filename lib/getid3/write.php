@@ -649,6 +649,9 @@ class getid3_writetags
 				default:
 					// most other (text) frames can be copied over as-is
 					foreach ($valuearray as $key => $value) {
+						if ( null === $value ) {
+							$value = '';
+						}
 						if (isset($ID3v2_text_encoding_lookup[$id3v2_majorversion][$this->tag_encoding])) {
 							// source encoding is valid in ID3v2 - use it with no conversion
 							$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = $ID3v2_text_encoding_lookup[$id3v2_majorversion][$this->tag_encoding];

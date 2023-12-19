@@ -278,26 +278,26 @@ class RTMediaMigration {
 		if ( 5 === $state ) {
 			$album_count  = intval( $_SESSION['migration_user_album'] );
 			$album_count += ( isset( $_SESSION['migration_group_album'] ) ) ? intval( $_SESSION['migration_group_album'] ) : 0;
-		} else {
-			if ( $state > 0 ) {
-				if ( function_exists( 'bp_core_get_table_prefix' ) ) {
-					$bp_prefix = bp_core_get_table_prefix();
-				} else {
-					$bp_prefix = '';
-				}
-				$pending_count = "select count(*) from $wpdb->posts where post_type='bp_media_album' and ( ID in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
-				if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
-					$pending_count .= " or ID in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
-				}
+		} elseif ( $state > 0 ) {
+			if ( function_exists( 'bp_core_get_table_prefix' ) ) {
+				$bp_prefix = bp_core_get_table_prefix();
+			} else {
+				$bp_prefix = '';
+			}
+
+			$pending_count = "select count(*) from $wpdb->posts where post_type='bp_media_album' and ( ID in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
+
+			if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
+				$pending_count .= " or ID in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
+			}
 				$pending_count .= ')';
 				$pending_count  = $wpdb->get_var( $pending_count ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 				$album_count  = intval( $_SESSION['migration_user_album'] );
 				$album_count += ( isset( $_SESSION['migration_group_album'] ) ) ? intval( $_SESSION['migration_group_album'] ) : 0;
 				$album_count  = $album_count - intval( $pending_count );
-			} else {
-				$album_count = 0;
-			}
+		} else {
+			$album_count = 0;
 		}
 
 		if ( isset( $_SESSION['migration_activity'] ) && intval( $_SESSION['migration_media'] ) === intval( $media_count ) ) {
@@ -815,18 +815,14 @@ class RTMediaMigration {
 			if ( 0 === strpos( $mime_type, 'image' ) ) {
 				$media_type = 'photo';
 				$old_type   = 'photos';
-			} else {
-				if ( 0 === strpos( $mime_type, 'audio' ) ) {
+			} elseif ( 0 === strpos( $mime_type, 'audio' ) ) {
 					$media_type = 'music';
 					$old_type   = 'music';
-				} else {
-					if ( 0 === strpos( $mime_type, 'video' ) ) {
-						$media_type = 'video';
-						$old_type   = 'videos';
-					} else {
-						$media_type = 'other';
-					}
-				}
+			} elseif ( 0 === strpos( $mime_type, 'video' ) ) {
+					$media_type = 'video';
+					$old_type   = 'videos';
+			} else {
+				$media_type = 'other';
 			}
 		}
 
@@ -900,7 +896,7 @@ class RTMediaMigration {
 
 		$last_id = $wpdb->insert_id;
 
-		if ( 'album' !== $media_type && function_exists( 'bp_core_get_user_domain' ) && $activity_data ) {
+		if ( 'album' !== $media_type && ( function_exists( 'bp_core_get_user_domain' ) || function_exists( 'bp_members_get_user_url' ) ) && $activity_data ) {
 			if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 				$bp_prefix = bp_core_get_table_prefix();
 			} else {
@@ -929,20 +925,18 @@ class RTMediaMigration {
 				),
 				array( 'id' => $activity_data->id )
 			);
-		} else {
-			if ( 'group' === $media_context ) {
+		} else if ( 'group' === $media_context ) {
 				$activity_data->old_primary_link = $activity_data->primary_link;
 				$parent_link                     = get_rtmedia_group_link( abs( intval( $result->context_id ) ) );
 				$parent_link                     = trailingslashit( $parent_link );
 				$activity_data->primary_link     = trailingslashit( $parent_link . RTMEDIA_MEDIA_SLUG . '/' . $last_id );
 				$this->search_and_replace( $activity_data->old_primary_link, $activity_data->primary_link );
-			} else {
-				$activity_data->old_primary_link = $activity_data->primary_link;
-				$parent_link                     = get_rtmedia_user_link( $activity_data->user_id );
-				$parent_link                     = trailingslashit( $parent_link );
-				$activity_data->primary_link     = trailingslashit( $parent_link . RTMEDIA_MEDIA_SLUG . '/' . $last_id );
-				$this->search_and_replace( $activity_data->old_primary_link, $activity_data->primary_link );
-			}
+		} else {
+			$activity_data->old_primary_link = $activity_data->primary_link;
+			$parent_link                     = get_rtmedia_user_link( $activity_data->user_id );
+			$parent_link                     = trailingslashit( $parent_link );
+			$activity_data->primary_link     = trailingslashit( $parent_link . RTMEDIA_MEDIA_SLUG . '/' . $last_id );
+			$this->search_and_replace( $activity_data->old_primary_link, $activity_data->primary_link );
 		}
 		if ( '' !== $old_type ) {
 			if ( 'group' === $media_context ) {
