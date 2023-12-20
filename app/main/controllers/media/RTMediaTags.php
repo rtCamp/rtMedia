@@ -173,7 +173,8 @@ class RTMediaTags {
 	public function __get( $key ) {
 
 		if ( ! in_array( $key, $this->tags, true ) && ! in_array( $key, $this->duration_info, true ) && ! isset( $this->duration_info[ $key ] ) ) {
-			throw new Exception( "Unknown property '$key' for class '" . __class__ . "'" );
+			/* translators: %1$s: tag name, %2$s: class name. */
+			throw new Exception( esc_html( sprintf( __( "Unknown property '%1\$s' for class '%2\$s'", 'buddypress-media' ), $key, __CLASS__ ) ) );
 		}
 
 		if ( null === $this->data ) {
@@ -185,15 +186,13 @@ class RTMediaTags {
 				'data' => $this->data['attached_picture'][0]['data'],
 				'mime' => $this->data['attached_picture'][0]['mime'],
 			) : null;
-		} else {
-			if ( isset( $this->duration_info[ $key ] ) ) {
+		} elseif ( isset( $this->duration_info[ $key ] ) ) {
 				return $this->duration_info[ $key ];
-			} else {
-				if ( ! empty( $this->data[ $key ] ) && ! empty( $this->data[ $key ][0] ) ) {
-					return $this->data[ $key ][0];
-				}
-				return null;
+		} else {
+			if ( ! empty( $this->data[ $key ] ) && ! empty( $this->data[ $key ][0] ) ) {
+				return $this->data[ $key ][0];
 			}
+			return null;
 		}
 	}
 
@@ -208,10 +207,12 @@ class RTMediaTags {
 	public function __set( $key, $value ) {
 
 		if ( ! in_array( $key, $this->tags, true ) ) {
-			throw new Exception( "Unknown property '$key' for class '" . __class__ . "'" );
+			/* translators: %1$s: tag name, %2$s: class name. */
+			throw new Exception( esc_html( sprintf( __( "Unknown property '%1\$s' for class '%2\$s'", 'buddypress-media' ), $key, __CLASS__ ) ) );
 		}
 		if ( in_array( $key, $this->readonly_tags, true ) ) {
-			throw new Exception( "Tying to set readonly property '$key' for class '" . __class__ . "'" );
+			/* translators: %1$s: tag name, %2$s: class name. */
+			throw new Exception( esc_html( sprintf( __( "Tying to set readonly property '%1\$s' for class '%2\$s'", 'buddypress-media' ), $key, __CLASS__ ) ) );
 		}
 
 		if ( null === $this->data ) {
@@ -244,12 +245,10 @@ class RTMediaTags {
 		}
 		if ( isset( $data['tags']['id3v2']['track_number'] ) ) {
 			$track = $data['tags']['id3v2']['track_number'][0];
-		} else {
-			if ( isset( $data['tags']['id3v1']['track'] ) ) {
+		} elseif ( isset( $data['tags']['id3v1']['track'] ) ) {
 				$track = $data['tags']['id3v1']['track'][0];
-			} else {
-				$track = null;
-			}
+		} else {
+			$track = '';
 		}
 
 		if ( isset( $data['tags']['id3v2']['totaltracks'] ) ) {
@@ -262,6 +261,5 @@ class RTMediaTags {
 		}
 
 		$this->data['track'] = array( $track );
-
 	}
 }

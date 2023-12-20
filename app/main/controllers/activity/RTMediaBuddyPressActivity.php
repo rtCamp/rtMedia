@@ -929,7 +929,7 @@ class RTMediaBuddyPressActivity {
 			// Array to store media_type in simplified manner with activity_id as key.
 			$rtmedia_media_type_array = array();
 			$media_count              = count( $rtmedia_media_query );
-			for ( $i = 0; $i < $media_count; $i ++ ) {
+			for ( $i = 0; $i < $media_count; $i++ ) {
 				// Storing media_type of uploaded media to check whether all media are of same type or different and key is activity_id
 				// Making activity_id array because there might be more then 1 media linked with activity.
 				if ( ! isset( $rtmedia_media_type_array[ $rtmedia_media_query[ $i ]->activity_id ] ) || ! is_array( $rtmedia_media_type_array[ $rtmedia_media_query[ $i ]->activity_id ] ) ) {
@@ -941,7 +941,7 @@ class RTMediaBuddyPressActivity {
 
 			// Updating action.
 			$activity_count = count( $activity_ids );
-			for ( $a = 0; $a < $activity_count; $a ++ ) {
+			for ( $a = 0; $a < $activity_count; $a++ ) {
 				// Getting index of activity which is being updated.
 				$index = $activity_index_array[ $a ];
 
@@ -973,18 +973,16 @@ class RTMediaBuddyPressActivity {
 					if ( 1 === $count ) {
 						// translators: 1: user link, 2: media.
 						$action = sprintf( esc_html__( '%1$s added a %2$s', 'buddypress-media' ), $user_link, $media_str );
-					} else {
 						// Checking all the media linked with activity are of same type.
-						if ( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] )
-							&& ! empty( $rtmedia_media_type_array[ $activities[ $index ]->id ] )
-							&& count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) === 1
-						) {
-							// translators: 1: user link, 2: media count, 3: media.
-							$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $user_link, $count, $media_str );
-						} else {
-							// translators: 1: user link, 2: media count, 3: rtMedia slug.
-							$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $user_link, $count, RTMEDIA_MEDIA_SLUG );
-						}
+					} else if ( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] )
+						&& ! empty( $rtmedia_media_type_array[ $activities[ $index ]->id ] )
+						&& count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) === 1
+					) {
+						// translators: 1: user link, 2: media count, 3: media.
+						$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $user_link, $count, $media_str );
+					} else {
+						// translators: 1: user link, 2: media count, 3: rtMedia slug.
+						$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $user_link, $count, RTMEDIA_MEDIA_SLUG );
 					}
 
 					$action                       = apply_filters( 'rtmedia_bp_activity_action_text', $action, $user_link, $count, $user, $rtmedia_media_type_array[ $activities[ $index ]->id ][0], $activities[ $index ]->id );
@@ -1002,7 +1000,8 @@ class RTMediaBuddyPressActivity {
 	 */
 	public function activity_after_media_like( $obj ) {
 		if ( class_exists( 'BuddyPress' ) ) {
-			global $rtmedia_points_media_id;
+			global $rtmedia_points_media_id, $bp;
+
 			if ( is_a( $obj, 'RTMediaLike' ) && isset( $obj->action_query->id ) ) {
 				$media_id = $obj->action_query->id;
 			} elseif ( ! empty( $rtmedia_points_media_id ) ) {
@@ -1042,27 +1041,32 @@ class RTMediaBuddyPressActivity {
 
 					if ( 'group' === $media_obj->context ) {
 						$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
+
+						if ( isset( $bp->version ) && version_compare( $bp->version, '12.0.0', 'ge' ) ) {
+							$group_permalink = bp_get_group_url( $group_data );
+						} else {
+							$group_permalink = bp_get_group_permalink( $group_data );
+						}
+
 						$group_name = sprintf(
 							'<a href="%1$s">%2$s</a>',
-							esc_url( bp_get_group_permalink( $group_data ) ),
+							esc_url( $group_permalink ),
 							esc_html( $group_data->name )
 						);
 						// translators: 1: username, 2: media, 3: group name.
 						$action = sprintf( esc_html__( '%1$s liked a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
-					} else {
-						if ( $user_id === $media_author ) {
+					} else if ( $user_id === $media_author ) {
 							// translators: 1: username, 2: media.
 							$action = sprintf( esc_html__( '%1$s liked their %2$s', 'buddypress-media' ), $username, $media_str );
-						} else {
-							$media_author_data = get_userdata( $media_author );
-							$media_author_name = sprintf(
-								'<a href="%1$s">%2$s</a>',
-								esc_url( get_rtmedia_user_link( $media_author ) ),
-								esc_html( $media_author_data->display_name )
-							);
-							// translators: 1: username, 2: author, 3: media.
-							$action = sprintf( esc_html__( '%1$s liked %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
-						}
+					} else {
+						$media_author_data = get_userdata( $media_author );
+						$media_author_name = sprintf(
+							'<a href="%1$s">%2$s</a>',
+							esc_url( get_rtmedia_user_link( $media_author ) ),
+							esc_html( $media_author_data->display_name )
+						);
+						// translators: 1: username, 2: author, 3: media.
+						$action = sprintf( esc_html__( '%1$s liked %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
 					}
 
 					$action       = apply_filters( 'rtm_bp_like_activity_action', $action, $media_id, $user_id );
@@ -1125,6 +1129,7 @@ class RTMediaBuddyPressActivity {
 	public function activity_after_media_comment( $params ) {
 		if ( class_exists( 'BuddyPress' ) && function_exists( 'bp_activity_add' ) ) {
 			if ( isset( $params['comment_post_ID'] ) ) {
+				global $bp;
 
 				// get media details.
 				$media_model = new RTMediaModel();
@@ -1157,28 +1162,32 @@ class RTMediaBuddyPressActivity {
 
 					if ( 'group' === $media_obj->context ) {
 						$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
+
+						if ( isset( $bp->version ) && version_compare( $bp->version, '12.0.0', 'ge' ) ) {
+							$group_permalink = bp_get_group_url( $group_data );
+						} else {
+							$group_permalink = bp_get_group_permalink( $group_data );
+						}
+
 						$group_name = sprintf(
 							'<a href="%1$s">%2$s</a>',
-							esc_url( bp_get_group_permalink( $group_data ) ),
+							esc_url( $group_permalink ),
 							esc_html( $group_data->name )
 						);
 						// translators: 1: username, 2: media, 3: group name.
 						$action = sprintf( esc_html__( '%1$s commented on a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
+					} else if ( $user_id === $media_author ) {
+						// translators: 1: username, 2: media.
+						$action = sprintf( esc_html__( '%1$s commented on their %2$s', 'buddypress-media' ), $username, $media_str );
 					} else {
-
-						if ( $user_id === $media_author ) {
-							// translators: 1: username, 2: media.
-							$action = sprintf( esc_html__( '%1$s commented on their %2$s', 'buddypress-media' ), $username, $media_str );
-						} else {
-							$media_author_data = get_userdata( $media_author );
-							$media_author_name = sprintf(
-								'<a href="%1$s">%2$s</a>',
-								esc_url( get_rtmedia_user_link( $media_author ) ),
-								esc_html( $media_author_data->display_name )
-							);
-							// translators: 1: username, 2: author, 3: media.
-							$action = sprintf( esc_html__( '%1$s commented on %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
-						}
+						$media_author_data = get_userdata( $media_author );
+						$media_author_name = sprintf(
+							'<a href="%1$s">%2$s</a>',
+							esc_url( get_rtmedia_user_link( $media_author ) ),
+							esc_html( $media_author_data->display_name )
+						);
+						// translators: 1: username, 2: author, 3: media.
+						$action = sprintf( esc_html__( '%1$s commented on %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
 					}
 
 					$activity_content = $params['comment_content'];
@@ -1328,7 +1337,6 @@ class RTMediaBuddyPressActivity {
 		}
 
 		return $can_delete;
-
 	}
 
 	/**
@@ -1396,7 +1404,6 @@ class RTMediaBuddyPressActivity {
 		}
 
 		return $has_access;
-
 	}
 
 	/**

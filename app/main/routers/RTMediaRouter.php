@@ -173,7 +173,6 @@ class RTMediaRouter {
 		$this->rt_theme_compat_reset_post();
 
 		return apply_filters( 'rtmedia_main_template_include', $template, $new_rt_template );
-
 	}
 
 	/**
@@ -248,7 +247,7 @@ class RTMediaRouter {
 	 * @param array $args Array of arguments.
 	 */
 	public function rt_theme_compat_reset_post( $args = array() ) {
-		global $wp_query, $post;
+		global $wp_query, $post, $bp;
 
 		// Switch defaults if post is set.
 		global $rtmedia_query;
@@ -341,18 +340,32 @@ class RTMediaRouter {
 			if ( bp_is_group() ) {
 				$dummy['post_type'] = 'bp_group';
 				if ( 'bp-default' !== get_option( 'stylesheet' ) ) {
+
+					if ( isset( $bp->version ) && version_compare( $bp->version, '12.0.0', 'ge' ) ) {
+						$group_permalink = bp_get_group_url( groups_get_current_group() );
+					} else {
+						$group_permalink = bp_get_group_permalink( groups_get_current_group() );
+					}
+
 					$dummy['post_title'] = sprintf(
 						'<a href="%1$s">%2$s</a>',
-						esc_url( bp_get_group_permalink( groups_get_current_group() ) ),
+						esc_url( $group_permalink ),
 						bp_get_current_group_name()
 					);
 				}
 			} else {
 				$dummy['post_type'] = 'bp_member';
 				if ( 'bp-default' !== get_option( 'stylesheet' ) ) {
+
+					if ( isset( $bp->version ) && version_compare( $bp->version, '12.0.0', 'ge' ) ) {
+						$user_profile = bp_displayed_user_url();
+					} else {
+						$user_profile = bp_get_displayed_user_link();
+					}
+
 					$dummy['post_title'] = sprintf(
 						'<a href="%1$s">%2$s</a>',
-						esc_url( bp_get_displayed_user_link() ),
+						esc_url( $user_profile ),
 						bp_get_displayed_user_fullname()
 					);
 				}
@@ -398,7 +411,6 @@ class RTMediaRouter {
 		if ( ! $wp_query->is_404() ) {
 			status_header( 200 );
 		}
-
 	}
 
 	/**
