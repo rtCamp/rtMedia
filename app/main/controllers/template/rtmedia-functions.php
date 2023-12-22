@@ -593,7 +593,7 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 				// added poster for showing thumbnail and changed preload value to fix rtMedia GL-209.
 				$html .= sprintf(
 					'<video poster="%1$s" src="%2$s" %3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata"></video>',
-					esc_url( $rtmedia_media->cover_art ),
+					esc_url( $rtmedia_media->cover_art || '' ),
 					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
 					esc_attr( $size ),
 					esc_attr( $rtmedia_media->id )
@@ -1320,7 +1320,9 @@ function rtmedia_actions() {
 	$actions = apply_filters( 'rtmedia_action_buttons_after_delete', $actions );
 
 	foreach ( $actions as $action ) {
-		echo wp_kses( $action, RTMedia::expanded_allowed_tags() );
+		if ( ! empty( $action ) ) {
+			echo wp_kses( $action, RTMedia::expanded_allowed_tags() );
+		}
 	}
 
 	do_action( 'after_rtmedia_action_buttons' );
