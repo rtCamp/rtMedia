@@ -230,7 +230,8 @@ var rtMediaHook = {
     call: function( name, arguments ) {
         if ( 'undefined' != typeof ( rtMediaHook.hooks[name] ) ) {
             for ( i = 0; i < rtMediaHook.hooks[name].length; ++i ) {
-                if ( true != rtMediaHook.hooks[name][i]( arguments ) ) {
+                var result = rtMediaHook.hooks[name][i]( arguments );
+                if ( false === result || 0 === result ) {
                     rtMediaHook.is_break = true;
                     return false;
                     break;
