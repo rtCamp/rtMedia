@@ -15,7 +15,6 @@
 function have_rtmedia() {
 	global $rtmedia_query;
 	return $rtmedia_query->have_media();
-
 }
 
 /**
@@ -30,7 +29,6 @@ function rewind_rtmedia() {
 	global $rtmedia_query;
 
 	return $rtmedia_query->rewind_media();
-
 }
 
 /**
@@ -45,7 +43,6 @@ function rtmedia() {
 	global $rtmedia_query;
 
 	return $rtmedia_query->rtmedia();
-
 }
 
 /**
@@ -67,7 +64,6 @@ function rtmedia_album_mediacounter( $id = null ) {
 		$media_id = ! empty( $id ) ? $id : $rtmedia_media->id;
 		return rtm_get_album_media_count( $media_id );
 	}
-
 }
 
 /**
@@ -89,7 +85,6 @@ function rtmedia_title() {
 
 		return stripslashes( esc_html( $rtmedia_media->media_title ) );
 	}
-
 }
 
 /**
@@ -112,7 +107,6 @@ function rtmedia_album_name() {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -143,7 +137,6 @@ function get_rtmedia_gallery_title() {
 	$title = apply_filters( 'rtmedia_gallery_title', $title );
 
 	return $title;
-
 }
 
 /**
@@ -163,7 +156,6 @@ function get_rtmedia_title( $id ) {
 	);
 
 	return $title[0]->media_title;
-
 }
 
 /**
@@ -245,7 +237,6 @@ function rtmedia_author_profile_pic( $show_link = true, $echo = true, $author_id
 			return $profile_pic;
 		}
 	} // End if.
-
 }
 
 /**
@@ -282,7 +273,6 @@ function rtmedia_author_name( $show_link = true ) {
 			echo '</a>';
 		}
 	}
-
 }
 
 /**
@@ -303,7 +293,6 @@ function rtmedia_get_author_name( $user_id ) {
 			return $user->display_name;
 		}
 	}
-
 }
 
 /**
@@ -361,7 +350,6 @@ function rtmedia_id( $media_id = false ) {
 
 		return $rtmedia_media->id;
 	}
-
 }
 
 /**
@@ -391,12 +379,9 @@ function rtmedia_media_id( $id = false ) {
 		if ( ! empty( $media ) && ! empty( $media[0] ) ) {
 			return $media[0]->media_id;
 		}
-	} else {
-		if ( is_object( $rtmedia_media ) ) {
+	} elseif ( is_object( $rtmedia_media ) ) {
 			return $rtmedia_media->media_id;
-		}
 	}
-
 }
 
 /**
@@ -434,7 +419,6 @@ function rtmedia_media_ext( $id = false ) {
 
 		return $filetype['ext'];
 	}
-
 }
 
 /**
@@ -464,7 +448,6 @@ function rtmedia_activity_id( $id = false ) {
 
 		return $rtmedia_media->activity_id;
 	}
-
 }
 
 /**
@@ -502,7 +485,6 @@ function rtmedia_type( $id = false ) {
 			return '';
 		}
 	}
-
 }
 
 /**
@@ -532,7 +514,6 @@ function rtmedia_cover_art( $id = false ) {
 
 		return $rtmedia_media->cover_art;
 	}
-
 }
 
 /**
@@ -552,7 +533,6 @@ function rtmedia_permalink( $media_id = null ) {
 	} else {
 		echo esc_url( get_rtmedia_permalink( rtmedia_id( $media_id ) ) );
 	}
-
 }
 
 /**
@@ -565,7 +545,6 @@ function rtmedia_album_permalink() {
 	global $rtmedia_media;
 
 	echo esc_url( get_rtmedia_permalink( $rtmedia_media->album_id ) );
-
 }
 
 /**
@@ -614,7 +593,7 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 				// added poster for showing thumbnail and changed preload value to fix rtMedia GL-209.
 				$html .= sprintf(
 					'<video poster="%1$s" src="%2$s" %3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata"></video>',
-					esc_url( $rtmedia_media->cover_art ),
+					esc_url( $rtmedia_media->cover_art || '' ),
 					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
 					esc_attr( $size ),
 					esc_attr( $rtmedia_media->id )
@@ -664,7 +643,6 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 	} else {
 		return $html;
 	}
-
 }
 
 /**
@@ -757,12 +735,10 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 		} else {
 			$src = false;
 		}
+	} elseif ( is_numeric( $thumbnail_id ) && 0 !== intval( $thumbnail_id ) ) {
+		list( $src, $width, $height ) = wp_get_attachment_image_src( $thumbnail_id, $size );
 	} else {
-		if ( is_numeric( $thumbnail_id ) && 0 !== intval( $thumbnail_id ) ) {
-			list( $src, $width, $height ) = wp_get_attachment_image_src( $thumbnail_id, $size );
-		} else {
-			$src = $thumbnail_id;
-		}
+		$src = $thumbnail_id;
 	}
 
 	$src = apply_filters( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
@@ -773,7 +749,6 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 	} else {
 		return $src;
 	}
-
 }
 
 /**
@@ -844,7 +819,6 @@ function rtmedia_image_alt( $id = false, $echo = true ) {
 	} else {
 		return $img_alt;
 	}
-
 }
 
 /**
@@ -896,30 +870,27 @@ function rtmedia_album_image( $size = 'thumbnail', $id = false ) {
 				1
 			);
 		}
+	} elseif ( isset( $rtmedia_query->query['context_id'] ) && isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
+
+		$media = $model->get_media(
+			array(
+				'album_id'   => $id,
+				'media_type' => 'photo',
+				'context_id' => $rtmedia_query->query['context_id'],
+			),
+			0,
+			1
+		);
 	} else {
 
-		if ( isset( $rtmedia_query->query['context_id'] ) && isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
-
-			$media = $model->get_media(
-				array(
-					'album_id'   => $id,
-					'media_type' => 'photo',
-					'context_id' => $rtmedia_query->query['context_id'],
-				),
-				0,
-				1
-			);
-		} else {
-
-			$media = $model->get_media(
-				array(
-					'album_id'   => $id,
-					'media_type' => 'photo',
-				),
-				0,
-				1
-			);
-		}
+		$media = $model->get_media(
+			array(
+				'album_id'   => $id,
+				'media_type' => 'photo',
+			),
+			0,
+			1
+		);
 	}
 
 	if ( $media ) {
@@ -931,7 +902,6 @@ function rtmedia_album_image( $size = 'thumbnail', $id = false ) {
 	}
 
 	return $src;
-
 }
 
 /**
@@ -992,7 +962,6 @@ function rtmedia_duration( $id = false ) {
 	}
 
 	return $duration;
-
 }
 
 /**
@@ -1012,7 +981,6 @@ function rtmedia_sanitize_object( $data, $exceptions = array() ) {
 	}
 
 	return $data;
-
 }
 
 /**
@@ -1039,7 +1007,6 @@ function rtmedia_delete_allowed() {
 	$flag = apply_filters( 'rtmedia_media_delete_priv', $flag );
 
 	return $flag;
-
 }
 
 /**
@@ -1062,7 +1029,6 @@ function rtmedia_edit_allowed() {
 	$flag = apply_filters( 'rtmedia_media_edit_priv', $flag );
 
 	return $flag;
-
 }
 
 /**
@@ -1077,7 +1043,6 @@ function rtmedia_request_action() {
 	global $rtmedia_query;
 
 	return $rtmedia_query->action_query->action;
-
 }
 
 /**
@@ -1110,7 +1075,6 @@ function rtmedia_title_input() {
 	$html .= '';
 
 	echo wp_kses( $html, RTMedia::expanded_allowed_tags() );
-
 }
 
 /**
@@ -1175,7 +1139,6 @@ function rtmedia_description_input( $editor = true, $echo = false ) {
 	} else {
 		return $html;
 	}
-
 }
 
 /**
@@ -1193,7 +1156,6 @@ function rtmedia_description( $echo = true ) {
 	} else {
 		return rtmedia_get_media_description();
 	}
-
 }
 
 /**
@@ -1222,7 +1184,6 @@ function rtmedia_get_media_description( $id = false ) {
 	 * this is already singe media request and hence using `wpautop` instead.
 	 */
 	return wpautop( get_post_field( 'post_content', $media_post_id ) );
-
 }
 
 /**
@@ -1237,7 +1198,6 @@ function rtmedia_count() {
 	global $rtmedia_query;
 
 	return $rtmedia_query->media_count;
-
 }
 
 /**
@@ -1252,7 +1212,6 @@ function rtmedia_offset() {
 	global $rtmedia_query;
 
 	return ( $rtmedia_query->action_query->page - 1 ) * $rtmedia_query->action_query->per_page_media;
-
 }
 
 /**
@@ -1267,7 +1226,6 @@ function rtmedia_per_page_media() {
 	global $rtmedia_query;
 
 	return $rtmedia_query->action_query->per_page_media;
-
 }
 
 /**
@@ -1282,7 +1240,6 @@ function rtmedia_page() {
 	global $rtmedia_query;
 
 	return $rtmedia_query->action_query->page;
-
 }
 
 /**
@@ -1297,7 +1254,6 @@ function rtmedia_current_media() {
 	global $rtmedia_query;
 
 	return $rtmedia_query->current_media;
-
 }
 
 /**
@@ -1364,11 +1320,12 @@ function rtmedia_actions() {
 	$actions = apply_filters( 'rtmedia_action_buttons_after_delete', $actions );
 
 	foreach ( $actions as $action ) {
-		echo wp_kses( $action, RTMedia::expanded_allowed_tags() );
+		if ( ! empty( $action ) ) {
+			echo wp_kses( $action, RTMedia::expanded_allowed_tags() );
+		}
 	}
 
 	do_action( 'after_rtmedia_action_buttons' );
-
 }
 
 /**
@@ -1432,7 +1389,6 @@ function rtmedia_comments( $echo = true ) {
 	} else {
 		return $html;
 	}
-
 }
 
 /**
@@ -1509,7 +1465,6 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 	$html .= '<div class="clear"></div></div></div></li>';
 
 	return apply_filters( 'rtmedia_single_comment', $html, $comment );
-
 }
 
 /**
@@ -1539,7 +1494,6 @@ function rtmedia_get_media_comment_count( $media_id = false ) {
 	} else {
 		return 0;
 	}
-
 }
 
 /**
@@ -1560,20 +1514,20 @@ function rtmedia_pagination_prev_link() {
 	$link        = '';
 
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'profile' === $rtmedia_interaction->context->type ) {
-		if ( function_exists( 'bp_core_get_user_domain' ) ) {
-			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query['media_author'] ) );
+		if ( function_exists( 'bp_members_get_user_url' ) ) {
+			$link = trailingslashit( bp_members_get_user_url( $rtmedia_query->media_query['media_author'] ) );
+		} else if ( function_exists( 'bp_core_get_user_domain' ) ) {
+			$link = trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query['media_author'] ) );
 		} else {
 			$link = $site_url . 'author/' . $author_name . '/';
 		}
-	} else {
-		if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'group' === $rtmedia_interaction->context->type ) {
-			if ( function_exists( 'bp_get_current_group_slug' ) ) {
-				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
-			}
-		} else {
-			$post  = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
-			$link .= $site_url . $post->post_name . '/';
+	} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'group' === $rtmedia_interaction->context->type ) {
+		if ( function_exists( 'bp_get_current_group_slug' ) ) {
+			$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 		}
+	} else {
+		$post  = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) );
+		$link .= $site_url . $post->post_name . '/';
 	}
 
 	$link .= RTMEDIA_MEDIA_SLUG . '/';
@@ -1587,7 +1541,6 @@ function rtmedia_pagination_prev_link() {
 	}
 
 	return apply_filters( 'rtmedia_pagination_prev_link', $link . $page_url, $link, $page_url );
-
 }
 
 /**
@@ -1609,7 +1562,7 @@ function rtmedia_pagination_next_link() {
 
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'profile' === $rtmedia_interaction->context->type ) {
 
-		if ( function_exists( 'bp_core_get_user_domain' ) ) {
+		if ( function_exists( 'bp_members_get_user_url' ) || function_exists( 'bp_core_get_user_domain' ) ) {
 
 			if ( isset( $rtmedia_query->media_query['context'] ) && 'profile' === $rtmedia_query->media_query['context'] && isset( $rtmedia_query->media_query['context_id'] ) ) {
 				$user_id = $rtmedia_query->media_query['context_id'];
@@ -1619,32 +1572,31 @@ function rtmedia_pagination_next_link() {
 				$user_id = bp_displayed_user_id();
 			}
 
-			$link .= trailingslashit( bp_core_get_user_domain( $user_id ) );
-
+			if ( function_exists( 'bp_members_get_user_url' ) ) {
+				$link .= trailingslashit( bp_members_get_user_url( $user_id ) );
+			} else {
+				$link .= trailingslashit( bp_core_get_user_domain( $user_id ) );
+			}
 		} else {
 			$link .= $site_url . 'author/' . $author_name . '/';
 		}
-	} else {
-		if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'group' === $rtmedia_interaction->context->type ) {
+	} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'group' === $rtmedia_interaction->context->type ) {
 
-			if ( function_exists( 'bp_get_current_group_slug' ) ) {
-				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
-			}
+		if ( function_exists( 'bp_get_current_group_slug' ) ) {
+			$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
+		}
+
+		// if there are more media than number of media per page to show than $rtmedia_query->media->media_id will be set other wise take media_id of very first media.
+		// For more understanding why array became object check rewind_media() in RTMediaQuery.php file and check it's call.
+	} else if ( ! empty( $rtmedia_query->media ) ) {
+
+		$post_id = ( isset( $rtmedia_query->media->media_id ) ? $rtmedia_query->media->media_id : $rtmedia_query->media[0]->media_id );
+		$post    = get_post( get_post_field( 'post_parent', $post_id ) );
+
+		if ( isset( $post->post_name ) ) {
+			$link .= $site_url . $post->post_name . '/';
 		} else {
-
-			// if there are more media than number of media per page to show than $rtmedia_query->media->media_id will be set other wise take media_id of very first media.
-			// For more understanding why array became object check rewind_media() in RTMediaQuery.php file and check it's call.
-			if ( ! empty( $rtmedia_query->media ) ) {
-
-				$post_id = ( isset( $rtmedia_query->media->media_id ) ? $rtmedia_query->media->media_id : $rtmedia_query->media[0]->media_id );
-				$post    = get_post( get_post_field( 'post_parent', $post_id ) );
-
-				if ( isset( $post->post_name ) ) {
-					$link .= $site_url . $post->post_name . '/';
-				} else {
-					$link .= $site_url;
-				}
-			}
+			$link .= $site_url;
 		}
 	}
 
@@ -1663,7 +1615,6 @@ function rtmedia_pagination_next_link() {
 	}
 
 	return apply_filters( 'rtmedia_pagination_next_link', $link . $page_url, $link, $page_url );
-
 }
 
 /**
@@ -1705,50 +1656,47 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'profile' === $rtmedia_interaction->context->type ) {
 
-		if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->query['context_id'] ) ) {
+		if ( function_exists( 'bp_members_get_user_url' ) && ! empty( $rtmedia_query->query['context_id'] ) ) {
+			$link .= trailingslashit( bp_members_get_user_url( $rtmedia_query->query['context_id'] ) );
+		} else if ( function_exists( 'bp_core_get_user_domain' ) && ! empty( $rtmedia_query->query['context_id'] ) ) {
 			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->query['context_id'] ) );
-		} else {
+		} elseif ( $is_shortcode_on_home ) {
 
-			if ( $is_shortcode_on_home ) {
 				$link .= $site_url;
-			} elseif ( 'group' === $rtm_context || 'profile' === $rtm_context ) {
-				$link .= $site_url . 'rtm_context/' . $rtm_context . '/attribute/' . $rtm_attr . '/' . $rtm_term . '/';
-			} else {
-				$link .= $site_url . 'author/' . $author_name . '/';
-			}
+		} elseif ( 'group' === $rtm_context || 'profile' === $rtm_context ) {
+			$link .= $site_url . 'rtm_context/' . $rtm_context . '/attribute/' . $rtm_attr . '/' . $rtm_term . '/';
+		} else {
+			$link .= $site_url . 'author/' . $author_name . '/';
 		}
-	} else {
+	} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'group' === $rtmedia_interaction->context->type ) {
 
-		if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'group' === $rtmedia_interaction->context->type ) {
-
-			if ( function_exists( 'bp_get_current_group_slug' ) ) {
-				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
-			}
-		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, $wp_default_context, true ) ) {
-
-			// Make sure that only one slash is at the end of url.
-			$link .= rtrim( get_permalink( $post ), '/' ) . '/';
-
-		} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'rtmedia_album' === $rtmedia_interaction->context->type ) { // url for rtmedia album.
-
-			global $rtmedia;
-			$options = $rtmedia->options;
-			// Get album slug.
-			$album_slug = $options['rtmedia_wp_album_slug'];
-
-			if ( empty( $album_slug ) ) {
-				$album_slug = 'rtmedia-album';
-			}
-
-			$post  = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) ); // phpcs:ignore
-			$link .= $site_url . $album_slug . '/' . $post->post_name . '/';
-
-		} elseif ( isset( $rtmedia_query->media->media_id ) ) {
-
-			$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) ); // phpcs:ignore
-
-			$link .= $site_url . $post->post_name . '/';
+		if ( function_exists( 'bp_get_current_group_slug' ) ) {
+			$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 		}
+	} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, $wp_default_context, true ) ) {
+
+		// Make sure that only one slash is at the end of url.
+		$link .= rtrim( get_permalink( $post ), '/' ) . '/';
+
+	} elseif ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && 'rtmedia_album' === $rtmedia_interaction->context->type ) { // url for rtmedia album.
+
+		global $rtmedia;
+		$options = $rtmedia->options;
+		// Get album slug.
+		$album_slug = $options['rtmedia_wp_album_slug'];
+
+		if ( empty( $album_slug ) ) {
+			$album_slug = 'rtmedia-album';
+		}
+
+		$post  = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) ); // phpcs:ignore
+		$link .= $site_url . $album_slug . '/' . $post->post_name . '/';
+
+	} elseif ( isset( $rtmedia_query->media->media_id ) ) {
+
+		$post = get_post( get_post_field( 'post_parent', $rtmedia_query->media->media_id ) ); // phpcs:ignore
+
+		$link .= $site_url . $post->post_name . '/';
 	}
 	// phpcs:enable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 
@@ -1799,7 +1747,6 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	}
 
 	return apply_filters( 'rtmedia_pagination_page_link', $link . $page_url, $link, $page_url );
-
 }
 
 /**
@@ -1816,7 +1763,6 @@ function rtmedia_media_pagination() {
 	} else {
 		echo wp_kses( rtmedia_get_pagination_values(), RTMedia::expanded_allowed_tags() );
 	}
-
 }
 
 /**
@@ -1871,7 +1817,6 @@ function rtmedia_get_pagination_values() {
 	} // End if.
 
 	return $rtmedia_media_pages;
-
 }
 
 /**
@@ -1890,7 +1835,6 @@ function rtmedia_comments_enabled() {
 	}
 
 	return false;
-
 }
 
 /**
@@ -1909,7 +1853,6 @@ function is_rtmedia_gallery() {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -1928,7 +1871,6 @@ function is_rtmedia_album_gallery() {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -1947,7 +1889,6 @@ function is_rtmedia_single() {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -1983,7 +1924,6 @@ function is_rtmedia_album( $album_id = false ) {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -2002,7 +1942,6 @@ function is_rtmedia_group_album() {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -2025,7 +1964,6 @@ function is_rtmedia_edit_allowed() {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -2103,7 +2041,6 @@ function update_activity_after_thumb_set( $id ) {
 			rtmedia_update_content_of_comment_media( $id, $activity_content );
 		}
 	} // End if.
-
 }
 
 /**
@@ -2169,7 +2106,6 @@ function update_video_poster( $html, $media, $activity = false ) {
 	}
 
 	return $html;
-
 }
 
 /**
@@ -2187,7 +2123,6 @@ function get_video_without_thumbs() {
 	$results = $wpdb->get_col( $wpdb->prepare( "select media_id from $rtmedia_model->table_name where media_type = %s and blog_id = %d and cover_art is null", 'video', get_current_blog_id() ) ); // phpcs:ignore
 
 	return $results;
-
 }
 
 /**
@@ -2214,7 +2149,6 @@ function rtmedia_comment_form() {
 		</script>
 		<?php
 	}
-
 }
 
 /**
@@ -2253,7 +2187,6 @@ function rtmedia_get_cover_art_src( $id ) {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -2303,7 +2236,6 @@ function rtmedia_delete_form( $echo = true ) {
 	}
 
 	return false;
-
 }
 
 /**
@@ -2317,11 +2249,9 @@ function rtmedia_uploader( $attr = '' ) {
 		if ( function_exists( 'bp_is_blog_page' ) && ! bp_is_blog_page() ) {
 			if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() === get_current_user_id() ) {
 				echo wp_kses( RTMediaUploadShortcode::pre_render( $attr ), RTMedia::expanded_allowed_tags() );
-			} else {
-				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
-					if ( can_user_upload_in_group() ) {
-						echo wp_kses( RTMediaUploadShortcode::pre_render( $attr ), RTMedia::expanded_allowed_tags() );
-					}
+			} elseif ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+				if ( can_user_upload_in_group() ) {
+					echo wp_kses( RTMediaUploadShortcode::pre_render( $attr ), RTMedia::expanded_allowed_tags() );
 				}
 			}
 		}
@@ -2339,7 +2269,6 @@ function rtmedia_uploader( $attr = '' ) {
 			)
 		);
 	}
-
 }
 
 /**
@@ -2378,7 +2307,6 @@ function get_rtmedia_meta( $id = false, $key = false ) {
 
 		return $meta;
 	}
-
 }
 
 /**
@@ -2407,7 +2335,6 @@ function add_rtmedia_meta( $id = false, $key = false, $value = false, $duplicate
 
 		return $meta;
 	}
-
 }
 
 /**
@@ -2436,7 +2363,6 @@ function update_rtmedia_meta( $id = false, $key = false, $value = false, $duplic
 
 		return $meta;
 	}
-
 }
 
 /**
@@ -2473,7 +2399,6 @@ function delete_rtmedia_meta( $id = false, $key = false ) {
 function rtmedia_global_albums() {
 
 	return RTMediaAlbum::get_globals();
-
 }
 
 /**
@@ -2518,7 +2443,6 @@ function rtmedia_global_album_list( $selected_album_id = false ) {
 	}
 
 	return $option;
-
 }
 
 /**
@@ -2592,7 +2516,6 @@ function rtmedia_user_album_list( $get_all = false, $selected_album_id = false )
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -2650,7 +2573,6 @@ function rtmedia_group_album_list( $selected_album_id = false ) {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -2661,7 +2583,6 @@ function rtmedia_group_album_list( $selected_album_id = false ) {
 function rtm_is_album_create_allowed() {
 
 	return apply_filters( 'rtm_is_album_create_enable', true );
-
 }
 
 /**
@@ -2699,7 +2620,6 @@ function rtmedia_is_album_editable() {
 	}
 
 	return false;
-
 }
 
 /**
@@ -2734,7 +2654,6 @@ function is_rtmedia_album_enable() {
 	}
 
 	return false;
-
 }
 
 /**
@@ -2750,7 +2669,6 @@ function rtmedia_load_template() {
 	}
 
 	do_action( 'rtmedia_after_template_load' );
-
 }
 
 /**
@@ -2769,7 +2687,6 @@ function is_rtmedia_privacy_enable() {
 	}
 
 	return false;
-
 }
 
 /**
@@ -2788,7 +2705,6 @@ function is_rtmedia_privacy_user_overide() {
 	}
 
 	return false;
-
 }
 
 /**
@@ -2846,7 +2762,6 @@ function get_rtmedia_default_privacy() {
 	}
 
 	return 0;
-
 }
 
 /**
@@ -2883,7 +2798,6 @@ function is_rtmedia_profile_media_enable() {
 	}
 
 	return false;
-
 }
 
 /**
@@ -2902,7 +2816,6 @@ function is_rtmedia_bp_group() {
 	}
 
 	return false;
-
 }
 
 /**
@@ -2921,7 +2834,6 @@ function is_rtmedia_bp_profile() {
 	}
 
 	return false;
-
 }
 
 /**
@@ -2940,7 +2852,6 @@ function can_user_upload_in_group() {
 	}
 
 	return apply_filters( 'rtm_can_user_upload_in_group', $display_flag );
-
 }
 
 /**
@@ -2976,19 +2887,16 @@ function can_user_create_album_in_group( $group_id = false, $user_id = false ) {
 			if ( groups_is_user_admin( $user_id, $group_id ) > 0 ) {
 				$display_flag = true;
 			}
-		} else {
-			if ( 'moderators' === $upload_level ) {
-				if ( groups_is_user_mod( $user_id, $group_id ) || groups_is_user_admin( $user_id, $group_id ) ) {
-					$display_flag = true;
-				}
-			} else {
+		} elseif ( 'moderators' === $upload_level ) {
+			if ( groups_is_user_mod( $user_id, $group_id ) || groups_is_user_admin( $user_id, $group_id ) ) {
 				$display_flag = true;
 			}
+		} else {
+			$display_flag = true;
 		}
 	}
 
 	return apply_filters( 'can_user_create_album_in_group', $display_flag );
-
 }
 
 /**
@@ -3025,7 +2933,6 @@ function is_rtmedia_upload_photo_enabled() {
 	}
 
 	return false;
-
 }
 
 /**
@@ -3044,7 +2951,6 @@ function is_rtmedia_upload_music_enabled() {
 	}
 
 	return false;
-
 }
 
 /**
@@ -3072,7 +2978,6 @@ function get_rtmedia_allowed_upload_type() {
 	}
 
 	return $allow_type_str;
-
 }
 
 /**
@@ -3083,7 +2988,6 @@ function get_rtmedia_allowed_upload_type() {
 function is_rt_admin() {
 
 	return current_user_can( 'list_users' );
-
 }
 
 /**
@@ -3128,7 +3032,6 @@ function get_rtmedia_like( $media_id = false ) {
 	}
 
 	return $actions;
-
 }
 
 /**
@@ -3163,7 +3066,6 @@ function show_rtmedia_like_counts() {
 		</div>
 		<?php
 	}
-
 }
 
 if ( ! function_exists( 'rtmedia_who_like_html' ) ) {
@@ -3321,7 +3223,6 @@ if ( ! function_exists( 'get_music_cover_art' ) ) {
 
 		// todo:delete if not used.
 		return false;
-
 	}
 }
 
@@ -3380,7 +3281,6 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 	}
 
 	return $privacy;
-
 }
 
 /**
@@ -3404,7 +3304,6 @@ function get_rtmedia_date_gmt( $rtmedia_id = false ) {
 	$date_time = apply_filters( 'rtmedia_comment_date_format', $date_time, null );
 
 	return '<span>' . $date_time . '</span>';
-
 }
 
 /**
@@ -3477,7 +3376,6 @@ function rtmedia_convert_date( $_date ) {
 		// translators: %s: date format, see http://php.net/date.
 		return date_i18n( 'd F Y ', strtotime( $_date ), true );
 	}
-
 }
 
 /**
@@ -3495,17 +3393,14 @@ function get_media_counts() {
 
 	if ( function_exists( 'bp_displayed_user_id' ) ) {
 		$user_id = bp_displayed_user_id();
-	} else {
-		if ( isset( $rtmedia_query ) && isset( $rtmedia_query->query['context_id'] ) && 'profile' === $rtmedia_query->query['context'] ) {
+	} elseif ( isset( $rtmedia_query ) && isset( $rtmedia_query->query['context_id'] ) && 'profile' === $rtmedia_query->query['context'] ) {
 			$user_id = $rtmedia_query->query['context_id'];
-		}
 	}
 
 	$media_nav = new RTMediaNav( false );
 	$temp      = $media_nav->actual_counts( $user_id );
 
 	return $temp;
-
 }
 
 /**
@@ -3533,7 +3428,6 @@ function rtmedia_is_edit_page( $new_edit = null ) {
 	} else { // check for either new or edit.
 		return in_array( $pagenow, array( 'post.php', 'post-new.php' ), true );
 	}
-
 }
 
 /**
@@ -3560,7 +3454,6 @@ function is_rtmedia_page() {
 	}
 
 	return $rtmedia_interaction->routes[ RTMEDIA_MEDIA_SLUG ]->is_template();
-
 }
 
 /**
@@ -3611,7 +3504,6 @@ function rtmedia_migrate_formatseconds( $seconds_left ) {
 	}
 
 	return $formatted_time_remaining;
-
 }
 
 /**
@@ -3637,7 +3529,6 @@ function rtmedia_file_size() {
 			return filesize( get_attached_file( $rtmedia_media->media_id ) );
 		}
 	}
-
 }
 
 /**
@@ -3662,7 +3553,6 @@ function rtmedia_get_media_type_from_extn( $extn ) {
 	}
 
 	return false;
-
 }
 
 /**
@@ -3694,7 +3584,6 @@ function rtmedia_get_extension( $media_id = false ) {
 
 	// return the extension of the filename.
 	return $file_type['ext'];
-
 }
 
 /**
@@ -3709,7 +3598,6 @@ function rtmedia_get_current_blog_url( $domain ) {
 	$domain = get_home_url( get_current_blog_id() );
 
 	return $domain;
-
 }
 
 /**
@@ -3728,7 +3616,6 @@ function rtmedia_is_global_album( $album_id ) {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -3742,7 +3629,6 @@ function rtmedia_is_global_album( $album_id ) {
 function rtmedia_is_uploader_view_allowed( $allow, $section = 'media_gallery' ) {
 
 	return apply_filters( 'rtmedia_allow_uploader_view', $allow, $section );
-
 }
 
 /**
@@ -3753,7 +3639,6 @@ function rtmedia_is_uploader_view_allowed( $allow, $section = 'media_gallery' ) 
 function get_rtmedia_encoding_api_key() {
 
 	return get_site_option( 'rtmedia-encoding-api-key' );
-
 }
 
 /**
@@ -3793,7 +3678,6 @@ function rtm_filter_metaid_column_name( $q ) {
 	}
 
 	return $q;
-
 }
 
 /**
@@ -3806,7 +3690,6 @@ function rtm_get_script_style_suffix() {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) === true ) ? '' : '.min';
 
 	return $suffix;
-
 }
 
 /**
@@ -3826,7 +3709,6 @@ function rtmedia_get_allowed_types() {
 	$allowed_media_type = apply_filters( 'rtmedia_allowed_types', $allowed_media_type );
 
 	return $allowed_media_type;
-
 }
 
 /**
@@ -3847,7 +3729,6 @@ function rtmedia_get_allowed_upload_types() {
 	}
 
 	return $allowed_types;
-
 }
 
 /**
@@ -3863,7 +3744,6 @@ function rtmedia_get_allowed_upload_types_array() {
 	$types         = array_keys( $allowed_types );
 
 	return $types;
-
 }
 
 /**
@@ -3886,7 +3766,6 @@ function rtmedia_add_media( $upload_params = array() ) {
 	$media_id = isset( $rtupload->media_ids[0] ) ? $rtupload->media_ids[0] : false;
 
 	return $media_id;
-
 }
 
 /**
@@ -3910,7 +3789,6 @@ function rtmedia_add_multiple_meta( $media_id, $meta_key_val ) {
 	}
 
 	return $meta_ids;
-
 }
 
 /**
@@ -3932,7 +3810,6 @@ function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_FULL_S
 	}
 
 	return $server_val;
-
 }
 
 /**
@@ -4021,7 +3898,6 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 	$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
 	return $license_data;
-
 }
 
 /**
@@ -4427,7 +4303,6 @@ function rtm_fetch_user_by_member_type( $type ) {
 	}
 
 	return $member_id;
-
 }
 
 /**
@@ -4508,21 +4383,18 @@ function rtmedia_get_upload_url( $request_uri ) {
 		$url_upload = substr( $url, 0, $slug_pos );
 		$url        = trailingslashit( $url_upload ) . 'upload/';
 
-	} else {
-
 		// If url contains '?' then put query string at last.
-		if ( strstr( $url, '?' ) ) {
+	} else if ( strstr( $url, '?' ) ) {
 
-			$url_arr = explode( '?', $url );
+		$url_arr = explode( '?', $url );
 
-			if ( is_array( $url_arr ) && ! empty( $url_arr ) && count( $url_arr ) > 1 ) {
-				$sub_url      = isset( $url_arr[0] ) ? $url_arr[0] : '';
-				$query_string = isset( $url_arr[1] ) ? $url_arr[1] : '';
-				$url          = trailingslashit( $sub_url ) . 'upload/?' . trim( $query_string, '/' );
-			}
-		} else {
-			$url = trailingslashit( $url ) . 'upload/';
+		if ( is_array( $url_arr ) && ! empty( $url_arr ) && count( $url_arr ) > 1 ) {
+			$sub_url      = isset( $url_arr[0] ) ? $url_arr[0] : '';
+			$query_string = isset( $url_arr[1] ) ? $url_arr[1] : '';
+			$url          = trailingslashit( $sub_url ) . 'upload/?' . trim( $query_string, '/' );
 		}
+	} else {
+		$url = trailingslashit( $url ) . 'upload/';
 	}
 
 	return $url;

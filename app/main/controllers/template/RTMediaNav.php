@@ -130,6 +130,12 @@ class RTMediaNav {
 				$slug               = apply_filters( 'rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG );
 				$media_tab_position = apply_filters( 'rtmedia_group_media_tab_position', 99 );
 
+				if ( isset( $bp->version ) && version_compare( $bp->version, '12.0.0', 'ge' ) ) {
+					$root_url = bp_get_root_url();
+				} else {
+					$root_url = bp_get_root_domain();
+				}
+
 				// to solve an issue of Media Tab is not showing in version 10.0.0.
 				if ( isset( $bp->version ) && version_compare( $bp->version, '2.5.3', 'gt' ) ) {
 
@@ -143,10 +149,10 @@ class RTMediaNav {
 					bp_core_new_subnav_item(
 						array(
 							'name'                => apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) . ' <span>' . rtmedia_number_to_human_readable( $group_counts['total']['all'] ) . '</span>',
-							'link'                => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ) . $slug,
+							'link'                => trailingslashit( $root_url . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ) . $slug,
 							'slug'                => $slug,
 							'parent_slug'         => bp_get_current_group_slug(),
-							'parent_url'          => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ),
+							'parent_url'          => trailingslashit( $root_url . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ),
 							'user_has_access'     => true,
 							'css_id'              => 'rtmedia-media-nav',
 							'position'            => $media_tab_position,
@@ -158,7 +164,7 @@ class RTMediaNav {
 				} else {
 					$bp->bp_options_nav[ bp_get_current_group_slug() ]['media'] = array(
 						'name'                => apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) . ' <span>' . rtmedia_number_to_human_readable( $group_counts['total']['all'] ) . '</span>',
-						'link'                => trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ) . $slug,
+						'link'                => trailingslashit( $root_url . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/' ) . $slug,
 						'slug'                => $slug,
 						'user_has_access'     => true,
 						'css_id'              => 'rtmedia-media-nav',
@@ -264,26 +270,13 @@ class RTMediaNav {
 		$default = false;
 		if ( function_exists( 'bp_is_group' ) && bp_is_group() && $user_group_status ) {
 			$link = get_rtmedia_group_link( bp_get_group_id() );
-		} else {
-
-			if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
-				$link = get_rtmedia_user_link( bp_displayed_user_id() );
-			} elseif ( get_query_var( 'author' ) ) {
-				$link = get_rtmedia_user_link( get_query_var( 'author' ) );
-			}
+		} else if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
+			$link = get_rtmedia_user_link( bp_displayed_user_id() );
+		} else if ( get_query_var( 'author' ) ) {
+			$link = get_rtmedia_user_link( get_query_var( 'author' ) );
 		}
 
 		$global_albums = rtmedia_global_albums();
-
-		// Return the album count if the album has media in it.
-		if ( function_exists( 'bp_is_group' ) && bp_is_group() && $user_group_status ) {
-			$global_albums = array_filter(
-				$global_albums,
-				function( $album_id ) {
-					return (int) rtm_get_album_media_count( $album_id ) > 0;
-				}
-			);
-		}
 
 		$other_count = count( $global_albums );
 
@@ -711,5 +704,4 @@ class RTMediaNav {
 		// Return media count.
 		return $media_count;
 	}
-
 }

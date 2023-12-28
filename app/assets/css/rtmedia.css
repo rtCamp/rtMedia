@@ -172,6 +172,16 @@ body.media.buddypress {
           align-items: center;
 }
 
+#buddypress.buddypress-wrap .bp-navs.bp-priority-nav {
+  overflow: unset;
+}
+
+.bp-priority-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .rtmedia-container {
   box-sizing: border-box;
 }

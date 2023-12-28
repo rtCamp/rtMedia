@@ -720,13 +720,13 @@ class RTMedia {
 	 */
 	public function get_user_link( $user ) {
 
-		if ( function_exists( 'bp_core_get_user_domain' ) ) {
-			$parent_link = bp_core_get_user_domain( $user );
-		} else {
-			$parent_link = get_author_posts_url( $user );
+		if ( function_exists( 'bp_members_get_user_url' ) ) {
+			return bp_members_get_user_url( $user );
+		} else if ( function_exists( 'bp_core_get_user_domain' ) ) {
+			return bp_core_get_user_domain( $user );
 		}
 
-		return $parent_link;
+		return get_author_posts_url( $user );
 	}
 
 	/**
@@ -1273,7 +1273,7 @@ class RTMedia {
 				array(
 					'jquery',
 					'rt-mediaelement-wp',
-					'rtmedia-emoji-picker'
+					'rtmedia-emoji-picker',
 				),
 				RTMEDIA_VERSION,
 				true
@@ -1670,16 +1670,18 @@ class RTMedia {
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
 		}
 
-		wp_enqueue_script(
-			'rtmedia-activity',
-			RTMEDIA_URL . 'app/assets/js/rtMedia.activity.js',
-			array(
-				'bp-nouveau',
-				'rtmedia-backbone'
-			),
-			RTMEDIA_VERSION,
-			true
-		);
+		if ( function_exists( 'bp_nouveau' ) ) {
+			wp_enqueue_script(
+				'rtmedia-activity',
+				RTMEDIA_URL . 'app/assets/js/rtMedia.activity.js',
+				array(
+					'bp-nouveau',
+					'rtmedia-backbone',
+				),
+				RTMEDIA_VERSION,
+				true
+			);
+		}
 	}
 
 	/**
@@ -1976,7 +1978,7 @@ class RTMedia {
  *
  * @return string
  */
-function parentlink_global_album( $id ) {
+function parentlink_global_album( $id ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed
 	$global_albums = RTMediaAlbum::get_globals();
 	$parent_link   = '';
 
@@ -2025,15 +2027,13 @@ function get_rtmedia_permalink( $id ) {
 				$parent_link = get_rtmedia_user_link( $media[0]->media_author );
 			}
 		}
-	} else {
-		if ( isset( $media[0]->context ) && function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
+	} elseif ( isset( $media[0]->context ) && function_exists( 'bp_get_groups_root_slug' ) && 'group' === $media[0]->context ) {
 			$parent_link = get_rtmedia_group_link( $media[0]->context_id );
-		} else {
-			// check for global album.
-			$parent_link = parentlink_global_album( $id );
-			if ( '' === $parent_link && isset( $media[0]->media_author ) ) {
-							$parent_link = get_rtmedia_user_link( $media[0]->media_author );
-			}
+	} else {
+		// check for global album.
+		$parent_link = parentlink_global_album( $id );
+		if ( '' === $parent_link && isset( $media[0]->media_author ) ) {
+						$parent_link = get_rtmedia_user_link( $media[0]->media_author );
 		}
 	}
 
@@ -2065,13 +2065,14 @@ function get_rtmedia_permalink( $id ) {
  * @return string
  */
 function get_rtmedia_user_link( $id ) {
-	if ( function_exists( 'bp_core_get_user_domain' ) ) {
-		$parent_link = bp_core_get_user_domain( $id );
-	} else {
-		$parent_link = get_author_posts_url( $id );
+
+	if ( function_exists( 'bp_members_get_user_url' ) ) {
+		return bp_members_get_user_url( $id );
+	} else if ( function_exists( 'bp_core_get_user_domain' ) ) {
+		return bp_core_get_user_domain( $id );
 	}
 
-	return $parent_link;
+	return get_author_posts_url( $id );
 }
 
 /**
@@ -2098,9 +2099,17 @@ function rtmedia_update_site_option( $option_name, $option_value ) {
  * @return mixed|void
  */
 function get_rtmedia_group_link( $group_id ) {
+	global $bp;
+
 	$group = groups_get_group( array( 'group_id' => $group_id ) );
 
-	return apply_filters( 'rtmedia_get_group_link', bp_get_group_permalink( $group ) );
+	if ( isset( $bp->version ) && version_compare( $bp->version, '12.0.0', 'ge' ) ) {
+		$group_link = bp_get_group_url( $group );
+	} else {
+		$group_link = bp_get_group_permalink( $group );
+	}
+
+	return apply_filters( 'rtmedia_get_group_link', $group_link );
 }
 
 /**
