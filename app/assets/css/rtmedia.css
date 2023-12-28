@@ -173,7 +173,13 @@ body.media.buddypress {
 }
 
 #buddypress.buddypress-wrap .bp-navs.bp-priority-nav {
-  overflow: hidden;
+  overflow: unset;
+}
+
+.bp-priority-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .rtmedia-container {
