@@ -98,5 +98,9 @@ body.media.buddypress {
 
 // Fix BuddyPress Nouveau issue in 2024 theme
 #buddypress.buddypress-wrap .bp-navs.bp-priority-nav {
-	overflow: hidden;
+	overflow: unset;
+}
+
+.bp-priority-nav {
+	display: flex;
 }
