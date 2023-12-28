@@ -186,7 +186,13 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 				bp_core_add_message( esc_html__( 'Settings saved successfully', 'buddypress-media' ) );
 			}
 
-			bp_core_redirect( bp_get_group_permalink( $bp->groups->current_group ) . '/admin/' . $this->slug );
+			if ( isset( $bp->version ) && version_compare( $bp->version, '12.0.0', 'ge' ) ) {
+				$group_permalink = bp_get_group_url( $bp->groups->current_group );
+			} else {
+				$group_permalink = bp_get_group_permalink( $bp->groups->current_group );
+			}
+
+			bp_core_redirect( $group_permalink . '/admin/' . $this->slug );
 		}
 
 		/**

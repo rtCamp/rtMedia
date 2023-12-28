@@ -2021,7 +2021,7 @@ class getid3_quicktime extends getid3_handler
 	 * @return array|false
 	 */
 	public function QuicktimeParseContainerAtom($atom_data, $baseoffset, &$atomHierarchy, $ParseAllPossibleAtoms) {
-		$atom_structure  = false;
+		$atom_structure  = array();
 		$subatomoffset  = 0;
 		$subatomcounter = 0;
 		if ((strlen($atom_data) == 4) && (getid3_lib::BigEndian2Int($atom_data) == 0x00000000)) {

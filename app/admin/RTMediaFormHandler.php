@@ -802,7 +802,12 @@ class RTMediaFormHandler {
 		}
 
 		foreach ( $options as $key => $value ) {
-			$data                           = explode( '_', $key );
+			$data = explode( '_', $key );
+
+			if ( false === $render[ $data[1] ] ) {
+				$render[ $data[1] ] = array();
+			}
+
 			$render[ $data[1] ][ $data[2] ] = $value;
 		}
 
@@ -1227,7 +1232,6 @@ class RTMediaFormHandler {
 			</script>
 			<?php
 		}
-
 	}
 
 	/**
@@ -1272,12 +1276,10 @@ class RTMediaFormHandler {
 
 			if ( isset( $field['args']['label_for'] ) && ! empty( $field['args']['label_for'] ) ) {
 				call_user_func( $field['callback'], array_merge( $field['args'], array( 'label' => $field['args']['label_for'] ) ) );
-			} else {
-				if ( isset( $field['title'] ) && ! empty( $field['title'] ) ) {
+			} elseif ( isset( $field['title'] ) && ! empty( $field['title'] ) ) {
 					call_user_func( $field['callback'], array_merge( $field['args'], array( 'label' => $field['title'] ) ) );
-				} else {
-					call_user_func( $field['callback'], $field['args'] );
-				}
+			} else {
+				call_user_func( $field['callback'], $field['args'] );
 			}
 			echo '</div>';
 			echo '</div>';
