@@ -152,6 +152,18 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.17 [December 28, 2023] ###
+
+* Enhancement
+
+	* Compatible with WordPress latest version 6.4.2
+	* Compatible with BuddyPress latest version 12.0.0
+
+* Fixed
+
+	* Fixed PHP compatibility issue.
+    * Fixed issues related to Twenty Twenty Four theme.
+
 ### 4.6.16 [November 16, 2023] ###
 
 * Enhancement
