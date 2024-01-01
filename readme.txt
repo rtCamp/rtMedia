@@ -133,7 +133,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.6.17 [December 28, 2023] =
+= 4.6.17 [January 2, 2024] =
 
 * Enhancement
 
@@ -144,6 +144,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
  * Fixed PHP compatibility issue.
  * Fixed issues related to Twenty Twenty Four theme.
+ * Fix BuddyPress nouveau template issue.
 
 = 4.6.16 [November 16, 2023] =
 
