@@ -1432,10 +1432,7 @@ jQuery( document ).ready( function( $ ) {
 			 * By: Yahil
 			 */
 			if ( '' === jQuery( '#whats-new' ).val().trim() ) {
-				if ( rtmedia_activity_text_with_attachment == 'disable' ) {
-					$( '#whats-new' ).css( 'color', 'transparent' );
-					$( '#whats-new' ).val( '&nbsp;' );
-				} else {
+				if ( rtmedia_activity_text_with_attachment != 'disable' ) {
 					jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
 					jQuery( '#whats-new' ).removeAttr( 'disabled' );
 					return false;
@@ -1588,13 +1585,6 @@ jQuery( document ).ready( function( $ ) {
 			 * Blank error display issue resolved
 			 */
 			if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
-
-				if ( 'disable' === rtmedia_activity_text_with_attachment &&  '' === jQuery.trim( jQuery( '#whats-new' ).val() ) ) {
-					let textarea = jQuery( '#whats-new' );
-					textarea.css( 'color', 'transparent' );
-					textarea.val( ' ' );
-				}
-
 				jQuery( '#whats-new-form' ).submit();
 			} else {
 				jQuery( '#aw-whats-new-submit' ).click();
@@ -1692,10 +1682,7 @@ jQuery( document ).ready( function( $ ) {
 		 					 * By: Yahil
 							 */
 
-							if ( rtmedia_activity_text_with_attachment == 'disable') {
-								$( "#whats-new" ).css( 'color', 'transparent' );
-								$( "#whats-new" ).val( '&nbsp;' );
-							} else {
+							if ( rtmedia_activity_text_with_attachment != 'disable') {
 								jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
 								jQuery( '#whats-new' ).removeAttr( 'disabled' );
 								return false;
