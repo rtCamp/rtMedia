@@ -1050,8 +1050,9 @@ class RTMedia {
 
 		$this->set_allowed_types(); // Define allowed types.
 
-		global $rtmedia_buddypress_activity;
+		global $rtmedia_buddypress_activity, $rtmedia_buddypress_group_activity;
 		$rtmedia_buddypress_activity = new RTMediaBuddyPressActivity();
+		$rtmedia_buddypress_group_activity = new RTMediaBuddyPressGroupActivity();
 		$media                       = new RTMediaMedia();
 		$media->delete_hook();
 
