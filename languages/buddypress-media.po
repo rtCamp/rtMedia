@@ -1,14 +1,14 @@
-# Copyright (C) 2023 rtCamp
+# Copyright (C) 2024 rtCamp
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.17\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2023-12-28 10:36:32+00:00\n"
+"POT-Creation-Date: 2024-01-02 06:22:56+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
 "Last-Translator: rtMedia <rtmedia@rtcamp.com>\n"
 "Language-Team: rtMedia <rtmedia@rtcamp.com>\n"
 "Language: en\n"
@@ -2312,7 +2312,7 @@ msgid "rtMedia: Import Media Size"
 msgstr ""
 
 #: app/main/RTMedia.php:163 app/main/RTMedia.php:1530 app/main/RTMedia.php:1623
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:760
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:763
 #: app/main/controllers/shortcodes/RTMediaGalleryShortcode.php:113
 #: app/main/controllers/upload/processors/RTMediaUploadFile.php:246
 msgid "Media Files"
@@ -2581,28 +2581,28 @@ msgstr ""
 msgid "Adding media in Comments is not allowed"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:490
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:493
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:60
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:74
 msgid "Terms and Conditions checkbox not found!"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:819
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:822
 #: app/main/controllers/media/RTMediaComment.php:219
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:135
 #: app/main/controllers/template/rtmedia-functions.php:2265
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:975
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:978
 #: app/main/controllers/media/RTMediaMedia.php:797
 #. translators: 1: user link, 2: media.
 #. translators: 1: username, 2: media type, 3: media name, 4: total media.
 msgid "%1$s added a %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:982
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:985
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:988
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:283
 #. translators: 1: user link, 2: media count, 3: media.
 #. translators: 1: user link, 2: media count, 3: rtMedia slug.
@@ -2610,32 +2610,32 @@ msgstr ""
 msgid "%1$s added %2$d %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1057
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1060
 #. translators: 1: username, 2: media, 3: group name.
 msgid "%1$s liked a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1060
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1063
 #. translators: 1: username, 2: media.
 msgid "%1$s liked their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1069
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1072
 #. translators: 1: username, 2: author, 3: media.
 msgid "%1$s liked %2$s's %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1178
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1181
 #. translators: 1: username, 2: media, 3: group name.
 msgid "%1$s commented on a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1181
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1184
 #. translators: 1: username, 2: media.
 msgid "%1$s commented on their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1190
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1193
 #. translators: 1: username, 2: author, 3: media.
 msgid "%1$s commented on %2$s's %3$s"
 msgstr ""
