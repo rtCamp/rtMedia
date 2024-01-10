@@ -184,7 +184,7 @@ h2.rtm-gallery-title  {
 
 	.dashicons {
 		font-size: inherit;
-		line-height: 1.4;
+		line-height: 1.2;
 	}
 }
 
@@ -313,9 +313,10 @@ h2.rtm-gallery-title  {
 	float: right;
 	border: 1px solid #ccc;
 	margin-left: 5px;
-	padding: 3px 0;
+	display: flex;
+	align-items: center;
 
-	.media_search_input {
+	input.media_search_input {
 		width: 200px;
 		outline: 0;
 		max-width: 200px;
@@ -348,21 +349,23 @@ h2.rtm-gallery-title  {
 		}
 	}
 
-	.search_option {
+	#media_search_remove, #media_search, .search_option {
 		padding: 0;
-		background: transparent;
-		color: #000;
-		margin-bottom: 0;
-		line-height: 1;
+		margin: 0;
 		border: none;
+		line-height: 1.2;
+		border-radius: 0;
+		display: flex;
+		align-items: center;
 	}
 
-	.media_search_remove.search_option {
-		display: none;
+	#media_search {
+		padding: 0 5px;
+		align-self: stretch;
+	}
 
-		i {
-			margin-top: 4px;
-		}
+	#media_search_remove {
+		display: none;
 	}
 
 	.search_by {
