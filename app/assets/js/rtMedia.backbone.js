@@ -1432,7 +1432,12 @@ jQuery( document ).ready( function( $ ) {
 			 * By: Yahil
 			 */
 			if ( '' === jQuery( '#whats-new' ).val().trim() ) {
-				if ( rtmedia_activity_text_with_attachment != 'disable' ) {
+				if ( rtmedia_activity_text_with_attachment == 'disable' ) {
+					if ( 'legacy' === bp_template_pack ) {
+						$('#whats-new').css('color', 'transparent');
+						$('#whats-new').val('&nbsp;');
+					}
+				} else {
 					jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
 					jQuery( '#whats-new' ).removeAttr( 'disabled' );
 					return false;
@@ -1532,34 +1537,34 @@ jQuery( document ).ready( function( $ ) {
  				}
 			} );
 
-			var object  = '';
+			var object  = 'profile';
 			var item_id = 0;
 
 			if ( 'legacy' === bp_template_pack ) {
-				if ( jQuery( '#whats-new-post-in' ).length ) {
-					item_id = jQuery( '#whats-new-post-in' ).val();
-				} else if ( jQuery( '.groups-header' ).length ) {
-					item_id = jQuery( '.groups-header' ).attr( 'data-bp-item-id' );
+				if ( jQuery( '#whats-new-post-in' ).length > 0 ) {
+					item_id = jQuery('#whats-new-post-in').val();
 				}
 
-				if ( item_id > 0 ) {
-					object = 'group';
-				} else {
-					object = 'profile';
+				/* Set object for non-profile posts */
+				if ( item_id > 0 && jQuery('#whats-new-post-object').length > 0 ) {
+					object = jQuery('#whats-new-post-object').val();
 				}
 			} else {
-				var whatsNewPostIn = jQuery( '#whats-new-post-in' );
-				if ( whatsNewPostIn.length ) {
-					object = whatsNewPostIn.val();
-					item_id = 0;
-				} else {
-					object = 'profile';
+				if ( 'undefined' !== typeof BP_Nouveau?.activity?.params?.object ) {
+					object = BP_Nouveau.activity.params.object;
 				}
 
-				var contextData = jQuery( '#whats-new-post-in-box-items li.bp-activity-object.selected input[type="hidden"]' );
-				if ( contextData.length ) {
-					item_id = contextData.val();
+				if ( 'undefined' !== typeof BP_Nouveau?.activity?.params?.item_id ) {
+					item_id = BP_Nouveau.activity.params.item_id;
+				} else if ( ( 'profile' === object || 'user' === object ) && 'undefined' !== typeof BP_Nouveau?.activity?.params?.user_id ) {
+					item_id = BP_Nouveau.activity.params.user_id;
 				}
+			}
+
+			if ( 'groups' === object ) {
+				object = 'group';
+			} else if ( 'user' === object ) {
+				object = 'profile';
 			}
 
 			up.settings.multipart_params.context = object;
@@ -1585,6 +1590,13 @@ jQuery( document ).ready( function( $ ) {
 			 * Blank error display issue resolved
 			 */
 			if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
+
+				if ( 'legacy' === bp_template_pack && 'disable' === rtmedia_activity_text_with_attachment &&  '' === jQuery.trim( jQuery( '#whats-new' ).val() ) ) {
+					let textarea = jQuery( '#whats-new' );
+					textarea.css( 'color', 'transparent' );
+					textarea.val( ' ' );
+				}
+
 				jQuery( '#whats-new-form' ).submit();
 			} else {
 				jQuery( '#aw-whats-new-submit' ).click();
@@ -1682,7 +1694,12 @@ jQuery( document ).ready( function( $ ) {
 		 					 * By: Yahil
 							 */
 
-							if ( rtmedia_activity_text_with_attachment != 'disable') {
+							if ( rtmedia_activity_text_with_attachment == 'disable') {
+								if ( 'legacy' === bp_template_pack ) {
+									$( '#whats-new' ).css( 'color', 'transparent' );
+									$( '#whats-new' ).val( '&nbsp;' );
+								}
+							} else {
 								jQuery('#whats-new-form').prepend('<div id="message" class="error bp-ajax-message" style="display: block;"><p> ' + rtmedia_empty_activity_msg + ' </p></div>')
 								jQuery( '#whats-new' ).removeAttr( 'disabled' );
 								return false;
