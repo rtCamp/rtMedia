@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.6.17\n"
 "Report-Msgid-Bugs-To: https://rtmedia.io/support/\n"
-"POT-Creation-Date: 2024-01-10 07:02:32+00:00\n"
+"POT-Creation-Date: 2024-01-10 12:37:08+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3152,12 +3152,12 @@ msgid "Merge Album"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:966
-#: app/main/controllers/template/rtmedia-functions.php:4643
+#: app/main/controllers/template/rtmedia-functions.php:4644
 msgid "rtMedia Shortcode Uploads"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:970
-#: app/main/controllers/template/rtmedia-functions.php:4524
+#: app/main/controllers/template/rtmedia-functions.php:4525
 msgid "rtMedia Activities"
 msgstr ""
 
@@ -3166,12 +3166,12 @@ msgid "rtMedia Comments"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:978
-#: app/main/controllers/template/rtmedia-functions.php:4872
+#: app/main/controllers/template/rtmedia-functions.php:4873
 msgid "rtMedia Media Views"
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-filters.php:982
-#: app/main/controllers/template/rtmedia-functions.php:4973
+#: app/main/controllers/template/rtmedia-functions.php:4974
 msgid "rtMedia Media Likes"
 msgstr ""
 
@@ -3278,63 +3278,63 @@ msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3974
+#: app/main/controllers/template/rtmedia-functions.php:3975
 #. translators: %s: date format, see http:php.net/date.
 msgid "View Conversation"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4550
+#: app/main/controllers/template/rtmedia-functions.php:4551
 msgid "Activity Date"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4554
+#: app/main/controllers/template/rtmedia-functions.php:4555
 msgid "Activity Content"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4558
-#: app/main/controllers/template/rtmedia-functions.php:4782
+#: app/main/controllers/template/rtmedia-functions.php:4559
+#: app/main/controllers/template/rtmedia-functions.php:4783
 msgid "Attachments"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4652
+#: app/main/controllers/template/rtmedia-functions.php:4653
 msgid "Media Upload Date"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4656
+#: app/main/controllers/template/rtmedia-functions.php:4657
 msgid "Media Title"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4660
-#: app/main/controllers/template/rtmedia-functions.php:4876
-#: app/main/controllers/template/rtmedia-functions.php:4977
+#: app/main/controllers/template/rtmedia-functions.php:4661
+#: app/main/controllers/template/rtmedia-functions.php:4877
+#: app/main/controllers/template/rtmedia-functions.php:4978
 msgid "Media URL"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4664
+#: app/main/controllers/template/rtmedia-functions.php:4665
 msgid "Album Title"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4753
+#: app/main/controllers/template/rtmedia-functions.php:4754
 msgid "rtMedia Activity Comments"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4774
+#: app/main/controllers/template/rtmedia-functions.php:4775
 msgid "Comment Date"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4778
+#: app/main/controllers/template/rtmedia-functions.php:4779
 msgid "Comment Content"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4880
+#: app/main/controllers/template/rtmedia-functions.php:4881
 msgid "Number of Views"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4884
+#: app/main/controllers/template/rtmedia-functions.php:4885
 msgid "Date of First View"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:4981
+#: app/main/controllers/template/rtmedia-functions.php:4982
 msgid "Date"
 msgstr ""
 
