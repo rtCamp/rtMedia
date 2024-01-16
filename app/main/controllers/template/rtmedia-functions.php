@@ -3881,11 +3881,12 @@ function rtmedia_activate_addon_license( $addon = array() ) {
 	);
 
 	// Call the custom API.
-	$response = wp_remote_get(
-		esc_url_raw( add_query_arg( $api_params, $store_url ) ),
+	$response = wp_remote_post(
+		esc_url_raw( $store_url ),
 		array(
-			'timeout'   => 15,
+			'timeout' => 15,
 			'sslverify' => false,
+			'body' => $api_params,
 		)
 	);
 

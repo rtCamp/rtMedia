@@ -152,6 +152,15 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.18 [January 16, 2024] ###
+
+* Fixed
+
+	* Fixed group media issue.
+    * Fix styles of search box.
+    * Add compatibility with BuddyPress legacy template pack.
+	* Enhance security for plugin update checker.
+
 ### 4.6.17 [January 2, 2024] ###
 
 * Enhancement

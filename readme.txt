@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 6.4.2
-Stable tag: 4.6.17
+Stable tag: 4.6.18
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -132,6 +132,15 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.6.18 [January 16, 2024] =
+
+* Fixed
+
+ * Fixed group media issue.
+ * Fix styles of search box.
+ * Add compatibility with BuddyPress legacy template pack.
+ * Enhance security for plugin update checker.
 
 = 4.6.17 [January 2, 2024] =
 
@@ -1874,6 +1883,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
+
+= 4.6.18 =
+rtMedia 4.6.18 with fixes related to group media.
 
 = 4.6.17 =
 rtMedia 4.6.17 with minor bug fixes and compatible with BuddyPress 12.0.0
