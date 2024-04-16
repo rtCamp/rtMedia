@@ -19,7 +19,7 @@ if ( ! defined( 'RTMEDIA_VERSION' ) ) {
 	/**
 	 * The version of the plugin
 	 */
-	define( 'RTMEDIA_VERSION', '4.6.1' );
+	define( 'RTMEDIA_VERSION', '4.6.19' );
 }
 
 if ( ! defined( 'RTMEDIA_PATH' ) ) {
