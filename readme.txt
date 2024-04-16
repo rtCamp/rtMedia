@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 6.4.2
-Stable tag: 4.6.18
+Stable tag: 4.6.19
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -119,7 +119,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 2.  BuddyPress Settings
 3.  Media Types Settings
 4.  Media Size Settings
-5.  Privacy Settings 
+5.  Privacy Settings
 6.  Other Setiings
 7.  Export/Import Settings
 8.  Media View
@@ -132,6 +132,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.6.19 [April 16, 2024] =
+
+* Fixed
+
+	* Fixed shortcode security issue.
 
 = 4.6.18 [January 16, 2024] =
 
@@ -195,13 +201,13 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 = 4.6.13 [December 12, 2022] =
 
 * Enhancement
-   
+
  * Compatible with WordPress latest version 6.1.1
- * Compatible with PHP 8.0.0 
+ * Compatible with PHP 8.0.0
  * Refactored code base.
 
 * Fixed
-    
+
  * Fixed save settings not working issue.
  * Fixed media tab not visible on groups page.
 
@@ -210,14 +216,14 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Enhancement
 
- * Compatible with BP-Rewrites latest version. 
+ * Compatible with BP-Rewrites latest version.
  * Compatible with with WordPress latest version 6.0.
 
 * Fixed
 
- * UI/UX Issues. 
- * Fixed album count issue for non-admin user and group albums. 
- * Fixed Video thumbnail issue. 
+ * UI/UX Issues.
+ * Fixed album count issue for non-admin user and group albums.
+ * Fixed Video thumbnail issue.
 
 = 4.6.11 [April 27, 2022] =
 
@@ -237,12 +243,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Enhancement
 
- * Compatible with WordPress latest version v5.9. 
- * Compatible with latest version of BuddyPress v10.0.0. 
+ * Compatible with WordPress latest version v5.9.
+ * Compatible with latest version of BuddyPress v10.0.0.
 
 * New Feature
 
- * Edit media option on activity stream with BuddyPress Edit Activity. 
+ * Edit media option on activity stream with BuddyPress Edit Activity.
 
 * Fixed
 
@@ -255,15 +261,15 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Enhancement
 
- * Added album search functionality. 
+ * Added album search functionality.
  * Added capability to group admin and mod to edit/delete the album.
 
 * FIXED
 
- * UI/UX issues. 
- * Able to upload media to comment if the activity steam option is disabled. 
- * Fixed pagination issue. 
- * Fixed RTL issues. 
+ * UI/UX issues.
+ * Able to upload media to comment if the activity steam option is disabled.
+ * Fixed pagination issue.
+ * Fixed RTL issues.
 
 
 = 4.6.8 [October 26, 2021] =
@@ -1883,6 +1889,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
+
+= 4.6.19 =
+rtMedia 4.6.19 with shortcode security fixes.
 
 = 4.6.18 =
 rtMedia 4.6.18 with fixes related to group media.
