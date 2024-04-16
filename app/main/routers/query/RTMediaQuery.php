@@ -632,7 +632,7 @@ class RTMediaQuery {
 			$this->query['activity_id'] = array( 'value' );
 			global $wpdb;
 			// todo cache.
-			$sql_query = $wpdb->prepare("SELECT id FROM {$wpdb->prefix}bp_activity WHERE item_id = %d AND type = %s", 0, 'rtmedia_update');
+			$sql_query = $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}bp_activity WHERE item_id = %d AND type = %s", 0, 'rtmedia_update' );
 			$this->query['activity_id']['value'] = $wpdb->get_col( $sql_query );
 		}
 
