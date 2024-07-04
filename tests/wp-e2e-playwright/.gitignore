@@ -1,0 +1,4 @@
+node_modules
+artifacts
+build
+.DS_store
