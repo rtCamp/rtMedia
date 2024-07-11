@@ -29,7 +29,7 @@ test.describe("Validated all of the INTEGRATION WITH BUDDYPRESS FEATURES in the 
           page.locator( '#rtmedia-add-media-button-post-update' ).click(),
         ] );
         await fileChooser.setFiles( [ 'uploads/img.jpg' ]);
-        await page.locator("//ul[@class='rtmedia-list rtm-activity-media-list rtmedia-activity-media-length-1 rtm-activity-photo-list']").first().click();
+        await page.locator("//ul[contains(@class, 'rtm-activity-photo-list')]").first().click();
         await page.locator("#comment_content").fill("Test Comment");
         await page.locator("#rt_media_comment_submit").click();
         //validated comments activity
