@@ -5,7 +5,7 @@ const { URLS } = require("../../utils/urls.js");
 test.describe("ASK USERS TO AGREE TO YOUR TERMS", ()=>{
     test("Enable all the settings of terms", async({page,admin})=>{
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-general");
-        await page.locator("#rtm-form-checkbox-23").check();
+        await page.locator("//label[@for='rtm-form-checkbox-23']").check();
         await page.locator("#rtm-form-checkbox-24").check();
         await page.locator("#rtm-form-text-0").fill("https://rtcamp.com");
         await page.locator("#rtm-form-text-1").fill("terms of services.");
@@ -21,6 +21,9 @@ test.describe("ASK USERS TO AGREE TO YOUR TERMS", ()=>{
         await page.locator("#whats-new").click();
         const termCheckBox = page.locator('#rtmedia_upload_terms_conditions');
         expect(termCheckBox).toBeVisible();
+        await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-general");
+        await page.locator("//label[@for='rtm-form-checkbox-23']").uncheck();
+        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
     })
 
     test("Validated Link for Terms of Service page, Terms of Service Message and Error message", async({page,admin})=>{
@@ -56,6 +59,6 @@ test.describe("ASK USERS TO AGREE TO YOUR TERMS", ()=>{
             return element.getAttribute('href');
           });
         expect(hrefValue).toContain("https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media");
-        
+    
     })
 })

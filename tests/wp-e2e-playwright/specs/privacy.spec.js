@@ -1,25 +1,22 @@
-import { expect, test } from "@wordpress/e2e-test-utils-playwright";
-const { URLS } = require("../utils/urls.js");
+import { test, expect } from "@wordpress/e2e-test-utils-playwright";
+import Backend from "../page_model/backend.js";
+import Activity from "../page_model/activity.js";
 
 test.describe("Validated privacy settings", () => {
-    test.beforeEach(async ({ admin }) => {
+    let backend;
+    let activity;
+
+    test.beforeEach(async ({ page, admin }) => {
+        backend = new Backend(page);
+        activity = new Activity(page);
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-privacy");
     });
-
     test("Enable privacy settings and validated from the fronend", async ({ page, admin }) => {
-        await page.locator("#rtmedia-privacy-enable").check();
-        await page.locator("#rtm-form-radio-3").check();
-        await page.locator("#rtm-form-checkbox-21").check();
-        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
-
+        await backend.enableAnySettingAndSave("#rtmedia-privacy-enable");
         //validated changes from the fronend
-        await page.goto(URLS.homepage + "/activity");
+        await activity.gotoActivityPage();
         await page.locator("#whats-new").click();
         const rtSelectPrivacy = page.locator("#rtSelectPrivacy");
         expect(rtSelectPrivacy).toBeVisible();
-
-        await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-privacy");
-        await page.locator("#rtmedia-privacy-enable").uncheck();
-        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
     });
 })
