@@ -17,7 +17,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
 
     test("Enable media toggle and validate from the frontend", async ({ page, admin }) => {
 
-        await backend.enableAnySettingAndSave("#rtm-form-checkbox-7");
+        await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-7']");
         await activity.gotoUserProfile();
         const profileSidebar = await page.locator("#member-primary-nav").textContent();
         expect(profileSidebar).toContain('Media');
@@ -33,7 +33,6 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         await backend.enableAnySettingAndSave("#rtmedia-bp-enable-activity");
         await activity.gotoActivityPage();
         await page.locator("#whats-new").click();
-        await activity.acceptTermsConsditon();
         const postUpload = page.locator('#rtmedia-add-media-button-post-update');
         await expect(postUpload).toBeVisible();
     });
@@ -59,8 +58,6 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         await activity.upploadImages(image);
         await page.reload();
         await page.locator("//ul[contains(@class, 'rtm-activity-photo-list')]").first().click();
-        await page.waitForTimeout(2000);
-        await page.waitForSelector("//div[contains(@class, 'rtmedia-actions-before-comments')]//button[contains(@class, 'rtmedia-like')]");
         await page.locator("//div[contains(@class, 'rtmedia-actions-before-comments')]//button[contains(@class, 'rtmedia-like')]").click();
         await activity.gotoActivityPage();
         const likeAcitivity = await page.locator("//li[contains(@class, 'activity-item')]").first().textContent();

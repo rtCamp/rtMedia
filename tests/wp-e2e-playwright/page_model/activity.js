@@ -8,7 +8,6 @@ class Activity{
     async upploadImages(paths){
         this.gotoActivityPage();
         await this.page.locator("#whats-new").click();
-        await this.acceptTermsConsditon();
         const [fileChooser] = await Promise.all([
         this.page.waitForEvent('filechooser'),
         this.page.locator('#rtmedia-add-media-button-post-update').click(),

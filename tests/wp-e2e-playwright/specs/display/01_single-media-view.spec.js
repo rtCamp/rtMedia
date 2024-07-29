@@ -14,7 +14,7 @@ test.describe("Validated media view in the frontend", () => {
     });
 
     test("Validate media search", async ({ page }) => {
-        await backend.enableAnySettingAndSave("#rtm-form-checkbox-2");
+        await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-2']");
         await activity.gotoUserProfile();
         await page.locator("#user-media").scrollIntoViewIfNeeded();
         await page.locator("#user-media").click();
@@ -23,7 +23,7 @@ test.describe("Validated media view in the frontend", () => {
     })
 
     test("Validated lightbox to display media", async ({ page }) => {
-        await backend.enableAnySettingAndSave("#rtm-form-checkbox-3");
+        await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-3']");
         const image = ['uploads/img.jpg'];
         await activity.upploadImages(image);
         await page.reload();
@@ -34,7 +34,7 @@ test.describe("Validated media view in the frontend", () => {
         await page.locator(lightbox).isVisible();
     })
     test("Validated Media display pagination option to the display media in profile", async ({ page, admin }) => {
-        await backend.enableAnySettingAndSave("#rtm-form-checkbox-4");
+        await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-4']");
         const imagesPath = ['uploads/img.jpg', 'uploads/img2.jpg', 'uploads/images.jpg'];
         await activity.upploadImages(imagesPath)
         await admin.visitAdminPage("admin.php?page=rtmedia-settings");
