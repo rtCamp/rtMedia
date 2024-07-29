@@ -23,7 +23,17 @@ class Activity{
     async gotoActivityPage(){
         await this.page.goto(URLS.homepage + "/activity");
     }
+
+    async getPhotoSize(){
+        const imgLocator = this.page.locator('div.rtmedia-item-thumbnail img').first();;
+        const srcValue = await imgLocator.getAttribute('src');
+        return srcValue;
+    }
     
+    async clickedOnFirstPhotoOfTheActivityPage(){
+        this.gotoActivityPage();
+        await this.page.locator("//ul[contains(@class, 'rtm-activity-photo-list')]").first().click();
+    }
     async acceptTermsConsditon(){
         const terms = '#rtmedia_upload_terms_conditions';
         try{

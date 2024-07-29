@@ -8,9 +8,9 @@ test.describe("Validating other settings", () => {
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-general");
     });
 
-    test('Validated Admin bar menu integration', async ({page, admin})=>{
+    test('Validated Admin bar menu integration', async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-22']")
         const isrtMediaMenuBarVisible = (await page.isVisible('a[title="rtMedia"]'));
-        expect(isrtMediaMenuBarVisible).toBeTruthy(); 
+        expect(isrtMediaMenuBarVisible).toBeTruthy();
     })
 });

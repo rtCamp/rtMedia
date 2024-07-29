@@ -1,5 +1,3 @@
-// backend.test.js
-
 import { test, expect } from "@wordpress/e2e-test-utils-playwright";
 const { URLS } = require("../../utils/urls.js");
 import Backend from "../../page_model/backend.js";
@@ -41,8 +39,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         await backend.enableAnySettingAndSave("#rtmedia-enable-comment-activity");
         const image = ['testdata/img.jpg'];
         await activity.upploadImages(image);
-        await page.reload();
-        await page.locator("//ul[contains(@class, 'rtm-activity-photo-list')]").first().click();
+        await activity.clickedOnFirstPhotoOfTheActivityPage();
         await page.waitForTimeout(2000);
         await page.locator("//div[contains(@class, 'rtm-media-single-comments')]//textarea[@id='comment_content']").fill("This is a test comment")
         await page.locator("//input[@id='rt_media_comment_submit']").click();
@@ -56,8 +53,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         await backend.enableAnySettingAndSave("#rtmedia-enable-like-activity");
         const image = ['testdata/img.jpg'];
         await activity.upploadImages(image);
-        await page.reload();
-        await page.locator("//ul[contains(@class, 'rtm-activity-photo-list')]").first().click();
+        await activity.clickedOnFirstPhotoOfTheActivityPage();
         await page.locator("//div[contains(@class, 'rtmedia-actions-before-comments')]//button[contains(@class, 'rtmedia-like')]").click();
         await activity.gotoActivityPage();
         const likeAcitivity = await page.locator("//li[contains(@class, 'activity-item')]").first().textContent();

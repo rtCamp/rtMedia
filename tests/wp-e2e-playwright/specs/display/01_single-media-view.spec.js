@@ -26,9 +26,7 @@ test.describe("Validated media view in the frontend", () => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-3']");
         const image = ['testdata/img.jpg'];
         await activity.upploadImages(image);
-        await page.reload();
-        await page.locator("//ul[contains(@class, 'rtm-activity-photo-list')]").first().click();
-
+        await activity.clickedOnFirstPhotoOfTheActivityPage();
         const lightbox = "//div[contains(@class, 'rtm-lightbox-container')]"
         await page.waitForSelector(lightbox);
         await page.locator(lightbox).isVisible();
