@@ -1,0 +1,13 @@
+{
+    "photo" : {
+        "thumbnailWidth" : "140",
+        "thumbnailHeight" : "140",
+        "mediumWidth" : "280",
+        "mediumHeight" : "120",
+        "largeWidth" : "400",
+        "largeHeight" : "300"
+    },
+    "video" : {
+        
+    }
+}
