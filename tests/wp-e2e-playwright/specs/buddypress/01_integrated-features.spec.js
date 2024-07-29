@@ -39,7 +39,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
 
     test("Enable Create activity for media comments and validate from the frontend", async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("#rtmedia-enable-comment-activity");
-        const image = ['uploads/img.jpg'];
+        const image = ['testdata/img.jpg'];
         await activity.upploadImages(image);
         await page.reload();
         await page.locator("//ul[contains(@class, 'rtm-activity-photo-list')]").first().click();
@@ -54,7 +54,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
 
     test("Enable Create activity for media Likes and validate from the frontend", async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("#rtmedia-enable-like-activity");
-        const image = ['uploads/img.jpg'];
+        const image = ['testdata/img.jpg'];
         await activity.upploadImages(image);
         await page.reload();
         await page.locator("//ul[contains(@class, 'rtm-activity-photo-list')]").first().click();
