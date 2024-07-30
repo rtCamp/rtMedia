@@ -40,4 +40,14 @@ test.describe("Validating media size", () => {
         expect(srcValue).toContain(expectedLargeSize);
         await page.waitForTimeout(5000);
     });
+
+    test("Validate video size", async ({page})=>{
+        await page.locator("#rtm-form-number-7").fill(testdata.video.activityPlayerWidth);
+        await page.locator("#rtm-form-number-8").fill(testdata.video.activityPlayerHeight);
+        await page.locator("#rtm-form-number-9").fill(testdata.video.singlePlayerWidth);
+        await page.locator("#rtm-form-number-10").fill(testdata.video.singlePlayerHeight);
+        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
+        
+    })
+    
 })

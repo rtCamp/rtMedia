@@ -40,9 +40,8 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         const image = ['testdata/img.jpg'];
         await activity.upploadImages(image);
         await activity.clickedOnFirstPhotoOfTheActivityPage();
-        await page.waitForTimeout(2000);
-        await page.locator("//div[contains(@class, 'rtm-media-single-comments')]//textarea[@id='comment_content']").fill("This is a test comment")
-        await page.locator("//input[@id='rt_media_comment_submit']").click();
+        await page.locator("#comment_content").fill("This is a test comment")
+        await page.locator("#rt_media_comment_submit").click();
 
         await activity.gotoActivityPage();
         const commentActivity = await page.locator("//li[contains(@class, 'activity-item')]").first().textContent();
@@ -54,7 +53,8 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         const image = ['testdata/img.jpg'];
         await activity.upploadImages(image);
         await activity.clickedOnFirstPhotoOfTheActivityPage();
-        await page.locator("//div[contains(@class, 'rtmedia-actions-before-comments')]//button[contains(@class, 'rtmedia-like')]").click();
+        await page.locator("//div[@class='rtmedia-actions-before-comments clearfix']//span[contains(text(),'Like')]").click();
+        await page.waitForSelector("//div[@class='rtmedia-actions-before-comments clearfix']//span[contains(text(),'Unlike')]");
         await activity.gotoActivityPage();
         const likeAcitivity = await page.locator("//li[contains(@class, 'activity-item')]").first().textContent();
         expect(likeAcitivity).toContain("liked");

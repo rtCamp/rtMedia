@@ -40,8 +40,7 @@ test.describe("Validated media view in the frontend", () => {
         await page.locator("#rtm-form-radio-0").click();
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
         //validating load more in media album
-        await page.goto(URLS.homepage);
-        await page.locator("div[class='buddypress-icons-wrapper'] a[class='user-link']").click();
+        await activity.gotoUserProfile();
         await page.locator("#user-media").scrollIntoViewIfNeeded();
         await page.locator("#user-media").click();
         const loadMore = await page.locator('#rtMedia-galary-next').textContent();
@@ -49,8 +48,7 @@ test.describe("Validated media view in the frontend", () => {
         //validating pagination in media album
         admin.visitAdminPage("admin.php?page=rtmedia-settings");
         await backend.enableAnySettingAndSave("#rtm-form-radio-1");
-        await page.goto(URLS.homepage);
-        await page.locator("div[class='buddypress-icons-wrapper'] a[class='user-link']").click();
+        await activity.gotoUserProfile();
         await page.locator("#user-media").scrollIntoViewIfNeeded();
         await page.locator("#user-media").click();
         const pagination = page.locator("//div[contains(@class, 'rtmedia_next_prev')]");

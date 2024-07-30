@@ -13,11 +13,11 @@ class Activity{
         this.page.locator('#rtmedia-add-media-button-post-update').click(),
     ]);
     await fileChooser.setFiles(paths);
+    await this.page.waitForTimeout(1000);
     }
     async gotoUserProfile(){
-        await this.page.goto(URLS.homepage);
-        // clicking on the profile Icon
-        await this.page.locator("div[class='buddypress-icons-wrapper'] a[class='user-link']").click();
+        await this.gotoActivityPage();
+        await this.page.locator("#whats-new-avatar").click();
     }
 
     async gotoActivityPage(){
@@ -32,7 +32,7 @@ class Activity{
     
     async clickedOnFirstPhotoOfTheActivityPage(){
         this.gotoActivityPage();
-        await this.page.locator("//ul[contains(@class, 'rtm-activity-photo-list')]").first().click();
+        await this.page.locator("//div[@class='rtmedia-item-thumbnail']").first().click();
     }
     async acceptTermsConsditon(){
         const terms = '#rtmedia_upload_terms_conditions';
