@@ -38,7 +38,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
     test("Enable Create activity for media comments and validate from the frontend", async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("#rtmedia-enable-comment-activity");
         const image = ['testdata/img.jpg'];
-        await activity.upploadImages(image);
+        await activity.upploadMedia(image);
         await activity.clickedOnFirstPhotoOfTheActivityPage();
         await page.locator("#comment_content").fill("This is a test comment")
         await page.locator("#rt_media_comment_submit").click();
@@ -51,8 +51,9 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
     test("Enable Create activity for media Likes and validate from the frontend", async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("#rtmedia-enable-like-activity");
         const image = ['testdata/img.jpg'];
-        await activity.upploadImages(image);
+        await activity.upploadMedia(image);
         await activity.clickedOnFirstPhotoOfTheActivityPage();
+        await page.waitForLoadState("domcontentloaded");
         await page.locator("//div[@class='rtmedia-actions-before-comments clearfix']//span[contains(text(),'Like')]").click();
         await page.waitForSelector("//div[@class='rtmedia-actions-before-comments clearfix']//span[contains(text(),'Unlike')]");
         await activity.gotoActivityPage();

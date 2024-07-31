@@ -18,9 +18,8 @@ test.describe("Validating media size", () => {
         await page.locator("#rtm-form-number-6").fill(testdata.photo.largeHeight);
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
 
-        const image = ['testdata/largePhoto.jpg'];
-        await activity.upploadImages(image);
-        await page.waitForTimeout(5000);
+        const imagepath = ['testdata/largePhoto.jpg'];
+        await activity.upploadMedia(imagepath);
         await activity.gotoUserProfile();
         await page.locator("#user-media").click();
         const expectedThumbnail = testdata.photo.thumbnailWidth + "x" + testdata.photo.thumbnailHeight;
@@ -38,7 +37,6 @@ test.describe("Validating media size", () => {
         const srcValue = await imgLocator.getAttribute('src');
         const expectedLargeSize = testdata.photo.largeWidth + "x" + testdata.photo.largeHeight;
         expect(srcValue).toContain(expectedLargeSize);
-        await page.waitForTimeout(5000);
     });
 
     test("Validate video size", async ({page})=>{
@@ -47,7 +45,13 @@ test.describe("Validating media size", () => {
         await page.locator("#rtm-form-number-9").fill(testdata.video.singlePlayerWidth);
         await page.locator("#rtm-form-number-10").fill(testdata.video.singlePlayerHeight);
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
-        
+
+        const videoPath = ['testdata/test.mp4'];
+        await activity.upploadMedia(videoPath);
+        await activity.gotoActivityPage();
+        const actualSize = await page.locator("//div[contains(@class, 'mejs-overlay') and contains(@class, 'mejs-layer') and contains(@class, 'mejs-overlay-play')]").first().getAttribute('style');
+        const expectedSize = "width: "+testdata.video.activityPlayerWidth+"px; height: "+testdata.video.activityPlayerHeight+"px";
+        expect(actualSize).toContain(expectedSize);
     })
     
 })

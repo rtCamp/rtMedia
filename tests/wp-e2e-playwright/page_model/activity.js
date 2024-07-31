@@ -5,15 +5,17 @@ class Activity{
         this.page = page;
     }
 
-    async upploadImages(paths){
+    async upploadMedia(paths){
         this.gotoActivityPage();
         await this.page.locator("#whats-new").click();
         const [fileChooser] = await Promise.all([
         this.page.waitForEvent('filechooser'),
         this.page.locator('#rtmedia-add-media-button-post-update').click(),
     ]);
+
     await fileChooser.setFiles(paths);
-    await this.page.waitForTimeout(1000);
+    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState('networkidle')
     }
     async gotoUserProfile(){
         await this.gotoActivityPage();
@@ -32,10 +34,10 @@ class Activity{
     
     async clickedOnFirstPhotoOfTheActivityPage(){
         this.gotoActivityPage();
+        await this.page.waitForLoadState("domcontentloaded");
         await this.page.locator("//div[@class='rtmedia-item-thumbnail']").first().click();
     }
     async acceptTermsConsditon(){
-        const terms = '#rtmedia_upload_terms_conditions';
         try{
             await this.page.locator('#rtmedia_upload_terms_conditions').click();
         }catch(message){

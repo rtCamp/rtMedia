@@ -25,7 +25,7 @@ test.describe("Validated media view in the frontend", () => {
     test("Validated lightbox to display media", async ({ page }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-3']");
         const image = ['testdata/img.jpg'];
-        await activity.upploadImages(image);
+        await activity.upploadMedia(image);
         await activity.clickedOnFirstPhotoOfTheActivityPage();
         const lightbox = "//div[contains(@class, 'rtm-lightbox-container')]"
         await page.waitForSelector(lightbox);
@@ -34,7 +34,7 @@ test.describe("Validated media view in the frontend", () => {
     test("Validated Media display pagination option to the display media in profile", async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-4']");
         const imagesPath = ['testdata/img.jpg', 'testdata/img2.jpg', 'testdata/images.jpg'];
-        await activity.upploadImages(imagesPath)
+        await activity.upploadMedia(imagesPath)
         await admin.visitAdminPage("admin.php?page=rtmedia-settings");
         await page.locator("#rtm-form-number-0").fill("1");
         await page.locator("#rtm-form-radio-0").click();
