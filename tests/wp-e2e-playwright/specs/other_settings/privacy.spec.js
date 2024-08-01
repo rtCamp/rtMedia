@@ -1,6 +1,6 @@
 import { test, expect } from "@wordpress/e2e-test-utils-playwright";
-import Backend from "../page_model/backend.js";
-import Activity from "../page_model/activity.js";
+import Backend from "../../page_model/backend.js";
+import Activity from "../../page_model/activity.js";
 
 test.describe("Validated privacy settings", () => {
     let backend;

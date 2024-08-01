@@ -6,7 +6,6 @@ class Activity{
     }
 
     async upploadMedia(paths){
-        this.gotoActivityPage();
         await this.page.locator("#whats-new").click();
         const [fileChooser] = await Promise.all([
         this.page.waitForEvent('filechooser'),
@@ -24,6 +23,7 @@ class Activity{
 
     async gotoActivityPage(){
         await this.page.goto(URLS.homepage + "/activity");
+        await this.page.waitForLoadState('domcontentloaded');
     }
 
     async getPhotoSize(){
@@ -43,6 +43,17 @@ class Activity{
         }catch(message){
             console.log('terms not enable');
         }
+    }
+
+    async getDialogMessageForInvalidFileUpload(paths){
+        let dialogMessage;
+        this.page.on('dialog', async dialog => {
+            dialogMessage = dialog.message();
+            await dialog.accept();
+        });
+
+        await this.upploadMedia(paths);
+        return dialogMessage;
     }
 }
 export default Activity;

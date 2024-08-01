@@ -10,6 +10,7 @@ test.describe("Validating other settings", () => {
 
     test('Validated Admin bar menu integration', async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-22']")
+        await page.waitForLoadState('domcontentloaded');
         const isrtMediaMenuBarVisible = (await page.isVisible('a[title="rtMedia"]'));
         expect(isrtMediaMenuBarVisible).toBeTruthy();
     })

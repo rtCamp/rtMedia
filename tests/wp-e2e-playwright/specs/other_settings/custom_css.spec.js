@@ -1,5 +1,5 @@
 import { test, expect } from "@wordpress/e2e-test-utils-playwright";
-import Activity from "../page_model/activity.js";
+import Activity from "../../page_model/activity.js";
 
 test.describe("Validating media size", () => {
     let activity;

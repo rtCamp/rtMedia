@@ -19,9 +19,11 @@ test.describe("Validating media size", () => {
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
 
         const imagepath = ['testdata/largePhoto.jpg'];
+        await activity.gotoActivityPage();
         await activity.upploadMedia(imagepath);
         await activity.gotoUserProfile();
         await page.locator("#user-media").click();
+        await page.waitForLoadState('domcontentloaded');
         const expectedThumbnail = testdata.photo.thumbnailWidth + "x" + testdata.photo.thumbnailHeight;
         //validating thumbnail size of the photo
         expect(await activity.getPhotoSize()).toContain(expectedThumbnail);
@@ -47,8 +49,9 @@ test.describe("Validating media size", () => {
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
 
         const videoPath = ['testdata/test.mp4'];
-        await activity.upploadMedia(videoPath);
         await activity.gotoActivityPage();
+        await activity.upploadMedia(videoPath);
+        await page.waitForLoadState('domcontentloaded');
         const actualSize = await page.locator("//div[contains(@class, 'mejs-overlay') and contains(@class, 'mejs-layer') and contains(@class, 'mejs-overlay-play')]").first().getAttribute('style');
         const expectedSize = "width: "+testdata.video.activityPlayerWidth+"px; height: "+testdata.video.activityPlayerHeight+"px";
         expect(actualSize).toContain(expectedSize);
