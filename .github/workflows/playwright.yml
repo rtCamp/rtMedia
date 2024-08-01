@@ -6,7 +6,8 @@ name: CI for rtMedia plugin
 on:
   # Triggers the workflow on pull request events
   pull_request:
-    branches: 
+    branches:
+      - wp-e2e-playwright
       - develop
       - master
 
