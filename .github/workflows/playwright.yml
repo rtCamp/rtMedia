@@ -7,7 +7,6 @@ on:
   # Triggers the workflow on pull request events
   pull_request:
     branches: 
-      - wp-e2e-playwright
       - develop
       - master
 
