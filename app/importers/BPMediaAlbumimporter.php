@@ -222,8 +222,13 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 	 *
 	 * @return mixed
 	 */
-	public function create_album( $author_id, $album_name = 'Imported Media' ) {
+	public function create_album( $album_name = '', $author_id = 1 )  {
 		global $bp_media, $wpdb;
+
+		// Set album_name to 'Imported Media' if it is empty.
+		if ( empty( $album_name ) ) {
+			$album_name = 'Imported Media';
+		}
 
 		if ( array_key_exists( 'bp_album_import_name', $bp_media->options ) ) {
 			if ( '' !== $bp_media->options['bp_album_import_name'] ) {
