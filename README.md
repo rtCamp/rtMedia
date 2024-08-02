@@ -152,6 +152,13 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.20 [August 02, 2024] ###
+
+* Fixed
+
+	* Fixes related PHP 8.2 compatibility issues.
+
+
 ### 4.6.19 [April 16, 2024] ###
 * Fixed
 	* Fixed shortcode security issue.
