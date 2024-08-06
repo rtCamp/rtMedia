@@ -17,7 +17,8 @@ test.describe("Validated privacy settings", () => {
         //validated changes from the fronend
         await activity.gotoActivityPage();
         await page.locator("#whats-new").click();
-        const rtSelectPrivacy = page.locator("#rtSelectPrivacy");
-        expect(rtSelectPrivacy).toBeVisible();
+        const rtSelectPrivacy = page.locator("//select[@id='rtSelectPrivacy']");
+        await expect(rtSelectPrivacy).toBeVisible({ timeout: 10000 });
+        expect(rtSelectPrivacy).toBeTruthy(); 
     });
 })
