@@ -19,7 +19,7 @@ test.describe("Enable basic features to perform tests", () => {
         //enable comment for media
         await admin.visitAdminPage("admin.php?page=rtmedia-settings");
         await page.locator("//label[@for='rtm-form-checkbox-0']").check();
-        await backend.clickedOnrtMediaSave();
+        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
     });
     
 });

@@ -1,7 +1,5 @@
 import { test, expect } from "@wordpress/e2e-test-utils-playwright";
 import Activity from "../../page_model/activity.js";
-import Backend from "../../page_model/backend.js";
-const { URLS } = require("../../utils/urls.js");
 
 test.describe("ASK USERS TO AGREE TO YOUR TERMS", () => {
     let activity;
@@ -9,7 +7,6 @@ test.describe("ASK USERS TO AGREE TO YOUR TERMS", () => {
 
     test.beforeEach(async ({ page, admin }) => {
         activity = new Activity(page);
-        backend = new Backend(page);
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-general");
     });
 
@@ -19,7 +16,7 @@ test.describe("ASK USERS TO AGREE TO YOUR TERMS", () => {
         await page.locator("#rtm-form-text-0").fill("https://rtcamp.com");
         await page.locator("#rtm-form-text-1").fill("terms of services.");
         await page.locator("#rtm-form-text-2").fill("please check the terms");
-        await backend.clickedOnrtMediaSave();
+        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
 
         await activity.gotoActivityPage();
         await page.locator("#whats-new").click();
@@ -44,13 +41,13 @@ test.describe("ASK USERS TO AGREE TO YOUR TERMS", () => {
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-general");
         await page.locator("//label[@for='rtm-form-checkbox-23']").uncheck();
         await page.locator("//label[@for='rtm-form-checkbox-24']").uncheck();
-        await backend.clickedOnrtMediaSave();
+        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
         })
 
     test("Validated Privacy messages", async ({ page, admin }) => {
         await page.locator("//label[@for='rtm-form-checkbox-25']").check();
         await page.locator("#rtm-form-textarea-0").fill("Demo Text");
-        await backend.clickedOnrtMediaSave();
+        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
         await activity.gotoActivityPage();
         const errorMessage = await page.locator("div[class='privacy_message_wrapper'] p").textContent();
         expect(errorMessage).toContain("Demo Text");

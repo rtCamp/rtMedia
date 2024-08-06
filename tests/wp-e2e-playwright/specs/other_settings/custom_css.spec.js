@@ -14,7 +14,7 @@ test.describe("Validating media size", () => {
     test("Validating custom css on the frontend", async ({ page }) => {
         const customCSS = "{background: red}"
         await page.locator('#rtmedia-custom-css').fill(customCSS);
-        await backend.clickedOnrtMediaSave();
+        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
         await activity.gotoActivityPage();
         const actualCSS = await page.locator('#rtmedia-custom-css-inline-css').textContent();
         expect(actualCSS).toContain(customCSS);

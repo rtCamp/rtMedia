@@ -5,13 +5,10 @@ class Backend {
 
     async enableAnySettingAndSave(selector) {
         await this.page.locator(selector).check();
-        this.clickedOnrtMediaSave();
+        await this.page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
     }
     async disableAnySettingAndSave(selector) {
         await this.page.locator(selector).uncheck();
-        this.clickedOnrtMediaSave();
-    }
-    async clickedOnrtMediaSave() {
         await this.page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
     }
 }

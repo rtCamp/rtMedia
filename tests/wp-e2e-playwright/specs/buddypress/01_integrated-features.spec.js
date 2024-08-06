@@ -49,7 +49,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         expect(commentActivity).toContain("This is a test comment");
     });
 
-    test("Enable Create activity for media Likes and validate from the frontend", async ({ page, admin }) => {
+    test("Enable Create activity for media Likes and validate from the frontend", async ({ page}) => {
         await backend.enableAnySettingAndSave("//label[@for='rtmedia-enable-like-activity']");
         const image = ['testdata/img.jpg'];
         await activity.gotoActivityPage();

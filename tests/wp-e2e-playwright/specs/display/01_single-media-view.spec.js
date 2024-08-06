@@ -39,7 +39,7 @@ test.describe("Validated media view in the frontend", () => {
         await admin.visitAdminPage("admin.php?page=rtmedia-settings");
         await page.locator("#rtm-form-number-0").fill("1");
         await page.locator("#rtm-form-radio-0").click();
-        await backend.clickedOnrtMediaSave();
+        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
         //validating load more in media album
         await activity.gotoUserProfile();
         await page.locator("#user-media").scrollIntoViewIfNeeded();
