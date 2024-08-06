@@ -1,5 +1,5 @@
 import { test} from "@wordpress/e2e-test-utils-playwright";
-import Backend from "../../page_model/backend.js";
+import Backend from "../page_model/backend.js";
 
 test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
     let backend;
