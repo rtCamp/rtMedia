@@ -9,8 +9,13 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-display");
     });
 
-    test("Enable media toggle and validate from the frontend", async ({ page, admin }) => {
+    test("Enable all of the prequisite", async ({ page, admin }) => {
+        //enable direct upload
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-6']");
+        //enable group from buddypress
+        await admin.visitAdminPage("options-general.php?page=bp-components");
+        await page.locator("//tr[@id='groups']").check();
+        await page.locator("//input[@id='bp-admin-component-submit']").click();
     });
     
 });

@@ -21,14 +21,14 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         expect(profileSidebar).toContain('Media');
     });
     test("Enable media in group toggle and validate from the frontend", async ({ page, admin }) => {
-        await backend.enableAnySettingAndSave("#rtmedia-enable-on-group");
+        await backend.enableAnySettingAndSave("//label[@for='rtmedia-enable-on-group']");
         await page.goto(URLS.homepage + "/groups/create/step/group-details/");
         const groupTab = await page.locator("#group-create-tabs").textContent();
         expect(groupTab).toContain('Media');
     });
 
     test("Enable Allow upload from activity stream and validate from the frontend", async ({ page, admin }) => {
-        await backend.enableAnySettingAndSave("#rtmedia-bp-enable-activity");
+        await backend.enableAnySettingAndSave("//label[@for='rtmedia-bp-enable-activity']");
         await activity.gotoActivityPage();
         await page.locator("#whats-new").click();
         const postUpload = page.locator('#rtmedia-add-media-button-post-update');
