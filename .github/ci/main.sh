@@ -41,7 +41,7 @@ function create_and_configure_site () {
 function install_playwright_package () {
 
     cd $GITHUB_WORKSPACE/tests/wp-e2e-playwright
-    git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
+    git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git testdata
     npm install
 
 }
