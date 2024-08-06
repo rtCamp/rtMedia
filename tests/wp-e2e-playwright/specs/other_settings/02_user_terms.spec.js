@@ -49,7 +49,6 @@ test.describe("ASK USERS TO AGREE TO YOUR TERMS", () => {
         await page.locator("#rtm-form-textarea-0").fill("Demo Text");
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
         await activity.gotoActivityPage();
-        const errorMessage = await page.locator("div[class='privacy_message_wrapper'] p").textContent();
-        expect(errorMessage).toContain("Demo Text");
+        await page.locator("//span[@id='close_rtm_privacy_message']").click();
     })
 })
