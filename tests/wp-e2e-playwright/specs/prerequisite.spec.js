@@ -16,6 +16,10 @@ test.describe("Enable basic features to perform tests", () => {
         await admin.visitAdminPage("options-general.php?page=bp-components");
         await page.locator("//input[@id='bp_components[groups]']").check();
         await page.locator("//input[@id='bp-admin-component-submit']").click();
+        //enable comment for media
+        await admin.visitAdminPage("admin.php?page=rtmedia-settings");
+        await page.locator("//label[@for='rtm-form-checkbox-0']").check();
+        await backend.clickedOnrtMediaSave();
     });
     
 });

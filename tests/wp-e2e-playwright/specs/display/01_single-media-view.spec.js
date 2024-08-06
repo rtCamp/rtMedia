@@ -1,7 +1,6 @@
 import { test, expect } from "@wordpress/e2e-test-utils-playwright";
 import Backend from "../../page_model/backend.js";
 import Activity from "../../page_model/activity.js";
-const { URLS } = require("../../utils/urls.js")
 
 test.describe("Validated media view in the frontend", () => {
     let backend;
@@ -40,7 +39,7 @@ test.describe("Validated media view in the frontend", () => {
         await admin.visitAdminPage("admin.php?page=rtmedia-settings");
         await page.locator("#rtm-form-number-0").fill("1");
         await page.locator("#rtm-form-radio-0").click();
-        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
+        await backend.clickedOnrtMediaSave();
         //validating load more in media album
         await activity.gotoUserProfile();
         await page.locator("#user-media").scrollIntoViewIfNeeded();
