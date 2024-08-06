@@ -11,8 +11,8 @@ test.describe("Validated privacy settings", () => {
         activity = new Activity(page);
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-privacy");
     });
-    test("Enable privacy settings and validated from the fronend", async ({ page, admin }) => {
-        await backend.enableAnySettingAndSave("#rtmedia-privacy-enable");
+    test("Enable privacy settings and validated from the fronend", async ({ page }) => {
+        await backend.enableAnySettingAndSave("//label[@for='rtmedia-privacy-enable']");
         //validated changes from the fronend
         await activity.gotoActivityPage();
         await page.locator("#whats-new").click();
