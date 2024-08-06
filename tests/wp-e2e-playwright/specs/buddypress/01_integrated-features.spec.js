@@ -41,7 +41,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         await activity.gotoActivityPage();
         await activity.upploadMedia(image);
         await activity.clickedOnFirstPhotoOfTheActivityPage();
-        await page.locator("#comment_content").fill("This is a test comment")
+        await page.locator("//textarea[@id='comment_content']").fill("This is a test comment")
         await page.locator("#rt_media_comment_submit").click();
 
         await activity.gotoActivityPage();
