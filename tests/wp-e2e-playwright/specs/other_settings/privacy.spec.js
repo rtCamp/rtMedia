@@ -13,6 +13,7 @@ test.describe("Validated privacy settings", () => {
     });
     test("Enable privacy settings and validated from the fronend", async ({ page }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtmedia-privacy-enable']");
+        await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-21']")
         //validated changes from the fronend
         await activity.gotoActivityPage();
         await page.locator("#whats-new").click();
