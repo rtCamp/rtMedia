@@ -54,7 +54,7 @@ function install_playwright(){
 # Run test for new deployed site
 function run_playwright_tests () {
     cd $GITHUB_WORKSPACE/tests/wp-e2e-playwright
-    npm run test-e2e:playwright -- enable_direct_upload.spec.js
+    npm run test-e2e:playwright -- prerequisite.spec.js
     npm run test-e2e:playwright -- specs/buddypress
     npm run test-e2e:playwright -- specs/display
     npm run test-e2e:playwright -- specs/other_settings
