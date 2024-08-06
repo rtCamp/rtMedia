@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: report
-          path: ./tests/wp-e2e-playwright/
+          path: ./tests/wp-e2e-playwright/playwright-report
 
       - name: Cleanup
         if: ${{ always() }}

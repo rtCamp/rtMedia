@@ -2,7 +2,7 @@
 set -ex
 ######################################################
 ######################## VARS ########################
-SITE_NAME='rtmediapro.local'
+SITE_NAME='rtmedia.local'
 SITE_ROOT="/var/www/$SITE_NAME/htdocs"
 SITE_URL="http://$SITE_NAME/"
 function ee() { wo "$@"; }
