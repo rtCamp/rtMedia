@@ -13,7 +13,7 @@ test.describe("Comment media BUDDYPRESS FEATURES", () => {
     });
 
     test("Validated Albums settings in the user's profile", async ({ page }) => {
-        await backend.enableAnySettingAndSave("#rtmedia-album-enable");
+        await backend.enableAnySettingAndSave("//label[@for='rtmedia-album-enable']");
         await activity.gotoUserProfile();
         await page.locator("#user-media").scrollIntoViewIfNeeded();
         await page.locator("#user-media").click();
