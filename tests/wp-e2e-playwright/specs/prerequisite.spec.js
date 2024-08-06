@@ -1,7 +1,7 @@
 import { test} from "@wordpress/e2e-test-utils-playwright";
 import Backend from "../page_model/backend.js";
 
-test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
+test.describe("Enable basic features to perform tests", () => {
     let backend;
 
     test.beforeEach(async ({ page, admin }) => {
@@ -14,7 +14,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-6']");
         //enable group from buddypress
         await admin.visitAdminPage("options-general.php?page=bp-components");
-        await page.locator("//tr[@id='groups']").check();
+        await page.locator("//input[@id='bp_components[groups]']").check();
         await page.locator("//input[@id='bp-admin-component-submit']").click();
     });
     
