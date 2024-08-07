@@ -51,5 +51,6 @@ test.describe("ASK USERS TO AGREE TO YOUR TERMS", () => {
         await activity.gotoActivityPage();
         const privacyContainer = page.locator("//span[@id='close_rtm_privacy_message']")
         await expect(privacyContainer).toBeVisible({ timeout: 10000 });
+        expect('My test').toContain(' develop');
     })
 })
