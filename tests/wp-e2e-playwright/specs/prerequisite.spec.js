@@ -1,5 +1,5 @@
 import { test} from "@wordpress/e2e-test-utils-playwright";
-import Backend from "../page_model/backend.js";
+import Backend from "../test_utils/backend.js";
 
 test.describe("Enable basic features to perform tests", () => {
     let backend;

@@ -1,7 +1,7 @@
 import { test, expect } from "@wordpress/e2e-test-utils-playwright";
 const { URLS } = require("../../utils/urls.js");
-import Backend from "../../page_model/backend.js";
-import Activity from "../../page_model/activity.js";
+import Backend from "../../test_utils/backend.js";
+import Activity from "../../test_utils/activity.js";
 
 test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
     let backend;
@@ -37,13 +37,12 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
 
     test("Enable Create activity for media comments and validate from the frontend", async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtmedia-enable-comment-activity']");
-        const image = ['testdata/img.jpg'];
+        const image = ['test-data/images/test.jpg'];
         await activity.gotoActivityPage();
         await activity.upploadMedia(image);
         await activity.clickedOnFirstPhotoOfTheActivityPage();
         await page.locator("//textarea[@id='comment_content']").fill("This is a test comment")
         await page.locator("#rt_media_comment_submit").click();
-
         await activity.gotoActivityPage();
         const commentActivity = await page.locator("//li[contains(@class, 'activity-item')]").first().textContent();
         expect(commentActivity).toContain("This is a test comment");
@@ -51,7 +50,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
 
     test("Enable Create activity for media Likes and validate from the frontend", async ({ page}) => {
         await backend.enableAnySettingAndSave("//label[@for='rtmedia-enable-like-activity']");
-        const image = ['testdata/img.jpg'];
+        const image = ['test-data/images/test.jpg'];
         await activity.gotoActivityPage();
         await activity.upploadMedia(image);
         await activity.clickedOnFirstPhotoOfTheActivityPage();

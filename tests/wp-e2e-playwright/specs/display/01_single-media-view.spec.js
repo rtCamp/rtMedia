@@ -1,6 +1,6 @@
 import { test, expect } from "@wordpress/e2e-test-utils-playwright";
-import Backend from "../../page_model/backend.js";
-import Activity from "../../page_model/activity.js";
+import Backend from "../../test_utils/backend.js";
+import Activity from "../../test_utils/activity.js";
 
 test.describe("Validated media view in the frontend", () => {
     let backend;
@@ -23,7 +23,7 @@ test.describe("Validated media view in the frontend", () => {
 
     test("Validated lightbox to display media", async ({ page }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-3']");
-        const image = ['testdata/img.jpg'];
+        const image = ['test-data/images/test.jpg'];
         await activity.gotoActivityPage();
         await activity.upploadMedia(image);
         await activity.clickedOnFirstPhotoOfTheActivityPage();
@@ -33,7 +33,7 @@ test.describe("Validated media view in the frontend", () => {
     })
     test("Validated Media display pagination option to the display media in profile", async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-4']");
-        const imagesPath = ['testdata/img.jpg', 'testdata/img2.jpg', 'testdata/images.jpg'];
+        const imagesPath = ['test-data/images/test.jpg', 'test-data/images/test0.jpg', 'test-data/images/test.jpg'];
         await activity.gotoActivityPage();
         await activity.upploadMedia(imagesPath)
         await admin.visitAdminPage("admin.php?page=rtmedia-settings");

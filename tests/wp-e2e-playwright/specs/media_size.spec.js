@@ -1,6 +1,6 @@
 import { test, expect } from "@wordpress/e2e-test-utils-playwright";
-import Activity from "../page_model/activity.js";
-const testdata = require("../testdata/media_size.json")
+import Activity from "../test_utils/activity.js";
+const testdata = require("../test-data/media_size/media_size.json")
 
 test.describe("Validating media size", () => {
     let activity;
@@ -17,8 +17,8 @@ test.describe("Validating media size", () => {
         await page.locator("#rtm-form-number-5").fill(testdata.photo.largeWidth);
         await page.locator("#rtm-form-number-6").fill(testdata.photo.largeHeight);
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
-
-        const imagepath = ['testdata/largePhoto.jpg'];
+        
+        const imagepath = ['test-data/images/test.jpg'];
         await activity.gotoActivityPage();
         await activity.upploadMedia(imagepath);
         await activity.gotoUserProfile();
@@ -48,7 +48,7 @@ test.describe("Validating media size", () => {
         await page.locator("#rtm-form-number-10").fill(testdata.video.singlePlayerHeight);
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
 
-        const videoPath = ['testdata/test.mp4'];
+        const videoPath = ['test-data/videos/testmpfour.mp4'];
         await activity.gotoActivityPage();
         await activity.upploadMedia(videoPath);
         await page.waitForLoadState('domcontentloaded');

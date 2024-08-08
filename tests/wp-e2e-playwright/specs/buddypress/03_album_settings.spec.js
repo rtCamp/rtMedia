@@ -1,6 +1,6 @@
 import { test, expect } from "@wordpress/e2e-test-utils-playwright";
-import Backend from "../../page_model/backend.js";
-import Activity from "../../page_model/activity.js";
+import Backend from "../../test_utils/backend.js";
+import Activity from "../../test_utils/activity.js";
 
 test.describe("Comment media BUDDYPRESS FEATURES", () => {
     let backend;

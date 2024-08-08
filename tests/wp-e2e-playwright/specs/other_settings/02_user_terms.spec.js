@@ -1,9 +1,8 @@
 import { test, expect } from "@wordpress/e2e-test-utils-playwright";
-import Activity from "../../page_model/activity.js";
+import Activity from "../../test_utils/activity.js";
 
 test.describe("ASK USERS TO AGREE TO YOUR TERMS", () => {
     let activity;
-    let backend;
 
     test.beforeEach(async ({ page, admin }) => {
         activity = new Activity(page);
@@ -51,6 +50,5 @@ test.describe("ASK USERS TO AGREE TO YOUR TERMS", () => {
         await activity.gotoActivityPage();
         const privacyContainer = page.locator("//span[@id='close_rtm_privacy_message']")
         await expect(privacyContainer).toBeVisible({ timeout: 10000 });
-        expect('My test').toContain(' develop');
     })
 })
