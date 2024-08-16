@@ -26,7 +26,7 @@
          new URL( './config/global-setup.ts', 'file:' + __filename ).href
      ),
      use: {
-         baseURL: 'http://rtmedia.local/',
+         baseURL: 'http://localhost:8889/',
          headless: true,
          viewport: {
              width: 960,

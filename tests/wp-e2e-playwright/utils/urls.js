@@ -1,5 +1,5 @@
 const URLS = {
-    homepage: "http://rtmedia.local",
+    homepage: "http://localhost:9323/",
   };
   
   module.exports = { URLS };
