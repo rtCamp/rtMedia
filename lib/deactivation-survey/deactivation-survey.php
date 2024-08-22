@@ -44,9 +44,9 @@ class Deactivation_Survey {
                 'It\'s not what I was looking for.',
                 'The plugin didn\'t work as expected.',
             ];
-    
+
             $current_user = wp_get_current_user();
-    
+
             $rt_deactivate = [
                 'home_url'    => home_url(),
                 'admin_url'   => admin_url(),
@@ -57,7 +57,7 @@ class Deactivation_Survey {
                 'user_email'  => $current_user->user_email,
                 'header_text' => esc_html__( 'If you have a moment, please let us know why you are deactivating: ', 'buddypress-media' )
             ];
-    
+
             wp_localize_script( 'rt-deactivation-survey', 'rtDeactivate', $rt_deactivate );
         }
     }
@@ -100,7 +100,7 @@ class Deactivation_Survey {
                 'body'             => $data,
                 'headers'          => [
                     'Content-type' => "application/x-www-form-urlencoded",
-                    'Authorization' => "Basic " . base64_encode("${auth_user}:${auth_password}")
+                    'Authorization' => "Basic " . base64_encode("{$auth_user}:{$auth_password}")
                 ],
                 'timeout'          => 60,
                 'redirection'      => 5,
@@ -111,7 +111,7 @@ class Deactivation_Survey {
 
             $api_response = wp_remote_post( $this->api_url . '/survey', $options );
             $response     = json_decode( wp_remote_retrieve_body( $api_response ) );
-    
+
             if ( 'integer' === gettype( $response ) ) {
                 echo wp_json_encode( 'success' );
 				wp_die();

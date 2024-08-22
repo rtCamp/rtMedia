@@ -138,7 +138,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 2.  BuddyPress Settings
 3.  Media Types Settings
 4.  Media Size Settings
-5.  Privacy Settings 
+5.  Privacy Settings
 6.  Other Setiings
 7.  Export/Import Settings
 8.  Media View
@@ -151,6 +151,18 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 ## Changelog ##
+
+### 4.6.20 [August 02, 2024] ###
+
+* Fixed
+
+	* Fixes related PHP 8.2 compatibility issues.
+
+
+### 4.6.19 [April 16, 2024] ###
+* Fixed
+	* Fixed shortcode security issue.
+
 
 ### 4.6.18 [January 16, 2024] ###
 
@@ -182,9 +194,9 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Fixed
 
-	* Fixed PHP deprecation warnings. 
-    * Fixed BuddyPress Versioning issue 
-    * Fixed Security issue. 
+	* Fixed PHP deprecation warnings.
+    * Fixed BuddyPress Versioning issue
+    * Fixed Security issue.
     * Fixed Video player UI issues.
 
 ### 4.6.15 [September 4, 2023] ###
@@ -214,29 +226,29 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 ### 4.6.13 [December 12, 2022] ###
 
 * Enhancement
-   
+
     * Compatible with WordPress latest version 6.1.1
-    * Compatible with PHP 8.0.0 
+    * Compatible with PHP 8.0.0
     * Refactored code base.
 
 * Fixed
-    
+
     * Fixed save settings not working issue.
     * Fixed media tab not visible on groups page.
 
-  
+
 ### 4.6.12 [June 16, 2022] ###
 
 * Enhancement
 
-    * Compatible with BP-Rewrites latest version. 
+    * Compatible with BP-Rewrites latest version.
     * Compatible with with WordPress latest version 6.0.
 
 * Fixed
 
-    * UI/UX Issues. 
-    * Fixed album count issue for non-admin user and group albums. 
-    * Fixed Video thumbnail issue. 
+    * UI/UX Issues.
+    * Fixed album count issue for non-admin user and group albums.
+    * Fixed Video thumbnail issue.
 
 
 ### 4.6.11 [April 27, 2022] ###
@@ -257,12 +269,12 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Enhancement
 
-    * Compatible with latest of WordPress v5.9. 
-    * Compatible with latest version of BuddyPress v10.0.0. 
+    * Compatible with latest of WordPress v5.9.
+    * Compatible with latest version of BuddyPress v10.0.0.
 
 * New Feature
 
-	* Edit media option on activity stream with [BuddyPress Edit Activity](https://wordpress.org/support/plugin/buddypress-edit-activity/). 
+	* Edit media option on activity stream with [BuddyPress Edit Activity](https://wordpress.org/support/plugin/buddypress-edit-activity/).
 
 * Fixed
 
@@ -275,14 +287,14 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Enhancement
 
-	* Added album search functionality. 
+	* Added album search functionality.
 	* Added capability to group admin and mod to edit/delete the album.
 
 * FIXED
 
-	* UI/UX issues. 
-	* Able to upload media to comment if the activity steam option is disabled. 
-	* Fixed pagination issue. 
+	* UI/UX issues.
+	* Able to upload media to comment if the activity steam option is disabled.
+	* Fixed pagination issue.
 	* Fixed RTL issues.
 
 ### 4.6.8 [October 26, 2021] ###
@@ -406,8 +418,8 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 	* Add new class on activity page based on the uploaded media type
 
 * FIXED
-	* Post Update button issue with BuddyPress Nouveau template 
-	* Issue when user uploads the media with link in comment on buddypress activity 
+	* Post Update button issue with BuddyPress Nouveau template
+	* Issue when user uploads the media with link in comment on buddypress activity
 
 ### 4.5.8 [August 6, 2019] ###
 
@@ -432,8 +444,8 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
     * Issue of entering text in text area when Direct Upload and Upload terms enabled together
     * UI of pagination button height and text field
     * Export/Import button issue in Firefox browser
-    * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1 
-    * Empty space issue for generated activity when media is uploaded without adding text 
+    * Issue of direct upload and media was not opening in lightbox with TwentySeventeen theme v2.1
+    * Empty space issue for generated activity when media is uploaded without adding text
     * Other Errors, Warnings and notices
     * Group Activity media are not shown in Group Media tab with BuddyPress Nouveau Template
     * User’s name autosuggestion
@@ -495,11 +507,11 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 * NEW
 
 	 * Added JavaScript hook to handle uploader slide event [Doc](https://rtmedia.io/docs/developers/hooks/rtmedia-js-hooks/#rtmediajsuploaderslideaftergalleryreload)
-	 
+
 * ENHANCEMENT
 
 	 * Added translation support for “Search Media” string
-	 
+
 * FIXED
 
 	 * PHP notices
