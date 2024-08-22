@@ -1376,6 +1376,7 @@ jQuery( document ).ready( function () {
                 setTimeout( function() {
                     jQuery( 'video' ).each( function () {
                         jQuery( this ).attr( 'controlsList', 'nodownload' );
+                        jQuery( this ).attr( 'playsinline', 'playsinline' );
                         jQuery( this ).load();
                     } );
                 }, 200 );
