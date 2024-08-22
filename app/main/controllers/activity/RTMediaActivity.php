@@ -265,7 +265,7 @@ class RTMediaActivity {
 				}
 				if ( empty( $youtube_url ) ) {
 					$html = sprintf(
-						'<video %1$s src="%2$s" width="%3$d" height="%4$d" type="video/mp4" class="%5$s" id="rt_media_video_%6$s" controls="controls" preload="metadata"></video>',
+						'<video %1$s src="%2$s" width="%3$d" height="%4$d" type="video/mp4" class="%5$s" id="rt_media_video_%6$s" controls="controls" preload="metadata" playsinline></video>',
 						$poster,
 						esc_url( wp_get_attachment_url( $media->media_id ) ),
 						esc_attr( $rtmedia->options['defaultSizes_video_activityPlayer_width'] ),

@@ -211,7 +211,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 				}
 
 				$content = sprintf(
-					'<video class="bp-media-featured-media wp-video-shortcode" %1$s src="%2$s" width="%3$s" height="%4$s" type="video/mp4" id="bp_media_video_%5$s" controls="controls" preload="true"></video>',
+					'<video class="bp-media-featured-media wp-video-shortcode" %1$s src="%2$s" width="%3$s" height="%4$s" type="video/mp4" id="bp_media_video_%5$s" controls="controls" preload="true" playsinline></video>',
 					$content_extra,
 					esc_url( wp_get_attachment_url( $featured->media_id ) ),
 					esc_attr( $this->settings['width'] ),

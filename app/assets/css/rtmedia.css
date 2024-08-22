@@ -694,7 +694,7 @@ input.imgedit-submit-btn {
 .rtm-tabs .active:after {
   background: #FFFFFF;
   bottom: -1px;
-  content: " ";
+  content: ' ';
   height: 1px;
   left: 0;
   position: absolute;
@@ -749,7 +749,7 @@ input.imgedit-submit-btn {
   box-sizing: border-box;
 }
 .mfp-container:before {
-  content: " ";
+  content: ' ';
   display: inline-block;
   height: 100%;
   vertical-align: middle;
@@ -926,7 +926,7 @@ button::-moz-focus-inner {
 .mfp-arrow:after,
 .mfp-arrow .mfp-b,
 .mfp-arrow .mfp-a {
-  content: "";
+  content: '';
   display: block;
   width: 0;
   height: 0;
@@ -1034,7 +1034,7 @@ img.mfp-img {
 }
 
 .mfp-figure:after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 40px;
@@ -1098,18 +1098,18 @@ img.mfp-img {
   margin-right: auto;
 }
 .mfp-preloader:before {
-  content: "Loading…";
+  content: 'Loading…';
   position: absolute;
   width: 30px;
   height: 30px;
 }
 .mfp-preloader:not(:required):before {
-  content: "";
+  content: '';
   border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, 0.27);
   border-top-color: rgba(255, 255, 255, 0.9);
-  animation: spinner 0.6s linear infinite;
-  -webkit-animation: spinner 0.6s linear infinite;
+  animation: spinner .6s linear infinite;
+  -webkit-animation: spinner .6s linear infinite;
 }
 
 @keyframes spinner {
@@ -1131,17 +1131,21 @@ img.mfp-img {
     padding-left: 0;
     padding-right: 0;
   }
+
   .mfp-img-mobile img.mfp-img {
     padding: 0;
   }
+
   .mfp-img-mobile .mfp-figure:after {
     top: 0;
     bottom: 0;
   }
+
   .mfp-img-mobile .mfp-figure small {
     display: inline;
     margin-left: 5px;
   }
+
   .mfp-img-mobile .mfp-bottom-bar {
     background: rgba(0, 0, 0, 0.6);
     bottom: 0;
@@ -1151,13 +1155,16 @@ img.mfp-img {
     position: fixed;
     box-sizing: border-box;
   }
+
   .mfp-img-mobile .mfp-bottom-bar:empty {
     padding: 0;
   }
+
   .mfp-img-mobile .mfp-counter {
     right: 5px;
     top: 3px;
   }
+
   .mfp-img-mobile .mfp-close {
     top: 0;
     right: 0;
@@ -1176,16 +1183,19 @@ img.mfp-img {
     -ms-transform: scale(0.75);
         transform: scale(0.75);
   }
+
   .mfp-arrow-left {
     -webkit-transform-origin: 0;
     -ms-transform-origin: 0;
         transform-origin: 0;
   }
+
   .mfp-arrow-right {
     -webkit-transform-origin: 100%;
     -ms-transform-origin: 100%;
         transform-origin: 100%;
   }
+
   .mfp-container {
     padding-left: 6px;
     padding-right: 6px;
@@ -1387,7 +1397,7 @@ img.mfp-img {
   bottom: 100%;
   left: 20px;
   border: solid transparent;
-  content: " ";
+  content: ' ';
   height: 0;
   width: 0;
   position: absolute;
@@ -1409,7 +1419,7 @@ img.mfp-img {
   top: 100%;
   right: 22px;
   border: solid transparent;
-  content: " ";
+  content: ' ';
   height: 0;
   width: 0;
   position: absolute;
@@ -1786,7 +1796,7 @@ img.mfp-img {
   display: none;
 }
 .rtmedia-activity-container .rtmedia-list.masonry:after {
-  content: "";
+  content: '';
   display: block;
   clear: both;
 }
@@ -2142,7 +2152,7 @@ abbr.required {
   text-decoration: none;
 }
 
-.media-item .describe input[type=text],
+.media-item .describe input[type="text"],
 .media-item .describe textarea {
   width: 460px;
 }
@@ -2752,14 +2762,14 @@ span.imgedit-scale-warn {
   margin: 5px 0 15px;
   background-color: #ffffe0;
   border-color: #e6db55;
-  padding: 0 0.6em;
+  padding: 0 .6em;
   border-radius: 3px;
   border-width: 1px;
   border-style: solid;
 }
 
 .bp-media-image-editor-cotnainer div.updated p {
-  margin: 0.5em 0;
+  margin: .5em 0;
   padding: 2px;
 }
 
@@ -3013,12 +3023,12 @@ h2.rtm-gallery-title {
   position: relative;
 }
 .media_search.media_search #media_fatch_loader.load:before {
-  content: "";
+  content: '';
   border-radius: 50%;
   border: 1px solid #aaa;
   border-top-color: rgba(255, 255, 255, 0.9);
-  animation: spinner 0.8s linear infinite;
-  -webkit-animation: spinner 0.8s linear infinite;
+  animation: spinner .8s linear infinite;
+  -webkit-animation: spinner .8s linear infinite;
   position: absolute;
   width: 15px;
   height: 15px;
@@ -3160,14 +3170,14 @@ a.rtmedia-upload-media-link {
 
 .mejs-container .mejs-controls .mejs-time {
   padding: 15px 3px 0;
-  content: "";
+  content: '';
 }
 
 .rtmedia-activity-container .mejs-playpause-button.mejs-play button:before, .rtmedia-activity-container .mejs-playpause-button.mejs-pause button:before, .rtmedia-activity-container .mejs-volume-button.mejs-mute button:before, .rtmedia-activity-container .mejs-fullscreen-button button:before, .rtmedia-media .mejs-playpause-button.mejs-play button:before, .rtmedia-media .mejs-playpause-button.mejs-pause button:before, .rtmedia-media .mejs-volume-button.mejs-mute button:before, .rtmedia-media .mejs-fullscreen-button button:before {
-  content: "";
+  content: '';
 }
 
-@media only screen and (min-width:1025px) {
+@media only screen and (min-width: 1025px) {
   .mfp-content .rtm-lightbox-container {
     display: -webkit-box;
     display: -ms-flexbox;
