@@ -55,7 +55,7 @@ class RTMediaUploadShortcode {
 		$media_enabled = ( is_rtmedia_upload_music_enabled() || is_rtmedia_upload_photo_enabled()
 			|| is_rtmedia_upload_video_enabled() || is_rtmedia_upload_document_enabled()
 			|| is_rtmedia_upload_other_enabled() );
-		$flag          = ( ! ( is_home() || is_post_type_archive() || is_author() ) )
+		$flag          = ( ! (is_post_type_archive() || is_author() ) )
 		&& is_user_logged_in()
 		&& ( $media_enabled )
 		// Added condition to disable upload when media is disabled in profile/group but user visits media tab.
