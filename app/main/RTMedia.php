@@ -1672,17 +1672,16 @@ class RTMedia {
 		}
 		wp_register_script(
 			'bp-nouveau',
-			plugins_url('buddypress/bp-templates/bp-nouveau/js/buddypress-nouveau.js'),
-			array('jquery'),
+			plugins_url( 'buddypress/bp-templates/bp-nouveau/js/buddypress-nouveau.js' ),
+			array( 'jquery' ),
 			'1.0',
 			true
 		);
-	
-		// Register rtMedia Backbone script
+
 		wp_register_script(
 			'rtmedia-backbone',
-			plugins_url('rtmedia/app/assets/js/rtmedia.backbone.js'),
-			array('jquery'),
+			plugins_url( 'rtmedia/app/assets/js/rtmedia.backbone.js' ),
+			array( 'jquery' ),
 			'1.0',
 			true
 		);
