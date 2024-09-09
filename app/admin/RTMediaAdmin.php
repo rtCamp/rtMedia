@@ -1444,7 +1444,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				wp_send_json( $response );
 			}
 
-			$settings_data = json_decode( $settings_data_json, true );
+			$settings_data = $settings_data_json;
 			if ( ! is_array( $settings_data ) || empty( $settings_data['rtm_key'] ) ) {
 				$response['rtm_response']     = 'error';
 				$response['rtm_response_msg'] = esc_html__( 'Invalid JSON Supplied!', 'buddypress-media' );
