@@ -103,7 +103,7 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 				wp_enqueue_style( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/css/rtm-upload-terms' . $suffix . '.css', '', RTMEDIA_VERSION );
 			}
 
-			if ( ! empty( $rtmedia->options['general_enable_upload_terms'] ) || ! empty( $rtmedia->options['activity_enable_upload_terms'] ) ) {
+			if ( isset( $rtmedia->options['general_enable_upload_terms'] ) || isset( $rtmedia->options['activity_enable_upload_terms'] ) ) {
 				wp_enqueue_script( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/js/rtm-upload-terms' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
 				wp_localize_script(
 					'rtmedia-upload-terms-main',
