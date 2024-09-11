@@ -910,6 +910,8 @@ jQuery( 'document' ).ready( function( $ ) {
                 data: data,
                 dataType: 'JSON',
                 success: function( response ) {
+                       // Reload the current page
+                       window.location.reload();
 
                     if ( 'rtmedia-media-deleted' === response.data.code ) {
                         //Media delete
