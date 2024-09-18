@@ -378,8 +378,11 @@ class RTMediaTemplate {
 				wp_update_attachment_metadata( $rtmedia_query->media[0]->media_id, $image_meta_data );
 			}
 
-			$state = $media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[0]->media_id );
-
+			if ( isset( $rtmedia_query->action_query->id ) && isset( $rtmedia_query->media[0]->media_id ) ) {
+				$state = $media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[0]->media_id );
+			} else {
+				$state = false; // or handle the error as needed
+			}
 			$rtmedia_filepath_old = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-filepath-old', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			if ( isset( $rtmedia_filepath_old ) ) {
 				$is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $rtmedia_filepath_old );

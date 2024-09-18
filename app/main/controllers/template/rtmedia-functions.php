@@ -994,8 +994,10 @@ function rtmedia_delete_allowed() {
 
 	global $rtmedia_media;
 
-	$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
-
+	$flag = false;
+	if ( $rtmedia_media !== null && isset( $rtmedia_media->media_author ) ) {
+		$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
+	}
 	if ( ! $flag && isset( $rtmedia_media->context ) && 'group' === $rtmedia_media->context && function_exists( 'bp_group_is_admin' ) ) {
 		$flag = ( bp_group_is_admin() || bp_group_is_mod() );
 	}
@@ -1020,8 +1022,10 @@ function rtmedia_edit_allowed() {
 
 	global $rtmedia_media;
 
-	$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
-
+	$flag = false;
+	if ( $rtmedia_media !== null && isset( $rtmedia_media->media_author ) ) {
+		$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
+	}
 	if ( ! $flag ) {
 		$flag = is_super_admin() || rtm_is_bp_group_admin() || rtm_is_bp_group_mod();
 	}
