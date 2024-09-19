@@ -322,6 +322,8 @@ jQuery( function( $ ) {
 						jQuery( '#rtmedia-nav-item-photo span' ).text( response.media_count.photos_count );
 						jQuery( '#rtmedia-nav-item-music span' ).text( response.media_count.music_count );
 						jQuery( '#rtmedia-nav-item-video span' ).text( response.media_count.videos_count );
+						jQuery( '#rtmedia-nav-item-document span' ).text( response.media_count.docs_count );
+						
 
 						if ( jQuery( 'li#rtm-url-upload' ).length === 0 ) {
 							jQuery( '#' + current_gallery_id + ' .rtmedia-list' ).css( { 'opacity': 1, 'height': 'auto', 'overflow': 'auto' } );

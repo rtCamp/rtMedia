@@ -367,16 +367,22 @@ class RTMediaTemplate {
 
 			$data       = rtmedia_sanitize_object( $_POST, $data_array );
 			$media      = new RTMediaMedia();
-			$image_path = get_attached_file( $rtmedia_query->media[0]->media_id );
-
-			if ( $image_path && 'photo' === $rtmedia_query->media[0]->media_type ) {
+			if ( isset( $rtmedia_query->media[0]->media_id ) ) {
+				$image_path = get_attached_file( $rtmedia_query->media[0]->media_id );
+			} else {
+				$image_path = ''; // or handle the error as needed
+			}
+			if ( isset( $rtmedia_query->media[0] ) && 'photo' === $rtmedia_query->media[0]->media_type ) {
 				$image_meta_data = wp_generate_attachment_metadata( $rtmedia_query->media[0]->media_id, $image_path );
 
 				wp_update_attachment_metadata( $rtmedia_query->media[0]->media_id, $image_meta_data );
 			}
 
-			$state = $media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[0]->media_id );
-
+			if ( isset( $rtmedia_query->action_query->id ) && isset( $rtmedia_query->media[0]->media_id ) ) {
+				$state = $media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[0]->media_id );
+			} else {
+				$state = false; // or handle the error as needed
+			}
 			$rtmedia_filepath_old = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-filepath-old', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			if ( isset( $rtmedia_filepath_old ) ) {
 				$is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $rtmedia_filepath_old );
@@ -423,22 +429,24 @@ class RTMediaTemplate {
 			// refresh.
 			$rtmedia_nav = new RTMediaNav();
 
-			if ( 'group' === $rtmedia_query->media[0]->context ) {
-				$rtmedia_nav->refresh_counts(
-					$rtmedia_query->media[0]->context_id,
-					array(
-						'context'    => $rtmedia_query->media[0]->context,
-						'context_id' => $rtmedia_query->media[0]->context_id,
-					)
-				);
-			} else {
-				$rtmedia_nav->refresh_counts(
-					$rtmedia_query->media[0]->media_author,
-					array(
-						'context'      => 'profile',
-						'media_author' => $rtmedia_query->media[0]->media_author,
-					)
-				);
+			if ( isset( $rtmedia_query->media[0] ) && isset( $rtmedia_query->media[0]->context ) ) {
+				if ( 'group' === $rtmedia_query->media[0]->context ) {
+					$rtmedia_nav->refresh_counts(
+						$rtmedia_query->media[0]->context_id,
+						array(
+							'context'    => $rtmedia_query->media[0]->context,
+							'context_id' => $rtmedia_query->media[0]->context_id,
+						)
+					);
+				} else {
+					$rtmedia_nav->refresh_counts(
+						$rtmedia_query->media[0]->media_author,
+						array(
+							'context'      => 'profile',
+							'media_author' => $rtmedia_query->media[0]->media_author,
+						)
+					);
+				}
 			}
 
 			$state = apply_filters( 'rtmedia_single_edit_state', $state );
