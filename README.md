@@ -152,6 +152,15 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.6.21 [Septemeber 23, 2024] ###
+
+* Fixed
+
+	* Resolved the issue with the privacy message's close button not functioning.
+	* Addressed the problem with JSON import not working.
+	* Fixed errors encountered while editing document uploads.
+	* Fixed issue related to videos automatically opened in full screen, hiding the activity feed in ios devices.
+
 ### 4.6.20 [August 02, 2024] ###
 
 * Fixed
