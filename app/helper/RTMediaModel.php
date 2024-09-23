@@ -122,7 +122,7 @@ class RTMediaModel extends RTDBModel {
 		}
 		$qgroup_by = ' ';
 
-		$allowed_order_columns = array( 'media_id', 'date', 'name' ); // Define allowed columns.
+		$allowed_order_columns = array( 'media_id', 'media_title','file_size'); // Define allowed columns.
 		list( $order_column, $order_direction ) = explode( ' ', $order_by . ' ' ); // Default to space if no direction provided.
 
 		if ( ! in_array( strtolower( $order_column ), $allowed_order_columns ) || ! in_array(
@@ -486,6 +486,7 @@ class RTMediaModel extends RTDBModel {
 		$remaining_music     = 0;
 		$remaining_videos    = 0;
 		$remaining_all_media = 0;
+		$remaining_docs	     = 0;
 
 		// Fetch the remaining media count.
 		if ( class_exists( 'RTMediaNav' ) ) {
@@ -512,6 +513,7 @@ class RTMediaModel extends RTDBModel {
 			$remaining_photos    = ( ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
 			$remaining_videos    = ( ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
 			$remaining_music     = ( ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
+			$remaining_docs 	= ( ! empty( $counts['total']['document'] ) ) ? $counts['total']['document'] : 0;
 		}
 
 		$media_counts = array(
@@ -520,6 +522,7 @@ class RTMediaModel extends RTDBModel {
 			'music_count'     => $remaining_music,
 			'videos_count'    => $remaining_videos,
 			'albums_count'    => $remaining_album,
+			'docs_count'      => $remaining_docs,
 		);
 
 		return $media_counts;

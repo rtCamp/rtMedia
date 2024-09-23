@@ -1,0 +1,54 @@
+# e2e test for rtMedia pro plugin. 
+
+name: CI for rtMedia plugin
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on pull request events
+  pull_request:
+    branches:
+      - wp-e2e-playwright
+      - develop
+      - master
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  Run-wpe2e-TestCase:
+    # The type of runner that the job will run on
+    name: Run rtMedia Features Test Cases
+    runs-on: ubuntu-latest
+    env: 
+      TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      working-directory: ./tests/wp-e2e-playwright
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      # Check node version
+      - name: Current directory and listings
+        run: |
+          pwd
+          ls -al
+        # Install config site
+      - name: Install and config site
+        uses: docker://rtcamp/base-wo:v1.0.0
+        env:
+          NODE_VERSION: 17
+          RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
+
+      - name: Archive HTML Report on failure
+        if: failure()
+        uses: actions/upload-artifact@v1
+        with:
+          name: report
+          path: ./tests/wp-e2e-playwright/playwright-report
+
+      - name: Cleanup
+        if: ${{ always() }}
+        uses: rtCamp/action-cleanup@master

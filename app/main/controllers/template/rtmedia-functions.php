@@ -592,7 +592,7 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 
 				// added poster for showing thumbnail and changed preload value to fix rtMedia GL-209.
 				$html .= sprintf(
-					'<video poster="%1$s" src="%2$s" %3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata"></video>',
+					'<video poster="%1$s" src="%2$s" %3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata" playsinline></video>',
 					esc_url( $rtmedia_media->cover_art || '' ),
 					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
 					esc_attr( $size ),
@@ -602,7 +602,7 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			} else {
 
 				$html .= sprintf(
-					'<video width="640" height="360" class="url-video" id="video-id-%1$s" preload="none"><source type="video/youtube" src="%2$s" /></video>',
+					'<video width="640" height="360" class="url-video" id="video-id-%1$s" preload="none"><source type="video/youtube" src="%2$s playsinline" /></video>',
 					esc_attr( $rtmedia_media->id ),
 					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) )
 				);
@@ -994,8 +994,10 @@ function rtmedia_delete_allowed() {
 
 	global $rtmedia_media;
 
-	$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
-
+	$flag = false;
+	if ( $rtmedia_media !== null && isset( $rtmedia_media->media_author ) ) {
+		$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
+	}
 	if ( ! $flag && isset( $rtmedia_media->context ) && 'group' === $rtmedia_media->context && function_exists( 'bp_group_is_admin' ) ) {
 		$flag = ( bp_group_is_admin() || bp_group_is_mod() );
 	}
@@ -1020,8 +1022,10 @@ function rtmedia_edit_allowed() {
 
 	global $rtmedia_media;
 
-	$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
-
+	$flag = false;
+	if ( $rtmedia_media !== null && isset( $rtmedia_media->media_author ) ) {
+		$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
+	}
 	if ( ! $flag ) {
 		$flag = is_super_admin() || rtm_is_bp_group_admin() || rtm_is_bp_group_mod();
 	}

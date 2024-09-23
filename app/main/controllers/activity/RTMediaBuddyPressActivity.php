@@ -848,6 +848,7 @@ class RTMediaBuddyPressActivity {
 		$activity_allowedtags['video']['width']    = array();
 		$activity_allowedtags['video']['height']   = array();
 		$activity_allowedtags['video']['poster']   = array();
+		$activity_allowedtags['video']['playsinline']   = array();
 		$activity_allowedtags['source']            = array();
 		$activity_allowedtags['source']['type']    = array();
 		$activity_allowedtags['source']['src']     = array();
