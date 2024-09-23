@@ -1670,7 +1670,21 @@ class RTMedia {
 
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
 		}
+		wp_register_script(
+			'bp-nouveau',
+			plugins_url( 'buddypress/bp-templates/bp-nouveau/js/buddypress-nouveau.js' ),
+			array( 'jquery' ),
+			'1.0',
+			true
+		);
 
+		wp_register_script(
+			'rtmedia-backbone',
+			plugins_url( 'rtmedia/app/assets/js/rtmedia.backbone.js' ),
+			array( 'jquery' ),
+			'1.0',
+			true
+		);
 		if ( function_exists( 'bp_nouveau' ) ) {
 			wp_enqueue_script(
 				'rtmedia-activity',

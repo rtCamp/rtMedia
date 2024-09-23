@@ -910,6 +910,8 @@ jQuery( 'document' ).ready( function( $ ) {
                 data: data,
                 dataType: 'JSON',
                 success: function( response ) {
+                       // Reload the current page
+                       window.location.reload();
 
                     if ( 'rtmedia-media-deleted' === response.data.code ) {
                         //Media delete
@@ -1376,6 +1378,7 @@ jQuery( document ).ready( function () {
                 setTimeout( function() {
                     jQuery( 'video' ).each( function () {
                         jQuery( this ).attr( 'controlsList', 'nodownload' );
+                        jQuery( this ).attr( 'playsinline', 'playsinline' );
                         jQuery( this ).load();
                     } );
                 }, 200 );

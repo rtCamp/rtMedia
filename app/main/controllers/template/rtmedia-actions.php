@@ -124,7 +124,7 @@ function rtmedia_add_album_selection_field( $media_type ) {
 		}
 		?>
 		<div class="rtmedia-edit-change-album rtm-field-wrap">
-			<label for=""><?php esc_html_e( 'Album', 'buddypress-media' ); ?> : </label>
+			<label ><?php esc_html_e( 'Album', 'buddypress-media' ); ?> : </label>
 			<?php
 			if ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) {
 				// show group album list.
