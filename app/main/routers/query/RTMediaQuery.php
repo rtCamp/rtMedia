@@ -24,6 +24,13 @@ class RTMediaQuery {
 	 *
 	 * @var array $media_query
 	 */
+	public $is_gallery_shortcode;
+
+	/**
+	 * The query arguments for the current instance (variable)
+	 *
+	 * @var array $media_query
+	 */
 	public $media_query = '';
 
 	/**
