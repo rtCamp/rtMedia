@@ -151,25 +151,15 @@
 
 .license-row {
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-flex: 0;
-      -ms-flex: 0 1 auto;
-          flex: 0 1 auto;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex: 0 1 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .license-column, .license-column {
   box-sizing: border-box;
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 auto;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
   padding-right: .5rem;
   padding-left: .5rem;
   width: 100%;
@@ -187,15 +177,13 @@
 
 @media screen and (max-width: 768px) {
   .medium-6 {
-    -ms-flex-preferred-size: 50%;
-        flex-basis: 50%;
+    flex-basis: 50%;
     max-width: 50%;
   }
 }
 @media screen and (max-width: 667px) {
   .small-12 {
-    -ms-flex-preferred-size: 100%;
-        flex-basis: 100%;
+    flex-basis: 100%;
     max-width: 100%;
   }
 }
@@ -214,9 +202,7 @@
 .theme-browser .theme .theme-actions {
   position: absolute;
   top: unset;
-  -webkit-transform: translateY(-100%);
-      -ms-transform: translateY(-100%);
-          transform: translateY(-100%);
+  transform: translateY(-100%);
   right: 0;
   padding: 9px 15px;
 }
@@ -359,14 +345,9 @@
   min-width: 110px;
   padding: 6px 15px;
   text-decoration: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-transition: all .2s ease-in-out;
-          transition: all .2s ease-in-out;
+  align-items: center;
+  transition: all .2s ease-in-out;
   margin: 5px 0;
   border: 1px solid lightgray;
   border-radius: 12px;
@@ -377,22 +358,16 @@
 .rtm-sidebar .button span.dashicons {
   font-size: 25px;
   margin-right: 15px;
-  -webkit-transition: all .3s ease-in-out;
-          transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
 }
 .rtm-sidebar .button span.icon-message {
-  -webkit-transform: translateX(0px);
-      -ms-transform: translateX(0px);
-          transform: translateX(0px);
-  -webkit-transition: all .1s ease-in-out;
-          transition: all .1s ease-in-out;
+  transform: translateX(0px);
+  transition: all .1s ease-in-out;
   opacity: 1;
   color: #303030;
 }
 .rtm-sidebar .button:active {
-  -webkit-transform: scale(1);
-      -ms-transform: scale(1);
-          transform: scale(1);
+  transform: scale(1);
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -400,92 +375,68 @@
   color: #45b0e3;
 }
 .rtm-social-share .twitter:hover {
-  background: -webkit-gradient(linear, left top, right top, from(#45b0e3), to(#fff));
-  background: -webkit-linear-gradient(left, #45b0e3 0%, #fff 100%);
   background: linear-gradient(to right, #45b0e3 0%, #fff 100%);
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid lightgray;
 }
 .rtm-social-share .twitter:hover span.dashicons {
-  -webkit-transform: translateX(70px);
-      -ms-transform: translateX(70px);
-          transform: translateX(70px);
+  transform: translateX(70px);
   padding-right: 0;
   color: #FFF;
 }
 .rtm-social-share .twitter:hover span.icon-message {
-  -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
   opacity: 0;
 }
 .rtm-social-share .facebook .dashicons {
   color: #3b5998;
 }
 .rtm-social-share .facebook:hover {
-  background: -webkit-gradient(linear, left top, right top, from(#3b5998), to(#fff));
-  background: -webkit-linear-gradient(left, #3b5998 0%, #fff 100%);
   background: linear-gradient(to right, #3b5998 0%, #fff 100%);
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid lightgray;
 }
 .rtm-social-share .facebook:hover span.dashicons {
-  -webkit-transform: translateX(70px);
-      -ms-transform: translateX(70px);
-          transform: translateX(70px);
+  transform: translateX(70px);
   padding-right: 0;
   color: #FFF;
 }
 .rtm-social-share .facebook:hover span.icon-message {
-  -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
   opacity: 0;
 }
 .rtm-social-share .wordpress .dashicons {
   color: #21759b;
 }
 .rtm-social-share .wordpress:hover {
-  background: -webkit-gradient(linear, left top, right top, from(#21759b), to(#fff));
-  background: -webkit-linear-gradient(left, #21759b 0%, #fff 100%);
   background: linear-gradient(to right, #21759b 0%, #fff 100%);
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid lightgray;
 }
 .rtm-social-share .wordpress:hover span.dashicons {
-  -webkit-transform: translateX(70px);
-      -ms-transform: translateX(70px);
-          transform: translateX(70px);
+  transform: translateX(70px);
   padding-right: 0;
   color: #FFF;
 }
 .rtm-social-share .wordpress:hover span.icon-message {
-  -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
   opacity: 0;
 }
 .rtm-social-share .rss .dashicons {
   color: #FF6600;
 }
 .rtm-social-share .rss:hover {
-  background: -webkit-gradient(linear, left top, right top, from(#FF6600), to(#fff));
-  background: -webkit-linear-gradient(left, #FF6600 0%, #fff 100%);
   background: linear-gradient(to right, #FF6600 0%, #fff 100%);
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid lightgray;
 }
 .rtm-social-share .rss:hover span.dashicons {
-  -webkit-transform: translateX(70px);
-      -ms-transform: translateX(70px);
-          transform: translateX(70px);
+  transform: translateX(70px);
   padding-right: 0;
   color: #FFF;
 }
 .rtm-social-share .rss:hover span.icon-message {
-  -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
   opacity: 0;
 }
 
@@ -645,8 +596,6 @@
 }
 .rtm-addon-license .license-inner {
   padding: 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   margin: 0 0 10px 0;
 }
@@ -892,18 +841,15 @@ horizontal tab css
   text-transform: uppercase;
   background: #b4b4b4;
   border-radius: inherit;
-  -webkit-transition: 0.15s ease-out;
-          transition: 0.15s ease-out;
-  -webkit-transition-property: opacity background;
-          transition-property: opacity background;
+  transition: 0.15s ease-out;
+  transition-property: opacity background;
 }
 .switch-label:before, .switch-label:after {
   position: absolute;
   top: 50%;
   margin-top: -.5em;
   line-height: 1;
-  -webkit-transition: inherit;
-          transition: inherit;
+  transition: inherit;
 }
 .switch-label:before {
   content: attr(data-off);
@@ -934,11 +880,8 @@ input[type=checkbox]:checked ~ .switch-label:after {
   background: white;
   border-radius: 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(40%, white), to(#f0f0f0));
-  background-image: -webkit-linear-gradient(top, white 40%, #f0f0f0);
   background-image: linear-gradient(to bottom, white 40%, #f0f0f0);
-  -webkit-transition: left 0.15s ease-out;
-          transition: left 0.15s ease-out;
+  transition: left 0.15s ease-out;
 }
 .switch-handle:before {
   content: '';
@@ -951,8 +894,6 @@ input[type=checkbox]:checked ~ .switch-label:after {
   background: #f9f9f9;
   border-radius: 6px;
   box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(white));
-  background-image: -webkit-linear-gradient(top, #eee, white);
   background-image: linear-gradient(to bottom, #eee, white);
 }
 input[type=checkbox]:checked ~ .switch-handle {
@@ -993,8 +934,7 @@ input[type=checkbox]:checked ~ .switch-handle {
   visibility: hidden;
   width: 210px;
   z-index: 9999;
-  -webkit-transition: all ease-in-out 0.4s;
-          transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.4s;
 }
 
 .rtm-tip-top {
@@ -1057,6 +997,7 @@ input[type=checkbox]:checked ~ .switch-handle {
 .rtm-plugin-card.plugin-card .desc, .rtm-plugin-card.plugin-card .name {
   margin-left: 0;
   margin-right: 0;
+  margin-bottom: 0.5rem;
   overflow: hidden;
 }
 .rtm-plugin-card.plugin-card h4 {
@@ -1099,6 +1040,11 @@ input[type=checkbox]:checked ~ .switch-handle {
   font-weight: 600;
 }
 
+@media screen and (min-width: 1600px) and (max-width: 2299px) {
+  .plugin-card:nth-child(3n+1) {
+    clear: none;
+  }
+}
 .rtm-theme-browser .rtm-themes {
   clear: none;
   padding: 0;
@@ -1466,3 +1412,5 @@ body.rtl .theme-browser .theme {
 .rtmedia-license .rtm-tabs span {
   padding: 0;
 }
+
+/*# sourceMappingURL=admin.css.map */
