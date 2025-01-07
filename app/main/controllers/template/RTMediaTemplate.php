@@ -231,7 +231,6 @@ class RTMediaTemplate {
 		/// Ensure the current action is 'upload' before proceeding.
 		if ( ! isset( $rtmedia_query )
 		|| ! isset( $rtmedia_query->action_query )
-		|| ! isset( $rtmedia_query->action_query->action )
 		|| 'upload' !== $rtmedia_query->action_query->action ) {
 			return;
 		}
