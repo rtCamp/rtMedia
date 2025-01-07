@@ -228,11 +228,9 @@ class RTMediaTemplate {
 	public function check_return_json() {
 		global $rtmedia_query;
 
-		/// Ensure the current action is 'upload' before proceeding.
-		if ( ! isset( $rtmedia_query )
-		|| ! isset( $rtmedia_query->action_query )
-		|| 'upload' !== $rtmedia_query->action_query->action ) {
-			return;
+		// Ensure $rtmedia_query and its nested format property are set before checking the value.
+		if ( isset( $rtmedia_query ) && isset( $rtmedia_query->format ) && 'json' === $rtmedia_query->format ) {
+			$this->json_output();
 		}
 	}
 
