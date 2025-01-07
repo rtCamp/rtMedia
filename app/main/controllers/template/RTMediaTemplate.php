@@ -323,9 +323,11 @@ class RTMediaTemplate {
 		global $rtmedia_query;
 
 		// Ensure the current action is 'edit' and POST data exists before proceeding.
-		if ( isset( $rtmedia_query->action_query->action ) &&
-		'edit' === $rtmedia_query->action_query->action &&
-		count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification
+		if ( isset( $rtmedia_query )
+		&& isset( $rtmedia_query->action_query )
+		&& isset( $rtmedia_query->action_query->action )
+		&& 'edit' === $rtmedia_query->action_query->action
+		&& count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification
 		$this->save_edit();
 		}
 
