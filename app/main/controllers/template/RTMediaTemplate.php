@@ -228,9 +228,12 @@ class RTMediaTemplate {
 	public function check_return_json() {
 		global $rtmedia_query;
 
-		// Ensure $rtmedia_query is not null and has the 'format' property
-		if ( isset( $rtmedia_query->format ) && 'json' === $rtmedia_query->format ) {
-			$this->json_output();
+		/// Ensure the current action is 'upload' before proceeding.
+		if ( ! isset( $rtmedia_query )
+		|| ! isset( $rtmedia_query->action_query )
+		|| ! isset( $rtmedia_query->action_query->action )
+		|| 'upload' !== $rtmedia_query->action_query->action ) {
+			return;
 		}
 	}
 
@@ -241,7 +244,10 @@ class RTMediaTemplate {
 		global $rtmedia_query;
 
 		// Ensure the current action is 'upload' before proceeding.
-		if ( ! isset( $rtmedia_query->action_query->action ) || 'upload' !== $rtmedia_query->action_query->action ) {
+		if ( ! isset( $rtmedia_query )
+		|| ! isset( $rtmedia_query->action_query )
+		|| ! isset( $rtmedia_query->action_query->action )
+		|| 'upload' !== $rtmedia_query->action_query->action ) {
 			return;
 		}
 
@@ -602,7 +608,10 @@ class RTMediaTemplate {
 		global $rtmedia_query;
 
 		// Ensure the current action query is 'delete', otherwise terminate.
-		if ( isset( $rtmedia_query->action_query->action ) && 'delete' !== $rtmedia_query->action_query->action ) {
+		if ( ! isset( $rtmedia_query )
+		|| ! isset( $rtmedia_query->action_query )
+		|| ! isset( $rtmedia_query->action_query->action )
+		|| 'delete' !== $rtmedia_query->action_query->action ) {
 			return;
 		}
 
@@ -751,7 +760,10 @@ class RTMediaTemplate {
 		global $rtmedia_query, $bp;
 
 		// Ensure the current action query is 'merge', otherwise terminate.
-		if ( isset( $rtmedia_query->action_query->action ) && 'merge' !== $rtmedia_query->action_query->action ) {
+		if ( ! isset( $rtmedia_query )
+		|| ! isset( $rtmedia_query->action_query )
+		|| ! isset( $rtmedia_query->action_query->action )
+		|| 'merge' !== $rtmedia_query->action_query->action ) {
 			return;
 		}
 
@@ -799,7 +811,10 @@ class RTMediaTemplate {
 		global $rtmedia_query;
 
 		// Check if $rtmedia_query and its nested properties are defined.
-		if ( ! isset( $rtmedia_query->action_query->action ) || 'comment' !== $rtmedia_query->action_query->action ) {
+		if ( ! isset( $rtmedia_query )
+		|| ! isset( $rtmedia_query->action_query )
+		|| ! isset( $rtmedia_query->action_query->action )
+		|| 'comment' !== $rtmedia_query->action_query->action ) {
 			return;
 		}
 
