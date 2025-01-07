@@ -228,15 +228,7 @@ class RTMediaTemplate {
 	public function check_return_json() {
 		global $rtmedia_query;
 
-		// // Handle null gracefully by returning early if $rtmedia_query is null or invalid.
-		// if ( ! is_object( $rtmedia_query ) || ! isset( $rtmedia_query->format ) ) {
-		// 	return; // No action needed if $rtmedia_query is not a valid object with the format property.
-		// }
-		error_log(print_r($rtmedia_query->format, true));
-
 		if ( 'json' === $rtmedia_query->format ) {
-			error_log('HERE');
-			error_log(print_r($this->json_output, true));
 			$this->json_output();
 		}
 	}
