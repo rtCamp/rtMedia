@@ -137,8 +137,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Fixed
 
-  * Fixed the read property on null warnings.
-  * Fixed warnings related to dynamic property creation.
+  * Fixed PHP warnings for WP v6.7
   * Fixed the premium page layout in the rtMedia settings.
 
 = 4.6.21 [September 23, 2024] =
@@ -1914,7 +1913,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.6.22 =
-rtMedia 4.6.22 with minor bug fixes, fixes reading property on null and dynamic property warnings and premium page layout in settings.
+rtMedia 4.6.22, Fixed PHP warnings for WP v6.7 and Premium page layout in rtMedia settings.
 
 = 4.6.21 =
 rtMedia 4.6.21 with minor bug fixes, JSON importing and editing document uploads fixes.

@@ -155,8 +155,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Fixed
 
-	* Fixed the read property on null warnings.
-	* Fixed warnings related to dynamic property creation.
+	* Fixed PHP warnings for WP v6.7
   	* Fixed the premium page layout in the rtMedia settings.
 
 ### 4.6.21 [Septemeber 23, 2024] ###
