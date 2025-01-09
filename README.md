@@ -155,7 +155,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Fixed
 
-	* Fixed PHP warnings for WP v6.7
+	* Fixes related WP v6.7.1 compatibility issues.
   	* Fixed the premium page layout in the rtMedia settings.
 
 ### 4.6.21 [Septemeber 23, 2024] ###

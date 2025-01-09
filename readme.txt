@@ -137,7 +137,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 * Fixed
 
-  * Fixed PHP warnings for WP v6.7
+  * Fixes related WP v6.7.1 compatibility issues.
   * Fixed the premium page layout in the rtMedia settings.
 
 = 4.6.21 [September 23, 2024] =
@@ -1913,7 +1913,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Upgrade Notice ==
 
 = 4.6.22 =
-rtMedia 4.6.22, Fixed PHP warnings for WP v6.7 and Premium page layout in rtMedia settings.
+rtMedia 4.6.22, Fixes related WP v6.7.1 compatibility issues and Premium page layout in rtMedia settings.
 
 = 4.6.21 =
 rtMedia 4.6.21 with minor bug fixes, JSON importing and editing document uploads fixes.
