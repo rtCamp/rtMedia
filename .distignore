@@ -1,0 +1,15 @@
+.bowerrc
+.gitattributes
+.gitignore
+.jshintrc
+.travis.yml
+CONTRIBUTING.md
+Gruntfile.js
+README.md
+bin
+deploy.sh
+package-lock.json
+package.json
+phpcs.xml
+phpunit.xml
+tests
