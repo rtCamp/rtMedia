@@ -228,7 +228,8 @@ class RTMediaTemplate {
 	public function check_return_json() {
 		global $rtmedia_query;
 
-		if ( 'json' === $rtmedia_query->format ) {
+		// Ensure $rtmedia_query and its nested format property are set before checking the value.
+		if ( isset( $rtmedia_query ) && isset( $rtmedia_query->format ) && 'json' === $rtmedia_query->format ) {
 			$this->json_output();
 		}
 	}
@@ -239,7 +240,11 @@ class RTMediaTemplate {
 	public function check_return_upload() {
 		global $rtmedia_query;
 
-		if ( 'upload' !== $rtmedia_query->action_query->action ) {
+		// Ensure the current action is 'upload' before proceeding.
+		if ( ! isset( $rtmedia_query )
+		|| ! isset( $rtmedia_query->action_query )
+		|| ! isset( $rtmedia_query->action_query->action )
+		|| 'upload' !== $rtmedia_query->action_query->action ) {
 			return;
 		}
 
@@ -314,8 +319,13 @@ class RTMediaTemplate {
 	public function check_return_edit() {
 		global $rtmedia_query;
 
-		if ( 'edit' === $rtmedia_query->action_query->action && count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification
-			$this->save_edit();
+		// Ensure the current action is 'edit' and POST data exists before proceeding.
+		if ( isset( $rtmedia_query )
+		&& isset( $rtmedia_query->action_query )
+		&& isset( $rtmedia_query->action_query->action )
+		&& 'edit' === $rtmedia_query->action_query->action
+		&& count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification
+		$this->save_edit();
 		}
 
 		return $this->get_default_template();
@@ -596,7 +606,11 @@ class RTMediaTemplate {
 	public function check_return_delete() {
 		global $rtmedia_query;
 
-		if ( 'delete' !== $rtmedia_query->action_query->action ) {
+		// Ensure the current action query is 'delete', otherwise terminate.
+		if ( ! isset( $rtmedia_query )
+		|| ! isset( $rtmedia_query->action_query )
+		|| ! isset( $rtmedia_query->action_query->action )
+		|| 'delete' !== $rtmedia_query->action_query->action ) {
 			return;
 		}
 
@@ -744,7 +758,11 @@ class RTMediaTemplate {
 	public function check_return_merge() {
 		global $rtmedia_query, $bp;
 
-		if ( 'merge' !== $rtmedia_query->action_query->action ) {
+		// Ensure the current action query is 'merge', otherwise terminate.
+		if ( ! isset( $rtmedia_query )
+		|| ! isset( $rtmedia_query->action_query )
+		|| ! isset( $rtmedia_query->action_query->action )
+		|| 'merge' !== $rtmedia_query->action_query->action ) {
 			return;
 		}
 
@@ -791,7 +809,11 @@ class RTMediaTemplate {
 	public function check_return_comments() {
 		global $rtmedia_query;
 
-		if ( 'comment' !== $rtmedia_query->action_query->action ) {
+		// Check if $rtmedia_query and its nested properties are defined.
+		if ( ! isset( $rtmedia_query )
+		|| ! isset( $rtmedia_query->action_query )
+		|| ! isset( $rtmedia_query->action_query->action )
+		|| 'comment' !== $rtmedia_query->action_query->action ) {
 			return;
 		}
 
