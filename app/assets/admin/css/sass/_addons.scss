@@ -19,6 +19,7 @@
 	.desc, .name {
 		margin-left: 0;
 		margin-right: 0;
+		margin-bottom: 0.5rem;
 		overflow: hidden;
 	}
 
@@ -69,4 +70,10 @@
 		font-size: 13px;
 		font-weight: 600;
 	}
+}
+
+@media screen and (min-width: 1600px) and (max-width: 2299px) {
+    .plugin-card:nth-child(3n+1) {
+        clear: none;
+    }
 }

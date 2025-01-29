@@ -7,14 +7,15 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    - name: Install SVN ( Subversion )
+      run: |
+        sudo apt-get update
+        sudo apt-get install subversion
     - name: WordPress Plugin Deploy
-      uses: rtCamp/action-wordpress-org-plugin-deploy@master
+      uses: 10up/action-wordpress-plugin-deploy@stable
       env:
         ASSETS_DIR: wpassets
-        EXCLUDE_LIST: .bowerrc .gitattributes .gitignore .jshintrc .travis.yml CONTRIBUTING.md
-          Gruntfile.js README.md bin deploy.sh package-lock.json package.json phpcs.xml phpunit.xml
-          tests
         SLUG: buddypress-media
-        WORDPRESS_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
-        WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}

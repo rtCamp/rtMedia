@@ -151,6 +151,13 @@ class RTMediaQuery {
 	public $query_vars;
 
 	/**
+	 * Determines if the gallery shortcode is executed.
+	 *
+	 * @var bool
+	 */
+	public $is_gallery_shortcode = false;
+
+	/**
 	 * Initialise the query
 	 *
 	 * @param array|bool $args The query arguments.

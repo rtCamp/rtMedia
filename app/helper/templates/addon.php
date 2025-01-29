@@ -22,7 +22,7 @@
 			</h4>
 		</div>
 
-		<div class="desc column-description">
+		<div class="column-description">
 			<?php echo wp_kses_post( $args['desc'] ); ?>
 		</div>
 	</div>
