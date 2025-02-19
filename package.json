@@ -1,17 +1,22 @@
 {
   "name": "rtMedia",
-  "dependencies": {},
+  "dependencies": {
+    "cross-spawn": "^7.0.6",
+    "postcss": "^8.5.2"
+  },
   "devDependencies": {
-    "grunt": "^1.0.4",
-    "grunt-autoprefixer": "^3.0.4",
-    "grunt-checktextdomain": "^1.0.1",
-    "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-uglify": "^4.0.1",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-wp-i18n": "^1.0.3",
-    "load-grunt-tasks": "^5.0.0",
-    "diff": ">=3.5.0",
     "acorn": "^7.1.1",
-    "minimist": "^1.2.5"
+    "autoprefixer": "^10.4.20",
+    "grunt": "^1.6.1",
+    "grunt-checktextdomain": "^1.0.1",
+    "grunt-contrib-sass": "^2.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-shell": "^4.0.0",
+    "grunt-terser": "^2.0.0",
+    "grunt-wp-i18n": "^1.0.3",
+    "load-grunt-tasks": "^3.2.0",
+    "minimist": "^1.2.5",
+    "postcss-cli": "^11.0.0",
+    "sass": "^1.85.0"
   }
 }
