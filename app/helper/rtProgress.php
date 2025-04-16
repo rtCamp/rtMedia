@@ -27,18 +27,18 @@ class rtProgress { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWi
 	 * @access public
 	 *
 	 * @param  float $progress Current progress.
-	 * @param  bool  $echo Echo.
+	 * @param  bool  $display Echo.
 	 *
 	 * @return string $progress_ui
 	 */
-	public function progress_ui( $progress, $echo = true ) {
+	public function progress_ui( $progress, $display = true ) {
 		$progress_ui = '
 			<div id="rtprogressbar">
 				<div style="width:' . esc_attr( $progress ) . '%"></div>
 			</div>
 			';
 
-		if ( $echo ) {
+		if ( $display ) {
 			echo wp_kses( $progress_ui, RTMedia::expanded_allowed_tags() );
 		} else {
 			return $progress_ui;
