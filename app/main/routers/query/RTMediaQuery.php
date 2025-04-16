@@ -1174,7 +1174,7 @@ class RTMediaQuery {
 	 * @return array
 	 */
 	public function next_media() {
-		$this->current_media++;
+		++$this->current_media;
 
 		$this->rtmedia = $this->media[ $this->current_media ];
 
@@ -1192,7 +1192,7 @@ class RTMediaQuery {
 
 		if ( function_exists( 'bp_members_get_user_url' ) ) {
 			$parent_link = bp_members_get_user_url( $rtmedia_media->media_author );
-		} else if ( function_exists( 'bp_core_get_user_domain' ) ) {
+		} elseif ( function_exists( 'bp_core_get_user_domain' ) ) {
 			$parent_link = bp_core_get_user_domain( $rtmedia_media->media_author );
 		} else {
 			$parent_link = get_author_posts_url( $rtmedia_media->media_author );

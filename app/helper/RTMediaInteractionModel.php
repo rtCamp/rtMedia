@@ -47,9 +47,8 @@ class RTMediaInteractionModel extends RTDBModel {
 
 		if ( $results ) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	/**

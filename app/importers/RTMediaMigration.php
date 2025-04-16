@@ -38,7 +38,7 @@ class RTMediaMigration {
 			wp_safe_redirect( esc_url_raw( $http_referer ) );
 		}
 		if ( false !== rtmedia_get_site_option( 'rt_migration_hide_notice' ) ) {
-			return true;
+			return;
 		}
 
 		$force = filter_input( INPUT_GET, 'force', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
@@ -237,9 +237,8 @@ class RTMediaMigration {
 		$row = $wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		if ( $row ) {
 			return $row->post_ID;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	/**
@@ -367,10 +366,9 @@ class RTMediaMigration {
 
 		$album_id = $wpdb->get_var( $wpdb->prepare( "select media_id from $this->bmp_table where id = %d", $album_rt_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
+		$bp_prefix = '';
 		if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 			$bp_prefix = bp_core_get_table_prefix();
-		} else {
-			$bp_prefix = '';
 		}
 
 		if ( $stage < 1 ) {
@@ -752,10 +750,9 @@ class RTMediaMigration {
 		$blog_id = get_current_blog_id();
 		$old     = $result;
 
+		$bp_prefix = '';
 		if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 			$bp_prefix = bp_core_get_table_prefix();
-		} else {
-			$bp_prefix = '';
 		}
 
 		global $wpdb;
@@ -865,15 +862,13 @@ class RTMediaMigration {
 				}
 			}
 		}
+		$album_id = 0;
 		if ( 0 !== intval( $result->parent ) ) {
 			$album_id = $this->migrate_single_media( $result->parent, true );
-		} else {
-			$album_id = 0;
 		}
+		$likes = 0;
 		if ( function_exists( 'bp_activity_get_meta' ) ) {
 			$likes = bp_activity_get_meta( $result->activity_id, 'favorite_count' );
-		} else {
-			$likes = 0;
 		}
 
 		$wpdb->insert(
@@ -897,12 +892,10 @@ class RTMediaMigration {
 		$last_id = $wpdb->insert_id;
 
 		if ( 'album' !== $media_type && ( function_exists( 'bp_core_get_user_domain' ) || function_exists( 'bp_members_get_user_url' ) ) && $activity_data ) {
+			$bp_prefix = '';
 			if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 				$bp_prefix = bp_core_get_table_prefix();
-			} else {
-				$bp_prefix = '';
 			}
-
 			$activity_data->old_primary_link = $activity_data->primary_link;
 			$parent_link                     = get_rtmedia_user_link( $activity_data->user_id );
 			$activity_data->primary_link     = $parent_link . RTMEDIA_MEDIA_SLUG . '/' . $last_id;
@@ -925,7 +918,7 @@ class RTMediaMigration {
 				),
 				array( 'id' => $activity_data->id )
 			);
-		} else if ( 'group' === $media_context ) {
+		} elseif ( 'group' === $media_context ) {
 				$activity_data->old_primary_link = $activity_data->primary_link;
 				$parent_link                     = get_rtmedia_group_link( abs( intval( $result->context_id ) ) );
 				$parent_link                     = trailingslashit( $parent_link );
@@ -1198,10 +1191,9 @@ class RTMediaMigration {
 	public function search_and_replace( $old, $new ) {
 		global $wpdb;
 
+		$bp_prefix = $wpdb->prefix;
 		if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 			$bp_prefix = bp_core_get_table_prefix();
-		} else {
-			$bp_prefix = $wpdb->prefix;
 		}
 
 		$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set action=replace(action,%s,%s) ,content=replace(content,%s,%s), primary_link=replace(primary_link,%s,%s) where id > 0;", $old, $new, $old, $new, $old, $new ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
