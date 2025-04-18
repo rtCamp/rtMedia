@@ -17,7 +17,7 @@
 				'target' => array(),
 			),
 		);
-		echo wp_kses( __( 'Install <a href="https://wordpress.org/plugins/transcoder/" target="_blank">Transcoder plugin</a> to convert audio/video files and thumbnails generation.', 'buddypress-media' ), $allowed_tags );
+		echo wp_kses( __( 'Install <a href="https://godam.io" target="_blank">GoDAM plugin</a> which includes powerful Digital Asset Management features along with video transcoding services.', 'buddypress-media' ), $allowed_tags );
 		?>
 	</p>
 </div>
