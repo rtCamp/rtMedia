@@ -48,6 +48,24 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public $rtmedia_feed;
 
+		/*
+		 * Static property to store the admin pages
+		 *
+		 * @var array
+		 */
+		public static $rtmedia_pages = [
+			'rtmedia-settings',
+			'rtmedia-addons',
+			'rtmedia-pro-addons',
+			'rtmedia-support',
+			'rtmedia-themes',
+			'rtmedia-hire-us',
+			'rtmedia-license',
+			'rtmedia-attributes',
+			'rtmedia-moderate',
+			'rtmedia-blocked-users',
+		];
+
 		/**
 		 * Constructor - get the plugin hooked in and ready
 		 *
@@ -100,6 +118,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				add_action( 'admin_notices', array( $this, 'install_transcoder_admin_notice' ) );
 				add_action( 'wp_ajax_install_transcoder_hide_admin_notice', array( $this, 'install_transcoder_hide_admin_notice' ) );
 			}
+
+			// Show admin notice to install GoDAM pluing.
+			if ( is_multisite() ) {
+				add_action( 'network_admin_notices', array( $this, 'install_godam_admin_notice' ) );
+			}
+			add_action( 'admin_notices', array( $this, 'install_godam_admin_notice' ) );
+			add_action( 'wp_ajax_install_godam_hide_admin_notice', array( $this, 'install_godam_hide_admin_notice' ) );
 
 			$rtmedia_option = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_SANITIZE_NUMBER_INT );
 			if ( isset( $rtmedia_option ) ) {
@@ -1716,6 +1741,85 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				}
 			}
 		}
+
+		/**
+		 * Display GoDAM banner admin notice
+		 */
+		public function install_godam_admin_notice() {
+			// Get the current page from the URL (e.g., ?page=rtmedia-settings)
+			$current_page = isset($_GET['page']) ? $_GET['page'] : '';
+
+			// List of pages where the banner should be shown
+			$pages = self::$rtmedia_pages;
+
+			// Check if the current page is one of the defined pages
+			if (in_array($current_page, $pages, true)) {
+				// Check if the banner has been dismissed
+				$banner_dismissed = get_user_meta(get_current_user_id(), 'install_godam_hide_notice', true);
+
+				if (!$banner_dismissed) {
+					?>
+					<div class="notice godam-admin-banner is-dismissible" style="position: relative; display:block; margin: 12px 0; padding: 0; width: 100%;">
+						<div class="godam-banner-wrapper">
+							<img src="<?php echo esc_url(RTMEDIA_URL . 'app/assets/img/godam-banner-2.png'); ?>" alt="Godam Banner" style="display: block; max-width: 100%; height: auto;">
+							<a href="https://godam.io?utm_source=rtmedia&utm_medium=banner&utm_campaign=godam_promo" target="_blank" style="
+								position: absolute;
+								top: 65%;
+								left: 32%;
+								width: 160px;
+								height: 40px;
+								display: block;
+								text-indent: -9999px;
+								background: rgba(0,0,0,0);
+								cursor: pointer;
+								outline: none;
+								border: none;
+								box-shadow: none;
+							">
+								Check out now
+							</a>
+						</div>
+					</div>
+
+					<script type="text/javascript">
+						// Ensure jQuery is loaded
+						jQuery(document).ready(function($) {
+							// Handle dismissal of the banner
+							$(document).on('click', '.godam-admin-banner .notice-dismiss', function() {
+								// Send AJAX request to mark the banner as dismissed
+								var data = {
+									action: 'install_godam_hide_admin_notice', // action hook
+									security: '<?php echo wp_create_nonce('install-godam-hide-notice'); ?>' // nonce for security
+								};
+
+								// Perform the AJAX request
+								$.post(ajaxurl, data, function(response) {
+									console.log('Notice dismissed and saved.');
+								});
+							});
+						});
+					</script>
+					<?php
+				}
+			}
+		}
+
+		/**
+		 * AJAX callback to hide GoDAM admin notice
+		 */
+		public function install_godam_hide_admin_notice() {
+			// Verify nonce for security
+			if (!isset($_POST['security']) || !wp_verify_nonce($_POST['security'], 'install-godam-hide-notice')) {
+				wp_die('Nonce verification failed');
+			}
+
+			// Update user meta to remember the dismissal
+			update_user_meta(get_current_user_id(), 'install_godam_hide_notice', true);
+
+			// Respond back to the AJAX request
+			wp_send_json_success('Notice dismissed');
+		}
+
 	}
 
 }
