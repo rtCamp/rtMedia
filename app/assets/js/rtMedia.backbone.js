@@ -1898,9 +1898,8 @@ jQuery( document ).ready( function( $ ) {
 				/** Scroll function called */
 				rtMediaScrollComments();
 
-				const hasGalleryShortCodeTitle = !!$('.rtm-gallery-shortcode-title-container', 'body').length;
 				/** refreshing fragments */
-				if ( false == $( 'body' ).hasClass( 'activity' ) && false == $( 'body' ).hasClass( 'groups' ) && !hasGalleryShortCodeTitle ) {
+				if ( false == $( 'body' ).hasClass( 'activity' ) && false == $( 'body' ).hasClass( 'groups' ) ) {
                     galleryObj.reloadView();
                 }
 			},
