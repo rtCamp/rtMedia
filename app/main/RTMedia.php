@@ -2048,7 +2048,7 @@ function get_rtmedia_permalink( $id ) {
 		// check for global album.
 		$parent_link = parentlink_global_album( $id );
 		if ( '' === $parent_link && isset( $media[0]->media_author ) ) {
-						$parent_link = get_rtmedia_user_link( $media[0]->media_author );
+			$parent_link = get_rtmedia_user_link( $media[0]->media_author );
 		}
 	}
 
@@ -2083,7 +2083,7 @@ function get_rtmedia_user_link( $id ) {
 
 	if ( function_exists( 'bp_members_get_user_url' ) ) {
 		return bp_members_get_user_url( $id );
-	} else if ( function_exists( 'bp_core_get_user_domain' ) ) {
+	} elseif ( function_exists( 'bp_core_get_user_domain' ) ) {
 		return bp_core_get_user_domain( $id );
 	}
 
@@ -2101,9 +2101,8 @@ function get_rtmedia_user_link( $id ) {
 function rtmedia_update_site_option( $option_name, $option_value ) {
 	if ( is_multisite() ) {
 		return update_option( $option_name, $option_value );
-	} else {
-		return update_site_option( $option_name, $option_value );
 	}
+	return update_site_option( $option_name, $option_value );
 }
 
 /**
@@ -2167,7 +2166,7 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
  * Function to show privacy message provided from rtMedia settings in front end.
  */
 function rtm_privacy_message_on_website() {
-	 global $rtmedia;
+	global $rtmedia;
 	$options = $rtmedia->options;
 
 	$rtm_privacy_message_options = array(

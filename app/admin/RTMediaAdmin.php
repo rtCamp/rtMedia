@@ -131,11 +131,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( isset( $rtmedia_option['general_showAdminMenu'] ) && 1 === intval( $rtmedia_option['general_showAdminMenu'] ) ) {
 					add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
 				}
-			} else {
-				if ( is_array( $rtmedia->options ) ) {
-					if ( 1 === intval( $rtmedia->options['general_showAdminMenu'] ) ) {
-						add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
-					}
+			} elseif ( is_array( $rtmedia->options ) ) {
+				if ( 1 === intval( $rtmedia->options['general_showAdminMenu'] ) ) {
+					add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
 				}
 			}
 
@@ -1428,10 +1426,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function export_settings() {
 
-            // permission check.
-            if ( ! current_user_can( 'manage_options' ) ) {
-	            wp_send_json_error( array( 'message' => esc_html__( 'You do not have permission to export settings.', 'buddypress-media' ) ) );
-            }
+			// permission check.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( array( 'message' => esc_html__( 'You do not have permission to export settings.', 'buddypress-media' ) ) );
+			}
 
 			$rtmedia_option = get_option( 'rtmedia-options' );
 
@@ -1460,7 +1458,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			$settings_data_json_string = file_get_contents( $file_path );
-			$settings_data_json = json_decode( $settings_data_json_string, true );
+			$settings_data_json        = json_decode( $settings_data_json_string, true );
 			wp_delete_file( $file_path );
 
 			if ( empty( $settings_data_json ) ) {

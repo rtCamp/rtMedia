@@ -50,7 +50,7 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 	 * @access private
 	 */
 	private function update_default_id() {
-		self::$id_count ++;
+		++self::$id_count;
 	}
 
 	/**
@@ -70,21 +70,22 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 	 *
 	 * @access private
 	 *
-	 * @param string $element element.
-	 * @param null   $class class.
+	 * @param string     $element element.
+	 * @param array|null $embedd_class class.
 	 *
 	 * @return string
 	 *
 	 * @throws rtFormsInvalidArgumentsException Form invalid argument exception.
 	 */
-	private function embedd_class( $element, $class = null ) {
+	private function embedd_class( $element, $embedd_class = null ) {
 		$html = 'class= "' . $this->get_default_class();
 
-		if ( isset( $class ) ) {
+		if ( isset( $embedd_class ) ) {
 
-			if ( is_array( $class ) ) {
-				$html .= ' ' . implode( ' ', $class );
+			if ( is_array( $embedd_class ) ) {
+				$html .= ' ' . implode( ' ', $embedd_class );
 			} else {
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				throw new rtFormsInvalidArgumentsException( 'class [' . $element . ']' );
 			}
 		}
@@ -192,5 +193,4 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 	public function display_dimensions( $args = '' ) {
 		echo wp_kses( $this->get_dimensions( $args ), RTMedia::expanded_allowed_tags() );
 	}
-
 }

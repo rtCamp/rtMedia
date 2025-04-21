@@ -100,10 +100,10 @@ class RTMediaCommentNotification extends RTMediaNotification {
 					esc_url( $return['link'] ),
 					esc_html( $return['text'] )
 				);
-			} else {
-				return $return;
 			}
+			return $return;
 		}
+		return '';
 	}
 
 	/**
@@ -143,7 +143,6 @@ class RTMediaCommentNotification extends RTMediaNotification {
 			BP_Notifications_Notification::delete( array( 'id' => $comment_notification_id ) );
 			delete_comment_meta( $comment_id, 'comment_notification_id' );
 		}
-
 	}
 }
 

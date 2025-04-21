@@ -52,11 +52,11 @@ class RTMediaFormHandler {
 	 * @access static
 	 *
 	 * @param  array $args arguments to display textarea.
-	 * @param  bool  $echo Do echo or not.
+	 * @param  bool  $display Do echo or not.
 	 *
 	 * @return string $chk_obj->get_textarea( $args )
 	 */
-	public static function textarea( $args, $echo = true ) {
+	public static function textarea( $args, $display = true ) {
 		$defaults = array(
 			'key'       => '',
 			'desc'      => '',
@@ -83,7 +83,7 @@ class RTMediaFormHandler {
 
 		$chk_obj = new rtForm();
 
-		if ( $echo ) {
+		if ( $display ) {
 			$chk_obj->display_textarea( $args );
 		} else {
 			return $chk_obj->get_textarea( $args );
@@ -98,11 +98,11 @@ class RTMediaFormHandler {
 	 * @access static
 	 *
 	 * @param  array $args arguments to display checkbox.
-	 * @param  bool  $echo Do echo or not.
+	 * @param  bool  $display Do echo or not.
 	 *
 	 * @return string $chk_obj->get_switch( $args )
 	 */
-	public static function checkbox( $args, $echo = true ) {
+	public static function checkbox( $args, $display = true ) {
 		$defaults = array(
 			'key'       => '',
 			'desc'      => '',
@@ -129,7 +129,7 @@ class RTMediaFormHandler {
 
 		$chk_obj = new rtForm();
 
-		if ( $echo ) {
+		if ( $display ) {
 			$chk_obj->display_switch( $args );
 		} else {
 			return $chk_obj->get_switch( $args );
@@ -265,13 +265,13 @@ class RTMediaFormHandler {
 	 * @access static
 	 *
 	 * @param array $args arguments to create link.
-	 * @param bool  $echo Echo or not.
+	 * @param bool  $display Echo or not.
 	 *
 	 * @return string $link_obj
 	 *
 	 * @throws rtFormInvalidArgumentsException Invalid argument exception.
 	 */
-	public static function link( $args, $echo = true ) {
+	public static function link( $args, $display = true ) {
 
 		$defaults = array(
 			'href'   => '',
@@ -299,7 +299,7 @@ class RTMediaFormHandler {
 
 		$link_obj = new rtForm();
 
-		if ( $echo ) {
+		if ( $display ) {
 
 			$link_obj->display_link( $args );
 		} else {
