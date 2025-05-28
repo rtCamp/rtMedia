@@ -5177,3 +5177,169 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 		'done'           => $done,
 	);
 }
+
+
+// ------------------------GODAM INTEGRATION-----------------------//
+
+if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
+
+	/**
+	 * Filter BuddyPress activity content to replace rtMedia video list
+	 * with Godam player shortcodes.
+	 */
+	add_filter( 'bp_get_activity_content_body', function( $content ) {
+		global $activities_template;
+
+		// Bail early if activity object is not available
+		if ( empty( $activities_template->activity ) || ! is_object( $activities_template->activity ) ) {
+			return $content;
+		}
+
+		$activity = $activities_template->activity;
+
+		// Allow only certain activity types
+		$valid_types = [ 'rtmedia_update', 'activity_update', 'activity_comment' ];
+		if ( ! isset( $activity->type ) || ! in_array( $activity->type, $valid_types, true ) ) {
+			return $content;
+		}
+
+		// Ensure RTMediaModel class exists
+		if ( ! class_exists( 'RTMediaModel' ) ) {
+			return $content;
+		}
+
+		$model       = new RTMediaModel();
+		$media_items = $model->get( [ 'activity_id' => $activity->id ] );
+
+		if ( empty( $media_items ) || ! is_array( $media_items ) ) {
+			return $content;
+		}
+
+		// Remove rtMedia default video <ul>
+		$clean_content = preg_replace(
+			'#<ul[^>]*class="[^"]*rtmedia-list[^"]*rtm-activity-media-list[^"]*rtmedia-activity-media-length-[0-9]+[^"]*rtm-activity-video-list[^"]*"[^>]*>.*?</ul>#si',
+			'',
+			$activity->content
+		);
+
+		// Group media by type
+		$grouped_media = [];
+		foreach ( $media_items as $media ) {
+			$grouped_media[ $media->media_type ][] = $media;
+		}
+
+		$godam_videos = '';
+
+		// Build Godam player shortcodes for videos
+		if ( ! empty( $grouped_media['video'] ) ) {
+			foreach ( $grouped_media['video'] as $index => $video ) {
+				$player_id     = 'godam-activity-' . esc_attr( $activity->id ) . '-' . $index;
+				$godam_videos .= do_shortcode(
+					'[godam_video id="' . esc_attr( $video->media_id ) .
+					'" context="buddypress" player_id="' . esc_attr( $player_id ) . '"]'
+				);
+			}
+		}
+
+		// Process video media in activity comments
+		if ( ! empty( $activity->children ) && is_array( $activity->children ) ) {
+			foreach ( $activity->children as $child ) {
+				$child_media = $model->get( [ 'activity_id' => $child->id ] );
+
+				if ( empty( $child_media ) ) {
+					continue;
+				}
+
+				$child_videos = '';
+
+				foreach ( $child_media as $index => $video ) {
+					$player_id     = 'godam-comment-' . esc_attr( $child->id ) . '-' . $index;
+					$child_videos .= do_shortcode(
+						'[godam_video id="' . esc_attr( $video->media_id ) . '"]'
+					);
+				}
+
+				if ( $child_videos ) {
+					// Remove rtMedia <ul> from comment
+					$child->content = preg_replace(
+						'#<ul[^>]*class="[^"]*rtmedia-list[^"]*rtm-activity-media-list[^"]*rtmedia-activity-media-length-[0-9]+[^"]*rtm-activity-video-list[^"]*"[^>]*>.*?</ul>#si',
+						'',
+						$child->content
+					);
+
+					// Append Godam video players
+					$child->content .= '<div class="godam-video-players-wrapper">' . $child_videos . '</div>';
+				}
+			}
+		}
+
+		// Final video output appended to cleaned content
+		if ( $godam_videos ) {
+			$godam_videos = '<div class="godam-video-players-wrapper">' . $godam_videos . '</div>';
+		}
+
+		return wp_kses_post( $clean_content ) . $godam_videos;
+	}, 10 );
+
+
+	/**
+	 * Enqueue frontend JS for Godam AJAX refresh.
+	 */
+	add_action( 'wp_enqueue_scripts', function() {
+		wp_enqueue_script(
+			'godam-ajax-refresh',
+			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.js',
+			[],
+			null,
+			true
+		);
+
+		wp_localize_script( 'godam-ajax-refresh', 'GodamAjax', [
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce'    => wp_create_nonce( 'godam-ajax-nonce' ),
+		]);
+	});
+
+
+	/**
+	 * Handle AJAX request for loading a single activity comment's HTML.
+	 */
+	add_action( 'wp_ajax_get_single_activity_comment_html', 'handle_get_single_activity_comment_html' );
+	add_action( 'wp_ajax_nopriv_get_single_activity_comment_html', 'handle_get_single_activity_comment_html' );
+
+	function handle_get_single_activity_comment_html() {
+		check_ajax_referer( 'godam-ajax-nonce', 'nonce' );
+
+		$activity_id = isset( $_POST['comment_id'] ) ? intval( $_POST['comment_id'] ) : 0;
+
+		if ( ! $activity_id ) {
+			wp_send_json_error( 'Invalid activity ID' );
+		}
+
+		$activity = new BP_Activity_Activity( $activity_id );
+		if ( empty( $activity->id ) ) {
+			wp_send_json_error( 'Activity comment not found' );
+		}
+
+		global $activities_template;
+
+		// Backup original activity
+		$original_activity = $activities_template->activity ?? null;
+
+		// Replace global for template rendering
+		$activities_template             = new stdClass();
+		$activities_template->activity  = $activity;
+
+		ob_start();
+		bp_get_template_part( 'activity/entry' );
+		$html = ob_get_clean();
+
+		// Restore original
+		if ( $original_activity ) {
+			$activities_template->activity = $original_activity;
+		}
+
+		wp_send_json_success( [ 'html' => $html ] );
+	}
+
+}
