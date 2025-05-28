@@ -584,33 +584,35 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 
 			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 			$height      = $rtmedia->options['defaultSizes_video_singlePlayer_height'];
-			$height      = ( $height * 75 ) / 640;
-			$size        = ' width="' . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . '" height="' . esc_attr( $height ) . '%" ';
-			$html        = "<div id='rtm-mejs-video-container' style='width:" . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . 'px;height:' . esc_attr( $height ) . "%;  max-width:96%;max-height:80%;'>";
+			$width       = $rtmedia->options['defaultSizes_video_singlePlayer_width'];
+			$height_pct  = ( $height * 75 ) / 640;
+			$size_attr   = ' width="' . esc_attr( $width ) . '" height="' . esc_attr( $height_pct ) . '%" ';
 
-			if ( empty( $youtube_url ) ) {
+			$html  = '<div id="rtm-mejs-video-container" style="width:' . esc_attr( $width ) . 'px;height:' . esc_attr( $height_pct ) . '%; max-width:96%;max-height:80%;">';
 
-				// added poster for showing thumbnail and changed preload value to fix rtMedia GL-209.
-				$html .= sprintf(
-					'<video poster="%1$s" src="%2$s" %3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata" playsinline></video>',
-					esc_url( $rtmedia_media->cover_art || '' ),
-					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
-					esc_attr( $size ),
-					esc_attr( $rtmedia_media->id )
-				);
-
+			// Check if Godam plugin is active.
+			if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
+				$html .= do_shortcode( '[godam_video id="' . esc_attr( $rtmedia_media->media_id ) . '"]' );
 			} else {
-
-				$html .= sprintf(
-					'<video width="640" height="360" class="url-video" id="video-id-%1$s" preload="none"><source type="video/youtube" src="%2$s playsinline" /></video>',
-					esc_attr( $rtmedia_media->id ),
-					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) )
-				);
-
+				// Fallback to native or YouTube player.
+				if ( empty( $youtube_url ) ) {
+					$html .= sprintf(
+						'<video poster="%1$s" src="%2$s"%3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata" playsinline></video>',
+						esc_url( $rtmedia_media->cover_art ?: '' ),
+						esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
+						$size_attr,
+						esc_attr( $rtmedia_media->id )
+					);
+				} else {
+					$html .= sprintf(
+						'<video width="640" height="360" class="url-video" id="video-id-%1$s" preload="none" playsinline><source type="video/youtube" src="%2$s" /></video>',
+						esc_attr( $rtmedia_media->id ),
+						esc_url( $youtube_url )
+					);
+				}
 			}
 
 			$html .= '</div>';
-
 		} elseif ( 'music' === $rtmedia_media->media_type ) {
 
 			$width = $rtmedia->options['defaultSizes_music_singlePlayer_width'];
