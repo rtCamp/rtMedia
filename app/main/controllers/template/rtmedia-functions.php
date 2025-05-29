@@ -1468,6 +1468,46 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 		);
 	}
 
+	/**
+	 * Replaces <video> tags with Godam shortcodes for comment videos in single media page.
+	 * Execute this when GoDAM is active
+	 *
+	 * Searches for <video> elements with IDs like 'rt_media_video_{id}', fetches the
+	 * corresponding `media_id` from the `rt_rtm_media` table, and replaces the tag
+	 * with the [godam_video] shortcode.
+	 *
+	 * @var    string $html HTML content containing video tags.
+	 * @return string Modified HTML with Godam shortcodes (if applicable).
+	 */
+	if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
+		global $wpdb;
+
+		// Replace all <video> tags with ID pattern rt_media_video_{id}
+		$html = preg_replace_callback(
+			'#<video[^>]*id="rt_media_video_(\d+)"[^>]*>.*?</video>#is',
+			function( $matches ) use ( $wpdb ) {
+				$extracted_id = intval( $matches[1] ); // Extract numeric ID from video tag
+
+				// Fetch media_id from rt_rtm_media table using the extracted ID
+				$media_id = $wpdb->get_var(
+					$wpdb->prepare(
+						"SELECT media_id FROM {$wpdb->prefix}rt_rtm_media WHERE id = %d",
+						$extracted_id
+					)
+				);
+
+				// If media_id exists, return Godam video shortcode
+				if ( ! empty( $media_id ) ) {
+					return do_shortcode( '[godam_video id="' . $media_id . '"]' );
+				}
+
+				// If no media_id found, return original video HTML
+				return $matches[0];
+			},
+			$html
+		);
+	}
+
 	$html .= '<div class="clear"></div></div></div></li>';
 
 	return apply_filters( 'rtmedia_single_comment', $html, $comment );
