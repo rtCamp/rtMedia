@@ -15,7 +15,7 @@ if (activityStream) {
 	const observer = new MutationObserver((mutations) => {
 		for (const mutation of mutations) {
 			mutation.addedNodes.forEach((node) => {
-				if (node.nodeType === 1 && node.matches('.activity')) {
+				if (node.nodeType === 1 && (node.matches('.activity') || node.matches('.groups'))) {
 					requestAnimationFrame(() => GODAMPlayer(node));
 				}
 			});

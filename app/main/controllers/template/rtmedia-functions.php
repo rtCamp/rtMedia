@@ -5427,8 +5427,6 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
  * jQuery and rt-mediaelement-wp are included to ensure proper functionality.
  *
  * Enqueuing here guarantees consistent script loading regardless of Godam’s activation status.
- *
- * Hooked into 'wp_enqueue_scripts' to load on frontend pages.
  */
 function enqueue_rtmedia_magnific_popup_script() {
     $handle = 'rtmedia-magnific-popup';
