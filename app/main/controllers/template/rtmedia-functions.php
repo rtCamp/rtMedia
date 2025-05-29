@@ -1498,7 +1498,10 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 
 				// If media_id exists, return Godam video shortcode
 				if ( ! empty( $media_id ) ) {
-					return do_shortcode( '[godam_video id="' . $media_id . '"]' );
+					return '<div style="max-width: 480px; width: 100%; overflow: hidden;">'
+						   . '<style>div.godam-video-wrapper video, div.godam-video-wrapper iframe { max-width: 100%; height: auto; display: block; }</style>'
+						   . do_shortcode( '[godam_video id="' . $media_id . '"]' )
+						   . '</div>';
 				}
 
 				// If no media_id found, return original video HTML
@@ -5226,6 +5229,18 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 	/**
+	 * Enqueue GoDAM scripts and styles globally (player, analytics, and styles).
+	 */
+	add_action( 'wp_enqueue_scripts', 'enqueue_scripts_globally', 20 );
+
+	function enqueue_scripts_globally() {
+		wp_enqueue_script( 'godam-player-frontend-script' );
+		wp_enqueue_script( 'godam-player-analytics-script' );
+		wp_enqueue_style( 'godam-player-frontend-style' );
+		wp_enqueue_style( 'godam-player-style' );
+	}
+
+	/**
 	 * Enqueue frontend scripts for Godam integration and AJAX refresh.
 	 */
 	add_action( 'wp_enqueue_scripts', function() {
@@ -5248,23 +5263,11 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		wp_enqueue_script(
 			'godam-rtmedia-integration',
 			RTMEDIA_URL . 'app/assets/js/godam-integration.js',
-			[],
+			[ 'godam-player-frontend-script' ],
 			null,
 			true
 		);
 	} );
-
-	/**
-	 * Enqueue GoDAM scripts and styles globally (player, analytics, and styles).
-	 */
-	add_action( 'wp_enqueue_scripts', 'enqueue_scripts_globally', 20 );
-
-	function enqueue_scripts_globally() {
-		wp_enqueue_script( 'godam-player-frontend-script' );
-		wp_enqueue_script( 'godam-player-analytics-script' );
-		wp_enqueue_style( 'godam-player-frontend-style' );
-		wp_enqueue_style( 'godam-player-style' );
-	}
 
 	/**
 	 * Filter BuddyPress activity content to replace rtMedia video list
