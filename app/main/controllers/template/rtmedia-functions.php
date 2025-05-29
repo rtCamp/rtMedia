@@ -5247,7 +5247,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		// Enqueue the script responsible for AJAX-based comment refresh.
 		wp_enqueue_script(
 			'godam-ajax-refresh',
-			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.js',
+			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.min.js',
 			[],
 			null,
 			true
@@ -5262,7 +5262,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		// Enqueue integration script for rtMedia and Godam.
 		wp_enqueue_script(
 			'godam-rtmedia-integration',
-			RTMEDIA_URL . 'app/assets/js/godam-integration.js',
+			RTMEDIA_URL . 'app/assets/js/godam-integration.min.js',
 			[ 'godam-player-frontend-script' ],
 			null,
 			true
@@ -5409,3 +5409,48 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 	}
 
 }
+
+/**
+ * Enqueue the Magnific Popup script for rtMedia.
+ *
+ * This function ensures that the Magnific Popup script is loaded correctly on the frontend
+ * so that popup functionality works seamlessly with all combinations of plugin states:
+ * - When only rtMedia is active
+ * - When both rtMedia and Godam plugins are active
+ * - When Godam plugin is deactivated
+ *
+ * To achieve this, the script is deregistered first if already registered or enqueued,
+ * preventing conflicts or duplicates.
+ *
+ * When Godam plugin is active, the script is loaded without dependencies to avoid
+ * redundant or conflicting scripts. When Godam is not active, dependencies such as
+ * jQuery and rt-mediaelement-wp are included to ensure proper functionality.
+ *
+ * Enqueuing here guarantees consistent script loading regardless of Godam’s activation status.
+ *
+ * Hooked into 'wp_enqueue_scripts' to load on frontend pages.
+ */
+function enqueue_rtmedia_magnific_popup_script() {
+    $handle = 'rtmedia-magnific-popup';
+    $script_src = RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js';
+    $version = RTMEDIA_VERSION;
+    $in_footer = true;
+
+    // Deregister the script if already registered or enqueued to prevent conflicts
+    if (wp_script_is($handle, 'registered') || wp_script_is($handle, 'enqueued')) {
+        wp_deregister_script($handle);
+    }
+
+    // Determine dependencies based on whether Godam integration is active
+    $dependencies = [];
+
+    // If Godam plugin is NOT active, add dependencies for jQuery and mediaelement
+    if (!defined('RTMEDIA_GODAM_ACTIVE') || !RTMEDIA_GODAM_ACTIVE) {
+        $dependencies = ['jquery', 'rt-mediaelement-wp'];
+    }
+
+    // Enqueue the Magnific Popup script with the appropriate dependencies
+    wp_enqueue_script($handle, $script_src, $dependencies, $version, $in_footer);
+}
+
+add_action('wp_enqueue_scripts', 'enqueue_rtmedia_magnific_popup_script');
