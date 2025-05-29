@@ -309,6 +309,3 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Initialize RTMedia tracking on load
 	setTimeout(checkRTMediaIdChange, 500);
 });
-
-
-
