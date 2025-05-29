@@ -5226,6 +5226,47 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 	/**
+	 * Enqueue frontend scripts for Godam integration and AJAX refresh.
+	 */
+	add_action( 'wp_enqueue_scripts', function() {
+		// Enqueue the script responsible for AJAX-based comment refresh.
+		wp_enqueue_script(
+			'godam-ajax-refresh',
+			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.js',
+			[],
+			null,
+			true
+		);
+
+		// Pass AJAX URL and nonce to the script.
+		wp_localize_script( 'godam-ajax-refresh', 'GodamAjax', [
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce'    => wp_create_nonce( 'godam-ajax-nonce' ),
+		]);
+
+		// Enqueue integration script for rtMedia and Godam.
+		wp_enqueue_script(
+			'godam-rtmedia-integration',
+			RTMEDIA_URL . 'app/assets/js/godam-integration.js',
+			[],
+			null,
+			true
+		);
+	} );
+
+	/**
+	 * Enqueue GoDAM scripts and styles globally (player, analytics, and styles).
+	 */
+	add_action( 'wp_enqueue_scripts', 'enqueue_scripts_globally', 20 );
+
+	function enqueue_scripts_globally() {
+		wp_enqueue_script( 'godam-player-frontend-script' );
+		wp_enqueue_script( 'godam-player-analytics-script' );
+		wp_enqueue_style( 'godam-player-frontend-style' );
+		wp_enqueue_style( 'godam-player-style' );
+	}
+
+	/**
 	 * Filter BuddyPress activity content to replace rtMedia video list
 	 * with Godam player shortcodes.
 	 */
@@ -5322,46 +5363,6 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 		return wp_kses_post( $clean_content ) . $godam_videos;
 	}, 10 );
-
-
-	/**
-	 * Enqueue frontend JS for Godam AJAX refresh.
-	 */
-	add_action( 'wp_enqueue_scripts', function() {
-		wp_enqueue_script(
-			'godam-ajax-refresh',
-			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.js',
-			[],
-			null,
-			true
-		);
-
-		wp_enqueue_script(
-			'godam-rtmedia-integration',
-			RTMEDIA_URL . 'app/assets/js/godam-integration.js',
-			[],
-			null,
-			true
-		);
-
-		wp_localize_script( 'godam-ajax-refresh', 'GodamAjax', [
-			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce'    => wp_create_nonce( 'godam-ajax-nonce' ),
-		]);
-	});
-
-	// add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
-	add_action( 'wp_enqueue_scripts', 'enqueue_scripts_globally', 20 );
-
-	/**
-	 * Enqueue GoDAM scripts and styles globally.
-	 */
-	function enqueue_scripts_globally() {
-		wp_enqueue_script( 'godam-player-frontend-script' );
-		wp_enqueue_script( 'godam-player-analytics-script' );
-		wp_enqueue_style( 'godam-player-frontend-style' );
-		wp_enqueue_style( 'godam-player-style' );
-	}
 
 	/**
 	 * Handle AJAX request for loading a single activity comment's HTML.
