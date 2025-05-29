@@ -5257,7 +5257,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		// Enqueue the script responsible for AJAX-based comment refresh.
 		wp_enqueue_script(
 			'godam-ajax-refresh',
-			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.js',
+			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.min.js',
 			[],
 			null,
 			true
