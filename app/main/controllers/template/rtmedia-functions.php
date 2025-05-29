@@ -5296,12 +5296,32 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 			true
 		);
 
+		wp_enqueue_script(
+			'godam-rtmedia-integration',
+			RTMEDIA_URL . 'app/assets/js/godam-integration.js',
+			[],
+			null,
+			true
+		);
+
 		wp_localize_script( 'godam-ajax-refresh', 'GodamAjax', [
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 			'nonce'    => wp_create_nonce( 'godam-ajax-nonce' ),
 		]);
 	});
 
+	// add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
+	add_action( 'wp_enqueue_scripts', 'enqueue_scripts_globally', 20 );
+
+	/**
+	 * Enqueue GoDAM scripts and styles globally.
+	 */
+	function enqueue_scripts_globally() {
+		wp_enqueue_script( 'godam-player-frontend-script' );
+		wp_enqueue_script( 'godam-player-analytics-script' );
+		wp_enqueue_style( 'godam-player-frontend-style' );
+		wp_enqueue_style( 'godam-player-style' );
+	}
 
 	/**
 	 * Handle AJAX request for loading a single activity comment's HTML.
