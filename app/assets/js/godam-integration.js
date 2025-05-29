@@ -1,11 +1,25 @@
 /**
- * This script ensures GODAMPlayer is initialized dynamically across:
- * - BuddyPress activity streams updated via AJAX.
- * - Magnific Popup content.
- * - Any newly added video elements in the DOM (e.g., via infinite scroll or modals).
+ * Enhanced GODAM Player Initialization Script
  *
- * It uses MutationObservers and event listeners to watch for new content and
- * initializes the player only when necessary, avoiding duplicate setups.
+ * This script handles automatic initialization and reinitialization of the GODAM video player
+ * across various WordPress/BuddyPress contexts, with special support for RTMedia galleries.
+ *
+ * Key Features:
+ * - Initializes GODAM player on page load and dynamic content changes
+ * - Handles BuddyPress activity streams with AJAX loading
+ * - Supports Magnific Popup lightbox integration
+ * - Automatically reinitializes when RTMedia gallery navigation occurs (prev/next arrows)
+ * - Tracks dynamic RTMedia element IDs (rtmedia-media-###) and reinitializes on changes
+ * - Prevents duplicate initializations using WeakSet tracking
+ * - Handles video element detection in popups and dynamic content
+ *
+ * RTMedia Integration:
+ * - Monitors for changes in elements with IDs matching pattern "rtmedia-media-{number}"
+ * - Detects navigation events (previous/next arrows) that change video content
+ * - Automatically reinitializes GODAM player when new media is loaded
+ * - Cleans up tracking when popups are closed
+ *
+ * Dependencies: GODAM Player, jQuery (optional), Magnific Popup (optional)
  */
 
 GODAMPlayer();
@@ -26,8 +40,8 @@ if (activityStream) {
 
 document.addEventListener('DOMContentLoaded', () => {
 	GODAMPlayer();
-
 	const initializedElements = new WeakSet();
+	let currentRTMediaId = null; // Track current RTMedia ID
 
 	const safeGODAMInit = (element) => {
 		if (!element) {
@@ -51,6 +65,36 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	};
 
+	// Function to check for RTMedia ID changes
+	const checkRTMediaIdChange = () => {
+		const rtmediaElement = document.querySelector('[id^="rtmedia-media-"]');
+		if (rtmediaElement) {
+			const newId = rtmediaElement.id;
+			if (newId !== currentRTMediaId) {
+				currentRTMediaId = newId;
+				console.log('RTMedia ID changed to:', newId);
+
+				// Remove from initialized set to allow reinitialization
+				initializedElements.delete(rtmediaElement);
+
+				// Find the container (could be the element itself or its parent)
+				const container = rtmediaElement.closest('.mfp-content') || rtmediaElement;
+				if (container) {
+					container.removeAttribute('data-godam-processed');
+					initializedElements.delete(container);
+
+					// Reinitialize after a short delay to ensure content is loaded
+					setTimeout(() => {
+						safeGODAMInit(container);
+					}, 100);
+				}
+				return true;
+			}
+		}
+		return false;
+	};
+
+	// BuddyPress Activity Stream Observer
 	const activityStream = document.querySelector('#buddypress #activity-stream');
 	if (activityStream) {
 		const observer = new MutationObserver((mutations) => {
@@ -72,9 +116,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	let popupInitializationTimeout = null;
 
+	// Enhanced Magnific Popup Observer with RTMedia support
 	const setupMagnificObserver = () => {
 		const magnificObserver = new MutationObserver((mutations) => {
+			let shouldCheckRTMedia = false;
+
 			for (const mutation of mutations) {
+				// Check for attribute changes on RTMedia elements
+				if (mutation.type === 'attributes' &&
+					mutation.target.id &&
+					mutation.target.id.startsWith('rtmedia-media-')) {
+					shouldCheckRTMedia = true;
+				}
+
 				mutation.addedNodes.forEach((node) => {
 					if (node.nodeType === 1) {
 						let mfpContent = null;
@@ -83,6 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
 							mfpContent = node;
 						} else {
 							mfpContent = node.querySelector('.mfp-content');
+						}
+
+						// Check if this node or its children contain RTMedia elements
+						const hasRTMedia = node.querySelector && node.querySelector('[id^="rtmedia-media-"]');
+						if (hasRTMedia) {
+							shouldCheckRTMedia = true;
 						}
 
 						if (mfpContent && !mfpContent.hasAttribute('data-godam-processed')) {
@@ -97,17 +157,34 @@ document.addEventListener('DOMContentLoaded', () => {
 						}
 					}
 				});
+
+				// Handle removed nodes (cleanup)
+				mutation.removedNodes.forEach((node) => {
+					if (node.nodeType === 1 && node.id && node.id.startsWith('rtmedia-media-')) {
+						if (currentRTMediaId === node.id) {
+							currentRTMediaId = null;
+						}
+					}
+				});
+			}
+
+			// Check for RTMedia ID changes if needed
+			if (shouldCheckRTMedia) {
+				setTimeout(checkRTMediaIdChange, 100);
 			}
 		});
 
 		magnificObserver.observe(document.body, {
 			childList: true,
-			subtree: true
+			subtree: true,
+			attributes: true,
+			attributeFilter: ['id', 'class']
 		});
 	};
 
 	setupMagnificObserver();
 
+	// Enhanced Magnific Popup event handlers
 	if (typeof $.magnificPopup !== 'undefined') {
 		let eventTimeout = null;
 
@@ -121,11 +198,22 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (mfpContent) {
 					safeGODAMInit(mfpContent);
 				}
+
+				// Also check for RTMedia changes
+				checkRTMediaIdChange();
+
 				eventTimeout = null;
 			}, 250);
 		};
 
-		$(document).on('mfpOpen mfpChange', handleMagnificEvent);
+		$(document).on('mfpOpen mfpChange mfpBeforeChange', handleMagnificEvent);
+
+		// Handle navigation events specifically
+		$(document).on('mfpNext mfpPrev', () => {
+			setTimeout(() => {
+				checkRTMediaIdChange();
+			}, 300);
+		});
 	}
 
 	if (typeof $ !== 'undefined') {
@@ -134,9 +222,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				clearTimeout(popupInitializationTimeout);
 				popupInitializationTimeout = null;
 			}
+			// Reset RTMedia tracking on close
+			currentRTMediaId = null;
 		});
 	}
 
+	// Enhanced Video Observer with RTMedia support
 	const videoObserver = new MutationObserver((mutations) => {
 		for (const mutation of mutations) {
 			mutation.addedNodes.forEach((node) => {
@@ -153,6 +244,15 @@ document.addEventListener('DOMContentLoaded', () => {
 							}
 						}
 					}
+
+					// Check for RTMedia elements specifically
+					const rtmediaElement = node.id && node.id.startsWith('rtmedia-media-') ?
+										   node :
+										   node.querySelector && node.querySelector('[id^="rtmedia-media-"]');
+
+					if (rtmediaElement) {
+						setTimeout(checkRTMediaIdChange, 100);
+					}
 				}
 			});
 		}
@@ -162,10 +262,53 @@ document.addEventListener('DOMContentLoaded', () => {
 		childList: true,
 		subtree: true
 	});
+
+	// Additional RTMedia-specific observer for DOM changes
+	const rtmediaObserver = new MutationObserver((mutations) => {
+		let hasRTMediaChanges = false;
+
+		for (const mutation of mutations) {
+			// Check for changes in elements with RTMedia IDs
+			if (mutation.target.id && mutation.target.id.startsWith('rtmedia-media-')) {
+				hasRTMediaChanges = true;
+				break;
+			}
+
+			// Check added/removed nodes for RTMedia elements
+			const checkNodes = (nodes) => {
+				for (const node of nodes) {
+					if (node.nodeType === 1) {
+						if ((node.id && node.id.startsWith('rtmedia-media-')) ||
+							(node.querySelector && node.querySelector('[id^="rtmedia-media-"]'))) {
+							hasRTMediaChanges = true;
+							return true;
+						}
+					}
+				}
+				return false;
+			};
+
+			if (checkNodes(mutation.addedNodes) || checkNodes(mutation.removedNodes)) {
+				break;
+			}
+		}
+
+		if (hasRTMediaChanges) {
+			setTimeout(checkRTMediaIdChange, 150);
+		}
+	});
+
+	// Observe the document for RTMedia changes
+	rtmediaObserver.observe(document.body, {
+		childList: true,
+		subtree: true,
+		attributes: true,
+		attributeFilter: ['id']
+	});
+
+	// Initialize RTMedia tracking on load
+	setTimeout(checkRTMediaIdChange, 500);
 });
-
-
-
 
 
 

@@ -1,3 +1,19 @@
+/**
+ * BuddyPress Activity Comment Enhancer
+ * -------------------------------------
+ * This script enhances dynamically added BuddyPress activity comments by:
+ *
+ * On detecting a new comment (via MutationObserver), it:
+ *    - Initializes GODAMPlayer for the new comment node.
+ *    - Extracts the comment ID.
+ *    - Makes an AJAX request to re-fetch the complete HTML for that comment.
+ *    - Replaces the placeholder node with the freshly rendered comment HTML.
+ *    - Re-initializes GODAMPlayer on the updated content to ensure video playback and *      shortcodes are rendered correctly.
+ *
+ * This ensures any dynamically loaded comment (e.g. via AJAX or frontend frameworks)
+ * is fully initialized with expected behavior and media handling.
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
     const commentsContainers = document.querySelectorAll('.activity-comments');
 

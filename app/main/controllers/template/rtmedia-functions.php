@@ -5244,10 +5244,20 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 	 * Enqueue frontend scripts for Godam integration and AJAX refresh.
 	 */
 	add_action( 'wp_enqueue_scripts', function() {
+
+		// Enqueue integration script for rtMedia and Godam.
+		wp_enqueue_script(
+			'godam-rtmedia-integration',
+			RTMEDIA_URL . 'app/assets/js/godam-integration.min.js',
+			[ 'godam-player-frontend-script' ],
+			null,
+			true
+		);
+
 		// Enqueue the script responsible for AJAX-based comment refresh.
 		wp_enqueue_script(
 			'godam-ajax-refresh',
-			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.min.js',
+			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.js',
 			[],
 			null,
 			true
@@ -5258,15 +5268,6 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 			'nonce'    => wp_create_nonce( 'godam-ajax-nonce' ),
 		]);
-
-		// Enqueue integration script for rtMedia and Godam.
-		wp_enqueue_script(
-			'godam-rtmedia-integration',
-			RTMEDIA_URL . 'app/assets/js/godam-integration.min.js',
-			[ 'godam-player-frontend-script' ],
-			null,
-			true
-		);
 	} );
 
 	/**
