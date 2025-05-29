@@ -122,7 +122,7 @@ class RTMediaModel extends RTDBModel {
 		}
 		$qgroup_by = ' ';
 
-		$allowed_order_columns = array( 'media_id', 'media_title', 'file_size', 'ratings_average', 'likes' ); // Define allowed columns.
+		$allowed_order_columns = array( 'media_id', 'media_title','file_size'); // Define allowed columns.
 		list( $order_column, $order_direction ) = explode( ' ', $order_by . ' ' ); // Default to space if no direction provided.
 
 		if ( ! in_array( strtolower( $order_column ), $allowed_order_columns ) || ! in_array(
