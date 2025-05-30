@@ -1,91 +1,31 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const commentsContainers = document.querySelectorAll('.activity-comments');
-  const processingComments = new Set(); // Track comments being processed
-
-  // If no comment containers exist, exit early
-  if (commentsContainers.length === 0) {
+// Enhanced AJAX function with better error handling and retry logic
+function refreshSingleComment(commentId, node) {
+  // Validation checks
+  if (!commentId || !node) {
     return;
   }
 
-  commentsContainers.forEach((container) => {
-    // Initialize GODAMPlayer on existing comment container
-    GODAMPlayer(container);
+  // Check if GodamAjax object exists
+  if (typeof GodamAjax === 'undefined' || !GodamAjax.ajax_url || !GodamAjax.nonce) {
+    return;
+  }
 
-    // Observe DOM changes to detect new comments being added dynamically
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === 1 && node.matches('li[id^="acomment-"]')) {
-            // Extract the comment ID
-            const commentId = node.id.replace('acomment-', '');
-
-            // Prevent duplicate processing
-            if (processingComments.has(commentId)) {
-              return;
-            }
-
-            // Add delay to ensure node is fully rendered
-            setTimeout(() => {
-              // Check if node still exists and needs processing
-              if (document.getElementById(`acomment-${commentId}`)) {
-                // Initialize GODAMPlayer on the new comment node
-                GODAMPlayer(node);
-
-                // Only refresh if it looks like a placeholder/incomplete node
-                if (shouldRefreshComment(node)) {
-                  refreshSingleComment(commentId, node);
-                }
-              }
-            }, 100); // Small delay to avoid race conditions
-          }
-        });
-      });
-    });
-
-    observer.observe(container, {
-      childList: true,
-      subtree: true
-    });
-  });
-});
-
-/**
- * Determines if a comment node needs to be refreshed
- * @param {Element} node - The comment node to check
- * @returns {boolean} - Whether the comment should be refreshed
- */
-function shouldRefreshComment(node) {
-  // Add your logic here to determine if the comment is a placeholder
-  // For example, check if it's missing expected content or has placeholder classes
-  return node.classList.contains('loading') ||
-         node.querySelector('.godam-placeholder') ||
-         !node.querySelector('.comment-content');
-}
-
-/**
- * Refreshes a single BuddyPress comment via AJAX to fetch updated content,
- * including Godam video player shortcode rendering.
- *
- * @param {string} commentId - The ID of the comment to refresh
- * @param {Element} node - The existing DOM node being replaced
- */
-function refreshSingleComment(commentId, node) {
-  const processingComments = window.processingComments || (window.processingComments = new Set());
+  // Check if node is still in the DOM
+  if (!document.contains(node)) {
+    return;
+  }
 
   // Prevent duplicate requests
-  if (processingComments.has(commentId)) {
+  if (node.classList.contains('refreshing')) {
     return;
   }
-
-  processingComments.add(commentId);
-
-  // Add loading indicator
-  const originalContent = node.innerHTML;
-  node.classList.add('loading');
+  node.classList.add('refreshing');
 
   // Create AbortController for timeout handling
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, 15000); // 15 second timeout
 
   fetch(GodamAjax.ajax_url, {
     method: 'POST',
@@ -102,69 +42,263 @@ function refreshSingleComment(commentId, node) {
   .then(response => {
     clearTimeout(timeoutId);
 
+    // Check if response is ok
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    // Check content type
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error('Server returned non-JSON response');
     }
 
     return response.json();
   })
   .then(data => {
-    if (data.success && data.data && data.data.html) {
-      // Identify the parent activity from the comment DOM node
-      const parentActivityId = node.closest('.activity-item')?.id?.replace('activity-', '');
-
-      if (!parentActivityId) {
-        throw new Error('Could not find parent activity ID');
-      }
-
-      // Locate or create the container for activity comments
-      let commentList = document.querySelector(`#activity-${parentActivityId} .activity-comments`);
-      if (!commentList) {
-        commentList = document.createElement('ul');
-        commentList.classList.add('activity-comments');
-        const activityElement = document.querySelector(`#activity-${parentActivityId}`);
-        if (!activityElement) {
-          throw new Error('Parent activity element not found');
-        }
-        activityElement.appendChild(commentList);
-      }
-
-      // Create a temporary container to parse the HTML
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = data.data.html;
-      const newCommentNode = tempDiv.firstElementChild;
-
-      if (newCommentNode) {
-        // Replace the old node with the new one
-        if (node.parentNode) {
-          node.parentNode.replaceChild(newCommentNode, node);
-        }
-
-        // Reinitialize GODAMPlayer for the new comment node
-        GODAMPlayer(newCommentNode);
-      }
+    if (data && data.success && data.data && data.data.html) {
+      // Success - handle the response
+      handleSuccessfulResponse(data, commentId, node);
     } else {
-      throw new Error(data.data || 'Unknown server error');
+      // AJAX returned error
+      const errorMsg = data && data.data ? data.data : 'Unknown AJAX error';
+      console.error('AJAX error:', errorMsg);
+
+      // Optional: Retry once after a delay
+      setTimeout(() => {
+        retryRefreshComment(commentId, node, 1);
+      }, 2000);
     }
   })
   .catch(error => {
-    console.error('AJAX error for comment', commentId, ':', error);
+    clearTimeout(timeoutId);
+    console.error('Fetch error:', error);
 
-    // Restore original content on error
-    node.innerHTML = originalContent;
-    node.classList.remove('loading');
-
-    // Retry logic (optional)
-    if (!error.name === 'AbortError') { // Don't retry timeouts
+    // Handle specific error types
+    if (error.name === 'AbortError') {
+      console.error('Request timed out');
+    } else if (error.message.includes('Failed to fetch')) {
+      console.error('Network error - possible connectivity issue');
+      // Retry after network error
       setTimeout(() => {
-        processingComments.delete(commentId);
-        // Could implement retry logic here
-      }, 5000);
+        retryRefreshComment(commentId, node, 1);
+      }, 3000);
     }
   })
   .finally(() => {
     clearTimeout(timeoutId);
-    processingComments.delete(commentId);
-    node.classList.remove('loading');
+    // Always remove refreshing class
+    if (document.contains(node)) {
+      node.classList.remove('refreshing');
+    }
   });
 }
+
+// Retry function with exponential backoff
+function retryRefreshComment(commentId, node, attempt = 1) {
+  const maxRetries = 2;
+
+  if (attempt > maxRetries) {
+    console.error(`Failed to refresh comment ${commentId} after ${maxRetries} retries`);
+    return;
+  }
+
+  // Check if node still exists
+  if (!document.contains(node)) {
+    return;
+  }
+
+  // Exponential backoff delay
+  const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s...
+
+  setTimeout(() => {
+    // Remove any existing refreshing class
+    node.classList.remove('refreshing');
+
+    // Try again with modified fetch (more conservative approach)
+    fetch(GodamAjax.ajax_url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cache-Control': 'no-cache',
+      },
+      body: new URLSearchParams({
+        action: 'get_single_activity_comment_html',
+        comment_id: commentId,
+        nonce: GodamAjax.nonce,
+        retry: attempt.toString()
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data && data.success && data.data && data.data.html) {
+        handleSuccessfulResponse(data, commentId, node);
+      } else {
+        // Retry again if not max attempts
+        if (attempt < maxRetries) {
+          retryRefreshComment(commentId, node, attempt + 1);
+        }
+      }
+    })
+    .catch(error => {
+      console.error(`Retry ${attempt} failed:`, error);
+      if (attempt < maxRetries) {
+        retryRefreshComment(commentId, node, attempt + 1);
+      }
+    });
+  }, delay);
+}
+
+// Handle successful AJAX response
+function handleSuccessfulResponse(data, commentId, node) {
+  try {
+    // Find parent activity more safely
+    const activityItem = node.closest('.activity-item');
+    if (!activityItem) {
+      console.error('Could not find parent activity item');
+      return;
+    }
+
+    const parentActivityId = activityItem.id.replace('activity-', '');
+
+    // Locate comment container
+    let commentList = document.querySelector(`#activity-${parentActivityId} .activity-comments`);
+    if (!commentList) {
+      commentList = document.createElement('ul');
+      commentList.classList.add('activity-comments');
+      activityItem.appendChild(commentList);
+    }
+
+    // Create temporary container for HTML parsing
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = data.data.html.trim();
+    const newCommentNode = tempDiv.firstElementChild;
+
+    if (newCommentNode) {
+      // Insert new comment
+      commentList.appendChild(newCommentNode);
+
+      // Remove old node safely
+      if (node.parentNode && document.contains(node)) {
+        node.parentNode.removeChild(node);
+      }
+
+      // Initialize GODAMPlayer if available
+      if (typeof GODAMPlayer === 'function') {
+        try {
+          GODAMPlayer(newCommentNode);
+        } catch (playerError) {
+          console.error('GODAMPlayer initialization failed:', playerError);
+        }
+      }
+
+      // Dispatch custom event for other scripts
+      document.dispatchEvent(new CustomEvent('commentRefreshed', {
+        detail: { commentId, node: newCommentNode }
+      }));
+
+    } else {
+      console.error('No valid comment node found in response HTML');
+    }
+  } catch (error) {
+    console.error('Error handling successful response:', error);
+  }
+}
+
+// Enhanced DOM observer with debouncing
+document.addEventListener('DOMContentLoaded', () => {
+  const commentsContainers = document.querySelectorAll('.activity-comments');
+
+  if (commentsContainers.length === 0) {
+    return;
+  }
+
+  // Debounce function to prevent rapid-fire calls
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  commentsContainers.forEach((container) => {
+    // Initialize GODAMPlayer on existing comments
+    if (typeof GODAMPlayer === 'function') {
+      try {
+        GODAMPlayer(container);
+      } catch (error) {
+        console.error('GODAMPlayer initialization failed:', error);
+      }
+    }
+
+    // Debounced mutation handler
+    const debouncedHandler = debounce((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1 && node.matches && node.matches('li[id^="acomment-"]')) {
+            // Initialize GODAMPlayer first
+            if (typeof GODAMPlayer === 'function') {
+              try {
+                GODAMPlayer(node);
+              } catch (error) {
+                console.error('GODAMPlayer initialization failed:', error);
+              }
+            }
+
+            // Extract comment ID and refresh with delay
+            const commentId = node.id.replace('acomment-', '');
+
+            // Add longer delay to ensure DOM stability
+            setTimeout(() => {
+              if (document.contains(node)) {
+                refreshSingleComment(commentId, node);
+              }
+            }, 250);
+          }
+        });
+      });
+    }, 100); // 100ms debounce
+
+    // Create observer
+    const observer = new MutationObserver(debouncedHandler);
+
+    observer.observe(container, {
+      childList: true,
+      subtree: true
+    });
+  });
+});
+
+// Debug function to test AJAX connectivity
+function testAjaxConnection() {
+  if (typeof GodamAjax === 'undefined') {
+    console.error('GodamAjax not defined');
+    return;
+  }
+
+  fetch(GodamAjax.ajax_url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      action: 'heartbeat',
+      nonce: GodamAjax.nonce,
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('AJAX connection test:', data);
+  })
+  .catch(error => {
+    console.error('AJAX connection test failed:', error);
+  });
+}
+
+// Uncomment to test AJAX connection
+// testAjaxConnection();
