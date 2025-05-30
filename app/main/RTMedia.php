@@ -1249,16 +1249,6 @@ class RTMedia {
 
 		if ( '' === $suffix ) {
 			wp_enqueue_script(
-				'rtmedia-magnific-popup',
-				RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js',
-				array(
-					'jquery',
-					'rt-mediaelement-wp',
-				),
-				RTMEDIA_VERSION,
-				true
-			);
-			wp_enqueue_script(
 				'rtmedia-admin-tabs',
 				RTMEDIA_URL . 'app/assets/admin/js/vendors/tabs.js',
 				array(
@@ -1277,7 +1267,7 @@ class RTMedia {
 					'rtmedia-emoji-picker',
 				),
 				RTMEDIA_VERSION,
-				true
+				args: true
 			);
 		} else {
 			wp_enqueue_script(

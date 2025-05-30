@@ -56,6 +56,22 @@ if ( ! defined( 'RTMEDIA_BASE_NAME' ) ) {
 }
 
 /**
+ * To prevent fatal errors when calling is_plugin_active(), we first check if the
+ * function exists. If it doesn't, we include the file manually to ensure the
+ * function is available.
+ */
+if ( ! function_exists( 'is_plugin_active' ) ) {
+    require_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+
+if ( ! defined( 'RTMEDIA_GODAM_ACTIVE' ) ) {
+    /**
+	 * Check if Godam plugin is active and set constant accordingly.
+	 */
+    define( 'RTMEDIA_GODAM_ACTIVE', is_plugin_active( 'godam/godam.php' ) );
+}
+
+/**
  * Auto Loader Function
  *
  * Autoloads classes on instantiation. Used by spl_autoload_register.

@@ -62,6 +62,16 @@ module.exports = function (grunt) {
                 files: {
                     'app/assets/admin/js/admin.min.js': ['app/assets/admin/js/scripts.js']
                 }
+            },
+            godam: {
+                files: {
+                    'app/assets/js/godam-integration.min.js': ['app/assets/js/godam-integration.js']
+                }
+            },
+            godam_ajax_refresh: {
+                files: {
+                    'app/assets/js/godam-ajax-refresh.min.js': ['app/assets/js/godam-ajax-refresh.js']
+                }
             }
         }
     });
