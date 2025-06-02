@@ -151,6 +151,18 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.0
+
+* ENHANCEMENTS
+  * Added integration with GoDAM plugin's video player.
+  * Enabled support for GoDAM video player in rtMedia media gallery, BuddyPress activity stream, groups, and forums.
+  * Improved handling of player enqueue conditions based on GoDAM plugin status.
+  * Refined script loading to ensure compatibility across WordPress, BuddyPress, and rtMedia components.
+
+* FIXED
+  * Prevented conflicts with `mediaelement.js` when GoDAM plugin is active.
+  * Deregistered conflicting scripts to ensure seamless fallback and prevent duplication in player initialization.
+
 ### 4.6.23
 
 * Fixed
