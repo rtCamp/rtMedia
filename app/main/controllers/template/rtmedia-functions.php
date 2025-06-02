@@ -584,33 +584,35 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 
 			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 			$height      = $rtmedia->options['defaultSizes_video_singlePlayer_height'];
-			$height      = ( $height * 75 ) / 640;
-			$size        = ' width="' . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . '" height="' . esc_attr( $height ) . '%" ';
-			$html        = "<div id='rtm-mejs-video-container' style='width:" . esc_attr( $rtmedia->options['defaultSizes_video_singlePlayer_width'] ) . 'px;height:' . esc_attr( $height ) . "%;  max-width:96%;max-height:80%;'>";
+			$width       = $rtmedia->options['defaultSizes_video_singlePlayer_width'];
+			$height_pct  = ( $height * 75 ) / 640;
+			$size_attr   = ' width="' . esc_attr( $width ) . '" height="' . esc_attr( $height_pct ) . '%" ';
 
-			if ( empty( $youtube_url ) ) {
+			$html  = '<div id="rtm-mejs-video-container" style="width:' . esc_attr( $width ) . 'px;height:' . esc_attr( $height_pct ) . '%; max-width:96%;max-height:80%;">';
 
-				// added poster for showing thumbnail and changed preload value to fix rtMedia GL-209.
-				$html .= sprintf(
-					'<video poster="%1$s" src="%2$s" %3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata" playsinline></video>',
-					esc_url( $rtmedia_media->cover_art || '' ),
-					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
-					esc_attr( $size ),
-					esc_attr( $rtmedia_media->id )
-				);
-
+			// Check if Godam plugin is active.
+			if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
+				$html .= do_shortcode( '[godam_video id="' . esc_attr( $rtmedia_media->media_id ) . '"]' );
 			} else {
-
-				$html .= sprintf(
-					'<video width="640" height="360" class="url-video" id="video-id-%1$s" preload="none"><source type="video/youtube" src="%2$s playsinline" /></video>',
-					esc_attr( $rtmedia_media->id ),
-					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) )
-				);
-
+				// Fallback to native or YouTube player.
+				if ( empty( $youtube_url ) ) {
+					$html .= sprintf(
+						'<video poster="%1$s" src="%2$s"%3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata" playsinline></video>',
+						esc_url( $rtmedia_media->cover_art ?: '' ),
+						esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
+						$size_attr,
+						esc_attr( $rtmedia_media->id )
+					);
+				} else {
+					$html .= sprintf(
+						'<video width="640" height="360" class="url-video" id="video-id-%1$s" preload="none" playsinline><source type="video/youtube" src="%2$s" /></video>',
+						esc_attr( $rtmedia_media->id ),
+						esc_url( $youtube_url )
+					);
+				}
 			}
 
 			$html .= '</div>';
-
 		} elseif ( 'music' === $rtmedia_media->media_type ) {
 
 			$width = $rtmedia->options['defaultSizes_music_singlePlayer_width'];
@@ -1463,6 +1465,49 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 			'<i data-id="%1$s" class="rtmedia-delete-comment dashicons dashicons-no-alt" title="%2$s"></i>',
 			esc_attr( $comment['comment_ID'] ),
 			esc_attr__( 'Delete Comment', 'buddypress-media' )
+		);
+	}
+
+	/**
+	 * Replaces <video> tags with Godam shortcodes for comment videos in single media page.
+	 * Execute this when GoDAM is active
+	 *
+	 * Searches for <video> elements with IDs like 'rt_media_video_{id}', fetches the
+	 * corresponding `media_id` from the `rt_rtm_media` table, and replaces the tag
+	 * with the [godam_video] shortcode.
+	 *
+	 * @var    string $html HTML content containing video tags.
+	 * @return string Modified HTML with Godam shortcodes (if applicable).
+	 */
+	if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
+		global $wpdb;
+
+		// Replace all <video> tags with ID pattern rt_media_video_{id}
+		$html = preg_replace_callback(
+			'#<video[^>]*id="rt_media_video_(\d+)"[^>]*>.*?</video>#is',
+			function( $matches ) use ( $wpdb ) {
+				$extracted_id = intval( $matches[1] ); // Extract numeric ID from video tag
+
+				// Fetch media_id from rt_rtm_media table using the extracted ID
+				$media_id = $wpdb->get_var(
+					$wpdb->prepare(
+						"SELECT media_id FROM {$wpdb->prefix}rt_rtm_media WHERE id = %d",
+						$extracted_id
+					)
+				);
+
+				// If media_id exists, return Godam video shortcode
+				if ( ! empty( $media_id ) ) {
+					return '<div style="max-width: 480px; width: 100%; overflow: hidden;">'
+						   . '<style>div.godam-video-wrapper video, div.godam-video-wrapper iframe { max-width: 100%; height: auto; display: block; }</style>'
+						   . do_shortcode( '[godam_video id="' . $media_id . '"]' )
+						   . '</div>';
+				}
+
+				// If no media_id found, return original video HTML
+				return $matches[0];
+			},
+			$html
 		);
 	}
 
@@ -5177,3 +5222,234 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 		'done'           => $done,
 	);
 }
+
+
+// ------------------------GODAM INTEGRATION-----------------------//
+
+if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
+
+	/**
+	 * Enqueue GoDAM scripts and styles globally (player, analytics, and styles).
+	 */
+	add_action( 'wp_enqueue_scripts', 'enqueue_scripts_globally', 20 );
+
+	function enqueue_scripts_globally() {
+		wp_enqueue_script( 'godam-player-frontend-script' );
+		wp_enqueue_script( 'godam-player-analytics-script' );
+		wp_enqueue_style( 'godam-player-frontend-style' );
+		wp_enqueue_style( 'godam-player-style' );
+	}
+
+	/**
+	 * Enqueue frontend scripts for Godam integration and AJAX refresh.
+	 */
+	add_action( 'wp_enqueue_scripts', function() {
+
+		// Enqueue integration script for rtMedia and Godam.
+		wp_enqueue_script(
+			'godam-rtmedia-integration',
+			RTMEDIA_URL . 'app/assets/js/godam-integration.min.js',
+			[ 'godam-player-frontend-script' ],
+			null,
+			true
+		);
+
+		// Enqueue the script responsible for AJAX-based comment refresh.
+		wp_enqueue_script(
+			'godam-ajax-refresh',
+			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.min.js',
+			[],
+			null,
+			true
+		);
+
+		// Pass AJAX URL and nonce to the script.
+		wp_localize_script( 'godam-ajax-refresh', 'GodamAjax', [
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce'    => wp_create_nonce( 'godam-ajax-nonce' ),
+		]);
+	} );
+
+	/**
+	 * Filter BuddyPress activity content to replace rtMedia video list
+	 * with Godam player shortcodes.
+	 */
+	add_filter( 'bp_get_activity_content_body', function( $content ) {
+		global $activities_template;
+
+		// Bail early if activity object is not available
+		if ( empty( $activities_template->activity ) || ! is_object( $activities_template->activity ) ) {
+			return $content;
+		}
+
+		$activity = $activities_template->activity;
+
+		// Allow only certain activity types
+		$valid_types = [ 'rtmedia_update', 'activity_update', 'activity_comment' ];
+		if ( ! isset( $activity->type ) || ! in_array( $activity->type, $valid_types, true ) ) {
+			return $content;
+		}
+
+		// Ensure RTMediaModel class exists
+		if ( ! class_exists( 'RTMediaModel' ) ) {
+			return $content;
+		}
+
+		$model       = new RTMediaModel();
+		$media_items = $model->get( [ 'activity_id' => $activity->id ] );
+
+		if ( empty( $media_items ) || ! is_array( $media_items ) ) {
+			return $content;
+		}
+
+		// Remove rtMedia default video <ul>
+		$clean_content = preg_replace(
+			'#<ul[^>]*class="[^"]*rtmedia-list[^"]*rtm-activity-media-list[^"]*rtmedia-activity-media-length-[0-9]+[^"]*rtm-activity-video-list[^"]*"[^>]*>.*?</ul>#si',
+			'',
+			$activity->content
+		);
+
+		// Group media by type
+		$grouped_media = [];
+		foreach ( $media_items as $media ) {
+			$grouped_media[ $media->media_type ][] = $media;
+		}
+
+		$godam_videos = '';
+
+		// Build Godam player shortcodes for videos
+		if ( ! empty( $grouped_media['video'] ) ) {
+			foreach ( $grouped_media['video'] as $index => $video ) {
+				$player_id     = 'godam-activity-' . esc_attr( $activity->id ) . '-' . $index;
+				$godam_videos .= do_shortcode(
+					'[godam_video id="' . esc_attr( $video->media_id ) .
+					'" context="buddypress" player_id="' . esc_attr( $player_id ) . '"]'
+				);
+			}
+		}
+
+		// Process video media in activity comments
+		if ( ! empty( $activity->children ) && is_array( $activity->children ) ) {
+			foreach ( $activity->children as $child ) {
+				$child_media = $model->get( [ 'activity_id' => $child->id ] );
+
+				if ( empty( $child_media ) ) {
+					continue;
+				}
+
+				$child_videos = '';
+
+				foreach ( $child_media as $index => $video ) {
+					$player_id     = 'godam-comment-' . esc_attr( $child->id ) . '-' . $index;
+					$child_videos .= do_shortcode(
+						'[godam_video id="' . esc_attr( $video->media_id ) . '"]'
+					);
+				}
+
+				if ( $child_videos ) {
+					// Remove rtMedia <ul> from comment
+					$child->content = preg_replace(
+						'#<ul[^>]*class="[^"]*rtmedia-list[^"]*rtm-activity-media-list[^"]*rtmedia-activity-media-length-[0-9]+[^"]*rtm-activity-video-list[^"]*"[^>]*>.*?</ul>#si',
+						'',
+						$child->content
+					);
+
+					// Append Godam video players
+					$child->content .= '<div class="godam-video-players-wrapper">' . $child_videos . '</div>';
+				}
+			}
+		}
+
+		// Final video output appended to cleaned content
+		if ( $godam_videos ) {
+			$godam_videos = '<div class="godam-video-players-wrapper">' . $godam_videos . '</div>';
+		}
+
+		return wp_kses_post( $clean_content ) . $godam_videos;
+	}, 10 );
+
+	/**
+	 * Handle AJAX request for loading a single activity comment's HTML.
+	 */
+	add_action( 'wp_ajax_get_single_activity_comment_html', 'handle_get_single_activity_comment_html' );
+	add_action( 'wp_ajax_nopriv_get_single_activity_comment_html', 'handle_get_single_activity_comment_html' );
+
+	function handle_get_single_activity_comment_html() {
+		check_ajax_referer( 'godam-ajax-nonce', 'nonce' );
+
+		$activity_id = isset( $_POST['comment_id'] ) ? intval( $_POST['comment_id'] ) : 0;
+
+		if ( ! $activity_id ) {
+			wp_send_json_error( 'Invalid activity ID' );
+		}
+
+		$activity = new BP_Activity_Activity( $activity_id );
+		if ( empty( $activity->id ) ) {
+			wp_send_json_error( 'Activity comment not found' );
+		}
+
+		global $activities_template;
+
+		// Backup original activity
+		$original_activity = $activities_template->activity ?? null;
+
+		// Replace global for template rendering
+		$activities_template             = new stdClass();
+		$activities_template->activity  = $activity;
+
+		ob_start();
+		bp_get_template_part( 'activity/entry' );
+		$html = ob_get_clean();
+
+		// Restore original
+		if ( $original_activity ) {
+			$activities_template->activity = $original_activity;
+		}
+
+		wp_send_json_success( [ 'html' => $html ] );
+	}
+
+}
+
+/**
+ * Enqueue the Magnific Popup script for rtMedia.
+ *
+ * This function ensures that the Magnific Popup script is loaded correctly on the frontend
+ * so that popup functionality works seamlessly with all combinations of plugin states:
+ * - When only rtMedia is active
+ * - When both rtMedia and Godam plugins are active
+ * - When Godam plugin is deactivated
+ *
+ * To achieve this, the script is deregistered first if already registered or enqueued,
+ * preventing conflicts or duplicates.
+ *
+ * When Godam plugin is active, the script is loaded without dependencies to avoid
+ * redundant or conflicting scripts. When Godam is not active, dependencies such as
+ * jQuery and rt-mediaelement-wp are included to ensure proper functionality.
+ *
+ * Enqueuing here guarantees consistent script loading regardless of Godam’s activation status.
+ */
+function enqueue_rtmedia_magnific_popup_script() {
+	$handle     = 'rtmedia-magnific-popup';
+	$script_src = RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js';
+	$version    = RTMEDIA_VERSION;
+	$in_footer  = true;
+
+	// Deregister the script if already registered or enqueued to prevent conflicts
+	if (wp_script_is($handle, 'registered') || wp_script_is($handle, 'enqueued')) {
+		wp_deregister_script($handle);
+	}
+
+	// Determine dependencies based on whether Godam integration is active
+	$dependencies = [];
+
+	// If Godam plugin is NOT active, add dependencies for jQuery and mediaelement
+	if (!defined('RTMEDIA_GODAM_ACTIVE') || !RTMEDIA_GODAM_ACTIVE) {
+		$dependencies = ['jquery', 'rt-mediaelement-wp'];
+	}
+
+	// Enqueue the Magnific Popup script with the appropriate dependencies
+	wp_enqueue_script($handle, $script_src, $dependencies, $version, $in_footer);
+}
+
+add_action('wp_enqueue_scripts', 'enqueue_rtmedia_magnific_popup_script');
