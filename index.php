@@ -61,14 +61,14 @@ if ( ! defined( 'RTMEDIA_BASE_NAME' ) ) {
  * function is available.
  */
 if ( ! function_exists( 'is_plugin_active' ) ) {
-    require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	require_once ABSPATH . 'wp-admin/includes/plugin.php';
 }
 
 if ( ! defined( 'RTMEDIA_GODAM_ACTIVE' ) ) {
-    /**
+	/**
 	 * Check if Godam plugin is active and set constant accordingly.
 	 */
-    define( 'RTMEDIA_GODAM_ACTIVE', is_plugin_active( 'godam/godam.php' ) );
+	define( 'RTMEDIA_GODAM_ACTIVE', is_plugin_active( 'godam/godam.php' ) );
 }
 
 /**

@@ -5430,26 +5430,26 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
  * Enqueuing here guarantees consistent script loading regardless of Godam’s activation status.
  */
 function enqueue_rtmedia_magnific_popup_script() {
-    $handle = 'rtmedia-magnific-popup';
-    $script_src = RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js';
-    $version = RTMEDIA_VERSION;
-    $in_footer = true;
+	$handle     = 'rtmedia-magnific-popup';
+	$script_src = RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js';
+	$version    = RTMEDIA_VERSION;
+	$in_footer  = true;
 
-    // Deregister the script if already registered or enqueued to prevent conflicts
-    if (wp_script_is($handle, 'registered') || wp_script_is($handle, 'enqueued')) {
-        wp_deregister_script($handle);
-    }
+	// Deregister the script if already registered or enqueued to prevent conflicts
+	if (wp_script_is($handle, 'registered') || wp_script_is($handle, 'enqueued')) {
+		wp_deregister_script($handle);
+	}
 
-    // Determine dependencies based on whether Godam integration is active
-    $dependencies = [];
+	// Determine dependencies based on whether Godam integration is active
+	$dependencies = [];
 
-    // If Godam plugin is NOT active, add dependencies for jQuery and mediaelement
-    if (!defined('RTMEDIA_GODAM_ACTIVE') || !RTMEDIA_GODAM_ACTIVE) {
-        $dependencies = ['jquery', 'rt-mediaelement-wp'];
-    }
+	// If Godam plugin is NOT active, add dependencies for jQuery and mediaelement
+	if (!defined('RTMEDIA_GODAM_ACTIVE') || !RTMEDIA_GODAM_ACTIVE) {
+		$dependencies = ['jquery', 'rt-mediaelement-wp'];
+	}
 
-    // Enqueue the Magnific Popup script with the appropriate dependencies
-    wp_enqueue_script($handle, $script_src, $dependencies, $version, $in_footer);
+	// Enqueue the Magnific Popup script with the appropriate dependencies
+	wp_enqueue_script($handle, $script_src, $dependencies, $version, $in_footer);
 }
 
 add_action('wp_enqueue_scripts', 'enqueue_rtmedia_magnific_popup_script');
