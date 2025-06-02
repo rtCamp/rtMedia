@@ -161,6 +161,10 @@ class RTMediaJsonApi {
 
 		add_action( 'wp_ajax_nopriv_rtmedia_api', array( $this, 'rtmedia_api_process_request' ) );
 		add_action( 'wp_ajax_rtmedia_api', array( $this, 'rtmedia_api_process_request' ) );
+
+		if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
+			add_action( 'rest_api_init', [ $this, 'register_rest_pre_dispatch_filter' ] );
+		}
 	}
 
 	/**
@@ -1468,5 +1472,40 @@ class RTMediaJsonApi {
 
 			return $args;
 		}
+	}
+
+	/**
+	 * Registers the rest_pre_dispatch filter during rest_api_init.
+	 */
+	public function register_rest_pre_dispatch_filter() {
+		add_filter( 'rest_pre_dispatch', [ $this, 'handle_rest_pre_dispatch' ], 10, 3 );
+	}
+
+	/**
+	 * Callback for rest_pre_dispatch filter.
+	 *
+	 * @param mixed           $result  Result to return instead of the request. Default null to continue with request.
+	 * @param WP_REST_Server  $server  Server instance.
+	 * @param WP_REST_Request $request Request object.
+	 *
+	 * @return mixed Modified result or original $result.
+	 */
+	public function handle_rest_pre_dispatch( $result, $server, $request ) {
+		$route  = $request->get_route();
+		$method = $request->get_method();
+
+		if ( 'GET' === $method && preg_match( '#^/wp/v2/media/(\d+)$#', $route, $matches ) ) {
+			$media_id = (int) $matches[1];
+			$post     = get_post( $media_id );
+
+			if ( $post && 'attachment' === $post->post_type ) {
+				$controller = new WP_REST_Attachments_Controller( 'attachment' );
+				$response   = $controller->prepare_item_for_response( $post, $request );
+
+				return rest_ensure_response( $response );
+			}
+		}
+
+		return $result;
 	}
 }
