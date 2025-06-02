@@ -4,8 +4,8 @@ Tags: BuddyPress, media, multimedia, album, audio, music, video, photo, upload, 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
-Tested up to: 6.8
-Stable tag: 4.6.23
+Tested up to: 6.8.1
+Stable tag: 4.7.0
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -132,6 +132,18 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.0 [June 2, 2025] =
+
+* ENHANCEMENTS
+  * Added integration with GoDAM plugin's video player.
+  * Enabled support for GoDAM video player in rtMedia media gallery, BuddyPress activity stream, groups, and forums.
+  * Improved handling of player enqueue conditions based on GoDAM plugin status.
+  * Refined script loading to ensure compatibility across WordPress, BuddyPress, and rtMedia components.
+
+* FIXED
+  * Prevented conflicts with `mediaelement.js` when GoDAM plugin is active.
+  * Deregistered conflicting scripts to ensure seamless fallback and prevent duplication in player initialization.
 
 = 4.6.23 [April 18, 2025] =
 
@@ -1921,6 +1933,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
+
+= 4.7.0 =
+This update introduces comprehensive support for the GoDAM video player across rtMedia galleries and all BuddyPress components, including activity streams, groups, and forums.
 
 = 4.6.23 =
 rtMedia 4.6.23 with WP v6.8 compatibility, node package enhancements and updated admin notices.
