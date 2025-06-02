@@ -273,32 +273,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
-
-// Debug function to test AJAX connectivity
-function testAjaxConnection() {
-  if (typeof GodamAjax === 'undefined') {
-    console.error('GodamAjax not defined');
-    return;
-  }
-
-  fetch(GodamAjax.ajax_url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: new URLSearchParams({
-      action: 'heartbeat',
-      nonce: GodamAjax.nonce,
-    }),
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('AJAX connection test:', data);
-  })
-  .catch(error => {
-    console.error('AJAX connection test failed:', error);
-  });
-}
-
-// Uncomment to test AJAX connection
-// testAjaxConnection();
