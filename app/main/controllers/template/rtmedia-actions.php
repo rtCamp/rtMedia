@@ -525,7 +525,6 @@ function rtmedia_add_media_delete_nonce_shortcode() {
 	if ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) {
 		wp_nonce_field( 'rtmedia_' . get_current_user_id(), 'rtmedia_media_delete_nonce' );
 	}
-
 }
 add_action( 'rtmedia_pre_template', 'rtmedia_add_media_delete_nonce_shortcode' );
 
@@ -989,9 +988,8 @@ add_action( 'admin_init', 'rtmedia_set_permalink' );
 function rtmedia_override_canonical( $redirect_url, $requested_url ) {
 	if ( is_front_page() && get_query_var( 'pg' ) ) {
 		return $requested_url;
-	} else {
-		return $redirect_url;
 	}
+	return $redirect_url;
 }
 add_filter( 'redirect_canonical', 'rtmedia_override_canonical', 10, 2 );
 

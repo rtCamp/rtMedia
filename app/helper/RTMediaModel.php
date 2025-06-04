@@ -125,22 +125,22 @@ class RTMediaModel extends RTDBModel {
 		$allowed_order_columns = array( 'media_id', 'media_title','file_size'); // Define allowed columns.
 		list( $order_column, $order_direction ) = explode( ' ', $order_by . ' ' ); // Default to space if no direction provided.
 
-		if ( ! in_array( strtolower( $order_column ), $allowed_order_columns ) || ! in_array(
+		if ( ! in_array( strtolower( $order_column ), $allowed_order_columns, true ) || ! in_array(
 			strtolower( $order_direction ),
 			array(
 				'asc',
 				'desc',
 				'',
-			)
+			),
+			true
 		) ) {
 			$order_by = 'media_id desc'; // Default order.
 		}
 
+		$qorder_by = '';
 		if ( $order_by ) {
 			$order_by  = esc_sql( $order_by );
 			$qorder_by = " ORDER BY {$this->table_name}.{$order_by}";
-		} else {
-			$qorder_by = '';
 		}
 
 		// phpcs:disable WordPress.NamingConventions.ValidHookName.UseUnderscores
@@ -459,10 +459,8 @@ class RTMediaModel extends RTDBModel {
 
 		if ( 'profile' === $context ) {
 			$sql .= $wpdb->prepare( ' AND media_author=%d ', $profile_id );
-		} else {
-			if ( 'group' === $context ) {
-				$sql .= $wpdb->prepare( ' AND context_id=%d ', $profile_id );
-			}
+		} elseif ( 'group' === $context ) {
+			$sql .= $wpdb->prepare( ' AND context_id=%d ', $profile_id );
 		}
 
 		$sql   .= 'limit 100';
@@ -470,9 +468,8 @@ class RTMediaModel extends RTDBModel {
 
 		if ( isset( $result ) ) {
 			return count( $result );
-		} else {
-			return 0;
 		}
+		return 0;
 	}
 
 	/**
@@ -500,12 +497,9 @@ class RTMediaModel extends RTDBModel {
 					$counts      = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
 					$other_count = $this->get_other_album_count( $bp->groups->current_group->id, 'group' );
 				}
-			} else {
-
-				if ( function_exists( 'bp_displayed_user_id' ) ) {
-					$counts      = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
-					$other_count = $this->get_other_album_count( bp_displayed_user_id(), 'profile' );
-				}
+			} elseif ( function_exists( 'bp_displayed_user_id' ) ) {
+				$counts      = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
+				$other_count = $this->get_other_album_count( bp_displayed_user_id(), 'profile' );
 			}
 
 			$remaining_all_media = ( ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
@@ -513,7 +507,7 @@ class RTMediaModel extends RTDBModel {
 			$remaining_photos    = ( ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
 			$remaining_videos    = ( ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
 			$remaining_music     = ( ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
-			$remaining_docs 	= ( ! empty( $counts['total']['document'] ) ) ? $counts['total']['document'] : 0;
+			$remaining_docs      = ( ! empty( $counts['total']['document'] ) ) ? $counts['total']['document'] : 0;
 		}
 
 		$media_counts = array(

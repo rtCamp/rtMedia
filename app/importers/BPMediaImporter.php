@@ -67,9 +67,8 @@ class BPMediaImporter {
 		$plugins = get_plugins();
 		if ( array_key_exists( $path, $plugins ) ) {
 			return 0;
-		} else {
-			return - 1;
 		}
+		return - 1;
 	}
 
 	/**
@@ -221,10 +220,8 @@ class BPMediaImporter {
 			}
 
 			return rmdir( $path );
-		} else {
-			if ( true === is_file( $path ) ) {
-				return unlink( $path );
-			}
+		} elseif ( true === is_file( $path ) ) {
+			return unlink( $path );
 		}
 
 		return false;
