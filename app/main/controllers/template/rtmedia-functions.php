@@ -593,23 +593,20 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			// Check if Godam plugin is active.
 			if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 				$html .= do_shortcode( '[godam_video id="' . esc_attr( $rtmedia_media->media_id ) . '"]' );
+			} elseif ( empty( $youtube_url ) ) {
+				$html .= sprintf(
+					'<video poster="%1$s" src="%2$s"%3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata" playsinline></video>',
+					esc_url( ! empty( $rtmedia_media->cover_art ) ? $rtmedia_media->cover_art : '' ),
+					esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
+					$size_attr,
+					esc_attr( $rtmedia_media->id )
+				);
 			} else {
-				// Fallback to native or YouTube player.
-				if ( empty( $youtube_url ) ) {
-					$html .= sprintf(
-						'<video poster="%1$s" src="%2$s"%3$s type="video/mp4" class="wp-video-shortcode" id="rt_media_video_%4$s" controls="controls" preload="metadata" playsinline></video>',
-						esc_url( $rtmedia_media->cover_art ?: '' ),
-						esc_url( wp_get_attachment_url( $rtmedia_media->media_id ) ),
-						$size_attr,
-						esc_attr( $rtmedia_media->id )
-					);
-				} else {
-					$html .= sprintf(
-						'<video width="640" height="360" class="url-video" id="video-id-%1$s" preload="none" playsinline><source type="video/youtube" src="%2$s" /></video>',
-						esc_attr( $rtmedia_media->id ),
-						esc_url( $youtube_url )
-					);
-				}
+				$html .= sprintf(
+					'<video width="640" height="360" class="url-video" id="video-id-%1$s" preload="none" playsinline><source type="video/youtube" src="%2$s" /></video>',
+					esc_attr( $rtmedia_media->id ),
+					esc_url( $youtube_url )
+				);
 			}
 
 			$html .= '</div>';
@@ -997,7 +994,7 @@ function rtmedia_delete_allowed() {
 	global $rtmedia_media;
 
 	$flag = false;
-	if ( $rtmedia_media !== null && isset( $rtmedia_media->media_author ) ) {
+	if ( null !== $rtmedia_media && isset( $rtmedia_media->media_author ) ) {
 		$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
 	}
 	if ( ! $flag && isset( $rtmedia_media->context ) && 'group' === $rtmedia_media->context && function_exists( 'bp_group_is_admin' ) ) {
@@ -1025,7 +1022,7 @@ function rtmedia_edit_allowed() {
 	global $rtmedia_media;
 
 	$flag = false;
-	if ( $rtmedia_media !== null && isset( $rtmedia_media->media_author ) ) {
+	if ( null !== $rtmedia_media && isset( $rtmedia_media->media_author ) ) {
 		$flag = intval( $rtmedia_media->media_author ) === get_current_user_id();
 	}
 	if ( ! $flag ) {
@@ -1482,13 +1479,13 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 	if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		global $wpdb;
 
-		// Replace all <video> tags with ID pattern rt_media_video_{id}
+		// Replace all <video> tags with ID pattern rt_media_video_{id}.
 		$html = preg_replace_callback(
 			'#<video[^>]*id="rt_media_video_(\d+)"[^>]*>.*?</video>#is',
-			function( $matches ) use ( $wpdb ) {
-				$extracted_id = intval( $matches[1] ); // Extract numeric ID from video tag
+			function ( $matches ) use ( $wpdb ) {
+				$extracted_id = intval( $matches[1] ); // Extract numeric ID from video tag.
 
-				// Fetch media_id from rt_rtm_media table using the extracted ID
+				// Fetch media_id from rt_rtm_media table using the extracted ID.
 				$media_id = $wpdb->get_var(
 					$wpdb->prepare(
 						"SELECT media_id FROM {$wpdb->prefix}rt_rtm_media WHERE id = %d",
@@ -1496,7 +1493,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 					)
 				);
 
-				// If media_id exists, return Godam video shortcode
+				// If media_id exists, return Godam video shortcode.
 				if ( ! empty( $media_id ) ) {
 					return '<div style="max-width: 480px; width: 100%; overflow: hidden;">'
 						   . '<style>div.godam-video-wrapper video, div.godam-video-wrapper iframe { max-width: 100%; height: auto; display: block; }</style>'
@@ -1504,7 +1501,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 						   . '</div>';
 				}
 
-				// If no media_id found, return original video HTML
+				// If no media_id found, return original video HTML.
 				return $matches[0];
 			},
 			$html
@@ -5233,6 +5230,14 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 	 */
 	add_action( 'wp_enqueue_scripts', 'enqueue_scripts_globally', 20 );
 
+	/**
+	 * Enqueues all necessary frontend scripts and styles globally for the Godam player.
+	 *
+	 * This includes the player script, analytics script, and both frontend and core styles.
+	 * Intended to be called on every page load where the player may be used.
+	 *
+	 * @return void
+	 */
 	function enqueue_scripts_globally() {
 		wp_enqueue_script( 'godam-player-frontend-script' );
 		wp_enqueue_script( 'godam-player-analytics-script' );
@@ -5243,130 +5248,141 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 	/**
 	 * Enqueue frontend scripts for Godam integration and AJAX refresh.
 	 */
-	add_action( 'wp_enqueue_scripts', function() {
+	add_action(
+		'wp_enqueue_scripts',
+		function () {
 
-		// Enqueue integration script for rtMedia and Godam.
-		wp_enqueue_script(
-			'godam-rtmedia-integration',
-			RTMEDIA_URL . 'app/assets/js/godam-integration.min.js',
-			[ 'godam-player-frontend-script' ],
-			null,
-			true
-		);
+			// Enqueue integration script for rtMedia and Godam.
+			wp_enqueue_script(
+				'godam-rtmedia-integration',
+				RTMEDIA_URL . 'app/assets/js/godam-integration.min.js',
+				array( 'godam-player-frontend-script' ),
+				null,
+				true
+			);
 
-		// Enqueue the script responsible for AJAX-based comment refresh.
-		wp_enqueue_script(
-			'godam-ajax-refresh',
-			RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.min.js',
-			[],
-			null,
-			true
-		);
+			// Enqueue the script responsible for AJAX-based comment refresh.
+			wp_enqueue_script(
+				'godam-ajax-refresh',
+				RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.min.js',
+				array(),
+				null,
+				true
+			);
 
-		// Pass AJAX URL and nonce to the script.
-		wp_localize_script( 'godam-ajax-refresh', 'GodamAjax', [
-			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce'    => wp_create_nonce( 'godam-ajax-nonce' ),
-		]);
-	} );
+			// Pass AJAX URL and nonce to the script.
+			wp_localize_script(
+				'godam-ajax-refresh',
+				'GodamAjax',
+				array(
+					'ajax_url' => admin_url( 'admin-ajax.php' ),
+					'nonce'    => wp_create_nonce( 'godam-ajax-nonce' ),
+				)
+			);
+		}
+	);
 
 	/**
 	 * Filter BuddyPress activity content to replace rtMedia video list
 	 * with Godam player shortcodes.
 	 */
-	add_filter( 'bp_get_activity_content_body', function( $content ) {
-		global $activities_template;
+	add_filter(
+		'bp_get_activity_content_body',
+		function ( $content ) {
+			global $activities_template;
 
-		// Bail early if activity object is not available
-		if ( empty( $activities_template->activity ) || ! is_object( $activities_template->activity ) ) {
-			return $content;
-		}
-
-		$activity = $activities_template->activity;
-
-		// Allow only certain activity types
-		$valid_types = [ 'rtmedia_update', 'activity_update', 'activity_comment' ];
-		if ( ! isset( $activity->type ) || ! in_array( $activity->type, $valid_types, true ) ) {
-			return $content;
-		}
-
-		// Ensure RTMediaModel class exists
-		if ( ! class_exists( 'RTMediaModel' ) ) {
-			return $content;
-		}
-
-		$model       = new RTMediaModel();
-		$media_items = $model->get( [ 'activity_id' => $activity->id ] );
-
-		if ( empty( $media_items ) || ! is_array( $media_items ) ) {
-			return $content;
-		}
-
-		// Remove rtMedia default video <ul>
-		$clean_content = preg_replace(
-			'#<ul[^>]*class="[^"]*rtmedia-list[^"]*rtm-activity-media-list[^"]*rtmedia-activity-media-length-[0-9]+[^"]*rtm-activity-video-list[^"]*"[^>]*>.*?</ul>#si',
-			'',
-			$activity->content
-		);
-
-		// Group media by type
-		$grouped_media = [];
-		foreach ( $media_items as $media ) {
-			$grouped_media[ $media->media_type ][] = $media;
-		}
-
-		$godam_videos = '';
-
-		// Build Godam player shortcodes for videos
-		if ( ! empty( $grouped_media['video'] ) ) {
-			foreach ( $grouped_media['video'] as $index => $video ) {
-				$player_id     = 'godam-activity-' . esc_attr( $activity->id ) . '-' . $index;
-				$godam_videos .= do_shortcode(
-					'[godam_video id="' . esc_attr( $video->media_id ) .
-					'" context="buddypress" player_id="' . esc_attr( $player_id ) . '"]'
-				);
+			// Bail early if activity object is not available.
+			if ( empty( $activities_template->activity ) || ! is_object( $activities_template->activity ) ) {
+				return $content;
 			}
-		}
 
-		// Process video media in activity comments
-		if ( ! empty( $activity->children ) && is_array( $activity->children ) ) {
-			foreach ( $activity->children as $child ) {
-				$child_media = $model->get( [ 'activity_id' => $child->id ] );
+			$activity = $activities_template->activity;
 
-				if ( empty( $child_media ) ) {
-					continue;
-				}
+			// Allow only certain activity types.
+			$valid_types = array( 'rtmedia_update', 'activity_update', 'activity_comment' );
+			if ( ! isset( $activity->type ) || ! in_array( $activity->type, $valid_types, true ) ) {
+				return $content;
+			}
 
-				$child_videos = '';
+			// Ensure RTMediaModel class exists.
+			if ( ! class_exists( 'RTMediaModel' ) ) {
+				return $content;
+			}
 
-				foreach ( $child_media as $index => $video ) {
-					$player_id     = 'godam-comment-' . esc_attr( $child->id ) . '-' . $index;
-					$child_videos .= do_shortcode(
-						'[godam_video id="' . esc_attr( $video->media_id ) . '"]'
+			$model       = new RTMediaModel();
+			$media_items = $model->get( array( 'activity_id' => $activity->id ) );
+
+			if ( empty( $media_items ) || ! is_array( $media_items ) ) {
+				return $content;
+			}
+
+			// Remove rtMedia default video <ul>.
+			$clean_content = preg_replace(
+				'#<ul[^>]*class="[^"]*rtmedia-list[^"]*rtm-activity-media-list[^"]*rtmedia-activity-media-length-[0-9]+[^"]*rtm-activity-video-list[^"]*"[^>]*>.*?</ul>#si',
+				'',
+				$activity->content
+			);
+
+			// Group media by type.
+			$grouped_media = array();
+			foreach ( $media_items as $media ) {
+				$grouped_media[ $media->media_type ][] = $media;
+			}
+
+			$godam_videos = '';
+
+			// Build Godam player shortcodes for videos.
+			if ( ! empty( $grouped_media['video'] ) ) {
+				foreach ( $grouped_media['video'] as $index => $video ) {
+					$player_id     = 'godam-activity-' . esc_attr( $activity->id ) . '-' . $index;
+					$godam_videos .= do_shortcode(
+						'[godam_video id="' . esc_attr( $video->media_id ) .
+						'" context="buddypress" player_id="' . esc_attr( $player_id ) . '"]'
 					);
 				}
+			}
 
-				if ( $child_videos ) {
-					// Remove rtMedia <ul> from comment
-					$child->content = preg_replace(
-						'#<ul[^>]*class="[^"]*rtmedia-list[^"]*rtm-activity-media-list[^"]*rtmedia-activity-media-length-[0-9]+[^"]*rtm-activity-video-list[^"]*"[^>]*>.*?</ul>#si',
-						'',
-						$child->content
-					);
+			// Process video media in activity comments.
+			if ( ! empty( $activity->children ) && is_array( $activity->children ) ) {
+				foreach ( $activity->children as $child ) {
+					$child_media = $model->get( array( 'activity_id' => $child->id ) );
 
-					// Append Godam video players
-					$child->content .= '<div class="godam-video-players-wrapper">' . $child_videos . '</div>';
+					if ( empty( $child_media ) ) {
+						continue;
+					}
+
+					$child_videos = '';
+
+					foreach ( $child_media as $index => $video ) {
+						$player_id     = 'godam-comment-' . esc_attr( $child->id ) . '-' . $index;
+						$child_videos .= do_shortcode(
+							'[godam_video id="' . esc_attr( $video->media_id ) . '"]'
+						);
+					}
+
+					if ( $child_videos ) {
+						// Remove rtMedia <ul> from comment.
+						$child->content = preg_replace(
+							'#<ul[^>]*class="[^"]*rtmedia-list[^"]*rtm-activity-media-list[^"]*rtmedia-activity-media-length-[0-9]+[^"]*rtm-activity-video-list[^"]*"[^>]*>.*?</ul>#si',
+							'',
+							$child->content
+						);
+
+						// Append Godam video players.
+						$child->content .= '<div class="godam-video-players-wrapper">' . $child_videos . '</div>';
+					}
 				}
 			}
-		}
 
-		// Final video output appended to cleaned content
-		if ( $godam_videos ) {
-			$godam_videos = '<div class="godam-video-players-wrapper">' . $godam_videos . '</div>';
-		}
+			// Final video output appended to cleaned content.
+			if ( $godam_videos ) {
+				$godam_videos = '<div class="godam-video-players-wrapper">' . $godam_videos . '</div>';
+			}
 
-		return wp_kses_post( $clean_content ) . $godam_videos;
-	}, 10 );
+			return wp_kses_post( $clean_content ) . $godam_videos;
+		},
+		10
+	);
 
 	/**
 	 * Handle AJAX request for loading a single activity comment's HTML.
@@ -5374,6 +5390,14 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 	add_action( 'wp_ajax_get_single_activity_comment_html', 'handle_get_single_activity_comment_html' );
 	add_action( 'wp_ajax_nopriv_get_single_activity_comment_html', 'handle_get_single_activity_comment_html' );
 
+	/**
+	 * AJAX handler to fetch and return the HTML for a single activity comment.
+	 *
+	 * Validates the request, loads the activity comment by ID,
+	 * renders its HTML using the BuddyPress template, and returns it in a JSON response.
+	 *
+	 * @return void Outputs JSON response with rendered HTML or error message.
+	 */
 	function handle_get_single_activity_comment_html() {
 		check_ajax_referer( 'godam-ajax-nonce', 'nonce' );
 
@@ -5390,10 +5414,10 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 		global $activities_template;
 
-		// Backup original activity
+		// Backup original activity.
 		$original_activity = $activities_template->activity ?? null;
 
-		// Replace global for template rendering
+		// Replace global for template rendering.
 		$activities_template             = new stdClass();
 		$activities_template->activity  = $activity;
 
@@ -5401,12 +5425,12 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		bp_get_template_part( 'activity/entry' );
 		$html = ob_get_clean();
 
-		// Restore original
+		// Restore original.
 		if ( $original_activity ) {
 			$activities_template->activity = $original_activity;
 		}
 
-		wp_send_json_success( [ 'html' => $html ] );
+		wp_send_json_success( array( 'html' => $html ) );
 	}
 
 }
@@ -5435,21 +5459,21 @@ function enqueue_rtmedia_magnific_popup_script() {
 	$version    = RTMEDIA_VERSION;
 	$in_footer  = true;
 
-	// Deregister the script if already registered or enqueued to prevent conflicts
-	if (wp_script_is($handle, 'registered') || wp_script_is($handle, 'enqueued')) {
-		wp_deregister_script($handle);
+	// Deregister the script if already registered or enqueued to prevent conflicts.
+	if ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) {
+		wp_deregister_script( $handle );
 	}
 
-	// Determine dependencies based on whether Godam integration is active
-	$dependencies = [];
+	// Determine dependencies based on whether Godam integration is active.
+	$dependencies = array();
 
-	// If Godam plugin is NOT active, add dependencies for jQuery and mediaelement
-	if (!defined('RTMEDIA_GODAM_ACTIVE') || !RTMEDIA_GODAM_ACTIVE) {
-		$dependencies = ['jquery', 'rt-mediaelement-wp'];
+	// If Godam plugin is NOT active, add dependencies for jQuery and mediaelement.
+	if ( ! defined( 'RTMEDIA_GODAM_ACTIVE' ) || ! RTMEDIA_GODAM_ACTIVE ) {
+		$dependencies = array( 'jquery', 'rt-mediaelement-wp' );
 	}
 
-	// Enqueue the Magnific Popup script with the appropriate dependencies
-	wp_enqueue_script($handle, $script_src, $dependencies, $version, $in_footer);
+	// Enqueue the Magnific Popup script with the appropriate dependencies.
+	wp_enqueue_script( $handle, $script_src, $dependencies, $version, $in_footer );
 }
 
-add_action('wp_enqueue_scripts', 'enqueue_rtmedia_magnific_popup_script');
+add_action( 'wp_enqueue_scripts', 'enqueue_rtmedia_magnific_popup_script' );
