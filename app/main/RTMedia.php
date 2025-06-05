@@ -1267,7 +1267,7 @@ class RTMedia {
 					'rtmedia-emoji-picker',
 				),
 				RTMEDIA_VERSION,
-				args: true
+				true
 			);
 		} else {
 			wp_enqueue_script(
