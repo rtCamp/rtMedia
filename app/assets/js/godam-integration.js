@@ -62,7 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         initializePopupVideos();
                     }
 
-                    if (node.classList?.contains('activity')) {
+                    // Check for either 'activity' or 'groups' class.
+                    if (node.classList?.contains('activity') || node.classList?.contains('groups')) {
                         setTimeout(() => safeGODAMPlayer(node), 100);
                     }
                 }
