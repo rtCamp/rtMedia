@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 6.8.1
-Stable tag: 4.7.0
+Stable tag: 4.7.1
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -132,6 +132,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.1 [June 6, 2025] =
+
+* FIXED
+  * Fixed a critical error related to inline annotations on certain themes.
+  * Resolved shimmering issue for newly uploaded media on the BuddyPress Groups page when GoDAM is active.
 
 = 4.7.0 [June 2, 2025] =
 
@@ -1933,6 +1939,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
+
+= 4.7.1 =
+Improved integration with GoDAM services and resolved a critical inline annotation error on certain themes.
 
 = 4.7.0 =
 This update introduces comprehensive support for the GoDAM video player across rtMedia galleries and all BuddyPress components, including activity streams, groups, and forums.

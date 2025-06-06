@@ -151,6 +151,12 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.1
+
+* FIXED
+  * Fixed a critical error related to inline annotations on certain themes.
+  * Resolved shimmering issue for newly uploaded media on the BuddyPress Groups page when GoDAM is active.
+
 ### 4.7.0
 
 * ENHANCEMENTS
