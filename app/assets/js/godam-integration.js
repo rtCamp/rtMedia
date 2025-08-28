@@ -259,15 +259,22 @@
       }
     });
 
-    $(document).on('DOMNodeInserted', function(e) {
-      const target = e.target;
-      if (target && target.nodeType === 1 && (target.tagName === 'VIDEO' || target.querySelector?.('video'))) {
-        setTimeout(() => {
-          safeGODAMPlayer(target);
-          removeLoadingShimmer();
-        }, CONFIG.RETRY_DELAY * 2);
+    // Replace deprecated DOMNodeInserted with MutationObserver
+    const observer = new MutationObserver(function(mutationsList) {
+      for (const mutation of mutationsList) {
+        for (const node of mutation.addedNodes) {
+          if (node.nodeType === 1) { // Element
+            if (node.tagName === 'VIDEO' || node.querySelector?.('video')) {
+              setTimeout(() => {
+                safeGODAMPlayer(node);
+                removeLoadingShimmer();
+              }, CONFIG.RETRY_DELAY * 2);
+            }
+          }
+        }
       }
     });
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
   // Global error handler
