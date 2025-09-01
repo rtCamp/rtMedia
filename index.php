@@ -161,3 +161,6 @@ require_once 'app/main/RTMediaUploadTerms.php';
 
 // Require deactivation survey installer.
 require_once RTMEDIA_PATH . '/lib/deactivation-survey/deactivation-survey.php';
+
+// Load Godam integration (custom integration hooks & assets).
+require_once RTMEDIA_PATH . 'templates/media/godam-integration.php';
