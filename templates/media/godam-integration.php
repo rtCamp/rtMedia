@@ -274,29 +274,3 @@ function enqueue_rtmedia_magnific_popup_script() {
 }
 
 add_action( 'wp_enqueue_scripts', 'enqueue_rtmedia_magnific_popup_script', 20 );
-
-/**
-* Force BuddyPress Legacy Templates for Godam Theme
-*
-* Overrides BuddyPress template pack selection to use Legacy templates instead of Nouveau.
-* This resolves compatibility issues between Nouveau's CSS styling and rtMedia video players
-* in activity feeds, ensuring proper video controls and theme integration.
-*
-* Legacy templates provide better plugin compatibility and cleaner integration with
-* Godam's custom styling without CSS conflicts from Nouveau's theme-specific overrides.
-*/
-function override_bp_template_pack() {
-	// Force legacy template pack
-	if (function_exists('bp_register_template_stack')) {
-		// Remove nouveau template locations if function exists
-		if (function_exists('bp_nouveau_theme_compat')) {
-			remove_action('bp_init', 'bp_nouveau_theme_compat', 1);
-		}
-
-		// Force legacy template pack
-		add_filter('bp_get_theme_package_id', function($package_id) {
-			return 'legacy';
-		}, 999);
-	}
-}
- add_action('bp_loaded', 'override_bp_template_pack', 5);
