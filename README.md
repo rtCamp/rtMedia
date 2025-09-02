@@ -151,6 +151,16 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.2
+
+* FIXED
+  * Fixed GoDAM Player rendering issue on Multisite.
+  * Fixed GoDAM Player Skins not loading on Multisite.
+
+* ENHANCEMENTS
+  * Better handling of rtMedia Notifications.
+  * Updated jQuery Deprecated Methods.
+
 ### 4.7.1
 
 * FIXED
