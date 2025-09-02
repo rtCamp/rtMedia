@@ -288,13 +288,15 @@ add_action( 'wp_enqueue_scripts', 'enqueue_rtmedia_magnific_popup_script', 20 );
 function override_bp_template_pack() {
 	// Force legacy template pack
 	if (function_exists('bp_register_template_stack')) {
-		// Remove nouveau template locations
-		remove_action('bp_init', 'bp_nouveau_theme_compat', 1);
+		// Remove nouveau template locations if function exists
+		if (function_exists('bp_nouveau_theme_compat')) {
+			remove_action('bp_init', 'bp_nouveau_theme_compat', 1);
+		}
 
 		// Force legacy template pack
 		add_filter('bp_get_theme_package_id', function($package_id) {
 			return 'legacy';
 		}, 999);
 	}
- }
+}
  add_action('bp_loaded', 'override_bp_template_pack', 5);
