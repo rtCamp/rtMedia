@@ -2694,8 +2694,12 @@ function check_condition(key) {
  * Ref: https://www.kevinleary.net/jquery-parse-url
  * return bool
  */
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function check_url(query) {
-  query = query.replace(/\[/g, "\\[").replace(/\]/g, "\\]");
+  query = escapeRegExp(query);
   var expr = "[\\?&]" + query + "=([^&#]*)";
   var regex = new RegExp(expr);
   var results = regex.exec(window.location.href);
