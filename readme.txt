@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 6.8.1
-Stable tag: 4.7.1
+Stable tag: 4.7.2
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -132,6 +132,16 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.2 [September 02, 2025 ] =
+
+* FIXED
+  * Fixed GoDAM Player rendering issue on Multisite.
+  * Fixed GoDAM Player Skins not loading on Multisite.
+
+* ENHANCEMENTS
+  * Better handling of rtMedia Notifications.
+  * Updated jQuery Deprecated Methods.
 
 = 4.7.1 [June 6, 2025] =
 
@@ -1940,9 +1950,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
+= 4.7.2 =
+Improved GoDAM Player support, notification handling, and jQuery compatibility; fixed player rendering and skin issues on Multisite.
+
 = 4.7.1 =
 Improved integration with GoDAM services and resolved a critical inline annotation error on certain themes.
-
 = 4.7.0 =
 This update introduces comprehensive support for the GoDAM video player across rtMedia galleries and all BuddyPress components, including activity streams, groups, and forums.
 
