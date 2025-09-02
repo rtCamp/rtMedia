@@ -1463,7 +1463,7 @@ function rtm_search_media_text_validation() {
 
 // Get query string parameters from url
 function rtmediaGetParameterByName(name) {
-  name = name.replace(/\[/g, "\\[").replace(/\]/g, "\\]");
+  name = name.replace(/\\/g, "\\\\").replace(/\[/g, "\\[").replace(/\]/g, "\\]");
   var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
     results = regex.exec(location.search);
   return results == null
