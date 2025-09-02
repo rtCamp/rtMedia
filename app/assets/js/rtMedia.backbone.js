@@ -2657,23 +2657,24 @@ function change_rtBrowserAddressUrl(url, page) {
   }
 }
 
+// Escape regex special characters in a string so it can be safely used in a RegExp.
+// This covers: . * + ? ^ $ { } ( ) | [ ] \
+function escapeForRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 /**
  * Get query string value
  * ref: http://stackoverflow.com/questions/9870512/how-to-obtaining-the-querystring-from-the-current-url-with-javascript
  * return string
  */
 function getQueryStringValue(key) {
-  return decodeURIComponent(
-    window.location.search.replace(
-      new RegExp(
-        "^(?:.*[&\\?]" +
-          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-          "(?:\\=([^&]*))?)?.*$",
-        "i"
-      ),
-      "$1"
-    )
+  const safeKey = escapeForRegex(encodeURIComponent(key));
+  const regex = new RegExp(
+    "^(?:.*[&\\?]" + safeKey + "(?:=([^&]*))?)?.*$",
+    "i"
   );
+  return decodeURIComponent(window.location.search.replace(regex, "$1"));
 }
 
 /**
@@ -2693,8 +2694,12 @@ function check_condition(key) {
  * Ref: https://www.kevinleary.net/jquery-parse-url
  * return bool
  */
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function check_url(query) {
-  query = query.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  query = escapeRegExp(query);
   var expr = "[\\?&]" + query + "=([^&#]*)";
   var regex = new RegExp(expr);
   var results = regex.exec(window.location.href);
