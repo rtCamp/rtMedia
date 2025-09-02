@@ -1647,7 +1647,7 @@ function get_parameter(parameter, data) {
     data = window.location.href;
   }
 
-  var parameter = parameter.replace(/\[/g, "\\[").replace(/\]/g, "\\]");
+  var parameter = parameter.replace(/\\/g, "\\\\").replace(/\[/g, "\\[").replace(/\]/g, "\\]");
   var expr = parameter + "=([^&#]*)";
   var regex = new RegExp(expr);
   var results = regex.exec(data);
