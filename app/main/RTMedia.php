@@ -1216,12 +1216,12 @@ class RTMedia {
 	/**
 	 * Ensure WordPress 6.7 compatibility by handling jQuery Migrate dependency.
 	 * WordPress 6.7 removed jQuery Migrate by default, which can break plugins using deprecated jQuery methods.
-	 * 
+	 *
 	 * @since 4.6.23
 	 */
 	public function ensure_wp67_compatibility() {
 		global $wp_version;
-		
+
 		// Check if we're running WordPress 6.7 or higher
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
 			// Enqueue jQuery Migrate if not already enqueued to maintain backward compatibility
@@ -1234,16 +1234,16 @@ class RTMedia {
 	/**
 	 * WordPress 6.7 compatibility scripts enqueue.
 	 * Ensures jQuery Migrate is available early in the loading process.
-	 * 
+	 *
 	 * @since 4.6.23
 	 */
 	public function wp67_compatibility_scripts() {
-		global $wp_version;
-		
+	global $wp_version;
+
 		// Enqueue jQuery Migrate for WordPress 6.7+ compatibility
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
-			if ( ! wp_script_is( 'jquery-migrate', 'enqueued' ) ) {
-				wp_enqueue_script( 'jquery-migrate' );
+			if ( wp_script_is('jquery', 'enqueued') && !wp_script_is('jquery-migrate', 'enqueued') ) {
+			wp_enqueue_script( 'jquery-migrate' );
 			}
 		}
 	}
@@ -1251,12 +1251,12 @@ class RTMedia {
 	/**
 	 * WordPress 6.7 MediaElement.js compatibility initialization.
 	 * Ensures MediaElement is properly initialized in WordPress 6.7+
-	 * 
+	 *
 	 * @since 4.6.23
 	 */
 	public function wp67_media_element_init() {
 		global $wp_version;
-		
+
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
 			?>
 			<script type="text/javascript">
@@ -1265,7 +1265,7 @@ class RTMedia {
 				if (typeof wp !== 'undefined' && wp.mediaelement && wp.mediaelement.initialize) {
 					wp.mediaelement.initialize();
 				}
-				
+
 				// Fallback for older MediaElement initialization
 				if (typeof $().mediaelementplayer !== 'undefined') {
 					$('.wp-audio-shortcode, .wp-video-shortcode').not('.mejs-container').mediaelementplayer({
@@ -1274,7 +1274,7 @@ class RTMedia {
 						}
 					});
 				}
-				
+
 				// WordPress 6.7 compatibility: Add console log to verify fixes are working
 				if (window.console && console.log) {
 					console.log('rtMedia: WordPress 6.7 compatibility mode active');
