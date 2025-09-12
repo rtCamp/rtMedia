@@ -1243,7 +1243,7 @@ class RTMedia {
 		// Enqueue jQuery Migrate for WordPress 6.7+ compatibility
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
 			if ( wp_script_is( 'jquery', 'enqueued' ) && ! wp_script_is( 'jquery-migrate', 'enqueued' ) ) {
-			wp_enqueue_script( 'jquery-migrate' );
+				wp_enqueue_script( 'jquery-migrate' );
 			}
 		}
 	}
