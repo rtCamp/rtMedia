@@ -151,6 +151,11 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.3
+
+* FIXED
+  * Resolved jQuery Migrate dependency to prevent JS errors.
+
 ### 4.7.2
 
 * FIXED
