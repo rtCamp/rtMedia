@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 4.1
 Tested up to: 6.8.1
-Stable tag: 4.7.2
+Stable tag: 4.7.3
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -132,6 +132,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.3 [September 12, 2025] =
+
+* FIXED
+  * Resolved jQuery Migrate dependency to prevent JS errors.
 
 = 4.7.2 [September 02, 2025 ] =
 
@@ -1949,6 +1954,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
+
+= 4.7.3 =
+Fixes a JS error affecting some themes/sites without jQuery.
 
 = 4.7.2 =
 Improved GoDAM Player support, notification handling, and jQuery compatibility; fixed player rendering and skin issues on Multisite.
