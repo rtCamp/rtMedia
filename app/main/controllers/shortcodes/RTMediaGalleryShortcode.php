@@ -110,6 +110,8 @@ class RTMediaGalleryShortcode {
 			$allowed_extensions = implode( ',', $allowed_types['video']['extn'] );
 		} elseif ( false !== strpos( $request_uri, '/music/' ) && ! empty( $allowed_types['music']['extn'] ) ) {
 			$allowed_extensions = implode( ',', $allowed_types['music']['extn'] );
+		} elseif ( false !== strpos( $request_uri, '/document/' ) && ! empty( $allowed_types['document']['extn'] ) ) {
+			$allowed_extensions = implode( ',', $allowed_types['document']['extn'] );
 		}
 
 		$upload_max_size = ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M';
