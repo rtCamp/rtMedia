@@ -510,6 +510,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 				'meta_key' => 'bp_favorite_activities',
 				'offset'   => $offset,
 				'number'   => 1,
+				'fields'   => 'ID',
 			)
 		);
 

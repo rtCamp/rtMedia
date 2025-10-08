@@ -140,7 +140,6 @@ class RTMediaActivityUpgrade {
 			echo '0';
 			wp_die();
 		}
-
 	}
 
 	/**
@@ -199,11 +198,9 @@ class RTMediaActivityUpgrade {
 	/**
 	 * Get pending count.
 	 *
-	 * @param bool|int $activity_id Activity id.
-	 *
 	 * @return int
 	 */
-	public function get_pending_count( $activity_id = false ) {
+	public function get_pending_count() {
 		global $wpdb;
 		$rtmedia_activity_model = new RTMediaActivityModel();
 		$rtmedia_model          = new RTMediaModel();

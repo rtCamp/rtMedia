@@ -105,9 +105,8 @@ class RTMediaActivityModel extends RTDBModel {
 
 		if ( $results ) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	/**

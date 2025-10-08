@@ -137,9 +137,8 @@ class RTMediaLikeNotification extends RTMediaNotification {
 					esc_url( $return['link'] ),
 					esc_html( $return['text'] )
 				);
-			} else {
-				return $return;
 			}
+			return $return;
 		}
 	}
 
