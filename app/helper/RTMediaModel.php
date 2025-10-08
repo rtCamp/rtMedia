@@ -513,7 +513,7 @@ class RTMediaModel extends RTDBModel {
 			$remaining_photos    = ( ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
 			$remaining_videos    = ( ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
 			$remaining_music     = ( ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
-			$remaining_docs 	= ( ! empty( $counts['total']['document'] ) ) ? $counts['total']['document'] : 0;
+			$remaining_docs 	 = ( ! empty( $counts['total']['document'] ) ) ? $counts['total']['document'] : 0;
 		}
 
 		$media_counts = array(

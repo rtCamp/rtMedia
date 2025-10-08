@@ -1427,11 +1427,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @access public
 		 */
 		public function export_settings() {
-
-            // permission check.
-            if ( ! current_user_can( 'manage_options' ) ) {
-	            wp_send_json_error( array( 'message' => esc_html__( 'You do not have permission to export settings.', 'buddypress-media' ) ) );
-            }
+			// permission check.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( array( 'message' => esc_html__( 'You do not have permission to export settings.', 'buddypress-media' ) ) );
+			}
 
 			$rtmedia_option = get_option( 'rtmedia-options' );
 

@@ -7,17 +7,17 @@
 
 // Include plugin.php if not already loaded.
 if ( ! function_exists( 'is_plugin_active' ) ) {
-    include_once ABSPATH . 'wp-admin/includes/plugin.php';
+	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 }
 
 // If GoDAM is active right now, set a permanent flag.
 if ( is_plugin_active( 'godam/godam.php' ) ) {
-    update_option( 'godam_plugin_activated_once', true );
+	update_option( 'godam_plugin_activated_once', true );
 }
 
 // If the permanent flag is set, never show the notice.
 if ( get_option( 'godam_plugin_activated_once' ) ) {
-    return;
+	return;
 }
 
 ?>

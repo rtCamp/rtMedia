@@ -301,7 +301,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                                             AND album.import_status =0
                                         )b"
 			);
-
+		}
 		return 0;
 	}
 

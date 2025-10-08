@@ -325,7 +325,7 @@ class RTMediaTemplate {
 		&& isset( $rtmedia_query->action_query->action )
 		&& 'edit' === $rtmedia_query->action_query->action
 		&& count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification
-		$this->save_edit();
+			$this->save_edit();
 		}
 
 		return $this->get_default_template();
