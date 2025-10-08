@@ -638,9 +638,22 @@ class RTMediaQuery {
 		if ( isset( $this->query['context'] ) && 'activity' === $this->query['context'] ) {
 			$this->query['activity_id'] = array( 'value' );
 			global $wpdb;
-			// todo cache.
-			$sql_query = $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}bp_activity WHERE item_id = %d AND type = %s", 0, 'rtmedia_update' );
-			$this->query['activity_id']['value'] = $wpdb->get_col( $sql_query );
+			$cache_key   = 'rtmedia_activity_ids_0_rtmedia_update';
+    		$cache_group = 'rtmedia_activity';
+
+			$activity_ids = wp_cache_get( $cache_key, $cache_group );
+			if ( false === $activity_ids ) {
+				$sql_query = $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}bp_activity WHERE item_id = %d AND type = %s", 0, 'rtmedia_update' );
+
+				// Direct query required; safe because values are prepared.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+				$activity_ids = $wpdb->get_col( $sql_query );
+
+				// Store result in cache for 1 hour.
+       			 wp_cache_set( $cache_key, $activity_ids, $cache_group, HOUR_IN_SECONDS );
+			}
+	
+			$this->query['activity_id']['value'] = $activity_ids;
 		}
 
 		if ( isset( $this->query ) && isset( $this->query['global'] ) ) {

@@ -169,13 +169,15 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 							if ( false !== strpos( $entry, '.schema' ) && file_exists( $path . '/' . $entry ) ) {
 								if ( is_multisite() ) {
 									$table_name = str_replace( '.schema', '', strtolower( $entry ) );
+									// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
 									$check_res  = $wpdb->get_results( $wpdb->prepare( 'SHOW TABLES LIKE %s', '%rt_' . $table_name ), ARRAY_N );
+
 									if ( $check_res && count( $check_res ) > 0 && is_array( $check_res ) && isset( $check_res[0][0] ) ) {
 										$tb_name    = $check_res[0][0];
 										$table_name = ( ( $this->mu_single_table ) ? $wpdb->base_prefix : $wpdb->prefix ) . 'rt_' . $table_name;
 										if ( $tb_name !== $table_name ) {
-											$alter_sql = 'ALTER TABLE ' . $tb_name . ' RENAME TO ' . $table_name;
-											$wpdb->query( $alter_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+											$alter_sql = "ALTER TABLE `{$tb_name}` RENAME TO `{$table_name}`";
+											$wpdb->query( $alter_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 										}
 									}
 								}
@@ -206,6 +208,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 		public static function table_exists( $table ) {
 			global $wpdb;
 
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
 			if ( 1 === intval( $wpdb->query( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) ) ) {
 				return true;
 			}

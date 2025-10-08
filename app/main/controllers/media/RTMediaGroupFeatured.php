@@ -197,7 +197,9 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 	 */
 	public function media_exists( $id ) {
 		global $wpdb;
-		$post_exists = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE id = %d", $id ), 'ARRAY_A' );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is used for performance.
+		$post_exists = $wpdb->get_row( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE ID = %d", $id ), 'ARRAY_A' );
+
 		if ( $post_exists ) {
 			return true;
 		} else {

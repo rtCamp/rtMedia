@@ -1486,6 +1486,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 				$extracted_id = intval( $matches[1] ); // Extract numeric ID from video tag.
 
 				// Fetch media_id from rt_rtm_media table using the extracted ID.
+				// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 				$media_id = $wpdb->get_var(
 					$wpdb->prepare(
 						"SELECT media_id FROM {$wpdb->prefix}rt_rtm_media WHERE id = %d",
@@ -4901,7 +4902,8 @@ function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 	$views           = wp_cache_get( $view_cache_key, 'view_exporter' );
 
 	if ( false === $views || false === $view_count ) {
-		$views      = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery -- Direct query is required for custom table.
+		$views      = $wpdb->get_results( $query );
 		$view_count = $wpdb->num_rows;
 
 		wp_cache_set( $view_cache_key, $views, 'view_exporter', 300 );
@@ -5003,7 +5005,8 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 	$likes           = wp_cache_get( $likes_cache_key, 'like_exporter' );
 
 	if ( false === $likes || false === $like_count ) {
-		$likes      = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery -- Direct query is required for custom table.
+		$likes      = $wpdb->get_results( $query );
 		$like_count = $wpdb->num_rows;
 
 		wp_cache_set( $likes_cache_key, $likes, 'like_exporter', 300 );
@@ -5202,13 +5205,17 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 
 	global $wpdb;
 
+	$bp_activity_table = $wpdb->prefix . 'bp_activity';
+
 	$query = $wpdb->prepare(
-		'DELETE FROM ' . $wpdb->prefix . "bp_activity WHERE type='rtmedia_like_activity' AND user_id=%d LIMIT %d",
+		"DELETE FROM `{$bp_activity_table}` WHERE type=%s AND user_id=%d LIMIT %d",
+		'rtmedia_like_activity',
 		$user_data->ID,
 		$number
 	);
 
-	$items_removed = $wpdb->query( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+	$items_removed = $wpdb->query( $query );
 
 	$done = ( $items_removed < $number );
 

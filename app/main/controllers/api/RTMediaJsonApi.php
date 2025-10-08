@@ -478,6 +478,7 @@ class RTMediaJsonApi {
 		}
 
 		$hashed = $wp_hasher->HashPassword( $key );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => sanitize_user( $user_login ) ) );
 
 		// create email message.
@@ -691,14 +692,21 @@ class RTMediaJsonApi {
 		global $wpdb;
 		if ( empty( $media_id ) ) {
 			$user_data   = $this->rtmediajsonapifunction->rtmedia_api_user_data_from_id( $this->user_id );
-			$comments    = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->comments} WHERE user_id = %d limit 100", $this->user_id ), ARRAY_A );
+
+			$comments = get_comments(
+				array(
+					'user_id' => $this->user_id,
+					'number'  => 100,
+				)
+			);
+
 			$my_comments = array();
 			if ( ! empty( $comments ) ) {
 				foreach ( $comments as $comment ) {
 					$my_comments['comments'][] = array(
-						'comment_ID'      => $comment['comment_ID'],
-						'comment_content' => $comment['comment_content'],
-						'media_id'        => $comment['comment_post_ID'],
+						'comment_ID'      => $comment->comment_ID,
+						'comment_content' => $comment->comment_content,
+						'media_id'        => $comment->comment_post_ID,
 					);
 				}
 				$my_comments['user'] = array(
@@ -806,7 +814,14 @@ class RTMediaJsonApi {
 		}
 
 		$id       = rtmedia_media_id( $media_id );
-		$comments = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->comments} WHERE comment_ID = %d AND comment_post_ID = %d AND user_id = %d limit 100", $comment_id, $id, $this->user_id ), ARRAY_A );
+		$comments = get_comments(
+			array(
+				'comment_ID'      => $comment_id,
+				'comment_post_ID' => $id,
+				'user_id'         => $this->user_id,
+				'counts'          => true,
+			)
+		);
 
 		// Delete Comment.
 		if ( ! empty( $comments ) ) {
@@ -1251,6 +1266,7 @@ class RTMediaJsonApi {
 				$obj_activity = new RTMediaActivity( $update_activity_media, $privacy, false );
 
 				global $wpdb, $bp;
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 				$updated = $wpdb->update(
 					$bp->activity->table_name,
 					array(

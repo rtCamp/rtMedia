@@ -283,6 +283,7 @@ class RTMediaUploadEndpoint {
 								$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $username, count( $same_medias ), RTMEDIA_MEDIA_SLUG );
 								$action = apply_filters( 'rtmedia_buddypress_action_text_fitler_multiple_media', $action, $username, count( $same_medias ), $user->display_name );
 
+								// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 								$wpdb->update(
 									$bp->activity->table_name,
 									array(

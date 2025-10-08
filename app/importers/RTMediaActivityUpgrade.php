@@ -113,7 +113,8 @@ class RTMediaActivityUpgrade {
 				$activity_sql = $wpdb->prepare( " SELECT *, max(privacy) as max_privacy FROM {$rtmedia_model->table_name} WHERE activity_id > %d AND activity_id is NOT NULL GROUP BY activity_id ORDER BY id limit %d", $lastid, $limit ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			}
 
-			$activity_data = $wpdb->get_results( $activity_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
+			$activity_data = $wpdb->get_results( $activity_sql );
 
 			if ( is_array( $activity_data ) && ! empty( $activity_data ) ) {
 				if ( $rtmedia_activity_model->check( $activity_data[0]->activity_id ) ) {
@@ -214,7 +215,8 @@ class RTMediaActivityUpgrade {
 			$query_pending .= $wpdb->prepare( ' AND activity_id > %d', intval( $last_imported ) );
 		}
 
-		$pending_count = $wpdb->get_results( $query_pending ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
+		$pending_count = $wpdb->get_results( $query_pending );
 
 		if ( $pending_count && count( $pending_count ) > 0 ) {
 			return $pending_count[0]->pending;
@@ -231,7 +233,8 @@ class RTMediaActivityUpgrade {
 	public function get_total_count() {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
-		$total_count   = $wpdb->get_results( $wpdb->prepare( " SELECT count( DISTINCT activity_id) as total FROM {$rtmedia_model->table_name} WHERE activity_id > %d ", 0 ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
+		$total_count   = $wpdb->get_results( $wpdb->prepare( " SELECT count( DISTINCT activity_id) as total FROM {$rtmedia_model->table_name} WHERE activity_id > %d ", 0 ) );
 
 		if ( $total_count && count( $total_count ) > 0 ) {
 			return $total_count[0]->total;
@@ -248,7 +251,8 @@ class RTMediaActivityUpgrade {
 	public function get_last_imported() {
 		global $wpdb;
 		$rtmedia_activity_model = new RTMediaActivityModel();
-		$last_imported          = $wpdb->get_results( $wpdb->prepare( " SELECT activity_id from {$rtmedia_activity_model->table_name} ORDER BY activity_id DESC limit %d ", 1 ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
+		$last_imported          = $wpdb->get_results( $wpdb->prepare( " SELECT activity_id from {$rtmedia_activity_model->table_name} ORDER BY activity_id DESC limit %d ", 1 ) );
 
 		if ( $last_imported && count( $last_imported ) > 0 && isset( $last_imported[0] ) && isset( $last_imported[0]->activity_id ) ) {
 			return $last_imported[0]->activity_id;

@@ -43,6 +43,7 @@ class BPMediaImporter {
 	public static function table_exists( $table ) {
 		global $wpdb;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 		if ( 1 === intval( $wpdb->query( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) ) ) {
 			return true;
 		}
@@ -198,7 +199,10 @@ class BPMediaImporter {
 	 */
 	public static function cleanup( $table, $directory ) {
 		global $wpdb;
-		$wpdb->query( "DROP TABLE IF EXISTS $table" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$table = esc_sql( $table );
+		$sql = "DROP TABLE IF EXISTS `{$table}`";
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->base_prefix}bp_activity WHERE component = %s", 'album' ) );
 		if ( is_dir( $directory ) ) {
 			self::delete( $directory );

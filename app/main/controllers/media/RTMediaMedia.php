@@ -407,6 +407,8 @@ class RTMediaMedia {
 
 						$obj_activity = new RTMediaActivity( $activity_media );
 						global $wpdb, $bp;
+
+						// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 						$wpdb->update(
 							$bp->activity->table_name,
 							array(
@@ -529,7 +531,11 @@ class RTMediaMedia {
 
 		global $wpdb;
 		// update the post_parent value in wp_post table.
-		$status = $wpdb->update( $wpdb->posts, array( 'post_parent' => $album_id ), array( 'ID' => $media_id ) );
+		$status = wp_update_post(array(
+			'ID' => $media_id,
+			'post_parent' => $album_id
+		));
+		
 
 		if ( is_wp_error( $status ) || 0 === $status ) {
 			return false;

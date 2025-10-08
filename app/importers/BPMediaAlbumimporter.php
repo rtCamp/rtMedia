@@ -35,7 +35,9 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		}
 		global $wpdb;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
 		return $wpdb->query(
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange
 			"ALTER TABLE {$wpdb->base_prefix}bp_album
                             ADD COLUMN import_status BIGINT (20) NOT NULL DEFAULT 0,
                             ADD COLUMN old_activity_id BIGINT (20) NOT NULL DEFAULT 0,
@@ -54,6 +56,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 	public function column_exists( $column ) {
 		global $wpdb;
 
+		// Direct query is required for custom table. safe because SQL is prepared.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		return $wpdb->query( $wpdb->prepare( "SHOW COLUMNS FROM {$wpdb->base_prefix}bp_album LIKE %s limit 1", $column ) );
 	}
 
@@ -236,6 +240,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 			}
 		}
 
+		// Direct query is required for because core function may return invalid result due to caching.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$result = $wpdb->get_results( $wpdb->prepare( "SELECT ID from $wpdb->posts WHERE post_type='bp_media_album' AND post_status = 'publish' AND post_author = %d AND post_title LIKE %s limit 1", $author_id, $album_name ) );
 		if ( count( $result ) < 1 ) {
 			$album = new BPMediaAlbum();
@@ -244,6 +250,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		} else {
 			$album_id = $result[0]->ID;
 		}
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 		$wpdb->update( $wpdb->base_prefix . 'bp_activity', array( 'secondary_item_id' => - 999 ), array( 'id' => get_post_meta( $album_id, 'bp_media_child_activity', true ) ) );
 
 		return $album_id;
@@ -258,6 +265,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( self::table_exists( $table ) ) {
+			// Direct query is required for custom table.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			return $wpdb->get_results( "SELECT COUNT(DISTINCT owner_id) as users, COUNT(id) as media FROM {$table}" );
 		}
 
@@ -274,7 +283,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		$bp_album_table = $wpdb->base_prefix . 'bp_album';
 		$activity_table = $wpdb->base_prefix . 'bp_activity';
 		if ( $this->table_exists( $bp_album_table ) ) {
-			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 			return $wpdb->get_var(
 				"SELECT SUM( b.count ) AS total
                                         FROM (
@@ -291,8 +300,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                                             AND activity.type =  'bp_album_picture'
                                             AND album.import_status =0
                                         )b"
-			); // phpcs:enable WordPress.DB.PreparedSQL.NotPrepared WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		}
+			);
 
 		return 0;
 	}
@@ -307,6 +315,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		$bp_album_table = $wpdb->base_prefix . 'bp_album';
 
 		if ( $this->table_exists( $bp_album_table ) ) {
+			// Direct query is required for custom table.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
 			return $wpdb->get_var(
 				"SELECT COUNT( activity.id ) AS count
                         FROM {$wpdb->base_prefix}bp_activity AS activity
@@ -329,6 +339,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( self::table_exists( $table ) ) {
 
+			// Direct query is required for custom table.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			return $wpdb->get_results(
 				"SELECT COUNT( DISTINCT owner_id ) AS users
                     FROM {$wpdb->base_prefix}bp_album
@@ -354,6 +366,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( self::table_exists( $table ) ) {
+			// Direct query is required for custom table.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			return $wpdb->get_results( "SELECT COUNT(id) as media FROM {$wpdb->base_prefix}bp_album WHERE import_status!=0" );
 		}
 
@@ -369,6 +383,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		global $wpdb;
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( self::table_exists( $table ) ) {
+			// Direct query is required for custom table.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			return $wpdb->get_results( "SELECT id,title,pic_org_url FROM {$wpdb->base_prefix}bp_album WHERE import_status=-1" );
 		}
 
@@ -387,6 +403,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
 		$table = $wpdb->base_prefix . 'bp_album';
 		if ( self::table_exists( $table ) ) {
+			// Direct query is required for custom table.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching 
 			$bp_album_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->base_prefix}bp_album WHERE import_status = 0 ORDER BY owner_id LIMIT %d", $count ) );
 			return $bp_album_data;
 		}
@@ -426,15 +444,48 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 			$bpm_host_wp->check_and_create_album( 0, 0, $bp_album_item->owner_id );
 			$album_id          = self::create_album( $bp_album_item->owner_id, 'Imported Media' );
 			$imported_media_id = BPMediaImporter::add_media( $album_id, $bp_album_item->title, $bp_album_item->description, $bp_album_item->pic_org_path, $bp_album_item->privacy, $bp_album_item->owner_id, 'Imported Media' );
+
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 			$wpdb->update( $table, array( 'import_status' => ( $imported_media_id ) ? $imported_media_id : - 1 ), array( 'id' => $bp_album_item->id ), array( '%d' ), array( '%d' ) );
+
 			if ( $imported_media_id ) {
 				$comments += (int) self::update_recorded_time_and_comments( $imported_media_id, $bp_album_item->id, "{$wpdb->base_prefix}bp_album" );
 
-				$bp_album_media_id = $wpdb->get_var( "SELECT activity.id from $activity_table as activity INNER JOIN $table as album ON ( activity.item_id = album.id ) WHERE activity.item_id = $bp_album_item->id AND activity.component = 'album' AND activity.type='bp_album_picture'" );
-				$wpdb->update( $table, array( 'old_activity_id' => $bp_album_media_id ), array( 'id' => $bp_album_item->id ), array( '%d' ), array( '%d' ) );
-				$bp_new_activity_id = $wpdb->get_var( "SELECT id from $activity_table WHERE item_id = $imported_media_id AND component = 'activity' AND type='activity_update' AND secondary_item_id=0" );
-				$wpdb->update( $table, array( 'new_activity_id' => $bp_new_activity_id ), array( 'id' => $bp_album_item->id ), array( '%d' ), array( '%d' ) );
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+				$bp_album_media_id = $wpdb->get_var(
+					$wpdb->prepare( 
+						"SELECT activity.id FROM {$activity_table} AS activity INNER JOIN {$table} AS album ON ( activity.item_id = album.id ) WHERE activity.item_id = %d AND activity.component = %s AND activity.type = %s",
+						$bp_album_item->id, 'album', 'bp_album_picture'
+					)
+				);
 
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+				$wpdb->update(
+					$table,
+					array( 'old_activity_id' => $bp_album_media_id ),
+					array( 'id' => $bp_album_item->id ),
+					array( '%d' ),
+					array( '%d' )
+				);
+
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+				$bp_new_activity_id = $wpdb->get_var(
+					$wpdb->prepare( 
+						"SELECT id FROM {$activity_table} WHERE item_id = %d AND component = %s AND type = %s AND secondary_item_id = 0",
+						$imported_media_id, 'activity', 'activity_update'
+					)
+				);
+
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+				$wpdb->update(
+					$table,
+					array( 'new_activity_id' => $bp_new_activity_id ),
+					array( 'id' => $bp_album_item->id ),
+					array( '%d' ),
+					array( '%d' )
+				);
+
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 				if ( $wpdb->update(
 					$activity_meta_table,
 					array( 'activity_id' => $bp_new_activity_id ),
@@ -479,7 +530,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
 		echo wp_json_encode(
 			array(
-				'favorites' => $wpdb->get_var( "SELECT COUNT(id) from $table WHERE favorites != 0" ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				'favorites' => $wpdb->get_var( "SELECT COUNT(id) from $table WHERE favorites != 0" ), // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 				'users'     => $users['total_users'],
 				'offset'    => (int) get_site_option( 'bp_media_bp_album_favorite_import_status', 0 ),
 			)
@@ -522,7 +573,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
 					$new_favorite_activities = $favorite_activities;
 					foreach ( $favorite_activities as $key => $favorite ) {
-						$new_act = $wpdb->get_var( $wpdb->prepare( "SELECT new_activity_id from $table WHERE old_activity_id = %d limit 1", $favorite ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+						// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+						$new_act = $wpdb->get_var( $wpdb->prepare( "SELECT new_activity_id from $table WHERE old_activity_id = %d limit 1", $favorite ) );
 						if ( ! empty( $new_act ) ) {
 							$new_favorite_activities[ $key ] = $new_act;
 						}
@@ -578,19 +630,25 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 			$comments    = 0;
 
 			if ( $activity_id ) {
-				$date_uploaded   = $wpdb->get_var( $wpdb->prepare( "SELECT date_uploaded from $table WHERE id = %d", $bp_album_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+				$date_uploaded   = $wpdb->get_var( $wpdb->prepare( "SELECT date_uploaded from $table WHERE id = %d", $bp_album_id ) );
+				
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 				$old_activity_id = $wpdb->get_var( $wpdb->prepare( "SELECT id from {$wpdb->base_prefix}bp_activity WHERE component = 'album' AND type = 'bp_album_picture' AND item_id = %d", $bp_album_id ) );
 				if ( $old_activity_id ) {
+					// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 					$comments = $wpdb->get_results( $wpdb->prepare( "SELECT id,secondary_item_id from {$wpdb->base_prefix}bp_activity WHERE component = 'activity' AND type = 'activity_comment' AND item_id = %d", $old_activity_id ) );
 					foreach ( $comments as $comment ) {
 						$update = array( 'item_id' => $activity_id );
 						if ( $comment->secondary_item_id === $old_activity_id ) {
 							$update['secondary_item_id'] = $activity_id;
 						}
+						// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Update date recorded in custom table.
 						$wpdb->update( $wpdb->base_prefix . 'bp_activity', $update, array( 'id' => $comment->id ) );
 						BP_Activity_Activity::rebuild_activity_comment_tree( $activity_id );
 					}
 				}
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Update date recorded in custom table.
 				$wpdb->update( $wpdb->base_prefix . 'bp_activity', array( 'date_recorded' => $date_uploaded ), array( 'id' => $activity_id ) );
 
 				return count( $comments );

@@ -179,7 +179,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 				if ( is_array( $class ) ) {
 					$html .= ' ' . esc_attr( implode( ' ', $class ) );
 				} else {
-					throw new rtFormInvalidArgumentsException( 'class [' . $element . ']' );
+					throw new rtFormInvalidArgumentsException( 'class [' . esc_html( $element ) . ']' );
 				}
 			}
 			$html .= '" ';
@@ -542,7 +542,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 						'rtForm_options' => $rtform_options,
 					);
 				} else {
-					throw new rtFormInvalidArgumentsException( 'rtForm_options [' . $element . ']' );
+					throw new rtFormInvalidArgumentsException( 'rtForm_options [' . esc_html( $element ) . ']' );
 				}
 			} else {
 				throw new rtFormInvalidArgumentsException( 'attributes' );

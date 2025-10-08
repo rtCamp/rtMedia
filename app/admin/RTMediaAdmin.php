@@ -1789,7 +1789,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 								// Send AJAX request to mark the banner as dismissed
 								var data = {
 									action: 'install_godam_hide_admin_notice', // action hook
-									security: '<?php echo wp_create_nonce('install-godam-hide-notice'); ?>' // nonce for security
+									security: '<?php echo esc_js( wp_create_nonce('install-godam-hide-notice') ); ?>' // nonce for security
 								};
 
 								// Perform the AJAX request

@@ -110,6 +110,7 @@ if ( ! function_exists( 'rtmedia_transcoded_media_added_callback' ) ) {
 					if ( $activity_id && isset( $media_id ) && ! empty( $media_id ) && function_exists( 'rtmedia_is_comment_media' ) && rtmedia_is_comment_media( $media_id ) ) {
 
 						global $wpdb;
+						// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 						$activity_content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$wpdb->base_prefix}bp_activity WHERE id = %d", $activity_id ) );
 
 						if ( function_exists( 'rtmedia_update_content_of_comment_media' ) ) {

@@ -346,23 +346,28 @@ class RTMediaJsonApiFunctions {
 			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_invalid_media_id, $rtmjsonapi->msg_invalid_media_id ) );
 		}
 
-		$comments = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->comments} WHERE comment_post_ID = %d limit 100", $id ), ARRAY_A );
+		$comments = get_comments(
+			array(
+				'comment_post_ID' => $id,
+				'number'          => 100,
+			)
+		);
 
 		$media_comments = array();
 		if ( ! empty( $comments ) ) {
 
 			foreach ( $comments as $comment ) {
 				$media_comments['comments'][] = array(
-					'comment_ID'      => $comment['comment_ID'],
-					'comment_content' => $comment['comment_content'],
-					'user_id'         => $comment['user_id'],
+					'comment_ID'      => $comment->comment_ID,
+					'comment_content' => $comment->comment_content,
+					'user_id'         => $comment->user_id,
 				);
 
-				if ( ! array_key_exists( $comment['user_id'], $media_comments['user'] ) ) {
+				if ( ! array_key_exists( $comment->user_id, $media_comments['user'] ) ) {
 
-					$user_data = $this->rtmedia_api_user_data_from_id( $comment['user_id'] );
+					$user_data = $this->rtmedia_api_user_data_from_id( $comment->user_id );
 
-					$media_comments['user'][ $comment['user_id'] ] = array(
+					$media_comments['user'][ $comment->user_id ] = array(
 						'name'   => $user_data['name'],
 						'avatar' => $user_data['avatar'],
 					);

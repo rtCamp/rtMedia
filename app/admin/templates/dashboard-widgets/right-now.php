@@ -19,6 +19,7 @@
 			global $wpdb;
 			$results = wp_cache_get( 'rt-stats', 'rt-dashboard' );
 			if ( false === $results ) {
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query required; safe because table name is trusted.
 				$results = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id=%d group by media_type", get_current_blog_id() ) );
 				wp_cache_set( 'stats', $results, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
@@ -47,6 +48,7 @@
 			<?php
 			$total_count = wp_cache_get( 'total_count', 'rt-dashboard' );
 			if ( false === $total_count ) {
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query required; safe because table name is trusted.
 				$total_count = $wpdb->get_var( "select count(*) from {$wpdb->users}" );
 				wp_cache_set( 'total_count', $total_count, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
@@ -58,6 +60,7 @@
 			<?php
 			$with_media_count = wp_cache_get( 'with_media', 'rt-dashboard' );
 			if ( false === $with_media_count ) {
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query required; safe because table name is trusted.
 				$with_media_count = $wpdb->get_var( "select count(distinct media_author) from {$rtmedia_model->table_name}" );
 				wp_cache_set( 'with_media', $with_media_count, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
@@ -69,7 +72,8 @@
 			<?php
 			$comments = wp_cache_get( 'comments', 'rt-dashboard' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			if ( false === $comments ) {
-				$comments = $wpdb->get_var( "select count(*) from {$wpdb->comments} where comment_post_ID in ( select media_id from {$rtmedia_model->table_name} )" ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.WP.GlobalVariablesOverride.Prohibited
+				$comments = $wpdb->get_var( "select count(*) from {$wpdb->comments} where comment_post_ID in ( select media_id from {$rtmedia_model->table_name} )" );
 				wp_cache_set( 'comments', $comments, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
 			?>
@@ -80,6 +84,7 @@
 			<?php
 			$likes = wp_cache_get( 'likes', 'rt-dashboard' );
 			if ( false === $likes ) {
+    			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query required; safe because table name is trusted.
 				$likes = $wpdb->get_var( "select sum(likes) from {$rtmedia_model->table_name}" );
 				wp_cache_set( 'likes', $likes, 'rt-dashboard', HOUR_IN_SECONDS );
 			}

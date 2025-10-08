@@ -85,7 +85,7 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 			if ( is_array( $class ) ) {
 				$html .= ' ' . implode( ' ', $class );
 			} else {
-				throw new rtFormsInvalidArgumentsException( 'class [' . $element . ']' );
+				throw new rtFormsInvalidArgumentsException( 'class [' . esc_html( $element ) . ']' );
 			}
 		}
 		$html .= '"';

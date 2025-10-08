@@ -78,6 +78,7 @@ class RTMediaMigration {
 		if ( '' === rtmedia_get_site_option( 'rt_image_size_migration_fix', '' ) ) {
 			global $wpdb;
 
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 			$wpdb->get_row( $wpdb->prepare( "update $wpdb->postmeta set meta_value=replace(meta_value	,%s,%s) where meta_key = '_wp_attachment_metadata';", 'bp_media', 'rt_media' ) );
 
 			update_option( 'rt_image_size_migration_fix', 'fix' );
@@ -125,6 +126,7 @@ class RTMediaMigration {
 	public static function table_exists( $table ) {
 		global $wpdb;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 		if ( 1 === intval( $wpdb->query( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) ) ) {
 			return true;
 		}
@@ -163,12 +165,14 @@ class RTMediaMigration {
 		}
 		$sql_album_usercount = "select count(*) FROM $wpdb->usermeta where meta_key ='bp-media-default-album' ";
 
-		$_SESSION['migration_user_album'] = $wpdb->get_var( $sql_album_usercount ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+		$_SESSION['migration_user_album'] = $wpdb->get_var( $sql_album_usercount );
 		$count                            = intval( $_SESSION['migration_user_album'] );
 
 		if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
 			$sql_album_groupcount              = $wpdb->prepare( "select count(*) FROM {$bp_prefix}bp_groups_groupmeta where meta_key =%s", 'bp_media_default_album' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$_SESSION['migration_group_album'] = $wpdb->get_var( $sql_album_groupcount ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+			$_SESSION['migration_group_album'] = $wpdb->get_var( $sql_album_groupcount );
 			$count                            += intval( $_SESSION['migration_group_album'] );
 		}
 
@@ -191,7 +195,8 @@ class RTMediaMigration {
                                                     and is_spam <>1 and
                                                         not p.meta_value is NULL";
 
-			$_SESSION['migration_activity'] = $wpdb->get_var( $sql_bpm_comment_count ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+			$_SESSION['migration_activity'] = $wpdb->get_var( $sql_bpm_comment_count );
 			$count                         += intval( $_SESSION['migration_activity'] );
 		}
 
@@ -210,7 +215,8 @@ class RTMediaMigration {
                     a.post_id > 0 and  (NOT p.ID IS NULL)
                         and a.meta_key = 'bp-media-key'";
 
-		$_SESSION['migration_media'] = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+		$_SESSION['migration_media'] = $wpdb->get_var( $sql );
 		$count                      += intval( $_SESSION['migration_media'] );
 
 		return $count;
@@ -233,8 +239,9 @@ class RTMediaMigration {
                 where
                      a.meta_key = 'bp-media-key' and  (NOT p.ID IS NULL) and a.post_id not in (select media_id
                 from {$this->bmp_table} where blog_id = %d and media_id <> %d ) order by a.post_ID";
-		$sql = $wpdb->prepare( $sql, get_current_blog_id(), $album_id ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$row = $wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$sql = $wpdb->prepare( $sql, get_current_blog_id(), $album_id );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+		$row = $wpdb->get_row( $sql );
 		if ( $row ) {
 			return $row->post_ID;
 		} else {
@@ -267,7 +274,8 @@ class RTMediaMigration {
                     a.post_id > 0 and  (NOT p.ID IS NULL)
                         and a.meta_key = 'bp-media-key')";
 
-		$media_count = $wpdb->get_var( $wpdb->prepare( $sql, get_current_blog_id() ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+		$media_count = $wpdb->get_var( $wpdb->prepare( $sql, get_current_blog_id() ) );
 
 		if ( $flag ) {
 			return $media_count - 1;
@@ -291,7 +299,8 @@ class RTMediaMigration {
 				$pending_count .= " or ID in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
 			}
 				$pending_count .= ')';
-				$pending_count  = $wpdb->get_var( $pending_count ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+				$pending_count  = $wpdb->get_var( $pending_count );
 
 				$album_count  = intval( $_SESSION['migration_user_album'] );
 				$album_count += ( isset( $_SESSION['migration_group_album'] ) ) ? intval( $_SESSION['migration_group_album'] ) : 0;
@@ -304,6 +313,7 @@ class RTMediaMigration {
 			$comment_sql = $_SESSION['migration_activity'];
 		} else {
 			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 			$comment_sql = $wpdb->get_var(
 				"select count(*) from $wpdb->comments a
                         where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
@@ -365,7 +375,8 @@ class RTMediaMigration {
 
 		global $wpdb;
 
-		$album_id = $wpdb->get_var( $wpdb->prepare( "select media_id from $this->bmp_table where id = %d", $album_rt_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+		$album_id = $wpdb->get_var( $wpdb->prepare( "select media_id from $this->bmp_table where id = %d", $album_rt_id ) );
 
 		if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 			$bp_prefix = bp_core_get_table_prefix();
@@ -384,9 +395,11 @@ class RTMediaMigration {
 			}
 
 			$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;", '<ul class="bp-media-list-media">', '<div class="rtmedia-activity-container"><ul class="rtmedia-list large-block-grid-3">' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+			$wpdb->get_row( $sql );
 			$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;", '</ul>', '</ul></div>' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+			$wpdb->get_row( $sql );
 
 			$sql_group = "update $wpdb->posts set post_parent='{$album_id}' where post_parent in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
 
@@ -394,7 +407,8 @@ class RTMediaMigration {
 				$sql_group .= " or post_parent in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
 			}
 
-			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+			$wpdb->query( $sql_group );
 			$stage = 1;
 			rtmedia_update_site_option( 'rtmedia-migration', $stage );
 			$this->return_migration();
@@ -402,7 +416,21 @@ class RTMediaMigration {
 
 		if ( $stage < 2 ) {
 
-			$results    = $wpdb->get_results( "select * from $wpdb->posts where post_type='bp_media_album' and ID in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') limit 10" );
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+			$results = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT * FROM `{$wpdb->posts}` 
+					WHERE post_type = %s 
+					AND ID IN (
+						SELECT meta_value 
+						FROM `{$wpdb->usermeta}` 
+						WHERE meta_key = %s
+					)
+					LIMIT 10",
+					'bp_media_album',
+					'bp-media-default-album'
+				)
+			);
 			$delete_ids = '';
 			$sep        = '';
 
@@ -413,8 +441,13 @@ class RTMediaMigration {
 			}
 
 			if ( '' !== $delete_ids ) {
-				// @todo missing prepare
-				$wpdb->query( "delete from $wpdb->posts where ID in ({$delete_ids})" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+				$wpdb->query( 
+					$wpdb->prepare(
+						"DELETE FROM `{$wpdb->posts}` WHERE ID IN (%s)",
+						$delete_ids
+					)
+				);
 			}
 
 			if ( count( $results ) < 10 ) {
@@ -429,8 +462,24 @@ class RTMediaMigration {
 
 			if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
 
-				$sql_delete = "select * from $wpdb->posts where post_type='bp_media_album' and ID in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album') limit 10";
-				$results    = $wpdb->get_results( $sql_delete ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$groupmeta_table = $bp_prefix . 'bp_groups_groupmeta';
+
+				// Prepare query safely
+				$sql_delete = $wpdb->prepare(
+					"SELECT * FROM `{$wpdb->posts}` 
+					WHERE post_type = %s
+					AND ID IN (
+						SELECT meta_value 
+						FROM `{$groupmeta_table}` 
+						WHERE meta_key = %s
+					)
+					LIMIT 10",
+					'bp_media_album',
+					'bp_media_default_album'
+				);
+
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+				$results    = $wpdb->get_results( $sql_delete );
 				$delete_ids = '';
 				$sep        = '';
 
@@ -445,7 +494,8 @@ class RTMediaMigration {
 
 					if ( '' !== $delete_ids ) {
 						// @todo prepare
-						$wpdb->query( "delete from $wpdb->posts where ID in ({$delete_ids})" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+						// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+						$wpdb->query( "delete from $wpdb->posts where ID in ({$delete_ids})" );
 					}
 
 					if ( count( $results ) < 10 ) {
@@ -465,7 +515,8 @@ class RTMediaMigration {
 
 		$sql = "update $wpdb->posts set post_type='{$album_post_type}' where post_type='bp_media_album'";
 
-		if ( false !== $wpdb->query( $sql ) ) { // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+		if ( false !== $wpdb->query( $sql ) ) {
 
 			rtmedia_update_site_option( 'rtmedia-migration', '5' );
 			return true;
@@ -695,7 +746,8 @@ class RTMediaMigration {
                 order by a.post_id
                 limit %d";
 
-			$results = $wpdb->get_results( $wpdb->prepare( $sql, $lastid, $limit ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+			$results = $wpdb->get_results( $wpdb->prepare( $sql, $lastid, $limit ) );
 
 			if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 				$bp_prefix = bp_core_get_table_prefix();
@@ -762,7 +814,8 @@ class RTMediaMigration {
 
 		if ( false !== $album && ! ( is_object( $result ) ) ) {
 
-			$id = $wpdb->get_var( $wpdb->prepare( "select ID from {$this->bmp_table} where media_id = %d", $result ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+			$id = $wpdb->get_var( $wpdb->prepare( "select ID from {$this->bmp_table} where media_id = %d", $result ) );
 
 			if ( null === $id ) {
 				$sql    = "select
@@ -788,7 +841,7 @@ class RTMediaMigration {
                     where
                         a.post_id = %d and (NOT p.ID IS NULL)
                             and a.meta_key = 'bp_media_privacy'";
-				$result = $wpdb->get_row( $wpdb->prepare( $sql, $result ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$result = $wpdb->get_row( $wpdb->prepare( $sql, $result ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			} else {
 				return $id;
 			}
@@ -826,7 +879,8 @@ class RTMediaMigration {
 			}
 		}
 
-		$activity_data = $wpdb->get_row( $wpdb->prepare( "select * from {$bp_prefix}bp_activity where id= %d", $result->activity_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
+		$activity_data = $wpdb->get_row( $wpdb->prepare( "select * from {$bp_prefix}bp_activity where id= %d", $result->activity_id ) );
 		if ( 'album' !== $media_type ) {
 			$this->importmedia( $media_id, $prefix );
 		}
@@ -851,6 +905,7 @@ class RTMediaMigration {
                 and a.meta_key = 'bp_media_child_activity')",
 				$media_id
 			);
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 			$all_activity = $wpdb->get_results( $activity_sql );
 
 			remove_all_actions( 'wp_insert_comment' );
@@ -876,6 +931,7 @@ class RTMediaMigration {
 			$likes = 0;
 		}
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 		$wpdb->insert(
 			$this->bmp_table,
 			array(
@@ -894,6 +950,7 @@ class RTMediaMigration {
 			array( '%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d', '%d' )
 		);
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 		$last_id = $wpdb->insert_id;
 
 		if ( 'album' !== $media_type && ( function_exists( 'bp_core_get_user_domain' ) || function_exists( 'bp_members_get_user_url' ) ) && $activity_data ) {
@@ -916,6 +973,7 @@ class RTMediaMigration {
 				$activity_data->content = str_replace( $last_baseurl, $replace_img, $activity_data->content );
 			}
 			global $wpdb;
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 			$wpdb->update(
 				$bp_prefix . 'bp_activity',
 				array(
@@ -1203,9 +1261,8 @@ class RTMediaMigration {
 		} else {
 			$bp_prefix = $wpdb->prefix;
 		}
-
 		$sql = $wpdb->prepare( "update {$bp_prefix}bp_activity set action=replace(action,%s,%s) ,content=replace(content,%s,%s), primary_link=replace(primary_link,%s,%s) where id > 0;", $old, $new, $old, $new, $old, $new ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->get_row( $sql ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
 	}
 
 	/**

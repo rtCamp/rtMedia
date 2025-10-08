@@ -666,6 +666,7 @@ function rtmedia_edit_media_on_database( $data, $post_ID ) {
 
 							$activity_content = str_replace( $rtmedia_filepath_old, wp_get_attachment_url( $post_ID ), $activity_content_new );
 
+							// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 							$wpdb->update( $bp->activity->table_name, array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
 						}
 					}
