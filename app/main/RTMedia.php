@@ -192,7 +192,7 @@ class RTMedia {
 				global $wpdb;
 				$row = $album_row['result'][0];
 				if ( isset( $row['media_id'] ) ) {
-					// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+					// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 					$sql = $wpdb->prepare(
 						"update $wpdb->posts p
                                 left join
@@ -207,7 +207,7 @@ class RTMedia {
 						get_current_blog_id(),
 						$row['media_id'],
 						'%/rtMedia/%'
-					);
+					); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 					$wpdb->query( $sql );
 				}

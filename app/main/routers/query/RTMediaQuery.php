@@ -646,7 +646,7 @@ class RTMediaQuery {
 				$sql_query = $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}bp_activity WHERE item_id = %d AND type = %s", 0, 'rtmedia_update' );
 
 				// Direct query required; safe because values are prepared.
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
 				$activity_ids = $wpdb->get_col( $sql_query );
 
 				// Store result in cache for 1 hour.

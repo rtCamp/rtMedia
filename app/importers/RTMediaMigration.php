@@ -232,15 +232,19 @@ class RTMediaMigration {
 		$album_id = $album[0];
 
 		global $wpdb;
-		$sql = "select a.post_ID
-                from
-                    {$wpdb->postmeta} a  left join
-                    {$wpdb->posts} p ON (a.post_id = p.ID)
-                where
-                     a.meta_key = 'bp-media-key' and  (NOT p.ID IS NULL) and a.post_id not in (select media_id
-                from {$this->bmp_table} where blog_id = %d and media_id <> %d ) order by a.post_ID";
-		$sql = $wpdb->prepare( $sql, get_current_blog_id(), $album_id );
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+
+		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$sql = $wpdb->prepare(
+			"SELECT a.post_ID FROM
+			{$wpdb->postmeta} a LEFT JOIN
+			{$wpdb->posts} p ON (a.post_id = p.ID)
+            WHERE
+                a.meta_key = 'bp-media-key' AND  (NOT p.ID IS NULL) AND a.post_id NOT IN (SELECT media_id
+            FROM {$this->bmp_table} WHERE blog_id = %d AND media_id <> %d ) ORDER BY a.post_ID",
+			get_current_blog_id(),
+			$album_id
+		); // phpcs:enable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
 		$row = $wpdb->get_row( $sql );
 		if ( $row ) {
 			return $row->post_ID;
@@ -312,13 +316,19 @@ class RTMediaMigration {
 		if ( isset( $_SESSION['migration_activity'] ) && intval( $_SESSION['migration_media'] ) === intval( $media_count ) ) {
 			$comment_sql = $_SESSION['migration_activity'];
 		} else {
-			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared 
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 			$comment_sql = $wpdb->get_var(
-				"select count(*) from $wpdb->comments a
-                        where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
-                        {$wpdb->posts} p ON (b.media_id = p.ID) where  (NOT p.ID IS NULL) ) and a.comment_agent=''"
-			);
+				"SELECT COUNT(*)
+				FROM {$wpdb->comments} a
+				WHERE a.comment_post_ID IN (
+					SELECT b.media_id
+					FROM {$this->bmp_table} b
+					LEFT JOIN {$wpdb->posts} p ON b.media_id = p.ID
+					WHERE p.ID IS NOT NULL
+				)
+				AND a.comment_agent = ''",
+			); // phpcs:enable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		}
 
@@ -464,7 +474,7 @@ class RTMediaMigration {
 
 				$groupmeta_table = $bp_prefix . 'bp_groups_groupmeta';
 
-				// Prepare query safely
+				// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				$sql_delete = $wpdb->prepare(
 					"SELECT * FROM `{$wpdb->posts}` 
 					WHERE post_type = %s
@@ -476,9 +486,9 @@ class RTMediaMigration {
 					LIMIT 10",
 					'bp_media_album',
 					'bp_media_default_album'
-				);
+				); // phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table, safe because SQL is prepared.
 				$results    = $wpdb->get_results( $sql_delete );
 				$delete_ids = '';
 				$sep        = '';
@@ -887,23 +897,20 @@ class RTMediaMigration {
 
 		if ( $this->table_exists( $bp_prefix . 'bp_activity' ) && class_exists( 'BP_Activity_Activity' ) ) {
 			$bp_activity = new BP_Activity_Activity();
-			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$activity_sql = $wpdb->prepare(
-				"SELECT
-                            *
-                        FROM
-                            {$bp_prefix}bp_activity
-                        where
-                                        id in (select distinct
-                                    a.meta_value
-                                from
-                                    $wpdb->postmeta a
-                                        left join
-                                    $wpdb->posts p ON (a.post_id = p.ID)
-                                where
-                                    (NOT p.ID IS NULL) and p.ID = %d
-                and a.meta_key = 'bp_media_child_activity')",
-				$media_id
+				"SELECT *
+				FROM {$bp_prefix}bp_activity
+				WHERE id IN (
+					SELECT DISTINCT a.meta_value
+					FROM $wpdb->postmeta a
+					LEFT JOIN $wpdb->posts p ON a.post_id = p.ID
+					WHERE (NOT p.ID IS NULL)
+					AND p.ID = %d
+					AND a.meta_key = %s
+				)",
+				$media_id,
+				'bp_media_child_activity'
 			);
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 			$all_activity = $wpdb->get_results( $activity_sql );

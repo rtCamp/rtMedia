@@ -5208,7 +5208,7 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 	$bp_activity_table = $wpdb->prefix . 'bp_activity';
 
 	$query = $wpdb->prepare(
-		"DELETE FROM `{$bp_activity_table}` WHERE type=%s AND user_id=%d LIMIT %d",
+		"DELETE FROM `{$bp_activity_table}` WHERE type=%s AND user_id=%d LIMIT %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		'rtmedia_like_activity',
 		$user_data->ID,
 		$number
