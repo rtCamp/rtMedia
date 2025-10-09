@@ -608,7 +608,7 @@ class RTMediaQuery {
 		$rtmedia_shortcode = sanitize_text_field( filter_input( INPUT_GET, 'rtmedia_shortcode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( ! empty( $rtmedia_shortcode ) ) {
-			$query_data = $_REQUEST; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+			$query_data = $_REQUEST; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			foreach ( $query_data as $key => $val ) {
 				if ( ! in_array( $key, $allowed_query, true ) ) {
 					unset( $query_data[ $key ] );

@@ -353,16 +353,26 @@ class RTMediaInteraction {
 	 */
 	public function rtmedia_wpseo_og_url( $url ) {
 		global $wp_query;
+
 		if ( ! array_key_exists( 'media', $wp_query->query_vars ) ) {
 			return $url;
 		}
-		$s        = empty( $_SERVER['HTTPS'] ) ? '' : ( ( 'on' === $_SERVER['HTTPS'] ) ? 's' : '' );
-		$sp       = strtolower( wp_unslash( $_SERVER['SERVER_PROTOCOL'] ) );
-		$protocol = substr( $sp, 0, strpos( $sp, '/' ) ) . $s;
-		$port     = ( '80' === $_SERVER['SERVER_PORT'] ) ? '' : ( ':' . $_SERVER['SERVER_PORT'] );
 
-		return $protocol . '://' . esc_url( $_SERVER['SERVER_NAME'] ) . esc_url( $port ) . esc_url( $_SERVER['REQUEST_URI'] );
+		// Safely retrieve $_SERVER values with validation, unslash, and sanitization.
+		$https          = isset( $_SERVER['HTTPS'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTPS'] ) ) : '';
+		$server_protocol = isset( $_SERVER['SERVER_PROTOCOL'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_PROTOCOL'] ) ) : 'HTTP/1.1';
+		$server_port     = isset( $_SERVER['SERVER_PORT'] ) ? (int) sanitize_text_field( wp_unslash( $_SERVER['SERVER_PORT'] ) ) : 80;
+		$server_name     = isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : '';
+		$request_uri     = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+
+		$s        = ( 'on' === strtolower( $https ) ) ? 's' : '';
+		$sp       = strtolower( $server_protocol );
+		$protocol = substr( $sp, 0, strpos( $sp, '/' ) ) . $s;
+		$port     = ( 80 === $server_port ) ? '' : ( ':' . $server_port );
+
+		return esc_url( $protocol . '://' . $server_name . $port . $request_uri );
 	}
+
 
 	/**
 	 * Change description using Yoast SEO plugin's filter

@@ -1746,7 +1746,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function install_godam_admin_notice() {
 			// Get the current page from the URL (e.g., ?page=rtmedia-settings)
-			$current_page = isset($_GET['page']) ? $_GET['page'] : '';
+			$current_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No nonce needed, just reading a value.
 
 			// List of pages where the banner should be shown
 			$pages = self::$rtmedia_pages;
@@ -1808,15 +1808,17 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function install_godam_hide_admin_notice() {
 			// Verify nonce for security
-			if (!isset($_POST['security']) || !wp_verify_nonce($_POST['security'], 'install-godam-hide-notice')) {
-				wp_die('Nonce verification failed');
+			$nonce = isset( $_POST['security'] ) ? sanitize_text_field( wp_unslash( $_POST['security'] ) ) : '';
+
+			if ( ! wp_verify_nonce( $nonce, 'install-godam-hide-notice' ) ) {
+				wp_send_json_error( 'Nonce verification failed' );
 			}
 
 			// Update user meta to remember the dismissal
-			update_user_meta(get_current_user_id(), 'install_godam_hide_notice', true);
+			update_user_meta( get_current_user_id(), 'install_godam_hide_notice', true );
 
 			// Respond back to the AJAX request
-			wp_send_json_success('Notice dismissed');
+			wp_send_json_success( 'Notice dismissed' );
 		}
 
 	}

@@ -167,13 +167,17 @@ class RTMediaMigration {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
 		$_SESSION['migration_user_album'] = $wpdb->get_var( $sql_album_usercount );
-		$count                            = intval( $_SESSION['migration_user_album'] );
+		if ( ! empty( $_SESSION['migration_user_album'] ) ) {
+			$count = intval( $_SESSION['migration_user_album'] ?? 0 );
+		}
 
 		if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
 			$sql_album_groupcount              = $wpdb->prepare( "select count(*) FROM {$bp_prefix}bp_groups_groupmeta where meta_key =%s", 'bp_media_default_album' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
 			$_SESSION['migration_group_album'] = $wpdb->get_var( $sql_album_groupcount );
-			$count                            += intval( $_SESSION['migration_group_album'] );
+			if ( ! empty( $_SESSION['migration_group_album'] ) ) {
+				$count += intval( $_SESSION['migration_group_album'] );
+			}
 		}
 
 		if ( $this->table_exists( $bp_prefix . 'bp_activity' ) ) {
@@ -195,7 +199,7 @@ class RTMediaMigration {
                                                     and is_spam <>1 and
                                                         not p.meta_value is NULL";
 
-			$_SESSION['migration_activity'] = $wpdb->get_var( $sql_bpm_comment_count ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$_SESSION['migration_activity'] = $wpdb->get_var( $sql_bpm_comment_count ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			if ( ! empty( $_SESSION['migration_activity'] ) ) {
 				$count += intval( $_SESSION['migration_activity'] );
 			}
@@ -218,7 +222,9 @@ class RTMediaMigration {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
 		$_SESSION['migration_media'] = $wpdb->get_var( $sql );
-		$count                      += intval( $_SESSION['migration_media'] );
+		if ( ! empty( $_SESSION['migration_media'] ) ) {
+			$count += intval( $_SESSION['migration_media'] );
+		}
 
 		return $count;
 	}
@@ -288,7 +294,7 @@ class RTMediaMigration {
 
 		$state = intval( rtmedia_get_site_option( 'rtmedia-migration', '0' ) );
 
-		if ( 5 === $state ) {
+		if ( 5 === $state && isset( $_SESSION['migration_user_album'] ) ) {
 			$album_count  = intval( $_SESSION['migration_user_album'] );
 			$album_count += ( isset( $_SESSION['migration_group_album'] ) ) ? intval( $_SESSION['migration_group_album'] ) : 0;
 		} elseif ( $state > 0 ) {
@@ -314,7 +320,7 @@ class RTMediaMigration {
 			$album_count = 0;
 		}
 
-		if ( isset( $_SESSION['migration_activity'] ) && intval( $_SESSION['migration_media'] ) === intval( $media_count ) ) {
+		if ( isset( $_SESSION['migration_activity'] ) && isset( $_SESSION['migration_media'] ) && intval( $_SESSION['migration_media'] ) === intval( $media_count ) ) {
 			$comment_sql = intval( $_SESSION['migration_activity'] );
 		} else {
 			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared 
@@ -585,22 +591,21 @@ class RTMediaMigration {
 			<h3><?php esc_html_e( 'It will migrate following things', 'buddypress-media' ); ?> </h3>
 			<?php
 			esc_html_e( 'User Albums : ', 'buddypress-media' );
-			echo esc_html( $_SESSION['migration_user_album'] );
+			echo esc_html( intval( $_SESSION['migration_user_album'] ?? 0 ) );
 			?>
 			<br/>
 			<?php
 			if ( isset( $_SESSION['migration_group_album'] ) ) {
 				esc_html_e( 'Groups Albums : ', 'buddypress-media' );
-				echo esc_html( $_SESSION['migration_group_album'] );
+				echo esc_html( intval( $_SESSION['migration_group_album'] ) );
 				?>
 				<br/>
 				<?php
 			}
 			esc_html_e( 'Media : ', 'buddypress-media' );
-			echo esc_html( $_SESSION['migration_media'] );
+			echo esc_html( intval( $_SESSION['migration_media'] ?? 0 ) );
 			?>
 			<br/>
-			?>
 			<?php
 			if ( isset( $_SESSION['migration_activity'] ) ) {
 				esc_html_e( 'Comments : ', 'buddypress-media' );
