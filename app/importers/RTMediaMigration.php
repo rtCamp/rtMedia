@@ -195,9 +195,10 @@ class RTMediaMigration {
                                                     and is_spam <>1 and
                                                         not p.meta_value is NULL";
 
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
-			$_SESSION['migration_activity'] = $wpdb->get_var( $sql_bpm_comment_count );
-			$count                         += intval( $_SESSION['migration_activity'] );
+			$_SESSION['migration_activity'] = $wpdb->get_var( $sql_bpm_comment_count ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			if ( ! empty( $_SESSION['migration_activity'] ) ) {
+				$count += intval( $_SESSION['migration_activity'] );
+			}
 		}
 
 		$sql = "select count(*)
@@ -314,7 +315,7 @@ class RTMediaMigration {
 		}
 
 		if ( isset( $_SESSION['migration_activity'] ) && intval( $_SESSION['migration_media'] ) === intval( $media_count ) ) {
-			$comment_sql = $_SESSION['migration_activity'];
+			$comment_sql = intval( $_SESSION['migration_activity'] );
 		} else {
 			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared 
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
@@ -603,7 +604,7 @@ class RTMediaMigration {
 			<?php
 			if ( isset( $_SESSION['migration_activity'] ) ) {
 				esc_html_e( 'Comments : ', 'buddypress-media' );
-				echo esc_html( $_SESSION['migration_activity'] );
+				echo esc_html( intval( $_SESSION['migration_activity'] ) );
 				?>
 				<br/>
 			<?php } ?>
