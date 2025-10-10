@@ -405,7 +405,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				rtmedia_update_site_option( 'rtm-settings-saved', esc_html__( 'Settings saved.', 'buddypress-media' ) );
 			}
 
-			do_action( 'rtmedia_sanitize_settings', $_POST, $input ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
+			do_action( 'rtmedia_sanitize_settings', $_POST, $input ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since this function is responsible only for sanitization of data.
 
 			return $input;
 		}

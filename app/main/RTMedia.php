@@ -1121,7 +1121,6 @@ class RTMedia {
 	 * @return bool
 	 */
 	public function check_global_album() {
-		// todo: Nonce required.
 		$album        = new RTMediaAlbum();
 		$global_album = $album->get_default();
 

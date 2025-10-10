@@ -1349,7 +1349,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function save_multisite_options() {
 			global $rtmedia_admin;
-			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
+			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Nonce verification is handled by network_admin_edit_ action hook which requires valid nonce and proper capabilities.
 
 			$rtmedia_options = filter_input( INPUT_POST, 'rtmedia_options' );
 			if ( isset( $rtmedia_options ) ) {
