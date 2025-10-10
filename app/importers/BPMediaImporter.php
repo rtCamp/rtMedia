@@ -217,6 +217,16 @@ class BPMediaImporter {
 	 * @return bool
 	 */
 	public static function delete( $path ) {
+		global $wp_filesystem;
+
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		if ( ! $wp_filesystem ) {
+			WP_Filesystem();
+		}
+
 		if ( true === is_dir( $path ) ) {
 			$files = array_diff( scandir( $path ), array( '.', '..' ) );
 
@@ -224,11 +234,9 @@ class BPMediaImporter {
 				self::delete( realpath( $path ) . '/' . $file );
 			}
 
-			return rmdir( $path );
-		} else {
-			if ( true === is_file( $path ) ) {
-				return unlink( $path );
-			}
+			return $wp_filesystem->rmdir( $path );
+		} elseif ( true === is_file( $path ) ) {
+				return $wp_filesystem->delete( $path );
 		}
 
 		return false;
