@@ -179,7 +179,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 * @return void
 		 */
 		public function service_selector() {
-			// todo: nonce required.
+			// phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since we are only checking which tab is checked in the settings.
 			$form = filter_input( INPUT_POST, 'form', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 			include RTMEDIA_PATH . 'app/helper/templates/service-sector.php';
@@ -411,9 +411,9 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 * @return void
 		 */
 		public function get_form( $form = '' ) {
-			// todo: nonce required.
+
 			if ( empty( $form ) ) {
-				$form = filter_input( INPUT_POST, 'form' . FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+				$form = filter_input( INPUT_POST, 'form' . FILTER_SANITIZE_FULL_SPECIAL_CHARS ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since we are only checking which tab is selected and send the form for it.
 				$form = isset( $form ) ? $form : 'premium_support';
 			}
 			$meta_title = '';

@@ -779,6 +779,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'RTMedia_Admin_Settings_JS',
 					array(
 						'rtmedia_default_sizes_error_message' => esc_html__( 'Invalid value for [default_size_property].', 'buddypress-media' ),
+						'rtmedia_buddypress_convert_nonce'    => wp_create_nonce( 'rtmedia_buddypress_convert_nonce' ),
 					)
 				);
 
@@ -1505,7 +1506,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * Ajax callback function Convert videos mailchimp.
 		 */
 		public function convert_videos_mailchimp_send() {
-			// todo: nonce required.
+			$nonce = sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) );
+
+			if( ! wp_verify_nonce( $nonce, 'rtmedia_mailchip_convert' ) ) {
+				esc_html_e( 'Invalid Request.', 'buddypress-media' );
+				wp_die();
+			}
+
 			$interested = sanitize_text_field( filter_input( INPUT_POST, 'linkback', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			$choice     = sanitize_text_field( filter_input( INPUT_POST, 'choice', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			$url        = filter_input( INPUT_POST, 'url', FILTER_SANITIZE_URL );
