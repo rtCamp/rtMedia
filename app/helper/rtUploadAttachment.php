@@ -44,8 +44,18 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 					$uploaddir = $wpuploaddir['basedir'] . '/rtMedia/tmp/';
 
 					// If folder is not there, then create it.
-					if ( ! is_dir( $uploaddir ) ) {
-						if ( ! mkdir( $uploaddir, 0777, true ) ) {
+					if ( ! function_exists( 'WP_Filesystem' ) ) {
+						require_once ABSPATH . 'wp-admin/includes/file.php';
+					}
+
+					global $wp_filesystem;
+
+					if ( ! $wp_filesystem ) {
+						WP_Filesystem();
+					}
+
+					if ( ! $wp_filesystem->is_dir( $uploaddir ) ) {
+						if ( ! $wp_filesystem->mkdir( $uploaddir, FS_CHMOD_DIR ) ) {
 							die( 'Failed to create folders...' );
 						}
 					}
@@ -62,22 +72,20 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 
 					// Move file to target folder.
 					foreach ( $_FILES as $name => $file ) {
-
 						if ( $file['size'] <= 2000000 ) {
 							$ext = pathinfo( basename( $file['name'] ), PATHINFO_EXTENSION );
+							$target_file = $uploaddir . basename( $file['name'] );
 
 							if ( $import_export ) {
-
-								if ( 'json' === strtolower( $ext ) && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
-									$uploaded_file = $uploaddir . $file['name'];
-
+								if ( 'json' === strtolower( $ext ) && $wp_filesystem->move( $file['tmp_name'], $target_file, true ) ) {
+									$uploaded_file = $target_file;
 									$rtadmin = new RTMediaAdmin();
 									$rtadmin->import_settings( $uploaded_file );
 								} else {
 									$error = true;
 								}
-							} elseif ( in_array( strtolower( $ext ), $allowed_type, true ) && move_uploaded_file( $file['tmp_name'], $uploaddir . basename( $file['name'] ) ) ) {
-								$files[] = $uploaddir . $file['name'];
+							} elseif ( in_array( strtolower( $ext ), $allowed_type, true ) && $wp_filesystem->move( $file['tmp_name'], $target_file, true ) ) {
+								$files[] = $target_file;
 							} else {
 								$error = true;
 							}

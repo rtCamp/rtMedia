@@ -630,12 +630,20 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					echo wp_kses_post( ucwords( str_replace( '_', ' ', $option ) ) . str_repeat( ' ', 50 - strlen( $option ) ) . wp_strip_all_tags( $value ) . PHP_EOL );
 				}
 
-				readfile( 'debuginfo.txt' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
+				if ( ! function_exists( 'WP_Filesystem' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/file.php';
+				}
+
+				global $wp_filesystem;
+
+				if ( ! $wp_filesystem ) {
+					WP_Filesystem();
+				}
+
+				echo esc_html( $wp_filesystem->get_contents( 'debuginfo.txt' ) );
+
 				exit();
 			}
-
 		}
-
 	}
-
 }
