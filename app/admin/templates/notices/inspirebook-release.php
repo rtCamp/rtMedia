@@ -20,16 +20,3 @@
 	</p>
 </div>
 
-<script type="text/javascript">
-	jQuery( document ).ready( function() {
-		jQuery( '.rtmedia-inspire-book-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
-			var data = {
-				action: 'rtmedia_hide_inspirebook_release_notice',
-				_rtm_nonce: jQuery('#rtmedia_hide_inspirebook_nonce').val()
-			};
-			jQuery.post( ajaxurl, data, function ( response ) {
-				jQuery('.rtmedia-inspire-book-notice').remove();
-			});
-		});
-	});
-</script>

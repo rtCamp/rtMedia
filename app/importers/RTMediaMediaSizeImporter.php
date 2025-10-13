@@ -104,7 +104,7 @@ class RTMediaMediaSizeImporter {
 		if ( current_user_can( 'manage_options' ) ) {
 			$this->create_notice(
 				sprintf(
-					'<p><strong>rtMedia</strong>: %1$s <a href="%2$s">%3$s</a> %4$s. <a href="#" onclick="rtmedia_hide_media_size_import_notice()" style="float: right;">%5$s</a></p>',
+					'<p><strong>rtMedia</strong>: %1$s <a href="%2$s">%3$s</a> %4$s. <a href="#" id="rtmedia_hide_media_size_import_notice" style="float: right;">%5$s</a></p>',
 					esc_html__( ': Database table structure for rtMedia has been updated. Please', 'buddypress-media' ),
 					esc_url( admin_url( 'admin.php?page=rtmedia-migration-media-size-import&force=true' ) ),
 					esc_html__( 'Click Here', 'buddypress-media' ),
@@ -112,19 +112,6 @@ class RTMediaMediaSizeImporter {
 					esc_html__( 'Hide', 'buddypress-media' )
 				)
 			);
-
-			?>
-			<script type="text/javascript">
-				function rtmedia_hide_media_size_import_notice() {
-					var data = {action: 'rtmedia_hide_media_size_import_notice'};
-					jQuery.post(ajaxurl, data, function (response) {
-						response = response.trim();
-						if (response === '1')
-							jQuery('.rtmedia-media-size-import-error').remove();
-					});
-				}
-			</script>
-			<?php
 		}
 	}
 
@@ -142,6 +129,7 @@ class RTMediaMediaSizeImporter {
 				'href'    => array(),
 				'onclick' => array(),
 				'style'   => array(),
+				'id' 	  => array(),
 			),
 			'strong' => array(),
 		);

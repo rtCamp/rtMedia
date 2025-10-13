@@ -761,6 +761,15 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$admin_pages = apply_filters( 'rtmedia_filter_admin_pages_array', $admin_pages );
 			$suffix      = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
 
+
+			// Enqueue importer script only on importer pages.
+			if (
+				( false !== strpos( $hook, 'rtmedia-media-size-import' ) ) ||
+				( false !== strpos( $hook, 'rtmedia-activity-upgrade' ) )
+			) {
+				wp_enqueue_script( 'rtmedia-importer', RTMEDIA_URL . 'app/assets/admin/js/importer' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+			}
+
 			if ( in_array( $hook, $admin_pages, true ) || strpos( $hook, 'rtmedia-migration' ) ) {
 
 				$admin_ajax = admin_url( 'admin-ajax.php' );
@@ -773,6 +782,19 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				} else {
 					wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin.min.js', array( 'backbone', 'wp-util' ), RTMEDIA_VERSION, true );
 				}
+
+				// Enqueue JS file for GoDAM notice show/hide.
+				wp_enqueue_script( 'rtmedia-rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/rtmedia-admin.min.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+				wp_localize_script(
+					'rtmedia-rtmedia-admin',
+					'rtmedia_rtmedia_admin',
+					array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'nonce'    => wp_create_nonce( 'install-godam-hide-notice' ),
+						'bp_is_active__activity' => ( class_exists( 'BuddyPress' ) && bp_is_active( 'activity' ) ) ? true : false,
+						'bp_is_active__groups'  => ( class_exists( 'BuddyPress' ) && bp_is_active( 'groups' ) ) ? true : false,
+					)
+				);
 
 				wp_localize_script(
 					'rtmedia-admin',

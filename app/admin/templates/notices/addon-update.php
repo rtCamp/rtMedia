@@ -27,16 +27,3 @@
 		<?php wp_nonce_field( 'rtmedia-addon-update-notice-3_8', 'rtmedia-addon-notice' ); ?>
 	</p>
 </div>
-<script type="text/javascript">
-	jQuery( document ).ready( function() {
-		jQuery( '.rtmedia-addon-update-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
-			var data = {
-				action: 'rtmedia_hide_addon_update_notice',
-				_rtm_nonce: jQuery('#rtmedia-addon-notice').val(),
-			};
-			jQuery.post(ajaxurl, data, function (response) {
-				jQuery('.rtmedia-addon-update-notice').remove();
-			});
-		});
-	});
-</script>
