@@ -810,10 +810,8 @@ jQuery( document ).ready( function ( $ ) {
 			email: jQuery( '.email' ).val(),
 			url: jQuery( '.url' ).val(),
 			choice: jQuery( 'input[name="choice"]:checked' ).val(),
-			interested: jQuery( 'input[name="interested"]:checked' ).val(),
-			wp_nonce: RTMedia_Admin_Settings_JS?.rtmedia_buddypress_convert_nonce ?? ''
+			interested: jQuery( 'input[name="interested"]:checked' ).val()
 		};
-		
 		jQuery.post( ajaxurl, data, function ( response ) {
 			var p_data = {
 				msg :response,

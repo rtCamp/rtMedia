@@ -1121,15 +1121,16 @@ class RTMedia {
 	 * @return bool
 	 */
 	public function check_global_album() {
+		// todo: Nonce required.
 		$album        = new RTMediaAlbum();
 		$global_album = $album->get_default();
 
-		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are just intercepting if a action is for a different kind of upload and removing a field based on it.
-		$mode   = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );   // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are just intercepting if a action is for a different kind of upload and removing a field based on it.
+		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$mode   = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		// Hack for plupload default name.
 		if ( ! empty( $action ) && ! empty( $mode ) && 'file_upload' === $mode ) {
-			unset( $_POST['name'] ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- We are removing the value from the $_POST.
+			unset( $_POST['name'] ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
 		}
 
 		global $rtmedia_error;
@@ -1490,8 +1491,7 @@ class RTMedia {
 
 		// Localizing strings for rtMedia.backbone.js.
 		$rtmedia_backbone_strings = array(
-			'rtm_edit_file_name'          => esc_html__( 'Edit File Name', 'buddypress-media' ),
-			'rtmedia_album_gallery_nonce' => wp_create_nonce( 'rtmedia_album_gallery' ),
+			'rtm_edit_file_name' => esc_html__( 'Edit File Name', 'buddypress-media' ),
 		);
 
 		// Localise fot rtmedia-backcone js.

@@ -1493,7 +1493,8 @@ class RTMediaBuddyPressActivity {
 		// if content is non-breaking space then set it to empty.
 		if ( isset( $args['content'] ) && '' === $args['content'] ) {
 
-			if ( ! empty( $_POST['rtMedia_attached_files'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Not needed since we  are only checking if the field exists and it is done already.
+			// Nonce verification is not required here as it is already done in previously.
+			if ( ! empty( $_POST['rtMedia_attached_files'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				$args['content'] = '&nbsp;';
 			}
 		}

@@ -779,7 +779,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'RTMedia_Admin_Settings_JS',
 					array(
 						'rtmedia_default_sizes_error_message' => esc_html__( 'Invalid value for [default_size_property].', 'buddypress-media' ),
-						'rtmedia_buddypress_convert_nonce'    => wp_create_nonce( 'rtmedia_buddypress_convert_nonce' ),
 					)
 				);
 
@@ -1350,7 +1349,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function save_multisite_options() {
 			global $rtmedia_admin;
-			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Nonce verification is handled by network_admin_edit_ action hook which requires valid nonce and proper capabilities.
+			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
 
 			$rtmedia_options = filter_input( INPUT_POST, 'rtmedia_options' );
 			if ( isset( $rtmedia_options ) ) {
@@ -1516,13 +1515,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * Ajax callback function Convert videos mailchimp.
 		 */
 		public function convert_videos_mailchimp_send() {
-			$nonce = sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) );
-
-			if( ! wp_verify_nonce( $nonce, 'rtmedia_buddypress_convert_nonce' ) ) {
-				esc_html_e( 'Invalid Request.', 'buddypress-media' );
-				wp_die();
-			}
-
+			// todo: nonce required.
 			$interested = sanitize_text_field( filter_input( INPUT_POST, 'linkback', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			$choice     = sanitize_text_field( filter_input( INPUT_POST, 'choice', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			$url        = filter_input( INPUT_POST, 'url', FILTER_SANITIZE_URL );

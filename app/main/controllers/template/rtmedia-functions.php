@@ -3803,7 +3803,7 @@ function rtmedia_get_allowed_upload_types_array() {
 function rtmedia_add_media( $upload_params = array() ) {
 
 	if ( empty( $upload_params ) ) {
-		$upload_params = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Not needed since it is only used to set the global value. It is being sanitized inside set_post_object function.
+		$upload_params = $_POST; // phpcs:ignore
 	}
 
 	$upload_model = new RTMediaUploadModel();

@@ -20,17 +20,12 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 * @access public
 		 */
 		public function __construct() {
-
+			// todo: nonce required.
 			if ( ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				add_action( 'admin_init', array( $this, 'settings' ) );
 
-				$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since we are only checking if it is a save action.
+				$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 				if ( isset( $rtmedia_option_save ) ) {
-					
-					if( ! isset( $_POST ) || !array_key_exists( 'wp_nonce', $_POST ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) ), 'rtmedia_settings' ) ) {
-						return;
-					}
-
 					add_action( 'init', array( $this, 'settings' ) );
 				}
 			}
@@ -213,15 +208,15 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 * @return void
 		 */
 		public function settings() {
-			
+			// todo: nonce required.
 			global $rtmedia, $rtmedia_addon, $rtmedia_save_setting_single;
 			$options          = rtmedia_get_site_option( 'rtmedia-options' );
 			$options          = $this->sanitize_options( $options );
 			$rtmedia->options = $options;
 			// Save Settings first then proceed.
-			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since it is the responsibility of caller function to verify nonce.
+			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( isset( $rtmedia_option_save ) && current_user_can( 'manage_options' ) ) {
-				$options               = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since it is the responsibility of caller function to verify nonce.
+				$options               = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 				$options               = $this->sanitize_before_save_options( $options );
 				$options               = apply_filters( 'rtmedia_pro_options_save_settings', $options );
 				$is_rewrite_rule_flush = apply_filters( 'rtmedia_flush_rewrite_rule', false );
@@ -231,7 +226,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 					flush_rewrite_rules( false );
 				}
 				$settings_saved = '';
-				$setting_save   = filter_input( INPUT_GET, 'settings-saved', FILTER_SANITIZE_FULL_SPECIAL_CHARS ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since it is the responsibility of caller function to verify nonce.
+				$setting_save   = filter_input( INPUT_GET, 'settings-saved', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 				if ( ! isset( $setting_save ) ) {
 					$settings_saved = '&settings-saved=true';
 				}
@@ -410,7 +405,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				rtmedia_update_site_option( 'rtm-settings-saved', esc_html__( 'Settings saved.', 'buddypress-media' ) );
 			}
 
-			do_action( 'rtmedia_sanitize_settings', $_POST, $input ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since this function is responsible only for sanitization of data.
+			do_action( 'rtmedia_sanitize_settings', $_POST, $input ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
 
 			return $input;
 		}
