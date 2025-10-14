@@ -1124,8 +1124,8 @@ class RTMedia {
 		$album        = new RTMediaAlbum();
 		$global_album = $album->get_default();
 
-		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are just intercepting if a action is for a different kind of upload.
-		$mode   = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );   // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are just intercepting if a action is for a different kind of upload.
+		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are just intercepting if a action is for a different kind of upload and removing a field based on it.
+		$mode   = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );   // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are just intercepting if a action is for a different kind of upload and removing a field based on it.
 
 		// Hack for plupload default name.
 		if ( ! empty( $action ) && ! empty( $mode ) && 'file_upload' === $mode ) {
