@@ -1136,19 +1136,13 @@ function rtmedia_after_media_callback() {
 	$comment_media = false;
 	if ( ! empty( $rtmedia_id ) ) {
 		$comment_media = rtmedia_is_comment_media( $rtmedia_id );
-		if ( ! empty( $comment_media ) ) {
-			?>
-			<script type="text/javascript">
-				comment_media = true;
-			</script>
-			<?php
-		} else {
-			?>
-			<script type="text/javascript">
-				comment_media = false;
-			</script>
-			<?php
-		}
+		wp_localize_script(
+			'rtmedia-main',
+			'rtmedia_after_media_vars',
+			array(
+				'comment_media' => (bool) $comment_media,
+			)
+		);
 	}
 }
 add_action( 'rtmedia_after_media', 'rtmedia_after_media_callback', 10 );
