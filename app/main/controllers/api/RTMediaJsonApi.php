@@ -1082,11 +1082,11 @@ class RTMediaJsonApi {
 		$ec_avatar_updated  = 130003;
 		$msg_avatar_updated = esc_html__( 'avatar updated', 'buddypress-media' );
 
-		if ( empty( $_FILES['file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Not needed since we are only checking if the value exists.
+		if ( empty( $_FILES['file'] ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_file, $msg_no_file ) );
 		}
 
-		$uploaded = bp_core_avatar_handle_upload( $_FILES, 'xprofile_avatar_upload_dir' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- It is verified by the external plugin function.
+		$uploaded = bp_core_avatar_handle_upload( $_FILES, 'xprofile_avatar_upload_dir' );
 		if ( ! $uploaded ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_image, $msg_invalid_image ) );
 		} else {
@@ -1139,7 +1139,7 @@ class RTMediaJsonApi {
 		$updated       = false;
 		$uploaded_look = false;
 
-		if ( empty( $rtmedia_file ) && empty( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are only checking presence of a data.
+		if ( empty( $rtmedia_file ) && empty( $_FILES['rtmedia_file'] ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_file, $msg_no_file ) );
 		}
 
@@ -1154,7 +1154,7 @@ class RTMediaJsonApi {
 			}
 		}
 
-		if ( ! empty( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are only checking presence of a data.
+		if ( ! empty( $_FILES['rtmedia_file'] ) ) {
 			// phpcs:disable Squiz.PHP.DisallowMultipleAssignments.Found, WordPress.Security.NonceVerification.NoNonceVerification
 			$_POST['rtmedia_upload_nonce']       = $_REQUEST['rtmedia_upload_nonce'] = wp_create_nonce( 'rtmedia_upload_nonce' );
 			$_POST['rtmedia_simple_file_upload'] = $_REQUEST['rtmedia_simple_file_upload'] = 1;

@@ -256,7 +256,6 @@ jQuery(function ($) {
             backbone: true,
             is_album: o_is_album,
             is_edit_allowed: o_is_edit_allowed,
-            wp_nonce: rtmedia_backbone_strings?.rtmedia_album_gallery_nonce,
           },
           function () {
             rtmedia_load_template_flag = false;

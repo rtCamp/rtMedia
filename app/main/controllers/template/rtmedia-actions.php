@@ -807,7 +807,7 @@ function rtmedia_addons_admin_notice() {
 
 	if ( 'rtmedia_page_rtmedia-license' === $screen->id ) {
 
-		if ( isset( $_POST ) && count( $_POST ) > 0 ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- We are only fetching the count of elements in $_POST so nonce verification is not needed.
+		if ( isset( $_POST ) && count( $_POST ) > 0 ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
 			?>
 			<div class="notice notice-success is-dismissible">
 				<p><?php esc_html_e( 'Settings has been saved successfully.', 'buddypress-media' ); ?></p>

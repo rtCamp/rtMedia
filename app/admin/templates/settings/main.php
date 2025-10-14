@@ -24,7 +24,6 @@
 						</div>
 					<?php } ?>
 					<input type="hidden" name="rtmedia-options-save" value="true">
-					<?php wp_nonce_field( 'rtmedia_settings', 'wp_nonce' ); ?>
 					<input type="submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php esc_attr_e( 'Save Settings', 'buddypress-media' ); ?>">
 				</div>
 				<?php
@@ -56,7 +55,6 @@
 					</div>
 
 					<input type="hidden" name="rtmedia-options-save" value="true">
-					<?php wp_nonce_field( 'rtmedia_settings', 'wp_nonce' ); ?>
 					<input type="submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php esc_attr_e( 'Save Settings', 'buddypress-media' ); ?>">
 				</div>
 			</div>
