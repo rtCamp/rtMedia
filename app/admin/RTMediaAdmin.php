@@ -770,6 +770,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				wp_enqueue_script( 'rtmedia-importer', RTMEDIA_URL . 'app/assets/admin/js/importer' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
 			}
 
+			// Enqueue migration JS on migration pages to avoid inline scripts.
+			if ( false !== strpos( $hook, 'rtmedia-migration' ) ) {
+				wp_enqueue_script( 'rtmedia-migration', RTMEDIA_URL . 'app/assets/admin/js/migration' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+			}
+
 			if ( in_array( $hook, $admin_pages, true ) || strpos( $hook, 'rtmedia-migration' ) ) {
 
 				$admin_ajax = admin_url( 'admin-ajax.php' );

@@ -87,6 +87,11 @@ module.exports = function (grunt) {
                 files: {
                     'app/assets/js/wp67-mediaelement-init.min.js': ['app/assets/js/wp67-mediaelement-init.js']
                 }
+            },
+            migration: {
+                files: {
+                    'app/assets/admin/js/migration.min.js': ['app/assets/admin/js/migration.js']
+                }
             }
         }
     });
