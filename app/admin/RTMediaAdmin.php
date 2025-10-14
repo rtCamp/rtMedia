@@ -1508,7 +1508,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function convert_videos_mailchimp_send() {
 			$nonce = sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) );
 
-			if( ! wp_verify_nonce( $nonce, 'rtmedia_mailchip_convert' ) ) {
+			if( ! wp_verify_nonce( $nonce, 'rtmedia_buddypress_convert_nonce' ) ) {
 				esc_html_e( 'Invalid Request.', 'buddypress-media' );
 				wp_die();
 			}
