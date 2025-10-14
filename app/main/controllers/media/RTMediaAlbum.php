@@ -207,7 +207,7 @@ class RTMediaAlbum {
 			'privacy'      => null,
 		);
 
-		$attributes  = apply_filters( 'rtmedia_before_save_album_attributes', $attributes, $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
+		$attributes  = apply_filters( 'rtmedia_before_save_album_attributes', $attributes, $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- It is the responsibility of the calling function to implement nonce verification.
 		$rtmedia_id  = $this->media->insert_album( $attributes );
 		$rtmedia_nav = new RTMediaNav();
 		$media_count = $rtmedia_nav->refresh_counts(

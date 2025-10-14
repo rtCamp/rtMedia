@@ -35,7 +35,7 @@ class RTMediaUploadEndpoint {
 	public function template_redirect( $create_activity = true ) {
 		// todo refactor below function so it takes param also and use if passed else use POST request.
 		ob_start();
-		if ( ! count( $_POST ) ) { // phpcs:ignore
+		if ( ! count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Not needed since we are only counting the elements in $_POST
 			include get_404_template();
 		} else {
 
