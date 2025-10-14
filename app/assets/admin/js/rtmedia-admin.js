@@ -102,4 +102,16 @@ jQuery(document).ready(function($) {
 		});
 	});
 
+	$('.upload-filetype-network-settings-error').on('click', '.update-network-settings-upload-filetypes', function () {
+		$('.update-network-settings-upload-filetypes').siblings('img').show();
+		$('.update-network-settings-upload-filetypes').prop('disabled', true);
+		$.post(ajaxurl, {action: 'rtmedia_correct_upload_filetypes', _rtm_nonce: $('rtm-file-type-error').val()}, function (response) {
+			if (response) {
+				$('.upload-filetype-network-settings-error:first').after('<div style="display: none;" class="updated rtmedia-network-settings-updated-successfully"><p>Network settings updated successfully.</p></div>');
+				$('.upload-filetype-network-settings-error').remove();
+				$('.bp-media-network-settings-updated-successfully').show();
+			}
+		});
+	});
+
 });
