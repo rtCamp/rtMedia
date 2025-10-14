@@ -129,7 +129,7 @@ class RTMediaMediaSizeImporter {
 				'href'    => array(),
 				'onclick' => array(),
 				'style'   => array(),
-				'id' 	  => array(),
+				'id'      => array(),
 			),
 			'strong' => array(),
 		);

@@ -1,6 +1,4 @@
 jQuery(document).ready(function($) {
-	console.log('rtmedia-admin.js loaded', window?.rtmedia_rtmedia_admin);	
-	
     // Handle dismissal of the GoDAM banner
 	$(document).on('click', '.godam-admin-banner .notice-dismiss', function() {
 		// Send AJAX request to mark the banner as dismissed
@@ -81,7 +79,6 @@ jQuery(document).ready(function($) {
 
 	// Media Size Import notice dismissal
 	$( '#rtmedia_hide_media_size_import_notice' ).on( 'click', function() {
-		console.log('clicked on rtmedia_hide_media_size_import_notice');
 		var data = {action: 'rtmedia_hide_media_size_import_notice'};
 		jQuery.post(ajaxurl, data, function (response) {
 			response = response.trim();
