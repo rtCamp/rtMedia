@@ -184,7 +184,12 @@ class RTMediaUploadFile {
 			/**
 			 * Otherwise check for $_FILES global object from the form submitted
 			 */
-		} elseif ( isset( $_FILES['rtmedia_file'] ) ) {
+		} elseif ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- We are just checking if the value exists over here.
+
+			if( isset( $_POST['wp_nonce'] ) || !wp_verify_nonce( $_POST['wp_nonce'], 'rtmedia_file_nonce' ) ) {
+				return;
+			}
+
 			$this->populate_file_array( $_FILES['rtmedia_file'] );
 		} else {
 			/**
