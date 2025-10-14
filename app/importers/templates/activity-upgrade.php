@@ -28,6 +28,7 @@
 
 	$temp = $prog->progress( $done, $total );
 	$prog->progress_ui( $temp, true );
+	// No a security issue, so keeping the style here.
 	?>
 	<style type="text/css">
 		#rtprogressbar {

@@ -245,6 +245,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				 */
 				$display = apply_filters( 'rtmedia_disable_media_in_commented_media', false );
 				if ( $display ) {
+					// No a security issue, so keeping the style here.
 					?>
 					<style type="text/css">
 						.rtm-option-wrapper .form-table[data-depends="buddypress_enableOnComment"] {

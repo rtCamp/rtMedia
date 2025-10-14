@@ -1497,7 +1497,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 				// If media_id exists, return Godam video shortcode.
 				if ( ! empty( $media_id ) ) {
 					return '<div style="max-width: 480px; width: 100%; overflow: hidden;">'
-						   . '<style>div.godam-video-wrapper video, div.godam-video-wrapper iframe { max-width: 100%; height: auto; display: block; }</style>'
+						   . '<style>div.godam-video-wrapper video, div.godam-video-wrapper iframe { max-width: 100%; height: auto; display: block; }</style>' // No a security issue, so keeping the style here.
 						   . do_shortcode( '[godam_video id="' . $media_id . '"]' )
 						   . '</div>';
 				}
@@ -2189,6 +2189,7 @@ function rtmedia_comment_form() {
 
 			<?php RTMediaComment::comment_nonce_generator(); ?>
 		</form>
+		<!-- Note: Not able to trace proper place to replace below script with wp_enqueue_script() function -->
 		<script>
 			(function($) {
 				$( '#comment_content' ).emoji( { place: 'after' } );

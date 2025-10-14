@@ -375,6 +375,7 @@ class RTMedia {
 	 */
 	public function custom_style_for_image_size() {
 		if ( apply_filters( 'rtmedia_custom_image_style', true ) ) {
+			// No a security issue, so keeping the style here.
 			?>
 			<style type="text/css">
 				<?php
