@@ -533,7 +533,14 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			) ) {
 				// delete file after sending it to mail.
 				if ( ! empty( $attachment_file ) ) {
-					unlink( $attachment_file );
+					if ( ! function_exists( 'WP_Filesystem' ) ) {
+						require_once ABSPATH . 'wp-admin/includes/file.php';
+					}
+					global $wp_filesystem;
+					if ( ! $wp_filesystem ) {
+						WP_Filesystem();
+					}
+					$wp_filesystem->delete( $attachment_file );
 				}
 				echo '<div class="rtmedia-success" style="margin:10px 0;">';
 
