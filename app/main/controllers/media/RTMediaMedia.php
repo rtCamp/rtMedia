@@ -661,7 +661,14 @@ class RTMediaMedia {
 				if ( function_exists( 'wp_delete_file' ) ) {  // wp_delete_file is introduced in WordPress 4.2.
 					wp_delete_file( $file );
 				} else {
-					unlink( $file );
+					if ( ! function_exists( 'WP_Filesystem' ) ) {
+						require_once ABSPATH . 'wp-admin/includes/file.php';
+					}
+					global $wp_filesystem;
+					if ( ! $wp_filesystem ) {
+						WP_Filesystem();
+					}
+					$wp_filesystem->delete( $file );
 				}
 
 				throw new Exception( esc_html__( 'Error creating attachment for the media file, please try again', 'buddypress-media' ) );
