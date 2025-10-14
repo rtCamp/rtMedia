@@ -790,7 +790,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'rtmedia_rtmedia_admin',
 					array(
 						'ajax_url' => admin_url( 'admin-ajax.php' ),
-						'nonce'    => wp_create_nonce( 'install-godam-hide-notice' ),
+						'godam_banner_nonce'    => wp_create_nonce( 'install-godam-hide-notice' ),
 						'bp_is_active__activity' => ( class_exists( 'BuddyPress' ) && bp_is_active( 'activity' ) ) ? true : false,
 						'bp_is_active__groups'  => ( class_exists( 'BuddyPress' ) && bp_is_active( 'groups' ) ) ? true : false,
 					)
@@ -1801,25 +1801,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							</a>
 						</div>
 					</div>
-
-					<script type="text/javascript">
-						// Ensure jQuery is loaded
-						jQuery(document).ready(function($) {
-							// Handle dismissal of the banner
-							$(document).on('click', '.godam-admin-banner .notice-dismiss', function() {
-								// Send AJAX request to mark the banner as dismissed
-								var data = {
-									action: 'install_godam_hide_admin_notice', // action hook
-									security: '<?php echo esc_js( wp_create_nonce('install-godam-hide-notice') ); ?>' // nonce for security
-								};
-
-								// Perform the AJAX request
-								$.post(ajaxurl, data, function(response) {
-									console.log('Notice dismissed and saved.');
-								});
-							});
-						});
-					</script>
 					<?php
 				}
 			}

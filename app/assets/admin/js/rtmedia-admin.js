@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
 		// Send AJAX request to mark the banner as dismissed
 		var data = {
 		    action: 'install_godam_hide_admin_notice', // action hook
-			security: window?.rtmedia_rtmedia_admin?.nonce // nonce for security
+			security: window?.rtmedia_rtmedia_admin?.godam_banner_nonce // nonce for security
 		};
 
 		// Perform the AJAX request
