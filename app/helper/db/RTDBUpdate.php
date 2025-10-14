@@ -78,13 +78,13 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 			if ( false !== $schema_path ) {
 				$this->schema_path = $schema_path;
 			} else {
-				$this->schema_path = realpath( dirname( __FILE__ ) . $this->schema_path );
+				$this->schema_path = realpath( __DIR__ . $this->schema_path );
 			}
 
 			if ( false !== $plugin_path ) {
 				$this->plugin_path = $plugin_path;
 			} else {
-				$this->plugin_path = realpath( dirname( __FILE__ ) . $this->plugin_path );
+				$this->plugin_path = realpath( __DIR__ . $this->plugin_path );
 			}
 
 			$this->mu_single_table = $mu_single_table;
@@ -170,7 +170,8 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 								if ( is_multisite() ) {
 									$table_name = str_replace( '.schema', '', strtolower( $entry ) );
 									// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
-									$check_res  = $wpdb->get_results( $wpdb->prepare( 'SHOW TABLES LIKE %s', '%rt_' . $table_name ), ARRAY_N );
+
+									$check_res = $wpdb->get_results( $wpdb->prepare( 'SHOW TABLES LIKE %s', '%rt_' . $table_name ), ARRAY_N );
 
 									if ( $check_res && count( $check_res ) > 0 && is_array( $check_res ) && isset( $check_res[0][0] ) ) {
 										$tb_name    = $check_res[0][0];
@@ -181,7 +182,19 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 										}
 									}
 								}
-								$this->create_table( $this->genrate_sql( $entry, file_get_contents( $path . '/' . $entry ) ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+								if ( ! function_exists( 'WP_Filesystem' ) ) {
+									require_once ABSPATH . 'wp-admin/includes/file.php';
+								}
+
+								global $wp_filesystem;
+
+								if ( ! $wp_filesystem ) {
+									WP_Filesystem();
+								}
+
+								$file_content = $wp_filesystem->get_contents( $path . '/' . $entry );
+
+								$this->create_table( $this->genrate_sql( $entry, $file_content ) );
 							}
 						}
 					}
