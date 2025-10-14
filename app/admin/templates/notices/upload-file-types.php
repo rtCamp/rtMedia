@@ -50,8 +50,8 @@ if ( ! empty( $rtmedia->options['videos_enabled'] ) ) {
 	}
 }
 
-// if ( ! empty( $rtmedia->options['audio_enabled'] ) ) {
-// 	if ( ! in_array( 'mp3', $upload_filetypes, true ) ) {
+if ( ! empty( $rtmedia->options['audio_enabled'] ) ) {
+	if ( ! in_array( 'mp3', $upload_filetypes, true ) ) {
 		?>
 		<div class="error upload-filetype-network-settings-error">
 			<p>
@@ -69,6 +69,5 @@ if ( ! empty( $rtmedia->options['videos_enabled'] ) ) {
 		</div>
 		<?php
 		
-	// }
-// }
-
+	}
+}
