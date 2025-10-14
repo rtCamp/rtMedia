@@ -796,8 +796,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					array(
 						'ajax_url' => admin_url( 'admin-ajax.php' ),
 						'godam_banner_nonce'    => wp_create_nonce( 'install-godam-hide-notice' ),
-						'bp_is_active__activity' => ( class_exists( 'BuddyPress' ) && bp_is_active( 'activity' ) ) ? true : false,
-						'bp_is_active__groups'  => ( class_exists( 'BuddyPress' ) && bp_is_active( 'groups' ) ) ? true : false,
+						'bp_is_active__activity' => ( class_exists( 'BuddyPress' ) && bp_is_active( 'activity' ) ),
+						'bp_is_active__groups'  => ( class_exists( 'BuddyPress' ) && bp_is_active( 'groups' ) ),
 					)
 				);
 

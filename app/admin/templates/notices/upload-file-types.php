@@ -50,11 +50,12 @@ if ( ! empty( $rtmedia->options['videos_enabled'] ) ) {
 	}
 }
 
-if ( ! empty( $rtmedia->options['audio_enabled'] ) ) {
-	if ( ! in_array( 'mp3', $upload_filetypes, true ) ) {
+// if ( ! empty( $rtmedia->options['audio_enabled'] ) ) {
+// 	if ( ! in_array( 'mp3', $upload_filetypes, true ) ) {
 		?>
 		<div class="error upload-filetype-network-settings-error">
 			<p>
+				<?php wp_nonce_field( '_rtm_file_type_error_', 'rtm-file-type-error' ); ?>
 				<?php esc_html_e( 'You have audio enabled on BuddyPress Media but your network allowed filetypes do not permit uploading of mp3. Click ', 'buddypress-media' ); ?>
 				<a href="<?php echo esc_url( network_admin_url( 'settings.php#upload_filetypes' ) ); ?>">
 					<?php esc_html_e( 'here', 'buddypress-media' ); ?>
@@ -67,6 +68,7 @@ if ( ! empty( $rtmedia->options['audio_enabled'] ) ) {
 			</p>
 		</div>
 		<?php
-	}
-}
+		
+	// }
+// }
 
