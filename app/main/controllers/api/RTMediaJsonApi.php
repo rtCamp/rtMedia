@@ -163,7 +163,7 @@ class RTMediaJsonApi {
 		add_action( 'wp_ajax_rtmedia_api', array( $this, 'rtmedia_api_process_request' ) );
 
 		if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
-			add_action( 'rest_api_init', [ $this, 'register_rest_pre_dispatch_filter' ] );
+			add_action( 'rest_api_init', array( $this, 'register_rest_pre_dispatch_filter' ) );
 		}
 	}
 
@@ -647,9 +647,9 @@ class RTMediaJsonApi {
 			}
 
 			if ( $increase ) {
-				$like_count_old ++;
+				$like_count_old++;
 			} elseif ( ! $increase ) {
-				$like_count_old --;
+				$like_count_old--;
 			}
 
 			if ( $like_count_old < 0 ) {
@@ -1047,7 +1047,7 @@ class RTMediaJsonApi {
 		$ec_profile_updated  = 120002;
 		$msg_profile_updated = esc_html__( 'profile updated', 'buddypress-media' );
 
-		for ( $i = 1; $i <= 12; $i ++ ) {
+		for ( $i = 1; $i <= 12; $i++ ) {
 			$field_str          = 'field_';
 			$field_str         .= $i;
 			$field_str_privacy  = $field_str . '_privacy';
@@ -1120,12 +1120,11 @@ class RTMediaJsonApi {
 		$msg_look_updated = esc_html__( 'media updated', 'buddypress-media' );
 
 		$image_type   = sanitize_text_field( filter_input( INPUT_POST, 'image_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-		$mime_type    = "";
+		$mime_type    = '';
 
 		if ( in_array( $image_type, array( 'jpeg', 'jpg' ), true ) ) {
 			$mime_type = 'image/jpeg';
-		}
-		else if ( 'png' === $image_type ) {
+		} else if ( 'png' === $image_type ) {
 			$mime_type = 'image/png';
 		} else {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_file_type, $msg_invalid_file_type ) );
@@ -1154,8 +1153,8 @@ class RTMediaJsonApi {
 			}
 		}
 
-		if ( ! empty( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are only checking presence of a data.
-			// phpcs:disable Squiz.PHP.DisallowMultipleAssignments.Found, WordPress.Security.NonceVerification.NoNonceVerification
+		if ( ! empty( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing -- We are only checking presence of a data.
+			// phpcs:disable Squiz.PHP.DisallowMultipleAssignments.Found, WordPress.Security.NonceVerification.Recommended
 			$_POST['rtmedia_upload_nonce']       = $_REQUEST['rtmedia_upload_nonce'] = wp_create_nonce( 'rtmedia_upload_nonce' );
 			$_POST['rtmedia_simple_file_upload'] = $_REQUEST['rtmedia_simple_file_upload'] = 1;
 			$_POST['context']                    = $_REQUEST['context'] = ! empty( $_REQUEST['context'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['context'] ) ) : 'profile';
@@ -1163,7 +1162,7 @@ class RTMediaJsonApi {
 			$_POST['mode']                       = $_REQUEST['mode'] = 'file_upload';
 			$_POST['media_author']               = $_REQUEST['media_author'] = $this->user_id;
 			$upload                              = new RTMediaUploadEndpoint();
-			// phpcs:enable Squiz.PHP.DisallowMultipleAssignments.Found, WordPress.Security.NonceVerification.NoNonceVerification
+			// phpcs:enable Squiz.PHP.DisallowMultipleAssignments.Found, WordPress.Security.NonceVerification.Recommended
 			// todo refactor below function so it takes param also and use if passed else use POST request.
 			$uploaded_look = $upload->template_redirect();
 		} else {
@@ -1175,7 +1174,22 @@ class RTMediaJsonApi {
 			$rtmedia_file = base64_decode( $img ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 
 			// check if file is valid image.
-			$actual_file_info = getimagesizefromstring( $rtmedia_file );
+			if ( function_exists( 'getimagesizefromstring' ) ) {
+				$actual_file_info = getimagesizefromstring( $rtmedia_file ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.getimagesizefromstringFound -- Added fallback for PHP < 5.4.
+			} else {
+				// Fallback for PHP < 5.4 using WP_Filesystem.
+				if ( ! function_exists( 'WP_Filesystem' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/file.php';
+				}
+				global $wp_filesystem;
+				if ( ! $wp_filesystem ) {
+					WP_Filesystem();
+				}
+				$tmp_file = trailingslashit( sys_get_temp_dir() ) . uniqid( 'img_', true );
+				$wp_filesystem->put_contents( $tmp_file, $rtmedia_file, FS_CHMOD_FILE );
+				$actual_file_info = getimagesize( $tmp_file );
+				$wp_filesystem->delete( $tmp_file );
+			}
 
 			if ( ! $actual_file_info || ! isset( $actual_file_info['mime'] ) || ! in_array( $actual_file_info['mime'], array( 'image/jpeg', 'image/png' ), true ) ) {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_image, $msg_invalid_image ) );
@@ -1465,7 +1479,6 @@ class RTMediaJsonApi {
 		} else {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_server_error, $this->msg_server_error ) );
 		}
-
 	}
 
 	/**
@@ -1494,7 +1507,7 @@ class RTMediaJsonApi {
 	 * Registers the rest_pre_dispatch filter during rest_api_init.
 	 */
 	public function register_rest_pre_dispatch_filter() {
-		add_filter( 'rest_pre_dispatch', [ $this, 'handle_rest_pre_dispatch' ], 10, 3 );
+		add_filter( 'rest_pre_dispatch', array( $this, 'handle_rest_pre_dispatch' ), 10, 3 );
 	}
 
 	/**

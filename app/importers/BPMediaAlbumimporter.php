@@ -221,12 +221,12 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 	/**
 	 * Create album.
 	 *
-	 * @param string $author_id Author id.
 	 * @param string $album_name Album name.
+	 * @param string $author_id Author id.
 	 *
 	 * @return mixed
 	 */
-	public function create_album( $album_name = '', $author_id = 1 )  {
+	public function create_album( $album_name = '', $author_id = 1 ) {
 		global $bp_media, $wpdb;
 
 		// Set album_name to 'Imported Media' if it is empty.
@@ -454,9 +454,11 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 				$bp_album_media_id = $wpdb->get_var(
-					$wpdb->prepare( 
+					$wpdb->prepare(
 						"SELECT activity.id FROM {$activity_table} AS activity INNER JOIN {$table} AS album ON ( activity.item_id = album.id ) WHERE activity.item_id = %d AND activity.component = %s AND activity.type = %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-						$bp_album_item->id, 'album', 'bp_album_picture'
+						$bp_album_item->id,
+						'album',
+						'bp_album_picture'
 					)
 				);
 
@@ -471,9 +473,11 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 				$bp_new_activity_id = $wpdb->get_var(
-					$wpdb->prepare( 
+					$wpdb->prepare(
 						"SELECT id FROM {$activity_table} WHERE item_id = %d AND component = %s AND type = %s AND secondary_item_id = 0", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-						$imported_media_id, 'activity', 'activity_update'
+						$imported_media_id,
+						'activity',
+						'activity_update'
 					)
 				);
 

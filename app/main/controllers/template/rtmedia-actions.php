@@ -46,7 +46,6 @@ function rtmedia_author_actions() {
 			}
 		}
 	}
-
 }
 add_action( 'after_rtmedia_action_buttons', 'rtmedia_author_actions' );
 
@@ -69,7 +68,6 @@ function rtmedia_image_editor_title( $type = 'photo' ) {
 			esc_html__( 'Image', 'buddypress-media' )
 		);
 	}
-
 }
 add_action( 'rtmedia_add_edit_tab_title', 'rtmedia_image_editor_title', 12, 1 );
 
@@ -138,7 +136,6 @@ function rtmedia_add_album_selection_field( $media_type ) {
 		</div>
 		<?php
 	}
-
 }
 add_action( 'rtmedia_add_edit_fields', 'rtmedia_add_album_selection_field', 14, 1 );
 
@@ -178,7 +175,6 @@ function rtmedia_gallery_options() {
 			echo wp_kses( $output, RTMedia::expanded_allowed_tags() );
 		}
 	}
-
 }
 add_action( 'rtmedia_media_gallery_actions', 'rtmedia_gallery_options', 80 );
 add_action( 'rtmedia_album_gallery_actions', 'rtmedia_gallery_options', 80 );
@@ -231,7 +227,6 @@ function rtmedia_merge_album_modal() {
 
 		include RTMEDIA_PATH . 'app/main/templates/merge-album-modal.php';
 	}
-
 }
 add_action( 'rtmedia_before_media_gallery', 'rtmedia_merge_album_modal' );
 add_action( 'rtmedia_before_album_gallery', 'rtmedia_merge_album_modal' );
@@ -250,14 +245,12 @@ function rtmedia_item_select() {
 		if ( isset( $rtmedia_backbone['is_album'] ) && $rtmedia_backbone['is_album'] && isset( $rtmedia_backbone['is_edit_allowed'] ) && $rtmedia_backbone['is_edit_allowed'] ) {
 			echo '<span class="rtm-checkbox-wrap"><input type="checkbox" name="move[]" class="rtmedia-item-selector" value="<%= id %>" /></span>';
 		}
-	} else {
-		if ( is_rtmedia_album() && isset( $rtmedia_query->media_query ) && 'edit' === $rtmedia_query->action_query->action ) {
-			if ( isset( $rtmedia_query->media_query['media_author'] ) && get_current_user_id() === intval( $rtmedia_query->media_query['media_author'] ) ) {
-				printf(
-					'<span class="rtm-checkbox-wrap"><input type="checkbox" class="rtmedia-item-selector" name="selected[]" value="%1$s" /></span>',
-					esc_attr( rtmedia_id() )
-				);
-			}
+	} elseif ( is_rtmedia_album() && isset( $rtmedia_query->media_query ) && 'edit' === $rtmedia_query->action_query->action ) {
+		if ( isset( $rtmedia_query->media_query['media_author'] ) && get_current_user_id() === intval( $rtmedia_query->media_query['media_author'] ) ) {
+			printf(
+				'<span class="rtm-checkbox-wrap"><input type="checkbox" class="rtmedia-item-selector" name="selected[]" value="%1$s" /></span>',
+				esc_attr( rtmedia_id() )
+			);
 		}
 	}
 }
@@ -275,7 +268,6 @@ function rtmedia_album_merge_action( $actions ) {
 	$actions['merge'] = esc_html__( 'Merge', 'buddypress-media' );
 
 	return $actions;
-
 }
 add_action( 'rtmedia_query_actions', 'rtmedia_album_merge_action' );
 
@@ -299,18 +291,15 @@ function add_upload_button() {
 				esc_html( apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) )
 			);
 
-		} else {
+		} elseif ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 
-			if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
+			if ( can_user_upload_in_group() ) {
 
-				if ( can_user_upload_in_group() ) {
-
-					printf(
-						'<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="%1$s"><i class="dashicons dashicons-upload"></i>%2$s</span>',
-						esc_attr( apply_filters( 'rtm_gallery_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ),
-						esc_html( apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) )
-					);
-				}
+				printf(
+					'<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="%1$s"><i class="dashicons dashicons-upload"></i>%2$s</span>',
+					esc_attr( apply_filters( 'rtm_gallery_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ),
+					esc_html( apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) )
+				);
 			}
 		}
 	}
@@ -332,7 +321,6 @@ function add_music_cover_art( $file_object, $upload_obj ) {
 			'id' => $upload_obj->media_ids[0],
 		)
 	);
-
 }
 
 /**
@@ -374,7 +362,6 @@ function rtmedia_content_before_media() {
 			esc_attr__( 'Close (Esc)', 'buddypress-media' )
 		);
 	}
-
 }
 add_action( 'rtmedia_before_media', 'rtmedia_content_before_media', 10 );
 
@@ -412,7 +399,6 @@ function update_group_media_privacy( $group_id ) {
 			$wpdb->query( $update_sql ); // phpcs:ignore
 		}
 	}
-
 }
 add_action( 'groups_settings_updated', 'update_group_media_privacy', 99, 1 );
 
@@ -426,7 +412,6 @@ add_action( 'groups_settings_updated', 'update_group_media_privacy', 99, 1 );
 function rtmedia_add_no_popup_class( $class = '' ) {
 
 	return $class .= ' no-popup';
-
 }
 
 /**
@@ -439,7 +424,6 @@ function rtmedia_add_no_popup_class( $class = '' ) {
 function rtmedia_gallery_do_not_show_media_title( $flag ) {
 
 	return false;
-
 }
 
 /**
@@ -449,7 +433,6 @@ function rtmedia_remove_media_query_hooks_after_gallery() {
 
 	remove_filter( 'rtmedia_gallery_list_item_a_class', 'rtmedia_add_no_popup_class', 10, 1 );
 	remove_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_gallery_do_not_show_media_title', 10, 1 );
-
 }
 add_action( 'rtmedia_after_media_gallery', 'rtmedia_remove_media_query_hooks_after_gallery' );
 
@@ -472,7 +455,6 @@ function sanitize_filename_before_upload( $filename ) {
 	$string          = preg_replace( '/\+/', '', $string );
 
 	return remove_accents( $string ) . $ext;
-
 }
 
 /**
@@ -481,7 +463,6 @@ function sanitize_filename_before_upload( $filename ) {
 function rtmedia_upload_sanitize_filename_before_upload() {
 
 	add_action( 'sanitize_file_name', 'sanitize_filename_before_upload', 10, 1 );
-
 }
 add_action( 'rtmedia_upload_set_post_object', 'rtmedia_upload_sanitize_filename_before_upload', 10 );
 
@@ -496,7 +477,6 @@ function rtmedia_admin_pages_content( $page ) {
 
 		include RTMEDIA_PATH . 'app/main/templates/admin-pages-content.php';
 	}
-
 }
 add_action( 'rtmedia_admin_page_insert', 'rtmedia_admin_pages_content', 99, 1 );
 
@@ -506,7 +486,6 @@ add_action( 'rtmedia_admin_page_insert', 'rtmedia_admin_pages_content', 99, 1 );
 function rtmedia_add_media_delete_nonce() {
 
 	wp_nonce_field( 'rtmedia_' . get_current_user_id(), 'rtmedia_media_delete_nonce' );
-
 }
 add_action( 'rtmedia_before_template_load', 'rtmedia_add_media_delete_nonce' );
 
@@ -525,7 +504,6 @@ function rtmedia_add_media_delete_nonce_shortcode() {
 	if ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) {
 		wp_nonce_field( 'rtmedia_' . get_current_user_id(), 'rtmedia_media_delete_nonce' );
 	}
-
 }
 add_action( 'rtmedia_pre_template', 'rtmedia_add_media_delete_nonce_shortcode' );
 
@@ -1023,7 +1001,6 @@ function rtmedia_gallery_shortcode_json_query_vars( $wp_query ) {
 	}
 
 	return $wp_query;
-
 }
 add_action( 'pre_get_posts', 'rtmedia_gallery_shortcode_json_query_vars', 99 );
 
@@ -1122,7 +1099,6 @@ function rtmedia_gallery_shortcode_rewrite_rules() {
 
 	// Rule for homepage.
 	add_rewrite_rule( 'pg/([0-9]*)/?', 'index.php?page_id=' . get_option( 'page_on_front' ) . '&pg=$matches[1]', 'top' );
-
 }
 add_action( 'rtmedia_add_rewrite_rules', 'rtmedia_gallery_shortcode_rewrite_rules' );
 
@@ -1136,19 +1112,13 @@ function rtmedia_after_media_callback() {
 	$comment_media = false;
 	if ( ! empty( $rtmedia_id ) ) {
 		$comment_media = rtmedia_is_comment_media( $rtmedia_id );
-		if ( ! empty( $comment_media ) ) {
-			?>
-			<script type="text/javascript">
-				comment_media = true;
-			</script>
-			<?php
-		} else {
-			?>
-			<script type="text/javascript">
-				comment_media = false;
-			</script>
-			<?php
-		}
+		wp_localize_script(
+			'rtmedia-main',
+			'rtmedia_after_media_vars',
+			array(
+				'comment_media' => (bool) $comment_media,
+			)
+		);
 	}
 }
 add_action( 'rtmedia_after_media', 'rtmedia_after_media_callback', 10 );

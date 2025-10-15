@@ -112,9 +112,9 @@ class RTMedia {
 		add_action( 'plugins_loaded', array( $this, 'load_translation' ), 10 );
 		add_action( 'plugins_loaded', array( $this, 'init' ), 20 );
 		add_action( 'wp_enqueue_scripts', array( 'RTMediaGalleryShortcode', 'register_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts_styles' ), 999 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_styles' ), 999 );
 
-		// WordPress 6.7 compatibility
+		// WordPress 6.7 compatibility.
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp67_compatibility_scripts' ), 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'wp67_compatibility_scripts' ), 1 );
 
@@ -375,6 +375,7 @@ class RTMedia {
 	 */
 	public function custom_style_for_image_size() {
 		if ( apply_filters( 'rtmedia_custom_image_style', true ) ) {
+			// No a security issue, so keeping the style here.
 			?>
 			<style type="text/css">
 				<?php
@@ -1225,9 +1226,9 @@ class RTMedia {
 	public function ensure_wp67_compatibility() {
 		global $wp_version;
 
-		// Check if we're running WordPress 6.7 or higher
+		// Check if we're running WordPress 6.7 or higher.
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
-			// Enqueue jQuery Migrate if not already enqueued to maintain backward compatibility
+			// Enqueue jQuery Migrate if not already enqueued to maintain backward compatibility.
 			if ( ! wp_script_is( 'jquery-migrate', 'enqueued' ) ) {
 				wp_enqueue_script( 'jquery-migrate' );
 			}
@@ -1241,9 +1242,9 @@ class RTMedia {
 	 * @since 4.6.23
 	 */
 	public function wp67_compatibility_scripts() {
-	global $wp_version;
+		global $wp_version;
 
-		// Enqueue jQuery Migrate for WordPress 6.7+ compatibility
+		// Enqueue jQuery Migrate for WordPress 6.7+ compatibility.
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
 			if ( wp_script_is( 'jquery', 'enqueued' ) && ! wp_script_is( 'jquery-migrate', 'enqueued' ) ) {
 				wp_enqueue_script( 'jquery-migrate' );
@@ -1260,31 +1261,16 @@ class RTMedia {
 	public function wp67_media_element_init() {
 		global $wp_version;
 
+		$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
+
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
-			?>
-			<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				// WordPress 6.7 compatibility: Initialize MediaElement if not already done
-				if (typeof wp !== 'undefined' && wp.mediaelement && wp.mediaelement.initialize) {
-					wp.mediaelement.initialize();
-				}
-
-				// Fallback for older MediaElement initialization
-				if (typeof $().mediaelementplayer !== 'undefined') {
-					$('.wp-audio-shortcode, .wp-video-shortcode').not('.mejs-container').mediaelementplayer({
-						success: function(mediaElement, domObject) {
-							// MediaElement successfully initialized
-						}
-					});
-				}
-
-				// WordPress 6.7 compatibility: Add console log to verify fixes are working
-				if (window.console && console.log) {
-					console.log('rtMedia: WordPress 6.7 compatibility mode active');
-				}
-			});
-			</script>
-			<?php
+			$load = wp_enqueue_script(
+				'rtmedia-wp67-mediaelement-init',
+				RTMEDIA_URL . 'app/assets/js/wp67-mediaelement-init' . $suffix . '.js',
+				array( 'jquery' ),
+				RTMEDIA_VERSION,
+				true
+			);
 		}
 	}
 
@@ -1294,11 +1280,11 @@ class RTMedia {
 	public function enqueue_scripts_styles() {
 		global $rtmedia, $bp, $rtmedia_interaction;
 
-		// WordPress 6.7 compatibility: Ensure jQuery Migrate is loaded for backward compatibility
+		// WordPress 6.7 compatibility: Ensure jQuery Migrate is loaded for backward compatibility.
 		$this->ensure_wp67_compatibility();
 
-		// Initialize WordPress 6.7 media element compatibility
-		add_action( 'wp_footer', array( $this, 'wp67_media_element_init' ), 20 );
+		// Initialize WordPress 6.7 media element compatibility.
+		$this->wp67_media_element_init();
 
 		$rtmedia_main     = array();
 		$rtmedia_backbone = array();
@@ -1306,7 +1292,7 @@ class RTMedia {
 
 		$bp_template = get_option( '_bp_theme_package_id' );
 
-		// Ensure MediaElement compatibility with WordPress 6.7
+		// Ensure MediaElement compatibility with WordPress 6.7.
 		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', array( 'jquery' ), RTMEDIA_VERSION, true );
 		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement-wp', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.min.css', '', RTMEDIA_VERSION );
@@ -1747,7 +1733,7 @@ class RTMedia {
 
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
 		}
-		// Register BuddyPress Nouveau script only if it doesn't exist
+		// Register BuddyPress Nouveau script only if it doesn't exist.
 		if ( ! wp_script_is( 'bp-nouveau', 'registered' ) ) {
 			wp_register_script(
 				'bp-nouveau',

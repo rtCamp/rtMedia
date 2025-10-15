@@ -300,7 +300,6 @@ class RTMediaAlbum {
 
 		$albums = array_merge( $albums, $album_ids );
 		rtmedia_update_site_option( 'rtmedia-global-albums', $albums );
-
 	}
 
 	/**

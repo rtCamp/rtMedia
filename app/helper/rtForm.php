@@ -142,7 +142,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 * @param  string $element element.
 		 */
 		private function update_default_id( $element ) {
-			self::$id_counts[ $element ] ++;
+			self::$id_counts[ $element ]++;
 		}
 
 		/**
@@ -415,21 +415,15 @@ if ( ! class_exists( 'rtForm' ) ) {
 
 					if ( 'checked' === $key ) {
 						$attrib['checked'] = esc_attr( $val );
-					} else {
-						if ( 'selected' === $key ) {
+					} elseif ( 'selected' === $key ) {
 							$attrib['selected'] = esc_attr( $val );
-						} else {
-							if ( 'desc' === $key ) {
-								$attrib['desc'] = esc_attr( $val );
-							} else {
-								if ( 'id' === $key ) {
-									$attrib['id'] = esc_attr( $val );
-								} else {
-									$attrib['key']   = $key;
-									$attrib['value'] = esc_attr( $val );
-								}
-							}
-						}
+					} elseif ( 'desc' === $key ) {
+							$attrib['desc'] = esc_attr( $val );
+					} elseif ( 'id' === $key ) {
+							$attrib['id'] = esc_attr( $val );
+					} else {
+						$attrib['key']   = $key;
+						$attrib['value'] = esc_attr( $val );
 					}
 				}
 
@@ -481,18 +475,16 @@ if ( ! class_exists( 'rtForm' ) ) {
 							$data
 						);
 
-					} else {
-						if ( ( isset( $attrib['switch'] ) && $attrib['switch'] ) || ( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ) ) {
+					} elseif ( ( isset( $attrib['switch'] ) && $attrib['switch'] ) || ( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ) ) {
 
 							$label_class = array( 'switch' );
 
 							$data = $this->enclose_label( $element, $data, $attrib['key'], $label_class );
-							if ( $size > 1 ) {
-								$data = '<div>' . $data . '</div>';
-							}
-						} else {
-							$data = $this->enclose_label( $element, $data, $attrib['key'] );
+						if ( $size > 1 ) {
+							$data = '<div>' . $data . '</div>';
 						}
+					} else {
+						$data = $this->enclose_label( $element, $data, $attrib['key'] );
 					}
 
 					$data .= '';

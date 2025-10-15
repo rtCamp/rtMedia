@@ -255,10 +255,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 								$rt_to_dir_path  = str_replace( '//', '/', $rt_to_dir_paths );
 								$result[]        = str_replace( ABSPATH . 'wp-content/', '', $rt_to_dir_path );
 							}
-						} else {
-							if ( 'main.php' !== $value ) {
+						} elseif ( 'main.php' !== $value ) {
 								$result[] = $value;
-							}
 						}
 					}
 				}

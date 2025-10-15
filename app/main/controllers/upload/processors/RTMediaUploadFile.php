@@ -134,15 +134,13 @@ class RTMediaUploadFile {
 				$rtmedia_upload_prefix = 'groups/';
 				$id                    = $this->uploaded['context_id'];
 			}
-		} else {
+		} elseif ( 'group' !== $rtmedia_interaction->context->type ) {
 
-			if ( 'group' !== $rtmedia_interaction->context->type ) {
 				$rtmedia_upload_prefix = 'users/';
 				$id                    = apply_filters( 'rtmedia_current_user', get_current_user_id() );
-			} else {
-				$rtmedia_upload_prefix = 'groups/';
-				$id                    = $rtmedia_interaction->context->id;
-			}
+		} else {
+			$rtmedia_upload_prefix = 'groups/';
+			$id                    = $rtmedia_interaction->context->id;
 		}
 
 		$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
@@ -186,11 +184,11 @@ class RTMediaUploadFile {
 			 */
 		} elseif ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- We are just checking if the value exists over here.
 
-			if( isset( $_POST['wp_nonce'] ) || !wp_verify_nonce( $_POST['wp_nonce'], 'rtmedia_file_nonce' ) ) {
+			if( isset( $_POST['wp_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) ), 'rtmedia_file_nonce' ) ) {
 				return;
 			}
 
-			$this->populate_file_array( $_FILES['rtmedia_file'] );
+			$this->populate_file_array( array_map( 'sanitize_text_field', $_FILES['rtmedia_file'] ) ); // populate_file_array is sanitizing string and integer values.
 		} else {
 			/**
 			 * No files could be found to upload
@@ -214,7 +212,7 @@ class RTMediaUploadFile {
 			'type'     => isset( $file_array['type'] ) ? $file_array['type'] : '',
 			'tmp_name' => isset( $file_array['tmp_name'] ) ? $file_array['tmp_name'] : '',
 			'error'    => isset( $file_array['error'] ) ? $file_array['error'] : '',
-			'size'     => isset( $file_array['size'] ) ? $file_array['size'] : 0,
+			'size'     => isset( $file_array['size'] ) ? intval( $file_array['size'] ) : 0,
 		);
 	}
 

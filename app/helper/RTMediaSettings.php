@@ -26,8 +26,8 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 				$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since we are only checking if it is a save action.
 				if ( isset( $rtmedia_option_save ) ) {
-					
-					if( ! isset( $_POST ) || !array_key_exists( 'wp_nonce', $_POST ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) ), 'rtmedia_settings' ) ) {
+
+					if ( ! isset( $_POST ) || ! array_key_exists( 'wp_nonce', $_POST ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) ), 'rtmedia_settings' ) ) {
 						return;
 					}
 
@@ -213,7 +213,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 * @return void
 		 */
 		public function settings() {
-			
+
 			global $rtmedia, $rtmedia_addon, $rtmedia_save_setting_single;
 			$options          = rtmedia_get_site_option( 'rtmedia-options' );
 			$options          = $this->sanitize_options( $options );

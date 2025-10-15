@@ -380,7 +380,7 @@ class RTMediaTemplate {
 			if ( isset( $rtmedia_query->media[0]->media_id ) ) {
 				$image_path = get_attached_file( $rtmedia_query->media[0]->media_id );
 			} else {
-				$image_path = ''; // or handle the error as needed
+				$image_path = ''; // or handle the error as needed.
 			}
 			if ( isset( $rtmedia_query->media[0] ) && 'photo' === $rtmedia_query->media[0]->media_type ) {
 				$image_meta_data = wp_generate_attachment_metadata( $rtmedia_query->media[0]->media_id, $image_path );
@@ -391,7 +391,7 @@ class RTMediaTemplate {
 			if ( isset( $rtmedia_query->action_query->id ) && isset( $rtmedia_query->media[0]->media_id ) ) {
 				$state = $media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[0]->media_id );
 			} else {
-				$state = false; // or handle the error as needed
+				$state = false; // or handle the error as needed.
 			}
 			$rtmedia_filepath_old = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia-filepath-old', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			if ( isset( $rtmedia_filepath_old ) ) {

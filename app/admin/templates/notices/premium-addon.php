@@ -30,13 +30,3 @@
 	</p>
 </div>
 
-<script type="text/javascript">
-	jQuery( document ).ready( function() {
-		jQuery( '.rtmedia-pro-split-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
-			var data = {action: 'rtmedia_hide_premium_addon_notice', _rtm_nonce: jQuery('#rtm_nonce').val() };
-			jQuery.post( ajaxurl, data, function ( response ) {
-				jQuery('.rtmedia-pro-split-notice').remove();
-			});
-		});
-	});
-</script>

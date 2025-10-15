@@ -83,7 +83,7 @@ class RTMediaGalleryShortcode {
 			);
 
 			$template_url = esc_url( add_query_arg( $album_template_args, admin_url( 'admin-ajax.php' ) ), null, '' );
-			
+
 		} else {
 
 			$media_template_args = apply_filters(

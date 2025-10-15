@@ -168,7 +168,7 @@ class RTMediaMigration {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
 		$_SESSION['migration_user_album'] = $wpdb->get_var( $sql_album_usercount );
 		if ( ! empty( $_SESSION['migration_user_album'] ) ) {
-			$count = intval( $_SESSION['migration_user_album'] ?? 0 );
+			$count = intval( isset( $_SESSION['migration_user_album'] ) ? $_SESSION['migration_user_album'] : 0 );
 		}
 
 		if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
@@ -334,7 +334,7 @@ class RTMediaMigration {
 					LEFT JOIN {$wpdb->posts} p ON b.media_id = p.ID
 					WHERE p.ID IS NOT NULL
 				)
-				AND a.comment_agent = ''",
+				AND a.comment_agent = ''"
 			); // phpcs:enable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		}
@@ -459,7 +459,7 @@ class RTMediaMigration {
 
 			if ( '' !== $delete_ids ) {
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
-				$wpdb->query( 
+				$wpdb->query(
 					$wpdb->prepare(
 						"DELETE FROM `{$wpdb->posts}` WHERE ID IN (%s)",
 						$delete_ids
@@ -582,6 +582,18 @@ class RTMediaMigration {
 			</div>
 			<?php
 		}
+		// Enqueue migration script and pass runtime data.
+		wp_enqueue_script( 'rtmedia-migration', RTMEDIA_URL . 'app/assets/admin/js/migration.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+		wp_localize_script(
+			'rtmedia-migration',
+			'rtmedia_migration',
+			array(
+				'done'       => (int) $done,
+				'total'      => (int) $total,
+				'admin_ajax' => admin_url( 'admin-ajax.php' ),
+			)
+		);
+
 		?>
 
 		<div class="wrap">
@@ -591,7 +603,7 @@ class RTMediaMigration {
 			<h3><?php esc_html_e( 'It will migrate following things', 'buddypress-media' ); ?> </h3>
 			<?php
 			esc_html_e( 'User Albums : ', 'buddypress-media' );
-			echo esc_html( intval( $_SESSION['migration_user_album'] ?? 0 ) );
+			echo esc_html( intval( isset( $_SESSION['migration_user_album'] ) ? $_SESSION['migration_user_album'] : 0 ) );
 			?>
 			<br/>
 			<?php
@@ -603,7 +615,7 @@ class RTMediaMigration {
 				<?php
 			}
 			esc_html_e( 'Media : ', 'buddypress-media' );
-			echo esc_html( intval( $_SESSION['migration_media'] ?? 0 ) );
+			echo esc_html( intval( isset( $_SESSION['migration_media'] ) ? $_SESSION['migration_media'] : 0 ) );
 			?>
 			<br/>
 			<?php
@@ -632,72 +644,7 @@ class RTMediaMigration {
 			$temp = $prog->progress( $done, $total );
 			$prog->progress_ui( $temp, true );
 			?>
-			<script type="text/javascript">
-				jQuery(document).ready(function (e) {
-					jQuery("#toplevel_page_rtmedia-settings").addClass("wp-has-current-submenu")
-					jQuery("#toplevel_page_rtmedia-settings").removeClass("wp-not-current-submenu")
-					jQuery("#toplevel_page_rtmedia-settings").addClass("wp-menu-open")
-					jQuery("#toplevel_page_rtmedia-settings>a").addClass("wp-menu-open")
-					jQuery("#toplevel_page_rtmedia-settings>a").addClass("wp-has-current-submenu")
 
-					if (db_total < 1)
-						jQuery("#submit").attr('disabled', "disabled");
-				});
-				function db_start_migration(db_done, db_total) {
-
-
-					if (db_done < db_total) {
-						jQuery("#rtMediaSyncing").show();
-						jQuery.ajax({
-							url: rtmedia_admin_ajax,
-							type: 'post',
-							data: {
-								"action": "bp_media_rt_db_migration",
-								"done": db_done
-							},
-							success: function (sdata) {
-
-								try {
-									data = JSON.parse(sdata);
-								} catch (e) {
-									jQuery("#submit").attr('disabled', "");
-								}
-								if (data.status) {
-									done = parseInt(data.done);
-									total = parseInt(data.total);
-									var progw = Math.ceil((done / total) * 100);
-									if (progw > 100) {
-										progw = 100;
-									}
-									jQuery('#rtprogressbar>div').css('width', progw + '%');
-									jQuery('span.finished').html(done);
-									jQuery('span.total').html(total);
-									jQuery('span.pending').html(data.pending);
-									db_start_migration(done, total);
-								} else {
-									alert("Migration completed.");
-									jQuery("#rtMediaSyncing").hide();
-								}
-							},
-							error: function () {
-								alert("<?php esc_html_e( 'Error During Migration, Please Refresh Page then try again', 'buddypress-media' ); ?>");
-								jQuery("#submit").removeAttr('disabled');
-							}
-						});
-					} else {
-						alert("Migration completed.");
-						jQuery("#rtMediaSyncing").hide();
-					}
-				}
-				var db_done = <?php echo esc_js( $done ); ?>;
-				var db_total = <?php echo esc_js( $total ); ?>;
-				jQuery(document).on('click', '#submit', function (e) {
-					e.preventDefault();
-
-					db_start_migration(db_done, db_total);
-					jQuery(this).attr('disabled', 'disabled');
-				});
-			</script>
 			<hr/>
 			<?php if ( ! ( isset( $rtmedia_error ) && true === $rtmedia_error ) ) { ?>
 				<input type="button" id="submit" value="<?php esc_attr_e( 'Start', 'buddypress-media' ); ?>" class="button button-primary"/>
