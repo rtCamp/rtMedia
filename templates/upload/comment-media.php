@@ -54,6 +54,8 @@ if ( is_array( $tabs ) && count( $tabs ) ) {
 					}
 				}
 
+				wp_nonce_field( 'rtmedia_file_nonce', 'wp_nonce' );
+
 				if ( isset( $attr['rtmedia_upload_allow_multiple'] ) && true === $attr['rtmedia_upload_allow_multiple'] ) {
 					?>
 					<div class="rtm-file-input-container"><p class="rtmedia-file-upload-p"><input type="file" name="rtmedia_file_multiple[]" multiple="true" class="rtm-simple-file-input" id="rtmedia_simple_file_input<?php echo esc_attr( $main_id ); ?>" /></p></div>

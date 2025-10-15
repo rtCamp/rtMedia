@@ -324,7 +324,7 @@ class RTMediaTemplate {
 		&& isset( $rtmedia_query->action_query )
 		&& isset( $rtmedia_query->action_query->action )
 		&& 'edit' === $rtmedia_query->action_query->action
-		&& count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification
+		&& count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification -- We are only fetching the count of elements in $_POST so nonce verification is not needed.
 			$this->save_edit();
 		}
 
@@ -614,7 +614,7 @@ class RTMediaTemplate {
 			return;
 		}
 
-		if ( ! count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification
+		if ( ! count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.NoNonceVerification -- We are only fetching the count of elements in $_POST so nonce verification is not needed.
 			return;
 		}
 
