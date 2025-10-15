@@ -141,7 +141,6 @@ class RTMediaActivityUpgrade {
 			echo '0';
 			wp_die();
 		}
-
 	}
 
 	/**

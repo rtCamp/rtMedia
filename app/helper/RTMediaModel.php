@@ -85,7 +85,7 @@ class RTMediaModel extends RTDBModel {
 					if ( ! isset( $meta_query['compare'] ) ) {
 						$meta_query['compare'] = '=';
 					}
-					$tbl_alias = esc_sql( chr( $temp ++ ) );
+					$tbl_alias = esc_sql( chr( $temp++ ) );
 					if ( is_multisite() ) {
 						$join .= " LEFT JOIN {$wpdb->base_prefix}{$this->meta_table_name} as {$tbl_alias} ON {$this->table_name}.id = {$tbl_alias}.media_id ";
 					} else {
@@ -98,31 +98,30 @@ class RTMediaModel extends RTDBModel {
 						$where .= $wpdb->prepare( " AND  {$tbl_alias}.meta_key = %s ", $meta_query['key'] ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 					}
 				}
-			} else {
-				if ( is_array( $colvalue ) ) {
-					if ( ! isset( $colvalue['compare'] ) ) {
-						$compare = 'IN';
-					} else {
-						$compare = $colvalue['compare'];
-					}
+			} elseif ( is_array( $colvalue ) ) {
+				if ( ! isset( $colvalue['compare'] ) ) {
+					$compare = 'IN';
+				} else {
+					$compare = $colvalue['compare'];
+				}
 
 					$tmp_val          = isset( $colvalue['value'] ) ? $colvalue['value'] : $colvalue;
 					$col_val_comapare = ( is_array( $tmp_val ) ) ? implode( "','", esc_sql( $tmp_val ) ) : esc_sql( $tmp_val );
 
-					if ( 'IS NOT' === $compare ) {
-						$col_val_comapare = ! empty( $colvalue['value'] ) ? $colvalue['value'] : $col_val_comapare;
-					}
+				if ( 'IS NOT' === $compare ) {
+					$col_val_comapare = ! empty( $colvalue['value'] ) ? $colvalue['value'] : $col_val_comapare;
+				}
 
 					$compare = esc_sql( $compare );
 					$where  .= " AND {$this->table_name}.{$colname} {$compare} ('{$col_val_comapare}')";
-				} else {
-					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				}
+			} else {
+				$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
 			}
 		}
 		$qgroup_by = ' ';
 
-		$allowed_order_columns = array( 'media_id', 'media_title','file_size'); // Define allowed columns.
+		$allowed_order_columns = array( 'media_id', 'media_title', 'file_size' ); // Define allowed columns.
 		list( $order_column, $order_direction ) = explode( ' ', $order_by . ' ' ); // Default to space if no direction provided.
 
 		if ( ! in_array( strtolower( $order_column ), $allowed_order_columns ) || ! in_array(
@@ -459,10 +458,8 @@ class RTMediaModel extends RTDBModel {
 
 		if ( 'profile' === $context ) {
 			$sql .= $wpdb->prepare( ' AND media_author=%d ', $profile_id );
-		} else {
-			if ( 'group' === $context ) {
+		} elseif ( 'group' === $context ) {
 				$sql .= $wpdb->prepare( ' AND context_id=%d ', $profile_id );
-			}
 		}
 
 		$sql   .= 'limit 100';
@@ -486,7 +483,7 @@ class RTMediaModel extends RTDBModel {
 		$remaining_music     = 0;
 		$remaining_videos    = 0;
 		$remaining_all_media = 0;
-		$remaining_docs	     = 0;
+		$remaining_docs      = 0;
 
 		// Fetch the remaining media count.
 		if ( class_exists( 'RTMediaNav' ) ) {
@@ -500,12 +497,10 @@ class RTMediaModel extends RTDBModel {
 					$counts      = $rtmedia_nav_obj->actual_counts( $bp->groups->current_group->id, 'group' );
 					$other_count = $this->get_other_album_count( $bp->groups->current_group->id, 'group' );
 				}
-			} else {
+			} elseif ( function_exists( 'bp_displayed_user_id' ) ) {
 
-				if ( function_exists( 'bp_displayed_user_id' ) ) {
 					$counts      = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
 					$other_count = $this->get_other_album_count( bp_displayed_user_id(), 'profile' );
-				}
 			}
 
 			$remaining_all_media = ( ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
@@ -513,7 +508,7 @@ class RTMediaModel extends RTDBModel {
 			$remaining_photos    = ( ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
 			$remaining_videos    = ( ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
 			$remaining_music     = ( ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
-			$remaining_docs 	 = ( ! empty( $counts['total']['document'] ) ) ? $counts['total']['document'] : 0;
+			$remaining_docs      = ( ! empty( $counts['total']['document'] ) ) ? $counts['total']['document'] : 0;
 		}
 
 		$media_counts = array(

@@ -168,7 +168,7 @@ class RTMediaMigration {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.
 		$_SESSION['migration_user_album'] = $wpdb->get_var( $sql_album_usercount );
 		if ( ! empty( $_SESSION['migration_user_album'] ) ) {
-			$count = intval( $_SESSION['migration_user_album'] ?? 0 );
+			$count = intval( isset( $_SESSION['migration_user_album'] ) ? $_SESSION['migration_user_album'] : 0 );
 		}
 
 		if ( $this->table_exists( $bp_prefix . 'bp_groups_groupmeta' ) ) {
@@ -334,7 +334,7 @@ class RTMediaMigration {
 					LEFT JOIN {$wpdb->posts} p ON b.media_id = p.ID
 					WHERE p.ID IS NOT NULL
 				)
-				AND a.comment_agent = ''",
+				AND a.comment_agent = ''"
 			); // phpcs:enable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		}
@@ -459,7 +459,7 @@ class RTMediaMigration {
 
 			if ( '' !== $delete_ids ) {
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
-				$wpdb->query( 
+				$wpdb->query(
 					$wpdb->prepare(
 						"DELETE FROM `{$wpdb->posts}` WHERE ID IN (%s)",
 						$delete_ids
@@ -603,7 +603,7 @@ class RTMediaMigration {
 			<h3><?php esc_html_e( 'It will migrate following things', 'buddypress-media' ); ?> </h3>
 			<?php
 			esc_html_e( 'User Albums : ', 'buddypress-media' );
-			echo esc_html( intval( $_SESSION['migration_user_album'] ?? 0 ) );
+			echo esc_html( intval( isset( $_SESSION['migration_user_album'] ) ? $_SESSION['migration_user_album'] : 0 ) );
 			?>
 			<br/>
 			<?php
@@ -615,7 +615,7 @@ class RTMediaMigration {
 				<?php
 			}
 			esc_html_e( 'Media : ', 'buddypress-media' );
-			echo esc_html( intval( $_SESSION['migration_media'] ?? 0 ) );
+			echo esc_html( intval( isset( $_SESSION['migration_media'] ) ? $_SESSION['migration_media'] : 0 ) );
 			?>
 			<br/>
 			<?php

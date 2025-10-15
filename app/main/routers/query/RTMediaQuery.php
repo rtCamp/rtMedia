@@ -639,7 +639,7 @@ class RTMediaQuery {
 			$this->query['activity_id'] = array( 'value' );
 			global $wpdb;
 			$cache_key   = 'rtmedia_activity_ids_0_rtmedia_update';
-    		$cache_group = 'rtmedia_activity';
+			$cache_group = 'rtmedia_activity';
 
 			$activity_ids = wp_cache_get( $cache_key, $cache_group );
 			if ( false === $activity_ids ) {
@@ -650,9 +650,9 @@ class RTMediaQuery {
 				$activity_ids = $wpdb->get_col( $sql_query );
 
 				// Store result in cache for 1 hour.
-       			 wp_cache_set( $cache_key, $activity_ids, $cache_group, HOUR_IN_SECONDS );
+				 wp_cache_set( $cache_key, $activity_ids, $cache_group, HOUR_IN_SECONDS );
 			}
-	
+
 			$this->query['activity_id']['value'] = $activity_ids;
 		}
 

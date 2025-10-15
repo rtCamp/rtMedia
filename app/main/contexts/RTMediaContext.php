@@ -103,12 +103,10 @@ class RTMediaContext {
 	public function set_bp_component_context() {
 		if ( bp_displayed_user_id() && ! bp_is_group() ) {
 			$this->type = 'profile';
-		} else {
-			if ( ! bp_displayed_user_id() && bp_is_group() ) {
+		} elseif ( ! bp_displayed_user_id() && bp_is_group() ) {
 				$this->type = 'group';
-			} else {
-				$this->type = 'profile';
-			}
+		} else {
+			$this->type = 'profile';
 		}
 		$this->id = $this->get_current_bp_component_id();
 		if ( null === $this->id ) {

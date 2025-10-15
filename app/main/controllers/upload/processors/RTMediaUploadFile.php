@@ -134,15 +134,13 @@ class RTMediaUploadFile {
 				$rtmedia_upload_prefix = 'groups/';
 				$id                    = $this->uploaded['context_id'];
 			}
-		} else {
+		} elseif ( 'group' !== $rtmedia_interaction->context->type ) {
 
-			if ( 'group' !== $rtmedia_interaction->context->type ) {
 				$rtmedia_upload_prefix = 'users/';
 				$id                    = apply_filters( 'rtmedia_current_user', get_current_user_id() );
-			} else {
-				$rtmedia_upload_prefix = 'groups/';
-				$id                    = $rtmedia_interaction->context->id;
-			}
+		} else {
+			$rtmedia_upload_prefix = 'groups/';
+			$id                    = $rtmedia_interaction->context->id;
 		}
 
 		$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );

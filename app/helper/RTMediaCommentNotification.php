@@ -35,7 +35,7 @@ class RTMediaCommentNotification extends RTMediaNotification {
 			$args = array(
 				'component_id'       => 'rt_comment_notifier',
 				'component_slug'     => 'rt_comment',
-				'component_callback' => 'rt_comment_notifications_callback',
+				'component_callback' => array( $this, 'rt_comment_notifications_callback' ),
 				'component_action'   => $this->component_action,
 			);
 
@@ -143,29 +143,28 @@ class RTMediaCommentNotification extends RTMediaNotification {
 			BP_Notifications_Notification::delete( array( 'id' => $comment_notification_id ) );
 			delete_comment_meta( $comment_id, 'comment_notification_id' );
 		}
-
 	}
-}
 
-/**
- * This is callback function for rt_like_notifier component dont call this callback method manually
- *
- * @param int    $action action of component for notification.
- * @param int    $post_id ID of a post to notification.
- * @param int    $initiator_id secondary_item_id used in 'bp_notifications_add_notification'.
- * @param int    $total_items number of notification for same component.
- * @param String $format string or array.
- *
- * @return  String/Array formatted notification
- */
-function rt_comment_notifications_callback( $action, $post_id, $initiator_id, $total_items, $format = 'string' ) {
-	$params = array(
-		'action'       => $action,
-		'post_id'      => $post_id,
-		'initiator_id' => $initiator_id,
-		'total_items'  => $total_items,
-		'format'       => $format,
-	);
+	/**
+	 * This is callback function for rt_like_notifier component dont call this callback method manually
+	 *
+	 * @param int    $action action of component for notification.
+	 * @param int    $post_id ID of a post to notification.
+	 * @param int    $initiator_id secondary_item_id used in 'bp_notifications_add_notification'.
+	 * @param int    $total_items number of notification for same component.
+	 * @param String $format string or array.
+	 *
+	 * @return  String/Array formatted notification
+	 */
+	public function rt_comment_notifications_callback( $action, $post_id, $initiator_id, $total_items, $format = 'string' ) {
+		$params = array(
+			'action'       => $action,
+			'post_id'      => $post_id,
+			'initiator_id' => $initiator_id,
+			'total_items'  => $total_items,
+			'format'       => $format,
+		);
 
-	return apply_filters( 'rtmedia_comment_notifications', $params );
+		return apply_filters( 'rtmedia_comment_notifications', $params );
+	}
 }
