@@ -5219,3 +5219,72 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 		'done'           => $done,
 	);
 }
+
+
+/**
+ * Add common media formats support by default
+ * This provides better UX by supporting common formats out-of-the-box
+ */
+if ( ! function_exists( 'rt_custom_allowed_types' ) ) {
+	/**
+	 * Add custom allowed types for upload interface
+	 *
+	 * @param array $types Array of upload types.
+	 * @return array Modified types array.
+	 */
+	function rt_custom_allowed_types( $types ) {
+		if ( isset( $types[0] ) && isset( $types[0]['extensions'] ) ) {
+			if ( is_rtmedia_upload_video_enabled() ) {
+				$types[0]['extensions'] .= ',mov,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo';
+			}
+			if ( is_rtmedia_upload_music_enabled() ) {
+				$types[0]['extensions'] .= ',wma,ogg,wav,m4a';
+			}
+		}
+		return $types;
+	}
+	add_filter( 'rtmedia_plupload_files_filter', 'rt_custom_allowed_types', 10, 1 );
+}
+
+if ( ! function_exists( 'rt_custom_allowed_types_admin_settings' ) ) {
+	/**
+	 * Add custom allowed types for admin settings
+	 *
+	 * @param array $types Array of media types.
+	 * @return array Modified types array.
+	 */
+	function rt_custom_allowed_types_admin_settings( $types ) {
+		if ( is_rtmedia_upload_video_enabled() && isset( $types['video']['extn'] ) ) {
+			$video_extensions = array(
+				'mov',
+				'mpg',
+				'flv',
+				'wmv',
+				'mkv',
+				'webm',
+				'ogv',
+				'mxf',
+				'asf',
+				'vob',
+				'mts',
+				'qt',
+				'mpeg',
+				'x-msvideo',
+			);
+			$types['video']['extn'] = array_unique( array_merge( $types['video']['extn'], $video_extensions ) );
+		}
+
+		if ( is_rtmedia_upload_music_enabled() && isset( $types['music']['extn'] ) ) {
+			$audio_extensions = array(
+				'wma',
+				'ogg',
+				'wav',
+				'm4a',
+			);
+			$types['music']['extn'] = array_unique( array_merge( $types['music']['extn'], $audio_extensions ) );
+		}
+
+		return $types;
+	}
+	add_filter( 'rtmedia_allowed_types', 'rt_custom_allowed_types_admin_settings', 10, 1 );
+}
