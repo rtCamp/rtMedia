@@ -1158,7 +1158,7 @@ class RTMediaJsonApi {
 			// phpcs:disable Squiz.PHP.DisallowMultipleAssignments.Found, WordPress.Security.NonceVerification.NoNonceVerification
 			$_POST['rtmedia_upload_nonce']       = $_REQUEST['rtmedia_upload_nonce'] = wp_create_nonce( 'rtmedia_upload_nonce' );
 			$_POST['rtmedia_simple_file_upload'] = $_REQUEST['rtmedia_simple_file_upload'] = 1;
-			$_POST['context']                    = $_REQUEST['context'] = ! empty( $_REQUEST['context'] ) ? wp_unslash( $_REQUEST['context'] ) : 'profile';           // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are using api token to verify request since it will be invoked by external service.
+			$_POST['context']                    = $_REQUEST['context'] = ! empty( $_REQUEST['context'] ) ? wp_unslash( $_REQUEST['context'] ) : 'profile'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are using api token to verify request since it will be invoked by external service.
 			$_POST['context_id']                 = $_REQUEST['context_id'] = ! empty( $_REQUEST['context_id'] ) ? absint( $_REQUEST['context_id'] ) : $this->user_id; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are using api token to verify request since it will be invoked by external service.
 			$_POST['mode']                       = $_REQUEST['mode'] = 'file_upload';
 			$_POST['media_author']               = $_REQUEST['media_author'] = $this->user_id;
