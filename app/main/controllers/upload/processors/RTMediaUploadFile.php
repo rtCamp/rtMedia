@@ -134,15 +134,13 @@ class RTMediaUploadFile {
 				$rtmedia_upload_prefix = 'groups/';
 				$id                    = $this->uploaded['context_id'];
 			}
-		} else {
+		} elseif ( 'group' !== $rtmedia_interaction->context->type ) {
 
-			if ( 'group' !== $rtmedia_interaction->context->type ) {
 				$rtmedia_upload_prefix = 'users/';
 				$id                    = apply_filters( 'rtmedia_current_user', get_current_user_id() );
-			} else {
-				$rtmedia_upload_prefix = 'groups/';
-				$id                    = $rtmedia_interaction->context->id;
-			}
+		} else {
+			$rtmedia_upload_prefix = 'groups/';
+			$id                    = $rtmedia_interaction->context->id;
 		}
 
 		$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
@@ -186,7 +184,7 @@ class RTMediaUploadFile {
 			 */
 		} elseif ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- We are just checking if the value exists over here.
 
-			if( isset( $_POST['wp_nonce'] ) || !wp_verify_nonce( $_POST['wp_nonce'], 'rtmedia_file_nonce' ) ) {
+			if ( isset( $_POST['wp_nonce'] ) || ! wp_verify_nonce( $_POST['wp_nonce'], 'rtmedia_file_nonce' ) ) {
 				return;
 			}
 

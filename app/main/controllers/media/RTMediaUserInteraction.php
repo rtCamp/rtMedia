@@ -211,7 +211,6 @@ class RTMediaUserInteraction {
 		$this->set_plural();
 		$this->set_media();
 		$this->set_interactor();
-
 	}
 
 	/**
@@ -250,7 +249,6 @@ class RTMediaUserInteraction {
 				$this->owner = $this->media->media_author;
 			}
 		}
-
 	}
 
 	/**
@@ -317,10 +315,8 @@ class RTMediaUserInteraction {
 			if ( $this->undoable ) {
 				$clickable = true;
 			}
-		} else {
-			if ( $this->undoable ) {
+		} elseif ( $this->undoable ) {
 				$clickable = true;
-			}
 		}
 
 		return $clickable;
@@ -330,7 +326,6 @@ class RTMediaUserInteraction {
 	 * Before rendering button.
 	 */
 	public function before_render() {
-
 	}
 
 	/**

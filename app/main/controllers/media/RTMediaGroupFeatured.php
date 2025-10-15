@@ -111,7 +111,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 		if ( false === $this->group_id ) {
 			return;
 		}
-		groups_update_groupmeta( $this->group_id, 'rtmedia_group_featured_media', $media_id );
+		groups_update_groupmeta( $this->group_id, array( $this, 'rtmedia_group_featured_media' ), $media_id );
 	}
 
 	/**
@@ -133,7 +133,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 				return false;
 			}
 		}
-		$this->featured = groups_get_groupmeta( $this->group_id, 'rtmedia_group_featured_media', true );
+		$this->featured = groups_get_groupmeta( $this->group_id, array( $this, 'rtmedia_group_featured_media' ), true );
 
 		return $this->featured;
 	}
@@ -312,26 +312,25 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 			wp_safe_redirect( esc_url_raw( $url ) );
 		}
 	}
-}
+	/**
+	 * Get featured group media.
+	 *
+	 * @param bool|int $group_id Group id.
+	 */
+	public function rtmedia_group_featured( $group_id = false ) {
+		echo wp_kses( $this->rtmedia_get_group_featured( $group_id ), RTMedia::expanded_allowed_tags() );
+	}
 
-/**
- * Get featured group media.
- *
- * @param bool|int $group_id Group id.
- */
-function rtmedia_group_featured( $group_id = false ) {
-	echo wp_kses( rtmedia_get_group_featured( $group_id ), RTMedia::expanded_allowed_tags() );
-}
+	/**
+	 * Get featured group media.
+	 *
+	 * @param bool|int $group_id Group id.
+	 *
+	 * @return bool|mixed|void
+	 */
+	public function rtmedia_get_group_featured( $group_id = false ) {
+		$featured = new RTMediaGroupFeatured( $group_id, false );
 
-/**
- * Get featured group media.
- *
- * @param bool|int $group_id Group id.
- *
- * @return bool|mixed|void
- */
-function rtmedia_get_group_featured( $group_id = false ) {
-	$featured = new RTMediaGroupFeatured( $group_id, false );
-
-	return $featured->content();
+		return $featured->content();
+	}
 }

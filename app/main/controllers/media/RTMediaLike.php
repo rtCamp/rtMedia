@@ -181,11 +181,11 @@ class RTMediaLike extends RTMediaUserInteraction {
 
 		$actions = intval( $actions[0]->{$actionwa} );
 		if ( true === $this->increase ) {
-			$actions ++;
+			$actions++;
 			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_undo_label_text', $this->undo_label );
 			$return['prev'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 		} else {
-			$actions --;
+			$actions--;
 			$return['next'] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 			$return['prev'] = apply_filters( 'rtmedia_' . $this->action . '_undo_label_text', $this->undo_label );
 		}
@@ -354,18 +354,16 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$like_media = get_user_meta( $interactor, 'rtmedia_liked_media', true );
 		if ( $this->is_like_migrated( $media_id, $interactor ) ) {
 			return $this->get_like_value( $media_id, $interactor );
-		} else {
+		} elseif ( strpos( ',' . $like_media . ',', ',' . $media_id . ',' ) === false ) {
 
-			if ( strpos( ',' . $like_media . ',', ',' . $media_id . ',' ) === false ) {
 				$this->increase = true;
 
 				return false;
-			} else {
-				$this->migrate_likes( $like_media );
-				$this->increase = false;
+		} else {
+			$this->migrate_likes( $like_media );
+			$this->increase = false;
 
-				return true;
-			}
+			return true;
 		}
 	}
 

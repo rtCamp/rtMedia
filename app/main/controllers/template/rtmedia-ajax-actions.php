@@ -39,12 +39,10 @@ function rtmedia_delete_uploaded_media() {
 						$other_count = $model->get_other_album_count( $bp->groups->current_group->id, 'group' );
 
 					}
-				} else {
+				} elseif ( function_exists( 'bp_displayed_user_id' ) ) {
 
-					if ( function_exists( 'bp_displayed_user_id' ) ) {
 						$counts      = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
 						$other_count = $model->get_other_album_count( bp_displayed_user_id(), 'profile' );
-					}
 				}
 
 				$remaining_all_media = ( ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
@@ -79,7 +77,6 @@ function rtmedia_delete_uploaded_media() {
 	);
 
 	wp_die();
-
 }
 add_action( 'wp_ajax_delete_uploaded_media', 'rtmedia_delete_uploaded_media' );
 

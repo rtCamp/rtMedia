@@ -246,11 +246,9 @@ class RTMediaInteraction {
 				$title .= $sep . ucfirst( $rtmedia_query->query['media_type'] );
 				$sep    = $old_sep;
 			}
-		} else {
-			if ( isset( $rtmedia_query->action_query ) && isset( $rtmedia_query->action_query->media_type ) ) {
+		} elseif ( isset( $rtmedia_query->action_query ) && isset( $rtmedia_query->action_query->media_type ) ) {
 				$title .= $sep . ucfirst( $rtmedia_query->action_query->media_type );
 				$sep    = $old_sep;
-			}
 		}
 
 		if ( function_exists( 'bp_is_group' ) ) {

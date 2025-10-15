@@ -30,7 +30,6 @@ class BPMediaImporter {
 	 * BPMediaImporter constructor.
 	 */
 	public function __construct() {
-
 	}
 
 	/**

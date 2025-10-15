@@ -50,7 +50,7 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 	 * @access private
 	 */
 	private function update_default_id() {
-		self::$id_count ++;
+		self::$id_count++;
 	}
 
 	/**
@@ -192,5 +192,4 @@ class rtDimensions extends rtForm { // phpcs:ignore PEAR.NamingConventions.Valid
 	public function display_dimensions( $args = '' ) {
 		echo wp_kses( $this->get_dimensions( $args ), RTMedia::expanded_allowed_tags() );
 	}
-
 }

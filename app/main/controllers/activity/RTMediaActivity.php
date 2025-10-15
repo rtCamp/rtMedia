@@ -175,7 +175,7 @@ class RTMediaActivity {
 			}
 
 			$media_content .= '</li>';
-			$count ++;
+			$count++;
 		}
 
 		$media_container_start_class = 'rtmedia-list';

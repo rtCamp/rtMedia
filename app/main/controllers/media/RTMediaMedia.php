@@ -417,10 +417,8 @@ class RTMediaMedia {
 							),
 							array( 'id' => $media[0]->activity_id )
 						);
-					} else {
-						if ( isset( $media[0] ) && isset( $media[0]->activity_id ) ) {
+					} elseif ( isset( $media[0] ) && isset( $media[0]->activity_id ) ) {
 							bp_activity_delete_by_activity_id( $media[0]->activity_id );
-						}
 					}
 
 					// Deleting like and comment activity for media.
@@ -531,11 +529,12 @@ class RTMediaMedia {
 
 		global $wpdb;
 		// update the post_parent value in wp_post table.
-		$status = wp_update_post(array(
-			'ID' => $media_id,
-			'post_parent' => $album_id
-		));
-		
+		$status = wp_update_post(
+			array(
+				'ID' => $media_id,
+				'post_parent' => $album_id,
+			)
+		);
 
 		if ( is_wp_error( $status ) || 0 === $status ) {
 			return false;
@@ -558,7 +557,6 @@ class RTMediaMedia {
 	 *  Imports attachment as media
 	 */
 	public function import_attachment() {
-
 	}
 
 	/**

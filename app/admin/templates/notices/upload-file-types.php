@@ -68,6 +68,6 @@ if ( ! empty( $rtmedia->options['audio_enabled'] ) ) {
 			</p>
 		</div>
 		<?php
-		
+
 	}
 }

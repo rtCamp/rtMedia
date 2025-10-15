@@ -35,7 +35,7 @@ class RTMediaLikeNotification extends RTMediaNotification {
 			$args = array(
 				'component_id'       => 'rt_like_notifier',
 				'component_slug'     => 'rt_like',
-				'component_callback' => 'like_notifications_callback',
+				'component_callback' => array( $this, 'like_notifications_callback' ),
 				'component_action'   => $this->component_action,
 			);
 
@@ -171,27 +171,27 @@ class RTMediaLikeNotification extends RTMediaNotification {
 
 		return $media_likes;
 	}
-}
 
-/**
- * This is callback function for rt_like_notifier component dont call this callback method manually
- *
- * @param int    $action action of component for notification.
- * @param int    $post_id ID of a post to notification.
- * @param int    $initiator_id secondary_item_id used in 'bp_notifications_add_notification'.
- * @param int    $total_items number of notification for same component.
- * @param String $format string or array.
- *
- * @return  String/Array formatted notification
- */
-function like_notifications_callback( $action, $post_id, $initiator_id, $total_items, $format = 'string' ) {
-	$params = array(
-		'action'       => $action,
-		'post_id'      => $post_id,
-		'initiator_id' => $initiator_id,
-		'total_items'  => $total_items,
-		'format'       => $format,
-	);
+	/**
+	 * This is callback function for rt_like_notifier component dont call this callback method manually
+	 *
+	 * @param int    $action action of component for notification.
+	 * @param int    $post_id ID of a post to notification.
+	 * @param int    $initiator_id secondary_item_id used in 'bp_notifications_add_notification'.
+	 * @param int    $total_items number of notification for same component.
+	 * @param String $format string or array.
+	 *
+	 * @return  String/Array formatted notification
+	 */
+	public function like_notifications_callback( $action, $post_id, $initiator_id, $total_items, $format = 'string' ) {
+		$params = array(
+			'action'       => $action,
+			'post_id'      => $post_id,
+			'initiator_id' => $initiator_id,
+			'total_items'  => $total_items,
+			'format'       => $format,
+		);
 
-	return apply_filters( 'rtmedia_like_notifications', $params );
+		return apply_filters( 'rtmedia_like_notifications', $params );
+	}
 }

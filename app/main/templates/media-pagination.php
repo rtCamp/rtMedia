@@ -47,7 +47,7 @@
 			}
 		}
 
-		for ( $i = 1; $i <= $pages; $i ++ ) {
+		for ( $i = 1; $i <= $pages; $i++ ) {
 			if ( 1 !== $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
 				$page_url = $page_base_url . $i;
 

@@ -57,7 +57,6 @@ class RTMediaGalleryItemAction {
 		}
 
 		return $classes;
-
 	}
 
 	/**

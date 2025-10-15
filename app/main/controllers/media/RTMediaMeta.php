@@ -134,23 +134,21 @@ class RTMediaMeta {
 					'meta_value' => $value,
 				)
 			);
-		} else {
-			if ( false !== $this->get_single_meta( $id, $key ) ) {
+		} elseif ( false !== $this->get_single_meta( $id, $key ) ) {
 				$meta       = array( 'meta_value' => $value );
 				$where      = array(
 					'media_id' => $id,
 					'meta_key' => $key,
 				);
 				$media_meta = $this->model->update( $meta, $where );
-			} else {
-				$media_meta = $this->model->insert(
-					array(
-						'media_id'   => $id,
-						'meta_key'   => $key,
-						'meta_value' => $value,
-					)
-				);
-			}
+		} else {
+			$media_meta = $this->model->insert(
+				array(
+					'media_id'   => $id,
+					'meta_key'   => $key,
+					'meta_value' => $value,
+				)
+			);
 		}
 
 		return $media_meta;
