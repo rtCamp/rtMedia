@@ -169,8 +169,8 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 							if ( false !== strpos( $entry, '.schema' ) && file_exists( $path . '/' . $entry ) ) {
 								if ( is_multisite() ) {
 									$table_name = str_replace( '.schema', '', strtolower( $entry ) );
-									// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
 
+									// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is required for custom table.
 									$check_res = $wpdb->get_results( $wpdb->prepare( 'SHOW TABLES LIKE %s', '%rt_' . $table_name ), ARRAY_N );
 
 									if ( $check_res && count( $check_res ) > 0 && is_array( $check_res ) && isset( $check_res[0][0] ) ) {
