@@ -104,7 +104,8 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 				groups_update_groupmeta( $bp->groups->new_group_id, 'rtmp_create_playlist_control_level', $rtmp_playlist_creation_control );
 			}
 
-			do_action( 'rtmedia_create_save_group_media_settings', $_POST );
+			$sanitized_post = array_map( 'sanitize_text_field', $_POST );
+			do_action( 'rtmedia_create_save_group_media_settings', $sanitized_post );
 		}
 
 		/**
@@ -166,16 +167,18 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 			check_admin_referer( 'groups_edit_save_' . $this->slug );
 
 			if ( isset( $rt_album_creation_control ) && ! empty( $rt_album_creation_control ) ) {
-				$success = groups_update_groupmeta( bp_get_current_group_id(), 'rt_media_group_control_level', $rt_album_creation_control );
-				do_action( 'rtmedia_edit_save_group_media_settings', $_POST );
+				$success        = groups_update_groupmeta( bp_get_current_group_id(), 'rt_media_group_control_level', $rt_album_creation_control );
+				$sanitized_post = array_map( 'sanitize_text_field', $_POST );
+				do_action( 'rtmedia_edit_save_group_media_settings', $sanitized_post );
 				$success = true;
 			} else {
 				$success = false;
 			}
 
 			if ( isset( $rtmp_playlist_creation_control ) && ! empty( $rtmp_playlist_creation_control ) ) {
-				$success = groups_update_groupmeta( bp_get_current_group_id(), 'rtmp_create_playlist_control_level', $rtmp_playlist_creation_control );
-				do_action( 'rtmedia_edit_save_group_media_settings', $_POST );
+				$success        = groups_update_groupmeta( bp_get_current_group_id(), 'rtmp_create_playlist_control_level', $rtmp_playlist_creation_control );
+				$sanitized_post = array_map( 'sanitize_text_field', $_POST );
+				do_action( 'rtmedia_edit_save_group_media_settings', $sanitized_post );
 				$success = true;
 			}
 

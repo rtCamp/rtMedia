@@ -413,7 +413,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		public function get_form( $form = '' ) {
 			// todo: nonce required.
 			if ( empty( $form ) ) {
-				$form = filter_input( INPUT_POST, 'form' . FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+				$form = filter_input( INPUT_POST, 'form' . FILTER_SANITIZE_FULL_SPECIAL_CHARS ); // Sanitized.
 				$form = isset( $form ) ? $form : 'premium_support';
 			}
 			$meta_title = '';

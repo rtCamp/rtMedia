@@ -217,6 +217,15 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( isset( $rtmedia_option_save ) && current_user_can( 'manage_options' ) ) {
 				$options               = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+				if ( is_array( $options ) ) {
+					foreach ( $options as $key => $value ) {
+						if ( is_array( $value ) ) {
+							$options[ $key ] = array_map( 'sanitize_text_field', $value );
+						} else {
+							$options[ $key ] = sanitize_text_field( $value );
+						}
+					}
+				}
 				$options               = $this->sanitize_before_save_options( $options );
 				$options               = apply_filters( 'rtmedia_pro_options_save_settings', $options );
 				$is_rewrite_rule_flush = apply_filters( 'rtmedia_flush_rewrite_rule', false );
@@ -405,7 +414,15 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				rtmedia_update_site_option( 'rtm-settings-saved', esc_html__( 'Settings saved.', 'buddypress-media' ) );
 			}
 
-			do_action( 'rtmedia_sanitize_settings', $_POST, $input ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
+			$sanitized_post = array();
+			foreach ( $_POST as $key => $value ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+				if ( is_array( $value ) ) {
+					$sanitized_post[ $key ] = array_map( 'sanitize_text_field', $value );
+				} else {
+					$sanitized_post[ $key ] = sanitize_text_field( $value );
+				}
+			}
+			do_action( 'rtmedia_sanitize_settings', $sanitized_post, $input );
 
 			return $input;
 		}

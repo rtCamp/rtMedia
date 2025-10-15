@@ -972,14 +972,18 @@ function rtmedia_duration( $id = false ) {
  * @return array
  */
 function rtmedia_sanitize_object( $data, $exceptions = array() ) {
+	$allowed_keys = array_merge( RTMediaMedia::$default_object, $exceptions );
+	$sanitized    = array();
 
 	foreach ( $data as $key => $value ) {
-		if ( ! in_array( $key, array_merge( RTMediaMedia::$default_object, $exceptions ), true ) ) {
-			unset( $data[ $key ] );
+		if ( in_array( $key, $allowed_keys, true ) ) {
+			// Sanitize value; if array, sanitize each element.
+			$sanitized[ $key ] = is_array( $value )
+				? array_map( 'sanitize_text_field', $value )
+				: sanitize_text_field( $value );
 		}
 	}
-
-	return $data;
+	return $sanitized;
 }
 
 /**
@@ -3803,7 +3807,11 @@ function rtmedia_get_allowed_upload_types_array() {
 function rtmedia_add_media( $upload_params = array() ) {
 
 	if ( empty( $upload_params ) ) {
-		$upload_params = $_POST; // phpcs:ignore
+		$nonce = isset( $_POST['rtmedia_upload_nonce'] ) ? sanitize_text_field( $_POST['rtmedia_upload_nonce'] ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'rtmedia-upload' ) ) {
+			return false;
+		}
+		$upload_params = array_map( 'sanitize_text_field', $_POST );
 	}
 
 	$upload_model = new RTMediaUploadModel();
