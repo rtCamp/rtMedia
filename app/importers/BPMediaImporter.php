@@ -112,7 +112,14 @@ class BPMediaImporter {
 		}
 
 		if ( file_exists( $filepath ) ) {
-			if ( copy( $filepath, $newpath ) ) {
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+			global $wp_filesystem;
+			if ( ! $wp_filesystem ) {
+				WP_Filesystem();
+			}
+			if ( $wp_filesystem->copy( $filepath, $newpath, true ) ) {
 				return self::file_array( $newpath );
 			}
 		}

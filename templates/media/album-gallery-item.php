@@ -13,7 +13,10 @@ $rtmedia_backbone = array(
 	'is_edit_allowed' => false,
 );
 
-// todo: nonce verification.
+if( ! isset( $_POST ) || !array_key_exists( 'wp_nonce', $_POST ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) ), 'rtmedia_album_gallery' ) ) {
+	return;
+}
+
 $rtmedia_backbone['backbone'] = filter_input( INPUT_POST, 'backbone', FILTER_VALIDATE_BOOLEAN );
 
 $is_album = filter_input( INPUT_POST, 'is_album', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );

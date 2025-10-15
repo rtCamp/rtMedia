@@ -184,7 +184,12 @@ class RTMediaUploadFile {
 			/**
 			 * Otherwise check for $_FILES global object from the form submitted
 			 */
-		} elseif ( isset( $_FILES['rtmedia_file'] ) ) {
+		} elseif ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- We are just checking if the value exists over here.
+
+			if( isset( $_POST['wp_nonce'] ) || !wp_verify_nonce( $_POST['wp_nonce'], 'rtmedia_file_nonce' ) ) {
+				return;
+			}
+
 			$this->populate_file_array( $_FILES['rtmedia_file'] );
 		} else {
 			/**
@@ -370,7 +375,14 @@ class RTMediaUploadFile {
 			if ( function_exists( 'wp_delete_file' ) ) {  // wp_delete_file is introduced in WordPress 4.2.
 				wp_delete_file( $file_path );
 			} else {
-				unlink( $file_path );
+				if ( ! function_exists( 'WP_Filesystem' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/file.php';
+				}
+				global $wp_filesystem;
+				if ( ! $wp_filesystem ) {
+					WP_Filesystem();
+				}
+				$wp_filesystem->delete( $file_path );
 			}
 		}
 	}

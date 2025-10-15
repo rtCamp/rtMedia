@@ -1124,12 +1124,22 @@ class RTMediaMigration {
 		$kaltura_remote_id     = get_post_meta( $id, 'bp_media_kaltura_remote_id', true );
 
 		if ( wp_mkdir_p( $basedir . "rtMedia/$prefix/" . $year_month ) ) {
-			if ( copy( $attached_file, str_replace( $basedir, $basedir . "rtMedia/$prefix/", $attached_file ) ) ) {
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+
+			global $wp_filesystem;
+
+			if ( ! $wp_filesystem ) {
+				WP_Filesystem();
+			}
+
+			if ( $wp_filesystem->copy( $attached_file, str_replace( $basedir, $basedir . "rtMedia/$prefix/", $attached_file ), true ) ) {
 				$delete = true;
 
 				if ( isset( $metadata['sizes'] ) ) {
 					foreach ( $metadata['sizes'] as $size ) {
-						if ( ! copy( $file_folder_path . $size['file'], $new_file_folder_path . $size['file'] ) ) {
+						if ( ! $wp_filesystem->copy( $file_folder_path . $size['file'], $new_file_folder_path . $size['file'], true ) ) {
 							$delete = false;
 						} else {
 							$delete_sizes[] = $file_folder_path . $size['file'];
@@ -1139,7 +1149,7 @@ class RTMediaMigration {
 				}
 				if ( $backup_metadata ) {
 					foreach ( $backup_metadata as $backup_images ) {
-						if ( ! copy( $file_folder_path . $backup_images['file'], $new_file_folder_path . $backup_images['file'] ) ) {
+						if ( ! $wp_filesystem->copy( $file_folder_path . $backup_images['file'], $new_file_folder_path . $backup_images['file'], true ) ) {
 							$delete = false;
 						} else {
 							$delete_sizes[] = $file_folder_path . $backup_images['file'];
@@ -1151,7 +1161,7 @@ class RTMediaMigration {
 				if ( $instagram_thumbs ) {
 					foreach ( $instagram_thumbs as $key => $insta_thumb ) {
 						try {
-							if ( ! copy( str_replace( $baseurl, $basedir, $insta_thumb ), str_replace( $baseurl, $basedir . "rtMedia/$prefix/", $insta_thumb ) ) ) {
+							if ( ! $wp_filesystem->copy( str_replace( $baseurl, $basedir, $insta_thumb ), str_replace( $baseurl, $basedir . "rtMedia/$prefix/", $insta_thumb ), true ) ) {
 								$delete = false;
 							} else {
 								$delete_sizes[]               = str_replace( $baseurl, $basedir, $insta_thumb );
@@ -1166,7 +1176,7 @@ class RTMediaMigration {
 
 				if ( $instagram_full_images ) {
 					foreach ( $instagram_full_images as $key => $insta_full_image ) {
-						if ( ! copy( $insta_full_image, str_replace( $basedir, $basedir . "rtMedia/$prefix/", $insta_full_image ) ) ) {
+						if ( ! $wp_filesystem->copy( $insta_full_image, str_replace( $basedir, $basedir . "rtMedia/$prefix/", $insta_full_image ), true ) ) {
 							$delete = false;
 						} else {
 							$delete_sizes[]                    = $insta_full_image;
@@ -1180,14 +1190,14 @@ class RTMediaMigration {
 					$instagram_metadata_new = $instagram_metadata;
 					foreach ( $instagram_metadata as $wp_size => $insta_metadata ) {
 						if ( isset( $insta_metadata['file'] ) ) {
-							if ( ! copy( $basedir . $insta_metadata['file'], $basedir . "rtMedia/$prefix/" . $insta_metadata['file'] ) ) {
+							if ( ! $wp_filesystem->copy( $basedir . $insta_metadata['file'], $basedir . "rtMedia/$prefix/" . $insta_metadata['file'], true ) ) {
 								$delete = false;
 							} else {
 								$delete_sizes[]                             = $basedir . $insta_metadata['file'];
 								$instagram_metadata_new[ $wp_size ]['file'] = "rtMedia/$prefix/" . $insta_metadata['file'];
 								if ( isset( $insta_metadata['sizes'] ) ) {
 									foreach ( $insta_metadata['sizes'] as $key => $insta_size ) {
-										if ( ! copy( $file_folder_path . $insta_size['file'], $new_file_folder_path . $insta_size['file'] ) ) {
+										if ( ! $wp_filesystem->copy( $file_folder_path . $insta_size['file'], $new_file_folder_path . $insta_size['file'], true ) ) {
 											$delete = false;
 										} else {
 											$delete_sizes[] = $file_folder_path . $insta_size['file'];
@@ -1202,13 +1212,13 @@ class RTMediaMigration {
 
 				if ( $delete ) {
 					if ( file_exists( $attached_file ) ) {
-						unlink( $attached_file );
+						$wp_filesystem->delete( $attached_file );
 					}
 
 					if ( isset( $delete_sizes ) ) {
 						foreach ( $delete_sizes as $delete_size ) {
 							if ( file_exists( $delete_size ) ) {
-								unlink( $delete_size );
+								$wp_filesystem->delete( $delete_size );
 							}
 						}
 					}
