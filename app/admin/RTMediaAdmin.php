@@ -245,6 +245,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				 */
 				$display = apply_filters( 'rtmedia_disable_media_in_commented_media', false );
 				if ( $display ) {
+					// No a security issue, so keeping the style here.
 					?>
 					<style type="text/css">
 						.rtm-option-wrapper .form-table[data-depends="buddypress_enableOnComment"] {
@@ -761,6 +762,20 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$admin_pages = apply_filters( 'rtmedia_filter_admin_pages_array', $admin_pages );
 			$suffix      = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
 
+
+			// Enqueue importer script only on importer pages.
+			if (
+				( false !== strpos( $hook, 'rtmedia-media-size-import' ) ) ||
+				( false !== strpos( $hook, 'rtmedia-activity-upgrade' ) )
+			) {
+				wp_enqueue_script( 'rtmedia-importer', RTMEDIA_URL . 'app/assets/admin/js/importer' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+			}
+
+			// Enqueue migration JS on migration pages to avoid inline scripts.
+			if ( false !== strpos( $hook, 'rtmedia-migration' ) ) {
+				wp_enqueue_script( 'rtmedia-migration', RTMEDIA_URL . 'app/assets/admin/js/migration' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+			}
+
 			if ( in_array( $hook, $admin_pages, true ) || strpos( $hook, 'rtmedia-migration' ) ) {
 
 				$admin_ajax = admin_url( 'admin-ajax.php' );
@@ -773,6 +788,19 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				} else {
 					wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin.min.js', array( 'backbone', 'wp-util' ), RTMEDIA_VERSION, true );
 				}
+
+				// Enqueue JS file for GoDAM notice show/hide.
+				wp_enqueue_script( 'rtmedia-rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/rtmedia-admin.min.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+				wp_localize_script(
+					'rtmedia-rtmedia-admin',
+					'rtmedia_rtmedia_admin',
+					array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'godam_banner_nonce'    => wp_create_nonce( 'install-godam-hide-notice' ),
+						'bp_is_active__activity' => ( class_exists( 'BuddyPress' ) && bp_is_active( 'activity' ) ),
+						'bp_is_active__groups'  => ( class_exists( 'BuddyPress' ) && bp_is_active( 'groups' ) ),
+					)
+				);
 
 				wp_localize_script(
 					'rtmedia-admin',
@@ -1796,25 +1824,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							</a>
 						</div>
 					</div>
-
-					<script type="text/javascript">
-						// Ensure jQuery is loaded
-						jQuery(document).ready(function($) {
-							// Handle dismissal of the banner
-							$(document).on('click', '.godam-admin-banner .notice-dismiss', function() {
-								// Send AJAX request to mark the banner as dismissed
-								var data = {
-									action: 'install_godam_hide_admin_notice', // action hook
-									security: '<?php echo esc_js( wp_create_nonce('install-godam-hide-notice') ); ?>' // nonce for security
-								};
-
-								// Perform the AJAX request
-								$.post(ajaxurl, data, function(response) {
-									console.log('Notice dismissed and saved.');
-								});
-							});
-						});
-					</script>
 					<?php
 				}
 			}

@@ -112,7 +112,7 @@ class RTMedia {
 		add_action( 'plugins_loaded', array( $this, 'load_translation' ), 10 );
 		add_action( 'plugins_loaded', array( $this, 'init' ), 20 );
 		add_action( 'wp_enqueue_scripts', array( 'RTMediaGalleryShortcode', 'register_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts_styles' ), 999 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_styles' ), 999 );
 
 		// WordPress 6.7 compatibility
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp67_compatibility_scripts' ), 1 );
@@ -375,6 +375,7 @@ class RTMedia {
 	 */
 	public function custom_style_for_image_size() {
 		if ( apply_filters( 'rtmedia_custom_image_style', true ) ) {
+			// No a security issue, so keeping the style here.
 			?>
 			<style type="text/css">
 				<?php
@@ -1260,31 +1261,16 @@ class RTMedia {
 	public function wp67_media_element_init() {
 		global $wp_version;
 
+		$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
+
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
-			?>
-			<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				// WordPress 6.7 compatibility: Initialize MediaElement if not already done
-				if (typeof wp !== 'undefined' && wp.mediaelement && wp.mediaelement.initialize) {
-					wp.mediaelement.initialize();
-				}
-
-				// Fallback for older MediaElement initialization
-				if (typeof $().mediaelementplayer !== 'undefined') {
-					$('.wp-audio-shortcode, .wp-video-shortcode').not('.mejs-container').mediaelementplayer({
-						success: function(mediaElement, domObject) {
-							// MediaElement successfully initialized
-						}
-					});
-				}
-
-				// WordPress 6.7 compatibility: Add console log to verify fixes are working
-				if (window.console && console.log) {
-					console.log('rtMedia: WordPress 6.7 compatibility mode active');
-				}
-			});
-			</script>
-			<?php
+			$load = wp_enqueue_script(
+				'rtmedia-wp67-mediaelement-init',
+				RTMEDIA_URL . 'app/assets/js/wp67-mediaelement-init' . $suffix . '.js',
+				array( 'jquery' ),
+				RTMEDIA_VERSION,
+				true
+			);
 		}
 	}
 
@@ -1298,7 +1284,7 @@ class RTMedia {
 		$this->ensure_wp67_compatibility();
 
 		// Initialize WordPress 6.7 media element compatibility
-		add_action( 'wp_footer', array( $this, 'wp67_media_element_init' ), 20 );
+		$this->wp67_media_element_init();
 
 		$rtmedia_main     = array();
 		$rtmedia_backbone = array();

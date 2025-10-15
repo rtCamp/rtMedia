@@ -87,6 +87,7 @@ class RTMediaUploadTemplate {
 			$params[ $key ] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
 		}
 
+		// Note: Not sure about the use of below script, so not enqueuing it using wp_enqueue_script().
 		echo "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5.
 		echo "/* <![CDATA[ */\n";
 		echo 'var bpm_plupload_params = ' . wp_json_encode( $params ) . ";\n";
