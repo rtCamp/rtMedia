@@ -3807,11 +3807,7 @@ function rtmedia_get_allowed_upload_types_array() {
 function rtmedia_add_media( $upload_params = array() ) {
 
 	if ( empty( $upload_params ) ) {
-		$nonce = isset( $_POST['rtmedia_upload_nonce'] ) ? sanitize_text_field( $_POST['rtmedia_upload_nonce'] ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'rtmedia-upload' ) ) {
-			return false;
-		}
-		$upload_params = array_map( 'sanitize_text_field', $_POST );
+		$upload_params = $_POST; // phpcs:ignore
 	}
 
 	$upload_model = new RTMediaUploadModel();
