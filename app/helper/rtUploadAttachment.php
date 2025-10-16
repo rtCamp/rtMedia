@@ -75,7 +75,7 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 						$safe_key  = sanitize_key( $name );
 						$safe_name = isset( $file['name'] ) ? sanitize_file_name( $file['name'] ) : '';
 						$file_size = isset( $file['size'] ) ? intval( $file['size'] ) : 0;
-						$tmp_name  = isset( $file['tmp_name'] ) ? sanitize_file_name( $file['tmp_name'] ) : '';
+						$tmp_name  = isset( $file['tmp_name'] ) ? $file['tmp_name'] : '';
 						$ext       = pathinfo( $safe_name, PATHINFO_EXTENSION );
 
 						if ( $file_size > 2000000 ) {
@@ -137,7 +137,7 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 			} elseif ( is_numeric( $value ) ) {
 				$sanitized[ $key ] = absint( $value );
 			} elseif ( false !== filter_var( $value, FILTER_VALIDATE_URL ) ) {
-				$sanitized[ $key ] = sanitize_url( $value );
+				$sanitized[ $key ] = esc_url_raw( $value );
 			} else {
 				$sanitized[ $key ] = sanitize_text_field( $value );
 			}

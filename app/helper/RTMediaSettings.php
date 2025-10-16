@@ -300,11 +300,11 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
 			foreach ( $data as $key => $value ) {
 				if ( is_array( $value ) ) {
-					$sanitized[ $key ] = rtmedia_deep_sanitize_post( $value );
+					$sanitized[ $key ] = $this->rtmedia_deep_sanitize_post( $value );
 				} elseif ( is_numeric( $value ) ) {
 					$sanitized[ $key ] = absint( $value );
 				} elseif ( false !== filter_var( $value, FILTER_VALIDATE_URL ) ) {
-					$sanitized[ $key ] = sanitize_url( $value );
+					$sanitized[ $key ] = esc_url_raw( $value );
 				} else {
 					$sanitized[ $key ] = sanitize_text_field( $value );
 				}

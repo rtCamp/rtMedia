@@ -862,7 +862,7 @@ class RTMediaTemplate {
 
 				$comment = new RTMediaComment();
 
-				$attr = rtmedia_deep_sanitize_post( $_POST );
+				$attr = $this->rtmedia_deep_sanitize_post( $_POST );
 
 				$media_model = new RTMediaModel();
 				$result      = $media_model->get( array( 'id' => $rtmedia_query->action_query->id ) );
@@ -990,11 +990,11 @@ class RTMediaTemplate {
 			if ( 'comment_content' === $key ) {
 				$sanitized[ $key ] = wp_kses_post( $value );
 			} elseif ( is_array( $value ) ) {
-				$sanitized[ $key ] = rtmedia_deep_sanitize_post( $value );
+				$sanitized[ $key ] = $this->rtmedia_deep_sanitize_post( $value );
 			} elseif ( is_numeric( $value ) ) {
 				$sanitized[ $key ] = absint( $value );
 			} elseif ( false !== filter_var( $value, FILTER_VALIDATE_URL ) ) {
-				$sanitized[ $key ] = sanitize_url( $value );
+				$sanitized[ $key ] = esc_url_raw( $value );
 			} else {
 				$sanitized[ $key ] = sanitize_text_field( $value );
 			}
