@@ -1119,19 +1119,19 @@ class RTMediaJsonApi {
 		$ec_look_updated  = 140004;
 		$msg_look_updated = esc_html__( 'media updated', 'buddypress-media' );
 
-		$image_type   = sanitize_text_field( filter_input( INPUT_POST, 'image_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-		$mime_type    = '';
+		$image_type = sanitize_text_field( filter_input( INPUT_POST, 'image_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$mime_type  = '';
 
 		if ( in_array( $image_type, array( 'jpeg', 'jpg' ), true ) ) {
 			$mime_type = 'image/jpeg';
-		} else if ( 'png' === $image_type ) {
+		} elseif ( 'png' === $image_type ) {
 			$mime_type = 'image/png';
 		} else {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_file_type, $msg_invalid_file_type ) );
 		}
 
-		$title        = sanitize_title( filter_input( INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-		$description  = sanitize_text_field( filter_input( INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$title       = sanitize_title( filter_input( INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$description = sanitize_text_field( filter_input( INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		$rtmedia_file = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_file', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
@@ -1166,6 +1166,13 @@ class RTMediaJsonApi {
 			// todo refactor below function so it takes param also and use if passed else use POST request.
 			$uploaded_look = $upload->template_redirect();
 		} else {
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+			global $wp_filesystem;
+			if ( ! $wp_filesystem ) {
+				WP_Filesystem();
+			}
 
 			// Process rtmedia_file.
 			$img          = $rtmedia_file;
@@ -1178,13 +1185,6 @@ class RTMediaJsonApi {
 				$actual_file_info = getimagesizefromstring( $rtmedia_file ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.getimagesizefromstringFound -- Added fallback for PHP < 5.4.
 			} else {
 				// Fallback for PHP < 5.4 using WP_Filesystem.
-				if ( ! function_exists( 'WP_Filesystem' ) ) {
-					require_once ABSPATH . 'wp-admin/includes/file.php';
-				}
-				global $wp_filesystem;
-				if ( ! $wp_filesystem ) {
-					WP_Filesystem();
-				}
 				$tmp_file = trailingslashit( sys_get_temp_dir() ) . uniqid( 'img_', true );
 				$wp_filesystem->put_contents( $tmp_file, $rtmedia_file, FS_CHMOD_FILE );
 				$actual_file_info = getimagesize( $tmp_file );
@@ -1199,7 +1199,7 @@ class RTMediaJsonApi {
 
 			$tmp_name = UPLOAD_DIR_LOOK . $title;
 			$file     = $tmp_name . '.' . $image_type;
-			$success  = file_put_contents( $file, $rtmedia_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
+			$success  = $wp_filesystem->put_contents( $file, $rtmedia_file, FS_CHMOD_FILE );
 
 			if ( ! $success ) {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_image, $msg_invalid_image ) );

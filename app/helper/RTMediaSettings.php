@@ -221,7 +221,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			// Save Settings first then proceed.
 			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since it is the responsibility of caller function to verify nonce.
 			if ( isset( $rtmedia_option_save ) && current_user_can( 'manage_options' ) ) {
-				$options               = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+				$options = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 				if ( is_array( $options ) ) {
 					foreach ( $options as $key => $value ) {
 						if ( is_array( $value ) ) {
@@ -294,6 +294,33 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			if ( ! isset( $rtmedia_save_setting_single ) ) {
 				$rtmedia_save_setting_single = true;
 			}
+		}
+
+		/**
+		 * Deep sanitize post data.
+		 *
+		 * @param array $data Data array.
+		 *
+		 * @return array
+		 */
+		public function rtmedia_deep_sanitize_post( $data ) {
+			$sanitized = array();
+
+			foreach ( $data as $key => $value ) {
+				if ( 'comment_content' === $key ) {
+					$sanitized[ $key ] = wp_kses_post( $value );
+				} elseif ( is_array( $value ) ) {
+					$sanitized[ $key ] = rtmedia_deep_sanitize_post( $value );
+				} elseif ( is_numeric( $value ) ) {
+					$sanitized[ $key ] = absint( $value );
+				} elseif ( false !== filter_var( $value, FILTER_VALIDATE_URL ) ) {
+					$sanitized[ $key ] = sanitize_url( $value );
+				} else {
+					$sanitized[ $key ] = sanitize_text_field( $value );
+				}
+			}
+
+			return $sanitized;
 		}
 
 		/**
@@ -419,14 +446,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				rtmedia_update_site_option( 'rtm-settings-saved', esc_html__( 'Settings saved.', 'buddypress-media' ) );
 			}
 
-			$sanitized_post = array();
-			foreach ( $_POST as $key => $value ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
-				if ( is_array( $value ) ) {
-					$sanitized_post[ $key ] = array_map( 'sanitize_text_field', $value );
-				} else {
-					$sanitized_post[ $key ] = sanitize_text_field( $value );
-				}
-			}
+			$sanitized_post = $this->rtmedia_deep_sanitize_post( $input );
 			do_action( 'rtmedia_sanitize_settings', $sanitized_post, $input );
 
 			return $input;
