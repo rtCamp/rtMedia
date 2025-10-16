@@ -222,15 +222,6 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since it is the responsibility of caller function to verify nonce.
 			if ( isset( $rtmedia_option_save ) && current_user_can( 'manage_options' ) ) {
 				$options = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-				if ( is_array( $options ) ) {
-					foreach ( $options as $key => $value ) {
-						if ( is_array( $value ) ) {
-							$options[ $key ] = array_map( 'sanitize_text_field', $value );
-						} else {
-							$options[ $key ] = sanitize_text_field( $value );
-						}
-					}
-				}
 				$options               = $this->sanitize_before_save_options( $options );
 				$options               = apply_filters( 'rtmedia_pro_options_save_settings', $options );
 				$is_rewrite_rule_flush = apply_filters( 'rtmedia_flush_rewrite_rule', false );
