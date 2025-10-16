@@ -86,9 +86,7 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 			$sanitized = array();
 
 			foreach ( $data as $key => $value ) {
-				if ( 'comment_content' === $key ) {
-					$sanitized[ $key ] = wp_kses_post( $value );
-				} elseif ( is_array( $value ) ) {
+				if ( is_array( $value ) ) {
 					$sanitized[ $key ] = rtmedia_deep_sanitize_post( $value );
 				} elseif ( is_numeric( $value ) ) {
 					$sanitized[ $key ] = absint( $value );

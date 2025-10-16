@@ -73,9 +73,9 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 					// Move file to target folder.
 					foreach ( $_FILES as $name => $file ) {
 						$safe_key  = sanitize_key( $name );
-						$safe_name = sanitize_file_name( $file['name'] );
+						$safe_name = isset( $file['name'] ) ? sanitize_file_name( $file['name'] ) : '';
 						$file_size = isset( $file['size'] ) ? intval( $file['size'] ) : 0;
-						$tmp_name  = isset( $file['tmp_name'] ) ? $file['tmp_name'] : '';
+						$tmp_name  = isset( $file['tmp_name'] ) ? sanitize_file_name( $file['tmp_name'] ) : '';
 						$ext       = pathinfo( $safe_name, PATHINFO_EXTENSION );
 
 						if ( $file_size > 2000000 ) {
@@ -110,7 +110,7 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 				} else {
 					$data = array(
 						'success'  => esc_html__( 'Form was submitted', 'buddypress-media' ),
-						'formData' => array_map( 'sanitize_text_field', $_POST ),
+						'formData' => rtmedia_deep_sanitize_post( $_POST ),
 					);
 				}
 
@@ -119,5 +119,30 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 				die();
 			}
 		}
+	}
+
+	/**
+	 * Deep sanitize post data.
+	 *
+	 * @param array $data Data array.
+	 *
+	 * @return array
+	 */
+	function rtmedia_deep_sanitize_post( $data ) {
+		$sanitized = array();
+
+		foreach ( $data as $key => $value ) {
+			if ( is_array( $value ) ) {
+				$sanitized[ $key ] = rtmedia_deep_sanitize_post( $value );
+			} elseif ( is_numeric( $value ) ) {
+				$sanitized[ $key ] = absint( $value );
+			} elseif ( false !== filter_var( $value, FILTER_VALIDATE_URL ) ) {
+				$sanitized[ $key ] = sanitize_url( $value );
+			} else {
+				$sanitized[ $key ] = sanitize_text_field( $value );
+			}
+		}
+
+		return $sanitized;
 	}
 }
