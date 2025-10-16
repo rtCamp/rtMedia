@@ -3,8 +3,8 @@ Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, ma
 Tags: BuddyPress, media, multimedia, album, audio, music, video, photo, upload, share, MediaElement.js, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Requires at least: WordPress 4.1
-Tested up to: 6.8.1
+Requires at least: 4.1
+Tested up to: 6.8
 Stable tag: 4.7.3
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.

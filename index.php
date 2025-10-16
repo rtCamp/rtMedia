@@ -8,6 +8,8 @@
  * Text Domain: buddypress-media
  * Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
  * Domain Path: /languages/
+ * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
  * Main file, contains the plugin metadata and activation processes
  *
