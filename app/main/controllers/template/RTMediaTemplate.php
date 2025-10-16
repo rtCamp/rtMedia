@@ -375,8 +375,8 @@ class RTMediaTemplate {
 				}
 			}
 
-			$data       = rtmedia_sanitize_object( $_POST, $data_array );
-			$media      = new RTMediaMedia();
+			$data  = rtmedia_sanitize_object( $_POST, $data_array ); // Properly Sanitized.
+			$media = new RTMediaMedia();
 			if ( isset( $rtmedia_query->media[0]->media_id ) ) {
 				$image_path = get_attached_file( $rtmedia_query->media[0]->media_id );
 			} else {
@@ -540,7 +540,7 @@ class RTMediaTemplate {
 			$_selected     = $_selected_arr['selected'];
 			if ( ! empty( $submit ) ) {
 				$data_array = array( 'media_title', 'description', 'privacy' );
-				$data       = rtmedia_sanitize_object( $_POST, $data_array );
+				$data       = rtmedia_sanitize_object( $_POST, $data_array ); // Properly Sanitized.
 				$album      = $model->get_media( array( 'id' => $rtmedia_query->media_query['album_id'] ), false, false );
 				$state      = $media->update( $album[0]->id, $data, $album[0]->media_id );
 
@@ -666,7 +666,7 @@ class RTMediaTemplate {
 		$nonce = wp_unslash( filter_input( INPUT_POST, 'rtmedia_media_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->media[0]->id ) ) {
-			$id = $_POST;
+			$id = $_POST; // Only used to unset values, no direct database operation. No need to sanitize.
 
 			unset( $id['rtmedia_media_nonce'] );
 			unset( $id['_wp_http_referer'] );
@@ -862,7 +862,7 @@ class RTMediaTemplate {
 
 				$comment = new RTMediaComment();
 
-				$attr = $_POST;
+				$attr = $this->rtmedia_deep_sanitize_post( $_POST );
 
 				$media_model = new RTMediaModel();
 				$result      = $media_model->get( array( 'id' => $rtmedia_query->action_query->id ) );
@@ -974,6 +974,33 @@ class RTMediaTemplate {
 		echo wp_kses( $this->rtmedia_delete_comment_and_activity( $_comment_id ), RTMedia::expanded_allowed_tags() );
 
 		exit;
+	}
+
+	/**
+	 * Deep sanitize post data.
+	 *
+	 * @param array $data Data array.
+	 *
+	 * @return array
+	 */
+	public function rtmedia_deep_sanitize_post( $data ) {
+		$sanitized = array();
+
+		foreach ( $data as $key => $value ) {
+			if ( 'comment_content' === $key ) {
+				$sanitized[ $key ] = wp_kses_post( $value );
+			} elseif ( is_array( $value ) ) {
+				$sanitized[ $key ] = $this->rtmedia_deep_sanitize_post( $value );
+			} elseif ( is_numeric( $value ) ) {
+				$sanitized[ $key ] = absint( $value );
+			} elseif ( false !== filter_var( $value, FILTER_VALIDATE_URL ) ) {
+				$sanitized[ $key ] = esc_url_raw( $value );
+			} else {
+				$sanitized[ $key ] = sanitize_text_field( $value );
+			}
+		}
+
+		return $sanitized;
 	}
 
 	/**
