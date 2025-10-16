@@ -1264,7 +1264,7 @@ class RTMedia {
 		$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
 
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
-			$load = wp_enqueue_script(
+			wp_enqueue_script(
 				'rtmedia-wp67-mediaelement-init',
 				RTMEDIA_URL . 'app/assets/js/wp67-mediaelement-init' . $suffix . '.js',
 				array( 'jquery' ),
