@@ -102,6 +102,21 @@ class RTMediaGalleryShortcode {
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
 
+		// Get all allowed media types from rtMedia.
+		$allowed_types = rtmedia_get_allowed_types();
+		$allowed_extensions = get_rtmedia_allowed_upload_type(); // Default fallback.
+
+		// Dynamically detect current media type based on the request URI.
+		if ( false !== strpos( $request_uri, '/photo/' ) && ! empty( $allowed_types['photo']['extn'] ) ) {
+			$allowed_extensions = implode( ',', $allowed_types['photo']['extn'] );
+		} elseif ( false !== strpos( $request_uri, '/video/' ) && ! empty( $allowed_types['video']['extn'] ) ) {
+			$allowed_extensions = implode( ',', $allowed_types['video']['extn'] );
+		} elseif ( false !== strpos( $request_uri, '/music/' ) && ! empty( $allowed_types['music']['extn'] ) ) {
+			$allowed_extensions = implode( ',', $allowed_types['music']['extn'] );
+		} elseif ( false !== strpos( $request_uri, '/document/' ) && ! empty( $allowed_types['document']['extn'] ) ) {
+			$allowed_extensions = implode( ',', $allowed_types['document']['extn'] );
+		}
+
 		$upload_max_size = ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M';
 		$params          = array(
 			'url'                 => $url,
@@ -114,7 +129,7 @@ class RTMediaGalleryShortcode {
 				array(
 					array(
 						'title'      => esc_html__( 'Media Files', 'buddypress-media' ),
-						'extensions' => get_rtmedia_allowed_upload_type(),
+						'extensions' => $allowed_extensions,
 					),
 				)
 			),
