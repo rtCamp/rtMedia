@@ -184,7 +184,7 @@ class RTMediaUploadFile {
 			 */
 		} elseif ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- We are just checking if the value exists over here.
 
-			if ( isset( $_POST['wp_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) ), 'rtmedia_file_nonce' ) ) {
+			if( isset( $_POST['wp_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) ), 'rtmedia_file_nonce' ) ) {
 				return;
 			}
 

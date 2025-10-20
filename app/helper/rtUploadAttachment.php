@@ -72,36 +72,27 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 
 					// Move file to target folder.
 					foreach ( $_FILES as $name => $file ) {
-						$safe_key  = sanitize_key( $name );
-						$safe_name = isset( $file['name'] ) ? sanitize_file_name( $file['name'] ) : '';
-						$file_size = isset( $file['size'] ) ? intval( $file['size'] ) : 0;
-						$tmp_name  = isset( $file['tmp_name'] ) ? $file['tmp_name'] : '';
-						$ext       = pathinfo( $safe_name, PATHINFO_EXTENSION );
+						if ( $file['size'] <= 2000000 ) {
+							$ext = pathinfo( basename( $file['name'] ), PATHINFO_EXTENSION );
+							$target_file = $uploaddir . basename( $file['name'] );
 
-						if ( $file_size > 2000000 ) {
-							$size_error = array( 'exceed_size_msg' => esc_html__( 'You can not upload more than 2 MB.', 'buddypress-media' ) );
-							echo wp_json_encode( $size_error );
-							exit();
-						}
-
-						if ( ! is_uploaded_file( $tmp_name ) ) {
-							$error = true;
-							continue;
-						}
-
-						if ( $import_export ) {
-							if ( 'json' === strtolower( $ext ) && $wp_filesystem->move( $tmp_name, $uploaddir . $safe_name, true ) ) {
-								$uploaded_file = $uploaddir . $safe_name;
-								$rtadmin       = new RTMediaAdmin();
-
-								$rtadmin->import_settings( $uploaded_file );
+							if ( $import_export ) {
+								if ( 'json' === strtolower( $ext ) && $wp_filesystem->move( $file['tmp_name'], $target_file, true ) ) {
+									$uploaded_file = $target_file;
+									$rtadmin = new RTMediaAdmin();
+									$rtadmin->import_settings( $uploaded_file );
+								} else {
+									$error = true;
+								}
+							} elseif ( in_array( strtolower( $ext ), $allowed_type, true ) && $wp_filesystem->move( $file['tmp_name'], $target_file, true ) ) {
+								$files[] = $target_file;
 							} else {
 								$error = true;
 							}
-						} elseif ( in_array( strtolower( $ext ), $allowed_type, true ) && $wp_filesystem->move( $tmp_name, $uploaddir . $safe_name, true ) ) {
-							$files[] = $uploaddir . $safe_name;
 						} else {
-							$error = true;
+							$size_error = array( 'exceed_size_msg' => esc_html__( 'You can not upload more than 2 MB.', 'buddypress-media' ) );
+							echo wp_json_encode( $size_error );
+							exit();
 						}
 					}
 
@@ -110,7 +101,7 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 				} else {
 					$data = array(
 						'success'  => esc_html__( 'Form was submitted', 'buddypress-media' ),
-						'formData' => rtmedia_deep_sanitize_post( $_POST ),
+						'formData' => $_POST,
 					);
 				}
 
@@ -119,30 +110,5 @@ if ( ! function_exists( 'rtmedia_admin_upload' ) ) {
 				die();
 			}
 		}
-	}
-
-	/**
-	 * Deep sanitize post data.
-	 *
-	 * @param array $data Data array.
-	 *
-	 * @return array
-	 */
-	function rtmedia_deep_sanitize_post( $data ) {
-		$sanitized = array();
-
-		foreach ( $data as $key => $value ) {
-			if ( is_array( $value ) ) {
-				$sanitized[ $key ] = rtmedia_deep_sanitize_post( $value );
-			} elseif ( is_numeric( $value ) ) {
-				$sanitized[ $key ] = absint( $value );
-			} elseif ( false !== filter_var( $value, FILTER_VALIDATE_URL ) ) {
-				$sanitized[ $key ] = esc_url_raw( $value );
-			} else {
-				$sanitized[ $key ] = sanitize_text_field( $value );
-			}
-		}
-
-		return $sanitized;
 	}
 }
