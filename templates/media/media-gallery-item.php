@@ -12,10 +12,7 @@ $rtmedia_backbone = array(
 	'is_album'        => false,
 	'is_edit_allowed' => false,
 );
-
-if( ! isset( $_POST ) || !array_key_exists( 'wp_nonce', $_POST ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) ), 'rtmedia_album_gallery' ) ) {
-	return;
-}
+// todo: nonce verification.
 
 $rtmedia_backbone['backbone'] = filter_input( INPUT_POST, 'backbone', FILTER_VALIDATE_BOOLEAN );
 
@@ -48,7 +45,6 @@ if ( isset( $is_edit_allowed[0] ) ) {
 		if ( ! empty( $rtmedia_query ) && isset( $rtmedia_query->rtmedia ) ) {
 			$rtmedia_media = $rtmedia_query->rtmedia;
 		}
-
 		$allowed_html = array(
 			'span' => array(
 				'class' => array(),
