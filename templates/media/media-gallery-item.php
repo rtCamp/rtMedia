@@ -12,7 +12,7 @@ $rtmedia_backbone = array(
 	'is_album'        => false,
 	'is_edit_allowed' => false,
 );
-// todo: nonce verification.
+// todo: nonce verification. -- Ignored for now, because code has been refactored and variables below are not being used anymore.
 
 $rtmedia_backbone['backbone'] = filter_input( INPUT_POST, 'backbone', FILTER_VALIDATE_BOOLEAN );
 
