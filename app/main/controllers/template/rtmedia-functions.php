@@ -972,14 +972,23 @@ function rtmedia_duration( $id = false ) {
  * @return array
  */
 function rtmedia_sanitize_object( $data, $exceptions = array() ) {
-
+	$allowed_keys = array_merge( RTMediaMedia::$default_object, $exceptions );
+	$sanitized    = array();
 	foreach ( $data as $key => $value ) {
-		if ( ! in_array( $key, array_merge( RTMediaMedia::$default_object, $exceptions ), true ) ) {
-			unset( $data[ $key ] );
+		if ( in_array( $key, $allowed_keys, true ) ) {
+			if ( is_array( $value ) ) {
+				$sanitized[ $key ] = rtmedia_sanitize_object( $value );
+			} elseif ( is_numeric( $value ) ) {
+				$sanitized[ $key ] = absint( $value );
+			} elseif ( false !== filter_var( $value, FILTER_VALIDATE_URL ) ) {
+				$sanitized[ $key ] = esc_url_raw( $value );
+			} else {
+				$sanitized[ $key ] = sanitize_text_field( $value );
+			}
 		}
 	}
 
-	return $data;
+	return $sanitized;
 }
 
 /**
