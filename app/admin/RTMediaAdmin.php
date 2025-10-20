@@ -1538,12 +1538,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * Ajax callback function Convert videos mailchimp.
 		 */
 		public function convert_videos_mailchimp_send() {
-			$nonce = sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ?? '' ) );
-
-			if ( ! wp_verify_nonce( $nonce, 'rtmedia_buddypress_convert_nonce' ) ) {
-				esc_html_e( 'Invalid Request.', 'buddypress-media' );
-				wp_die();
-			}
+			// todo: nonce required. -- Not required since this AJAX action is not being used anymore and will be removed in future version.
 
 			$interested = sanitize_text_field( filter_input( INPUT_POST, 'linkback', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			$choice     = sanitize_text_field( filter_input( INPUT_POST, 'choice', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );

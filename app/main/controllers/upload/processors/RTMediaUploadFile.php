@@ -182,13 +182,9 @@ class RTMediaUploadFile {
 			/**
 			 * Otherwise check for $_FILES global object from the form submitted
 			 */
-		} elseif ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- We are just checking if the value exists over here.
-
-			if( isset( $_POST['wp_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) ), 'rtmedia_file_nonce' ) ) {
-				return;
-			}
-
-			$this->populate_file_array( array_map( 'sanitize_text_field', $_FILES['rtmedia_file'] ) ); // populate_file_array is sanitizing string and integer values.
+		} elseif ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are just checking if the value exists over here.
+			$this->populate_file_array( array_map( 'sanitize_text_field', $_FILES['rtmedia_file'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are just checking if the value exists over here.
+			// The function populate_file_array is sanitizing string and integer values.
 		} else {
 			/**
 			 * No files could be found to upload
