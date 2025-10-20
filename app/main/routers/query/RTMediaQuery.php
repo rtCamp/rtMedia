@@ -650,7 +650,7 @@ class RTMediaQuery {
 				$activity_ids = $wpdb->get_col( $sql_query );
 
 				// Store result in cache for 1 hour.
-				 wp_cache_set( $cache_key, $activity_ids, $cache_group, HOUR_IN_SECONDS );
+				wp_cache_set( $cache_key, $activity_ids, $cache_group, HOUR_IN_SECONDS );
 			}
 
 			$this->query['activity_id']['value'] = $activity_ids;
