@@ -1538,7 +1538,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * Ajax callback function Convert videos mailchimp.
 		 */
 		public function convert_videos_mailchimp_send() {
-			$nonce = sanitize_text_field( wp_unslash( isset( $_POST['wp_nonce'] ) ? $_POST['wp_nonce'] : '' ) );
+			$nonce = sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ?? '' ) );
 
 			if ( ! wp_verify_nonce( $nonce, 'rtmedia_buddypress_convert_nonce' ) ) {
 				esc_html_e( 'Invalid Request.', 'buddypress-media' );
