@@ -183,7 +183,7 @@ class RTMediaUploadFile {
 			 * Otherwise check for $_FILES global object from the form submitted
 			 */
 		} elseif ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are just checking if the value exists over here.
-			$this->populate_file_array( array_map( 'sanitize_text_field', $_FILES['rtmedia_file'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$this->populate_file_array( array_map( 'sanitize_text_field', $_FILES['rtmedia_file'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are just checking if the value exists over here.
 			// The function populate_file_array is sanitizing string and integer values.
 		} else {
 			/**
