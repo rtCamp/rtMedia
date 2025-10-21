@@ -242,7 +242,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 				return false;
 		}
 
-		return apply_filters( array( $this, 'rtmedia_featured_media_content' ), $content );
+		return apply_filters( 'rtmedia_featured_media_content', $content );
 	}
 
 	/**
