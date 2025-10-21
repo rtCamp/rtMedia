@@ -96,7 +96,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		}
 
 		// todo user attribute.
-		update_user_meta( $this->user_id, array( $this, 'rtmedia_featured_media' ), $media_id );
+		update_user_meta( $this->user_id, 'rtmedia_featured_media', $media_id );
 	}
 
 	/**
@@ -114,7 +114,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 			}
 		}
 		// todo user attribute.
-		$this->featured = get_user_meta( $this->user_id, array( $this, 'rtmedia_featured_media' ), true );
+		$this->featured = get_user_meta( $this->user_id, 'rtmedia_featured_media', true );
 
 		if ( empty( $this->featured ) ) {
 			$this->featured = get_user_meta( $this->user_id, 'bp_media_featured_media', true );
@@ -311,17 +311,17 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 
 		return $button;
 	}
-
-	/**
-	 * Get featured media for user.
-	 *
-	 * @param bool|int $user_id User ID.
-	 */
-	public function rtmedia_featured( $user_id = false ) {
-		echo wp_kses( rtmedia_get_featured( $user_id ), RTMedia::expanded_allowed_tags() );
-	}
 }
 
+/**
+ * Get featured media for user.
+ *
+ * @param bool|int $user_id User ID.
+ */
+function rtmedia_featured( $user_id = false ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Function might be used outside the class.
+	// todo: Refactor the code to move the function inside the class.
+	echo wp_kses( rtmedia_get_featured( $user_id ), RTMedia::expanded_allowed_tags() );
+}
 
 /**
  * Get featured media for user.
