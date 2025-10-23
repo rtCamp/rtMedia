@@ -30,7 +30,6 @@ class BPMediaImporter {
 	 * BPMediaImporter constructor.
 	 */
 	public function __construct() {
-
 	}
 
 	/**
@@ -43,6 +42,7 @@ class BPMediaImporter {
 	public static function table_exists( $table ) {
 		global $wpdb;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 		if ( 1 === intval( $wpdb->query( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) ) ) {
 			return true;
 		}
@@ -111,7 +111,14 @@ class BPMediaImporter {
 		}
 
 		if ( file_exists( $filepath ) ) {
-			if ( copy( $filepath, $newpath ) ) {
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+			global $wp_filesystem;
+			if ( ! $wp_filesystem ) {
+				WP_Filesystem();
+			}
+			if ( $wp_filesystem->copy( $filepath, $newpath, true ) ) {
 				return self::file_array( $newpath );
 			}
 		}
@@ -198,7 +205,10 @@ class BPMediaImporter {
 	 */
 	public static function cleanup( $table, $directory ) {
 		global $wpdb;
-		$wpdb->query( "DROP TABLE IF EXISTS $table" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$table = esc_sql( $table );
+		$sql = "DROP TABLE IF EXISTS `{$table}`";
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->base_prefix}bp_activity WHERE component = %s", 'album' ) );
 		if ( is_dir( $directory ) ) {
 			self::delete( $directory );
@@ -213,6 +223,16 @@ class BPMediaImporter {
 	 * @return bool
 	 */
 	public static function delete( $path ) {
+		global $wp_filesystem;
+
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		if ( ! $wp_filesystem ) {
+			WP_Filesystem();
+		}
+
 		if ( true === is_dir( $path ) ) {
 			$files = array_diff( scandir( $path ), array( '.', '..' ) );
 
@@ -220,11 +240,9 @@ class BPMediaImporter {
 				self::delete( realpath( $path ) . '/' . $file );
 			}
 
-			return rmdir( $path );
-		} else {
-			if ( true === is_file( $path ) ) {
-				return unlink( $path );
-			}
+			return $wp_filesystem->rmdir( $path );
+		} elseif ( true === is_file( $path ) ) {
+				return $wp_filesystem->delete( $path );
 		}
 
 		return false;

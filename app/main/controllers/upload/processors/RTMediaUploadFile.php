@@ -134,15 +134,13 @@ class RTMediaUploadFile {
 				$rtmedia_upload_prefix = 'groups/';
 				$id                    = $this->uploaded['context_id'];
 			}
-		} else {
+		} elseif ( 'group' !== $rtmedia_interaction->context->type ) {
 
-			if ( 'group' !== $rtmedia_interaction->context->type ) {
 				$rtmedia_upload_prefix = 'users/';
 				$id                    = apply_filters( 'rtmedia_current_user', get_current_user_id() );
-			} else {
-				$rtmedia_upload_prefix = 'groups/';
-				$id                    = $rtmedia_interaction->context->id;
-			}
+		} else {
+			$rtmedia_upload_prefix = 'groups/';
+			$id                    = $rtmedia_interaction->context->id;
 		}
 
 		$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
@@ -184,8 +182,9 @@ class RTMediaUploadFile {
 			/**
 			 * Otherwise check for $_FILES global object from the form submitted
 			 */
-		} elseif ( isset( $_FILES['rtmedia_file'] ) ) {
-			$this->populate_file_array( $_FILES['rtmedia_file'] );
+		} elseif ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are just checking if the value exists over here.
+			$this->populate_file_array( array_map( 'sanitize_text_field', $_FILES['rtmedia_file'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are just checking if the value exists over here.
+			// The function populate_file_array is sanitizing string and integer values.
 		} else {
 			/**
 			 * No files could be found to upload
@@ -209,7 +208,7 @@ class RTMediaUploadFile {
 			'type'     => isset( $file_array['type'] ) ? $file_array['type'] : '',
 			'tmp_name' => isset( $file_array['tmp_name'] ) ? $file_array['tmp_name'] : '',
 			'error'    => isset( $file_array['error'] ) ? $file_array['error'] : '',
-			'size'     => isset( $file_array['size'] ) ? $file_array['size'] : 0,
+			'size'     => isset( $file_array['size'] ) ? intval( $file_array['size'] ) : 0,
 		);
 	}
 
@@ -370,7 +369,14 @@ class RTMediaUploadFile {
 			if ( function_exists( 'wp_delete_file' ) ) {  // wp_delete_file is introduced in WordPress 4.2.
 				wp_delete_file( $file_path );
 			} else {
-				unlink( $file_path );
+				if ( ! function_exists( 'WP_Filesystem' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/file.php';
+				}
+				global $wp_filesystem;
+				if ( ! $wp_filesystem ) {
+					WP_Filesystem();
+				}
+				$wp_filesystem->delete( $file_path );
 			}
 		}
 	}

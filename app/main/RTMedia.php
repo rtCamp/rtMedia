@@ -112,9 +112,9 @@ class RTMedia {
 		add_action( 'plugins_loaded', array( $this, 'load_translation' ), 10 );
 		add_action( 'plugins_loaded', array( $this, 'init' ), 20 );
 		add_action( 'wp_enqueue_scripts', array( 'RTMediaGalleryShortcode', 'register_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts_styles' ), 999 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_styles' ), 999 );
 
-		// WordPress 6.7 compatibility
+		// WordPress 6.7 compatibility.
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp67_compatibility_scripts' ), 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'wp67_compatibility_scripts' ), 1 );
 
@@ -192,7 +192,7 @@ class RTMedia {
 				global $wpdb;
 				$row = $album_row['result'][0];
 				if ( isset( $row['media_id'] ) ) {
-					// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+					// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 					$sql = $wpdb->prepare(
 						"update $wpdb->posts p
                                 left join
@@ -207,7 +207,8 @@ class RTMedia {
 						get_current_blog_id(),
 						$row['media_id'],
 						'%/rtMedia/%'
-					);
+					); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 					$wpdb->query( $sql );
 				}
 			}
@@ -221,7 +222,8 @@ class RTMedia {
 		global $wpdb;
 		$model      = new RTMediaModel();
 		$update_sql = "UPDATE {$model->table_name} SET privacy = '80' where privacy = '-1' ";
-		$wpdb->query( $update_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+		$wpdb->query( $update_sql );
 	}
 
 	/**
@@ -232,15 +234,17 @@ class RTMedia {
 		// if buddypress is active and groups are enabled.
 		global $wpdb;
 		$table_exist = false;
-		if ( $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}bp_groups'" ) ) {
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+		$bp_groups_exists = $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}bp_groups'" );
+		if ( $bp_groups_exists ) {
 			$table_exist = true;
 		}
 		if ( class_exists( 'BuddyPress' ) && $table_exist ) {
 			$model     = new RTMediaModel();
 			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' and m.privacy <> 80 ";
-			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 20 where m.context = 'group' and ( bp.status = 'private' OR bp.status = 'hidden' ) and m.privacy <> 80 ";
-			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		}
 	}
 
@@ -252,11 +256,11 @@ class RTMedia {
 		$model             = new RTMediaModel();
 		$interaction_model = new RTMediaInteractionModel();
 		$update_media_sql  = 'ALTER TABLE ' . $model->table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $update_media_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$wpdb->query( $update_media_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- No caching required for altering table.
 		$update_media_meta_sql = 'ALTER TABLE ' . $wpdb->base_prefix . $model->meta_table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $update_media_meta_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$wpdb->query( $update_media_meta_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- No caching required for altering table.
 		$update_media_interaction_sql = 'ALTER TABLE ' . $interaction_model->table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $update_media_interaction_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$wpdb->query( $update_media_interaction_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- No caching required for altering table.
 	}
 
 	/**
@@ -371,6 +375,7 @@ class RTMedia {
 	 */
 	public function custom_style_for_image_size() {
 		if ( apply_filters( 'rtmedia_custom_image_style', true ) ) {
+			// No a security issue, so keeping the style here.
 			?>
 			<style type="text/css">
 				<?php
@@ -1117,16 +1122,15 @@ class RTMedia {
 	 * @return bool
 	 */
 	public function check_global_album() {
-		// todo: Nonce required.
 		$album        = new RTMediaAlbum();
 		$global_album = $album->get_default();
 
-		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-		$mode   = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$action = sanitize_text_field( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are just intercepting if a action is for a different kind of upload and removing a field based on it.
+		$mode   = sanitize_text_field( filter_input( INPUT_POST, 'mode', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );   // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are just intercepting if a action is for a different kind of upload and removing a field based on it.
 
 		// Hack for plupload default name.
 		if ( ! empty( $action ) && ! empty( $mode ) && 'file_upload' === $mode ) {
-			unset( $_POST['name'] ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
+			unset( $_POST['name'] ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- We are removing the value from the $_POST.
 		}
 
 		global $rtmedia_error;
@@ -1222,9 +1226,9 @@ class RTMedia {
 	public function ensure_wp67_compatibility() {
 		global $wp_version;
 
-		// Check if we're running WordPress 6.7 or higher
+		// Check if we're running WordPress 6.7 or higher.
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
-			// Enqueue jQuery Migrate if not already enqueued to maintain backward compatibility
+			// Enqueue jQuery Migrate if not already enqueued to maintain backward compatibility.
 			if ( ! wp_script_is( 'jquery-migrate', 'enqueued' ) ) {
 				wp_enqueue_script( 'jquery-migrate' );
 			}
@@ -1238,9 +1242,9 @@ class RTMedia {
 	 * @since 4.6.23
 	 */
 	public function wp67_compatibility_scripts() {
-	global $wp_version;
+		global $wp_version;
 
-		// Enqueue jQuery Migrate for WordPress 6.7+ compatibility
+		// Enqueue jQuery Migrate for WordPress 6.7+ compatibility.
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
 			if ( wp_script_is( 'jquery', 'enqueued' ) && ! wp_script_is( 'jquery-migrate', 'enqueued' ) ) {
 				wp_enqueue_script( 'jquery-migrate' );
@@ -1257,31 +1261,16 @@ class RTMedia {
 	public function wp67_media_element_init() {
 		global $wp_version;
 
+		$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
+
 		if ( version_compare( $wp_version, '6.7', '>=' ) ) {
-			?>
-			<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				// WordPress 6.7 compatibility: Initialize MediaElement if not already done
-				if (typeof wp !== 'undefined' && wp.mediaelement && wp.mediaelement.initialize) {
-					wp.mediaelement.initialize();
-				}
-
-				// Fallback for older MediaElement initialization
-				if (typeof $().mediaelementplayer !== 'undefined') {
-					$('.wp-audio-shortcode, .wp-video-shortcode').not('.mejs-container').mediaelementplayer({
-						success: function(mediaElement, domObject) {
-							// MediaElement successfully initialized
-						}
-					});
-				}
-
-				// WordPress 6.7 compatibility: Add console log to verify fixes are working
-				if (window.console && console.log) {
-					console.log('rtMedia: WordPress 6.7 compatibility mode active');
-				}
-			});
-			</script>
-			<?php
+			wp_enqueue_script(
+				'rtmedia-wp67-mediaelement-init',
+				RTMEDIA_URL . 'app/assets/js/wp67-mediaelement-init' . $suffix . '.js',
+				array( 'jquery' ),
+				RTMEDIA_VERSION,
+				true
+			);
 		}
 	}
 
@@ -1291,11 +1280,11 @@ class RTMedia {
 	public function enqueue_scripts_styles() {
 		global $rtmedia, $bp, $rtmedia_interaction;
 
-		// WordPress 6.7 compatibility: Ensure jQuery Migrate is loaded for backward compatibility
+		// WordPress 6.7 compatibility: Ensure jQuery Migrate is loaded for backward compatibility.
 		$this->ensure_wp67_compatibility();
 
-		// Initialize WordPress 6.7 media element compatibility
-		add_action( 'wp_footer', array( $this, 'wp67_media_element_init' ), 20 );
+		// Initialize WordPress 6.7 media element compatibility.
+		$this->wp67_media_element_init();
 
 		$rtmedia_main     = array();
 		$rtmedia_backbone = array();
@@ -1303,7 +1292,7 @@ class RTMedia {
 
 		$bp_template = get_option( '_bp_theme_package_id' );
 
-		// Ensure MediaElement compatibility with WordPress 6.7
+		// Ensure MediaElement compatibility with WordPress 6.7.
 		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', array( 'jquery' ), RTMEDIA_VERSION, true );
 		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement-wp', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.min.css', '', RTMEDIA_VERSION );
@@ -1487,7 +1476,8 @@ class RTMedia {
 
 		// Localizing strings for rtMedia.backbone.js.
 		$rtmedia_backbone_strings = array(
-			'rtm_edit_file_name' => esc_html__( 'Edit File Name', 'buddypress-media' ),
+			'rtm_edit_file_name'          => esc_html__( 'Edit File Name', 'buddypress-media' ),
+			'rtmedia_album_gallery_nonce' => wp_create_nonce( 'rtmedia_album_gallery' ),
 		);
 
 		// Localise fot rtmedia-backcone js.
@@ -1743,7 +1733,7 @@ class RTMedia {
 
 			wp_localize_script( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
 		}
-		// Register BuddyPress Nouveau script only if it doesn't exist
+		// Register BuddyPress Nouveau script only if it doesn't exist.
 		if ( ! wp_script_is( 'bp-nouveau', 'registered' ) ) {
 			wp_register_script(
 				'bp-nouveau',

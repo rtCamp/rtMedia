@@ -35,7 +35,7 @@ class RTMediaUploadEndpoint {
 	public function template_redirect( $create_activity = true ) {
 		// todo refactor below function so it takes param also and use if passed else use POST request.
 		ob_start();
-		if ( ! count( $_POST ) ) { // phpcs:ignore
+		if ( ! count( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Not needed since we are only counting the elements in $_POST
 			include get_404_template();
 		} else {
 
@@ -283,6 +283,7 @@ class RTMediaUploadEndpoint {
 								$action = sprintf( esc_html__( '%1$s added %2$d %3$s', 'buddypress-media' ), $username, count( $same_medias ), RTMEDIA_MEDIA_SLUG );
 								$action = apply_filters( 'rtmedia_buddypress_action_text_fitler_multiple_media', $action, $username, count( $same_medias ), $user->display_name );
 
+								// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 								$wpdb->update(
 									$bp->activity->table_name,
 									array(

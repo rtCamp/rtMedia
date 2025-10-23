@@ -7,17 +7,17 @@
 
 // Include plugin.php if not already loaded.
 if ( ! function_exists( 'is_plugin_active' ) ) {
-    include_once ABSPATH . 'wp-admin/includes/plugin.php';
+	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 }
 
 // If GoDAM is active right now, set a permanent flag.
 if ( is_plugin_active( 'godam/godam.php' ) ) {
-    update_option( 'godam_plugin_activated_once', true );
+	update_option( 'godam_plugin_activated_once', true );
 }
 
 // If the permanent flag is set, never show the notice.
 if ( get_option( 'godam_plugin_activated_once' ) ) {
-    return;
+	return;
 }
 
 ?>
@@ -36,16 +36,4 @@ if ( get_option( 'godam_plugin_activated_once' ) ) {
 		?>
 	</p>
 </div>
-<script type="text/javascript">
-	jQuery( document ).ready( function() {
-		jQuery( '.install-transcoder-notice.is-dismissible' ).on( 'click', '.notice-dismiss', function() {
-			var data = {
-				action: 'install_transcoder_hide_admin_notice',
-				install_transcoder_notice_nonce: jQuery('#install_transcoder_hide_notice_nonce').val()
-			};
-			jQuery.post( ajaxurl, data, function ( response ) {
-				jQuery('.install-transcoder-notice').remove();
-			});
-		});
-	});
-</script>
+

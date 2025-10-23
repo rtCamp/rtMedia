@@ -972,14 +972,23 @@ function rtmedia_duration( $id = false ) {
  * @return array
  */
 function rtmedia_sanitize_object( $data, $exceptions = array() ) {
-
+	$allowed_keys = array_merge( RTMediaMedia::$default_object, $exceptions );
+	$sanitized    = array();
 	foreach ( $data as $key => $value ) {
-		if ( ! in_array( $key, array_merge( RTMediaMedia::$default_object, $exceptions ), true ) ) {
-			unset( $data[ $key ] );
+		if ( in_array( $key, $allowed_keys, true ) ) {
+			if ( is_array( $value ) ) {
+				$sanitized[ $key ] = rtmedia_sanitize_object( $value );
+			} elseif ( is_numeric( $value ) ) {
+				$sanitized[ $key ] = absint( $value );
+			} elseif ( false !== filter_var( $value, FILTER_VALIDATE_URL ) ) {
+				$sanitized[ $key ] = esc_url_raw( $value );
+			} else {
+				$sanitized[ $key ] = sanitize_text_field( $value );
+			}
 		}
 	}
 
-	return $data;
+	return $sanitized;
 }
 
 /**
@@ -1486,6 +1495,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 				$extracted_id = intval( $matches[1] ); // Extract numeric ID from video tag.
 
 				// Fetch media_id from rt_rtm_media table using the extracted ID.
+				// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 				$media_id = $wpdb->get_var(
 					$wpdb->prepare(
 						"SELECT media_id FROM {$wpdb->prefix}rt_rtm_media WHERE id = %d",
@@ -1496,7 +1506,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 				// If media_id exists, return Godam video shortcode.
 				if ( ! empty( $media_id ) ) {
 					return '<div style="max-width: 480px; width: 100%; overflow: hidden;">'
-						   . '<style>div.godam-video-wrapper video, div.godam-video-wrapper iframe { max-width: 100%; height: auto; display: block; }</style>'
+						   . '<style>div.godam-video-wrapper video, div.godam-video-wrapper iframe { max-width: 100%; height: auto; display: block; }</style>' // No a security issue, so keeping the style here.
 						   . do_shortcode( '[godam_video id="' . $media_id . '"]' )
 						   . '</div>';
 				}
@@ -2188,6 +2198,7 @@ function rtmedia_comment_form() {
 
 			<?php RTMediaComment::comment_nonce_generator(); ?>
 		</form>
+		<!-- Note: Not able to trace proper place to replace below script with wp_enqueue_script() function -->
 		<script>
 			(function($) {
 				$( '#comment_content' ).emoji( { place: 'after' } );
@@ -3802,7 +3813,7 @@ function rtmedia_get_allowed_upload_types_array() {
 function rtmedia_add_media( $upload_params = array() ) {
 
 	if ( empty( $upload_params ) ) {
-		$upload_params = $_POST; // phpcs:ignore
+		$upload_params = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Not needed since it is only used to set the global value. It is being sanitized inside set_post_object function.
 	}
 
 	$upload_model = new RTMediaUploadModel();
@@ -4901,7 +4912,8 @@ function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
 	$views           = wp_cache_get( $view_cache_key, 'view_exporter' );
 
 	if ( false === $views || false === $view_count ) {
-		$views      = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery -- Direct query is required for custom table.
+		$views      = $wpdb->get_results( $query );
 		$view_count = $wpdb->num_rows;
 
 		wp_cache_set( $view_cache_key, $views, 'view_exporter', 300 );
@@ -5003,7 +5015,8 @@ function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
 	$likes           = wp_cache_get( $likes_cache_key, 'like_exporter' );
 
 	if ( false === $likes || false === $like_count ) {
-		$likes      = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery -- Direct query is required for custom table.
+		$likes      = $wpdb->get_results( $query );
 		$like_count = $wpdb->num_rows;
 
 		wp_cache_set( $likes_cache_key, $likes, 'like_exporter', 300 );
@@ -5202,13 +5215,17 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 
 	global $wpdb;
 
+	$bp_activity_table = $wpdb->prefix . 'bp_activity';
+
 	$query = $wpdb->prepare(
-		'DELETE FROM ' . $wpdb->prefix . "bp_activity WHERE type='rtmedia_like_activity' AND user_id=%d LIMIT %d",
+		"DELETE FROM `{$bp_activity_table}` WHERE type=%s AND user_id=%d LIMIT %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		'rtmedia_like_activity',
 		$user_data->ID,
 		$number
 	);
 
-	$items_removed = $wpdb->query( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+	$items_removed = $wpdb->query( $query );
 
 	$done = ( $items_removed < $number );
 

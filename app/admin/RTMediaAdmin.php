@@ -48,12 +48,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public $rtmedia_feed;
 
-		/*
+		/**
 		 * Static property to store the admin pages
 		 *
 		 * @var array
 		 */
-		public static $rtmedia_pages = [
+		public static $rtmedia_pages = array(
 			'rtmedia-settings',
 			'rtmedia-addons',
 			'rtmedia-pro-addons',
@@ -64,7 +64,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			'rtmedia-attributes',
 			'rtmedia-moderate',
 			'rtmedia-blocked-users',
-		];
+		);
 
 		/**
 		 * Constructor - get the plugin hooked in and ready
@@ -131,11 +131,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( isset( $rtmedia_option['general_showAdminMenu'] ) && 1 === intval( $rtmedia_option['general_showAdminMenu'] ) ) {
 					add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
 				}
-			} else {
-				if ( is_array( $rtmedia->options ) ) {
-					if ( 1 === intval( $rtmedia->options['general_showAdminMenu'] ) ) {
-						add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
-					}
+			} elseif ( is_array( $rtmedia->options ) ) {
+				if ( 1 === intval( $rtmedia->options['general_showAdminMenu'] ) ) {
+					add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
 				}
 			}
 
@@ -245,6 +243,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				 */
 				$display = apply_filters( 'rtmedia_disable_media_in_commented_media', false );
 				if ( $display ) {
+					// No a security issue, so keeping the style here.
 					?>
 					<style type="text/css">
 						.rtm-option-wrapper .form-table[data-depends="buddypress_enableOnComment"] {
@@ -761,6 +760,19 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$admin_pages = apply_filters( 'rtmedia_filter_admin_pages_array', $admin_pages );
 			$suffix      = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
 
+			// Enqueue importer script only on importer pages.
+			if (
+				( false !== strpos( $hook, 'rtmedia-media-size-import' ) ) ||
+				( false !== strpos( $hook, 'rtmedia-activity-upgrade' ) )
+			) {
+				wp_enqueue_script( 'rtmedia-importer', RTMEDIA_URL . 'app/assets/admin/js/importer' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+			}
+
+			// Enqueue migration JS on migration pages to avoid inline scripts.
+			if ( false !== strpos( $hook, 'rtmedia-migration' ) ) {
+				wp_enqueue_script( 'rtmedia-migration', RTMEDIA_URL . 'app/assets/admin/js/migration' . $suffix . '.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+			}
+
 			if ( in_array( $hook, $admin_pages, true ) || strpos( $hook, 'rtmedia-migration' ) ) {
 
 				$admin_ajax = admin_url( 'admin-ajax.php' );
@@ -774,11 +786,25 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin.min.js', array( 'backbone', 'wp-util' ), RTMEDIA_VERSION, true );
 				}
 
+				// Enqueue JS file for GoDAM notice show/hide.
+				wp_enqueue_script( 'rtmedia-rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/rtmedia-admin.min.js', array( 'jquery' ), RTMEDIA_VERSION, true );
+				wp_localize_script(
+					'rtmedia-rtmedia-admin',
+					'rtmedia_rtmedia_admin',
+					array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'godam_banner_nonce'    => wp_create_nonce( 'install-godam-hide-notice' ),
+						'bp_is_active__activity' => ( class_exists( 'BuddyPress' ) && bp_is_active( 'activity' ) ),
+						'bp_is_active__groups'  => ( class_exists( 'BuddyPress' ) && bp_is_active( 'groups' ) ),
+					)
+				);
+
 				wp_localize_script(
 					'rtmedia-admin',
 					'RTMedia_Admin_Settings_JS',
 					array(
 						'rtmedia_default_sizes_error_message' => esc_html__( 'Invalid value for [default_size_property].', 'buddypress-media' ),
+						'rtmedia_buddypress_convert_nonce'    => wp_create_nonce( 'rtmedia_buddypress_convert_nonce' ),
 					)
 				);
 
@@ -934,7 +960,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					)
 				);
 			}
-
 		}
 
 		/**
@@ -1349,7 +1374,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function save_multisite_options() {
 			global $rtmedia_admin;
-			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing
+			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Nonce verification is handled by network_admin_edit_ action hook which requires valid nonce and proper capabilities.
 
 			$rtmedia_options = filter_input( INPUT_POST, 'rtmedia_options' );
 			if ( isset( $rtmedia_options ) ) {
@@ -1427,11 +1452,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @access public
 		 */
 		public function export_settings() {
-
-            // permission check.
-            if ( ! current_user_can( 'manage_options' ) ) {
-	            wp_send_json_error( array( 'message' => esc_html__( 'You do not have permission to export settings.', 'buddypress-media' ) ) );
-            }
+			// permission check.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( array( 'message' => esc_html__( 'You do not have permission to export settings.', 'buddypress-media' ) ) );
+			}
 
 			$rtmedia_option = get_option( 'rtmedia-options' );
 
@@ -1459,8 +1483,18 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				wp_send_json( $response );
 			}
 
-			$settings_data_json_string = file_get_contents( $file_path );
-			$settings_data_json = json_decode( $settings_data_json_string, true );
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+
+			global $wp_filesystem;
+
+			if ( ! $wp_filesystem ) {
+				WP_Filesystem();
+			}
+
+			$settings_data_json_string = $wp_filesystem->get_contents( $file_path );
+			$settings_data_json        = json_decode( $settings_data_json_string, true );
 			wp_delete_file( $file_path );
 
 			if ( empty( $settings_data_json ) ) {
@@ -1489,14 +1523,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( $new_value === $old_value ) {
 				$response['rtm_response']     = 'error';
 				$response['rtm_response_msg'] = esc_html__( 'Data passed for settings is unchanged!', 'buddypress-media' );
-			} else {
-				if ( update_option( 'rtmedia-options', $settings_data ) ) {
+			} elseif ( update_option( 'rtmedia-options', $settings_data ) ) {
 					$response['rtm_response']     = 'success';
 					$response['rtm_response_msg'] = esc_html__( 'rtMedia Settings imported successfully!', 'buddypress-media' );
-				} else {
-					$response['rtm_response']     = 'error';
-					$response['rtm_response_msg'] = esc_html__( 'Could not update rtMedia Settings', 'buddypress-media' );
-				}
+			} else {
+				$response['rtm_response']     = 'error';
+				$response['rtm_response_msg'] = esc_html__( 'Could not update rtMedia Settings', 'buddypress-media' );
 			}
 
 			wp_send_json( $response );
@@ -1506,7 +1538,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * Ajax callback function Convert videos mailchimp.
 		 */
 		public function convert_videos_mailchimp_send() {
-			// todo: nonce required.
+			// todo: nonce required. -- Not required since this AJAX action is not being used anymore and will be removed in future version.
+
 			$interested = sanitize_text_field( filter_input( INPUT_POST, 'linkback', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			$choice     = sanitize_text_field( filter_input( INPUT_POST, 'choice', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 			$url        = filter_input( INPUT_POST, 'url', FILTER_SANITIZE_URL );
@@ -1746,22 +1779,22 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * Display GoDAM banner admin notice
 		 */
 		public function install_godam_admin_notice() {
-			// Get the current page from the URL (e.g., ?page=rtmedia-settings)
-			$current_page = isset($_GET['page']) ? $_GET['page'] : '';
+			// Get the current page from the URL (e.g., ?page=rtmedia-settings).
+			$current_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No nonce needed, just reading a value.
 
-			// List of pages where the banner should be shown
+			// List of pages where the banner should be shown.
 			$pages = self::$rtmedia_pages;
 
-			// Check if the current page is one of the defined pages
-			if (in_array($current_page, $pages, true)) {
-				// Check if the banner has been dismissed
-				$banner_dismissed = get_user_meta(get_current_user_id(), 'install_godam_hide_notice', true);
+			// Check if the current page is one of the defined pages.
+			if ( in_array( $current_page, $pages, true ) ) {
+				// Check if the banner has been dismissed.
+				$banner_dismissed = get_user_meta( get_current_user_id(), 'install_godam_hide_notice', true );
 
-				if (!$banner_dismissed) {
+				if ( ! $banner_dismissed ) {
 					?>
 					<div class="notice godam-admin-banner is-dismissible" style="position: relative; display:block; margin: 12px 0; padding: 0; width: 100%;">
 						<div class="godam-banner-wrapper">
-							<img src="<?php echo esc_url(RTMEDIA_URL . 'app/assets/img/godam-banner-2.png'); ?>" alt="Godam Banner" style="display: block; max-width: 100%; height: auto;">
+							<img src="<?php echo esc_url( RTMEDIA_URL . 'app/assets/img/godam-banner-2.png' ); ?>" alt="Godam Banner" style="display: block; max-width: 100%; height: auto;">
 							<a href="https://godam.io?utm_source=rtmedia&utm_medium=banner&utm_campaign=godam_promo" target="_blank" style="
 								position: absolute;
 								top: 65%;
@@ -1780,25 +1813,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							</a>
 						</div>
 					</div>
-
-					<script type="text/javascript">
-						// Ensure jQuery is loaded
-						jQuery(document).ready(function($) {
-							// Handle dismissal of the banner
-							$(document).on('click', '.godam-admin-banner .notice-dismiss', function() {
-								// Send AJAX request to mark the banner as dismissed
-								var data = {
-									action: 'install_godam_hide_admin_notice', // action hook
-									security: '<?php echo wp_create_nonce('install-godam-hide-notice'); ?>' // nonce for security
-								};
-
-								// Perform the AJAX request
-								$.post(ajaxurl, data, function(response) {
-									console.log('Notice dismissed and saved.');
-								});
-							});
-						});
-					</script>
 					<?php
 				}
 			}
@@ -1808,18 +1822,19 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * AJAX callback to hide GoDAM admin notice
 		 */
 		public function install_godam_hide_admin_notice() {
-			// Verify nonce for security
-			if (!isset($_POST['security']) || !wp_verify_nonce($_POST['security'], 'install-godam-hide-notice')) {
-				wp_die('Nonce verification failed');
+			// Verify nonce for security.
+			$nonce = isset( $_POST['security'] ) ? sanitize_text_field( wp_unslash( $_POST['security'] ) ) : '';
+
+			if ( ! wp_verify_nonce( $nonce, 'install-godam-hide-notice' ) ) {
+				wp_send_json_error( 'Nonce verification failed' );
 			}
 
-			// Update user meta to remember the dismissal
-			update_user_meta(get_current_user_id(), 'install_godam_hide_notice', true);
+			// Update user meta to remember the dismissal.
+			update_user_meta( get_current_user_id(), 'install_godam_hide_notice', true );
 
-			// Respond back to the AJAX request
-			wp_send_json_success('Notice dismissed');
+			// Respond back to the AJAX request.
+			wp_send_json_success( 'Notice dismissed' );
 		}
-
 	}
 
 }

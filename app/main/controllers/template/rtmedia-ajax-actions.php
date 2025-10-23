@@ -39,12 +39,10 @@ function rtmedia_delete_uploaded_media() {
 						$other_count = $model->get_other_album_count( $bp->groups->current_group->id, 'group' );
 
 					}
-				} else {
+				} elseif ( function_exists( 'bp_displayed_user_id' ) ) {
 
-					if ( function_exists( 'bp_displayed_user_id' ) ) {
 						$counts      = $rtmedia_nav_obj->actual_counts( bp_displayed_user_id(), 'profile' );
 						$other_count = $model->get_other_album_count( bp_displayed_user_id(), 'profile' );
-					}
 				}
 
 				$remaining_all_media = ( ! empty( $counts['total']['all'] ) ) ? $counts['total']['all'] : 0;
@@ -52,7 +50,7 @@ function rtmedia_delete_uploaded_media() {
 				$remaining_photos    = ( ! empty( $counts['total']['photo'] ) ) ? $counts['total']['photo'] : 0;
 				$remaining_videos    = ( ! empty( $counts['total']['video'] ) ) ? $counts['total']['video'] : 0;
 				$remaining_music     = ( ! empty( $counts['total']['music'] ) ) ? $counts['total']['music'] : 0;
-				$remaining_docs	  = ( ! empty( $counts['total']['document'] ) ) ? $counts['total']['document'] : 0;
+				$remaining_docs      = ( ! empty( $counts['total']['document'] ) ) ? $counts['total']['document'] : 0;
 			}
 
 			wp_send_json_success(
@@ -79,7 +77,6 @@ function rtmedia_delete_uploaded_media() {
 	);
 
 	wp_die();
-
 }
 add_action( 'wp_ajax_delete_uploaded_media', 'rtmedia_delete_uploaded_media' );
 
@@ -110,6 +107,7 @@ if ( ! function_exists( 'rtmedia_transcoded_media_added_callback' ) ) {
 					if ( $activity_id && isset( $media_id ) && ! empty( $media_id ) && function_exists( 'rtmedia_is_comment_media' ) && rtmedia_is_comment_media( $media_id ) ) {
 
 						global $wpdb;
+						// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 						$activity_content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$wpdb->base_prefix}bp_activity WHERE id = %d", $activity_id ) );
 
 						if ( function_exists( 'rtmedia_update_content_of_comment_media' ) ) {

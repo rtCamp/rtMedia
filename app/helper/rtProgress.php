@@ -18,7 +18,6 @@ class rtProgress { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWi
 	 * @access public
 	 */
 	public function __construct() {
-
 	}
 
 	/**

@@ -197,7 +197,9 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 	 */
 	public function media_exists( $id ) {
 		global $wpdb;
-		$post_exists = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE id = %d", $id ), 'ARRAY_A' );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is used for performance.
+		$post_exists = $wpdb->get_row( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE ID = %d", $id ), 'ARRAY_A' );
+
 		if ( $post_exists ) {
 			return true;
 		} else {
@@ -317,7 +319,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
  *
  * @param bool|int $group_id Group id.
  */
-function rtmedia_group_featured( $group_id = false ) {
+function rtmedia_group_featured( $group_id = false ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Function might be used outside the class.
 	echo wp_kses( rtmedia_get_group_featured( $group_id ), RTMedia::expanded_allowed_tags() );
 }
 
@@ -328,7 +330,7 @@ function rtmedia_group_featured( $group_id = false ) {
  *
  * @return bool|mixed|void
  */
-function rtmedia_get_group_featured( $group_id = false ) {
+function rtmedia_get_group_featured( $group_id = false ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Function used outside the class.
 	$featured = new RTMediaGroupFeatured( $group_id, false );
 
 	return $featured->content();

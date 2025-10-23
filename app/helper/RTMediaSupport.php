@@ -179,7 +179,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 * @return void
 		 */
 		public function service_selector() {
-			// todo: nonce required.
+			// phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since we are only checking which tab is checked in the settings.
 			$form = filter_input( INPUT_POST, 'form', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 			include RTMEDIA_PATH . 'app/helper/templates/service-sector.php';
@@ -255,10 +255,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 								$rt_to_dir_path  = str_replace( '//', '/', $rt_to_dir_paths );
 								$result[]        = str_replace( ABSPATH . 'wp-content/', '', $rt_to_dir_path );
 							}
-						} else {
-							if ( 'main.php' !== $value ) {
+						} elseif ( 'main.php' !== $value ) {
 								$result[] = $value;
-							}
 						}
 					}
 				}
@@ -411,9 +409,9 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 * @return void
 		 */
 		public function get_form( $form = '' ) {
-			// todo: nonce required.
+
 			if ( empty( $form ) ) {
-				$form = filter_input( INPUT_POST, 'form' . FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+				$form = filter_input( INPUT_POST, 'form' . FILTER_SANITIZE_FULL_SPECIAL_CHARS ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since we are only checking which tab is selected and send the form for it.
 				$form = isset( $form ) ? $form : 'premium_support';
 			}
 			$meta_title = '';
@@ -533,7 +531,14 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			) ) {
 				// delete file after sending it to mail.
 				if ( ! empty( $attachment_file ) ) {
-					unlink( $attachment_file );
+					if ( ! function_exists( 'WP_Filesystem' ) ) {
+						require_once ABSPATH . 'wp-admin/includes/file.php';
+					}
+					global $wp_filesystem;
+					if ( ! $wp_filesystem ) {
+						WP_Filesystem();
+					}
+					$wp_filesystem->delete( $attachment_file );
 				}
 				echo '<div class="rtmedia-success" style="margin:10px 0;">';
 
@@ -630,12 +635,20 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					echo wp_kses_post( ucwords( str_replace( '_', ' ', $option ) ) . str_repeat( ' ', 50 - strlen( $option ) ) . wp_strip_all_tags( $value ) . PHP_EOL );
 				}
 
-				readfile( 'debuginfo.txt' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
+				if ( ! function_exists( 'WP_Filesystem' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/file.php';
+				}
+
+				global $wp_filesystem;
+
+				if ( ! $wp_filesystem ) {
+					WP_Filesystem();
+				}
+
+				echo esc_html( $wp_filesystem->get_contents( 'debuginfo.txt' ) );
+
 				exit();
 			}
-
 		}
-
 	}
-
 }

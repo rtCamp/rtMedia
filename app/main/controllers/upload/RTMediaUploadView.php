@@ -122,7 +122,12 @@ class RTMediaUploadView {
 
 				if ( false === $group_status ) {
 					// Query to fetch current group's privacy status.
-					$group_status = $wpdb->get_var( 'SELECT `status` FROM ' . $table_name . ' WHERE id = ' . $group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+					$sql = $wpdb->prepare(
+						"SELECT status FROM `{$table_name}` WHERE id = %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+						$group_id
+					);
+					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table. safe because SQL is prepared.
+					$group_status = $wpdb->get_var( $sql );
 
 					// Set data in transient for better performance.
 					set_transient( 'group_status_' . $group_id, $group_status );

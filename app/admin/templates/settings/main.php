@@ -24,6 +24,7 @@
 						</div>
 					<?php } ?>
 					<input type="hidden" name="rtmedia-options-save" value="true">
+					<?php wp_nonce_field( 'rtmedia_settings', 'wp_nonce' ); ?>
 					<input type="submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php esc_attr_e( 'Save Settings', 'buddypress-media' ); ?>">
 				</div>
 				<?php
@@ -55,6 +56,7 @@
 					</div>
 
 					<input type="hidden" name="rtmedia-options-save" value="true">
+					<?php wp_nonce_field( 'rtmedia_settings', 'wp_nonce' ); ?>
 					<input type="submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php esc_attr_e( 'Save Settings', 'buddypress-media' ); ?>">
 				</div>
 			</div>
@@ -71,12 +73,10 @@
 				$rtmedia_support->render_support( $page_name );
 			} elseif ( 'rtmedia-themes' === $page_name ) {
 				RTMediaThemes::render_themes( $page_name );
-			} else {
-				if ( 'rtmedia-license' === $page_name ) {
+			} elseif ( 'rtmedia-license' === $page_name ) {
 					RTMediaLicense::render_license( $page_name );
-				} else {
-					do_settings_sections( $page_name );
-				}
+			} else {
+				do_settings_sections( $page_name );
 			}
 			do_action( 'rtmedia_admin_page_insert', $page_name );
 			?>

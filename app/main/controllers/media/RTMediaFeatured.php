@@ -177,7 +177,8 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 	public function media_exists( $id ) {
 		global $wpdb;
 
-		$post_exists = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE id = %d", $id ), 'ARRAY_A' );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query is used for performance.
+		$post_exists = $wpdb->get_row( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE ID = %d", $id ), 'ARRAY_A' );
 
 		if ( $post_exists ) {
 			return true;
@@ -317,7 +318,8 @@ class RTMediaFeatured extends RTMediaUserInteraction {
  *
  * @param bool|int $user_id User ID.
  */
-function rtmedia_featured( $user_id = false ) {
+function rtmedia_featured( $user_id = false ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Function might be used outside the class.
+	// todo: Refactor the code to move the function inside the class.
 	echo wp_kses( rtmedia_get_featured( $user_id ), RTMedia::expanded_allowed_tags() );
 }
 
@@ -328,7 +330,8 @@ function rtmedia_featured( $user_id = false ) {
  *
  * @return bool|mixed|void
  */
-function rtmedia_get_featured( $user_id = false ) {
+function rtmedia_get_featured( $user_id = false ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Function used outside the class.
+	// todo: Refactor the code to move the function inside the class.
 	$featured = new RTMediaFeatured( $user_id, false );
 
 	return $featured->content();

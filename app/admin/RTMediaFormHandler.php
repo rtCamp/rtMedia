@@ -1207,31 +1207,6 @@ class RTMediaFormHandler {
 		self::render_tab_content( $render_options, $general_group, 10 );
 
 		do_action( 'rtmedia_buddypress_setting_content' );
-		/**
-		 * Disable inputs and change background color to differentiate disabled inputs,
-		 * if 'Activity Streams' component is disabled in BuddyPress Settings.
-		 */
-		if ( ! bp_is_active( 'activity' ) ) {
-			?>
-			<script>
-				jQuery( '#rtmedia-bp-enable-activity, #rtmedia-enable-comment-activity, #rtmedia-enable-like-activity' )
-					.prop( "disabled", true )
-					.next().css( 'background-color', '#808080' );
-				jQuery( '#rtmedia-activity-feed-limit' ).prop( "disabled", true );
-			</script>
-			<?php
-		}
-		/**
-		 * Disable inputs and change background color to differentiate disabled inputs,
-		 * if 'User Groups' component is disabled in BuddyPress Settings.
-		 */
-		if ( ! bp_is_active( 'groups' ) ) {
-			?>
-			<script>
-				jQuery( '#rtmedia-enable-on-group' ).prop( "disabled", true ).next().css( 'background-color', '#808080' );
-			</script>
-			<?php
-		}
 	}
 
 	/**
