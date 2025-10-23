@@ -1,11 +1,11 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala, shobhit2412, vaishu.agola27, kapilpaul, opurockey, vkd007, pavanpatil1, pradeep1308, shardul200, sabbir1991, kamalahmed, ibnulk, harshbarach, Mukulsingh27, vishalkakadiya, elifvish, krupajnanda, utsavladani, krishana79, rohitmathur7
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala, shobhit2412, vaishu.agola27, kapilpaul, opurockey, vkd007, pavanpatil1, pradeep1308, shardul200, sabbir1991, kamalahmed, ibnulk, harshbarach, Mukulsingh27, vishalkakadiya, elifvish, krupajnanda, utsavladani, krishana79, rohitmathur7, kuldipchaudhary, mchirag2002, vedantgandhi28
 Tags: BuddyPress, media, multimedia, album, audio, music, video, photo, upload, share, MediaElement.js, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.1
 Tested up to: 6.8
-Stable tag: 4.7.3
+Stable tag: 4.7.4
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -132,6 +132,16 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.4 [October 24, 2025] =
+* FIXED
+  * Fix the unauthenticated information disclosure via handle_rest_pre_dispatch Function.
+  * Restrict the media upload by its types based on selected tab in rtMedia gallery.
+
+* ENHANCEMENT
+  * Enhances media upload support by adding a broader set of commonly used video and audio formats.
+  * Replace PHP file system functions with WordPress alternative filesystem function to enhance security.
+  * Add missing sanitization, validation, and nonce verification function to improve security.
 
 = 4.7.3 [September 12, 2025] =
 
