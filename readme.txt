@@ -33,7 +33,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  2. **BuddyPress Integration** - Find a new media tab under BuddyPress Profiles & Groups.
  3. **BuddyPress Activity Stream** - Attach media to activity status updates just like Facebook.
  4. **Albums** - Organise media into manageable collections. BuddyPress Group albums support collaboration.
- 5. **Responsive** - Album Slideshow (Lightbox), video player, uploads work on mobiles & tablets. Support for swipe guestures.
+ 5. **Responsive** - Album Slideshow (Lightbox), video player, uploads work on mobiles & tablets. Support for swipe gestures.
  6. **Privacy** - Control who can see media files, albums and BuddyPress activities.
  7. **Templating system** - Completely customise rtMedia by modifying the template files. Just copy over the template folder to your theme.
  8. **[Featured Media](https://rtmedia.io/docs/developers/featured-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
@@ -120,7 +120,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 3.  Media Types Settings
 4.  Media Size Settings
 5.  Privacy Settings
-6.  Other Setiings
+6.  Other Settings
 7.  Export/Import Settings
 8.  Media View
 9.  Album View
@@ -2037,7 +2037,7 @@ rtMedia includes [full translation support](https://rtmedia.io/docs/translations
 rtMedia uses the following projects/sources for some functionality
 
 * [MediaElement.js](http://mediaelementjs.com/) for html5 audio/video player
-* [Maginific Popup](http://dimsemenov.com/plugins/magnific-popup/) for responsive lightbox
+* [Magnific Popup](http://dimsemenov.com/plugins/magnific-popup/) for responsive lightbox
 * [getID3](http://getid3.sourceforge.net/) gets us some ID tags for the media
 * [Foundation](http://foundation.zurb.com/) for the media grid and layout
 * [Backbone.js](http://backbonejs.org/) for an MVC architecture for the frontend

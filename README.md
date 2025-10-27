@@ -138,7 +138,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 3.  Media Types Settings
 4.  Media Size Settings
 5.  Privacy Settings
-6.  Other Setiings
+6.  Other Settings
 7.  Export/Import Settings
 8.  Media View
 9.  Album View
@@ -1994,7 +1994,7 @@ rtMedia includes [full translation support](https://rtmedia.io/docs/translations
 rtMedia uses the following projects/sources for some functionality
 
 * [MediaElement.js](http://mediaelementjs.com/) for html5 audio/video player
-* [Maginific Popup](http://dimsemenov.com/plugins/magnific-popup/) for responsive lightbox
+* [Magnific Popup](http://dimsemenov.com/plugins/magnific-popup/) for responsive lightbox
 * [getID3](http://getid3.sourceforge.net/) gets us some ID tags for the media
 * [Foundation](http://foundation.zurb.com/) for the media grid and layout
 * [Backbone.js](http://backbonejs.org/) for an MVC architecture for the frontend
