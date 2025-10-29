@@ -569,7 +569,7 @@ class RTMedia {
 				'plural'              => 'videos',
 				'label'               => esc_html__( 'Video', 'buddypress-media' ),
 				'plural_label'        => esc_html__( 'Videos', 'buddypress-media' ),
-				'extn'                => array( 'mp4', 'mov', 'mpg', 'flv', 'wmv', 'mkv', 'webm', 'ogv', 'mxf', 'asf', 'vob', 'mts', 'qt', 'mpeg' ),
+				'extn'                => array( 'mp4', 'mov', 'mpg', 'flv', 'wmv', 'mkv', 'webm', 'ogv', 'asf', 'qt', 'mpeg', 'm4v' ),
 				'thumbnail'           => RTMEDIA_URL . 'app/assets/admin/img/video_thumb.png',
 				'settings_visibility' => true,
 			),
