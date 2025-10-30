@@ -153,13 +153,12 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ### 4.7.4
 * FIXED
-  * Fix the unauthenticated information disclosure via handle_rest_pre_dispatch Function.
+  * Apply security recommendations and fixes.
   * Restrict the media upload by its types based on selected tab in rtMedia gallery.
 
 * ENHANCEMENT
   * Enhances media upload support by adding a broader set of commonly used video and audio formats.
   * Replace PHP file system functions with WordPress alternative filesystem function to enhance security.
-  * Add missing sanitization, validation, and nonce verification function to improve security.
 
 ### 4.7.3
 
