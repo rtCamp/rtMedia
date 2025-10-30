@@ -59,7 +59,6 @@ function rtmedia_create_album( $options ) {
 	}
 
 	return $options;
-
 }
 add_filter( 'rtmedia_gallery_actions', 'rtmedia_create_album', 12 );
 
@@ -124,7 +123,6 @@ function rtmedia_album_edit( $options ) {
 	}
 
 	return $options;
-
 }
 add_filter( 'rtmedia_gallery_actions', 'rtmedia_album_edit', 11 );
 
@@ -140,7 +138,6 @@ function rtmedia_bp_activity_get_types( $actions ) {
 	$actions['rtmedia_update'] = 'rtMedia update';
 
 	return $actions;
-
 }
 add_filter( 'bp_activity_get_types', 'rtmedia_bp_activity_get_types', 10, 1 );
 
@@ -167,7 +164,6 @@ function rtm_is_buddypress_enable( $flag ) {
 	}
 
 	return false;
-
 }
 add_filter( 'rtm_main_template_buddypress_enable', 'rtm_is_buddypress_enable', 10, 1 );
 
@@ -190,7 +186,6 @@ function rtmedia_media_gallery_show_title_template_request( $flag ) {
 	}
 
 	return $flag;
-
 }
 add_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_media_gallery_show_title_template_request', 10, 1 );
 
@@ -214,7 +209,6 @@ function rtmedia_media_gallery_lightbox_template_request( $class ) {
 	}
 
 	return $class;
-
 }
 add_filter( 'rtmedia_gallery_list_item_a_class', 'rtmedia_media_gallery_lightbox_template_request', 10, 1 );
 
@@ -245,7 +239,6 @@ function rtmedia_modify_activity_upload_url( $params ) {
 	}
 
 	return $params;
-
 }
 add_filter( 'rtmedia_modify_upload_params', 'rtmedia_modify_activity_upload_url', 999, 1 );
 
@@ -264,15 +257,12 @@ function rtm_modify_document_title_parts( $title = array() ) {
 
 		if ( isset( $rtmedia_query->action_query->media_type ) ) {
 			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ), apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) ) : array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ) );
-		} else {
-			if ( ! class_exists( 'BuddyPress' ) ) {
+		} elseif ( ! class_exists( 'BuddyPress' ) ) {
 				array_unshift( $title, apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) );
-			}
 		}
 	}
 
 	return $title;
-
 }
 add_filter( 'document_title_parts', 'rtm_modify_document_title_parts', 30, 1 );
 
@@ -326,7 +316,6 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 	$final_file_url = rtmedia_append_timestamp_in_url( $final_file_url );
 
 	return preg_replace( '/src=["]([^"]+)["]/', 'src="' . $final_file_url . '"', $html );
-
 }
 add_filter( 'rtmedia_single_content_filter', 'replace_src_with_transcoded_file_url', 100, 2 );
 
@@ -562,7 +551,6 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 	 * Apply filter to get amazon s3 URL
 	 */
 	return apply_filters( 'transcoded_file_url', $thumbnail_id, $media_id );
-
 }
 add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
 
@@ -666,6 +654,7 @@ function rtmedia_edit_media_on_database( $data, $post_ID ) {
 
 							$activity_content = str_replace( $rtmedia_filepath_old, wp_get_attachment_url( $post_ID ), $activity_content_new );
 
+							// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 							$wpdb->update( $bp->activity->table_name, array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
 						}
 					}
@@ -761,7 +750,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 		$raw_search = wp_unslash( filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( 'string' !== gettype( $raw_search ) ) {
-			$raw_search = "";
+			$raw_search = '';
 		}
 
 		$search                = sanitize_text_field( urldecode( $raw_search ) );

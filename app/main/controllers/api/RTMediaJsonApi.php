@@ -161,10 +161,6 @@ class RTMediaJsonApi {
 
 		add_action( 'wp_ajax_nopriv_rtmedia_api', array( $this, 'rtmedia_api_process_request' ) );
 		add_action( 'wp_ajax_rtmedia_api', array( $this, 'rtmedia_api_process_request' ) );
-
-		if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
-			add_action( 'rest_api_init', [ $this, 'register_rest_pre_dispatch_filter' ] );
-		}
 	}
 
 	/**
@@ -478,6 +474,7 @@ class RTMediaJsonApi {
 		}
 
 		$hashed = $wp_hasher->HashPassword( $key );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => sanitize_user( $user_login ) ) );
 
 		// create email message.
@@ -646,9 +643,9 @@ class RTMediaJsonApi {
 			}
 
 			if ( $increase ) {
-				$like_count_old ++;
+				$like_count_old++;
 			} elseif ( ! $increase ) {
-				$like_count_old --;
+				$like_count_old--;
 			}
 
 			if ( $like_count_old < 0 ) {
@@ -691,14 +688,21 @@ class RTMediaJsonApi {
 		global $wpdb;
 		if ( empty( $media_id ) ) {
 			$user_data   = $this->rtmediajsonapifunction->rtmedia_api_user_data_from_id( $this->user_id );
-			$comments    = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->comments} WHERE user_id = %d limit 100", $this->user_id ), ARRAY_A );
+
+			$comments = get_comments(
+				array(
+					'user_id' => $this->user_id,
+					'number'  => 100,
+				)
+			);
+
 			$my_comments = array();
 			if ( ! empty( $comments ) ) {
 				foreach ( $comments as $comment ) {
 					$my_comments['comments'][] = array(
-						'comment_ID'      => $comment['comment_ID'],
-						'comment_content' => $comment['comment_content'],
-						'media_id'        => $comment['comment_post_ID'],
+						'comment_ID'      => $comment->comment_ID,
+						'comment_content' => $comment->comment_content,
+						'media_id'        => $comment->comment_post_ID,
 					);
 				}
 				$my_comments['user'] = array(
@@ -806,7 +810,14 @@ class RTMediaJsonApi {
 		}
 
 		$id       = rtmedia_media_id( $media_id );
-		$comments = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->comments} WHERE comment_ID = %d AND comment_post_ID = %d AND user_id = %d limit 100", $comment_id, $id, $this->user_id ), ARRAY_A );
+		$comments = get_comments(
+			array(
+				'comment_ID'      => $comment_id,
+				'comment_post_ID' => $id,
+				'user_id'         => $this->user_id,
+				'counts'          => true,
+			)
+		);
 
 		// Delete Comment.
 		if ( ! empty( $comments ) ) {
@@ -1032,7 +1043,7 @@ class RTMediaJsonApi {
 		$ec_profile_updated  = 120002;
 		$msg_profile_updated = esc_html__( 'profile updated', 'buddypress-media' );
 
-		for ( $i = 1; $i <= 12; $i ++ ) {
+		for ( $i = 1; $i <= 12; $i++ ) {
 			$field_str          = 'field_';
 			$field_str         .= $i;
 			$field_str_privacy  = $field_str . '_privacy';
@@ -1067,11 +1078,11 @@ class RTMediaJsonApi {
 		$ec_avatar_updated  = 130003;
 		$msg_avatar_updated = esc_html__( 'avatar updated', 'buddypress-media' );
 
-		if ( empty( $_FILES['file'] ) ) {
+		if ( empty( $_FILES['file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Not needed since we are only checking if the value exists.
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_file, $msg_no_file ) );
 		}
 
-		$uploaded = bp_core_avatar_handle_upload( $_FILES, 'xprofile_avatar_upload_dir' );
+		$uploaded = bp_core_avatar_handle_upload( $_FILES, 'xprofile_avatar_upload_dir' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- It is verified by the external plugin function.
 		if ( ! $uploaded ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_image, $msg_invalid_image ) );
 		} else {
@@ -1104,27 +1115,26 @@ class RTMediaJsonApi {
 		$ec_look_updated  = 140004;
 		$msg_look_updated = esc_html__( 'media updated', 'buddypress-media' );
 
-		$image_type   = sanitize_text_field( filter_input( INPUT_POST, 'image_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-		$mime_type    = "";
+		$image_type = sanitize_text_field( filter_input( INPUT_POST, 'image_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$mime_type  = '';
 
 		if ( in_array( $image_type, array( 'jpeg', 'jpg' ), true ) ) {
 			$mime_type = 'image/jpeg';
-		}
-		else if ( 'png' === $image_type ) {
+		} elseif ( 'png' === $image_type ) {
 			$mime_type = 'image/png';
 		} else {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_file_type, $msg_invalid_file_type ) );
 		}
 
-		$title        = sanitize_title( filter_input( INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-		$description  = sanitize_text_field( filter_input( INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$title       = sanitize_title( filter_input( INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$description = sanitize_text_field( filter_input( INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		$rtmedia_file = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_file', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		$updated       = false;
 		$uploaded_look = false;
 
-		if ( empty( $rtmedia_file ) && empty( $_FILES['rtmedia_file'] ) ) {
+		if ( empty( $rtmedia_file ) && empty( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are only checking presence of a data.
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_file, $msg_no_file ) );
 		}
 
@@ -1139,19 +1149,26 @@ class RTMediaJsonApi {
 			}
 		}
 
-		if ( ! empty( $_FILES['rtmedia_file'] ) ) {
-			// phpcs:disable Squiz.PHP.DisallowMultipleAssignments.Found, WordPress.Security.NonceVerification.NoNonceVerification
+		if ( ! empty( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing -- We are only checking presence of a data.
+			// phpcs:disable Squiz.PHP.DisallowMultipleAssignments.Found, WordPress.Security.NonceVerification.Recommended
 			$_POST['rtmedia_upload_nonce']       = $_REQUEST['rtmedia_upload_nonce'] = wp_create_nonce( 'rtmedia_upload_nonce' );
 			$_POST['rtmedia_simple_file_upload'] = $_REQUEST['rtmedia_simple_file_upload'] = 1;
-			$_POST['context']                    = $_REQUEST['context'] = ! empty( $_REQUEST['context'] ) ? wp_unslash( $_REQUEST['context'] ) : 'profile';
+			$_POST['context']                    = $_REQUEST['context'] = ! empty( $_REQUEST['context'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['context'] ) ) : 'profile';
 			$_POST['context_id']                 = $_REQUEST['context_id'] = ! empty( $_REQUEST['context_id'] ) ? absint( $_REQUEST['context_id'] ) : $this->user_id;
 			$_POST['mode']                       = $_REQUEST['mode'] = 'file_upload';
 			$_POST['media_author']               = $_REQUEST['media_author'] = $this->user_id;
 			$upload                              = new RTMediaUploadEndpoint();
-			// phpcs:enable Squiz.PHP.DisallowMultipleAssignments.Found, WordPress.Security.NonceVerification.NoNonceVerification
+			// phpcs:enable Squiz.PHP.DisallowMultipleAssignments.Found, WordPress.Security.NonceVerification.Recommended
 			// todo refactor below function so it takes param also and use if passed else use POST request.
 			$uploaded_look = $upload->template_redirect();
 		} else {
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+			global $wp_filesystem;
+			if ( ! $wp_filesystem ) {
+				WP_Filesystem();
+			}
 
 			// Process rtmedia_file.
 			$img          = $rtmedia_file;
@@ -1160,7 +1177,15 @@ class RTMediaJsonApi {
 			$rtmedia_file = base64_decode( $img ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 
 			// check if file is valid image.
-			$actual_file_info = getimagesizefromstring( $rtmedia_file );
+			if ( function_exists( 'getimagesizefromstring' ) ) {
+				$actual_file_info = getimagesizefromstring( $rtmedia_file ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.getimagesizefromstringFound -- Added fallback for PHP < 5.4.
+			} else {
+				// Fallback for PHP < 5.4 using WP_Filesystem.
+				$tmp_file = trailingslashit( sys_get_temp_dir() ) . uniqid( 'img_', true );
+				$wp_filesystem->put_contents( $tmp_file, $rtmedia_file, FS_CHMOD_FILE );
+				$actual_file_info = getimagesize( $tmp_file );
+				$wp_filesystem->delete( $tmp_file );
+			}
 
 			if ( ! $actual_file_info || ! isset( $actual_file_info['mime'] ) || ! in_array( $actual_file_info['mime'], array( 'image/jpeg', 'image/png' ), true ) ) {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_image, $msg_invalid_image ) );
@@ -1170,7 +1195,7 @@ class RTMediaJsonApi {
 
 			$tmp_name = UPLOAD_DIR_LOOK . $title;
 			$file     = $tmp_name . '.' . $image_type;
-			$success  = file_put_contents( $file, $rtmedia_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
+			$success  = $wp_filesystem->put_contents( $file, $rtmedia_file, FS_CHMOD_FILE );
 
 			if ( ! $success ) {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_image, $msg_invalid_image ) );
@@ -1251,6 +1276,7 @@ class RTMediaJsonApi {
 				$obj_activity = new RTMediaActivity( $update_activity_media, $privacy, false );
 
 				global $wpdb, $bp;
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 				$updated = $wpdb->update(
 					$bp->activity->table_name,
 					array(
@@ -1449,7 +1475,6 @@ class RTMediaJsonApi {
 		} else {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_server_error, $this->msg_server_error ) );
 		}
-
 	}
 
 	/**
@@ -1472,40 +1497,5 @@ class RTMediaJsonApi {
 
 			return $args;
 		}
-	}
-
-	/**
-	 * Registers the rest_pre_dispatch filter during rest_api_init.
-	 */
-	public function register_rest_pre_dispatch_filter() {
-		add_filter( 'rest_pre_dispatch', [ $this, 'handle_rest_pre_dispatch' ], 10, 3 );
-	}
-
-	/**
-	 * Callback for rest_pre_dispatch filter.
-	 *
-	 * @param mixed           $result  Result to return instead of the request. Default null to continue with request.
-	 * @param WP_REST_Server  $server  Server instance.
-	 * @param WP_REST_Request $request Request object.
-	 *
-	 * @return mixed Modified result or original $result.
-	 */
-	public function handle_rest_pre_dispatch( $result, $server, $request ) {
-		$route  = $request->get_route();
-		$method = $request->get_method();
-
-		if ( 'GET' === $method && preg_match( '#^/wp/v2/media/(\d+)$#', $route, $matches ) ) {
-			$media_id = (int) $matches[1];
-			$post     = get_post( $media_id );
-
-			if ( $post && 'attachment' === $post->post_type ) {
-				$controller = new WP_REST_Attachments_Controller( 'attachment' );
-				$response   = $controller->prepare_item_for_response( $post, $request );
-
-				return rest_ensure_response( $response );
-			}
-		}
-
-		return $result;
 	}
 }

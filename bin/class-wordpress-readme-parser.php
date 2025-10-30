@@ -39,7 +39,7 @@ class WordPress_Readme_Parser {
 		$this->metadata          = array_fill_keys( array( 'Contributors', 'Tags', 'Requires at least', 'Tested up to', 'Stable tag', 'License', 'License URI' ), null );
 		foreach ( explode( "\n", $matches[2] ) as $metadatum ) {
 			if ( ! preg_match( '/^(.+?):\s+(.+)$/', $metadatum, $metadataum_matches ) ) {
-				throw new Exception( "Parse error in $metadatum" );
+				throw new Exception( 'Parse error in ' . esc_html( $metadatum ) );
 			}
 			list( $name, $value ) = array_slice( $metadataum_matches, 1, 2 );
 			$this->metadata[ $name ] = $value;

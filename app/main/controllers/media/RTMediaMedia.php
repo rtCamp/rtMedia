@@ -407,6 +407,8 @@ class RTMediaMedia {
 
 						$obj_activity = new RTMediaActivity( $activity_media );
 						global $wpdb, $bp;
+
+						// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 						$wpdb->update(
 							$bp->activity->table_name,
 							array(
@@ -415,10 +417,8 @@ class RTMediaMedia {
 							),
 							array( 'id' => $media[0]->activity_id )
 						);
-					} else {
-						if ( isset( $media[0] ) && isset( $media[0]->activity_id ) ) {
+					} elseif ( isset( $media[0] ) && isset( $media[0]->activity_id ) ) {
 							bp_activity_delete_by_activity_id( $media[0]->activity_id );
-						}
 					}
 
 					// Deleting like and comment activity for media.
@@ -529,7 +529,12 @@ class RTMediaMedia {
 
 		global $wpdb;
 		// update the post_parent value in wp_post table.
-		$status = $wpdb->update( $wpdb->posts, array( 'post_parent' => $album_id ), array( 'ID' => $media_id ) );
+		$status = wp_update_post(
+			array(
+				'ID' => $media_id,
+				'post_parent' => $album_id,
+			)
+		);
 
 		if ( is_wp_error( $status ) || 0 === $status ) {
 			return false;
@@ -552,7 +557,6 @@ class RTMediaMedia {
 	 *  Imports attachment as media
 	 */
 	public function import_attachment() {
-
 	}
 
 	/**
@@ -655,7 +659,14 @@ class RTMediaMedia {
 				if ( function_exists( 'wp_delete_file' ) ) {  // wp_delete_file is introduced in WordPress 4.2.
 					wp_delete_file( $file );
 				} else {
-					unlink( $file );
+					if ( ! function_exists( 'WP_Filesystem' ) ) {
+						require_once ABSPATH . 'wp-admin/includes/file.php';
+					}
+					global $wp_filesystem;
+					if ( ! $wp_filesystem ) {
+						WP_Filesystem();
+					}
+					$wp_filesystem->delete( $file );
 				}
 
 				throw new Exception( esc_html__( 'Error creating attachment for the media file, please try again', 'buddypress-media' ) );

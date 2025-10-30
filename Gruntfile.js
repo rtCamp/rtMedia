@@ -72,6 +72,26 @@ module.exports = function (grunt) {
                 files: {
                     'app/assets/js/godam-ajax-refresh.min.js': ['app/assets/js/godam-ajax-refresh.js']
                 }
+            },
+            rtmedia_admin: {
+                files: {
+                    'app/assets/admin/js/rtmedia-admin.min.js': ['app/assets/admin/js/rtmedia-admin.js']
+                }
+            },
+            importer: {
+                files: {
+                    'app/assets/admin/js/importer.min.js': ['app/assets/admin/js/importer.js']
+                }
+            },
+            wp67_media_element: {
+                files: {
+                    'app/assets/js/wp67-mediaelement-init.min.js': ['app/assets/js/wp67-mediaelement-init.js']
+                }
+            },
+            migration: {
+                files: {
+                    'app/assets/admin/js/migration.min.js': ['app/assets/admin/js/migration.js']
+                }
             }
         }
     });

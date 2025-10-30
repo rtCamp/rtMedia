@@ -393,6 +393,7 @@ class RTMediaBuddyPressActivity {
 		$transient_name = 'rtm_filter_blog_activity_' . $blog_id;
 		$activity_ids   = get_site_transient( $transient_name );
 		if ( empty( $activity_ids ) ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
 			$activities   = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT activity_id FROM {$wpdb->base_prefix}rt_rtm_activity WHERE blog_id!=%d", $blog_id ) );
 			$activity_ids = implode( ',', $activities );
 
@@ -539,6 +540,7 @@ class RTMediaBuddyPressActivity {
 	 */
 	public function delete_comment_sync( $activity_id, $comment_id ) {
 		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$comment_id = $wpdb->get_var( $wpdb->prepare( "select comment_id from {$wpdb->commentmeta} where meta_key = 'activity_id' and meta_value = %s", $comment_id ) );
 		if ( $comment_id ) {
 			wp_delete_comment( $comment_id, true );
@@ -1491,8 +1493,7 @@ class RTMediaBuddyPressActivity {
 		// if content is non-breaking space then set it to empty.
 		if ( isset( $args['content'] ) && '' === $args['content'] ) {
 
-			// Nonce verification is not required here as it is already done in previously.
-			if ( ! empty( $_POST['rtMedia_attached_files'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			if ( ! empty( $_POST['rtMedia_attached_files'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Not needed since we  are only checking if the field exists and it is done already.
 				$args['content'] = '&nbsp;';
 			}
 		}

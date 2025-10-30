@@ -256,6 +256,7 @@ jQuery(function ($) {
             backbone: true,
             is_album: o_is_album,
             is_edit_allowed: o_is_edit_allowed,
+            wp_nonce: rtmedia_backbone_strings?.rtmedia_album_gallery_nonce,
           },
           function () {
             rtmedia_load_template_flag = false;
@@ -808,10 +809,23 @@ jQuery(function ($) {
   });
 
   if ($("#rtMedia-upload-button").length > 0) {
+    // Check if media_type is specified in shortcode via data attribute
+    var uploaderForm = jQuery("#rtmedia-uploader-form");
+    var mediaTypeFilter = uploaderForm.data("media-type");
+    
     if (
+      mediaTypeFilter &&
+      typeof rtmedia_exteansions == "object" &&
+      rtmedia_exteansions[mediaTypeFilter]
+    ) {
+      // Use the specific media type extensions from shortcode attribute
+      rtMedia_plupload_config.filters[0].extensions =
+        rtmedia_exteansions[mediaTypeFilter].join();
+    } else if (
       typeof rtmedia_upload_type_filter == "object" &&
       rtmedia_upload_type_filter.length > 0
     ) {
+      // Fallback to old method for backward compatibility
       rtMedia_plupload_config.filters[0].extensions =
         rtmedia_upload_type_filter.join();
     }

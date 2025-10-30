@@ -78,6 +78,8 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 					}
 				}
 
+				wp_nonce_field( 'rtmedia_file_nonce', 'wp_nonce' );
+
 				if ( isset( $attr['rtmedia_upload_allow_multiple'] ) && true === $attr['rtmedia_upload_allow_multiple'] ) {
 					?>
 					<div class="rtm-file-input-container">
@@ -112,7 +114,7 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 		} else {
 			?>
 			<div class="rtmedia-uploader no-js">
-				<div id="rtmedia-uploader-form">
+				<div id="rtmedia-uploader-form" <?php echo isset( $attr['media_type'] ) ? 'data-media-type="' . esc_attr( $attr['media_type'] ) . '"' : ''; ?>>
 					<?php do_action( 'rtmedia_before_uploader' ); ?>
 
 					<div class="rtm-tab-content-wrapper">

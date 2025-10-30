@@ -104,7 +104,7 @@ class RTMediaMediaSizeImporter {
 		if ( current_user_can( 'manage_options' ) ) {
 			$this->create_notice(
 				sprintf(
-					'<p><strong>rtMedia</strong>: %1$s <a href="%2$s">%3$s</a> %4$s. <a href="#" onclick="rtmedia_hide_media_size_import_notice()" style="float: right;">%5$s</a></p>',
+					'<p><strong>rtMedia</strong>: %1$s <a href="%2$s">%3$s</a> %4$s. <a href="#" id="rtmedia_hide_media_size_import_notice" style="float: right;">%5$s</a></p>',
 					esc_html__( ': Database table structure for rtMedia has been updated. Please', 'buddypress-media' ),
 					esc_url( admin_url( 'admin.php?page=rtmedia-migration-media-size-import&force=true' ) ),
 					esc_html__( 'Click Here', 'buddypress-media' ),
@@ -112,19 +112,6 @@ class RTMediaMediaSizeImporter {
 					esc_html__( 'Hide', 'buddypress-media' )
 				)
 			);
-
-			?>
-			<script type="text/javascript">
-				function rtmedia_hide_media_size_import_notice() {
-					var data = {action: 'rtmedia_hide_media_size_import_notice'};
-					jQuery.post(ajaxurl, data, function (response) {
-						response = response.trim();
-						if (response === '1')
-							jQuery('.rtmedia-media-size-import-error').remove();
-					});
-				}
-			</script>
-			<?php
 		}
 	}
 
@@ -142,6 +129,7 @@ class RTMediaMediaSizeImporter {
 				'href'    => array(),
 				'onclick' => array(),
 				'style'   => array(),
+				'id'      => array(),
 			),
 			'strong' => array(),
 		);
@@ -179,10 +167,12 @@ class RTMediaMediaSizeImporter {
 
 		if ( $media_id ) {
 			$media_id      = intval( $media_id );
-			$query_pending = $wpdb->prepare( "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other') AND id > %d", $media_id );
+			$query_pending = $wpdb->prepare( "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other') AND id > %d", $media_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
 
-		$pending_count = $wpdb->get_results( $query_pending ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// Direct query is required for custom table. safe because SQL is prepared.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$pending_count = $wpdb->get_results( $query_pending );
 		if ( $pending_count && count( $pending_count ) > 0 ) {
 			return $pending_count[0]->pending;
 		}
@@ -198,8 +188,10 @@ class RTMediaMediaSizeImporter {
 	public function get_total_count() {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
-		$query_total   = "SELECT COUNT(*) as total from {$rtmedia_model->table_name} where media_type in ('photo','video','document','music','other') ";
-		$total_count   = $wpdb->get_results( $query_total ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$query_total   = "SELECT COUNT(*) as total from {$rtmedia_model->table_name} where media_type in ('photo','video','document','music','other') "; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// Direct query is required for custom table.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		$total_count   = $wpdb->get_results( $query_total );
 
 		if ( $total_count && count( $total_count ) > 0 ) {
 			return $total_count[0]->total;
@@ -218,12 +210,14 @@ class RTMediaMediaSizeImporter {
 		global $wpdb;
 		if ( check_ajax_referer( 'rtmedia_media_size_import_nonce', 'nonce' ) ) {
 			$rtmedia_model = new RTMediaModel();
-			$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $limit );
+			$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $limit ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$lastid        = filter_input( INPUT_POST, 'last_id', FILTER_SANITIZE_NUMBER_INT );
 			if ( ! empty( $lastid ) ) {
-				$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where id > %d AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $lastid, $limit );
+				$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where id > %d AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $lastid, $limit ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
-			$result = $wpdb->get_results( $get_media_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			// Direct query is required for custom table. safe because SQL is prepared.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+			$result = $wpdb->get_results( $get_media_sql );
 			if ( $result && count( $result ) > 0 ) {
 				$migrate = $this->migrate_single_media( $result[0] );
 			}

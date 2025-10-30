@@ -66,7 +66,7 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 			$results       = $rtmediainteraction->get_row( $user_id, $media_id, $action );
 			$row           = $results[0];
 			$curr_value    = $row->value;
-			$update_data   = array( 'value' => ++ $curr_value );
+			$update_data   = array( 'value' => ++$curr_value );
 			$where_columns = array(
 				'user_id'  => $user_id,
 				'media_id' => $media_id,

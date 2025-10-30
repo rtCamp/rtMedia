@@ -1,11 +1,11 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala, shobhit2412, vaishu.agola27, kapilpaul, opurockey, vkd007, pavanpatil1, pradeep1308, shardul200, sabbir1991, kamalahmed, ibnulk, harshbarach, Mukulsingh27, vishalkakadiya, elifvish, krupajnanda, utsavladani, krishana79, rohitmathur7
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala, shobhit2412, vaishu.agola27, kapilpaul, opurockey, vkd007, pavanpatil1, pradeep1308, shardul200, sabbir1991, kamalahmed, ibnulk, harshbarach, Mukulsingh27, vishalkakadiya, elifvish, krupajnanda, utsavladani, krishana79, rohitmathur7, kuldipchaudhary, mchirag2002, vedantgandhi28
 Tags: BuddyPress, media, multimedia, album, audio, music, video, photo, upload, share, MediaElement.js, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Requires at least: WordPress 4.1
-Tested up to: 6.8.1
-Stable tag: 4.7.3
+Requires at least: 4.1
+Tested up to: 6.8
+Stable tag: 4.7.4
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -33,7 +33,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
  2. **BuddyPress Integration** - Find a new media tab under BuddyPress Profiles & Groups.
  3. **BuddyPress Activity Stream** - Attach media to activity status updates just like Facebook.
  4. **Albums** - Organise media into manageable collections. BuddyPress Group albums support collaboration.
- 5. **Responsive** - Album Slideshow (Lightbox), video player, uploads work on mobiles & tablets. Support for swipe guestures.
+ 5. **Responsive** - Album Slideshow (Lightbox), video player, uploads work on mobiles & tablets. Support for swipe gestures.
  6. **Privacy** - Control who can see media files, albums and BuddyPress activities.
  7. **Templating system** - Completely customise rtMedia by modifying the template files. Just copy over the template folder to your theme.
  8. **[Featured Media](https://rtmedia.io/docs/developers/featured-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
@@ -88,7 +88,7 @@ rtMedia has a premium solution to take care of audio/video conversion.
 
 = Important Links =
 
-* [Project Homepage](https://rtmedio.io/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Project Homepage")
+* [Project Homepage](https://rtmedia.io/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Project Homepage")
 * [Roadmap](https://rtmedia.io/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Roadmap page")
 * [Documentation](https://rtmedia.io/docs/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Documentation page")
 * [FAQ](https://rtmedia.io/faq/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's FAQ page")
@@ -120,7 +120,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 3.  Media Types Settings
 4.  Media Size Settings
 5.  Privacy Settings
-6.  Other Setiings
+6.  Other Settings
 7.  Export/Import Settings
 8.  Media View
 9.  Album View
@@ -132,6 +132,15 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.4 [October 30, 2025] =
+* FIXED
+  * Apply security recommendations and fixes.
+  * Restrict the media upload by its types based on selected tab in rtMedia gallery.
+
+* ENHANCEMENT
+  * Enhances media upload support by adding a broader set of commonly used video and audio formats.
+  * Replace PHP file system functions with WordPress alternative filesystem function to enhance security.
 
 = 4.7.3 [September 12, 2025] =
 
@@ -2027,7 +2036,7 @@ rtMedia includes [full translation support](https://rtmedia.io/docs/translations
 rtMedia uses the following projects/sources for some functionality
 
 * [MediaElement.js](http://mediaelementjs.com/) for html5 audio/video player
-* [Maginific Popup](http://dimsemenov.com/plugins/magnific-popup/) for responsive lightbox
+* [Magnific Popup](http://dimsemenov.com/plugins/magnific-popup/) for responsive lightbox
 * [getID3](http://getid3.sourceforge.net/) gets us some ID tags for the media
 * [Foundation](http://foundation.zurb.com/) for the media grid and layout
 * [Backbone.js](http://backbonejs.org/) for an MVC architecture for the frontend
