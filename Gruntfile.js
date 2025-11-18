@@ -92,6 +92,16 @@ module.exports = function (grunt) {
                 files: {
                     'app/assets/admin/js/migration.min.js': ['app/assets/admin/js/migration.js']
                 }
+            },
+            rtm_upload_terms: {
+                files: {
+                    'app/assets/js/rtm-upload-terms.min.js': ['app/assets/js/rtm-upload-terms.js']
+                }
+            },
+            admin_upload_terms: {
+                files: {
+                    'app/assets/js/admin-upload-terms.min.js': ['app/assets/js/admin-upload-terms.js']
+                }
             }
         }
     });
