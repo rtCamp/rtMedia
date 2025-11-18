@@ -187,6 +187,28 @@
 	}
 }
 
+/* BuddyPress specific styles for Options and Upload buttons */
+#buddypress button.rtmedia-media-options,
+#buddypress button.rtmedia-action-buttons,
+#buddypress button.rtmedia-upload-media-link {
+	background: transparent;
+	border: none;
+	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	line-height: inherit;
+	padding: 0;
+	text-transform: inherit;
+}
+
+#buddypress button.rtmedia-media-options:focus-visible,
+#buddypress button.rtmedia-action-buttons:focus-visible,
+#buddypress button.rtmedia-upload-media-link:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
 .rtm-options {
 	&.rtm-options {
 		background: $gray;
