@@ -157,7 +157,7 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
   * Fixed plugin Conflict with AnsPress plugin which prevented question and answer submission.
 
 * ENHANCEMENT
-  * Made Uplaod and Options button in the media gallery accessible via keyboard navigation for better accessibility.
+  * Made Upload and Options button in the media gallery accessible via keyboard navigation for better accessibility.
 
 
 ### 4.7.4
