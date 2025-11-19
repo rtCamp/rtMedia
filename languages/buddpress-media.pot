@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.7.5\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rtMedia\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/buddypress-media\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
