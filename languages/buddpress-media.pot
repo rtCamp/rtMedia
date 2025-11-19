@@ -2,16 +2,16 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.7.4\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.7.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/buddypress-media\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-30T07:53:22+00:00\n"
+"POT-Creation-Date: 2025-11-19T09:53:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: buddypress-media\n"
 
 #. Plugin Name of the plugin
@@ -300,6 +300,7 @@ msgstr ""
 
 #. translators: 1. Home url.
 #: app/admin/RTMediaAdmin.php:1413
+#, php-format
 msgid "I use @rtMediaWP http://rt.cx/rtmedia on %s"
 msgstr ""
 
@@ -351,11 +352,13 @@ msgstr ""
 
 #. translators: 1$s: Account page and link. 2$s: License documentation page link.
 #: app/admin/RTMediaAdmin.php:1749
+#, php-format
 msgid "Your license keys can be found on <a href=\"%1$s\">my-account</a> page. For more details, please refer to <a href=\"%2$s\">License documentation</a> page."
 msgstr ""
 
 #. translators: 1. License page link.
 #: app/admin/RTMediaAdmin.php:1769
+#, php-format
 msgid "We found an invalid or expired license key for rtMedia Premium. Please go to the <a href=\"%1$s\">Licenses page</a> to fix this issue."
 msgstr ""
 
@@ -929,6 +932,7 @@ msgstr ""
 
 #. translators: %s: Product page link.
 #: app/admin/templates/notices/premium-addon.php:21
+#, php-format
 msgid "Check 30+ premium rtMedia add-ons on our <a href=\"%s\">store</a>."
 msgstr ""
 
@@ -948,6 +952,7 @@ msgstr ""
 
 #. translators: 1. Not supported image types.
 #: app/admin/templates/notices/upload-file-types.php:17
+#, php-format
 msgid "You have images enabled on rtMedia but your network allowed filetypes do not permit uploading of %s. Click "
 msgstr ""
 
@@ -1078,11 +1083,13 @@ msgstr ""
 
 #. translators: 1: Line number, 2: file.
 #: app/helper/rtFormInvalidArgumentsException.php:28
+#, php-format
 msgid "Error on line %1$s in %2$s : "
 msgstr ""
 
 #. translators: %s: message.
 #: app/helper/rtFormInvalidArgumentsException.php:30
+#, php-format
 msgid "The method expects an array in arguments for %s provided."
 msgstr ""
 
@@ -1421,6 +1428,7 @@ msgstr ""
 
 #. translators: %s: Expiry date.
 #: app/helper/RTMediaLicense.php:175
+#, php-format
 msgid "Your license key expired on %s. Please renew your license key."
 msgstr ""
 
@@ -1430,26 +1438,31 @@ msgstr ""
 
 #. translators: %s: Account page link.
 #: app/helper/RTMediaLicense.php:195
+#, php-format
 msgid "Invalid license. Please <a href=\"%s\" target=\"_blank\">visit your account page</a> and verify it."
 msgstr ""
 
 #. translators: 1: Add-on name, 2:My account page link.
 #: app/helper/RTMediaLicense.php:211
+#, php-format
 msgid "Your %1$s is not active for this URL. Please <a href=\"%2$s\" target=\"_blank\">visit your account page</a> to manage your license key URLs."
 msgstr ""
 
 #. translators: %s: Add-on name.
 #: app/helper/RTMediaLicense.php:224
+#, php-format
 msgid "This appears to be an invalid license key for %s."
 msgstr ""
 
 #. translators: %s: Account link.
 #: app/helper/RTMediaLicense.php:234
+#, php-format
 msgid "Your license key has reached its activation limit. <a href=\"%s\">View possible upgrades</a> now."
 msgstr ""
 
 #. translators: %s: Account link.
 #: app/helper/RTMediaLicense.php:244
+#, php-format
 msgid "Your license is not activable, please visit <a href=\"%s\">your account page</a>."
 msgstr ""
 
@@ -1464,11 +1477,13 @@ msgstr ""
 
 #. translators: 1: Expiry date.
 #: app/helper/RTMediaLicense.php:280
+#, php-format
 msgid "Your license key expires soon! It expires on %1$s. Renew your license key."
 msgstr ""
 
 #. translators: %s: Expiry date.
 #: app/helper/RTMediaLicense.php:292
+#, php-format
 msgid "Your license key expires on %s."
 msgstr ""
 
@@ -2001,11 +2016,13 @@ msgstr ""
 
 #. translators: %d: Media.
 #: app/importers/BPMediaAlbumimporter.php:170
+#, php-format
 msgid "The following %d BP Album Media id's could not be imported"
 msgstr ""
 
 #. translators: %s: URL.
 #: app/importers/BPMediaAlbumimporter.php:180
+#, php-format
 msgid "I just imported bp-album to @rtMediaWP http://rt.cx/rtmedia on %s"
 msgstr ""
 
@@ -2103,6 +2120,7 @@ msgstr ""
 
 #. translators: 1: %s gets replaced by '<strong>', 2: %s by '</strong>'
 #: app/importers/RTMediaMigration.php:579
+#, php-format
 msgid "Please Backup your %1$sDATABASE%2$s and %1$sUPLOAD%2$s folder before Migration."
 msgstr ""
 
@@ -2193,6 +2211,7 @@ msgstr ""
 #. translators: 1: username, 2: media type, 3: media name, 4: total media.
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:981
 #: app/main/controllers/media/RTMediaMedia.php:808
+#, php-format
 msgid "%1$s added a %2$s"
 msgstr ""
 
@@ -2202,36 +2221,43 @@ msgstr ""
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:988
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:991
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:283
+#, php-format
 msgid "%1$s added %2$d %3$s"
 msgstr ""
 
 #. translators: 1: username, 2: media, 3: group name.
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1063
+#, php-format
 msgid "%1$s liked a %2$s in the group %3$s"
 msgstr ""
 
 #. translators: 1: username, 2: media.
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1066
+#, php-format
 msgid "%1$s liked their %2$s"
 msgstr ""
 
 #. translators: 1: username, 2: author, 3: media.
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1075
+#, php-format
 msgid "%1$s liked %2$s's %3$s"
 msgstr ""
 
 #. translators: 1: username, 2: media, 3: group name.
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1184
+#, php-format
 msgid "%1$s commented on a %2$s in the group %3$s"
 msgstr ""
 
 #. translators: 1: username, 2: media.
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1187
+#, php-format
 msgid "%1$s commented on their %2$s"
 msgstr ""
 
 #. translators: 1: username, 2: author, 3: media.
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:1196
+#, php-format
 msgid "%1$s commented on %2$s's %3$s"
 msgstr ""
 
@@ -2293,6 +2319,7 @@ msgstr ""
 
 #. translators: 1: Username.
 #: app/main/controllers/api/RTMediaJsonApi.php:485
+#, php-format
 msgid "Username: %s"
 msgstr ""
 
@@ -2302,6 +2329,7 @@ msgstr ""
 
 #. translators: 1: Blog name.
 #: app/main/controllers/api/RTMediaJsonApi.php:491
+#, php-format
 msgid "[%s] Password Reset"
 msgstr ""
 
@@ -2462,6 +2490,7 @@ msgstr ""
 
 #. translators: %s: Album.
 #: app/main/controllers/media/RTMediaAlbum.php:38
+#, php-format
 msgid "Hidden (%s)"
 msgid_plural "Hidden (%s)"
 msgstr[0] ""
@@ -2633,17 +2662,20 @@ msgstr ""
 
 #. translators: 1: username, 2: media type, 3: media name, 4: total media.
 #: app/main/controllers/media/RTMediaMedia.php:808
+#, php-format
 msgid "%1$s added %4$d %3$s"
 msgstr ""
 
 #. translators: %1$s: tag name, %2$s: class name.
 #: app/main/controllers/media/RTMediaTags.php:177
 #: app/main/controllers/media/RTMediaTags.php:211
+#, php-format
 msgid "Unknown property '%1$s' for class '%2$s'"
 msgstr ""
 
 #. translators: %1$s: tag name, %2$s: class name.
 #: app/main/controllers/media/RTMediaTags.php:215
+#, php-format
 msgid "Tying to set readonly property '%1$s' for class '%2$s'"
 msgstr ""
 
@@ -2800,6 +2832,7 @@ msgstr ""
 
 #. translators: %s Count of comments.
 #: app/main/controllers/template/rtmedia-functions.php:1429
+#, php-format
 msgid "Show all %s comments"
 msgstr ""
 
@@ -2861,11 +2894,13 @@ msgstr ""
 
 #. translators: %s: count of hour/minute/second.
 #: app/main/controllers/template/rtmedia-functions.php:3385
+#, php-format
 msgid "%s ago "
 msgstr ""
 
 #. translators: %s: number of seconds.
 #: app/main/controllers/template/rtmedia-functions.php:3407
+#, php-format
 msgid "%s second"
 msgid_plural "%s seconds"
 msgstr[0] ""
@@ -2873,6 +2908,7 @@ msgstr[1] ""
 
 #. translators: %s: number of minutes.
 #: app/main/controllers/template/rtmedia-functions.php:3412
+#, php-format
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
@@ -2880,6 +2916,7 @@ msgstr[1] ""
 
 #. translators: %s: number of hours.
 #: app/main/controllers/template/rtmedia-functions.php:3417
+#, php-format
 msgid "%s hour"
 msgid_plural "%s hours"
 msgstr[0] ""
@@ -3057,6 +3094,7 @@ msgstr ""
 
 #. translators: 1: function name, 2: method.
 #: app/main/deprecated/RTMediaDeprecated.php:40
+#, php-format
 msgid "Deprecated %1$s. Please use %2$s."
 msgstr ""
 

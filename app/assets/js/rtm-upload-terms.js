@@ -235,7 +235,7 @@ jQuery( document ).ready( function () {
      * Send terms condition checkbox status on backend to validate it on server side.
      */
     jQuery.ajaxPrefilter( function ( options, originalOptions, jqXHR ) {
-        if ( 'undefined' === typeof options || 'undefined' === typeof options.data || 'undefined' === typeof originalOptions || 'undefined' === typeof originalOptions.data ) {
+        if ( 'undefined' === typeof options || 'undefined' === typeof options.data || 'undefined' === typeof originalOptions || 'undefined' === typeof originalOptions.data || null === originalOptions.data ) {
             return true;
         }
 
