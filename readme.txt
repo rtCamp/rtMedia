@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.1
 Tested up to: 6.8
-Stable tag: 4.7.5
+Stable tag: 4.7.6
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -133,7 +133,14 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
+= 4.7.6 [November 20, 2025] =
+
+* FIXED
+  * Fixed End to End playwright testing scripts for media validation.
+  * Fixed minor dashboard frontend bug caused due to build process.
+
 = 4.7.5 [November 19, 2025] =
+
 * FIXED
   * Fixed plugin Conflict with AnsPress plugin which prevented question and answer submission.
 
@@ -141,6 +148,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
   * Made Upload and Options button in the media gallery accessible via keyboard navigation for better accessibility.
 
 = 4.7.4 [October 30, 2025] =
+
 * FIXED
   * Apply security recommendations and fixes.
   * Restrict the media upload by its types based on selected tab in rtMedia gallery.
