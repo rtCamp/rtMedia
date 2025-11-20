@@ -154,7 +154,7 @@ function rtmedia_gallery_options() {
 		$options_start .= sprintf(
 			'<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
 			<div class="no-js">
-			<button type="button" class="clicker rtmedia-action-buttons" aria-label="%1$s"><i class="dashicons dashicons-admin-generic"></i>%1$s</button>
+			<button type="button" class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic"></i>%1$s</button>
 			<ul class="rtm-options">',
 			apply_filters( 'rtm_gallery_option_label', __( 'Options', 'buddypress-media' ) )
 		);
@@ -286,7 +286,7 @@ function add_upload_button() {
 		if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() === get_current_user_id() ) {
 
 			printf(
-				'<button type="button" class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="%1$s" aria-label="%1$s"><i class="dashicons dashicons-upload"></i>%2$s</button>',
+				'<button type="button" class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="%1$s"><i class="dashicons dashicons-upload"></i>%2$s</button>',
 				esc_attr( apply_filters( 'rtm_gallery_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ),
 				esc_html( apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) )
 			);
@@ -296,7 +296,7 @@ function add_upload_button() {
 			if ( can_user_upload_in_group() ) {
 
 				printf(
-					'<button type="button" class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="%1$s" aria-label="%1$s"><i class="dashicons dashicons-upload"></i>%2$s</button>',
+					'<button type="button" class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="%1$s"><i class="dashicons dashicons-upload"></i>%2$s</button>',
 					esc_attr( apply_filters( 'rtm_gallery_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ),
 					esc_html( apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) )
 				);
