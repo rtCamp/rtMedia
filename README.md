@@ -151,6 +151,13 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.6
+
+* FIXED
+  * Fixed End to End playwright testing scripts for media validation.
+  * Fixed minor dashboard frontend bug caused due to build process.
+
+
 ### 4.7.5
 
 * FIXED
