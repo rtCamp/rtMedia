@@ -15,7 +15,7 @@ test.describe("Validate media types", () => {
         selectorToReset = null; // Reset tracker
     });
 
-    test.afterEach(async ({ admin }) => {
+    test.afterEach(async ({ page, admin }) => {
         if (selectorToReset) {
             await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-types");
             await backend.enableAnySettingAndSave(selectorToReset);
