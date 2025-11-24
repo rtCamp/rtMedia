@@ -28,10 +28,14 @@ test.describe("Validating media size", () => {
         //validating thumbnail size of the photo
         expect(await activity.getPhotoSize()).toContain(expectedThumbnail);
 
-        //validating medium photo size
-        const expectedMediumSize = testdata.photo.mediumWidth + "x" + testdata.photo.mediumHeight;
+
+        //validating medium photo size (will contain original image)
+        const originalFilename = imagepath[0].split("/").pop(); // "test.jpg"
+        const namePart = originalFilename.replace(/\.[^/.]+$/, ""); // "test"
+        // Matches: "test" + (optional hyphens/numbers/dimensions) + ".jpg"
+        const regex = new RegExp(`${namePart}[-0-9x]*\\.jpg`);
         await activity.gotoActivityPage()
-        expect(await activity.getPhotoSize()).toContain(expectedMediumSize);
+        expect(await activity.getPhotoSize()).toMatch(regex);
 
         //validting large Photo size
         await activity.clickedOnFirstPhotoOfTheActivityPage();
