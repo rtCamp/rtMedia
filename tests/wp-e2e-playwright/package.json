@@ -58,6 +58,7 @@
 		"build:package-types": "node ./bin/packages/validate-typescript-version.js && tsc --build",
 		"build": "npm run build:packages && wp-scripts build",
 		"dev": "npm run build:packages && concurrently \"wp-scripts start\" \"npm run dev:packages\"",
-		"test-e2e:playwright": "playwright test --config playwright.config.ts"
+		"test-e2e:playwright": "playwright test --config playwright.config.ts",
+		"test-e2e:playwright:prod": "npm run test-e2e:playwright -- prerequisite.spec.js && npm run test-e2e:playwright -- specs/buddypress && npm run test-e2e:playwright -- specs/display && npm run test-e2e:playwright -- specs/other_settings && npm run test-e2e:playwright -- media_size.spec.js && npm run test-e2e:playwright -- types.spec.js && npm run test-e2e:playwright -- cleanup.spec.js"
 	}
 }
