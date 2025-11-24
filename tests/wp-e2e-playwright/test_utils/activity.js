@@ -33,7 +33,7 @@ class Activity{
     }
     
     async clickedOnFirstPhotoOfTheActivityPage(){
-        this.gotoActivityPage();
+        await this.gotoActivityPage();
         await this.page.waitForLoadState("domcontentloaded");
         await this.page.locator("//div[@class='rtmedia-item-thumbnail']").first().click();
     }

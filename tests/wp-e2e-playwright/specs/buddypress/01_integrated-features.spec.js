@@ -21,6 +21,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         expect(profileSidebar).toContain('Media');
     });
     test("Enable media in group toggle and validate from the frontend", async ({ page, admin }) => {
+        await page.locator("//label[@for='rtmedia-album-enable']").check();
         await backend.enableAnySettingAndSave("//label[@for='rtmedia-enable-on-group']");
         await page.goto(URLS.homepage + "/groups/create/step/group-details/");
         const groupTab = await page.locator("#group-create-tabs").textContent();
@@ -48,8 +49,10 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         expect(commentActivity).toContain("This is a test comment");
     });
 
-    test("Enable Create activity for media Likes and validate from the frontend", async ({ page}) => {
+    test("Enable Create activity for media Likes and validate from the frontend", async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtmedia-enable-like-activity']");
+        await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-display");
+        await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-1']");
         const image = ['test-data/images/test.jpg'];
         await activity.gotoActivityPage();
         await activity.upploadMedia(image);

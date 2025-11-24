@@ -18,7 +18,6 @@ test.describe("Comment media BUDDYPRESS FEATURES", () => {
         await page.locator("#user-media").scrollIntoViewIfNeeded();
         await page.locator("#user-media").click();
         const Album = await page.locator("//ul[@class='subnav']").textContent();
-        //validating Enable media in profile
         expect(Album).toContain('Albums');
     })
 });

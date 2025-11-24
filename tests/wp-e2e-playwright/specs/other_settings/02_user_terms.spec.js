@@ -35,12 +35,6 @@ test.describe("ASK USERS TO AGREE TO YOUR TERMS", () => {
         await page.locator('#rtmedia_upload_terms_conditions').uncheck();
         const errorMessage = await page.locator(".rt_alert_msg").textContent();
         expect(errorMessage).toContain("please check the terms");
-
-        //disable all of the settings
-        await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-general");
-        await page.locator("//label[@for='rtm-form-checkbox-23']").uncheck();
-        await page.locator("//label[@for='rtm-form-checkbox-24']").uncheck();
-        await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
         })
 
     test("Validated Privacy messages", async ({ page, admin }) => {
