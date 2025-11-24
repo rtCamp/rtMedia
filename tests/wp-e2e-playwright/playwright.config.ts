@@ -14,7 +14,7 @@ const STORAGE_STATE_PATH =
 const config: PlaywrightTestConfig = {
 
     forbidOnly: !!process.env.CI,
-    workers: 1, // Limited parallelism for tests that don't conflict
+    workers: 1,
     reporter: 'html',
     retries: process.env.CI ? 2 : 0,
     timeout: parseInt(process.env.TIMEOUT || '', 10) || 100_000, // Defaults to 100 seconds.
@@ -51,44 +51,9 @@ const config: PlaywrightTestConfig = {
     //      reuseExistingServer: true,
     //  },
     projects: [
-        // Sequential setup tests - must run in order first
         {
-            name: 'setup-prerequisite',
-            testMatch: '**/00_prerequisite.spec.js',
+            name: 'chromium',
             use: { ...devices['Desktop Chrome'] },
-        },
-        {
-            name: 'setup-types',
-            testMatch: '**/01_types.spec.js',
-            use: { ...devices['Desktop Chrome'] },
-            dependencies: ['setup-prerequisite'],
-        },
-        {
-            name: 'setup-media-size',
-            testMatch: '**/02_media_size.spec.js',
-            use: { ...devices['Desktop Chrome'] },
-            dependencies: ['setup-types'],
-        },
-        // BuddyPress tests - can run together (modify different BP settings)
-        {
-            name: 'buddypress-group',
-            testMatch: '**/buddypress/*.spec.js',
-            use: { ...devices['Desktop Chrome'] },
-            dependencies: ['setup-media-size'],
-        },
-        // Other settings & display tests - run after BuddyPress
-        {
-            name: 'other-tests',
-            testMatch: ['**/other_settings/*.spec.js', '**/display/*.spec.js'],
-            use: { ...devices['Desktop Chrome'] },
-            dependencies: ['buddypress-group'],
-        },
-        // Cleanup - run at the very end
-        {
-            name: 'cleanup',
-            testMatch: '**/99_cleanup*.spec.js',
-            use: { ...devices['Desktop Chrome'] },
-            dependencies: ['other-tests'],
         },
     ],
 };
