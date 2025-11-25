@@ -32,8 +32,8 @@ test.describe("Validating media size", () => {
         //validating medium photo size (will contain original image)
         const originalFilename = imagepath[0].split("/").pop(); // "test.jpg"
         const namePart = originalFilename.replace(/\.[^/.]+$/, ""); // "test"
-        // Matches: "test" + (optional hyphens/numbers/dimensions) + ".jpg"
-        const regex = new RegExp(`${namePart}[-0-9x]*\\.jpg`);
+        const extension = originalFilename.split('.').pop(); // "jpg"
+        const regex = new RegExp(`${namePart}[-0-9x]*\\.${extension}`);
         await activity.gotoActivityPage()
         expect(await activity.getPhotoSize()).toMatch(regex);
 

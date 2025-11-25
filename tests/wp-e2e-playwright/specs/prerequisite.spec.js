@@ -9,7 +9,7 @@ test.describe("Enable basic features to perform tests", () => {
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-display");
     });
 
-    test("Enable all of the prequisite", async ({ page, admin }) => {
+    test("Enable all of the prerequisite", async ({ page, admin }) => {
         //enable direct upload
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-6']");
         

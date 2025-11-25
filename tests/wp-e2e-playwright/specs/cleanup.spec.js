@@ -24,6 +24,13 @@ test.describe("Cleanup - Disable all settings enabled in tests", () => {
         
         // Disable likes for media
         await page.locator("//label[@for='rtm-form-checkbox-1']").uncheck();
+
+        // Disable media search
+        await page.locator("//label[@for='rtm-form-checkbox-2']").uncheck();
+        // Disable lightbox
+        await page.locator("//label[@for='rtm-form-checkbox-3']").uncheck();
+        // Disable pagination
+        await page.locator("//label[@for='rtm-form-checkbox-4']").uncheck();
         
         // Save settings
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
