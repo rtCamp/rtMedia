@@ -21,7 +21,7 @@ test.describe("INTEGRATION WITH BUDDYPRESS FEATURES", () => {
         expect(profileSidebar).toContain('Media');
     });
     test("Enable media in group toggle and validate from the frontend", async ({ page, admin }) => {
-        await page.locator("//label[@for='rtmedia-album-enable']").check();
+        await backend.enableAnySettingAndSave("//label[@for='rtmedia-album-enable']");
         await backend.enableAnySettingAndSave("//label[@for='rtmedia-enable-on-group']");
         await page.goto(URLS.homepage + "/groups/create/step/group-details/");
         const groupTab = await page.locator("#group-create-tabs").textContent();

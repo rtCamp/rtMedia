@@ -54,7 +54,8 @@ test.describe("Validated media view in the frontend", () => {
         await page.locator("#user-media").click();
         const pagination = page.locator("//div[contains(@class, 'rtmedia_next_prev')]");
         await expect(pagination).toBeVisible();
-        //FIX : validating Masonry script present on the gallery or not
+        // TODO: Validate Masonry script presence in gallery once Masonry support is restored.
+        // If Masonry layout is re-enabled, uncomment and update the following lines to test for Masonry elements.
         // const masonry = page.locator('.rtmedia-list-item.masonry-brick');
         // await expect(masonry).toBeVisible();
     })
