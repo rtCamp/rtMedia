@@ -1066,11 +1066,15 @@ jQuery( document ).ready( function ( $ ) {
 						jQuery('.rtm-button-container.top').append( setting_message );
 						setting_message.delay( 3000 ).fadeOut( 100 );
 					}
+					// Return early for import/export settings responses to avoid JSON.parse on already-parsed object.
+					return;
 				}
 
 				if ( typeof data.error === 'undefined' ) {
-
-					data = JSON.parse( data );
+					// Only parse if data is a string (not already parsed by jQuery).
+					if ( typeof data === 'string' ) {
+						data = JSON.parse( data );
+					}
 					if ( data.exceed_size_msg ) {
 						jQuery( '#debuglog' ).val( '' );
 						alert( data.exceed_size_msg );
