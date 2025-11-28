@@ -5,7 +5,7 @@ class Activity{
         this.page = page;
     }
 
-    async upploadMedia(paths){
+    async uploadMedia(paths){
         await this.page.locator("#whats-new").click();
         const [fileChooser] = await Promise.all([
         this.page.waitForEvent('filechooser'),
@@ -52,7 +52,7 @@ class Activity{
             await dialog.accept();
         });
 
-        await this.upploadMedia(paths);
+        await this.uploadMedia(paths);
         return dialogMessage;
     }
 }
