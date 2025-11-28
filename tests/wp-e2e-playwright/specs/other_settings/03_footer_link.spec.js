@@ -2,8 +2,8 @@ import { test, expect } from "@wordpress/e2e-test-utils-playwright";
 const { URLS } = require("../../utils/urls.js");
 import Backend from "../../test_utils/backend.js";
 
-test.describe("Validated footer link", () => {
-    test("validated rtMedia footer link", async ({ page, admin }) => {
+test.describe("Validate footer link", () => {
+    test("Validate rtMedia footer link", async ({ page, admin }) => {
         let backend = new Backend(page);
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-general");
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-28']");

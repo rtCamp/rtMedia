@@ -21,32 +21,34 @@ test.describe("Validated media view in the frontend", () => {
         await expect(mediaSearch).toBeVisible();
     })
 
-    test("Validated lightbox to display media", async ({ page }) => {
+    test("Validate lightbox to display media", async ({ page }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-3']");
         const image = ['test-data/images/test.jpg'];
         await activity.gotoActivityPage();
-        await activity.upploadMedia(image);
+        await activity.uploadMedia(image);
         await activity.clickedOnFirstPhotoOfTheActivityPage();
         const lightbox = "//div[contains(@class, 'rtm-lightbox-container')]"
         await page.waitForSelector(lightbox);
         await page.locator(lightbox).isVisible();
     })
-    test("Validated Media display pagination option to the display media in profile", async ({ page, admin }) => {
+    test("Validate Media display pagination option to the display media in profile", async ({ page, admin }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-4']");
         const imagesPath = ['test-data/images/test.jpg', 'test-data/images/test0.jpg', 'test-data/images/test.jpg'];
         await activity.gotoActivityPage();
-        await activity.upploadMedia(imagesPath)
+        await activity.uploadMedia(imagesPath)
         await admin.visitAdminPage("admin.php?page=rtmedia-settings");
         await page.locator("#rtm-form-number-0").fill("1");
         await page.locator("#rtm-form-radio-0").click();
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();
-        //validating load more in media album
+        
+        // Validating load more in media album
         await activity.gotoUserProfile();
         await page.locator("#user-media").scrollIntoViewIfNeeded();
         await page.locator("#user-media").click();
         const loadMore = await page.locator('#rtMedia-galary-next').textContent();
         expect(loadMore).toContain("Load More");
-        //validating pagination in media album
+        
+        // Validating pagination in media album
         admin.visitAdminPage("admin.php?page=rtmedia-settings");
         await backend.enableAnySettingAndSave("#rtm-form-radio-1");
         await activity.gotoUserProfile();

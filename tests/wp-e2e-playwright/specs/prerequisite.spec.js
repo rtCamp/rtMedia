@@ -10,7 +10,7 @@ test.describe("Enable basic features to perform tests", () => {
     });
 
     test("Enable all of the prerequisite", async ({ page, admin }) => {
-        //enable direct upload
+        // Enable direct upload
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-6']");
         
         // Enable Photo, Video, and Music types
@@ -23,16 +23,17 @@ test.describe("Enable basic features to perform tests", () => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-15']");
 
 
-        //enable media in profile and attach media to activity
+        // Enable media in profile and attach media to activity
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-bp");
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-7']");
         await backend.enableAnySettingAndSave("//label[@for='rtmedia-bp-enable-activity']");
 
-        //enable group from buddypress
+        // Enable group from buddypress
         await admin.visitAdminPage("options-general.php?page=bp-components");
         await page.locator("//input[@id='bp_components[groups]']").check();
         await page.locator("//input[@id='bp-admin-component-submit']").click();
-        //enable comment for media
+        
+        // Enable comment for media
         await admin.visitAdminPage("admin.php?page=rtmedia-settings");
         await page.locator("//label[@for='rtm-form-checkbox-0']").check();
         await page.locator("div[class='rtm-button-container bottom'] input[value='Save Settings']").click();

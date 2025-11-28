@@ -9,7 +9,7 @@ test.describe("Validating media size", () => {
         activity = new Activity(page);
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-sizes");
     });
-    test("Enter photo size in the backend and validated on frontend", async ({ page }) => {
+    test("Enter photo size in the backend and validate on frontend", async ({ page }) => {
         await page.locator("#rtm-form-number-1").fill(testdata.photo.thumbnailWidth);
         await page.locator("#rtm-form-number-2").fill(testdata.photo.thumbnailHeight);
         await page.locator("#rtm-form-number-3").fill(testdata.photo.mediumWidth);
@@ -20,16 +20,17 @@ test.describe("Validating media size", () => {
         
         const imagepath = ['test-data/images/test.jpg'];
         await activity.gotoActivityPage();
-        await activity.upploadMedia(imagepath);
+        await activity.uploadMedia(imagepath);
         await activity.gotoUserProfile();
         await page.locator("#user-media").click();
         await page.waitForLoadState('domcontentloaded');
         const expectedThumbnail = testdata.photo.thumbnailWidth + "x" + testdata.photo.thumbnailHeight;
-        //validating thumbnail size of the photo
+        
+        // Validating thumbnail size of the photo
         expect(await activity.getPhotoSize()).toContain(expectedThumbnail);
 
 
-        //validating medium photo size (will contain original image)
+        // Validating medium photo size (will contain original image)
         const originalFilename = imagepath[0].split("/").pop(); // "test.jpg"
         const namePart = originalFilename.replace(/\.[^/.]+$/, ""); // "test"
         const extension = originalFilename.split('.').pop(); // "jpg"
@@ -37,7 +38,7 @@ test.describe("Validating media size", () => {
         await activity.gotoActivityPage()
         expect(await activity.getPhotoSize()).toMatch(regex);
 
-        //validting large Photo size
+        // Validating large Photo size
         await activity.clickedOnFirstPhotoOfTheActivityPage();
         const imgLocator = page.locator('div.rtmedia-media img');
         const srcValue = await imgLocator.getAttribute('src');
@@ -54,7 +55,7 @@ test.describe("Validating media size", () => {
 
         const videoPath = ['test-data/videos/testmpfour.mp4'];
         await activity.gotoActivityPage();
-        await activity.upploadMedia(videoPath);
+        await activity.uploadMedia(videoPath);
         await page.waitForLoadState('domcontentloaded');
         const actualSize = await page.locator("//div[contains(@class, 'mejs-overlay') and contains(@class, 'mejs-layer') and contains(@class, 'mejs-overlay-play')]").first().getAttribute('style');
         const expectedSize = "width: "+testdata.video.activityPlayerWidth+"px; height: "+testdata.video.activityPlayerHeight+"px";

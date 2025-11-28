@@ -8,7 +8,7 @@ test.describe("Cleanup - Disable all settings enabled in tests", () => {
         await admin.visitAdminPage("admin.php?page=rtmedia-settings");
         await page.waitForLoadState('domcontentloaded');
         
-        // Disable comment for media
+        // Disable comments for media
         await page.locator("//label[@for='rtm-form-checkbox-0']").uncheck();
         
         // Save settings
@@ -92,7 +92,7 @@ test.describe("Cleanup - Disable all settings enabled in tests", () => {
         // Disable media toggle in profile
         await page.locator("//label[@for='rtm-form-checkbox-7']").uncheck();
         
-        // Disable media in group
+        // Disable media in groups
         await page.locator("//label[@for='rtmedia-enable-on-group']").uncheck();
         
         // Disable Allow upload from activity stream
