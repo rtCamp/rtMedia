@@ -54,9 +54,17 @@ test.describe("Validated media view in the frontend", () => {
         await page.locator("#user-media").click();
         const pagination = page.locator("//div[contains(@class, 'rtmedia_next_prev')]");
         await expect(pagination).toBeVisible();
-        // TODO: Validate Masonry script presence in gallery once Masonry support is restored.
-        // If Masonry layout is re-enabled, uncomment and update the following lines to test for Masonry elements.
-        // const masonry = page.locator('.rtmedia-list-item.masonry-brick');
-        // await expect(masonry).toBeVisible();
+        const masonryContainer = page.locator('.rtmedia-container .rtmedia-list');
+        await expect(masonryContainer).toBeVisible();
+        // Verify masonry is initialized by checking for masonry class on container (added by jQuery masonry bridge)
+        // or by checking the masonry data attribute exists
+        const hasMasonry = await page.evaluate(() => {
+            const container = document.querySelector('.rtmedia-container .rtmedia-list');
+            return container && (
+                container.classList.contains('masonry') || 
+                jQuery('.rtmedia-container .rtmedia-list').data('masonry') !== undefined
+            );
+        });
+        expect(hasMasonry).toBe(true);
     })
 });
