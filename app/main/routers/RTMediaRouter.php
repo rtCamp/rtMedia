@@ -225,8 +225,8 @@ class RTMediaRouter {
 	}
 
 	/**
-	 * "the_content" filter won't work on FSE themes e.g Twenty Twenty-Tow.
-	 * The following add supports for block theme.
+	 * "the_content" filter won't work on FSE themes e.g Twenty Twenty-Two.
+	 * The following adds support for block themes.
 	 *
 	 * @param string $content Content.
 	 * @param array  $parsed_block blocks.
@@ -234,7 +234,9 @@ class RTMediaRouter {
 	 * @return string $content
 	 */
 	public function rt_replace_the_content_fse( $content, $parsed_block ) {
-		if ( 'core/post-template' === $parsed_block['blockName'] ) {
+		// core/post-template: Used in archive/query loop templates.
+		// core/post-content: Used in single post/page templates.
+		if ( 'core/post-template' === $parsed_block['blockName'] || 'core/post-content' === $parsed_block['blockName'] ) {
 			return $this->rt_replace_the_content();
 		}
 
@@ -294,7 +296,8 @@ class RTMediaRouter {
 
 					'is_404'                => false,
 					'is_page'               => false,
-					'is_single'             => false,
+					'is_single'             => true,
+					'is_singular'           => true,
 					'is_archive'            => false,
 					'is_tax'                => false,
 				)
@@ -329,7 +332,8 @@ class RTMediaRouter {
 					'filter'                => 'raw',
 					'is_404'                => false,
 					'is_page'               => false,
-					'is_single'             => false,
+					'is_single'             => true,
+					'is_singular'           => true,
 					'is_archive'            => false,
 					'is_tax'                => false,
 				)
@@ -393,12 +397,13 @@ class RTMediaRouter {
 		$wp_query->posts = array( $post );
 
 		// Prevent comments form from appearing.
-		$wp_query->post_count = 1;
-		$wp_query->is_404     = $dummy['is_404'];
-		$wp_query->is_page    = $dummy['is_page'];
-		$wp_query->is_single  = $dummy['is_single'];
-		$wp_query->is_archive = $dummy['is_archive'];
-		$wp_query->is_tax     = $dummy['is_tax'];
+		$wp_query->post_count  = 1;
+		$wp_query->is_404      = $dummy['is_404'];
+		$wp_query->is_page     = $dummy['is_page'];
+		$wp_query->is_single   = $dummy['is_single'];
+		$wp_query->is_singular = $dummy['is_singular'];
+		$wp_query->is_archive  = $dummy['is_archive'];
+		$wp_query->is_tax      = $dummy['is_tax'];
 
 		// Clean up the dummy post.
 		unset( $dummy );
