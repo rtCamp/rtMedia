@@ -310,6 +310,48 @@ button#rtmedia-add-media-button-post-update .dashicons {
   line-height: 20px;
 }
 
+/* Reset button styles for Options and Upload buttons */
+button.rtmedia-media-options,
+button.rtmedia-action-buttons,
+button.rtmedia-upload-media-link {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  text-align: inherit;
+  text-decoration: none;
+  text-transform: inherit;
+}
+
+/* Focus styles for keyboard accessibility */
+button.rtmedia-media-options:focus-visible,
+button.rtmedia-action-buttons:focus-visible,
+button.rtmedia-upload-media-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+button.rtmedia-media-options:hover,
+button.rtmedia-action-buttons:hover,
+button.rtmedia-upload-media-link:hover {
+  opacity: 0.8;
+}
+
+/* Ensure dashicons display properly in buttons */
+button.rtmedia-media-options .dashicons,
+button.rtmedia-action-buttons .dashicons,
+button.rtmedia-upload-media-link .dashicons {
+  vertical-align: middle;
+}
+
 .plupload_file_name {
   font-size: 11px;
   font-weight: bold;
@@ -686,7 +728,7 @@ input.imgedit-submit-btn {
 .rtm-tabs .active:after {
   background: #FFFFFF;
   bottom: -1px;
-  content: ' ';
+  content: " ";
   height: 1px;
   left: 0;
   position: absolute;
@@ -743,7 +785,7 @@ input.imgedit-submit-btn {
   box-sizing: border-box;
 }
 .mfp-container:before {
-  content: ' ';
+  content: " ";
   display: inline-block;
   height: 100%;
   vertical-align: middle;
@@ -923,7 +965,7 @@ button::-moz-focus-inner {
 .mfp-arrow:after,
 .mfp-arrow .mfp-b,
 .mfp-arrow .mfp-a {
-  content: '';
+  content: "";
   display: block;
   width: 0;
   height: 0;
@@ -1033,7 +1075,7 @@ img.mfp-img {
 }
 
 .mfp-figure:after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 40px;
@@ -1097,18 +1139,18 @@ img.mfp-img {
   margin-right: auto;
 }
 .mfp-preloader:before {
-  content: 'Loading…';
+  content: "Loading…";
   position: absolute;
   width: 30px;
   height: 30px;
 }
 .mfp-preloader:not(:required):before {
-  content: '';
+  content: "";
   border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, 0.27);
   border-top-color: rgba(255, 255, 255, 0.9);
-  animation: spinner .6s linear infinite;
-  -webkit-animation: spinner .6s linear infinite;
+  animation: spinner 0.6s linear infinite;
+  -webkit-animation: spinner 0.6s linear infinite;
 }
 
 @keyframes spinner {
@@ -1129,21 +1171,17 @@ img.mfp-img {
     padding-left: 0;
     padding-right: 0;
   }
-
   .mfp-img-mobile img.mfp-img {
     padding: 0;
   }
-
   .mfp-img-mobile .mfp-figure:after {
     top: 0;
     bottom: 0;
   }
-
   .mfp-img-mobile .mfp-figure small {
     display: inline;
     margin-left: 5px;
   }
-
   .mfp-img-mobile .mfp-bottom-bar {
     background: rgba(0, 0, 0, 0.6);
     bottom: 0;
@@ -1155,16 +1193,13 @@ img.mfp-img {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
-
   .mfp-img-mobile .mfp-bottom-bar:empty {
     padding: 0;
   }
-
   .mfp-img-mobile .mfp-counter {
     right: 5px;
     top: 3px;
   }
-
   .mfp-img-mobile .mfp-close {
     top: 0;
     right: 0;
@@ -1182,17 +1217,14 @@ img.mfp-img {
     -webkit-transform: scale(0.75);
     transform: scale(0.75);
   }
-
   .mfp-arrow-left {
     -webkit-transform-origin: 0;
     transform-origin: 0;
   }
-
   .mfp-arrow-right {
     -webkit-transform-origin: 100%;
     transform-origin: 100%;
   }
-
   .mfp-container {
     padding-left: 6px;
     padding-right: 6px;
@@ -1353,6 +1385,28 @@ img.mfp-img {
   line-height: 1.7;
 }
 
+/* BuddyPress specific styles for Options and Upload buttons */
+#buddypress button.rtmedia-media-options,
+#buddypress button.rtmedia-action-buttons,
+#buddypress button.rtmedia-upload-media-link {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  padding: 0;
+  text-transform: inherit;
+}
+
+#buddypress button.rtmedia-media-options:focus-visible,
+#buddypress button.rtmedia-action-buttons:focus-visible,
+#buddypress button.rtmedia-upload-media-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
 .rtm-options.rtm-options {
   background: #666666;
   color: #FFFFFF;
@@ -1376,7 +1430,7 @@ img.mfp-img {
   bottom: 100%;
   left: 20px;
   border: solid transparent;
-  content: ' ';
+  content: " ";
   height: 0;
   width: 0;
   position: absolute;
@@ -1398,7 +1452,7 @@ img.mfp-img {
   top: 100%;
   right: 22px;
   border: solid transparent;
-  content: ' ';
+  content: " ";
   height: 0;
   width: 0;
   position: absolute;
@@ -1777,7 +1831,7 @@ img.mfp-img {
   display: none;
 }
 .rtmedia-activity-container .rtmedia-list.masonry:after {
-  content: '';
+  content: "";
   display: block;
   clear: both;
 }
@@ -2130,7 +2184,7 @@ abbr.required {
   text-decoration: none;
 }
 
-.media-item .describe input[type="text"],
+.media-item .describe input[type=text],
 .media-item .describe textarea {
   width: 460px;
 }
@@ -2749,7 +2803,7 @@ span.imgedit-scale-warn {
   margin: 5px 0 15px;
   background-color: #ffffe0;
   border-color: #e6db55;
-  padding: 0 .6em;
+  padding: 0 0.6em;
   -webkit-border-radius: 3px;
   border-radius: 3px;
   border-width: 1px;
@@ -2757,7 +2811,7 @@ span.imgedit-scale-warn {
 }
 
 .bp-media-image-editor-cotnainer div.updated p {
-  margin: .5em 0;
+  margin: 0.5em 0;
   padding: 2px;
 }
 
@@ -3007,12 +3061,12 @@ h2.rtm-gallery-title {
   position: relative;
 }
 .media_search.media_search #media_fatch_loader.load:before {
-  content: '';
+  content: "";
   border-radius: 50%;
   border: 1px solid #aaa;
   border-top-color: rgba(255, 255, 255, 0.9);
-  animation: spinner .8s linear infinite;
-  -webkit-animation: spinner .8s linear infinite;
+  animation: spinner 0.8s linear infinite;
+  -webkit-animation: spinner 0.8s linear infinite;
   position: absolute;
   width: 15px;
   height: 15px;
@@ -3142,14 +3196,14 @@ a.rtmedia-upload-media-link {
 
 .mejs-container .mejs-controls .mejs-time {
   padding: 15px 3px 0;
-  content: '';
+  content: "";
 }
 
 .rtmedia-activity-container .mejs-playpause-button.mejs-play button:before, .rtmedia-activity-container .mejs-playpause-button.mejs-pause button:before, .rtmedia-activity-container .mejs-volume-button.mejs-mute button:before, .rtmedia-activity-container .mejs-fullscreen-button button:before, .rtmedia-media .mejs-playpause-button.mejs-play button:before, .rtmedia-media .mejs-playpause-button.mejs-pause button:before, .rtmedia-media .mejs-volume-button.mejs-mute button:before, .rtmedia-media .mejs-fullscreen-button button:before {
-  content: '';
+  content: "";
 }
 
-@media only screen and (min-width: 1025px) {
+@media only screen and (min-width:1025px) {
   .mfp-content .rtm-lightbox-container {
     display: flex;
     table-layout: fixed;
