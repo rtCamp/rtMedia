@@ -1,44 +1,44 @@
 // *** CSS Variables *** //
-@import 'variables';
+@use 'variables' as *;
 
 // *** Utility Classes *** //
-@import "utility";
+@use "utility";
 
 // *** Layout *** //
-@import "layout";
+@use "layout";
 
 // *** Components *** //
-@import "components";
+@use "components";
 
 // *** Sidebar *** //
-@import "sidebar";
+@use "sidebar";
 
 // *** Tabs *** //
-@import "tabs";
+@use "tabs";
 
 // *** Switch *** //
-@import "switch";
+@use "switch";
 
 // *** Tooltip *** //
-@import "tooltip";
+@use "tooltip";
 
 // *** Addons *** //
-@import "addons";
+@use "addons";
 
 // *** Themes *** //
-@import "themes";
+@use "themes";
 
 // *** Support *** //
-@import "support-form";
+@use "support-form";
 
 // *** rtMedia-Pro *** //
-@import "rtmedia-pro";
+@use "rtmedia-pro";
 
 // *** Responsive *** //
-@import "responsive";
+@use "responsive";
 
 // *** Responsive *** //
-@import "rtl";
+@use "rtl";
 
 // *** License *** //
-@import "license";
+@use "license";

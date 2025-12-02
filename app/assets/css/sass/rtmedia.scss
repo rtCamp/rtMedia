@@ -1,41 +1,41 @@
 // *** CSS Variables *** //
-@import "variables";
+@use "variables" as *;
 
 // *** Utility Classes *** //
-@import "utility";
+@use "utility";
 
 // *** BuddyPress Overwites *** //
-@import "buddypress";
+@use "buddypress";
 
 // *** rtMedia Defaults *** //
-@import "rtm";
+@use "rtm";
 
 // *** Tabs *** //
-@import "tabs";
+@use "tabs";
 
 // *** Default Magnific Popup *** //
-@import "magnific";
+@use "magnific";
 
 // *** Customize Magnific Popup *** //
-@import "popup";
+@use "popup";
 
 // *** Activity *** //
-@import "activity";
+@use "activity";
 
 // *** Album *** //
-@import "album";
+@use "album";
 
 // *** Image Edit *** //
-@import "img-edit";
+@use "img-edit";
 
 // *** Media Tab *** //
-@import "media-tab";
+@use "media-tab";
 
 // *** Media Element *** //
-@import "media-element";
+@use "media-element";
 
 // *** Responsive *** //
-@import "responsive";
+@use "responsive";
 
 // *** RTL *** //
-@import "rtl";
+@use "rtl";

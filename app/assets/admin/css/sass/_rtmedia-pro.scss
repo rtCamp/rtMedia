@@ -1,3 +1,6 @@
+@use "sass:color";
+@use "variables" as *;
+
 .rtm-page-container {
 	background: $white;
 	overflow: hidden;
@@ -59,7 +62,7 @@
     text-transform: uppercase;
 
 	&:hover, &:focus {
-		background-color: darken($link, 5);
+		background-color: color.adjust($link, $lightness: -5%);
 		color: $white;
 	}
 
@@ -73,7 +76,7 @@
 		background-color: #2ecc71;
 
 		&:hover, &:focus {
-			background-color: darken(#34bf49, 5);
+			background-color: color.adjust(#34bf49, $lightness: -5%);
 		}
 	}
 }

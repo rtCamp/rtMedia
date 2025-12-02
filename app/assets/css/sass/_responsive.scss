@@ -1,4 +1,7 @@
-@media #{$large-up} {
+@use "variables" as *;
+@use "utility" as u;
+
+@media #{u.$large-up} {
 
 	.mfp-content {
 		.rtm-lightbox-container {

@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "layout" as l;
+
 .rtm-tabs {
 
 	li {
@@ -92,7 +95,7 @@ horizontal tab css
 	.rtm-tabs-content {
 		border-left: none;
 		background: $white;
-		min-height: $container-min-height;
+		min-height: l.$container-min-height;
 		padding: 20px 30px;
 		vertical-align: top;
 	}

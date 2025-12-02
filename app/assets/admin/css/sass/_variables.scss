@@ -1,3 +1,5 @@
+@use "sass:list";
+
 // ***** Constant Variables ***** //
 $black: #000000;
 $white: #FFFFFF;
@@ -32,17 +34,17 @@ $link-hover: $link;
 // RANGES
 // We use these functions to define ranges for various things, like media queries.
 @function lower-bound($range){
-	@if length($range) <= 0 {
+	@if list.length($range) <= 0 {
 		@return 0;
 	}
-	@return nth($range,1);
+	@return list.nth($range,1);
 }
 
 @function upper-bound($range) {
-	@if length($range) < 2 {
+	@if list.length($range) < 2 {
 		@return 999999999999;
 	}
-	@return nth($range, 2);
+	@return list.nth($range, 2);
 }
 
 // Here we define the lower and upper bounds for each media size
