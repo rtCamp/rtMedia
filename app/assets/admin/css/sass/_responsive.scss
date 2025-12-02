@@ -1,3 +1,5 @@
+@use "variables" as *;
+
 @media #{$large-up} {
 
 	.rtm-setting-container {

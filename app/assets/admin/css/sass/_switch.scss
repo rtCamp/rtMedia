@@ -1,3 +1,6 @@
+@use "sass:color";
+@use "variables" as *;
+
 // New Switch
 
 $switchTransition: .15s ease-out;
@@ -55,8 +58,8 @@ $switchTransition: .15s ease-out;
 
 	input[type=checkbox]:checked ~ & {
 		//background: #47a8d8;
-		background: lighten(#2ea2cc, 2);
-		//background: lighten(#2ecc71, 5); #2ea2cc
+		background: color.adjust(#2ea2cc, $lightness: 2%);
+		//background: color.adjust(#2ecc71, $lightness: 5%); #2ea2cc
 
 		&:before { opacity: 0; }
 		&:after { opacity: 1; }
