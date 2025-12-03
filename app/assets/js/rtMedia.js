@@ -342,9 +342,9 @@ jQuery("document").ready(function ($) {
           "get_single_activity_content" === get_action ||
           "activity_get_older_updates" === get_action) &&
         "undefined" !== typeof rtmedia_masonry_layout &&
-        "true" === rtmedia_masonry_layout &&
+        rtm_is_true(rtmedia_masonry_layout) &&
         "undefined" !== typeof rtmedia_masonry_layout_activity &&
-        "true" === rtmedia_masonry_layout_activity
+        rtm_is_true(rtmedia_masonry_layout_activity)
       ) {
         setTimeout(function () {
           apply_rtMagnificPopup(
@@ -1066,9 +1066,9 @@ jQuery("document").ready(function ($) {
   // Masonry code for activity
   if (
     typeof rtmedia_masonry_layout != "undefined" &&
-    rtmedia_masonry_layout == "true" &&
+    rtm_is_true(rtmedia_masonry_layout) &&
     typeof rtmedia_masonry_layout_activity != "undefined" &&
-    rtmedia_masonry_layout_activity == "true"
+    rtm_is_true(rtmedia_masonry_layout_activity)
   ) {
     // Arrange media into masonry view
     rtmedia_activity_masonry();
@@ -1083,9 +1083,9 @@ jQuery("document").ready(function ($) {
         "get_single_activity_content" === get_action ||
         "activity_get_older_updates" === get_action) &&
       typeof rtmedia_masonry_layout != "undefined" &&
-      rtmedia_masonry_layout == "true" &&
+      rtm_is_true(rtmedia_masonry_layout) &&
       typeof rtmedia_masonry_layout_activity != "undefined" &&
-      rtmedia_masonry_layout_activity == "true"
+      rtm_is_true(rtmedia_masonry_layout_activity)
     ) {
       rtmedia_activity_masonry();
     }
@@ -1094,7 +1094,7 @@ jQuery("document").ready(function ($) {
   // Masonry code
   if (
     typeof rtmedia_masonry_layout != "undefined" &&
-    rtmedia_masonry_layout == "true" &&
+    rtm_is_true(rtmedia_masonry_layout) &&
     jQuery(".rtmedia-container .rtmedia-list.rtm-no-masonry").length == 0
   ) {
     rtm_masonry_container = jQuery(".rtmedia-container .rtmedia-list");
@@ -1191,7 +1191,7 @@ jQuery("document").ready(function ($) {
 
             if (
               "undefined" !== typeof rtmedia_masonry_layout &&
-              "true" === rtmedia_masonry_layout
+              rtm_is_true(rtmedia_masonry_layout)
             ) {
               rtm_masonry_reload(rtm_masonry_container);
             }
@@ -1232,6 +1232,16 @@ function bp_media_create_element(id) {
   return false;
 }
 
+/**
+ * Check if a value is true (handles both string "true" and boolean true).
+ *
+ * @param {*} value The value to check.
+ * @return {boolean} True if the value is "true" (string) or true (boolean).
+ */
+function rtm_is_true(value) {
+  return "true" === value || true === value;
+}
+
 function rtmedia_version_compare(left, right) {
   if (typeof left + typeof right != "stringstring") {
     return false;
@@ -1270,7 +1280,17 @@ function rtm_is_element_exist(el) {
 function rtm_masonry_reload(el) {
   setTimeout(function () {
     // We make masonry recalculate the element based on their current state.
-    el.masonry("reload");
+    // Check if masonry instance exists and use the appropriate method.
+    var masonryInstance = el.data('masonry');
+    if (masonryInstance) {
+      // Masonry v4.x uses reloadItems() + layout() instead of reload()
+      if (typeof masonryInstance.reload === 'function') {
+        el.masonry("reload");
+      } else if (typeof masonryInstance.reloadItems === 'function') {
+        masonryInstance.reloadItems();
+        masonryInstance.layout();
+      }
+    }
   }, 250);
 }
 

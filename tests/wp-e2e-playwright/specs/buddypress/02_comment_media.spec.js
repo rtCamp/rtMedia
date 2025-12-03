@@ -13,7 +13,7 @@ test.describe("Comment media BUDDYPRESS FEATURES", () => {
 
     });
 
-    test("Validated comment media in the frontend activity page", async ({ page }) => {
+    test("Validate comment media in the frontend activity page", async ({ page }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-9']");
         await activity.gotoActivityPage();
         await page.locator("#whats-new").fill("This is a demo post");
