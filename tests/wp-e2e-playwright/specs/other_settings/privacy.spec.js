@@ -2,7 +2,7 @@ import { test, expect } from "@wordpress/e2e-test-utils-playwright";
 import Backend from "../../test_utils/backend.js";
 import Activity from "../../test_utils/activity.js";
 
-test.describe("Validated privacy settings", () => {
+test.describe("Validate privacy settings", () => {
     let backend;
     let activity;
 
@@ -11,10 +11,10 @@ test.describe("Validated privacy settings", () => {
         activity = new Activity(page);
         await admin.visitAdminPage("admin.php?page=rtmedia-settings#rtmedia-privacy");
     });
-    test("Enable privacy settings and validated from the fronend", async ({ page }) => {
+    test("Enable privacy settings and validate from the frontend", async ({ page }) => {
         await backend.enableAnySettingAndSave("//label[@for='rtmedia-privacy-enable']");
         await backend.enableAnySettingAndSave("//label[@for='rtm-form-checkbox-21']")
-        //validated changes from the fronend
+        // Validate changes from the frontend
         await activity.gotoActivityPage();
         await page.locator("#whats-new").click();
         await page.waitForLoadState('domcontentloaded')
