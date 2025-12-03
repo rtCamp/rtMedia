@@ -151,6 +151,17 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.7
+
+* FIXED
+  * Fix JS Build process breaking Admin dashboard.
+  * Fix rtMedia compatibility with Hello Elementor theme.
+  * Fix Masonry script issue in rtMedia Gallery in BuddyX theme.
+
+* ENHANCEMENT
+  * Enchanced End to End playwright testing scripts for media validation.
+  * Improved rtMedia Logo visibility on dashboard.
+
 ### 4.7.6
 
 * FIXED
