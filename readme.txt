@@ -141,7 +141,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
   * Fix Masonry script issue in rtMedia Gallery in BuddyX theme.
 
 * ENHANCEMENT
-  * Enchanced End to End playwright testing scripts for media validation.
+  * Enhanced End to End playwright testing scripts for media validation.
   * Improved rtMedia Logo visibility on dashboard.
 
 = 4.7.6 [November 20, 2025] =
