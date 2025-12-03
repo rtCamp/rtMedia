@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 				tasks: ['shell:postcss']
 			},
 			js: {
-				files: ['app/assets/js/rtMedia.js', 'app/assets/admin/js/scripts.js'],
+				files: ['app/assets/js/rtMedia.js', 'app/assets/admin/js/scripts.js', 'app/assets/admin/js/settings.js'],
 				tasks: ['terser']
 			}
 		},
@@ -60,7 +60,10 @@ module.exports = function (grunt) {
             },
             backend: {
                 files: {
-                    'app/assets/admin/js/admin.min.js': ['app/assets/admin/js/scripts.js']
+                    'app/assets/admin/js/admin.min.js': [
+                        'app/assets/admin/js/scripts.js',
+                        'app/assets/admin/js/settings.js'
+                    ]
                 }
             },
             godam: {
