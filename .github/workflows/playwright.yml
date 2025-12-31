@@ -1,7 +1,11 @@
 # e2e test for rtMedia pro plugin. 
 
 name: CI for rtMedia plugin
-
+permissions:
+  contents: read        # Read code
+  checks: write         # Report test results
+  pull-requests: write  # Comment on PRs
+  statuses: write       # Update commit status
 # Controls when the workflow will run
 on:
   # Triggers the workflow on pull request events
