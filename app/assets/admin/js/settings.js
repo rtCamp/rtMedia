@@ -156,7 +156,7 @@ jQuery( document ).ready( function ( $ ) {
 			if ( ! reg.test( current_element.val() ) ) {
 				var name_attr = current_element.attr( 'name' );
 				name_attr = name_attr.replace( 'rtmedia-options[defaultSizes_', '' );
-				name_attr = name_attr.replace( ']', '' );
+				name_attr = name_attr.replace( /\]/g, '' );
 				name_attr = name_attr.replace( /_/g, ' ' );
 				var error_msg = RTMedia_Admin_Settings_JS.rtmedia_default_sizes_error_message;
 				error_msg = error_msg.replace( '[default_size_property]', name_attr );
