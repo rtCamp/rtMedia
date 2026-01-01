@@ -2608,6 +2608,7 @@ function rtmedia_selected_file_list(
     safe_file_name + '">';
   rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
   rtmedia_plupload_file += safe_file_name;
+  rtmedia_plupload_file += "</span>";
   rtmedia_plupload_file += icon;
   rtmedia_plupload_file += "</div>";
   rtmedia_plupload_file += '<div class="plupload_file_action">';
