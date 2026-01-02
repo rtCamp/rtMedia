@@ -62,6 +62,7 @@ function apply_rtMagnificPopup(selector) {
         delegate:
           "a:not(.no-popup, .mejs-time-slider, .mejs-volume-slider, .mejs-horizontal-volume-slider)",
         type: "ajax",
+        allowHTMLInTemplate: true,
         fixedContentPos: true,
         fixedBgPos: true,
         tLoading: rt_load_more + " #%curr%...",
@@ -1332,7 +1333,7 @@ function rtm_masonry_reload(el) {
           var $this = $(this);
           if ($this.hasClass("less")) {
             $this.removeClass("less");
-            $this.html(config.moreText);
+            $this.text(config.moreText);
             $this
               .parent()
               .prev()
@@ -1344,7 +1345,7 @@ function rtm_masonry_reload(el) {
               });
           } else {
             $this.addClass("less");
-            $this.html(config.lessText);
+            $this.text(config.lessText);
             $this
               .parent()
               .prev()
@@ -1427,11 +1428,10 @@ function rtm_masonry_reload(el) {
               }
             }
           }
-          c = $("<div/>")
-            .html(
-              bag + '<span class="ellip">' + config.ellipsesText + "</span>"
-            )
-            .html();
+          var $container = $("<div/>").html(bag);
+          var $ellipsisSpan = $("<span/>").addClass("ellip").text(config.ellipsesText);
+          $container.append($ellipsisSpan);
+          c = $container.html();
         } else {
           c += config.ellipsesText;
         }
@@ -1441,11 +1441,10 @@ function rtm_masonry_reload(el) {
           c +
           '</div><div class="allcontent">' +
           content +
-          '</div><span><a href="javascript://nop/" class="morelink">' +
-          config.moreText +
-          "</a></span>";
+          '</div><span><a href="javascript://nop/" class="morelink"></a></span>';
 
         $this.html(html);
+        $this.find(".morelink").text(config.moreText);
         $this.find(".allcontent").hide(); // Hide all text
         $(".shortcontent p:last", $this).css("margin-bottom", 0); //Remove bottom margin on last paragraph as it's likely shortened
       }
