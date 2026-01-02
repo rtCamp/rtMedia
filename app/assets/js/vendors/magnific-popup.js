@@ -89,7 +89,17 @@ var _mfpOn = function(name, f) {
 	},
 	_getCloseBtn = function(type) {
 		if(type !== _currPopupType || !mfp.currTemplate.closeBtn) {
-			mfp.currTemplate.closeBtn = $( mfp.st.closeMarkup.replace('%title%', mfp.st.tClose ) );
+
+			// 1. Create the raw markup (removing the placeholder string first)
+			var rawMarkup = mfp.st.closeMarkup.replace('%title%', '');
+			
+			// 2. Parse it into a jQuery object
+			var $btn = $(rawMarkup);
+			
+			// 3. Set the title attribute safely (jQuery handles the escaping)
+			$btn.attr('title', mfp.st.tClose);
+			
+			mfp.currTemplate.closeBtn = $btn;
 			_currPopupType = type;
 		}
 		return mfp.currTemplate.closeBtn;
@@ -353,7 +363,14 @@ MagnificPopup.prototype = {
 		$('html').css(windowStyles);
 		
 		// add everything to DOM
-		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo || $(document.body) );
+        var appendToEl = mfp.st.prependTo || $(document.body);
+        
+        // FIX: If prependTo is a string, force it to be a selector 
+        // by looking it up inside the body, rather than letting jQuery evaluate it.
+        if (typeof mfp.st.prependTo === 'string') {
+            appendToEl = $(document.body).find(mfp.st.prependTo);
+        }
+		mfp.bgOverlay.add(mfp.wrap).prependTo( appendToEl );
 
 		// Save last focused element
 		mfp._lastFocusedEl = document.activeElement;
@@ -506,7 +523,7 @@ MagnificPopup.prototype = {
 			_mfpTrigger('FirstMarkupParse', markup);
 
 			if(markup) {
-				mfp.currTemplate[type] = $(markup);
+				mfp.currTemplate[type] = $($.parseHTML(markup));
 			} else {
 				// if there is no markup found we just define that template is parsed
 				mfp.currTemplate[type] = true;
