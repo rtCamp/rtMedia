@@ -93,8 +93,8 @@ var _mfpOn = function(name, f) {
 			// 1. Create the raw markup (removing the placeholder string first)
 			var rawMarkup = mfp.st.closeMarkup.replace('%title%', '');
 			
-			// 2. Parse it into a jQuery object
-			var $btn = $(rawMarkup);
+			// 2. Parse it into a jQuery object SAFELY using $.parseHTML
+			var $btn = $($.parseHTML(rawMarkup));
 			
 			// 3. Set the title attribute safely (jQuery handles the escaping)
 			$btn.attr('title', mfp.st.tClose);
@@ -365,10 +365,15 @@ MagnificPopup.prototype = {
 		// add everything to DOM
         var appendToEl = mfp.st.prependTo || $(document.body);
         
-        // FIX: If prependTo is a string, force it to be a selector 
-        // by looking it up inside the body, rather than letting jQuery evaluate it.
-        if (typeof mfp.st.prependTo === 'string') {
-            appendToEl = $(document.body).find(mfp.st.prependTo);
+		if (typeof mfp.st.prependTo === 'string') {
+            // FIX: Use document.querySelector to ensure the string is treated 
+            // strictly as a CSS selector and not executable HTML.
+            try {
+                appendToEl = $(document.querySelector(mfp.st.prependTo));
+            } catch (e) {
+                // Fallback to body if the selector is invalid
+                appendToEl = $(document.body);
+            }
         }
 		mfp.bgOverlay.add(mfp.wrap).prependTo( appendToEl );
 
