@@ -39,9 +39,9 @@ jobs:
           ls -al
         # Install config site
       - name: Install and config site
-        uses: docker://rtcamp/base-wo:v1.0.0
+        uses: docker://rtcamp/base-wo:v1.1.0
         env:
-          NODE_VERSION: 17
+          NODE_VERSION: 22
           RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
 
       - name: Archive HTML Report on failure
