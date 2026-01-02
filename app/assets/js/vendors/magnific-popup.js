@@ -369,8 +369,17 @@ MagnificPopup.prototype = {
             // FIX: Use document.querySelector to ensure the string is treated 
             // strictly as a CSS selector and not executable HTML.
             try {
-                appendToEl = $(document.querySelector(mfp.st.prependTo));
-            } catch (e) {
+				// 1. Attempt to query the element
+                var el = document.querySelector(mfp.st.prependTo);
+                
+                // 2. Check if the element actually exists (querySelector returns null if not found)
+                if (el) {
+                    appendToEl = $(el);
+                } else {
+                    // Valid selector but element not found in DOM -> Fallback to body
+                    appendToEl = $(document.body);
+				} 
+			} catch (e) {
                 // Fallback to body if the selector is invalid
                 appendToEl = $(document.body);
             }
