@@ -366,8 +366,7 @@ MagnificPopup.prototype = {
         var appendToEl = mfp.st.prependTo || $(document.body);
         
 		if (typeof mfp.st.prependTo === 'string') {
-            // FIX: Use document.querySelector to ensure the string is treated 
-            // strictly as a CSS selector and not executable HTML.
+            // Use document.querySelector to ensure the string is treated 
             try {
 				// 1. Attempt to query the element
                 var el = document.querySelector(mfp.st.prependTo);
