@@ -24,26 +24,26 @@
 		"pr-status": "bin/pr-status.js"
 	},
 	"dependencies": {
-		"@octokit/core": "^2.5.4",
-		"@octokit/plugin-paginate-rest": "^1.1.1",
-		"@wordpress/api-fetch": "6.10.0",
-		"@wordpress/keycodes": "3.13.0",
-		"@wordpress/scripts": "23.5.0",
-		"@wordpress/url": "3.14.0",
+		"@octokit/core": "^7.0.6",
+		"@octokit/plugin-paginate-rest": "^14.0.0",
+		"@wordpress/scripts": "^31.2.0",
 		"dotenv": "^16.4.5",
 		"form-data": "^4.0.0",
 		"lodash": "^4.17.21",
-		"playwright": "^1.45.1",
 		"playwright-tesults-reporter": "^1.0.0"
 	},
 	"devDependencies": {
-		"@playwright/test": "1.35.0",
+		"@playwright/test": "^1.57.0",
 		"@types/lodash": "^4.14.182",
-		"@wordpress/e2e-test-utils-playwright": "^1.1.0",
+		"@wordpress/api-fetch": "^7.37.0",
+		"@wordpress/e2e-test-utils-playwright": "^1.37.0",
+		"@wordpress/keycodes": "^4.37.0",
+		"@wordpress/url": "^4.37.0",
 		"chai": "4.3.6",
 		"eslint-plugin-playwright": "0.8.0",
 		"filenamify": "4.2.0",
 		"mailslurp-client": "15.13.3",
+		"playwright": "^1.57.0",
 		"typescript": "4.4.2",
 		"worker-farm": "1.7.0"
 	},
@@ -53,11 +53,15 @@
 	"publishConfig": {
 		"access": "public"
 	},
+	"overrides": {
+    	"webpack-dev-server": "^5.2.1"
+  	},
 	"scripts": {
 		"build:packages": "npm run build:package-types && node ./bin/packages/build.js",
 		"build:package-types": "node ./bin/packages/validate-typescript-version.js && tsc --build",
 		"build": "npm run build:packages && wp-scripts build",
 		"dev": "npm run build:packages && concurrently \"wp-scripts start\" \"npm run dev:packages\"",
 		"test-e2e:playwright": "playwright test --config playwright.config.ts",
-		"test-e2e:playwright:dev": "npm run test-e2e:playwright -- prerequisite.spec.js && npm run test-e2e:playwright -- specs/buddypress && npm run test-e2e:playwright -- specs/display && npm run test-e2e:playwright -- specs/other_settings && npm run test-e2e:playwright -- media_size.spec.js && npm run test-e2e:playwright -- types.spec.js; npm run test-e2e:playwright -- cleanup.spec.js"	}
+		"test-e2e:playwright:dev": "npm run test-e2e:playwright -- prerequisite.spec.js && npm run test-e2e:playwright -- specs/buddypress && npm run test-e2e:playwright -- specs/display && npm run test-e2e:playwright -- specs/other_settings && npm run test-e2e:playwright -- media_size.spec.js && npm run test-e2e:playwright -- types.spec.js; npm run test-e2e:playwright -- cleanup.spec.js"
+	}
 }

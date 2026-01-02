@@ -670,6 +670,6 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
 			deactivate_plugins( 'bp-album/loader.php' );
 		}
-		die( true );
+		exit;
 	}
 }
