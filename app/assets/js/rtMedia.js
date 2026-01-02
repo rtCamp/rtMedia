@@ -1436,14 +1436,15 @@ function rtm_masonry_reload(el) {
           c += config.ellipsesText;
         }
 
-        var html =
-          '<div class="shortcontent">' +
-          c +
-          '</div><div class="allcontent">' +
-          content +
-          '</div><span><a href="javascript://nop/" class="morelink"></a></span>';
+        var $shortContent = jQuery('<div class="shortcontent"></div>').html(c);
+        var $allContent = jQuery('<div class="allcontent"></div>').html(content);
+        var $moreLink = jQuery('<span><a href="javascript://nop/" class="morelink"></a></span>');
 
-        $this.html(html);
+          $this.empty()
+            .append($shortContent)
+            .append($allContent)
+            .append($moreLink);
+
         $this.find(".morelink").text(config.moreText);
         $this.find(".allcontent").hide(); // Hide all text
         $(".shortcontent p:last", $this).css("margin-bottom", 0); //Remove bottom margin on last paragraph as it's likely shortened
