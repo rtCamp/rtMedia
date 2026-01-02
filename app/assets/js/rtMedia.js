@@ -62,6 +62,7 @@ function apply_rtMagnificPopup(selector) {
         delegate:
           "a:not(.no-popup, .mejs-time-slider, .mejs-volume-slider, .mejs-horizontal-volume-slider)",
         type: "ajax",
+        allowHTMLInTemplate: true,
         fixedContentPos: true,
         fixedBgPos: true,
         tLoading: rt_load_more + " #%curr%...",
