@@ -151,6 +151,15 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.8
+
+* ENHANCEMENT
+  * Compatible with WordPress latest version 6.9
+  * Compatible with PHP version 8.4
+  * Updated magnific-popup library to latest version 1.2.0
+  * Updated dependencies in node and composer packages to latest versions.
+  * Made the overall code more robust and secure.
+
 ### 4.7.7
 
 * FIXED

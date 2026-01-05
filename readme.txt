@@ -4,8 +4,8 @@ Tags: BuddyPress, media, multimedia, album, audio, music, video, photo, upload, 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.1
-Tested up to: 6.8
-Stable tag: 4.7.7
+Tested up to: 6.9
+Stable tag: 4.7.8
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -132,6 +132,15 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.8 [January 05, 2026] =
+
+* ENHANCEMENT
+  * Compatible with WordPress latest version 6.9
+  * Compatible with PHP version 8.4
+  * Updated magnific-popup library to latest version 1.2.0
+  * Updated dependencies in node and composer packages to latest versions.
+  * Made the overall code more robust and secure.
 
 = 4.7.7 [December 03, 2025] =
 
