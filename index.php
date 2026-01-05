@@ -5,7 +5,6 @@
  * Description: This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!
  * Version: 4.7.8
  * Requires at least: 4.1
- * Requires PHP: 7.3
  * Text Domain: buddypress-media
  * Author: rtCamp
  * Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
