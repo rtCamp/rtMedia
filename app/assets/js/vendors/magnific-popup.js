@@ -354,7 +354,7 @@
 			$( 'html' ).css( windowStyles );
 
 			// add everything to DOM
-			mfp.bgOverlay.add( mfp.wrap ).prependTo( mfp.st.prependTo || $( document.body ) );
+			mfp.bgOverlay.add( mfp.wrap ).prependTo( $.find( mfp.st.prependTo ) || $( document.body ) );
 
 			// Save last focused element
 			mfp._lastFocusedEl = document.activeElement;
