@@ -361,7 +361,8 @@ MagnificPopup.prototype = {
 
 		// remove scrollbar, add margin e.t.c
 		$('html').css(windowStyles);
-		
+
+		var appendToEl = mfp.st.prependTo;		
 		// Default to body
 		var $appendToEl = $(document.body);
 
