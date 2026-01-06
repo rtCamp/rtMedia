@@ -128,7 +128,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.7.8 [January 05, 2026] =
+= 4.7.8 [January 06, 2026] =
 
 * ENHANCEMENT
   * Compatible with WordPress latest version 6.9
