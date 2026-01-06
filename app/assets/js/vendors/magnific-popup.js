@@ -365,17 +365,12 @@ MagnificPopup.prototype = {
 		// add everything to DOM
         var appendToEl = mfp.st.prependTo || $(document.body);
 
-        // Ensure 'appendToEl' string is treated strictly as a selector, not HTML.
-		if (typeof appendToEl === 'string') {
-			var $target = $(document.body).find(appendToEl);
-			// If element is found, use it; otherwise fallback to body
-			appendToEl = $target.length ? $target : $(document.body);
-		} else if (!(appendToEl && appendToEl.jquery)) {
-			// If it's a DOM element or other truthy value, wrap it as a jQuery object;
-			// otherwise, fallback to body.
-			appendToEl = appendToEl ? $(appendToEl) : $(document.body);
-		}
+        // This ensures the string is treated ONLY as a selector, not HTML.
+        if (typeof appendToEl === 'string') {
+            appendToEl = $(document.body).find(appendToEl);
+        }
 
+        // 3. The line where the alert was (now safe)
         mfp.bgOverlay.add(mfp.wrap).prependTo( appendToEl );
 
 		// Save last focused element
