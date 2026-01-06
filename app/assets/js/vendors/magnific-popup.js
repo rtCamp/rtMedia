@@ -361,29 +361,20 @@ MagnificPopup.prototype = {
 
 		// remove scrollbar, add margin e.t.c
 		$('html').css(windowStyles);
-		
-		// add everything to DOM
-        var appendToEl = mfp.st.prependTo || $(document.body);
-        
-		if (typeof mfp.st.prependTo === 'string') {
-            // Use document.querySelector to ensure the string is treated 
-            try {
-				// 1. Attempt to query the element
-                var el = document.querySelector(mfp.st.prependTo);
-                
-                // 2. Check if the element actually exists (querySelector returns null if not found)
-                if (el) {
-                    appendToEl = $(el);
-                } else {
-                    // Valid selector but element not found in DOM -> Fallback to body
-                    appendToEl = $(document.body);
-				} 
-			} catch (e) {
-                // Fallback to body if the selector is invalid
-                appendToEl = $(document.body);
-            }
-        }
-		mfp.bgOverlay.add(mfp.wrap).prependTo( appendToEl );
+
+		var appendToEl = mfp.st.prependTo;		
+		// Default to body
+		var $appendToEl = $(document.body);
+
+		// Only allow DOM elements or jQuery objects
+		if (appendToEl instanceof HTMLElement) {
+			$appendToEl = $(appendToEl);
+		} else if (appendToEl && appendToEl.jquery) {
+			$appendToEl = appendToEl;
+		}
+
+		// Safe DOM insertion
+		mfp.bgOverlay.add(mfp.wrap).prependTo($appendToEl);
 
 		// Save last focused element
 		mfp._lastFocusedEl = document.activeElement;
