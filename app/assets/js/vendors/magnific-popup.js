@@ -362,16 +362,18 @@ MagnificPopup.prototype = {
 		// remove scrollbar, add margin e.t.c
 		$('html').css(windowStyles);
 		
-		// add everything to DOM
-        var appendToEl = mfp.st.prependTo || $(document.body);
+		// Default to body
+		var $appendToEl = $(document.body);
 
-        // This ensures the string is treated ONLY as a selector, not HTML.
-        if (typeof appendToEl === 'string') {
-            appendToEl = $(document.body).find(appendToEl);
-        }
+		// Only allow DOM elements or jQuery objects
+		if (appendToEl instanceof HTMLElement) {
+			$appendToEl = $(appendToEl);
+		} else if (appendToEl && appendToEl.jquery) {
+			$appendToEl = appendToEl;
+		}
 
-        // 3. The line where the alert was (now safe)
-        mfp.bgOverlay.add(mfp.wrap).prependTo( appendToEl );
+		// Safe DOM insertion
+		mfp.bgOverlay.add(mfp.wrap).prependTo($appendToEl);
 
 		// Save last focused element
 		mfp._lastFocusedEl = document.activeElement;
