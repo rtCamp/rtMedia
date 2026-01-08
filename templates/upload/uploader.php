@@ -84,7 +84,7 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 					?>
 					<div class="rtm-file-input-container">
 						<p class="rtmedia-file-upload-p">
-							<input type="file" name="rtmedia_file_multiple[]" multiple="true" class="rtm-simple-file-input" id="rtmedia_simple_file_input" />
+                            <input type="file" name="rtmedia_file_multiple[]" multiple="true" class="rtm-simple-file-input" id="rtmedia_simple_file_input" aria-label="Select media files to upload" multiple required/>
 						</p>
 					</div>
 					<?php
@@ -92,7 +92,7 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 					?>
 					<div class="rtm-file-input-container">
 						<p class="rtmedia-file-upload-p">
-							<input type="file" name="rtmedia_file" class="rtm-simple-file-input" id="rtmedia_simple_file_input" />
+                            <input type="file" name="rtmedia_file" class="rtm-simple-file-input" id="rtmedia_simple_file_input" aria-label="Select a media file to upload"  required/>
 						</p>
 					</div>
 					<?php
@@ -106,7 +106,7 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 					<?php
 				} else {
 					?>
-						<p><input type="submit" name="rtmedia_simple_file_upload_submit" /></p>
+						<p><input type="submit" name="rtmedia_simple_file_upload_submit" aria-label="Upload selected media file" /></p>
 					</div>
 			</form>
 					<?php
@@ -154,7 +154,8 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 					}
 					?>
 
-					<input type="submit" id='rtMedia-start-upload' name="rtmedia-upload" value="<?php echo esc_attr( RTMEDIA_UPLOAD_LABEL ); ?>" />
+					<input type="submit" id='rtMedia-start-upload' name="rtmedia-upload" value="<?php echo esc_attr( RTMEDIA_UPLOAD_LABEL ); ?>" aria-label="Start media upload" />
+
 
 				</div>
 			</div>
