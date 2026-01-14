@@ -17,6 +17,6 @@
     "load-grunt-tasks": "^3.2.0",
     "minimist": "^1.2.5",
     "postcss-cli": "^11.0.0",
-    "sass": "^1.85.0"
+    "sass": "^1.97.2"
   }
 }
