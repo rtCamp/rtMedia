@@ -183,14 +183,15 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 	/**
 	 * Handle AJAX request for loading a single activity comment's HTML.
+	 * Note: Only registered for logged-in users (wp_ajax_) for security.
 	 */
 	add_action( 'wp_ajax_get_single_activity_comment_html', 'handle_get_single_activity_comment_html' );
-	add_action( 'wp_ajax_nopriv_get_single_activity_comment_html', 'handle_get_single_activity_comment_html' );
 
 	/**
 	 * AJAX handler to fetch and return the HTML for a single activity comment.
 	 *
 	 * Validates the request, loads the activity comment by ID,
+	 * verifies the user has permission to view it,
 	 * renders its HTML using the BuddyPress template, and returns it in a JSON response.
 	 *
 	 * @return void Outputs JSON response with rendered HTML or error message.
@@ -198,15 +199,25 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 	function handle_get_single_activity_comment_html() {
 		check_ajax_referer( 'godam-ajax-nonce', 'nonce' );
 
+		// Require user to be logged in.
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( 'Authentication required', 403 );
+		}
+		
 		$activity_id = isset( $_POST['comment_id'] ) ? intval( $_POST['comment_id'] ) : 0;
 
 		if ( ! $activity_id ) {
-			wp_send_json_error( 'Invalid activity ID' );
+			wp_send_json_error( 'Invalid activity ID', 400 );
 		}
 
 		$activity = new BP_Activity_Activity( $activity_id );
 		if ( empty( $activity->id ) ) {
-			wp_send_json_error( 'Activity comment not found' );
+			wp_send_json_error( 'Activity comment not found', 404 );
+		}
+
+		// Verify user has permission to view this activity.
+		if ( ! godam_user_can_view_activity( $activity ) ) {
+			wp_send_json_error( 'You do not have permission to view this activity', 403 );
 		}
 
 		global $activities_template;
@@ -228,6 +239,91 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		}
 
 		wp_send_json_success( array( 'html' => $html ) );
+	}
+
+	/**
+	 * Check if the current user can view a specific activity.
+	 *
+	 * This function implements permission checks for activities from groups and profiles.
+	 * It ensures that private group activities and private profile activities are only
+	 * accessible to users with appropriate permissions.
+	 *
+	 * @param BP_Activity_Activity $activity The activity object to check permission for.
+	 *
+	 * @return bool True if the user can view the activity, false otherwise.
+	 */
+	function godam_user_can_view_activity( $activity ) {
+		$current_user_id = get_current_user_id();
+
+		// User must be logged in to view non-public activities.
+		if ( ! $current_user_id ) {
+			return false;
+		}
+
+		// Admins can view everything.
+		if ( current_user_can( 'manage_options' ) ) {
+			return true;
+		}
+
+		// If activity is from a group, verify user is a member of non-public groups.
+		if ( isset( $activity->component ) && 'groups' === $activity->component ) {
+			// Check if BuddyPress groups component is active.
+			if ( ! function_exists( 'groups_get_group' ) ) {
+				return false;
+			}
+
+			$group = groups_get_group( array( 'group_id' => $activity->item_id ) );
+
+			if ( empty( $group ) ) {
+				// Group not found.
+				return false;
+			}
+
+			// Public groups are accessible to all logged-in users.
+			if ( 'public' === $group->status ) {
+				return true;
+			}
+
+			// For private/hidden groups, user must be a member.
+			if ( ! function_exists( 'groups_is_user_member' ) ) {
+				return false;
+			}
+
+			return groups_is_user_member( $current_user_id, $group->id );
+		}
+
+		// For profile/activity updates, check ownership and privacy.
+		if ( isset( $activity->component ) && 'profile' === $activity->component ) {
+			$activity_author = intval( $activity->user_id );
+
+			// User can always view their own activities.
+			if ( $activity_author === $current_user_id ) {
+				return true;
+			}
+
+			// Check if activity has privacy restrictions.
+			if ( function_exists( 'bp_activity_user_can_read' ) ) {
+				return bp_activity_user_can_read( $activity, $current_user_id );
+			}
+
+			// If privacy is enabled via rtMedia, apply additional checks.
+			if ( function_exists( 'is_rtmedia_privacy_enable' ) && is_rtmedia_privacy_enable() ) {
+				// Check if activity is public or if user has access via friendship.
+				if ( isset( $activity->privacy ) && 'private' === $activity->privacy ) {
+					// Check friendship if friends component is active.
+					if ( function_exists( 'friends_check_friendship' ) ) {
+						return friends_check_friendship( $current_user_id, $activity_author );
+					}
+					return false;
+				}
+			}
+
+			// Default: allow access to public profile activities.
+			return true;
+		}
+
+		// For other components, allow access by default (logged-in users).
+		return true;
 	}
 
 }
