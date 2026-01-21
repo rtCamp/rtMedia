@@ -201,9 +201,9 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 		// Require user to be logged in.
 		if ( ! is_user_logged_in() ) {
-			wp_send_json_error( 'Authentication required', 403 );
+			wp_send_json_error( 'Authentication required', 401 );
 		}
-		
+
 		$activity_id = isset( $_POST['comment_id'] ) ? intval( $_POST['comment_id'] ) : 0;
 
 		if ( ! $activity_id ) {
