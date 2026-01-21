@@ -216,7 +216,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		}
 
 		// Verify user has permission to view this activity.
-		if ( ! godam_user_can_view_activity( $activity ) ) {
+		if ( ! rtmedia_user_can_view_activity( $activity ) ) {
 			wp_send_json_error( __( 'You do not have permission to view this activity', 'buddypress-media' ), 403 );
 		}
 
@@ -252,7 +252,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 	 *
 	 * @return bool True if the user can view the activity, false otherwise.
 	 */
-	function godam_user_can_view_activity( $activity ) {
+	function rtmedia_user_can_view_activity( $activity ) {
 		$current_user_id = get_current_user_id();
 
 		// User must be logged in to view non-public activities.
