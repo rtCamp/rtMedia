@@ -29,7 +29,7 @@
 		"@wordpress/scripts": "^31.2.0",
 		"dotenv": "^16.4.5",
 		"form-data": "^4.0.0",
-		"lodash": "^4.17.21",
+		"lodash": "^4.17.23",
 		"playwright-tesults-reporter": "^1.0.0"
 	},
 	"devDependencies": {
