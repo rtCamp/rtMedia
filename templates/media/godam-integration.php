@@ -201,23 +201,23 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 		// Require user to be logged in.
 		if ( ! is_user_logged_in() ) {
-			wp_send_json_error( 'Authentication required', 401 );
+			wp_send_json_error( __( 'Authentication required', 'buddypress-media' ), 401 );
 		}
 
 		$activity_id = isset( $_POST['comment_id'] ) ? intval( $_POST['comment_id'] ) : 0;
 
 		if ( ! $activity_id ) {
-			wp_send_json_error( 'Invalid activity ID', 400 );
+			wp_send_json_error( __( 'Invalid activity ID', 'buddypress-media' ), 400 );
 		}
 
 		$activity = new BP_Activity_Activity( $activity_id );
 		if ( empty( $activity->id ) ) {
-			wp_send_json_error( 'Activity comment not found', 404 );
+			wp_send_json_error( __( 'Activity comment not found', 'buddypress-media' ), 404 );
 		}
 
 		// Verify user has permission to view this activity.
 		if ( ! godam_user_can_view_activity( $activity ) ) {
-			wp_send_json_error( 'You do not have permission to view this activity', 403 );
+			wp_send_json_error( __( 'You do not have permission to view this activity', 'buddypress-media' ), 403 );
 		}
 
 		global $activities_template;
