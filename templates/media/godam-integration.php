@@ -49,14 +49,17 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		'wp_enqueue_scripts',
 		function () {
 
-			// Enqueue integration script for rtMedia and Godam.
-			wp_enqueue_script(
-				'godam-rtmedia-integration',
-				RTMEDIA_URL . 'app/assets/js/godam-integration.min.js',
-				array( 'godam-player-frontend-script' ),
-				null,
-				true
-			);
+			// Skip loading rtMedia's GoDAM integration script on Godam video embed pages.
+			if ( 'video-embed' !== get_query_var( 'godam_page' ) ) {
+				// Enqueue integration script for rtMedia and Godam.
+				wp_enqueue_script(
+					'godam-rtmedia-integration',
+					RTMEDIA_URL . 'app/assets/js/godam-integration.min.js',
+					array( 'godam-player-frontend-script' ),
+					null,
+					true
+				);
+			}
 
 			// Enqueue the script responsible for AJAX-based comment refresh.
 			wp_enqueue_script(
