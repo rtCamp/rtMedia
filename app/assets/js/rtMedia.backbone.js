@@ -460,7 +460,12 @@ jQuery(function ($) {
       this.render();
     },
     render: function () {
-      $(this.el).html(this.template(this.model.toJSON()));
+      var data = this.model.toJSON();
+      // High-Quality Fix: Escape the media title to prevent XSS
+      if (data.media_title) {
+        data.media_title = rtm_escape_html(data.media_title);
+      }
+      $(this.el).html(this.template(data));
       return this.el;
     },
     unrender: function () {
@@ -1483,7 +1488,7 @@ jQuery(document).ready(function ($) {
   /**
    * Commented by : Naveen giri
    * Reason : Commenting this code because its overriding buddypress functionality
-   * 			and introducing issue Duplicate activity generation  Issue #108.
+   * and introducing issue Duplicate activity generation  Issue #108.
    */
   /*JQuery( '#aw-whats-new-submit' ).removeAttr( 'disabled' );
 	jQuery( document ).on( 'blur', '#whats-new', function() {
@@ -3679,7 +3684,7 @@ function rtmedia_disable_popup_navigation($selector) {
 
 /**
  * Function that smooth scrolls to the latest comment in rtMedia.
- *  Created on 23-Nov-2020 by Vipin Kumar Dinkar <vipin.dinkar@rtcamp.com>
+ * Created on 23-Nov-2020 by Vipin Kumar Dinkar <vipin.dinkar@rtcamp.com>
  */
 const rtMediaScrollComments = () => {
   const commentBox = document.getElementById("rtmedia_comment_ul");
