@@ -1,5 +1,15 @@
 == Changelog ==
 
+= 4.7.9 [January 30, 2026] =
+
+* FIXED
+  * Fixed GoDAM plugin integration issues
+  * Fixed translation loading
+  * Applied security fixes in dependencies
+
+* ENHANCEMENT
+  * Improved security handling for plugin integrations
+
 = 4.7.8 [January 06, 2026] =
 
 * ENHANCEMENT

@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.1
 Tested up to: 6.9
-Stable tag: 4.7.8
+Stable tag: 4.7.9
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -127,6 +127,16 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.9 [January 30, 2026] =
+
+* FIXED
+  * Fixed GoDAM plugin integration issues
+  * Fixed translation loading
+  * Applied security fixes in dependencies
+  
+* ENHANCEMENT
+  * Improved security handling for plugin integrations
 
 = 4.7.8 [January 06, 2026] =
 

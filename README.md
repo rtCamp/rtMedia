@@ -147,6 +147,16 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.9
+
+* FIXED
+  * Fixed GoDAM plugin integration issues
+  * Fixed translation loading
+  * Applied security fixes in dependencies
+
+* ENHANCEMENT
+  * Improved security handling for plugin integrations
+
 ### 4.7.8
 
 * ENHANCEMENT
