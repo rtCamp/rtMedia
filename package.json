@@ -5,7 +5,7 @@
     "postcss": "^8.5.2"
   },
   "devDependencies": {
-    "acorn": "^7.1.1",
+    "acorn": "^8.15.0",
     "autoprefixer": "^10.4.20",
     "grunt": "^1.6.1",
     "grunt-checktextdomain": "^1.0.1",
