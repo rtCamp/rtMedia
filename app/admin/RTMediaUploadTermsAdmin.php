@@ -37,13 +37,20 @@ if ( ! class_exists( 'RTMediaUploadTermsAdmin' ) && ! is_plugin_active( 'rtmedia
 		 * Constructing settings for upload terms.
 		 */
 		public function __construct() {
-			$this->upload_terms_message       = esc_html__( 'terms of services.', 'buddypress-media' );
-			$this->upload_terms_error_message = esc_html__( 'Please check terms of service.', 'buddypress-media' );
+			add_action( 'init', array( $this, 'init_translations' ), 5 );
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_styles' ), 999 );
 			add_filter( 'rtmedia_general_content_default_values', array( $this, 'add_admin_option_default_value' ), 10, 1 );
 			add_filter( 'rtmedia_general_content_groups', array( $this, 'admin_setting_add_terms_section' ), 10, 1 );
 			add_filter( 'rtmedia_general_content_add_itmes', array( $this, 'admin_setting_add_terms_option' ), 10, 2 );
+		}
+
+		/**
+		 * Initialize translations at the proper time.
+		 */
+		public function init_translations() {
+			$this->upload_terms_message       = esc_html__( 'terms of services.', 'buddypress-media' );
+			$this->upload_terms_error_message = esc_html__( 'Please check terms of service.', 'buddypress-media' );
 		}
 
 		/**
