@@ -54,9 +54,10 @@
 		"access": "public"
 	},
 	"overrides": {
-    	"webpack-dev-server": "^5.2.1",
-		"minimatch":"10.2.1"
-  	},
+		"webpack-dev-server": "^5.2.1",
+		"minimatch": "10.2.1",
+		"fast-xml-parser": "5.3.7"
+	},
 	"scripts": {
 		"build:packages": "npm run build:package-types && node ./bin/packages/build.js",
 		"build:package-types": "node ./bin/packages/validate-typescript-version.js && tsc --build",
