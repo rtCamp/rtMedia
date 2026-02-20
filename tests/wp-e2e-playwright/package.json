@@ -56,7 +56,8 @@
 	"overrides": {
 		"webpack-dev-server": "^5.2.1",
 		"minimatch": "10.2.1",
-		"fast-xml-parser": "5.3.7"
+		"fast-xml-parser": "5.3.7",
+		"ajv": "8.18.0"
 	},
 	"scripts": {
 		"build:packages": "npm run build:package-types && node ./bin/packages/build.js",
