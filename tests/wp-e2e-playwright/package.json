@@ -55,7 +55,7 @@
 	},
 	"overrides": {
 		"webpack-dev-server": "5.2.1",
-		"minimatch": "10.2.1",
+		"minimatch": "^10.2.4",
 		"fast-xml-parser": "5.3.7",
 		"ajv": "8.18.0",
 		"basic-ftp": "5.2.0"
