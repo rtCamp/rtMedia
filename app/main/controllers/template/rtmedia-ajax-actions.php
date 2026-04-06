@@ -18,9 +18,6 @@ function rtmedia_delete_uploaded_media() {
 	if ( ! empty( $action ) && 'delete_uploaded_media' === $action && ! empty( $media_id ) ) {
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . get_current_user_id() ) ) {
 
-			// ==========================================
-			// SECURITY PATCH: AUTHORIZATION CHECK START
-			// ==========================================
 			$model = new RTMediaModel();
 			$media = $model->get( array( 'id' => $media_id ) );
 
@@ -60,9 +57,6 @@ function rtmedia_delete_uploaded_media() {
 				);
 				wp_die();
 			}
-			// ==========================================
-			// SECURITY PATCH: AUTHORIZATION CHECK END
-			// ==========================================
 
 			$remaining_album     = 0;
 			$remaining_photos    = 0;
