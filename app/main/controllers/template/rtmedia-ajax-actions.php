@@ -7,7 +7,7 @@
 
 /**
  * Delete uploaded media.
- * Modified 10-02-2019 by Adarsh Verma <adarsh.verma@rtcamp.com>
+ * Patched to include Ownership and Authorization checks.
  */
 function rtmedia_delete_uploaded_media() {
 
@@ -17,6 +17,47 @@ function rtmedia_delete_uploaded_media() {
 
 	if ( ! empty( $action ) && 'delete_uploaded_media' === $action && ! empty( $media_id ) ) {
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . get_current_user_id() ) ) {
+
+			$model = new RTMediaModel();
+			$media = $model->get( array( 'id' => $media_id ) );
+
+			// Check if media exists
+			if ( empty( $media ) || ! isset( $media[0] ) ) {
+				wp_send_json_error(
+					array(
+						'code'    => 'rtmedia-media-not-found',
+						'message' => esc_html__( 'Media not found.', 'buddypress-media' ),
+					)
+				);
+				wp_die();
+			}
+
+			$current_user_id = get_current_user_id();
+			$media_author    = (int) $media[0]->media_author;
+
+			// 1. Is the user the owner of the media?
+			$is_owner = ( $current_user_id === $media_author );
+
+			// 2. Is the user a site administrator?
+			$is_admin = current_user_can( 'manage_options' ) || current_user_can( 'delete_others_posts' );
+
+			// 3. Is the user a BuddyPress Group Admin? (if the media belongs to a BP group)
+			$is_group_admin = false;
+			if ( ! empty( $media[0]->context ) && 'group' === $media[0]->context && function_exists( 'groups_is_user_admin' ) ) {
+				$is_group_admin = groups_is_user_admin( $current_user_id, $media[0]->context_id );
+			}
+
+			// If none of the above are true, block the deletion
+			if ( ! $is_owner && ! $is_admin && ! $is_group_admin ) {
+				wp_send_json_error(
+					array(
+						'code'    => 'rtmedia-unauthorized',
+						'message' => esc_html__( 'You do not have permission to delete this media.', 'buddypress-media' ),
+					)
+				);
+				wp_die();
+			}
+
 			$remaining_album     = 0;
 			$remaining_photos    = 0;
 			$remaining_music     = 0;
@@ -29,7 +70,6 @@ function rtmedia_delete_uploaded_media() {
 			if ( class_exists( 'RTMediaNav' ) ) {
 				global $bp;
 				$rtmedia_nav_obj = new RTMediaNav();
-				$model           = new RTMediaModel();
 				$other_count     = 0;
 
 				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
