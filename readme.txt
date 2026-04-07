@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.1
 Tested up to: 6.9
-Stable tag: 4.7.9
+Stable tag: 4.7.10
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -128,13 +128,18 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
+= 4.7.10 [April 07, 2026] =
+
+* FIXED
+  * Improved authorization checks for media deletion to ensure only permitted users can delete media.
+
 = 4.7.9 [January 30, 2026] =
 
 * FIXED
   * Fixed GoDAM plugin integration issues
   * Fixed translation loading
   * Applied security fixes in dependencies
-  
+
 * ENHANCEMENT
   * Improved security handling for plugin integrations
 
@@ -989,6 +994,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 [See changelog for all versions](https://raw.githubusercontent.com/rtCamp/rtMedia/master/changelog.txt)
 
 == Upgrade Notice ==
+
+= 4.7.10 =
+This release includes security issue fixes and permission improvements.
 
 = 4.7.3 =
 Fixes a JS error affecting some themes/sites without jQuery.
