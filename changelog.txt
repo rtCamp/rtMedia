@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.7.10 [April 07, 2026] =
+
+* FIXED
+  * Improved authorization checks for media deletion to ensure only permitted users can delete media.
+
 = 4.7.9 [January 30, 2026] =
 
 * FIXED
