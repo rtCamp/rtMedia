@@ -147,6 +147,10 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.10
+* FIXED
+  * Improved authorization checks for media deletion to ensure only permitted users can delete media.
+
 ### 4.7.9
 
 * FIXED
