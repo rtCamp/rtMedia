@@ -2,6 +2,9 @@
     "require-dev": {
         "lucatume/wp-browser": "^3.0",
         "codeception/module-webdriver": "^1.1",
-        "codeception/module-asserts": "^1.3"
+        "codeception/module-asserts": "^1.3",
+        "guzzlehttp/psr7": "^2.10.4",
+        "symfony/yaml": "^5.4.52",
+        "symfony/dom-crawler": "^5.4.52"
     }
 }
