@@ -747,13 +747,15 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
 
+		global $wpdb;
+
 		$raw_search = wp_unslash( filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( 'string' !== gettype( $raw_search ) ) {
 			$raw_search = '';
 		}
 
-		$search                = sanitize_text_field( urldecode( $raw_search ) );
+		$search                = sanitize_text_field( $raw_search );
 		$search_by             = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'search_by', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 		$media_type            = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'media_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 		$rtmedia_current_album = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'rtmedia-current-album', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
@@ -770,17 +772,17 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 			if ( ! empty( $search_by ) ) {
 
 				if ( ! empty( $rtmedia_current_album ) ) {
-					$where .= " $table_name.album_id = '" . $rtmedia_current_album . "' AND ";
+					$where .= $wpdb->prepare( " $table_name.album_id = %s AND ", $rtmedia_current_album ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				}
 
 				if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
-					$where .= " $table_name.media_type = '" . $media_type . "' AND ";
+					$where .= $wpdb->prepare( " $table_name.media_type = %s AND ", $media_type ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				}
 
 				if ( 'title' === $search_by ) {
-					$where .= " $table_name.media_title LIKE '%" . $search . "%' ";
+					$where .= $wpdb->prepare( " $table_name.media_title LIKE %s ", '%' . $wpdb->esc_like( $search ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				} elseif ( 'description' === $search_by ) {
-					$where .= " post_table.post_content LIKE '%" . $search . "%'";
+					$where .= $wpdb->prepare( " post_table.post_content LIKE %s ", '%' . $wpdb->esc_like( $search ) . '%' );
 
 				} elseif ( 'author' === $search_by ) {
 					if ( ! empty( $author_id ) ) {
@@ -796,24 +798,24 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 			} else {
 
 				if ( ! empty( $rtmedia_current_album ) ) {
-					$where .= " $table_name.album_id = '" . $rtmedia_current_album . "' AND ";
+					$where .= $wpdb->prepare( " $table_name.album_id = %s AND ", $rtmedia_current_album ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				}
 
 				if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
-					$where .= " $table_name.media_type = '" . $media_type . "' AND ";
+					$where .= $wpdb->prepare( " $table_name.media_type = %s AND ", $media_type ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				}
 				$where .= ' ( ';
-				$where .= " $table_name.media_title LIKE '%" . $search . "%' ";
+				$where .= $wpdb->prepare( " $table_name.media_title LIKE %s ", '%' . $wpdb->esc_like( $search ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				if ( ! empty( $author_id ) ) {
 					$where .= " OR $table_name.media_author IN  (" . $author_id . ') ';
 				}
 				if ( ! empty( $member_type ) ) {
 					$where .= " OR $table_name.media_author IN  (" . $member_type . ') ';
 				}
-				$where .= " OR post_table.post_content LIKE '%" . $search . "%'";
+				$where .= $wpdb->prepare( " OR post_table.post_content LIKE %s ", '%' . $wpdb->esc_like( $search ) . '%' );
 
 				if ( empty( $media_type ) ) {
-					$where .= " OR $table_name.media_type = '" . $search . "' ";
+					$where .= $wpdb->prepare( " OR $table_name.media_type = %s ", $search ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				}
 
 				$where .= ' ) ';
@@ -822,12 +824,12 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 
 			// Reset data for album's media.
 			if ( '' !== $search && ! empty( $rtmedia_current_album ) ) {
-					$where .= " AND $table_name.album_id = '" . $rtmedia_current_album . "' ";
+					$where .= $wpdb->prepare( " AND $table_name.album_id = %s ", $rtmedia_current_album ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
 
 			// Reset data for particular media type.
 			if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
-				$where .= " AND $table_name.media_type = '" . $media_type . "' ";
+				$where .= $wpdb->prepare( " AND $table_name.media_type = %s ", $media_type ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
 		} // End if.
 	} // End if.
@@ -872,7 +874,7 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 			$request_url = explode( '/', $request_uri );
 			if ( ! empty( $search_by ) && 'attribute' === $search_by && ! in_array( 'attribute', $request_url, true ) ) {
 				$join .= " 	INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = '$media_type' )
-		                    INNER JOIN $terms_table ON ( $terms_table.slug IN ('" . $search . "') )
+		                    INNER JOIN $terms_table ON ( $terms_table.slug IN (" . $wpdb->prepare( '%s', $search ) . ") )
 		                    INNER JOIN $term_taxonomy_table ON ( $term_taxonomy_table.term_id = $terms_table.term_id )
 		                    INNER JOIN $term_relationships_table ON ( $term_relationships_table.term_taxonomy_id = $term_taxonomy_table.term_taxonomy_id AND $term_relationships_table.object_id = $posts_table.ID ) ";
 			}
