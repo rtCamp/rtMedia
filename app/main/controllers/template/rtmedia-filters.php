@@ -764,6 +764,9 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 			$author_id   = rtm_select_user( $search );
 			$member_type = rtm_fetch_user_by_member_type( $search );
 
+			$author_id   = implode( ',', array_map( 'absint', array_filter( explode( ',', $author_id ) ) ) );
+			$member_type = implode( ',', array_map( 'absint', array_filter( explode( ',', $member_type ) ) ) );
+
 			if ( ! empty( $rtmedia_current_album ) ) {
 				$where = '';
 			}
