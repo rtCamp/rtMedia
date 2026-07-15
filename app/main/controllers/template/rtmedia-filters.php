@@ -751,7 +751,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 
 		$raw_search = wp_unslash( filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
-		if ( 'string' !== gettype( $raw_search ) ) {
+		if ( ! is_string( $raw_search ) ) {
 			$raw_search = '';
 		}
 
@@ -874,10 +874,11 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 			$request_url = explode( '/', $request_uri );
 			if ( ! empty( $search_by ) && 'attribute' === $search_by && ! in_array( 'attribute', $request_url, true ) ) {
 				$join .= $wpdb->prepare(
-					" 	INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = '$media_type' )
-		                    INNER JOIN $terms_table ON ( $terms_table.slug IN (%s) )
+					" 	INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = %s )
+		                    INNER JOIN $terms_table ON ( $terms_table.slug = %s )
 		                    INNER JOIN $term_taxonomy_table ON ( $term_taxonomy_table.term_id = $terms_table.term_id )
 		                    INNER JOIN $term_relationships_table ON ( $term_relationships_table.term_taxonomy_id = $term_taxonomy_table.term_taxonomy_id AND $term_relationships_table.object_id = $posts_table.ID ) ",
+					$media_type,
 					$search
 				); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
