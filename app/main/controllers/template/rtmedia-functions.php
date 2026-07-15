@@ -4324,7 +4324,7 @@ function rtm_select_user( $user ) {
 		}
 	}
 
-	$user_id = implode( ',', $user_ids );
+	$user_id = implode( ',', array_map( 'absint', $user_ids ) );
 	return $user_id;
 }
 
@@ -4357,7 +4357,7 @@ function rtm_fetch_user_by_member_type( $type ) {
 				array_push( $member_id, bp_get_member_user_id() );
 			}
 		}
-		$member_id = implode( ',', $member_id );
+		$member_id = implode( ',', array_map( 'absint', $member_id ) );
 	}
 
 	return $member_id;
