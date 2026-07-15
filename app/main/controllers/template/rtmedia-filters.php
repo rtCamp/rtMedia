@@ -775,15 +775,15 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 			if ( ! empty( $search_by ) ) {
 
 				if ( ! empty( $rtmedia_current_album ) ) {
-					$where .= $wpdb->prepare( " $table_name.album_id = %d AND ", absint( $rtmedia_current_album ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					$where .= $wpdb->prepare( " $table_name.album_id = %d AND ", absint( $rtmedia_current_album ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 				}
 
 				if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
-					$where .= $wpdb->prepare( " $table_name.media_type = %s AND ", $media_type ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					$where .= $wpdb->prepare( " $table_name.media_type = %s AND ", $media_type ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 				}
 
 				if ( 'title' === $search_by ) {
-					$where .= $wpdb->prepare( " $table_name.media_title LIKE %s ", '%' . $wpdb->esc_like( $search ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					$where .= $wpdb->prepare( " $table_name.media_title LIKE %s ", '%' . $wpdb->esc_like( $search ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 				} elseif ( 'description' === $search_by ) {
 					$where .= $wpdb->prepare( " post_table.post_content LIKE %s ", '%' . $wpdb->esc_like( $search ) . '%' );
 
@@ -801,14 +801,14 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 			} else {
 
 				if ( ! empty( $rtmedia_current_album ) ) {
-					$where .= $wpdb->prepare( " $table_name.album_id = %d AND ", absint( $rtmedia_current_album ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					$where .= $wpdb->prepare( " $table_name.album_id = %d AND ", absint( $rtmedia_current_album ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 				}
 
 				if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
-					$where .= $wpdb->prepare( " $table_name.media_type = %s AND ", $media_type ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					$where .= $wpdb->prepare( " $table_name.media_type = %s AND ", $media_type ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 				}
 				$where .= ' ( ';
-				$where .= $wpdb->prepare( " $table_name.media_title LIKE %s ", '%' . $wpdb->esc_like( $search ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$where .= $wpdb->prepare( " $table_name.media_title LIKE %s ", '%' . $wpdb->esc_like( $search ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 				if ( ! empty( $author_id ) ) {
 					$where .= " OR $table_name.media_author IN  (" . $author_id . ') ';
 				}
@@ -818,7 +818,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 				$where .= $wpdb->prepare( " OR post_table.post_content LIKE %s ", '%' . $wpdb->esc_like( $search ) . '%' );
 
 				if ( empty( $media_type ) ) {
-					$where .= $wpdb->prepare( " OR $table_name.media_type = %s ", $search ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					$where .= $wpdb->prepare( " OR $table_name.media_type = %s ", $search ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 				}
 
 				$where .= ' ) ';
@@ -827,12 +827,12 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 
 			// Reset data for album's media.
 			if ( '' !== $search && ! empty( $rtmedia_current_album ) ) {
-					$where .= $wpdb->prepare( " AND $table_name.album_id = %d ", absint( $rtmedia_current_album ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					$where .= $wpdb->prepare( " AND $table_name.album_id = %d ", absint( $rtmedia_current_album ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 			}
 
 			// Reset data for particular media type.
 			if ( ! empty( $media_type ) && empty( $rtmedia_current_album ) ) {
-				$where .= $wpdb->prepare( " AND $table_name.media_type = %s ", $media_type ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$where .= $wpdb->prepare( " AND $table_name.media_type = %s ", $media_type ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 			}
 		} // End if.
 	} // End if.
@@ -883,7 +883,7 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 		                    INNER JOIN $term_relationships_table ON ( $term_relationships_table.term_taxonomy_id = $term_taxonomy_table.term_taxonomy_id AND $term_relationships_table.object_id = $posts_table.ID ) ",
 					$media_type,
 					$search
-				); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 			}
 		}
 	}
