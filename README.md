@@ -147,6 +147,14 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.11
+* FIXED
+  * Security enhancement: Improved data validation and sanitization for media queries and search filters.
+  * Improved validation for sorting parameters in media queries.
+
+* ENHANCEMENT
+  * Updated NPM and Composer dependencies for improved security and stability.
+
 ### 4.7.10
 * FIXED
   * Improved authorization checks for media deletion to ensure only permitted users can delete media.
