@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.1
 Tested up to: 6.9
-Stable tag: 4.7.10
+Stable tag: 4.7.11
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -127,6 +127,15 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.11 [July 20, 2026] =
+
+* FIXED
+  * Security enhancement: Improved data validation and sanitization for media queries and search filters.
+  * Improved validation for sorting parameters in media queries.
+
+* ENHANCEMENT
+  * Updated NPM and Composer dependencies for improved security and stability.
 
 = 4.7.10 [April 07, 2026] =
 
