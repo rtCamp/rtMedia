@@ -1004,6 +1004,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
+= 4.7.11 =
+This release includes security enhancements for media queries and dependency updates. We strongly recommend upgrading.
+
 = 4.7.10 =
 This release includes security issue fixes and permission improvements.
 
