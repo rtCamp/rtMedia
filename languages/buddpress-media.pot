@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.7.9\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.7.11\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/buddypress-media\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-01-30T09:10:24+00:00\n"
+"POT-Creation-Date: 2026-07-20T12:13:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: buddypress-media\n"
@@ -2755,11 +2755,19 @@ msgstr ""
 msgid "Please swipe for more media."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-ajax-actions.php:75
+#: app/main/controllers/template/rtmedia-ajax-actions.php:29
+msgid "Media not found."
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-ajax-actions.php:55
+msgid "You do not have permission to delete this media."
+msgstr ""
+
+#: app/main/controllers/template/rtmedia-ajax-actions.php:115
 msgid "Doing wrong, invalid AJAX request!"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-ajax-actions.php:152
+#: app/main/controllers/template/rtmedia-ajax-actions.php:192
 #: app/main/controllers/template/rtmedia-functions.php:2196
 msgid "Comment"
 msgstr ""
@@ -2784,39 +2792,39 @@ msgstr ""
 msgid "Merge Album"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-filters.php:955
+#: app/main/controllers/template/rtmedia-filters.php:964
 #: app/main/controllers/template/rtmedia-functions.php:4701
 msgid "rtMedia Shortcode Uploads"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-filters.php:959
+#: app/main/controllers/template/rtmedia-filters.php:968
 #: app/main/controllers/template/rtmedia-functions.php:4582
 msgid "rtMedia Activities"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-filters.php:963
+#: app/main/controllers/template/rtmedia-filters.php:972
 msgid "rtMedia Comments"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-filters.php:967
+#: app/main/controllers/template/rtmedia-filters.php:976
 #: app/main/controllers/template/rtmedia-functions.php:4931
 msgid "rtMedia Media Views"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-filters.php:971
+#: app/main/controllers/template/rtmedia-filters.php:980
 #: app/main/controllers/template/rtmedia-functions.php:5033
 msgid "rtMedia Media Likes"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-filters.php:989
+#: app/main/controllers/template/rtmedia-filters.php:998
 msgid "rtMedia Eraser"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-filters.php:994
+#: app/main/controllers/template/rtmedia-filters.php:1003
 msgid "rtMedia Likes Eraser"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-filters.php:999
+#: app/main/controllers/template/rtmedia-filters.php:1008
 msgid "rtMedia Album Eraser"
 msgstr ""
 

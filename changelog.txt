@@ -1,5 +1,15 @@
 == Changelog ==
 
+= 4.7.11 [July 20, 2026] =
+
+* FIXED
+  * Security enhancement: Improved data validation and sanitization for media queries and search filters.
+  * Improved validation for sorting parameters in media queries.
+
+* ENHANCEMENT
+  * Updated NPM and Composer dependencies for improved security and stability.
+
+
 = 4.7.10 [April 07, 2026] =
 
 * FIXED

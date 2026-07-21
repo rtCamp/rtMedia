@@ -122,18 +122,16 @@ class RTMediaModel extends RTDBModel {
 		$qgroup_by = ' ';
 
 		$allowed_order_columns = array( 'media_id', 'media_title', 'file_size' ); // Define allowed columns.
+		$allowed_order_dirs    = array( 'asc', 'desc', '' );
 		list( $order_column, $order_direction ) = explode( ' ', $order_by . ' ' ); // Default to space if no direction provided.
 
-		if ( ! in_array( strtolower( $order_column ), $allowed_order_columns ) || ! in_array(
-			strtolower( $order_direction ),
-			array(
-				'asc',
-				'desc',
-				'',
-			)
-		) ) {
-			$order_by = 'media_id desc'; // Default order.
+		if ( ! in_array( strtolower( $order_column ), $allowed_order_columns, true ) || ! in_array( strtolower( $order_direction ), $allowed_order_dirs, true ) ) {
+			$order_column    = 'media_id';
+			$order_direction = 'desc';
 		}
+
+		// Reconstruct order_by from validated tokens only to prevent injection via trailing content.
+		$order_by = trim( $order_column . ' ' . $order_direction );
 
 		if ( $order_by ) {
 			$order_by  = esc_sql( $order_by );
