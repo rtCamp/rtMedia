@@ -1447,6 +1447,11 @@ class RTMediaJsonApi {
 			);
 			$media        = $rtmediamodel->get( $args );
 		}
+
+		if ( ! empty( $media ) && ! $this->rtmedia_api_current_user_can_view_media( $media[0] ) ) {
+			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_invalid_media_id, $this->msg_invalid_media_id ) );
+		}
+
 		$activity_id = ! empty( $media ) ? $media[0]->activity_id : '';
 
 		if ( empty( $activity_id ) ) {
@@ -1454,9 +1459,64 @@ class RTMediaJsonApi {
 		}
 		$media_single = $this->rtmediajsonapifunction->rtmedia_api_get_feed( false, $activity_id );
 
+		// This endpoint returns a single media item; drop any sibling media sharing the
+		// same activity so another user's media is never exposed alongside the requested one.
+		if ( ! empty( $media_single[0]['media'] ) && is_array( $media_single[0]['media'] ) ) {
+			$requested_media = array();
+			foreach ( $media_single[0]['media'] as $item ) {
+				if ( isset( $item['id'] ) && (int) $item['id'] === (int) $media_id ) {
+					$requested_media[] = $item;
+				}
+			}
+			$media_single[0]['media'] = $requested_media;
+
+			// Re-scope comments to the requested media; get_feed sets them from the
+			// activity's first media, which may belong to another user.
+			if ( isset( $media_single[0]['comments'] ) ) {
+				$media_single[0]['comments'] = $this->rtmediajsonapifunction->rtmedia_api_get_media_comments( $media_id );
+			}
+		}
+
 		if ( $media_single ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'TRUE', $ec_single_media, $msg_single_media, $media_single ) );
 		}
+	}
+
+	/**
+	 * Check whether the token-authenticated API user may view a media item.
+	 *
+	 * Mirrors RTMediaQuery::privacy_filter(), which is not registered during the
+	 * API request lifecycle, so private media must be gated explicitly here.
+	 *
+	 * @param object $media Media row returned by RTMediaModel::get().
+	 *
+	 * @return bool True if the current API user may view the media.
+	 */
+	private function rtmedia_api_current_user_can_view_media( $media ) {
+		$privacy = isset( $media->privacy ) && null !== $media->privacy ? (int) $media->privacy : 0;
+		$author  = isset( $media->media_author ) ? (int) $media->media_author : 0;
+		$user    = (int) $this->user_id;
+
+		if ( $user && user_can( $user, 'list_users' ) ) {
+			return true;
+		}
+		// Public is exactly NULL or 0; values such as -1 / 80 are blocked, not public.
+		if ( 0 === $privacy ) {
+			return true;
+		}
+		if ( $user ) {
+			if ( 20 === $privacy ) {
+				return true;
+			}
+			if ( $author === $user && $privacy >= 40 ) {
+				return true;
+			}
+			if ( 40 === $privacy && function_exists( 'friends_check_friendship' ) && friends_check_friendship( $author, $user ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

@@ -348,13 +348,14 @@ class RTMediaJsonApiFunctions {
 
 		$comments = get_comments(
 			array(
-				'comment_post_ID' => $id,
-				'number'          => 100,
+				'post_id' => $id,
+				'number'  => 100,
 			)
 		);
 
 		$media_comments = array();
 		if ( ! empty( $comments ) ) {
+			$media_comments['user'] = array();
 
 			foreach ( $comments as $comment ) {
 				$media_comments['comments'][] = array(
