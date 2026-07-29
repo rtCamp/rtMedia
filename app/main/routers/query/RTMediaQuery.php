@@ -610,7 +610,7 @@ class RTMediaQuery {
 		if ( ! empty( $rtmedia_shortcode ) ) {
 			$query_data = $_REQUEST; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are just replacing the args so nonce verification is not needed.
 			foreach ( $query_data as $key => $val ) {
-				if ( ! in_array( $key, $allowed_query, true ) ) {
+				if ( ! in_array( $key, $allowed_query, true ) || is_array( $val ) ) {
 					unset( $query_data[ $key ] );
 				}
 			}

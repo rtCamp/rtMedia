@@ -182,6 +182,24 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		}
 
 		/**
+		 * Validate a SQL comparison operator against an allowlist.
+		 *
+		 * The operator is interpolated directly into query strings, so it must be
+		 * restricted to a fixed set of known-safe operators to prevent SQL injection.
+		 *
+		 * @param string $compare Operator supplied by the caller.
+		 * @param string $default Fallback operator when $compare is not allowed.
+		 *
+		 * @return string Safe SQL comparison operator.
+		 */
+		public function sanitize_sql_compare_operator( $compare, $default = 'IN' ) {
+			$allowed = array( '=', '!=', '<>', '>', '>=', '<', '<=', 'IN', 'NOT IN', 'LIKE', 'IS', 'IS NOT' );
+			$compare = strtoupper( trim( (string) $compare ) );
+
+			return in_array( $compare, $allowed, true ) ? $compare : $default;
+		}
+
+		/**
 		 * Get all the rows according to the columns set in $columns parameter.
 		 * offset and rows per page can also be passed for pagination.
 		 *
@@ -206,10 +224,11 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 					} else {
 						$compare = $colvalue['compare'];
 					}
+					$compare = $this->sanitize_sql_compare_operator( $compare );
 					if ( ! isset( $colvalue['value'] ) ) {
-						$colvalue['value'] = esc_sql( $colvalue );
+						$colvalue['value'] = $colvalue;
 					}
-					$col_val_comapare = ( is_array( $colvalue['value'] ) ) ? '(\'' . implode( "','", $colvalue['value'] ) . '\')' : '(\'' . $colvalue['value'] . '\')';
+					$col_val_comapare = ( is_array( $colvalue['value'] ) ) ? '(\'' . implode( "','", esc_sql( $colvalue['value'] ) ) . '\')' : '(\'' . esc_sql( $colvalue['value'] ) . '\')';
 					$where           .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
 				} else {
 					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
