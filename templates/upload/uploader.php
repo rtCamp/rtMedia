@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! function_exists( 'rtmedia_uploader_hidden_fields' ) ) {
 	/**
 	 * Display hidden fields.

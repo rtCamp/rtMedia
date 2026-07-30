@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div id="bp-media-settings-boxes" class="bp-media-settings-boxes-container rtm-setting-container">

@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Include plugin.php if not already loaded.
 if ( ! function_exists( 'is_plugin_active' ) ) {
 	include_once ABSPATH . 'wp-admin/includes/plugin.php';

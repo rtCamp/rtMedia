@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="theme-overlay rtm-theme-overlay">
 	<div class="theme-backdrop rtm-close"></div>

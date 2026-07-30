@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 global $rtmedia_query, $rtmedia_media;
 
 $model = new RTMediaModel();

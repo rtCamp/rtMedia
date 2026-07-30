@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 global $rtmedia_backbone;
 
 $rtmedia_backbone = array(

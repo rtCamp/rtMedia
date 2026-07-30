@@ -6,6 +6,10 @@
  * @author  Malav Vasita <malav.vasita@rtcamp.com>
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * We will first check if rtmedia-upload-terms plugin is activate before putting this code in action.
  * RTMediaUploadTerms class would come in picture if and only if rtmedia-upload-terms plugin is deactivated.

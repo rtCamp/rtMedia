@@ -9,6 +9,10 @@
  * version 1.1
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'RTDBUpdate' ) ) {
 	/**
 	 * Class to update DB for rtMedia.

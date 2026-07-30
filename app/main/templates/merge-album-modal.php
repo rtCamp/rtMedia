@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="rtmedia-merge-container rtmedia-popup mfp-hide" id="rtmedia-merge">

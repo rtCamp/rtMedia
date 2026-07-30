@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="rtmedia-container rtmedia-single-container rtmedia-media-edit">
 	<?php

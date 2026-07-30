@@ -18,6 +18,10 @@
  * @subpackage Main
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! defined( 'RTMEDIA_VERSION' ) ) {
 	/**
 	 * The version of the plugin

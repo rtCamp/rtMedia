@@ -12,6 +12,10 @@
  * - Maintain Magnific Popup compatibility when Godam is active or inactive.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 	/**

@@ -6,6 +6,10 @@
  * @subpackage Admin
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 	/**

@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <h3 class="rtm-option-title"><?php echo esc_html( $meta_title ); ?></h3>

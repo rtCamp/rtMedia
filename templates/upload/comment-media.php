@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( is_array( $tabs ) && count( $tabs ) ) {
 	if ( isset( $attr['upload_parent_id_type'] ) && isset( $attr['upload_parent_id'] ) ) {
 		$main_id = '-' . $attr['upload_parent_id_type'] . '-' . $attr['upload_parent_id'];

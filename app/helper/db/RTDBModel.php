@@ -7,6 +7,10 @@
  * @author udit
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'RTDBModel' ) ) {
 	/**
 	 * Base class for any Database Model like Media, Album etc.

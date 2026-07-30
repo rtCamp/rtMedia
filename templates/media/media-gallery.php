@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Generate random number for gallery container.
 // This will be useful when multiple gallery shortcodes are used in a single page.
 $rand_id = wp_rand( 0, 1000 );
