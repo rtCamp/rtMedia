@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: rtMedia for WordPress, BuddyPress and bbPress
+ * Plugin Name: rtMedia for BuddyPress and bbPress
  * Plugin URI: https://rtmedia.io/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
  * Description: This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!
  * Version: 4.7.11
