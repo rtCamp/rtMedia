@@ -1233,6 +1233,18 @@ class RTMediaJsonApi {
 			$uploaded['description']                = $description;
 			$uploaded['taxonomy']                   = array();
 			$uploaded['custom_fields']              = array();
+
+			// Verify the token user may write to the requested album/context before adding.
+			$upload_model         = new RTMediaUploadModel();
+			$upload_model->upload = array_merge( $upload_model->upload, $uploaded );
+			$upload_model->authorize_targets();
+			$uploaded['album_id']   = $upload_model->upload['album_id'];
+			$uploaded['context']    = $upload_model->upload['context'];
+			$uploaded['context_id'] = $upload_model->upload['context_id'];
+			if ( ! in_array( intval( $uploaded['privacy'] ), array( 0, 20, 40, 60 ), true ) ) {
+				$uploaded['privacy'] = get_rtmedia_default_privacy();
+			}
+
 			$rtmedia                                = new RTMediaMedia();
 			$rtupload                               = $rtmedia->add( $uploaded, $new_look );
 			$id                                     = rtmedia_media_id( $rtupload[0] );

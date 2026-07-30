@@ -66,6 +66,14 @@ class RTMediaUploadModel {
 	 */
 	public function sanitize_object() {
 
+		// Never trust a client-supplied author: force the acting user. On the token API
+		// (no WP session) keep the author the API layer has already set.
+		if ( is_user_logged_in() ) {
+			$this->upload['media_author'] = get_current_user_id();
+		} elseif ( ! $this->has_author() ) {
+			$this->set_author();
+		}
+
 		if ( ! $this->has_context() ) {
 			// Set context_id to Logged in user id if context is profile and context_id is not provided.
 			if ( 'profile' === $this->upload['context'] || 'bp_member' === $this->upload['context'] ) {
@@ -79,20 +87,16 @@ class RTMediaUploadModel {
 			}
 		}
 
+		// Verify the acting user may write to the requested context and album; otherwise
+		// fall back to safe defaults (own profile / own default album).
+		$this->authorize_targets();
+
 		if ( ! is_array( $this->upload['taxonomy'] ) ) {
 			$this->upload['taxonomy'] = array( $this->upload['taxonomy'] );
 		}
 
 		if ( ! is_array( $this->upload['custom_fields'] ) ) {
 			$this->upload['custom_fields'] = array( $this->upload['custom_fields'] );
-		}
-
-		if ( ! $this->has_album_id() || ! $this->has_album_permissions() ) {
-			$this->set_album_id();
-		}
-
-		if ( ! $this->has_author() ) {
-			$this->set_author();
 		}
 
 		if ( is_rtmedia_privacy_enable() ) {
@@ -111,6 +115,11 @@ class RTMediaUploadModel {
 			}
 		} else {
 			$this->upload['privacy'] = 0;
+		}
+
+		// Restrict privacy to the known set; -1/80 are moderation states, not user-settable.
+		if ( ! in_array( intval( $this->upload['privacy'] ), array( 0, 20, 40, 60 ), true ) ) {
+			$this->upload['privacy'] = get_rtmedia_default_privacy();
 		}
 	}
 
@@ -149,8 +158,88 @@ class RTMediaUploadModel {
 	 * @return boolean
 	 */
 	public function has_album_permissions() {
-		// yet to be coded for the privacy options of the album.
-		return true;
+		$album_id = $this->upload['album_id'];
+		if ( ! $album_id || 'undefined' === $album_id ) {
+			return false;
+		}
+
+		$user = intval( $this->upload['media_author'] );
+
+		// Site admins bypass, matching rtMedia's is_rt_admin() ( list_users ) convention.
+		if ( $user && user_can( $user, 'list_users' ) ) {
+			return true;
+		}
+
+		// The shared global "wall post" albums are a valid destination for everyone.
+		if ( function_exists( 'rtmedia_global_albums' ) ) {
+			$globals = array_map( 'intval', (array) rtmedia_global_albums() );
+			if ( in_array( intval( $album_id ), $globals, true ) ) {
+				return true;
+			}
+		}
+
+		$model = new RTMediaModel();
+		$album = $model->get( array( 'id' => $album_id ) );
+		if ( empty( $album ) ) {
+			return false;
+		}
+		$album = $album[0];
+
+		// The album owner may add to their own album.
+		if ( $user && intval( $album->media_author ) === $user ) {
+			return true;
+		}
+
+		// Group albums: users who may post in the owning group may add.
+		if ( 'group' === $album->context ) {
+			return $this->can_user_upload_in_target_group( $user, intval( $album->context_id ) );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Validate the upload's context and album against the acting user, falling back to
+	 * safe defaults (the user's own profile / default album) when not permitted.
+	 */
+	public function authorize_targets() {
+		$user = intval( $this->upload['media_author'] );
+
+		if ( 'profile' === $this->upload['context'] || 'bp_member' === $this->upload['context'] ) {
+			// A user may only upload to their own profile.
+			$this->upload['context']    = 'profile';
+			$this->upload['context_id'] = $user;
+		} elseif ( 'group' === $this->upload['context'] ) {
+			// Only users who may post in the target group may upload into it.
+			if ( ! $this->can_user_upload_in_target_group( $user, intval( $this->upload['context_id'] ) ) ) {
+				$this->upload['context']    = 'profile';
+				$this->upload['context_id'] = $user;
+			}
+		}
+
+		if ( ! $this->has_album_id() || ! $this->has_album_permissions() ) {
+			$this->set_album_id();
+		}
+	}
+
+	/**
+	 * Whether a user may upload into a given BuddyPress group (members, or site admins).
+	 *
+	 * @param int $user     User id.
+	 * @param int $group_id Group id.
+	 *
+	 * @return boolean
+	 */
+	private function can_user_upload_in_target_group( $user, $group_id ) {
+		if ( $user && user_can( $user, 'list_users' ) ) {
+			return true;
+		}
+
+		$allowed = ( $user && $group_id && function_exists( 'groups_is_user_member' ) )
+			? (bool) groups_is_user_member( $user, $group_id )
+			: false;
+
+		return (bool) apply_filters( 'rtm_can_user_upload_in_group', $allowed, $group_id, $user );
 	}
 
 	/**

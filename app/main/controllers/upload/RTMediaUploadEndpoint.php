@@ -178,6 +178,11 @@ class RTMediaUploadEndpoint {
 				} // End if.
 
 				$this->upload = apply_filters( 'rtmedia_media_param_before_upload', $this->upload );
+
+				$model->upload = $this->upload;
+				$model->authorize_targets();
+				$this->upload = $model->upload;
+
 				$rtupload     = new RTMediaUpload( $this->upload );
 
 				if ( $comment_media ) {
