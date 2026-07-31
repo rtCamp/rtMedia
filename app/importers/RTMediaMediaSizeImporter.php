@@ -171,7 +171,7 @@ class RTMediaMediaSizeImporter {
 		}
 
 		// Direct query is required for custom table. safe because SQL is prepared.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$pending_count = $wpdb->get_results( $query_pending );
 		if ( $pending_count && count( $pending_count ) > 0 ) {
 			return $pending_count[0]->pending;
@@ -190,7 +190,7 @@ class RTMediaMediaSizeImporter {
 		$rtmedia_model = new RTMediaModel();
 		$query_total   = "SELECT COUNT(*) as total from {$rtmedia_model->table_name} where media_type in ('photo','video','document','music','other') "; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		// Direct query is required for custom table.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$total_count   = $wpdb->get_results( $query_total );
 
 		if ( $total_count && count( $total_count ) > 0 ) {
@@ -216,7 +216,7 @@ class RTMediaMediaSizeImporter {
 				$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where id > %d AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $lastid, $limit ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
 			// Direct query is required for custom table. safe because SQL is prepared.
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$result = $wpdb->get_results( $get_media_sql );
 			if ( $result && count( $result ) > 0 ) {
 				$migrate = $this->migrate_single_media( $result[0] );

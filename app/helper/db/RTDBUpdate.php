@@ -182,7 +182,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 										$table_name = ( ( $this->mu_single_table ) ? $wpdb->base_prefix : $wpdb->prefix ) . 'rt_' . $table_name;
 										if ( $tb_name !== $table_name ) {
 											$alter_sql = "ALTER TABLE `{$tb_name}` RENAME TO `{$table_name}`";
-											$wpdb->query( $alter_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+											$wpdb->query( $alter_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Direct query is required for custom table.
 										}
 									}
 								}

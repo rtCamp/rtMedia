@@ -880,6 +880,7 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 			$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 			$request_url = explode( '/', $request_uri );
 			if ( ! empty( $search_by ) && 'attribute' === $search_by && ! in_array( 'attribute', $request_url, true ) ) {
+				// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 				$join .= $wpdb->prepare(
 					" 	INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = %s )
 		                    INNER JOIN $terms_table ON ( $terms_table.slug = %s )
@@ -888,6 +889,7 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 					$media_type,
 					$search
 				); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
+				// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
 		}
 	}
