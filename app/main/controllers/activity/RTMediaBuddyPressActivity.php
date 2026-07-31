@@ -403,9 +403,9 @@ class RTMediaBuddyPressActivity {
 		if ( ! is_main_site( $blog_id ) ) {
 			if ( ! empty( $activity_ids ) ) {
 				if ( current_filter() === 'bp_ajax_querystring' ) {
-					$query_string .= '&exclude=' . $activity_ids;
+					$query_string .= '&exclude=' . $activity_ids; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- BuddyPress activity-query exclude parameter, not a WP_Query.
 				} else {
-					$query_string['exclude'] = $activity_ids;
+					$query_string['exclude'] = $activity_ids; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- BuddyPress activity-query exclude parameter, not a WP_Query.
 				}
 			}
 		}

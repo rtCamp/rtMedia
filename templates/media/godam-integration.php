@@ -60,7 +60,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 					'godam-rtmedia-integration',
 					RTMEDIA_URL . 'app/assets/js/godam-integration.min.js',
 					array( 'godam-player-frontend-script' ),
-					null,
+					RTMEDIA_VERSION,
 					true
 				);
 			}
@@ -70,7 +70,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 				'godam-ajax-refresh',
 				RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.min.js',
 				array(),
-				null,
+				RTMEDIA_VERSION,
 				true
 			);
 

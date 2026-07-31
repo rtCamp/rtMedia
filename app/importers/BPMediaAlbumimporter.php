@@ -496,7 +496,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 					array( 'activity_id' => $bp_new_activity_id ),
 					array(
 						'activity_id' => $bp_album_media_id,
-						'meta_key'    => 'favorite_count',
+						'meta_key'    => 'favorite_count', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
 					),
 					array( '%d' ),
 					array( '%d' )
@@ -563,7 +563,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 		$table     = $wpdb->base_prefix . 'bp_album';
 		$blogusers = get_users(
 			array(
-				'meta_key' => 'bp_favorite_activities',
+				'meta_key' => 'bp_favorite_activities', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
 				'offset'   => $offset,
 				'number'   => 1,
 			)

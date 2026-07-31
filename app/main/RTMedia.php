@@ -1113,7 +1113,7 @@ class RTMedia {
 	 * Loads translations.
 	 */
 	public static function load_translation() {
-		load_plugin_textdomain( 'buddypress-media', false, basename( RTMEDIA_PATH ) . '/languages/' );
+		load_plugin_textdomain( 'buddypress-media', false, basename( RTMEDIA_PATH ) . '/languages/' ); // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- Loads bundled translations from the plugin /languages directory.
 	}
 
 	/**

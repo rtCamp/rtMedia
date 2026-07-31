@@ -1104,13 +1104,13 @@ class RTMediaQuery {
 			 * Setting up meta query vars
 			 */
 			if ( isset( $this->query_vars->meta_query ) ) {
-				$media_post_query_args['meta_query'] = $this->query_vars->meta_query;
+				$media_post_query_args['meta_query'] = $this->query_vars->meta_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- meta_query/tax_query required for rtMedia gallery filtering.
 			}
 			/**
 			 * Setting up taxonomy query vars
 			 */
 			if ( isset( $this->query_vars->tax_query ) ) {
-				$media_post_query_args['tax_query'] = $this->query_vars->tax_query;
+				$media_post_query_args['tax_query'] = $this->query_vars->tax_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- meta_query/tax_query required for rtMedia gallery filtering.
 			}
 
 			/**

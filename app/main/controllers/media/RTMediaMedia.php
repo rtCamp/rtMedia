@@ -144,8 +144,8 @@ class RTMediaMedia {
 			foreach ( $custom_fields as $key => $value ) {
 
 				if ( ! is_null( $value ) ) {
-					$row['meta_key']   = $key;
-					$row['meta_value'] = $value;
+					$row['meta_key']   = $key; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
+					$row['meta_value'] = $value; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
 					$status            = add_rtmedia_meta( $id, $key, $value );
 
 					if ( is_wp_error( $status ) || 0 === $status ) {

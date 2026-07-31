@@ -89,7 +89,7 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 		 * Loads translation
 		 */
 		public function load_translation() {
-			load_plugin_textdomain( 'rtmedia', false, basename( RTMEDIA_PATH ) . '/languages/' );
+			load_plugin_textdomain( 'rtmedia', false, basename( RTMEDIA_PATH ) . '/languages/' ); // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- Loads bundled translations from the plugin /languages directory.
 		}
 
 		/**
