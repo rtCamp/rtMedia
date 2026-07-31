@@ -1,7 +1,10 @@
 .bowerrc
+.distignore
+.github
 .gitattributes
 .gitignore
 .jshintrc
+.nvmrc
 .travis.yml
 CONTRIBUTING.md
 Gruntfile.js
@@ -12,4 +15,5 @@ package-lock.json
 package.json
 phpcs.xml
 phpunit.xml
+postcss.config.js
 tests
