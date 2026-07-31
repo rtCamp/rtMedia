@@ -83,7 +83,7 @@ class RTMediaPrivacy {
 
 		if ( function_exists( 'bp_activity_user_can_delete' ) && bp_activity_user_can_delete()
 			&& ( ! bp_is_groups_component() ) && is_rtmedia_privacy_user_overide()
-			&& apply_filters( 'rtm_load_bp_activity_privacy_update_ui', true )
+			&& apply_filters( 'rtm_load_bp_activity_privacy_update_ui', true ) /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			&& isset( $activities_template->activity )
 			&& isset( $activities_template->activity->type )
 			&& ! in_array( $activities_template->activity->type, $rtmedia_activity_types, true )
@@ -452,7 +452,7 @@ class RTMediaPrivacy {
 		}
 
 		// Load the template.
-		bp_core_load_template( apply_filters( 'bp_settings_screen_delete_account', 'members/single/plugins' ) );
+		bp_core_load_template( apply_filters( 'bp_settings_screen_delete_account', 'members/single/plugins' ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	}
 
 	/**
@@ -488,7 +488,7 @@ class RTMediaPrivacy {
 			}
 
 			bp_core_add_message( $feedback, $feedback_type );
-			do_action( 'bp_core_general_settings_after_save' );
+			do_action( 'bp_core_general_settings_after_save' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			bp_core_redirect( bp_displayed_user_domain() . bp_get_settings_slug() . '/privacy/' );
 		}
 	}

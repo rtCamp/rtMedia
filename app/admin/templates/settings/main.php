@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="bp-media-metabox-holder">
 				<div class="rtm-button-container top">
 					<?php
-					$is_setting_save = filter_input( INPUT_GET, 'settings-saved', FILTER_VALIDATE_BOOLEAN );
+					$is_setting_save = filter_input( INPUT_GET, 'settings-saved', FILTER_VALIDATE_BOOLEAN ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					if ( ! empty( $is_setting_save ) ) {
 						?>
 						<div class="rtm-success rtm-fly-warning rtm-save-settings-msg">

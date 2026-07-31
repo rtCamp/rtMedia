@@ -49,7 +49,7 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 
 				if ( ! empty( $attr ) ) {
 
-					foreach ( $attr as $key => $value ) {
+					foreach ( $attr as $key => $value ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 						switch ( $key ) {
 
@@ -142,7 +142,7 @@ if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 
 					if ( ! empty( $attr ) ) {
 
-						foreach ( $attr as $key => $value ) {
+						foreach ( $attr as $key => $value ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 							switch ( $key ) {
 

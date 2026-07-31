@@ -26,12 +26,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</tr>
 
 		<?php
-		foreach ( $render_data as $parent_key => $section ) {
-			$entities = $section;
+		foreach ( $render_data as $parent_key => $section ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+			$entities = $section; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			unset( $entities['title'] );
-			$count    = 0;
-			$row_span = count( $entities );
-			foreach ( $entities as $entity ) {
+			$count    = 0; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+			$row_span = count( $entities ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+			foreach ( $entities as $entity ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				?>
 				<tr>
 					<?php
@@ -48,12 +48,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</td>
 
 					<?php
-					$args = array(
+					$args = array( /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 						'key' => 'defaultSizes_' . $parent_key . '_' . $entity['title'],
 					);
-					foreach ( $entity as $child_key => $value ) {
+					foreach ( $entity as $child_key => $value ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 						if ( 'title' !== $child_key ) {
-							$args[ $child_key ] = $value;
+							$args[ $child_key ] = $value; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 						}
 					}
 					self::dimensions( $args );

@@ -106,7 +106,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 					$page = $arguments[2];
 				}
 
-				$this->per_page         = apply_filters( 'rt_db_model_per_page', $this->per_page, $this->table_name );
+				$this->per_page         = apply_filters( 'rt_db_model_per_page', $this->per_page, $this->table_name ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				$return_array           = array();
 				$return_array['result'] = false;
 

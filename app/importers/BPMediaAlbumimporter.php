@@ -10,7 +10,7 @@
  *
  * @author saurabh
  */
-class BPMediaAlbumimporter extends BPMediaImporter {
+class BPMediaAlbumimporter extends BPMediaImporter { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	/**
 	 * BPMediaAlbumimporter constructor.

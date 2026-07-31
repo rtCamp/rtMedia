@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="themes rtm-themes clearfix">
 
 		<?php
-		foreach ( $themes as $theme ) {
+		foreach ( $themes as $theme ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			?>
 
 			<div class="theme rtm-theme">

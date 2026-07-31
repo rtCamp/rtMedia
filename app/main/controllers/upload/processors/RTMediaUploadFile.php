@@ -79,7 +79,7 @@ class RTMediaUploadFile {
 
 		if ( ! isset( $rt_set_filter_uplaod_dir ) ) {
 			add_filter( 'upload_dir', array( $this, 'upload_dir' ) );
-			$rt_set_filter_uplaod_dir = true;
+			$rt_set_filter_uplaod_dir = true; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		}
 
 		if ( isset( $this->files ) && count( $this->files ) > 0 ) {

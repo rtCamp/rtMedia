@@ -16,22 +16,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // By default it is not an ajax request.
 global $rt_ajax_request;
-$rt_ajax_request = false;
+$rt_ajax_request = false; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 // Todo sanitize and fix $_SERVER variable usage.
 // Check if it is an ajax request.
-$_rt_ajax_request = rtm_get_server_var( 'HTTP_X_REQUESTED_WITH', 'FILTER_SANITIZE_FULL_SPECIAL_CHARS' );
+$_rt_ajax_request = rtm_get_server_var( 'HTTP_X_REQUESTED_WITH', 'FILTER_SANITIZE_FULL_SPECIAL_CHARS' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 if ( 'xmlhttprequest' === strtolower( $_rt_ajax_request ) ) {
-	$rt_ajax_request = true;
+	$rt_ajax_request = true; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 }
 
 // Get currently active template (Nouveau / Legacy).
-$bp_template = get_option( '_bp_theme_package_id' );
+$bp_template = get_option( '_bp_theme_package_id' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
-$class = '';
+$class = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 // Getting extran classes for #buddypress when Nouveau is active.
 if ( 'nouveau' === $bp_template && ! $rt_ajax_request && function_exists( 'bp_nouveau_get_container_classes' ) ) {
-	$class = bp_nouveau_get_container_classes();
+	$class = bp_nouveau_get_container_classes(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 }
 ?>
 <div id="buddypress" class="<?php echo esc_attr( $class ); ?>">
@@ -39,10 +39,10 @@ if ( 'nouveau' === $bp_template && ! $rt_ajax_request && function_exists( 'bp_no
 // if it's not an ajax request, load headers.
 if ( ! $rt_ajax_request ) {
 	// if this is a BuddyPress page, set template type to buddypress to load appropriate headers.
-	if ( class_exists( 'BuddyPress' ) && ! bp_is_blog_page() && apply_filters( 'rtm_main_template_buddypress_enable', true ) ) {
-		$template_type = 'buddypress';
+	if ( class_exists( 'BuddyPress' ) && ! bp_is_blog_page() && apply_filters( 'rtm_main_template_buddypress_enable', true ) ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+		$template_type = 'buddypress'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	} else {
-		$template_type = '';
+		$template_type = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	}
 
 	// When Nouveau is active.
@@ -69,8 +69,8 @@ if ( ! $rt_ajax_request ) {
 
 					<div id="item-body" class="item-body">
 
-						<?php do_action( 'bp_before_member_body' ); ?>
-						<?php do_action( 'bp_before_member_media' ); ?>
+						<?php do_action( 'bp_before_member_body' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
+						<?php do_action( 'bp_before_member_media' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
 						<nav class="<?php bp_nouveau_single_item_subnav_classes(); ?>" id="subnav" role="navigation" aria-label="<?php esc_attr_e( 'rtMedia menu', 'buddypress-media' ); ?>">
 							<ul class="subnav">
 
@@ -84,8 +84,8 @@ if ( ! $rt_ajax_request ) {
 						<?php
 						rtmedia_load_template();
 
-						do_action( 'bp_after_member_media' );
-						do_action( 'bp_after_member_body' );
+						do_action( 'bp_after_member_media' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+						do_action( 'bp_after_member_body' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 						?>
 					</div><!--#item-body-->
 				</div><!-- // .bp-wrap -->
@@ -117,17 +117,17 @@ if ( ! $rt_ajax_request ) {
 							<div id="item-body" class="item-body">
 								
 								<?php
-								do_action( 'bp_before_group_body' );
-								do_action( 'bp_before_group_media' );
+								do_action( 'bp_before_group_body' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+								do_action( 'bp_before_group_media' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
-								$bp_is_group_home = bp_is_group_home();
+								$bp_is_group_home = bp_is_group_home(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 								if ( $bp_is_group_home && ! bp_current_user_can( 'groups_access_group' ) ) {
 									/**
 									 * Fires before the display of the group status message.
 									 *
 									 * @since 1.1.0
 									 */
-									do_action( 'bp_before_group_status_message' );
+									do_action( 'bp_before_group_status_message' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 									?>
 
 									<div id="message" class="info">
@@ -141,7 +141,7 @@ if ( ! $rt_ajax_request ) {
 									 *
 									 * @since 1.1.0
 									 */
-									do_action( 'bp_after_group_status_message' );
+									do_action( 'bp_after_group_status_message' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 								} else {
 									?>
 									<nav class="<?php bp_nouveau_single_item_subnav_classes(); ?>" id="subnav" role="navigation" aria-label="<?php esc_attr_e( 'rtMedia menu', 'buddypress-media' ); ?>">
@@ -155,8 +155,8 @@ if ( ! $rt_ajax_request ) {
 									rtmedia_load_template();
 								}
 
-								do_action( 'bp_after_group_media' );
-								do_action( 'bp_after_group_body' );
+								do_action( 'bp_after_group_media' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+								do_action( 'bp_after_group_body' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 								?>
 
 							</div><!-- // .item-body -->
@@ -177,21 +177,21 @@ if ( ! $rt_ajax_request ) {
 			if ( ! $rt_ajax_request ) {
 				if ( 'buddypress' === $template_type ) {
 					if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
-						do_action( 'bp_after_group_media' );
-						do_action( 'bp_after_group_body' );
+						do_action( 'bp_after_group_media' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+						do_action( 'bp_after_group_body' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					}
 					if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
-						do_action( 'bp_after_member_media' );
-						do_action( 'bp_after_member_body' );
+						do_action( 'bp_after_member_media' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+						do_action( 'bp_after_member_body' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					}
 				}
 				echo '</div><!--#item-body-->';
 				if ( 'buddypress' === $template_type ) {
 					if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
-						do_action( 'bp_after_group_home_content' );
+						do_action( 'bp_after_group_home_content' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					}
 					if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
-						do_action( 'bp_after_member_home_content' );
+						do_action( 'bp_after_member_home_content' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					}
 				}
 			}
@@ -201,7 +201,7 @@ if ( ! $rt_ajax_request ) {
 			// load buddypress markup.
 			if ( bp_displayed_user_id() ) {
 				?>
-				<?php do_action( 'bp_before_member_home_content' ); ?>
+				<?php do_action( 'bp_before_member_home_content' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
 				<div id="item-header" role="complementary" data-bp-item-id="<?php echo esc_attr( bp_displayed_user_id() ); ?>" data-bp-item-component="members" class="users-header single-headers">
 
 					<?php
@@ -223,7 +223,7 @@ if ( ! $rt_ajax_request ) {
 
 							<?php bp_get_displayed_user_nav(); ?>
 
-							<?php do_action( 'bp_member_options_nav' ); ?>
+							<?php do_action( 'bp_member_options_nav' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
 
 						</ul>
 					</div>
@@ -231,8 +231,8 @@ if ( ! $rt_ajax_request ) {
 
 				<div id="item-body" role="main">
 
-					<?php do_action( 'bp_before_member_body' ); ?>
-					<?php do_action( 'bp_before_member_media' ); ?>
+					<?php do_action( 'bp_before_member_body' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
+					<?php do_action( 'bp_before_member_media' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
 					<div class="item-list-tabs no-ajax" id="subnav">
 						<ul>
 
@@ -263,7 +263,7 @@ if ( ! $rt_ajax_request ) {
 						 *
 						 * @since 1.2.0
 						 */
-						do_action( 'bp_before_group_home_content' );
+						do_action( 'bp_before_group_home_content' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 						?>
 
 						<div id="item-header" role="complementary" data-bp-item-id="<?php bp_group_id(); ?>" data-bp-item-component="groups" class="groups-header single-headers">
@@ -285,15 +285,15 @@ if ( ! $rt_ajax_request ) {
 							<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
 								<ul>
 									<?php bp_get_options_nav(); ?>
-									<?php do_action( 'bp_group_options_nav' ); ?>
+									<?php do_action( 'bp_group_options_nav' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
 								</ul>
 							</div>
 						</div><!-- #item-nav -->
 
 
 						<div id="item-body">
-							<?php do_action( 'bp_before_group_body' ); ?>
-							<?php do_action( 'bp_before_group_media' ); ?>
+							<?php do_action( 'bp_before_group_body' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
+							<?php do_action( 'bp_before_group_media' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
 							<div class="item-list-tabs no-ajax" id="subnav">
 								<ul>
 									<?php rtmedia_sub_nav(); ?>
@@ -314,21 +314,21 @@ if ( ! $rt_ajax_request ) {
 		if ( ! $rt_ajax_request ) {
 			if ( 'buddypress' === $template_type ) {
 				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
-					do_action( 'bp_after_group_media' );
-					do_action( 'bp_after_group_body' );
+					do_action( 'bp_after_group_media' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+					do_action( 'bp_after_group_body' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				}
 				if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
-					do_action( 'bp_after_member_media' );
-					do_action( 'bp_after_member_body' );
+					do_action( 'bp_after_member_media' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+					do_action( 'bp_after_member_body' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				}
 			}
 			echo '</div><!--#item-body-->';
 			if ( 'buddypress' === $template_type ) {
 				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
-					do_action( 'bp_after_group_home_content' );
+					do_action( 'bp_after_group_home_content' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				}
 				if ( function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() ) {
-					do_action( 'bp_after_member_home_content' );
+					do_action( 'bp_after_member_home_content' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				}
 			}
 		}

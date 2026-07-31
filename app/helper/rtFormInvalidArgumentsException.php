@@ -16,7 +16,7 @@ if ( ! class_exists( 'rtFormsInvalidArgumentsException' ) ) {
 	 *
 	 * @author udit
 	 */
-	class rtFormInvalidArgumentsException extends Exception { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
+	class rtFormInvalidArgumentsException extends Exception { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons.
 
 		/**
 		 * The rtFormInvalidArgumentsException constructor.

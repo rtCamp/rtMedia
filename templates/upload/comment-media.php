@@ -11,12 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( is_array( $tabs ) && count( $tabs ) ) {
 	if ( isset( $attr['upload_parent_id_type'] ) && isset( $attr['upload_parent_id'] ) ) {
-		$main_id = '-' . $attr['upload_parent_id_type'] . '-' . $attr['upload_parent_id'];
+		$main_id = '-' . $attr['upload_parent_id_type'] . '-' . $attr['upload_parent_id']; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	}
 	?>
 	<div class="rtmedia-container rtmedia-uploader-div">
 	<?php
-	$bp_template = get_option( '_bp_theme_package_id' );
+	$bp_template = get_option( '_bp_theme_package_id' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	if ( 'legacy' !== $bp_template ) {
 		?>
 		<div class="rtmedia-container rtmedia-uploader-div">
@@ -38,7 +38,7 @@ if ( is_array( $tabs ) && count( $tabs ) ) {
 
 				if ( ! empty( $attr ) ) {
 
-					foreach ( $attr as $key => $value ) {
+					foreach ( $attr as $key => $value ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 						if ( 'context' === $key ) {
 							echo '<input type="hidden" name="context" value="' . esc_attr( $value ) . '" />';
@@ -110,7 +110,7 @@ if ( is_array( $tabs ) && count( $tabs ) ) {
 
 							if ( ! empty( $attr ) ) {
 
-								foreach ( $attr as $key => $value ) {
+								foreach ( $attr as $key => $value ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 									if ( 'context_id' === $key ) {
 										echo '<input type="hidden" name="context_id" value="' . esc_attr( $value ) . '" />';
 									}

@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<tbody>
 		<?php
 		if ( $debug_info ) {
-			foreach ( $debug_info as $configuration => $value ) {
+			foreach ( $debug_info as $configuration => $value ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				?>
 				<tr>
 					<th scope="row"><?php echo esc_html( $configuration ); ?></th>

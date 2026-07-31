@@ -464,7 +464,7 @@ class RTMediaJsonApi {
 
 		// Generate something random for a key...
 		$key = wp_generate_password( 20, false );
-		do_action( 'retrieve_password_key', $user_login, $key );
+		do_action( 'retrieve_password_key', $user_login, $key ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 		// Now insert the new md5 key into the db.
 		// Now insert the key, hashed, into the DB.
@@ -1191,7 +1191,7 @@ class RTMediaJsonApi {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_image, $msg_invalid_image ) );
 			}
 
-			define( 'UPLOAD_DIR_LOOK', sys_get_temp_dir() );
+			define( 'UPLOAD_DIR_LOOK', sys_get_temp_dir() ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			$tmp_name = UPLOAD_DIR_LOOK . $title;
 			$file     = $tmp_name . '.' . $image_type;

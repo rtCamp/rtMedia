@@ -1208,8 +1208,8 @@ class RTMediaMigration {
 					 * For Activity
 					 */
 					global $last_baseurl, $last_newurl;
-					$last_baseurl = $baseurl;
-					$last_newurl  = $baseurl . "rtMedia/$prefix/";
+					$last_baseurl = $baseurl; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+					$last_newurl  = $baseurl . "rtMedia/$prefix/"; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					$this->search_and_replace( $old_guid, $attachment['guid'] );
 					wp_update_post( $attachment );
 				}

@@ -11,13 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Generate random number for gallery container.
 // This will be useful when multiple gallery shortcodes are used in a single page.
-$rand_id = wp_rand( 0, 1000 );
+$rand_id = wp_rand( 0, 1000 ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 ?>
 <div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo intval( $rand_id ); ?>">
 	<?php do_action( 'rtmedia_before_media_gallery' ); ?>
 	<?php
-	$album_title = get_rtmedia_gallery_title();
+	$album_title = get_rtmedia_gallery_title(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	global $rtmedia_query;
 
 	if ( isset( $rtmedia_query->is_gallery_shortcode ) && true === $rtmedia_query->is_gallery_shortcode ) { // if gallery is displayed using gallery shortcode.
@@ -112,15 +112,15 @@ $rand_id = wp_rand( 0, 1000 );
 			<!-- these links will be handled by backbone -->
 			<?php
 			global $rtmedia;
-			$general_options = $rtmedia->options;
+			$general_options = $rtmedia->options; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( isset( $rtmedia->options['general_display_media'] ) && 'pagination' === $general_options['general_display_media'] ) {
 				rtmedia_media_pagination();
 			} else {
-				$display = '';
+				$display = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				if ( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() ) {
-					$display = 'display:inline;';
+					$display = 'display:inline;'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				} else {
-					$display = 'display:none;';
+					$display = 'display:none;'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				}
 				?>
 				<a id="rtMedia-galary-next" style="<?php echo esc_attr( $display ); ?>" href="<?php esc_url( rtmedia_pagination_next_link() ); ?>">

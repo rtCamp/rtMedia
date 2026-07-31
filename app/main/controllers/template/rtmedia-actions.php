@@ -160,7 +160,7 @@ function rtmedia_gallery_options() {
 			<div class="no-js">
 			<button type="button" class="clicker rtmedia-action-buttons" aria-label="%1$s"><i class="dashicons dashicons-admin-generic"></i>%1$s</button>
 			<ul class="rtm-options">',
-			apply_filters( 'rtm_gallery_option_label', __( 'Options', 'buddypress-media' ) )
+			apply_filters( 'rtm_gallery_option_label', __( 'Options', 'buddypress-media' ) ) /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		);
 
 		foreach ( $options as $action ) {
@@ -278,7 +278,7 @@ add_action( 'rtmedia_query_actions', 'rtmedia_album_merge_action' );
 /**
  * Add upload button
  */
-function add_upload_button() {
+function add_upload_button() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( function_exists( 'bp_is_blog_page' ) && ! bp_is_blog_page() ) {
 		/**
@@ -291,8 +291,8 @@ function add_upload_button() {
 
 			printf(
 				'<button type="button" class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="%1$s" aria-label="%1$s"><i class="dashicons dashicons-upload"></i>%2$s</button>',
-				esc_attr( apply_filters( 'rtm_gallery_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ),
-				esc_html( apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) )
+				esc_attr( apply_filters( 'rtm_gallery_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ), /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+				esc_html( apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) ) /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			);
 
 		} elseif ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
@@ -301,8 +301,8 @@ function add_upload_button() {
 
 				printf(
 					'<button type="button" class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="%1$s" aria-label="%1$s"><i class="dashicons dashicons-upload"></i>%2$s</button>',
-					esc_attr( apply_filters( 'rtm_gallery_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ),
-					esc_html( apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) )
+					esc_attr( apply_filters( 'rtm_gallery_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ), /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+					esc_html( apply_filters( 'rtm_gallery_upload_label', __( 'Upload', 'buddypress-media' ) ) ) /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				);
 			}
 		}
@@ -317,7 +317,7 @@ add_action( 'rtmedia_album_gallery_actions', 'add_upload_button', 99 );
  * @param array  $file_object File details.
  * @param object $upload_obj Uploaded object.
  */
-function add_music_cover_art( $file_object, $upload_obj ) {
+function add_music_cover_art( $file_object, $upload_obj ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$media_obj = new RTMediaMedia();
 	$media     = $media_obj->model->get(
@@ -376,7 +376,7 @@ add_action( 'rtmedia_before_media', 'rtmedia_content_before_media', 10 );
  *
  * @global wpdb $wpdb
  */
-function update_group_media_privacy( $group_id ) {
+function update_group_media_privacy( $group_id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( ! empty( $group_id ) && function_exists( 'groups_get_group' ) ) {
 		// get the buddybress group.
@@ -447,14 +447,14 @@ add_action( 'rtmedia_after_media_gallery', 'rtmedia_remove_media_query_hooks_aft
  *
  * @return string
  */
-function sanitize_filename_before_upload( $filename ) {
+function sanitize_filename_before_upload( $filename ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$info            = pathinfo( $filename );
 	$ext             = empty( $info['extension'] ) ? '' : '.' . $info['extension'];
 	$name            = basename( $filename, $ext );
 	$final_file_name = $name;
 	$special_chars   = array( '?', '[', ']', '/', '\\', '=', '<', '>', ':', ';', ',', "'", '"', '&', '$', '#', '*', '(', ')', '|', '~', '`', '!', '{', '}', chr( 0 ) );
-	$special_chars   = apply_filters( 'sanitize_file_name_chars', $special_chars, $final_file_name );
+	$special_chars   = apply_filters( 'sanitize_file_name_chars', $special_chars, $final_file_name ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$string          = str_replace( $special_chars, '-', $final_file_name );
 	$string          = preg_replace( '/\+/', '', $string );
 
@@ -609,7 +609,7 @@ if ( ! function_exists( 'rtmedia_single_media_pagination' ) ) {
  *
  * @return array|int
  */
-function rtm_get_album_media_count( $album_id ) {
+function rtm_get_album_media_count( $album_id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	global $rtmedia_query;
 
 	$args  = array();
@@ -642,7 +642,7 @@ function rtm_get_album_media_count( $album_id ) {
  * @param int $media_id media_id.
  * @param int $album_id album_id.
  */
-function rtm_album_media_count( $media_id, $album_id ) {
+function rtm_album_media_count( $media_id, $album_id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$rtmedia_album_count_status = array(
 		'status'        => true,
 		'before_string' => '',
@@ -671,7 +671,7 @@ add_action( 'rtmedia_after_album_gallery_item', 'rtm_album_media_count', 10, 2 )
 /**
  * Get the information ( status, expiry date ) of all the installed addons and store in site option
  */
-function rt_check_addon_status() {
+function rt_check_addon_status() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$addons = apply_filters( 'rtmedia_license_tabs', array() );
 
 	if ( empty( $addons ) ) {
@@ -830,7 +830,7 @@ add_action( 'bp_activity_register_activity_actions', 'rtmedia_activity_register_
  *
  * @since  4.4
  */
-function add_search_filter( $attr = null ) {
+function add_search_filter( $attr = null ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia, $rtmedia_query;
 

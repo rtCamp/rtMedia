@@ -160,7 +160,7 @@ class RTMediaTemplate {
 				global $rtaccount;
 
 				if ( ! isset( $rtaccount ) ) {
-					$rtaccount = 0;
+					$rtaccount = 0; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				}
 
 				$include_uploader = false;
@@ -912,7 +912,7 @@ class RTMediaTemplate {
 							)
 						);
 
-						do_action( 'rtm_bp_activity_comment_posted', $comment_activity_id, $result[0] );
+						do_action( 'rtm_bp_activity_comment_posted', $comment_activity_id, $result[0] ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					}
 				}
 
@@ -1073,7 +1073,7 @@ class RTMediaTemplate {
 
 		if ( isset( $attr['order_by'] ) ) {
 			$allowed_columns = array( 'date', 'views', 'downloads', 'ratings', 'likes', 'dislikes' );
-			$allowed_columns = apply_filters( 'filter_allowed_sorting_columns', $allowed_columns );
+			$allowed_columns = apply_filters( 'filter_allowed_sorting_columns', $allowed_columns ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			$flag            = $flag && in_array( $attr['order_by'], $allowed_columns, true );
 
 			if ( 'date' === strtolower( $attr['order_by'] ) ) {

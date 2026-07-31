@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="rtmedia-image-editor" id="image-editor-<?php echo esc_attr( $media_id ); ?>"></div>
 
-		<?php $thumb_url = wp_get_attachment_image_src( $media_id, 'thumbnail', true ); ?>
+		<?php $thumb_url = wp_get_attachment_image_src( $media_id, 'thumbnail', true ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
 
 		<div id="imgedit-response-<?php echo esc_attr( $media_id ); ?>"></div>
 

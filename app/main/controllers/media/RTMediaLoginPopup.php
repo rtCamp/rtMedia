@@ -52,8 +52,8 @@ class RTMediaLoginPopup {
 						<i class="dashicons dashicons-upload"></i>%2$s
 					</a>
 				</span>',
-				esc_attr( apply_filters( 'rtm_album_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ),
-				esc_html( apply_filters( 'rtm_album_upload_label', __( 'Upload', 'buddypress-media' ) ) )
+				esc_attr( apply_filters( 'rtm_album_upload_title_label', __( 'Upload Media', 'buddypress-media' ) ) ), /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+				esc_html( apply_filters( 'rtm_album_upload_label', __( 'Upload', 'buddypress-media' ) ) ) /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			);
 
 		}

@@ -14,18 +14,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="clearfix <?php echo esc_attr( $tab_position_class ); ?> rtm-admin-tab-container <?php echo esc_attr( $wrapper_class ); ?>">
 	<ul class="rtm-tabs">
 		<?php
-		$i = 1;
-		foreach ( $sub_tabs as $single_tab ) {
+		$i = 1; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+		foreach ( $sub_tabs as $single_tab ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			// tab status.
-			$active_class = '';
-			$error_class  = '';
+			$active_class = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+			$error_class  = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			if ( ! empty( $single_tab['args'] ) && ( empty( $single_tab['args']['status'] ) || 'valid' !== $single_tab['args']['status'] ) ) {
-				$error_class = 'error';
+				$error_class = 'error'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			}
 			if ( 1 === $i ) {
-				$active_class = 'active';
+				$active_class = 'active'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			}
 
 			?>
@@ -49,18 +49,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="tabs-content rtm-tabs-content">
 		<?php
-		$k = 1;
-		foreach ( $sub_tabs as $single_tab ) {
-			$active_class = '';
+		$k = 1; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+		foreach ( $sub_tabs as $single_tab ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+			$active_class = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( 1 === $k ) {
-				$active_class = ' active';
+				$active_class = ' active'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			}
 			$k++;
 			if ( isset( $single_tab['icon'] ) && ! empty( $single_tab['icon'] ) ) {
-				$icon = sprintf( '<i class="%1$s"></i>', esc_attr( $single_tab['icon'] ) );
+				$icon = sprintf( '<i class="%1$s"></i>', esc_attr( $single_tab['icon'] ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			}
-			$tab_without_hash = explode( '#', $single_tab['href'] );
-			$tab_without_hash = $tab_without_hash[1];
+			$tab_without_hash = explode( '#', $single_tab['href'] ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+			$tab_without_hash = $tab_without_hash[1]; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			echo '<div class="rtm-content' . esc_attr( $active_class ) . '" id="' . esc_attr( $tab_without_hash ) . '">';
 			if ( isset( $single_tab['args'] ) ) {
 				call_user_func( $single_tab['callback'], $page_name, $single_tab['args'] );

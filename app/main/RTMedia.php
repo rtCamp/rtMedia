@@ -1020,13 +1020,13 @@ class RTMedia {
 		global $rtmedia_nav;
 
 		/** Legacy code for Add-ons * */
-		$bp_class_construct = apply_filters( 'bpmedia_class_construct', array() );
+		$bp_class_construct = apply_filters( 'bpmedia_class_construct', array() ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		foreach ( $bp_class_construct as $classname => $global_scope ) {
 			$class = 'BPMedia' . ucfirst( $classname );
 			if ( class_exists( $class ) ) {
 				if ( true === $global_scope ) {
 					global ${'bp_media_' . $classname}; // phpcs:ignore PHPCompatibility.Variables.ForbiddenGlobalVariableVariable.NonBareVariableFound
-					${'bp_media_' . $classname} = new $class();
+					${'bp_media_' . $classname} = new $class(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				} else {
 					new $class();
 				}
@@ -1038,11 +1038,11 @@ class RTMedia {
 		$class_construct['Group'] = false; // will be constructed after rtmedia pro class.
 
 		foreach ( $class_construct as $key => $global_scope ) {
-			$classname = '';
+			$classname = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			$ck        = explode( '_', $key );
 
 			foreach ( $ck as $cn ) {
-				$classname .= ucfirst( $cn );
+				$classname .= ucfirst( $cn ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			}
 
 			$class = 'RTMedia' . $classname;
@@ -1050,7 +1050,7 @@ class RTMedia {
 			if ( class_exists( $class ) ) {
 				if ( true === $global_scope ) {
 					global ${'rtmedia_' . $key}; // phpcs:ignore PHPCompatibility.Variables.ForbiddenGlobalVariableVariable.NonBareVariableFound
-					${'rtmedia_' . $key} = new $class();
+					${'rtmedia_' . $key} = new $class(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				} else {
 					new $class();
 				}
@@ -1075,7 +1075,7 @@ class RTMedia {
 			rtmedia_enable_comment_media_uplaod();
 		}
 
-		do_action( 'bp_media_init' ); // legacy For plugin using this actions.
+		do_action( 'bp_media_init' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ // legacy For plugin using this actions.
 		do_action( 'rtmedia_init' );
 	}
 
@@ -2059,7 +2059,7 @@ class RTMedia {
  *
  * @return string
  */
-function parentlink_global_album( $id ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed
+function parentlink_global_album( $id ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons.
 	$global_albums = RTMediaAlbum::get_globals();
 	$parent_link   = '';
 
@@ -2089,7 +2089,7 @@ function parentlink_global_album( $id ) { // phpcs:ignore Universal.Files.Separa
  *
  * @return mixed|void
  */
-function get_rtmedia_permalink( $id ) {
+function get_rtmedia_permalink( $id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$media_model = new RTMediaModel();
 	$media       = $media_model->get( array( 'id' => intval( $id ) ) );
@@ -2135,7 +2135,7 @@ function get_rtmedia_permalink( $id ) {
 	 * @param int     $id        ID of the media.
 	 */
 
-	return apply_filters( 'get_rtmedia_permalink', $permalink, $media, $id );
+	return apply_filters( 'get_rtmedia_permalink', $permalink, $media, $id ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 }
 
 /**
@@ -2145,7 +2145,7 @@ function get_rtmedia_permalink( $id ) {
  *
  * @return string
  */
-function get_rtmedia_user_link( $id ) {
+function get_rtmedia_user_link( $id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( function_exists( 'bp_members_get_user_url' ) ) {
 		return bp_members_get_user_url( $id );
@@ -2179,7 +2179,7 @@ function rtmedia_update_site_option( $option_name, $option_value ) {
  *
  * @return mixed|void
  */
-function get_rtmedia_group_link( $group_id ) {
+function get_rtmedia_group_link( $group_id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	global $bp;
 
 	$group = groups_get_group( array( 'group_id' => $group_id ) );
@@ -2232,7 +2232,7 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
 /**
  * Function to show privacy message provided from rtMedia settings in front end.
  */
-function rtm_privacy_message_on_website() {
+function rtm_privacy_message_on_website() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	 global $rtmedia;
 	$options = $rtmedia->options;
 
@@ -2242,7 +2242,7 @@ function rtm_privacy_message_on_website() {
 		'position'         => 'bottom',
 	);
 
-	$rtm_privacy_message_options = apply_filters( 'rtm_privacy_bar_position', $rtm_privacy_message_options );
+	$rtm_privacy_message_options = apply_filters( 'rtm_privacy_bar_position', $rtm_privacy_message_options ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 
@@ -2269,7 +2269,7 @@ add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
 /**
  * Function to add privacy policy information in WordPress policy section.
  */
-function rtm_plugin_privacy_information() {
+function rtm_plugin_privacy_information() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
 		ob_start();
 

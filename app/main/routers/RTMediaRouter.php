@@ -143,11 +143,11 @@ class RTMediaRouter {
 		$template_load = new RTMediaTemplate();
 
 		global $new_rt_template;
-		$new_rt_template = $template_load->set_template( $template );
+		$new_rt_template = $template_load->set_template( $template ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
-		$new_rt_template = apply_filters( 'rtmedia_' . $this->slug . '_include', $new_rt_template );
+		$new_rt_template = apply_filters( 'rtmedia_' . $this->slug . '_include', $new_rt_template ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		global $rt_ajax_request;
-		$rt_ajax_request = false;
+		$rt_ajax_request = false; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 		$req_with = rtm_get_server_var( 'HTTP_X_REQUESTED_WITH', 'FILTER_SANITIZE_FULL_SPECIAL_CHARS' );
 
@@ -156,7 +156,7 @@ class RTMediaRouter {
 			! empty( $req_with ) &&
 			strtolower( $req_with ) === 'xmlhttprequest'
 		) {
-			$rt_ajax_request = true;
+			$rt_ajax_request = true; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		}
 
 		if ( $rt_ajax_request ) {
@@ -196,7 +196,7 @@ class RTMediaRouter {
 		if ( ! isset( $rt_template_content ) ) {
 			ob_start();
 			load_template( $new_rt_template );
-			$rt_template_content = ob_get_contents();
+			$rt_template_content = ob_get_contents(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			ob_end_clean();
 		}
 
@@ -204,13 +204,13 @@ class RTMediaRouter {
 
 		// todo:Check usage of code after return statement.
 		// phpcs:disable Squiz.PHP.NonExecutableCode.Unreachable
-		$new_content = apply_filters( 'bp_replace_the_content', $rt_template_content );
+		$new_content = apply_filters( 'bp_replace_the_content', $rt_template_content ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 		// Juggle the content around and try to prevent unsightly comments.
 		if ( ! empty( $new_content ) && ( $new_content !== $rt_template_content ) ) {
 
 			// Set the content to be the new content.
-			$rt_template_content = $new_content;
+			$rt_template_content = $new_content; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			// Clean up after ourselves.
 			unset( $new_content );

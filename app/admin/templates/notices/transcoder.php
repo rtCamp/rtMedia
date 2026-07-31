@@ -30,7 +30,7 @@ if ( get_option( 'godam_plugin_activated_once' ) ) {
 	<?php wp_nonce_field( '_install_transcoder_hide_notice_', 'install_transcoder_hide_notice_nonce' ); ?>
 	<p>
 		<?php
-		$allowed_tags = array(
+		$allowed_tags = array( /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			'a' => array(
 				'href'   => array(),
 				'target' => array(),

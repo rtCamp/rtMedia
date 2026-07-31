@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( rtmedia_edit_allowed() ) {
 			global $rtmedia_media;
 			// Added to get nonce of current media.
-			$media_id_nonce = wp_create_nonce( "image_editor-$rtmedia_media->media_id" );
+			$media_id_nonce = wp_create_nonce( "image_editor-$rtmedia_media->media_id" ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			?>
 			<div class="rtmedia-single-edit-title-container">
 				<h2 class="rtmedia-title"><?php esc_html_e( 'Edit Media', 'buddypress-media' ); ?></h2>
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<div class="rtmedia-editor-description rtm-field-wrap">
 								<label><?php esc_html_e( 'Description: ', 'buddypress-media' ); ?></label>
 								<?php
-								$editor = false;
+								$editor = false; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 								rtmedia_description_input( $editor, true );
 
 								RTMediaMedia::media_nonce_generator( rtmedia_id() );

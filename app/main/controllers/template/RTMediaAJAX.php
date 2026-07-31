@@ -49,12 +49,12 @@ class RTMediaAJAX {
 				}
 			}
 
-			$create_album = apply_filters( 'rtm_is_album_create_enable', true );
+			$create_album = apply_filters( 'rtm_is_album_create_enable', true ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( ! $create_album ) {
 				$return['error'] = esc_html__( 'You can not create album.', 'buddypress-media' );
 			}
 
-			$create_album = apply_filters( 'rtm_display_create_album_button', true, $_context_id );
+			$create_album = apply_filters( 'rtm_display_create_album_button', true, $_context_id ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( ! $create_album ) {
 				$return['error'] = esc_html__( 'You can not create more albums, you exceed your album limit.', 'buddypress-media' );
 			}

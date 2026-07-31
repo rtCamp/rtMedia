@@ -239,7 +239,7 @@ class RTMediaUploadModel {
 			? (bool) groups_is_user_member( $user, $group_id )
 			: false;
 
-		return (bool) apply_filters( 'rtm_can_user_upload_in_group', $allowed, $group_id, $user );
+		return (bool) apply_filters( 'rtm_can_user_upload_in_group', $allowed, $group_id, $user ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	}
 
 	/**

@@ -388,7 +388,7 @@ class RTMediaNav {
 			echo apply_filters( 'rtmedia_sub_nav_' . $type['name'], $nav_li, $type['name'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
-		do_action( 'add_extra_sub_nav' );
+		do_action( 'add_extra_sub_nav' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	}
 
 	/**

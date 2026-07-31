@@ -339,7 +339,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function rtmedia_premium_addon_notice() {
 			$site_option = rtmedia_get_site_option( 'rtmedia_premium_addon_notice' );
 
-			$premium_addon_notice = apply_filters( 'rt_premium_addon_notice', true );
+			$premium_addon_notice = apply_filters( 'rt_premium_addon_notice', true ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( ( ! $site_option || 'hide' !== $site_option ) ) {
 				if ( true === $premium_addon_notice ) {
 					rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
@@ -1229,7 +1229,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				);
 			}
 
-			$tabs = apply_filters( 'media_add_tabs', $tabs );
+			$tabs = apply_filters( 'media_add_tabs', $tabs ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			// Loop through tabs and build navigation.
 			foreach ( $tabs as $tab_data ) {

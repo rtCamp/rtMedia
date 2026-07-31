@@ -209,7 +209,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 				} else {
 					update_option( $this->db_version_option_name, $this->db_version );
 				}
-				do_action( 'rt_db_upgrade' );
+				do_action( 'rt_db_upgrade' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			}
 		}
 
