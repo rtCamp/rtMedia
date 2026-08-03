@@ -77,14 +77,14 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				'general_direct_upload'            => 0,
 			);
 
-			foreach ( $rtmedia->allowed_types as $type ) {
+			foreach ( (array) $rtmedia->allowed_types as $type ) {
 				// invalid keys handled in sanitize method.
 				$defaults[ 'allowedTypes_' . $type['name'] . '_enabled' ]  = 0;
 				$defaults[ 'allowedTypes_' . $type['name'] . '_featured' ] = 0;
 			}
 
 			/* Previous Sizes values from buddypress is migrated */
-			foreach ( $rtmedia->default_sizes as $type => $type_value ) {
+			foreach ( (array) $rtmedia->default_sizes as $type => $type_value ) {
 				foreach ( $type_value as $size => $size_value ) {
 					foreach ( $size_value as $dimension => $value ) {
 						$defaults[ 'defaultSizes_' . $type . '_' . $size . '_' . $dimension ] = 0;

@@ -153,7 +153,7 @@ class RTMedia {
 	public function filter_allow_mime_type_mu( $options ) {
 		$allowed_types       = array();
 		$this->allowed_types = apply_filters( 'rtmedia_allowed_types', $this->allowed_types );
-		foreach ( $this->allowed_types as $type ) {
+		foreach ( (array) $this->allowed_types as $type ) {
 			if ( '' !== $type['extn'] && call_user_func( 'is_rtmedia_upload_' . $type['name'] . '_enabled' ) ) {
 				foreach ( $type['extn'] as $extn ) {
 					$allowed_types[] = $extn;
@@ -789,14 +789,14 @@ class RTMedia {
 			'general_AllowUserData'       => 0,
 		);
 
-		foreach ( $this->allowed_types as $type ) {
+		foreach ( (array) $this->allowed_types as $type ) {
 			// invalid keys handled in sanitize method.
 			$defaults[ 'allowedTypes_' . $type['name'] . '_enabled' ]  = 1;
 			$defaults[ 'allowedTypes_' . $type['name'] . '_featured' ] = 0;
 		}
 
 		// Previous Sizes values from buddypress is migrated.
-		foreach ( $this->default_sizes as $type => $type_value ) {
+		foreach ( (array) $this->default_sizes as $type => $type_value ) {
 			foreach ( $type_value as $size => $size_value ) {
 				foreach ( $size_value as $dimension => $value ) {
 					switch ( $type ) {
@@ -917,7 +917,7 @@ class RTMedia {
 		if ( ! isset( $this->allowed_types ) ) {
 			return;
 		}
-		foreach ( $this->allowed_types as $type ) {
+		foreach ( (array) $this->allowed_types as $type ) {
 			if ( ! isset( $type['name'] ) || '' === $type['name'] ) {
 				continue;
 			}
@@ -1446,7 +1446,7 @@ class RTMedia {
 		$rtmedia_backbone['rMedia_loading_media'] = RTMEDIA_URL . 'app/assets/admin/img/boxspinner.gif';
 
 		$rtmedia_media_thumbs = array();
-		foreach ( $this->allowed_types as $key_type => $value_type ) {
+		foreach ( (array) $this->allowed_types as $key_type => $value_type ) {
 			if ( isset( $value_type['thumbnail'] ) ) {
 				$rtmedia_media_thumbs[ $key_type ] = $value_type['thumbnail'];
 			}
@@ -1629,7 +1629,7 @@ class RTMedia {
 
 		global $rtmedia;
 		$rtmedia_extns = array();
-		foreach ( $rtmedia->allowed_types as $allowed_types_key => $allowed_types_value ) {
+		foreach ( (array) $rtmedia->allowed_types as $allowed_types_key => $allowed_types_value ) {
 			$rtmedia_extns[ $allowed_types_key ] = $allowed_types_value['extn'];
 		}
 

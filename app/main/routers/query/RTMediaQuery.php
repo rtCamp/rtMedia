@@ -916,7 +916,7 @@ class RTMediaQuery {
 
 		global $rtmedia;
 
-		foreach ( $rtmedia->allowed_types as $value ) {
+		foreach ( (array) $rtmedia->allowed_types as $value ) {
 			$allowed_media_types[] = $value['name'];
 		}
 

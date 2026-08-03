@@ -1778,7 +1778,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	$allowed_types = array( 'album' );
 
 	// get all allowed media type.
-	foreach ( $rtmedia->allowed_types as $type ) {
+	foreach ( (array) $rtmedia->allowed_types as $type ) {
 		$name            = strtoupper( $type['name'] );
 		$allowed_types[] = constant( 'RTMEDIA_' . $name . '_SLUG' );
 	}
@@ -3028,7 +3028,7 @@ function get_rtmedia_allowed_upload_type() { /* phpcs:ignore WordPress.NamingCon
 	$allow_type_str = '';
 	$sep            = '';
 
-	foreach ( $rtmedia->allowed_types as $type ) {
+	foreach ( (array) $rtmedia->allowed_types as $type ) {
 		if ( function_exists( 'is_rtmedia_upload_' . $type['name'] . '_enabled' ) && call_user_func( 'is_rtmedia_upload_' . $type['name'] . '_enabled' ) ) {
 			foreach ( $type['extn'] as $extn ) {
 				$allow_type_str .= $sep . $extn;

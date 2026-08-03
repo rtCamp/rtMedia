@@ -229,7 +229,7 @@ class RTMediaUploadFile {
 			$allowed_types          = array();
 			$rtmedia->allowed_types = apply_filters( 'rtmedia_allowed_types', $rtmedia->allowed_types );
 
-			foreach ( $rtmedia->allowed_types as $type ) {
+			foreach ( (array) $rtmedia->allowed_types as $type ) {
 				if ( '' !== $type['extn'] && call_user_func( 'is_rtmedia_upload_' . $type['name'] . '_enabled' ) ) {
 					foreach ( $type['extn'] as $extn ) {
 						$allowed_types[] = $extn;

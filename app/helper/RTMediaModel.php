@@ -381,7 +381,7 @@ class RTMediaModel extends RTDBModel {
 		global $wpdb, $rtmedia;
 
 		$query = "SELECT {$this->table_name}.privacy, ";
-		foreach ( $rtmedia->allowed_types as $type ) {
+		foreach ( (array) $rtmedia->allowed_types as $type ) {
 			$type['name'] = esc_sql( $type['name'] );
 			$query       .= $wpdb->prepare( "SUM(CASE WHEN {$this->table_name}.media_type LIKE %s THEN 1 ELSE 0 END) as {$type['name']}, ", $type['name'] ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
