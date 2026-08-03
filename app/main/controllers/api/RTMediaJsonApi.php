@@ -802,25 +802,69 @@ class RTMediaJsonApi {
 		$ec_comment_deleted  = 800009;
 		$msg_comment_deleted = esc_html__( 'comment deleted', 'buddypress-media' );
 
-		$media_id   = filter_input( INPUT_POST, 'media_id', FILTER_SANITIZE_NUMBER_INT );
-		$comment_id = filter_input( INPUT_POST, 'comment_id', FILTER_SANITIZE_NUMBER_INT );
+		$media_id     = filter_input( INPUT_POST, 'media_id', FILTER_SANITIZE_NUMBER_INT );
+		$req_activity = filter_input( INPUT_POST, 'activity_id', FILTER_SANITIZE_NUMBER_INT );
+		$comment_id   = filter_input( INPUT_POST, 'comment_id', FILTER_SANITIZE_NUMBER_INT );
 
 		if ( empty( $comment_id ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_comment_id, $msg_no_comment_id ) );
 		}
 
-		$id       = rtmedia_media_id( $media_id );
-		$comments = get_comments(
-			array(
-				'comment_ID'      => $comment_id,
-				'comment_post_ID' => $id,
-				'user_id'         => $this->user_id,
-				'counts'          => true,
-			)
-		);
+		// Old guard used wrong WP_Comment_Query keys and matched "caller has any comment".
+		$comment = get_comment( $comment_id );
+
+		// Scope to the media given by media_id, or any media on activity_id. The comment
+		// must be on one of those posts, else this endpoint could touch any comment the
+		// caller authored (e.g. a blog-post comment).
+		$rtmediamodel     = new RTMediaModel();
+		$allowed_post_ids = array();
+		if ( ! empty( $media_id ) ) {
+			$post_id = intval( rtmedia_media_id( $media_id ) );
+			if ( $post_id ) {
+				$allowed_post_ids[] = $post_id;
+			}
+		} elseif ( ! empty( $req_activity ) ) {
+			$activity_media = $rtmediamodel->get( array( 'activity_id' => intval( $req_activity ) ) );
+			if ( ! empty( $activity_media ) ) {
+				foreach ( $activity_media as $am ) {
+					if ( ! empty( $am->media_id ) ) {
+						$allowed_post_ids[] = intval( $am->media_id );
+					}
+				}
+			}
+		}
+
+		if ( empty( $comment ) || empty( $allowed_post_ids ) || ! in_array( intval( $comment->comment_post_ID ), $allowed_post_ids, true ) ) {
+			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_comment_not_found, $msg_comment_not_found ) );
+		}
+
+		$can_delete = false;
+		if ( ! empty( $comment ) ) {
+			// Comment author.
+			if ( intval( $comment->user_id ) === intval( $this->user_id ) ) {
+				$can_delete = true;
+			} elseif ( ! empty( $comment->comment_post_ID ) ) {
+				// Author of the media the comment is on.
+				$rtmediamodel = new RTMediaModel();
+				$media        = $rtmediamodel->get( array( 'media_id' => $comment->comment_post_ID ) );
+				if ( ! empty( $media ) && intval( $media[0]->media_author ) === intval( $this->user_id ) ) {
+					$can_delete = true;
+				}
+			}
+
+			// rtMedia admin ( bound to the token user; API has no wp_set_current_user() ).
+			if ( ! $can_delete && user_can( intval( $this->user_id ), 'list_users' ) ) {
+				$can_delete = true;
+			}
+
+			// Same override hook the UI uses.
+			if ( ! $can_delete && apply_filters( 'rtmedia_allow_comment_delete', false ) ) {
+				$can_delete = true;
+			}
+		}
 
 		// Delete Comment.
-		if ( ! empty( $comments ) ) {
+		if ( ! empty( $comment ) && $can_delete ) {
 			$comment = new RTMediaComment();
 
 			$activity_id = get_comment_meta( $comment_id, 'activity_id', true );

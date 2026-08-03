@@ -158,6 +158,9 @@ class RTMediaMigration {
 	 */
 	public function get_total_count() {
 		global $wpdb;
+
+		$count = 0;
+
 		if ( function_exists( 'bp_core_get_table_prefix' ) ) {
 			$bp_prefix = bp_core_get_table_prefix();
 		} else {

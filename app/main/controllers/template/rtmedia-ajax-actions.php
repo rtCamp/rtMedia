@@ -42,8 +42,8 @@ function rtmedia_delete_uploaded_media() {
 			// 1. Is the user the owner of the media?
 			$is_owner = ( $current_user_id === $media_author );
 
-			// 2. Is the user a site administrator?
-			$is_admin = current_user_can( 'manage_options' ) || current_user_can( 'delete_others_posts' );
+			// 2. rtMedia admin ( list_users, not delete_others_posts which also covers Editors ).
+			$is_admin = ( function_exists( 'is_rt_admin' ) && is_rt_admin() ) || is_super_admin();
 
 			// 3. Is the user a BuddyPress Group Admin? (if the media belongs to a BP group)
 			$is_group_admin = false;

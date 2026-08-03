@@ -1024,6 +1024,74 @@ function rtmedia_delete_allowed() {
 }
 
 /**
+ * Whether the current user may manage (delete/move/merge) a media row.
+ *
+ * Owner, rtMedia admin, or the group's admin/mod for group media.
+ *
+ * @param object $media Media row from RTMediaModel::get().
+ *
+ * @return bool
+ */
+function rtmedia_current_user_can_manage_media( $media ) {
+	if ( empty( $media ) || ! is_object( $media ) || ! isset( $media->media_author ) ) {
+		return false;
+	}
+
+	$current_user_id = get_current_user_id();
+
+	if ( ! $current_user_id ) {
+		return false;
+	}
+
+	// Owner.
+	if ( intval( $media->media_author ) === intval( $current_user_id ) ) {
+		return true;
+	}
+
+	// rtMedia admin ( list_users, not delete_others_posts which also covers Editors ).
+	if ( ( function_exists( 'is_rt_admin' ) && is_rt_admin() ) || is_super_admin() ) {
+		return true;
+	}
+
+	// Group admin/mod, for group media only.
+	if ( isset( $media->context ) && 'group' === $media->context && isset( $media->context_id ) ) {
+		if ( function_exists( 'groups_is_user_admin' ) && groups_is_user_admin( $current_user_id, $media->context_id ) ) {
+			return true;
+		}
+		if ( function_exists( 'groups_is_user_mod' ) && groups_is_user_mod( $current_user_id, $media->context_id ) ) {
+			return true;
+		}
+	}
+
+	return (bool) apply_filters( 'rtmedia_current_user_can_manage_media', false, $media, $current_user_id );
+}
+
+/**
+ * Whether the current user may add media to an album (move/merge destination).
+ *
+ * Looser than managing it: reuses the upload rule, so global albums and group
+ * upload permissions apply just like when uploading.
+ *
+ * @param int $album_id Destination album's rtMedia id.
+ *
+ * @return bool
+ */
+function rtmedia_current_user_can_add_to_album( $album_id ) {
+	$album_id = intval( $album_id );
+	$user     = get_current_user_id();
+
+	if ( ! $album_id || ! $user || ! class_exists( 'RTMediaUploadModel' ) ) {
+		return false;
+	}
+
+	$upload_model                         = new RTMediaUploadModel();
+	$upload_model->upload['album_id']     = $album_id;
+	$upload_model->upload['media_author'] = $user;
+
+	return (bool) $upload_model->has_album_permissions();
+}
+
+/**
  * Checking if edit media is allowed
  *
  * @global object $rtmedia_media
@@ -1365,8 +1433,9 @@ function rtmedia_comments( $echo = true ) {
 	if ( empty( $comment_media ) ) {
 
 		$html = sprintf(
-			'<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="%1$sdelete-comment/">',
-			esc_url( get_rtmedia_permalink( rtmedia_id() ) )
+			'<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="%1$sdelete-comment/" data-delete-nonce="%2$s">',
+			esc_url( get_rtmedia_permalink( rtmedia_id() ) ),
+			esc_attr( wp_create_nonce( 'rtmedia_delete_comment' ) )
 		);
 
 		$comments     = get_comments(
