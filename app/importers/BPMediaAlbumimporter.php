@@ -418,6 +418,10 @@ class BPMediaAlbumimporter extends BPMediaImporter { /* phpcs:ignore WordPress.N
 	 */
 	public static function bpmedia_ajax_import_callback() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json( false );
+		}
+
 		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
 			wp_send_json( false );
 		}
@@ -525,6 +529,10 @@ class BPMediaAlbumimporter extends BPMediaImporter { /* phpcs:ignore WordPress.N
 	 */
 	public static function bpmedia_ajax_import_favorites() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json( array( 'status' => false ) );
+		}
+
 		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
 			wp_send_json( array( 'status' => false ) );
 		}
@@ -548,6 +556,10 @@ class BPMediaAlbumimporter extends BPMediaImporter { /* phpcs:ignore WordPress.N
 	 * Ajax import step favorites callback.
 	 */
 	public static function bpmedia_ajax_import_step_favorites() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json( array( 'status' => false ) );
+		}
 
 		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
 			wp_send_json( array( 'status' => false ) );
@@ -600,6 +612,10 @@ class BPMediaAlbumimporter extends BPMediaImporter { /* phpcs:ignore WordPress.N
 	 */
 	public static function cleanup_after_install() {
 		global $wpdb;
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json( array( 'status' => false ) );
+		}
 
 		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
 			wp_send_json( array( 'status' => false ) );
@@ -667,9 +683,14 @@ class BPMediaAlbumimporter extends BPMediaImporter { /* phpcs:ignore WordPress.N
 	 * BPAlbum plugin deactivate.
 	 */
 	public static function bp_album_deactivate() {
-		if ( ! check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce' ) ) {
+		// Require an administrator and a valid importer nonce before deactivating a plugin.
+		// (The previous logic was inverted and gated only on a failing nonce, so it never ran.)
+		if ( current_user_can( 'manage_options' ) && check_ajax_referer( 'bpmedia-bpalbumimporter', 'rtm_wpnonce', false ) ) {
 			deactivate_plugins( 'bp-album/loader.php' );
+			echo '1';
 		}
+		// On failure emit nothing: the caller treats an empty response as an error
+		// (a literal "0" would be truthy in JS and wrongly read as success).
 		exit;
 	}
 }

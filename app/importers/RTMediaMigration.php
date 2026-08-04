@@ -594,6 +594,7 @@ class RTMediaMigration {
 				'done'       => (int) $done,
 				'total'      => (int) $total,
 				'admin_ajax' => admin_url( 'admin-ajax.php' ),
+				'nonce'      => wp_create_nonce( 'rtmedia_migration' ),
 			)
 		);
 
@@ -664,6 +665,13 @@ class RTMediaMigration {
 	 * @param int $limit Limit of rows.
 	 */
 	public function migrate_to_new_db( $lastid = 0, $limit = 1 ) {
+
+		// Only administrators may run the migration, and only from the migration
+		// screen (nonce guards against CSRF). Migration is a heavy, destructive
+		// DB rewrite, so it must never be reachable by arbitrary logged-in users.
+		if ( ! current_user_can( 'manage_options' ) || ! check_ajax_referer( 'rtmedia_migration', 'nonce', false ) ) {
+			wp_send_json( array( 'status' => false ) );
+		}
 
 		if ( ! isset( $_SESSION['migration_media'] ) ) {
 			$this->get_total_count();

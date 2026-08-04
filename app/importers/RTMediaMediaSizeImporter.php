@@ -64,6 +64,10 @@ class RTMediaMediaSizeImporter {
 	 * Hide media size import notice.
 	 */
 	public function rtmedia_hide_media_size_import_notice() {
+		if ( ! current_user_can( 'manage_options' ) || ! check_ajax_referer( 'rtmedia_hide_media_size_import_notice', 'nonce', false ) ) {
+			echo '0';
+			wp_die();
+		}
 		if ( rtmedia_update_site_option( 'rtmedia_hide_media_size_import_notice', true ) ) {
 			echo '1';
 		} else {
@@ -104,12 +108,13 @@ class RTMediaMediaSizeImporter {
 		if ( current_user_can( 'manage_options' ) ) {
 			$this->create_notice(
 				sprintf(
-					'<p><strong>rtMedia</strong>: %1$s <a href="%2$s">%3$s</a> %4$s. <a href="#" id="rtmedia_hide_media_size_import_notice" style="float: right;">%5$s</a></p>',
+					'<p><strong>rtMedia</strong>: %1$s <a href="%2$s">%3$s</a> %4$s. <a href="#" id="rtmedia_hide_media_size_import_notice" data-nonce="%6$s" style="float: right;">%5$s</a></p>',
 					esc_html__( ': Database table structure for rtMedia has been updated. Please', 'buddypress-media' ),
 					esc_url( admin_url( 'admin.php?page=rtmedia-migration-media-size-import&force=true' ) ),
 					esc_html__( 'Click Here', 'buddypress-media' ),
 					esc_html__( 'to import media sizes', 'buddypress-media' ),
-					esc_html__( 'Hide', 'buddypress-media' )
+					esc_html__( 'Hide', 'buddypress-media' ),
+					esc_attr( wp_create_nonce( 'rtmedia_hide_media_size_import_notice' ) )
 				)
 			);
 		}
@@ -126,10 +131,11 @@ class RTMediaMediaSizeImporter {
 		$allowed_html = array(
 			'p'      => array(),
 			'a'      => array(
-				'href'    => array(),
-				'onclick' => array(),
-				'style'   => array(),
-				'id'      => array(),
+				'href'       => array(),
+				'onclick'    => array(),
+				'style'      => array(),
+				'id'         => array(),
+				'data-nonce' => array(),
 			),
 			'strong' => array(),
 		);
@@ -208,7 +214,7 @@ class RTMediaMediaSizeImporter {
 	 */
 	public function rtmedia_media_size_import( $lastid = 0, $limit = 1 ) {
 		global $wpdb;
-		if ( check_ajax_referer( 'rtmedia_media_size_import_nonce', 'nonce' ) ) {
+		if ( current_user_can( 'manage_options' ) && check_ajax_referer( 'rtmedia_media_size_import_nonce', 'nonce' ) ) {
 			$rtmedia_model = new RTMediaModel();
 			$get_media_sql = $wpdb->prepare( "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit %d", $limit ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$lastid        = filter_input( INPUT_POST, 'last_id', FILTER_SANITIZE_NUMBER_INT );

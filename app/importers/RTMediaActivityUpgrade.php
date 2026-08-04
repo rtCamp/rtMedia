@@ -59,6 +59,11 @@ class RTMediaActivityUpgrade {
 	 * Function to update option after activity upgrade is done.
 	 */
 	public function rtmedia_activity_done_upgrade() {
+		// Reuses the nonce rendered on the activity-upgrade screen (same field the
+		// per-batch rtmedia_activity_upgrade requests use).
+		if ( ! current_user_can( 'manage_options' ) || ! check_ajax_referer( 'rtmedia_media_activity_upgrade_nonce', 'nonce', false ) ) {
+			wp_die();
+		}
 		rtmedia_update_site_option( 'rtmedia_activity_done_upgrade', true );
 		die();
 	}
@@ -102,7 +107,7 @@ class RTMediaActivityUpgrade {
 	 */
 	public function rtmedia_activity_upgrade( $lastid = 0, $limit = 1 ) {
 		global $wpdb;
-		if ( check_ajax_referer( 'rtmedia_media_activity_upgrade_nonce', 'nonce' ) ) {
+		if ( current_user_can( 'manage_options' ) && check_ajax_referer( 'rtmedia_media_activity_upgrade_nonce', 'nonce' ) ) {
 			$rtmedia_model          = new RTMediaModel();
 			$rtmedia_activity_model = new RTMediaActivityModel();
 			$activity_sql           = $wpdb->prepare( "SELECT *, max(privacy) as max_privacy FROM {$rtmedia_model->table_name} WHERE activity_id is NOT NULL GROUP BY activity_id ORDER BY id limit %d", $limit ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
