@@ -610,6 +610,13 @@ class RTMediaJsonApi {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_invalid_media_id, $this->msg_invalid_media_id ) );
 			}
 
+			// Do not allow liking media the user is not permitted to view.
+			$rtmediamodel = new RTMediaModel();
+			$media_row    = $rtmediamodel->get( array( 'id' => $media_id ) );
+			if ( empty( $media_row ) || ! $this->rtmedia_api_current_user_can_view_media( $media_row[0] ) ) {
+				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_invalid_media_id, $this->msg_invalid_media_id ) );
+			}
+
 			$like_count_old = get_rtmedia_like( rtmedia_media_id( $media_id ) );
 			$check_action   = $rtmediainteraction->check( $this->user_id, $media_id, $action );
 			if ( $check_action ) {
@@ -714,6 +721,14 @@ class RTMediaJsonApi {
 				wp_send_json( $this->rtmedia_api_response_object( 'TRUE', $ec_media_comments, $msg_media_comments, $my_comments ) );
 			}
 		} else {
+			// Do not disclose comments on media the user is not permitted to view
+			// (fail closed, consistent with like_media / get_likes_rtmedia).
+			$rtmediamodel = new RTMediaModel();
+			$media_row    = $rtmediamodel->get( array( 'id' => $media_id ) );
+			if ( empty( $media_row ) || ! $this->rtmedia_api_current_user_can_view_media( $media_row[0] ) ) {
+				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_comments, $msg_no_comments ) );
+			}
+
 			$media_comments = $this->rtmediajsonapifunction->rtmedia_api_get_media_comments( $media_id );
 			if ( $media_comments ) {
 				wp_send_json( $this->rtmedia_api_response_object( 'TRUE', $ec_media_comments, $msg_media_comments, $media_comments ) );
@@ -755,6 +770,13 @@ class RTMediaJsonApi {
 
 		if ( empty( $media_like_users ) || ! is_array( $media_like_users ) ) {
 			$media_like_users = array();
+		}
+
+		// Do not disclose like data for media the user is not permitted to view.
+		$rtmediamodel = new RTMediaModel();
+		$media_row    = $rtmediamodel->get( array( 'id' => $media_id ) );
+		if ( empty( $media_row ) || ! $this->rtmedia_api_current_user_can_view_media( $media_row[0] ) ) {
+			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_likes, $msg_no_likes ) );
 		}
 
 		$media_like_users = $this->rtmediajsonapifunction->rtmedia_api_media_liked_by_user( $media_id );
@@ -1544,11 +1566,16 @@ class RTMediaJsonApi {
 	 * Mirrors RTMediaQuery::privacy_filter(), which is not registered during the
 	 * API request lifecycle, so private media must be gated explicitly here.
 	 *
-	 * @param object $media Media row returned by RTMediaModel::get().
+	 * Public so the API-functions helpers (which run against the global
+	 * $rtmediajsonapi request instance) can reuse the same check.
+	 *
+	 * @param object|array $media Media row returned by RTMediaModel::get() (object or ARRAY_A).
 	 *
 	 * @return bool True if the current API user may view the media.
 	 */
-	private function rtmedia_api_current_user_can_view_media( $media ) {
+	public function rtmedia_api_current_user_can_view_media( $media ) {
+		// Accept either a DB row object or an associative-array row.
+		$media   = (object) $media;
 		$privacy = isset( $media->privacy ) && null !== $media->privacy ? (int) $media->privacy : 0;
 		$author  = isset( $media->media_author ) ? (int) $media->media_author : 0;
 		$user    = (int) $this->user_id;
