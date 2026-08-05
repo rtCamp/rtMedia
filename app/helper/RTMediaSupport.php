@@ -18,6 +18,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 	 */
 	class RTMediaSupport {
 
+
 		/**
 		 * Debug info.
 		 *
@@ -74,7 +75,6 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							esc_html__( 'Can not verify request source.', 'buddypress-media' )
 						)
 					);
-
 				} else {
 					// download the debug info.
 					$this->download_debuginfo_as_text();
@@ -260,7 +260,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 								$result[]        = str_replace( ABSPATH . 'wp-content/', '', $rt_to_dir_path );
 							}
 						} elseif ( 'main.php' !== $value ) {
-								$result[] = $value;
+							$result[] = $value;
 						}
 					}
 				}
@@ -313,7 +313,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			global $wpdb;
 			$rtmedia_model = new RTMediaModel();
-			$results       = $wpdb->get_results( $wpdb->prepare( "select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id = %d group by media_type limit 100", get_current_blog_id() ) ); // phpcs:ignore
+			$results       = $wpdb->get_results($wpdb->prepare("select media_type, count(id) as count from {$rtmedia_model->table_name} where blog_id = %d group by media_type limit 100", get_current_blog_id())); // phpcs:ignore
 
 			if ( $results ) {
 				foreach ( $results as $media ) {
@@ -469,6 +469,11 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 		 * @return void
 		 */
 		public function submit_request() {
+			// Support requests can attach and delete uploaded debug logs; keep this admin-only.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( array( 'message' => esc_html__( 'You do not have permission to submit a support request.', 'buddypress-media' ) ) );
+			}
+
 			$nonce = filter_input( INPUT_POST, 'support_wpnonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'rtmedia-support-request' ) ) {
 
@@ -512,10 +517,22 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			add_filter( 'wp_mail_content_type', array( $this, 'rtmedia_mail_content_type' ) );
 
-			$debuglog_temp_path = sanitize_text_field( $form_data['debuglog_temp_path'] );
-			// set attachment path for sending into mail.
-			$attachment_file = ( ! empty( $debuglog_temp_path ) ) ? $debuglog_temp_path : '';
-			$attachments     = array( $attachment_file );
+			$debuglog_temp_path = isset( $form_data['debuglog_temp_path'] ) ? sanitize_text_field( $form_data['debuglog_temp_path'] ) : '';
+			// Only attach debug logs created in rtMedia's temporary upload directory.
+			$attachment_file = '';
+			if ( ! empty( $debuglog_temp_path ) ) {
+				$wpuploaddir   = wp_upload_dir();
+				$allowed_real  = realpath( $wpuploaddir['basedir'] . '/rtMedia/tmp' );
+				$resolved_real = realpath( $debuglog_temp_path );
+				if ( $allowed_real && $resolved_real ) {
+					$allowed_dir = trailingslashit( wp_normalize_path( $allowed_real ) );
+					$resolved    = wp_normalize_path( $resolved_real );
+					if ( 0 === strpos( $resolved, $allowed_dir ) ) {
+						$attachment_file = $debuglog_temp_path;
+					}
+				}
+			}
+			$attachments = array( $attachment_file );
 
 			// Sanitize before building the header: both strip CR/LF, preventing email header injection.
 			$from_name     = sanitize_text_field( $form_data['name'] );
@@ -552,7 +569,6 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				if ( 'new_feature' === sanitize_text_field( $form_data['request_type'] ) ) {
 
 					printf( '<p>%1$s</p>', esc_html__( 'Thank you for your Feedback/Suggestion.', 'buddypress-media' ) );
-
 				} else {
 
 					printf(
@@ -563,7 +579,6 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				}
 
 				echo '</div>';
-
 			} else {
 
 				echo '<div class="rtmedia-error">';
