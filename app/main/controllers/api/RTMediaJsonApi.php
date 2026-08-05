@@ -379,6 +379,22 @@ class RTMediaJsonApi {
 		$ec_user_insert_success  = 300007;
 		$msg_user_insert_success = esc_html__( 'new user created', 'buddypress-media' );
 
+		$ec_registration_disabled  = 300006;
+		$msg_registration_disabled = esc_html__( 'user registration is not allowed', 'buddypress-media' );
+
+		// Enforce the site's registration policy. wp_insert_user() does not check it,
+		// so without this the API could create accounts even when self-registration
+		// is turned off site-wide.
+		if ( is_multisite() ) {
+			$registration_allowed = in_array( get_site_option( 'registration' ), array( 'user', 'all' ), true );
+		} else {
+			$registration_allowed = (bool) get_option( 'users_can_register' );
+		}
+
+		if ( ! $registration_allowed ) {
+			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_registration_disabled, $msg_registration_disabled ) );
+		}
+
 		$registration_fields = array( 'username', 'email', 'password', 'password_confirm' );
 		// fields empty field_1, field_4.
 		$field_1 = sanitize_text_field( filter_input( INPUT_POST, 'field_1', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );

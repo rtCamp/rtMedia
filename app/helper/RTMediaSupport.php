@@ -517,7 +517,10 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$attachment_file = ( ! empty( $debuglog_temp_path ) ) ? $debuglog_temp_path : '';
 			$attachments     = array( $attachment_file );
 
-			$headers       = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
+			// Sanitize before building the header: both strip CR/LF, preventing email header injection.
+			$from_name     = sanitize_text_field( $form_data['name'] );
+			$from_email    = sanitize_email( $form_data['email'] );
+			$headers       = 'From: ' . $from_name . ' <' . $from_email . '>' . "\r\n";
 			$support_email = 'support@rtcamp.com';
 			if ( wp_mail(
 				$support_email,

@@ -240,7 +240,8 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 			}
 			$sql = $select . $where;
 
-			$sql .= " ORDER BY {$this->table_name}.$order_by";
+			// esc_sql() does not make ORDER BY safe, so constrain it to validated tokens.
+			$sql .= " ORDER BY {$this->table_name}." . esc_sql( $this->sanitize_order_by( $order_by, 'id desc' ) );
 			if ( false !== $offset ) {
 				if ( ! is_integer( $offset ) ) {
 					$offset = 0;
@@ -259,6 +260,40 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 
 			}
 			return $wpdb->get_results( $sql ); // phpcs:ignore
+		}
+
+		/**
+		 * Validate an ORDER BY clause against a safe pattern (defense-in-depth).
+		 *
+		 * `esc_sql()` does not neutralise SQL inside an ORDER BY clause, so allow
+		 * only comma-separated `column [asc|desc]` segments with identifier-only
+		 * column names. Anything else falls back to $default. This mirrors the
+		 * token allowlist used by RTMediaModel::get().
+		 *
+		 * @param string $order_by Raw order-by clause.
+		 * @param string $default  Fallback clause used when validation fails.
+		 *
+		 * @return string Validated order-by clause (identifiers/directions only).
+		 */
+		protected function sanitize_order_by( $order_by, $default = 'id desc' ) {
+			$segments  = explode( ',', (string) $order_by );
+			$sanitized = array();
+
+			foreach ( $segments as $segment ) {
+				$parts     = preg_split( '/\s+/', trim( $segment ) );
+				$column    = isset( $parts[0] ) ? $parts[0] : '';
+				$direction = isset( $parts[1] ) ? strtolower( $parts[1] ) : '';
+
+				if ( '' === $column
+					|| ! preg_match( '/^[a-zA-Z0-9_]+$/', $column )
+					|| ! in_array( $direction, array( 'asc', 'desc', '' ), true ) ) {
+					return $default;
+				}
+
+				$sanitized[] = trim( $column . ' ' . $direction );
+			}
+
+			return empty( $sanitized ) ? $default : implode( ', ', $sanitized );
 		}
 
 		/**

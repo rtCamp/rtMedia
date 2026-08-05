@@ -40,7 +40,6 @@ class RTMediaRouter {
 		$this->template_redirect();
 
 		add_filter( 'template_include', array( $this, 'template_include' ), 0, 1 );
-		add_action( 'wp_ajax_rtmedia_include_gallery_item', array( 'RTMediaTemplate', 'include_gallery_item' ) );
 	}
 
 	/**
