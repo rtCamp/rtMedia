@@ -51,7 +51,7 @@ class RTMediaUploadException extends Exception {
 			case UPLOAD_ERR_PARTIAL:
 			case UPLOAD_ERR_NO_TMP_DIR:
 			case UPLOAD_ERR_CANT_WRITE:
-				$message = apply_filters( 'bp_media_file_internal_error', esc_html__( 'Uploade failed due to internal server error.', 'buddypress-media' ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+				$message = apply_filters( 'bp_media_file_internal_error', esc_html__( 'Upload failed due to internal server error.', 'buddypress-media' ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				break;
 			case UPLOAD_ERR_EXTENSION:
 				$message = apply_filters( 'bp_media_file_extension_error', esc_html__( 'File type not allowed.', 'buddypress-media' ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */

@@ -532,7 +532,10 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					}
 				}
 			}
-			$attachments = array( $attachment_file );
+			$attachments = array();
+			if ( ! empty( $attachment_file ) ) {
+				$attachments[] = $attachment_file;
+			}
 
 			// Sanitize before building the header: both strip CR/LF, preventing email header injection.
 			$from_name     = sanitize_text_field( $form_data['name'] );

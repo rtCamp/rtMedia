@@ -240,8 +240,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 			}
 			$sql = $select . $where;
 
-			// esc_sql() does not make ORDER BY safe, so constrain it to validated tokens.
-			$sql .= " ORDER BY {$this->table_name}." . esc_sql( $this->sanitize_order_by( $order_by, 'id desc' ) );
+			$sql .= ' ORDER BY ' . $this->qualify_order_by( $order_by, 'id desc' );
 			if ( false !== $offset ) {
 				if ( ! is_integer( $offset ) ) {
 					$offset = 0;
@@ -294,6 +293,35 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 			}
 
 			return empty( $sanitized ) ? $default : implode( ', ', $sanitized );
+		}
+
+		/**
+		 * Qualify each validated ORDER BY segment with the model table name.
+		 *
+		 * @param string $order_by Raw order-by clause.
+		 * @param string $default  Fallback clause used when validation fails.
+		 *
+		 * @return string Validated and table-qualified order-by clause.
+		 */
+		protected function qualify_order_by( $order_by, $default = 'id desc' ) {
+			$segments  = explode( ',', $this->sanitize_order_by( $order_by, $default ) );
+			$qualified = array();
+
+			foreach ( $segments as $segment ) {
+				$parts     = preg_split( '/\s+/', trim( $segment ) );
+				$column    = isset( $parts[0] ) ? $parts[0] : '';
+				$direction = isset( $parts[1] ) ? strtolower( $parts[1] ) : '';
+
+				if ( '' === $column
+					|| ! preg_match( '/^[a-zA-Z0-9_]+$/', $column )
+					|| ! in_array( $direction, array( 'asc', 'desc', '' ), true ) ) {
+					continue;
+				}
+
+				$qualified[] = $this->table_name . '.' . trim( $column . ' ' . $direction );
+			}
+
+			return implode( ', ', $qualified );
 		}
 
 		/**

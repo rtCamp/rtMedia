@@ -281,8 +281,8 @@ class RTMediaModel extends RTDBModel {
 		$where = apply_filters( 'rtmedia-get-album-where-query', $where, $this->table_name ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
-		$order_by  = esc_sql( $this->sanitize_order_by( $order_by, 'media_id desc' ) );
-		$qorder_by = " ORDER BY {$this->table_name}.$order_by ";
+		$order_by  = $this->qualify_order_by( $order_by, 'media_id desc' );
+		$qorder_by = " ORDER BY $order_by ";
 		$sql      .= $where . $qorder_by;
 
 		if ( false !== $offset ) {
@@ -340,8 +340,8 @@ class RTMediaModel extends RTDBModel {
 		if ( is_multisite() ) {
 			$sql .= $wpdb->prepare( " AND  {$this->table_name}.blog_id = %d ", get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
-		$order_by = esc_sql( $this->sanitize_order_by( $order_by, 'media_id desc' ) );
-		$sql     .= " ORDER BY {$this->table_name}.$order_by";
+		$order_by = $this->qualify_order_by( $order_by, 'media_id desc' );
+		$sql     .= " ORDER BY $order_by";
 
 		if ( false !== $offset ) {
 			if ( ! is_integer( $offset ) ) {
