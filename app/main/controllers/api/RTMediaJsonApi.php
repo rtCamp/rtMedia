@@ -849,7 +849,7 @@ class RTMediaJsonApi {
 		}
 
 		// Old guard used wrong WP_Comment_Query keys and matched "caller has any comment".
-		$comment = get_comment( $comment_id );
+		$wp_comment = get_comment( $comment_id );
 
 		// Scope to the media given by media_id, or any media on activity_id. The comment
 		// must be on one of those posts, else this endpoint could touch any comment the
@@ -872,19 +872,19 @@ class RTMediaJsonApi {
 			}
 		}
 
-		if ( empty( $comment ) || empty( $allowed_post_ids ) || ! in_array( intval( $comment->comment_post_ID ), $allowed_post_ids, true ) ) {
+		if ( empty( $wp_comment ) || empty( $allowed_post_ids ) || ! in_array( intval( $wp_comment->comment_post_ID ), $allowed_post_ids, true ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_comment_not_found, $msg_comment_not_found ) );
 		}
 
 		$can_delete = false;
-		if ( ! empty( $comment ) ) {
+		if ( ! empty( $wp_comment ) ) {
 			// Comment author.
-			if ( intval( $comment->user_id ) === intval( $this->user_id ) ) {
+			if ( intval( $wp_comment->user_id ) === intval( $this->user_id ) ) {
 				$can_delete = true;
-			} elseif ( ! empty( $comment->comment_post_ID ) ) {
+			} elseif ( ! empty( $wp_comment->comment_post_ID ) ) {
 				// Author of the media the comment is on.
 				$rtmediamodel = new RTMediaModel();
-				$media        = $rtmediamodel->get( array( 'media_id' => $comment->comment_post_ID ) );
+				$media        = $rtmediamodel->get( array( 'media_id' => $wp_comment->comment_post_ID ) );
 				if ( ! empty( $media ) && intval( $media[0]->media_author ) === intval( $this->user_id ) ) {
 					$can_delete = true;
 				}
@@ -902,8 +902,8 @@ class RTMediaJsonApi {
 		}
 
 		// Delete Comment.
-		if ( ! empty( $comment ) && $can_delete ) {
-			$comment = new RTMediaComment();
+		if ( ! empty( $wp_comment ) && $can_delete ) {
+			$rtmedia_comment = new RTMediaComment();
 
 			$activity_id = get_comment_meta( $comment_id, 'activity_id', true );
 
@@ -918,7 +918,7 @@ class RTMediaJsonApi {
 				);
 
 			}
-			$comment_deleted = $comment->rtmedia_comment_model->delete( $comment_id );
+			$comment_deleted = $rtmedia_comment->rtmedia_comment_model->delete( $comment_id );
 
 			if ( $comment_deleted ) {
 				wp_send_json( $this->rtmedia_api_response_object( 'TRUE', $ec_comment_deleted, $msg_comment_deleted ) );
