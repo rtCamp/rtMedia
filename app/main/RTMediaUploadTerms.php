@@ -85,7 +85,7 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 		 * Loads translation
 		 */
 		public function load_translation() {
-			load_plugin_textdomain( 'rtmedia', false, basename( RTMEDIA_PATH ) . '/languages/' );
+			load_plugin_textdomain( 'buddypress-media', false, basename( RTMEDIA_PATH ) . '/languages/' );
 		}
 
 		/**
@@ -97,7 +97,8 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 			global $rtmedia;
 
 			$suffix                             = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
-			$general_upload_terms_error_message = apply_filters( 'rtmedia_upload_terms_check_terms_message', $rtmedia->options['general_upload_terms_error_message'] );
+			$upload_terms_error_message         = isset( $rtmedia->options['general_upload_terms_error_message'] ) ? $rtmedia->options['general_upload_terms_error_message'] : '';
+			$general_upload_terms_error_message = apply_filters( 'rtmedia_upload_terms_check_terms_message', $upload_terms_error_message );
 
 			if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options['styles_enabled'] ) && 0 === $rtmedia->options['styles_enabled'] ) ) {
 				wp_enqueue_style( 'rtmedia-upload-terms-main', RTMEDIA_URL . 'app/assets/css/rtm-upload-terms' . $suffix . '.css', '', RTMEDIA_VERSION );

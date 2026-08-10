@@ -163,6 +163,8 @@ class RTMediaMigration {
 		} else {
 			$bp_prefix = '';
 		}
+		$count = 0;
+
 		$sql_album_usercount = "select count(*) FROM $wpdb->usermeta where meta_key ='bp-media-default-album' ";
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query is required for custom table.

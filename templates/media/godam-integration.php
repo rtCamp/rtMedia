@@ -8,7 +8,6 @@
  * - Enqueue Godam scripts and styles (including skins) on both normal pages and BuddyPress pages.
  * - Replace rtMedia video lists in BuddyPress activity streams with Godam players.
  * - Handle AJAX requests for activity comments to ensure Godam players load dynamically.
- * - Ensure compatibility with multisite setups using `get_site_option` for global settings.
  * - Maintain Magnific Popup compatibility when Godam is active or inactive.
  */
 
@@ -24,10 +23,10 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		// Base scripts and styles
 		wp_enqueue_script( 'godam-player-frontend-script' );
 		wp_enqueue_script( 'godam-player-analytics-script' );
-		wp_enqueue_style( 'godam-player-frontend-style' );
 		wp_enqueue_style( 'godam-player-style' );
 
-		// Skin detection — multisite safe (uses site option).
+		// Skin detection. GoDAM stores this with get_option()/update_option(), so it is
+		// intentionally per-site and must not be read with get_site_option().
 		$godam_settings = get_option( 'rtgodam-settings', array() );
 		$selected_skin  = $godam_settings['video_player']['player_skin'] ?? '';
 
