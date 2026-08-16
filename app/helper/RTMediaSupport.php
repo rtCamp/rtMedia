@@ -519,8 +519,10 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 
 			$debuglog_temp_path = isset( $form_data['debuglog_temp_path'] ) ? sanitize_text_field( $form_data['debuglog_temp_path'] ) : '';
 			// Only attach debug logs created in rtMedia's temporary upload directory.
+			// sanitize_text_field() does not strip NUL bytes and realpath() throws a
+			// ValueError on them in PHP 8, so reject those before resolving the path.
 			$attachment_file = '';
-			if ( ! empty( $debuglog_temp_path ) ) {
+			if ( ! empty( $debuglog_temp_path ) && false === strpos( $debuglog_temp_path, "\0" ) ) {
 				$wpuploaddir   = wp_upload_dir();
 				$allowed_real  = realpath( $wpuploaddir['basedir'] . '/rtMedia/tmp' );
 				$resolved_real = realpath( $debuglog_temp_path );

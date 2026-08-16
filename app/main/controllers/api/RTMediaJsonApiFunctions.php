@@ -308,7 +308,7 @@ class RTMediaJsonApiFunctions {
 					$model = new RTMediaModel();
 					$media = $model->get_by_activity_id( $activities_template->activity->id );
 
-					if ( isset( $media['result'] ) && count( $media['result'] ) > 0 ) {
+					if ( ! empty( $media['result'] ) && is_array( $media['result'] ) && count( $media['result'] ) > 0 ) {
 						// Drop media the API user is not permitted to view. Privacy is
 						// otherwise enforced only by RTMediaQuery, which never runs in
 						// the API request lifecycle.

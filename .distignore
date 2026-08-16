@@ -1,4 +1,5 @@
 .bowerrc
+app/assets/css/sass/.bowerrc
 .distignore
 .github
 .gitattributes
@@ -11,6 +12,7 @@ Gruntfile.js
 README.md
 bin
 deploy.sh
+node_modules
 package-lock.json
 package.json
 phpcs.xml
