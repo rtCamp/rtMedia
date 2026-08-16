@@ -1041,12 +1041,16 @@ class RTMediaTemplate {
 			return true;
 		}
 
-		// Author of the media the comment is on.
+		// Author of the media the comment is on. media_id is not unique — several rtMedia
+		// rows can point at one attachment and so share a single comment thread — so every
+		// matching row must be checked, not just the first.
 		if ( ! empty( $comment->comment_post_ID ) && class_exists( 'RTMediaModel' ) ) {
 			$model = new RTMediaModel();
 			$media = $model->get( array( 'media_id' => $comment->comment_post_ID ) );
-			if ( ! empty( $media ) && intval( $media[0]->media_author ) === intval( $current_user_id ) ) {
-				return true;
+			foreach ( (array) $media as $media_row ) {
+				if ( isset( $media_row->media_author ) && intval( $media_row->media_author ) === intval( $current_user_id ) ) {
+					return true;
+				}
 			}
 		}
 

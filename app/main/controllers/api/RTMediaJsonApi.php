@@ -882,11 +882,16 @@ class RTMediaJsonApi {
 			if ( intval( $wp_comment->user_id ) === intval( $this->user_id ) ) {
 				$can_delete = true;
 			} elseif ( ! empty( $wp_comment->comment_post_ID ) ) {
-				// Author of the media the comment is on.
+				// Author of the media the comment is on. media_id is not unique — several
+				// rtMedia rows can point at one attachment and so share a single comment
+				// thread — so every matching row must be checked, not just the first.
 				$rtmediamodel = new RTMediaModel();
 				$media        = $rtmediamodel->get( array( 'media_id' => $wp_comment->comment_post_ID ) );
-				if ( ! empty( $media ) && intval( $media[0]->media_author ) === intval( $this->user_id ) ) {
-					$can_delete = true;
+				foreach ( (array) $media as $media_row ) {
+					if ( isset( $media_row->media_author ) && intval( $media_row->media_author ) === intval( $this->user_id ) ) {
+						$can_delete = true;
+						break;
+					}
 				}
 			}
 
