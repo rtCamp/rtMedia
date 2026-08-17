@@ -328,7 +328,8 @@ class RTMediaJsonApiFunctions {
 
 						$viewable_media_ids = array();
 						foreach ( $viewable_media as $media_row ) {
-							$viewable_media_ids[] = intval( $media_row->id );
+							// get_by_activity_id() returns ARRAY_A rows, but callers may pass objects.
+							$viewable_media_ids[] = intval( is_array( $media_row ) ? $media_row['id'] : $media_row->id );
 						}
 
 						$activity_text = bp_activity_get_meta( $activities_template->activity->id, 'bp_activity_text' );
