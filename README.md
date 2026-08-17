@@ -149,10 +149,10 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ### 4.7.12
 * FIXED
-  * Improved authorization checks for media, albums, comments and activity privacy so actions are limited to permitted users.
-  * Improved privacy enforcement for media returned by the JSON API.
-  * Improved validation and sanitization of upload targets, album selection and query parameters.
-  * Added capability and nonce verification to administrative AJAX actions.
+  * Fixed authorization checks for media, albums, comments and activity privacy so actions are limited to permitted users.
+  * Fixed privacy enforcement for media returned by the JSON API.
+  * Fixed insufficient validation and sanitization of upload targets, album selection and query parameters.
+  * Fixed missing capability and nonce verification on administrative AJAX actions.
   * Fixed PHP 8 warnings reported on page load.
 
 * ENHANCEMENT
