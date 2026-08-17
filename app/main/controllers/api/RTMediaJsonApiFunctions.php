@@ -321,6 +321,21 @@ class RTMediaJsonApiFunctions {
 							$viewable_media[] = $media_row;
 						}
 
+						if ( empty( $viewable_media ) ) {
+							unset( $activity_feed[ $i ] );
+							continue;
+						}
+
+						$viewable_media_ids = array();
+						foreach ( $viewable_media as $media_row ) {
+							$viewable_media_ids[] = intval( $media_row->id );
+						}
+
+						$activity_text = bp_activity_get_meta( $activities_template->activity->id, 'bp_activity_text' );
+						$obj_activity  = new RTMediaActivity( $viewable_media_ids, 0, $activity_text );
+
+						$activity_feed[ $i ]['activity_content'] = $obj_activity->create_activity_html();
+
 						// Create media array.
 						$media = $this->rtmedia_api_media_details( $viewable_media );
 					} else {

@@ -107,7 +107,8 @@ class RTMediaUploadEndpoint {
 					}
 				}
 
-				$comment_media = false;
+				$comment_media                 = false;
+				$internal_comment_media_upload = false;
 				// if media is add in from the comment media section.
 				if ( isset( $this->upload['comment_media_activity_id'] ) && ! empty( $this->upload['comment_media_activity_id'] ) ) {
 					// if group is public, then set media privacy as 0.
@@ -169,7 +170,8 @@ class RTMediaUploadEndpoint {
 						$this->upload['privacy']  = $privacy;
 
 						if ( 0 === strrpos( $context, 'comment-media' ) ) {
-							$this->upload['context'] = 'comment-media';
+							$this->upload['context']       = 'comment-media';
+							$internal_comment_media_upload = true;
 						}
 
 						$this->upload['context_id'] = $context_id;
@@ -180,6 +182,7 @@ class RTMediaUploadEndpoint {
 				$this->upload = apply_filters( 'rtmedia_media_param_before_upload', $this->upload );
 
 				$model->upload = $this->upload;
+				$model->set_internal_comment_media_upload( $internal_comment_media_upload );
 				$model->authorize_targets();
 				$this->upload = $model->upload;
 

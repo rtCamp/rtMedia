@@ -31,6 +31,13 @@ class RTMediaUploadModel {
 	);
 
 	/**
+	 * Whether the endpoint has derived this as an internal comment-media upload.
+	 *
+	 * @var bool
+	 */
+	private $internal_comment_media_upload = false;
+
+	/**
 	 * Set uploaded media data in class upload object.
 	 *
 	 * @param array $upload_params array of parameters.
@@ -210,14 +217,111 @@ class RTMediaUploadModel {
 		} elseif ( 'group' === $this->upload['context'] ) {
 			// Only users who may post in the target group may upload into it.
 			if ( ! $this->can_user_upload_in_target_group( $user, intval( $this->upload['context_id'] ) ) ) {
-				$this->upload['context']    = 'profile';
-				$this->upload['context_id'] = $user;
+				$this->fallback_to_profile_context( $user );
 			}
+		} elseif ( 'comment-media' === $this->upload['context'] ) {
+			if ( ! $this->is_internal_comment_media_upload() ) {
+				$this->fallback_to_profile_context( $user );
+			}
+		} elseif ( 'comment' === $this->upload['context'] ) {
+			if ( ! $this->can_user_upload_in_comment_context( $user, intval( $this->upload['context_id'] ) ) ) {
+				$this->fallback_to_profile_context( $user );
+			}
+		} elseif ( 'reply' === $this->upload['context'] ) {
+			if ( ! $this->can_user_upload_in_reply_context( $user, intval( $this->upload['context_id'] ) ) ) {
+				$this->fallback_to_profile_context( $user );
+			}
+		} elseif ( ! $this->can_user_upload_in_post_context( $user, $this->upload['context'], intval( $this->upload['context_id'] ) ) ) {
+			$this->fallback_to_profile_context( $user );
 		}
 
 		if ( ! $this->has_album_id() || ! $this->has_album_permissions() ) {
 			$this->set_album_id();
 		}
+	}
+
+	/**
+	 * Reset the upload target to the acting user's profile.
+	 *
+	 * @param int $user User id.
+	 */
+	private function fallback_to_profile_context( $user ) {
+		$this->upload['context']    = 'profile';
+		$this->upload['context_id'] = $user;
+	}
+
+	/**
+	 * Mark whether the current upload was derived from the internal comment-media path.
+	 *
+	 * @param bool $is_internal Whether this is an internal comment-media upload.
+	 */
+	public function set_internal_comment_media_upload( $is_internal ) {
+		$this->internal_comment_media_upload = (bool) $is_internal;
+	}
+
+	/**
+	 * Whether this request is the internally-derived comment-media upload path.
+	 *
+	 * @return boolean
+	 */
+	private function is_internal_comment_media_upload() {
+		return $this->internal_comment_media_upload;
+	}
+
+	/**
+	 * Whether a user may upload media attached to a comment target.
+	 *
+	 * @param int $user       User id.
+	 * @param int $context_id Comment id.
+	 *
+	 * @return boolean
+	 */
+	private function can_user_upload_in_comment_context( $user, $context_id ) {
+		$allowed = ( $user && $context_id && get_comment( $context_id ) )
+			? user_can( $user, 'edit_comment', $context_id )
+			: false;
+
+		return (bool) apply_filters( 'rtmedia_can_user_upload_in_comment_context', $allowed, $context_id, $user, $this->upload ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+	}
+
+	/**
+	 * Whether a user may upload media attached to a reply target.
+	 *
+	 * @param int $user       User id.
+	 * @param int $context_id Reply id.
+	 *
+	 * @return boolean
+	 */
+	private function can_user_upload_in_reply_context( $user, $context_id ) {
+		$allowed = ( $user && $context_id && user_can( $user, 'edit_reply', $context_id ) );
+
+		if ( ! $allowed ) {
+			$allowed = $this->can_user_upload_in_post_context( $user, 'reply', $context_id );
+		}
+
+		return (bool) apply_filters( 'rtmedia_can_user_upload_in_reply_context', $allowed, $context_id, $user, $this->upload ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+	}
+
+	/**
+	 * Whether a user may upload media attached to a post-like target.
+	 *
+	 * @param int    $user       User id.
+	 * @param string $context    Context/post type.
+	 * @param int    $context_id Context id.
+	 *
+	 * @return boolean
+	 */
+	private function can_user_upload_in_post_context( $user, $context, $context_id ) {
+		$allowed = false;
+
+		if ( $user && $context_id && function_exists( 'post_type_exists' ) && post_type_exists( $context ) ) {
+			$post = get_post( $context_id );
+			if ( $post && $context === $post->post_type ) {
+				$allowed = user_can( $user, 'edit_post', $context_id );
+			}
+		}
+
+		return (bool) apply_filters( 'rtmedia_can_user_upload_in_context', $allowed, $context, $context_id, $user, $this->upload ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	}
 
 	/**
