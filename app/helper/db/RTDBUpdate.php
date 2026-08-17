@@ -9,6 +9,10 @@
  * version 1.1
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'RTDBUpdate' ) ) {
 	/**
 	 * Class to update DB for rtMedia.
@@ -178,7 +182,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 										$table_name = ( ( $this->mu_single_table ) ? $wpdb->base_prefix : $wpdb->prefix ) . 'rt_' . $table_name;
 										if ( $tb_name !== $table_name ) {
 											$alter_sql = "ALTER TABLE `{$tb_name}` RENAME TO `{$table_name}`";
-											$wpdb->query( $alter_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+											$wpdb->query( $alter_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Direct query is required for custom table.
 										}
 									}
 								}
@@ -205,7 +209,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ) {
 				} else {
 					update_option( $this->db_version_option_name, $this->db_version );
 				}
-				do_action( 'rt_db_upgrade' );
+				do_action( 'rt_db_upgrade' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			}
 		}
 

@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class='rtmedia-group-media-settings'>

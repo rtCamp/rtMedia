@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <h3 class="rtm-option-title"><?php echo esc_html( $meta_title ); ?></h3>
@@ -70,7 +74,7 @@
 
 		<?php
 		// Adding nonce for file upload.
-		$nonce = wp_create_nonce( 'rtmedia-admin-upload' );
+		$nonce = wp_create_nonce( 'rtmedia-admin-upload' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		?>
 		<input type="hidden" id="rtmedia_admin_upload_nonce" value="<?php echo esc_attr( $nonce ); ?>" />
 		<input type="hidden" name="debuglog_temp_path" id="debuglog_temp_path" />

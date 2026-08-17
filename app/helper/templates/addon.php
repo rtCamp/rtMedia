@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="plugin-card clearfix rtm-plugin-card">

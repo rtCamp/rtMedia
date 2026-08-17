@@ -6,6 +6,7 @@ jQuery(function ($) {
 	var done = parseInt(window.rtmedia_migration.done || 0, 10);
 	var total = parseInt(window.rtmedia_migration.total || 0, 10);
 	var adminAjax = String(window.rtmedia_migration.admin_ajax || '');
+	var nonce = String(window.rtmedia_migration.nonce || '');
 
 	$("#toplevel_page_rtmedia-settings").addClass("wp-has-current-submenu");
 	$("#toplevel_page_rtmedia-settings").removeClass("wp-not-current-submenu");
@@ -46,7 +47,8 @@ jQuery(function ($) {
 				type: 'post',
 				data: {
 					action: 'bp_media_rt_db_migration',
-					done: currentDone
+					done: currentDone,
+					nonce: nonce
 				}
 			}).done(function (sdata) {
 				var data;

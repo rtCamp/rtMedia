@@ -379,6 +379,22 @@ class RTMediaJsonApi {
 		$ec_user_insert_success  = 300007;
 		$msg_user_insert_success = esc_html__( 'new user created', 'buddypress-media' );
 
+		$ec_registration_disabled  = 300006;
+		$msg_registration_disabled = esc_html__( 'user registration is not allowed', 'buddypress-media' );
+
+		// Enforce the site's registration policy. wp_insert_user() does not check it,
+		// so without this the API could create accounts even when self-registration
+		// is turned off site-wide.
+		if ( is_multisite() ) {
+			$registration_allowed = in_array( get_site_option( 'registration' ), array( 'user', 'all' ), true );
+		} else {
+			$registration_allowed = (bool) get_option( 'users_can_register' );
+		}
+
+		if ( ! $registration_allowed ) {
+			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_registration_disabled, $msg_registration_disabled ) );
+		}
+
 		$registration_fields = array( 'username', 'email', 'password', 'password_confirm' );
 		// fields empty field_1, field_4.
 		$field_1 = sanitize_text_field( filter_input( INPUT_POST, 'field_1', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
@@ -464,7 +480,7 @@ class RTMediaJsonApi {
 
 		// Generate something random for a key...
 		$key = wp_generate_password( 20, false );
-		do_action( 'retrieve_password_key', $user_login, $key );
+		do_action( 'retrieve_password_key', $user_login, $key ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 		// Now insert the new md5 key into the db.
 		// Now insert the key, hashed, into the DB.
@@ -610,6 +626,13 @@ class RTMediaJsonApi {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_invalid_media_id, $this->msg_invalid_media_id ) );
 			}
 
+			// Do not allow liking media the user is not permitted to view.
+			$rtmediamodel = new RTMediaModel();
+			$media_row    = $rtmediamodel->get( array( 'id' => $media_id ) );
+			if ( empty( $media_row ) || ! $this->rtmedia_api_current_user_can_view_media( $media_row[0] ) ) {
+				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_invalid_media_id, $this->msg_invalid_media_id ) );
+			}
+
 			$like_count_old = get_rtmedia_like( rtmedia_media_id( $media_id ) );
 			$check_action   = $rtmediainteraction->check( $this->user_id, $media_id, $action );
 			if ( $check_action ) {
@@ -714,6 +737,14 @@ class RTMediaJsonApi {
 				wp_send_json( $this->rtmedia_api_response_object( 'TRUE', $ec_media_comments, $msg_media_comments, $my_comments ) );
 			}
 		} else {
+			// Do not disclose comments on media the user is not permitted to view
+			// (fail closed, consistent with like_media / get_likes_rtmedia).
+			$rtmediamodel = new RTMediaModel();
+			$media_row    = $rtmediamodel->get( array( 'id' => $media_id ) );
+			if ( empty( $media_row ) || ! $this->rtmedia_api_current_user_can_view_media( $media_row[0] ) ) {
+				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_comments, $msg_no_comments ) );
+			}
+
 			$media_comments = $this->rtmediajsonapifunction->rtmedia_api_get_media_comments( $media_id );
 			if ( $media_comments ) {
 				wp_send_json( $this->rtmedia_api_response_object( 'TRUE', $ec_media_comments, $msg_media_comments, $media_comments ) );
@@ -755,6 +786,13 @@ class RTMediaJsonApi {
 
 		if ( empty( $media_like_users ) || ! is_array( $media_like_users ) ) {
 			$media_like_users = array();
+		}
+
+		// Do not disclose like data for media the user is not permitted to view.
+		$rtmediamodel = new RTMediaModel();
+		$media_row    = $rtmediamodel->get( array( 'id' => $media_id ) );
+		if ( empty( $media_row ) || ! $this->rtmedia_api_current_user_can_view_media( $media_row[0] ) ) {
+			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_likes, $msg_no_likes ) );
 		}
 
 		$media_like_users = $this->rtmediajsonapifunction->rtmedia_api_media_liked_by_user( $media_id );
@@ -802,26 +840,75 @@ class RTMediaJsonApi {
 		$ec_comment_deleted  = 800009;
 		$msg_comment_deleted = esc_html__( 'comment deleted', 'buddypress-media' );
 
-		$media_id   = filter_input( INPUT_POST, 'media_id', FILTER_SANITIZE_NUMBER_INT );
-		$comment_id = filter_input( INPUT_POST, 'comment_id', FILTER_SANITIZE_NUMBER_INT );
+		$media_id     = filter_input( INPUT_POST, 'media_id', FILTER_SANITIZE_NUMBER_INT );
+		$req_activity = filter_input( INPUT_POST, 'activity_id', FILTER_SANITIZE_NUMBER_INT );
+		$comment_id   = filter_input( INPUT_POST, 'comment_id', FILTER_SANITIZE_NUMBER_INT );
 
 		if ( empty( $comment_id ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_no_comment_id, $msg_no_comment_id ) );
 		}
 
-		$id       = rtmedia_media_id( $media_id );
-		$comments = get_comments(
-			array(
-				'comment_ID'      => $comment_id,
-				'comment_post_ID' => $id,
-				'user_id'         => $this->user_id,
-				'counts'          => true,
-			)
-		);
+		// Old guard used wrong WP_Comment_Query keys and matched "caller has any comment".
+		$wp_comment = get_comment( $comment_id );
+
+		// Scope to the media given by media_id, or any media on activity_id. The comment
+		// must be on one of those posts, else this endpoint could touch any comment the
+		// caller authored (e.g. a blog-post comment).
+		$rtmediamodel     = new RTMediaModel();
+		$allowed_post_ids = array();
+		if ( ! empty( $media_id ) ) {
+			$post_id = intval( rtmedia_media_id( $media_id ) );
+			if ( $post_id ) {
+				$allowed_post_ids[] = $post_id;
+			}
+		} elseif ( ! empty( $req_activity ) ) {
+			$activity_media = $rtmediamodel->get( array( 'activity_id' => intval( $req_activity ) ) );
+			if ( ! empty( $activity_media ) ) {
+				foreach ( $activity_media as $am ) {
+					if ( ! empty( $am->media_id ) ) {
+						$allowed_post_ids[] = intval( $am->media_id );
+					}
+				}
+			}
+		}
+
+		if ( empty( $wp_comment ) || empty( $allowed_post_ids ) || ! in_array( intval( $wp_comment->comment_post_ID ), $allowed_post_ids, true ) ) {
+			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_comment_not_found, $msg_comment_not_found ) );
+		}
+
+		$can_delete = false;
+		if ( ! empty( $wp_comment ) ) {
+			// Comment author.
+			if ( intval( $wp_comment->user_id ) === intval( $this->user_id ) ) {
+				$can_delete = true;
+			} elseif ( ! empty( $wp_comment->comment_post_ID ) ) {
+				// Author of the media the comment is on. media_id is not unique — several
+				// rtMedia rows can point at one attachment and so share a single comment
+				// thread — so every matching row must be checked, not just the first.
+				$rtmediamodel = new RTMediaModel();
+				$media        = $rtmediamodel->get( array( 'media_id' => $wp_comment->comment_post_ID ) );
+				foreach ( (array) $media as $media_row ) {
+					if ( isset( $media_row->media_author ) && intval( $media_row->media_author ) === intval( $this->user_id ) ) {
+						$can_delete = true;
+						break;
+					}
+				}
+			}
+
+			// rtMedia admin ( bound to the token user; API has no wp_set_current_user() ).
+			if ( ! $can_delete && user_can( intval( $this->user_id ), 'list_users' ) ) {
+				$can_delete = true;
+			}
+
+			// Same override hook the UI uses.
+			if ( ! $can_delete && apply_filters( 'rtmedia_allow_comment_delete', false ) ) {
+				$can_delete = true;
+			}
+		}
 
 		// Delete Comment.
-		if ( ! empty( $comments ) ) {
-			$comment = new RTMediaComment();
+		if ( ! empty( $wp_comment ) && $can_delete ) {
+			$rtmedia_comment = new RTMediaComment();
 
 			$activity_id = get_comment_meta( $comment_id, 'activity_id', true );
 
@@ -836,7 +923,7 @@ class RTMediaJsonApi {
 				);
 
 			}
-			$comment_deleted = $comment->rtmedia_comment_model->delete( $comment_id );
+			$comment_deleted = $rtmedia_comment->rtmedia_comment_model->delete( $comment_id );
 
 			if ( $comment_deleted ) {
 				wp_send_json( $this->rtmedia_api_response_object( 'TRUE', $ec_comment_deleted, $msg_comment_deleted ) );
@@ -1191,7 +1278,7 @@ class RTMediaJsonApi {
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_image, $msg_invalid_image ) );
 			}
 
-			define( 'UPLOAD_DIR_LOOK', sys_get_temp_dir() );
+			define( 'UPLOAD_DIR_LOOK', sys_get_temp_dir() ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			$tmp_name = UPLOAD_DIR_LOOK . $title;
 			$file     = $tmp_name . '.' . $image_type;
@@ -1233,6 +1320,24 @@ class RTMediaJsonApi {
 			$uploaded['description']                = $description;
 			$uploaded['taxonomy']                   = array();
 			$uploaded['custom_fields']              = array();
+
+			// Verify the token user may write to the requested album/context before adding.
+			$upload_model         = new RTMediaUploadModel();
+			$upload_model->upload = array_merge( $upload_model->upload, $uploaded );
+			$upload_model->authorize_targets();
+			$uploaded['album_id']   = $upload_model->upload['album_id'];
+			$uploaded['context']    = $upload_model->upload['context'];
+			$uploaded['context_id'] = $upload_model->upload['context_id'];
+			// This branch skips sanitize_object(), so validate privacy here too.
+			$uploaded['privacy'] = rtmedia_sanitize_privacy_level( $uploaded['privacy'] );
+
+			// Group uploads take their privacy from the group, same as the normal upload
+			// endpoint. Without this a caller could post privacy 0 into a private group
+			// and the web gallery would treat it as public.
+			if ( 'group' === $uploaded['context'] ) {
+				$uploaded['privacy'] = rtmedia_get_group_privacy_level( $uploaded['context_id'] );
+			}
+
 			$rtmedia                                = new RTMediaMedia();
 			$rtupload                               = $rtmedia->add( $uploaded, $new_look );
 			$id                                     = rtmedia_media_id( $rtupload[0] );
@@ -1447,6 +1552,11 @@ class RTMediaJsonApi {
 			);
 			$media        = $rtmediamodel->get( $args );
 		}
+
+		if ( ! empty( $media ) && ! $this->rtmedia_api_current_user_can_view_media( $media[0] ) ) {
+			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_invalid_media_id, $this->msg_invalid_media_id ) );
+		}
+
 		$activity_id = ! empty( $media ) ? $media[0]->activity_id : '';
 
 		if ( empty( $activity_id ) ) {
@@ -1454,9 +1564,81 @@ class RTMediaJsonApi {
 		}
 		$media_single = $this->rtmediajsonapifunction->rtmedia_api_get_feed( false, $activity_id );
 
+		// This endpoint returns a single media item; drop any sibling media sharing the
+		// same activity so another user's media is never exposed alongside the requested one.
+		if ( ! empty( $media_single[0]['media'] ) && is_array( $media_single[0]['media'] ) ) {
+			$requested_media = array();
+			foreach ( $media_single[0]['media'] as $item ) {
+				if ( isset( $item['id'] ) && (int) $item['id'] === (int) $media_id ) {
+					$requested_media[] = $item;
+				}
+			}
+			$media_single[0]['media'] = $requested_media;
+
+			// Re-scope comments to the requested media; get_feed sets them from the
+			// activity's first media, which may belong to another user.
+			if ( isset( $media_single[0]['comments'] ) ) {
+				$media_single[0]['comments'] = $this->rtmediajsonapifunction->rtmedia_api_get_media_comments( $media_id );
+			}
+		}
+
 		if ( $media_single ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'TRUE', $ec_single_media, $msg_single_media, $media_single ) );
 		}
+	}
+
+	/**
+	 * Check whether the token-authenticated API user may view a media item.
+	 *
+	 * Mirrors RTMediaQuery::privacy_filter(), which is not registered during the
+	 * API request lifecycle, so private media must be gated explicitly here.
+	 *
+	 * Public so the API-functions helpers (which run against the global
+	 * $rtmediajsonapi request instance) can reuse the same check.
+	 *
+	 * @param object|array $media Media row returned by RTMediaModel::get() (object or ARRAY_A).
+	 *
+	 * @return bool True if the current API user may view the media.
+	 */
+	public function rtmedia_api_current_user_can_view_media( $media ) {
+		// Accept either a DB row object or an associative-array row.
+		$media   = (object) $media;
+		$privacy = isset( $media->privacy ) && null !== $media->privacy ? (int) $media->privacy : 0;
+		$author  = isset( $media->media_author ) ? (int) $media->media_author : 0;
+		$user    = (int) $this->user_id;
+
+		if ( $user && user_can( $user, 'list_users' ) ) {
+			return true;
+		}
+		// Group media: private/hidden groups store privacy 20, which the numeric ladder
+		// would otherwise treat as "any logged-in user". Gate on group membership first.
+		if ( isset( $media->context, $media->context_id ) && 'group' === $media->context ) {
+			if ( ! function_exists( 'groups_get_group' ) || ! function_exists( 'groups_is_user_member' ) ) {
+				return false;
+			}
+			$group = groups_get_group( (int) $media->context_id );
+			if ( empty( $group->id ) || ( 'public' !== $group->status && ( ! $user || ! groups_is_user_member( $user, (int) $media->context_id ) ) ) ) {
+				return false;
+			}
+		}
+
+		// Public is exactly NULL or 0; values such as -1 / 80 are blocked, not public.
+		if ( 0 === $privacy ) {
+			return true;
+		}
+		if ( $user ) {
+			if ( 20 === $privacy ) {
+				return true;
+			}
+			if ( $author === $user && $privacy >= 40 ) {
+				return true;
+			}
+			if ( 40 === $privacy && function_exists( 'friends_check_friendship' ) && friends_check_friendship( $author, $user ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

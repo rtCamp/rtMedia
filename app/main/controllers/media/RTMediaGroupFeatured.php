@@ -6,6 +6,10 @@
  * @author ritz <ritesh.patel@rtcamp.com>
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class to handle media group featured media.
  */

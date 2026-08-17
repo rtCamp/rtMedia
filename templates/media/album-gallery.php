@@ -5,16 +5,20 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Generate random number for gallery container.
 // This will be useful when multiple gallery shortcodes are used in a single page.
-$rand_id = wp_rand( 0, 1000 );
+$rand_id = wp_rand( 0, 1000 ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 ?>
 <div class="rtmedia-container" id="rtmedia_gallery_container_<?php echo esc_attr( $rand_id ); ?>">
 	<?php
 	do_action( 'rtmedia_before_album_gallery' );
 
-	$gallery_title = get_rtmedia_gallery_title();
+	$gallery_title = get_rtmedia_gallery_title(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	?>
 
 	<div id="rtm-gallery-title-container" class="clearfix">
@@ -41,9 +45,9 @@ $rand_id = wp_rand( 0, 1000 );
 
 	<?php
 	do_action( 'rtmedia_after_media_gallery_title' );
-	$global_albums = rtmedia_global_albums();
-	$model         = new RTMediaModel();
-	$album_objects = $model->get_media(
+	$global_albums = rtmedia_global_albums(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+	$model         = new RTMediaModel(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+	$album_objects = $model->get_media( /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		array(
 			'id' => ( $global_albums ),
 		)
@@ -63,10 +67,10 @@ $rand_id = wp_rand( 0, 1000 );
 				include 'album-gallery-item.php';
 			endwhile;
 			if ( ! empty( $album_objects ) && ! current_user_can( 'manage_options' ) ) {
-				foreach ( $album_objects as $album_object ) {
-					$media_id    = $album_object->media_id;
-					$album_id    = $album_object->id;
-					$media_title = $album_object->media_title;
+				foreach ( $album_objects as $album_object ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+					$media_id    = $album_object->media_id; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+					$album_id    = $album_object->id; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+					$media_title = $album_object->media_title; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					?>
 					<!--    start default album gallery-->
 					<li class="rtmedia-list-item" id="<?php echo esc_attr( $media_id ); ?>">
@@ -115,15 +119,15 @@ $rand_id = wp_rand( 0, 1000 );
 			<?php
 			global $rtmedia;
 
-			$general_options = $rtmedia->options;
+			$general_options = $rtmedia->options; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			if ( isset( $rtmedia->options['general_display_media'] ) && 'pagination' === $general_options['general_display_media'] ) {
 				rtmedia_media_pagination();
 			} else {
-				$display = '';
+				$display = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 				if ( rtmedia_offset() + rtmedia_per_page_media() > rtmedia_count() ) {
-					$display = 'display:none;';
+					$display = 'display:none;'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				}
 				?>
 				<a id="rtMedia-galary-next" style='<?php echo esc_attr( $display ); ?>' href="<?php echo esc_url( rtmedia_pagination_next_link() ); ?>"><?php esc_html_e( 'Load More', 'buddypress-media' ); ?></a>

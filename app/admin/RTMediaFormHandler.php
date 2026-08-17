@@ -6,6 +6,10 @@
  * @subpackage Admin
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class for different form elements display.
  *

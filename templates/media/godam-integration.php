@@ -12,6 +12,10 @@
  * - Maintain Magnific Popup compatibility when Godam is active or inactive.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 	/**
@@ -20,7 +24,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 	add_action( 'wp_enqueue_scripts', 'godam_enqueue_player_assets', 20 );
 	add_action( 'bp_enqueue_scripts', 'godam_enqueue_player_assets', 20 ); // BuddyPress pages
 
-	function godam_enqueue_player_assets() {
+	function godam_enqueue_player_assets() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		// Base scripts and styles
 		wp_enqueue_script( 'godam-player-frontend-script' );
 		wp_enqueue_script( 'godam-player-analytics-script' );
@@ -56,7 +60,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 					'godam-rtmedia-integration',
 					RTMEDIA_URL . 'app/assets/js/godam-integration.min.js',
 					array( 'godam-player-frontend-script' ),
-					null,
+					RTMEDIA_VERSION,
 					true
 				);
 			}
@@ -66,7 +70,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 				'godam-ajax-refresh',
 				RTMEDIA_URL . 'app/assets/js/godam-ajax-refresh.min.js',
 				array(),
-				null,
+				RTMEDIA_VERSION,
 				true
 			);
 
@@ -199,7 +203,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 	 *
 	 * @return void Outputs JSON response with rendered HTML or error message.
 	 */
-	function handle_get_single_activity_comment_html() {
+	function handle_get_single_activity_comment_html() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		check_ajax_referer( 'godam-ajax-nonce', 'nonce' );
 
 		// Require user to be logged in.
@@ -229,7 +233,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		$original_activity = $activities_template->activity ?? null;
 
 		// Replace global for template rendering.
-		$activities_template             = new stdClass();
+		$activities_template             = new stdClass(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		$activities_template->activity  = $activity;
 
 		ob_start();
@@ -349,7 +353,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
  *
  * Enqueuing here guarantees consistent script loading regardless of Godam’s activation status.
  */
-function enqueue_rtmedia_magnific_popup_script() {
+function enqueue_rtmedia_magnific_popup_script() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$handle     = 'rtmedia-magnific-popup';
 	$script_src = RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js';
 	$version    = RTMEDIA_VERSION;

@@ -79,7 +79,7 @@ jQuery(document).ready(function($) {
 
 	// Media Size Import notice dismissal
 	$( '#rtmedia_hide_media_size_import_notice' ).on( 'click', function() {
-		var data = {action: 'rtmedia_hide_media_size_import_notice'};
+		var data = {action: 'rtmedia_hide_media_size_import_notice', nonce: $( this ).data( 'nonce' )};
 		jQuery.post(ajaxurl, data, function (response) {
 			response = response.trim();
 			if (response === '1')

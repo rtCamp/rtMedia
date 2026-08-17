@@ -79,7 +79,7 @@ class RTMediaMeta {
 		$value = $this->model->get(
 			array(
 				'media_id' => $id,
-				'meta_key' => $key,
+				'meta_key' => $key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
 			)
 		);
 
@@ -130,23 +130,23 @@ class RTMediaMeta {
 			$media_meta = $this->model->insert(
 				array(
 					'media_id'   => $id,
-					'meta_key'   => $key,
-					'meta_value' => $value,
+					'meta_key'   => $key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
+					'meta_value' => $value, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
 				)
 			);
 		} elseif ( false !== $this->get_single_meta( $id, $key ) ) {
-				$meta       = array( 'meta_value' => $value );
+				$meta       = array( 'meta_value' => $value ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
 				$where      = array(
 					'media_id' => $id,
-					'meta_key' => $key,
+					'meta_key' => $key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
 				);
 				$media_meta = $this->model->update( $meta, $where );
 		} else {
 			$media_meta = $this->model->insert(
 				array(
 					'media_id'   => $id,
-					'meta_key'   => $key,
-					'meta_value' => $value,
+					'meta_key'   => $key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
+					'meta_value' => $value, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
 				)
 			);
 		}
@@ -172,7 +172,7 @@ class RTMediaMeta {
 		} else {
 			$where = array(
 				'media_id' => $id,
-				'meta_key' => $key,
+				'meta_key' => $key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Column of rtMedia custom meta table (rt_rtm_media_meta), not WP post meta; not a WP_Query.
 			);
 		}
 

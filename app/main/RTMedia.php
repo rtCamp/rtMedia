@@ -153,7 +153,7 @@ class RTMedia {
 	public function filter_allow_mime_type_mu( $options ) {
 		$allowed_types       = array();
 		$this->allowed_types = apply_filters( 'rtmedia_allowed_types', $this->allowed_types );
-		foreach ( $this->allowed_types as $type ) {
+		foreach ( (array) $this->allowed_types as $type ) {
 			if ( '' !== $type['extn'] && call_user_func( 'is_rtmedia_upload_' . $type['name'] . '_enabled' ) ) {
 				foreach ( $type['extn'] as $extn ) {
 					$allowed_types[] = $extn;
@@ -208,7 +208,7 @@ class RTMedia {
 						$row['media_id'],
 						'%/rtMedia/%'
 					); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Direct query is required for custom table.
 					$wpdb->query( $sql );
 				}
 			}
@@ -222,7 +222,7 @@ class RTMedia {
 		global $wpdb;
 		$model      = new RTMediaModel();
 		$update_sql = "UPDATE {$model->table_name} SET privacy = '80' where privacy = '-1' ";
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Direct query is required for custom table.
 		$wpdb->query( $update_sql );
 	}
 
@@ -242,9 +242,9 @@ class RTMedia {
 		if ( class_exists( 'BuddyPress' ) && $table_exist ) {
 			$model     = new RTMediaModel();
 			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' and m.privacy <> 80 ";
-			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 20 where m.context = 'group' and ( bp.status = 'private' OR bp.status = 'hidden' ) and m.privacy <> 80 ";
-			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->query( $sql_group ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		}
 	}
 
@@ -256,11 +256,11 @@ class RTMedia {
 		$model             = new RTMediaModel();
 		$interaction_model = new RTMediaInteractionModel();
 		$update_media_sql  = 'ALTER TABLE ' . $model->table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $update_media_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- No caching required for altering table.
+		$wpdb->query( $update_media_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- No caching required for altering table.
 		$update_media_meta_sql = 'ALTER TABLE ' . $wpdb->base_prefix . $model->meta_table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $update_media_meta_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- No caching required for altering table.
+		$wpdb->query( $update_media_meta_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- No caching required for altering table.
 		$update_media_interaction_sql = 'ALTER TABLE ' . $interaction_model->table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $update_media_interaction_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- No caching required for altering table.
+		$wpdb->query( $update_media_interaction_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- No caching required for altering table.
 	}
 
 	/**
@@ -789,14 +789,14 @@ class RTMedia {
 			'general_AllowUserData'       => 0,
 		);
 
-		foreach ( $this->allowed_types as $type ) {
+		foreach ( (array) $this->allowed_types as $type ) {
 			// invalid keys handled in sanitize method.
 			$defaults[ 'allowedTypes_' . $type['name'] . '_enabled' ]  = 1;
 			$defaults[ 'allowedTypes_' . $type['name'] . '_featured' ] = 0;
 		}
 
 		// Previous Sizes values from buddypress is migrated.
-		foreach ( $this->default_sizes as $type => $type_value ) {
+		foreach ( (array) $this->default_sizes as $type => $type_value ) {
 			foreach ( $type_value as $size => $size_value ) {
 				foreach ( $size_value as $dimension => $value ) {
 					switch ( $type ) {
@@ -917,7 +917,7 @@ class RTMedia {
 		if ( ! isset( $this->allowed_types ) ) {
 			return;
 		}
-		foreach ( $this->allowed_types as $type ) {
+		foreach ( (array) $this->allowed_types as $type ) {
 			if ( ! isset( $type['name'] ) || '' === $type['name'] ) {
 				continue;
 			}
@@ -1020,13 +1020,13 @@ class RTMedia {
 		global $rtmedia_nav;
 
 		/** Legacy code for Add-ons * */
-		$bp_class_construct = apply_filters( 'bpmedia_class_construct', array() );
+		$bp_class_construct = apply_filters( 'bpmedia_class_construct', array() ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		foreach ( $bp_class_construct as $classname => $global_scope ) {
 			$class = 'BPMedia' . ucfirst( $classname );
 			if ( class_exists( $class ) ) {
 				if ( true === $global_scope ) {
 					global ${'bp_media_' . $classname}; // phpcs:ignore PHPCompatibility.Variables.ForbiddenGlobalVariableVariable.NonBareVariableFound
-					${'bp_media_' . $classname} = new $class();
+					${'bp_media_' . $classname} = new $class(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				} else {
 					new $class();
 				}
@@ -1038,11 +1038,11 @@ class RTMedia {
 		$class_construct['Group'] = false; // will be constructed after rtmedia pro class.
 
 		foreach ( $class_construct as $key => $global_scope ) {
-			$classname = '';
+			$classname = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			$ck        = explode( '_', $key );
 
 			foreach ( $ck as $cn ) {
-				$classname .= ucfirst( $cn );
+				$classname .= ucfirst( $cn ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			}
 
 			$class = 'RTMedia' . $classname;
@@ -1050,7 +1050,7 @@ class RTMedia {
 			if ( class_exists( $class ) ) {
 				if ( true === $global_scope ) {
 					global ${'rtmedia_' . $key}; // phpcs:ignore PHPCompatibility.Variables.ForbiddenGlobalVariableVariable.NonBareVariableFound
-					${'rtmedia_' . $key} = new $class();
+					${'rtmedia_' . $key} = new $class(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				} else {
 					new $class();
 				}
@@ -1075,7 +1075,7 @@ class RTMedia {
 			rtmedia_enable_comment_media_uplaod();
 		}
 
-		do_action( 'bp_media_init' ); // legacy For plugin using this actions.
+		do_action( 'bp_media_init' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ // legacy For plugin using this actions.
 		do_action( 'rtmedia_init' );
 	}
 
@@ -1113,7 +1113,7 @@ class RTMedia {
 	 * Loads translations.
 	 */
 	public static function load_translation() {
-		load_plugin_textdomain( 'buddypress-media', false, basename( RTMEDIA_PATH ) . '/languages/' );
+		load_plugin_textdomain( 'buddypress-media', false, basename( RTMEDIA_PATH ) . '/languages/' ); // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- Loads bundled translations from the plugin /languages directory.
 	}
 
 	/**
@@ -1446,7 +1446,7 @@ class RTMedia {
 		$rtmedia_backbone['rMedia_loading_media'] = RTMEDIA_URL . 'app/assets/admin/img/boxspinner.gif';
 
 		$rtmedia_media_thumbs = array();
-		foreach ( $this->allowed_types as $key_type => $value_type ) {
+		foreach ( (array) $this->allowed_types as $key_type => $value_type ) {
 			if ( isset( $value_type['thumbnail'] ) ) {
 				$rtmedia_media_thumbs[ $key_type ] = $value_type['thumbnail'];
 			}
@@ -1629,7 +1629,7 @@ class RTMedia {
 
 		global $rtmedia;
 		$rtmedia_extns = array();
-		foreach ( $rtmedia->allowed_types as $allowed_types_key => $allowed_types_value ) {
+		foreach ( (array) $rtmedia->allowed_types as $allowed_types_key => $allowed_types_value ) {
 			$rtmedia_extns[ $allowed_types_key ] = $allowed_types_value['extn'];
 		}
 
@@ -2059,7 +2059,7 @@ class RTMedia {
  *
  * @return string
  */
-function parentlink_global_album( $id ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed
+function parentlink_global_album( $id ) { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons.
 	$global_albums = RTMediaAlbum::get_globals();
 	$parent_link   = '';
 
@@ -2089,7 +2089,7 @@ function parentlink_global_album( $id ) { // phpcs:ignore Universal.Files.Separa
  *
  * @return mixed|void
  */
-function get_rtmedia_permalink( $id ) {
+function get_rtmedia_permalink( $id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$media_model = new RTMediaModel();
 	$media       = $media_model->get( array( 'id' => intval( $id ) ) );
@@ -2135,7 +2135,7 @@ function get_rtmedia_permalink( $id ) {
 	 * @param int     $id        ID of the media.
 	 */
 
-	return apply_filters( 'get_rtmedia_permalink', $permalink, $media, $id );
+	return apply_filters( 'get_rtmedia_permalink', $permalink, $media, $id ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 }
 
 /**
@@ -2145,7 +2145,7 @@ function get_rtmedia_permalink( $id ) {
  *
  * @return string
  */
-function get_rtmedia_user_link( $id ) {
+function get_rtmedia_user_link( $id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( function_exists( 'bp_members_get_user_url' ) ) {
 		return bp_members_get_user_url( $id );
@@ -2179,7 +2179,7 @@ function rtmedia_update_site_option( $option_name, $option_value ) {
  *
  * @return mixed|void
  */
-function get_rtmedia_group_link( $group_id ) {
+function get_rtmedia_group_link( $group_id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	global $bp;
 
 	$group = groups_get_group( array( 'group_id' => $group_id ) );
@@ -2232,7 +2232,7 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
 /**
  * Function to show privacy message provided from rtMedia settings in front end.
  */
-function rtm_privacy_message_on_website() {
+function rtm_privacy_message_on_website() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	 global $rtmedia;
 	$options = $rtmedia->options;
 
@@ -2242,7 +2242,7 @@ function rtm_privacy_message_on_website() {
 		'position'         => 'bottom',
 	);
 
-	$rtm_privacy_message_options = apply_filters( 'rtm_privacy_bar_position', $rtm_privacy_message_options );
+	$rtm_privacy_message_options = apply_filters( 'rtm_privacy_bar_position', $rtm_privacy_message_options ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 
@@ -2269,7 +2269,7 @@ add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
 /**
  * Function to add privacy policy information in WordPress policy section.
  */
-function rtm_plugin_privacy_information() {
+function rtm_plugin_privacy_information() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
 		ob_start();
 

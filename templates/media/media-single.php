@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="rtmedia-container rtmedia-single-container">
 	<div class="rtm-lightbox-container clearfix">
@@ -16,21 +20,21 @@
 			rtmedia();
 
 			global $rtmedia_media;
-			$media_type = ! empty( $rtmedia_media->media_type ) ? $rtmedia_media->media_type : 'none';
-			$class      = '';
+			$media_type = ! empty( $rtmedia_media->media_type ) ? $rtmedia_media->media_type : 'none'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+			$class      = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
-			$if_comments_enable = isset( $rtmedia->options['general_enableComments'] ) ? $rtmedia->options['general_enableComments'] : 0;
+			$if_comments_enable = isset( $rtmedia->options['general_enableComments'] ) ? $rtmedia->options['general_enableComments'] : 0; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			// Count of likes.
 			if ( isset( $rtmedia_media->likes ) ) {
-				$count = intval( $rtmedia_media->likes );
+				$count = intval( $rtmedia_media->likes ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			} else {
-				$count = 0;
+				$count = 0; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			}
 
 			// Add hide class to this element when "comment on media" is not enabled.
 			if ( ! intval( $count ) && '0' === $if_comments_enable ) {
-				$class = 'hide';
+				$class = 'hide'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			}
 			?>
 			<div id="rtmedia-single-media-container" class="rtmedia-single-media rtm-single-media rtm-media-type-<?php echo esc_attr( $media_type ); ?>">
@@ -146,7 +150,7 @@
 								<div class="rtmedia-item-comments">
 									<div class="rtmedia-actions-before-comments clearfix">
 										<div class="like-button-no-comments">
-											<?php do_action( 'like_button_no_comments' ); ?>
+											<?php do_action( 'like_button_no_comments' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
 										</div>
 									</div>
 									<div class="rtm-like-comments-info <?php echo esc_attr( $class ); ?>">

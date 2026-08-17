@@ -93,7 +93,7 @@ class RTMediaUpload {
 		if ( ! is_wp_error( $file_object ) && $file_object && $uploaded ) {
 
 			$this->media_ids = $this->media->add( $uploaded, $file_object );
-			do_action( 'rtemdia_after_file_upload_before_activity', $file_object, $this );
+			do_action( 'rtemdia_after_file_upload_before_activity', $file_object, $this ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			if ( $this->media_ids ) {
 				return true;

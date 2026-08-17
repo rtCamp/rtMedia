@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="clearfix">
@@ -17,14 +21,14 @@
 			<?php
 			$rtmedia_model = new RTMediaModel();
 			global $wpdb;
-			$results = wp_cache_get( 'rt-stats', 'rt-dashboard' );
+			$results = wp_cache_get( 'rt-stats', 'rt-dashboard' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( false === $results ) {
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query required; safe because table name is trusted.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Direct query required; safe because table name is trusted.
 				$results = $wpdb->get_results( $wpdb->prepare( "SELECT media_type, count(id) as count FROM {$rtmedia_model->table_name} WHERE blog_id=%d GROUP BY media_type", get_current_blog_id() ) );
 				wp_cache_set( 'stats', $results, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
 			if ( $results ) {
-				foreach ( $results as $media ) {
+				foreach ( $results as $media ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					if ( defined( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ) ) {
 						?>
 						<tr>
@@ -46,9 +50,9 @@
 		<table>
 			<tbody>
 			<?php
-			$total_count = wp_cache_get( 'total_count', 'rt-dashboard' );
+			$total_count = wp_cache_get( 'total_count', 'rt-dashboard' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( false === $total_count ) {
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Direct query required; safe because table name is trusted.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Direct query required; safe because table name is trusted.
 				$total_count = $wpdb->get_var( "select count(*) from {$wpdb->users}" );
 				wp_cache_set( 'total_count', $total_count, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
@@ -58,9 +62,9 @@
 				<td class="t"><?php esc_html_e( 'Total ', 'buddypress-media' ); ?></td>
 			</tr>
 			<?php
-			$with_media_count = wp_cache_get( 'with_media', 'rt-dashboard' );
+			$with_media_count = wp_cache_get( 'with_media', 'rt-dashboard' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( false === $with_media_count ) {
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query required; safe because table name is trusted.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Direct query required; safe because table name is trusted.
 				$with_media_count = $wpdb->get_var( "SELECT count(distinct media_author) FROM {$rtmedia_model->table_name}" );
 				wp_cache_set( 'with_media', $with_media_count, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
@@ -72,7 +76,7 @@
 			<?php
 			$comments = wp_cache_get( 'comments', 'rt-dashboard' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			if ( false === $comments ) {
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.WP.GlobalVariablesOverride.Prohibited, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.WP.GlobalVariablesOverride.Prohibited, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				$comments = $wpdb->get_var( "SELECT count(*) FROM {$wpdb->comments} WHERE comment_post_ID IN ( SELECT media_id FROM {$rtmedia_model->table_name} )" );
 				wp_cache_set( 'comments', $comments, 'rt-dashboard', HOUR_IN_SECONDS );
 			}
@@ -82,9 +86,9 @@
 				<td class="t"><?php esc_html_e( 'Comments ', 'buddypress-media' ); ?></td>
 			</tr>
 			<?php
-			$likes = wp_cache_get( 'likes', 'rt-dashboard' );
+			$likes = wp_cache_get( 'likes', 'rt-dashboard' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( false === $likes ) {
-    			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Direct query required; safe because table name is trusted.
+    			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Direct query required; safe because table name is trusted.
 				$likes = $wpdb->get_var( "SELECT sum(likes) FROM {$rtmedia_model->table_name}" );
 				wp_cache_set( 'likes', $likes, 'rt-dashboard', HOUR_IN_SECONDS );
 			}

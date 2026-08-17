@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Creating an album
  *
@@ -149,7 +153,7 @@ add_filter( 'bp_activity_get_types', 'rtmedia_bp_activity_get_types', 10, 1 );
  * @return bool
  * @global RTMediaQuery $rtmedia_query
  */
-function rtm_is_buddypress_enable( $flag ) {
+function rtm_is_buddypress_enable( $flag ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query;
 
@@ -250,7 +254,7 @@ add_filter( 'rtmedia_modify_upload_params', 'rtmedia_modify_activity_upload_url'
  * @return array
  * @global RTMediaQuery $rtmedia_query
  */
-function rtm_modify_document_title_parts( $title = array() ) {
+function rtm_modify_document_title_parts( $title = array() ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( is_rtmedia_page() ) {
 		global $rtmedia_query;
@@ -274,7 +278,7 @@ add_filter( 'document_title_parts', 'rtm_modify_document_title_parts', 30, 1 );
  *
  * @return string
  */
-function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
+function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( empty( $rtmedia_media->media_id ) ) {
 		return $html;
@@ -308,7 +312,7 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 			$final_file_url = $uploads['baseurl'] . '/' . $file_url;
 		}
 
-		$final_file_url = apply_filters( 'transcoded_file_url', $final_file_url, $attachment_id );
+		$final_file_url = apply_filters( 'transcoded_file_url', $final_file_url, $attachment_id ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	} else {
 		$final_file_url = wp_get_attachment_url( $attachment_id );
 	}
@@ -327,7 +331,7 @@ add_filter( 'rtmedia_single_content_filter', 'replace_src_with_transcoded_file_u
  *
  * @return string
  */
-function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
+function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( empty( $rtmedia_media ) ) {
 		return $html;
@@ -339,7 +343,7 @@ function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
 	 * @var boolean               Boolean false is passed as a parameter.
 	 * @var object $rtmedia_media Object of rtmedia containing media_id, media_type etc.
 	 */
-	if ( apply_filters( 'replace_aws_img_urls_from_activity', false, $rtmedia_media ) ) {
+	if ( apply_filters( 'replace_aws_img_urls_from_activity', false, $rtmedia_media ) ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		return $html;
 	}
 
@@ -400,7 +404,7 @@ add_filter( 'rtmedia_single_content_filter', 'replace_aws_img_urls_from_activity
  * @return string
  * @since 1.0.1
  */
-function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
+function replace_aws_img_urls_from_activities( $content, $activity = '' ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( empty( $content ) || empty( $activity ) ) {
 		return $content;
@@ -412,7 +416,7 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 	 * @var boolean          Boolean false is passed as a parameter.
 	 * @var object $activity Object of activity.
 	 */
-	if ( apply_filters( 'replace_aws_img_urls_from_activities', false, $activity ) ) {
+	if ( apply_filters( 'replace_aws_img_urls_from_activities', false, $activity ) ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		return $content;
 	}
 
@@ -500,7 +504,7 @@ add_filter( 'bp_get_activity_content_body', 'replace_aws_img_urls_from_activitie
  *
  * @return      string      Attachment URL if attachment URL is provided in the argument
  */
-function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
+function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( is_numeric( $thumbnail_id ) ) {
 		return $thumbnail_id;
@@ -512,7 +516,7 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 	 * @var boolean            Boolean false is passed as a parameter.
 	 * @var string $media_type Type of the media.
 	 */
-	if ( apply_filters( 'rtt_restore_og_wp_image_url', false, $media_type ) ) {
+	if ( apply_filters( 'rtt_restore_og_wp_image_url', false, $media_type ) ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		return $thumbnail_id;
 	}
 
@@ -550,7 +554,7 @@ function rtt_restore_og_wp_image_url( $thumbnail_id, $media_type, $media_id ) {
 	/**
 	 * Apply filter to get amazon s3 URL
 	 */
-	return apply_filters( 'transcoded_file_url', $thumbnail_id, $media_id );
+	return apply_filters( 'transcoded_file_url', $thumbnail_id, $media_id ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 }
 add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
 
@@ -562,7 +566,7 @@ add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
  *
  * @return string  $link  media comment link
  */
-function rt_get_comment_link_callback( $link, $comment ) {
+function rt_get_comment_link_callback( $link, $comment ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$rtmedia_media_id = rtmedia_id( $comment->comment_post_ID );
 
@@ -876,6 +880,7 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 			$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 			$request_url = explode( '/', $request_uri );
 			if ( ! empty( $search_by ) && 'attribute' === $search_by && ! in_array( 'attribute', $request_url, true ) ) {
+				// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
 				$join .= $wpdb->prepare(
 					" 	INNER JOIN $posts_table ON ( $posts_table.ID = $table_name.media_id AND $posts_table.post_type = %s )
 		                    INNER JOIN $terms_table ON ( $terms_table.slug = %s )
@@ -884,6 +889,7 @@ function rtmedia_search_fillter_join_query( $join, $table_name ) {
 					$media_type,
 					$search
 				); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Interpolated values are trusted internal table/column identifiers, not user input.
+				// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
 		}
 	}
@@ -959,7 +965,7 @@ add_filter( 'rtmedia_gallery_shortcode_parameter_pre_filter', 'rtmedia_gallery_s
  *
  * @return array
  */
-function register_rtmedia_exporter( $exporters ) {
+function register_rtmedia_exporter( $exporters ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$exporters['buddypress-media-shortcode-uploads'] = array(
 		'exporter_friendly_name' => esc_html__( 'rtMedia Shortcode Uploads', 'buddypress-media' ),
 		'callback'               => 'rtmedia_shortcode_upload_exporter',
@@ -992,7 +998,7 @@ add_filter( 'wp_privacy_personal_data_exporters', 'register_rtmedia_exporter', 1
  *
  * @return array
  */
-function register_rtmedia_eraser( $erasers ) {
+function register_rtmedia_eraser( $erasers ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$erasers['buddypress-media'] = array(
 		'eraser_friendly_name' => esc_html__( 'rtMedia Eraser', 'buddypress-media' ),

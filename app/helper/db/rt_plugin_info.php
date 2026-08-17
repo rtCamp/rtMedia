@@ -7,6 +7,10 @@
  * @author udit
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'rt_plugin_info' ) ) {
 	/**
 	 * Class to store rtMedia plugin info.

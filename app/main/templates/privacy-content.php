@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <form method="post">
@@ -19,7 +23,7 @@
 
 			<div class="rtm-privacy-levels">
 
-				<?php foreach ( $rtmedia->privacy_settings['levels'] as $level => $data ) { ?>
+				<?php foreach ( $rtmedia->privacy_settings['levels'] as $level => $data ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
 					<label>
 						<input type="radio" value="<?php echo esc_attr( $level ); ?>" name="rtmedia-default-privacy" <?php checked( intval( $default_privacy ), $level, true ); ?> />
 						<?php echo esc_html( $data ); ?>

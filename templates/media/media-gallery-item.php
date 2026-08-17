@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 global $rtmedia_backbone;
 
 $rtmedia_backbone = array(
@@ -16,13 +20,13 @@ $rtmedia_backbone = array(
 
 $rtmedia_backbone['backbone'] = filter_input( INPUT_POST, 'backbone', FILTER_VALIDATE_BOOLEAN );
 
-$is_album = filter_input( INPUT_POST, 'is_album', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+$is_album = filter_input( INPUT_POST, 'is_album', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 if ( isset( $is_album[0] ) ) {
 	$rtmedia_backbone['is_album'] = $is_album[0];
 }
 
-$is_edit_allowed = filter_input( INPUT_POST, 'is_edit_allowed', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+$is_edit_allowed = filter_input( INPUT_POST, 'is_edit_allowed', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 if ( isset( $is_edit_allowed[0] ) ) {
 	$rtmedia_backbone['is_edit_allowed'] = $is_edit_allowed[0];
 }
@@ -39,13 +43,13 @@ if ( isset( $is_edit_allowed[0] ) ) {
 		<?php
 		global $rtmedia_query;
 
-		$alt_text      = rtmedia_image_alt( false, false );
+		$alt_text      = rtmedia_image_alt( false, false ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		$rtmedia_media = '';
 
 		if ( ! empty( $rtmedia_query ) && isset( $rtmedia_query->rtmedia ) ) {
 			$rtmedia_media = $rtmedia_query->rtmedia;
 		}
-		$allowed_html = array(
+		$allowed_html = array( /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			'span' => array(
 				'class' => array(),
 			),
@@ -53,7 +57,7 @@ if ( isset( $is_edit_allowed[0] ) ) {
 		?>
 		<div class="rtmedia-item-thumbnail">
 			<?php echo wp_kses( rtmedia_duration(), $allowed_html ); ?>
-			<img src="<?php rtmedia_image( 'rt_media_thumbnail' ); ?>" alt="<?php echo esc_attr( apply_filters( 'rtmc_change_alt_text', $alt_text, $rtmedia_media ) ); ?>">
+			<img src="<?php rtmedia_image( 'rt_media_thumbnail' ); ?>" alt="<?php echo esc_attr( apply_filters( 'rtmc_change_alt_text', $alt_text, $rtmedia_media ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>">
 		</div>
 
 		<?php

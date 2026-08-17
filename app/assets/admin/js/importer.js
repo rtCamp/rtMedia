@@ -97,7 +97,10 @@ jQuery(document).ready(function () {
 			});
 		} else {
 			if ('activity-upgrade' === importerType) {
-				jQuery.post(adminAjax, { action: 'rtmedia_activity_done_upgrade' }, function () {
+				jQuery.post(adminAjax, {
+					action: 'rtmedia_activity_done_upgrade',
+					nonce: jQuery.trim(jQuery('#' + nonceFieldId).val())
+				}, function () {
 					alert('Database upgrade completed.');
 				});
 			} else {

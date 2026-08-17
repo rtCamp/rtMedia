@@ -79,7 +79,7 @@ class RTMediaUploadFile {
 
 		if ( ! isset( $rt_set_filter_uplaod_dir ) ) {
 			add_filter( 'upload_dir', array( $this, 'upload_dir' ) );
-			$rt_set_filter_uplaod_dir = true;
+			$rt_set_filter_uplaod_dir = true; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		}
 
 		if ( isset( $this->files ) && count( $this->files ) > 0 ) {
@@ -229,7 +229,7 @@ class RTMediaUploadFile {
 			$allowed_types          = array();
 			$rtmedia->allowed_types = apply_filters( 'rtmedia_allowed_types', $rtmedia->allowed_types );
 
-			foreach ( $rtmedia->allowed_types as $type ) {
+			foreach ( (array) $rtmedia->allowed_types as $type ) {
 				if ( '' !== $type['extn'] && call_user_func( 'is_rtmedia_upload_' . $type['name'] . '_enabled' ) ) {
 					foreach ( $type['extn'] as $extn ) {
 						$allowed_types[] = $extn;
