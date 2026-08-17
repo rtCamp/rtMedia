@@ -147,6 +147,18 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.12
+* FIXED
+  * Improved authorization checks for media, albums, comments and activity privacy so actions are limited to permitted users.
+  * Improved privacy enforcement for media returned by the JSON API.
+  * Improved validation and sanitization of upload targets, album selection and query parameters.
+  * Added capability and nonce verification to administrative AJAX actions.
+  * Fixed PHP 8 warnings reported on page load.
+
+* ENHANCEMENT
+  * Improved compliance with WordPress plugin coding and security standards.
+  * Removed development-only files from the distributed plugin package.
+
 ### 4.7.11
 * FIXED
   * Security enhancement: Improved data validation and sanitization for media queries and search filters.
