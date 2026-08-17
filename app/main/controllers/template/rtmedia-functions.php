@@ -2895,6 +2895,60 @@ function get_rtmedia_default_privacy() { /* phpcs:ignore WordPress.NamingConvent
 }
 
 /**
+ * Privacy levels a user is allowed to pick.
+ *
+ * Levels are not fixed: add-ons add their own via `rtmedia_privacy_levels`, and
+ * core drops 40 when the Friends component is off. Read them from the live
+ * settings rather than assuming a list. -1 and 80 are moderation states set
+ * internally, so they are never selectable.
+ *
+ * @return int[]
+ */
+function rtmedia_get_allowed_privacy_levels() {
+	global $rtmedia;
+
+	// Not initialised yet (early hooks, cron): let rtMedia rebuild them so the
+	// filter and the Friends check still apply.
+	if ( empty( $rtmedia->privacy_settings['levels'] ) && is_a( $rtmedia, 'RTMedia' ) ) {
+		$rtmedia->set_privacy();
+	}
+
+	if ( empty( $rtmedia->privacy_settings['levels'] ) || ! is_array( $rtmedia->privacy_settings['levels'] ) ) {
+		return array();
+	}
+
+	$levels = array_map( 'intval', array_keys( $rtmedia->privacy_settings['levels'] ) );
+
+	return array_values( array_diff( $levels, array( -1, 80 ) ) );
+}
+
+/**
+ * Validate a submitted privacy level, falling back to the site default.
+ *
+ * For uploads, where a bad value should be corrected. Callers that need to
+ * reject the request instead should check rtmedia_get_allowed_privacy_levels().
+ *
+ * @param mixed $privacy Submitted value.
+ *
+ * @return int
+ */
+function rtmedia_sanitize_privacy_level( $privacy ) {
+	$levels  = rtmedia_get_allowed_privacy_levels();
+	$default = intval( get_rtmedia_default_privacy() );
+
+	if ( empty( $levels ) ) {
+		return $default;
+	}
+
+	if ( in_array( intval( $privacy ), $levels, true ) ) {
+		return intval( $privacy );
+	}
+
+	// Guard against a stale default left over from a level that has since gone.
+	return in_array( $default, $levels, true ) ? $default : min( $levels );
+}
+
+/**
  * Checking if media is enabled in BuddyPress group
  *
  * @global RTMedia $rtmedia

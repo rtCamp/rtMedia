@@ -117,10 +117,8 @@ class RTMediaUploadModel {
 			$this->upload['privacy'] = 0;
 		}
 
-		// Restrict privacy to the known set; -1/80 are moderation states, not user-settable.
-		if ( ! in_array( intval( $this->upload['privacy'] ), array( 0, 20, 40, 60 ), true ) ) {
-			$this->upload['privacy'] = get_rtmedia_default_privacy();
-		}
+		// Keep privacy within the levels the site actually offers.
+		$this->upload['privacy'] = rtmedia_sanitize_privacy_level( $this->upload['privacy'] );
 	}
 
 	/**

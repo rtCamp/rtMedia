@@ -128,12 +128,8 @@ class RTMediaPrivacy {
 				wp_die();
 			}
 
-			// Only known privacy levels are settable (honours the rtmedia_privacy_levels filter).
-			global $rtmedia;
-			$allowed_levels = ( isset( $rtmedia->privacy_settings['levels'] ) && is_array( $rtmedia->privacy_settings['levels'] ) )
-				? array_map( 'intval', array_keys( $rtmedia->privacy_settings['levels'] ) )
-				: array( 0, 20, 40, 60 );
-			if ( ! in_array( $privacy, $allowed_levels, true ) ) {
+			// Reject unknown levels outright rather than silently changing the activity.
+			if ( ! in_array( $privacy, rtmedia_get_allowed_privacy_levels(), true ) ) {
 				echo esc_html( 'false' );
 				wp_die();
 			}

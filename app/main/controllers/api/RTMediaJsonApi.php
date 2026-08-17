@@ -1328,9 +1328,8 @@ class RTMediaJsonApi {
 			$uploaded['album_id']   = $upload_model->upload['album_id'];
 			$uploaded['context']    = $upload_model->upload['context'];
 			$uploaded['context_id'] = $upload_model->upload['context_id'];
-			if ( ! in_array( intval( $uploaded['privacy'] ), array( 0, 20, 40, 60 ), true ) ) {
-				$uploaded['privacy'] = get_rtmedia_default_privacy();
-			}
+			// This branch skips sanitize_object(), so validate privacy here too.
+			$uploaded['privacy'] = rtmedia_sanitize_privacy_level( $uploaded['privacy'] );
 
 			$rtmedia                                = new RTMediaMedia();
 			$rtupload                               = $rtmedia->add( $uploaded, $new_look );
@@ -1604,6 +1603,18 @@ class RTMediaJsonApi {
 		if ( $user && user_can( $user, 'list_users' ) ) {
 			return true;
 		}
+		// Group media: private/hidden groups store privacy 20, which the numeric ladder
+		// would otherwise treat as "any logged-in user". Gate on group membership first.
+		if ( isset( $media->context, $media->context_id ) && 'group' === $media->context ) {
+			if ( ! function_exists( 'groups_get_group' ) || ! function_exists( 'groups_is_user_member' ) ) {
+				return false;
+			}
+			$group = groups_get_group( (int) $media->context_id );
+			if ( empty( $group->id ) || ( 'public' !== $group->status && ( ! $user || ! groups_is_user_member( $user, (int) $media->context_id ) ) ) ) {
+				return false;
+			}
+		}
+
 		// Public is exactly NULL or 0; values such as -1 / 80 are blocked, not public.
 		if ( 0 === $privacy ) {
 			return true;
