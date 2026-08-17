@@ -2923,6 +2923,31 @@ function rtmedia_get_allowed_privacy_levels() {
 }
 
 /**
+ * Privacy level for media uploaded into a group.
+ *
+ * Public groups map to 0, everything else to 20 so only members can see it.
+ * Anything we cannot positively confirm as public — a deleted group, a bad id,
+ * BuddyPress switched off — is treated as non-public rather than world readable.
+ *
+ * @param int $group_id Group id.
+ *
+ * @return int
+ */
+function rtmedia_get_group_privacy_level( $group_id ) {
+	$group_id = intval( $group_id );
+
+	if ( ! $group_id || ! function_exists( 'groups_get_group' ) ) {
+		return 20;
+	}
+
+	// Array form rather than a bare id: BuddyPress only started accepting the id
+	// directly in 2.9, and the rest of the plugin calls it this way.
+	$group = groups_get_group( array( 'group_id' => $group_id ) );
+
+	return ( isset( $group->status ) && 'public' === $group->status ) ? 0 : 20;
+}
+
+/**
  * Validate a submitted privacy level, falling back to the site default.
  *
  * For uploads, where a bad value should be corrected. Callers that need to

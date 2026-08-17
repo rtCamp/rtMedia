@@ -93,18 +93,9 @@ class RTMediaUploadEndpoint {
 
 				}
 
-				// if media upload is being made for a group, identify the group privacy and set media privacy accordingly.
-				if ( isset( $this->upload['context'] ) && isset( $this->upload['context_id'] ) && 'group' === $this->upload['context'] && function_exists( 'groups_get_group' ) ) {
-
-					$group = groups_get_group( array( 'group_id' => $this->upload['context_id'] ) );
-
-					if ( isset( $group->status ) && 'public' !== $group->status ) {
-						// if group is not public, then set media privacy as 20, so only the group members can see the images.
-						$this->upload['privacy'] = '20';
-					} else {
-						// if group is public, then set media privacy as 0.
-						$this->upload['privacy'] = '0';
-					}
+				// Media uploaded into a group takes its privacy from that group.
+				if ( isset( $this->upload['context'], $this->upload['context_id'] ) && 'group' === $this->upload['context'] ) {
+					$this->upload['privacy'] = rtmedia_get_group_privacy_level( $this->upload['context_id'] );
 				}
 
 				$comment_media                 = false;

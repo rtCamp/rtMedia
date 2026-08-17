@@ -190,6 +190,12 @@ class RTMediaUploadModel {
 		}
 		$album = $album[0];
 
+		// The destination has to actually be an album, otherwise a photo or video id
+		// would be accepted and end up as the parent of the upload.
+		if ( ! isset( $album->media_type ) || 'album' !== $album->media_type ) {
+			return false;
+		}
+
 		// The album owner may add to their own album.
 		if ( $user && intval( $album->media_author ) === $user ) {
 			return true;

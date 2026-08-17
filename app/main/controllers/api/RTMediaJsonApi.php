@@ -1331,6 +1331,13 @@ class RTMediaJsonApi {
 			// This branch skips sanitize_object(), so validate privacy here too.
 			$uploaded['privacy'] = rtmedia_sanitize_privacy_level( $uploaded['privacy'] );
 
+			// Group uploads take their privacy from the group, same as the normal upload
+			// endpoint. Without this a caller could post privacy 0 into a private group
+			// and the web gallery would treat it as public.
+			if ( 'group' === $uploaded['context'] ) {
+				$uploaded['privacy'] = rtmedia_get_group_privacy_level( $uploaded['context_id'] );
+			}
+
 			$rtmedia                                = new RTMediaMedia();
 			$rtupload                               = $rtmedia->add( $uploaded, $new_look );
 			$id                                     = rtmedia_media_id( $rtupload[0] );
