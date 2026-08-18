@@ -43,18 +43,18 @@ class RTMediaUploadException extends Exception {
 		switch ( $code ) {
 			case UPLOAD_ERR_INI_SIZE:
 			case UPLOAD_ERR_FORM_SIZE:
-				$message = apply_filters( 'bp_media_file_size_error', esc_html__( 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form', 'buddypress-media' ) );
+				$message = apply_filters( 'bp_media_file_size_error', esc_html__( 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form', 'buddypress-media' ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				break;
 			case UPLOAD_ERR_NO_FILE:
-				$message = apply_filters( 'bp_media_file_null_error', esc_html__( 'No file was uploaded', 'buddypress-media' ) );
+				$message = apply_filters( 'bp_media_file_null_error', esc_html__( 'No file was uploaded', 'buddypress-media' ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				break;
 			case UPLOAD_ERR_PARTIAL:
 			case UPLOAD_ERR_NO_TMP_DIR:
 			case UPLOAD_ERR_CANT_WRITE:
-				$message = apply_filters( 'bp_media_file_internal_error', esc_html__( 'Uploade failed due to internal server error.', 'buddypress-media' ) );
+				$message = apply_filters( 'bp_media_file_internal_error', esc_html__( 'Upload failed due to internal server error.', 'buddypress-media' ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				break;
 			case UPLOAD_ERR_EXTENSION:
-				$message = apply_filters( 'bp_media_file_extension_error', esc_html__( 'File type not allowed.', 'buddypress-media' ) );
+				$message = apply_filters( 'bp_media_file_extension_error', esc_html__( 'File type not allowed.', 'buddypress-media' ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				break;
 
 			case $this->upload_err_invalid_context:
@@ -62,7 +62,7 @@ class RTMediaUploadException extends Exception {
 				break;
 			default:
 				$msg     = $msg ? $msg : esc_html__( 'Unknown file upload error.', 'buddypress-media' );
-				$message = apply_filters( 'bp_media_file_unknown_error', $msg );
+				$message = apply_filters( 'bp_media_file_unknown_error', $msg ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				break;
 		}
 

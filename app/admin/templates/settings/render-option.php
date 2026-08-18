@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <table class="form-table" <?php echo ( ! empty( $option['depends'] ) ) ? 'data-depends="' . esc_attr( $option['depends'] ) . '"' : ''; ?>>

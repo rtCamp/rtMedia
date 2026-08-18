@@ -610,7 +610,7 @@ class RTMediaQuery {
 		if ( ! empty( $rtmedia_shortcode ) ) {
 			$query_data = $_REQUEST; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.NoNonceVerification -- We are just replacing the args so nonce verification is not needed.
 			foreach ( $query_data as $key => $val ) {
-				if ( ! in_array( $key, $allowed_query, true ) ) {
+				if ( ! in_array( $key, $allowed_query, true ) || is_array( $val ) ) {
 					unset( $query_data[ $key ] );
 				}
 			}
@@ -916,7 +916,7 @@ class RTMediaQuery {
 
 		global $rtmedia;
 
-		foreach ( $rtmedia->allowed_types as $value ) {
+		foreach ( (array) $rtmedia->allowed_types as $value ) {
 			$allowed_media_types[] = $value['name'];
 		}
 
@@ -1104,13 +1104,13 @@ class RTMediaQuery {
 			 * Setting up meta query vars
 			 */
 			if ( isset( $this->query_vars->meta_query ) ) {
-				$media_post_query_args['meta_query'] = $this->query_vars->meta_query;
+				$media_post_query_args['meta_query'] = $this->query_vars->meta_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- meta_query/tax_query required for rtMedia gallery filtering.
 			}
 			/**
 			 * Setting up taxonomy query vars
 			 */
 			if ( isset( $this->query_vars->tax_query ) ) {
-				$media_post_query_args['tax_query'] = $this->query_vars->tax_query;
+				$media_post_query_args['tax_query'] = $this->query_vars->tax_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- meta_query/tax_query required for rtMedia gallery filtering.
 			}
 
 			/**

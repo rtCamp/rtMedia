@@ -83,7 +83,7 @@ class RTMediaPrivacy {
 
 		if ( function_exists( 'bp_activity_user_can_delete' ) && bp_activity_user_can_delete()
 			&& ( ! bp_is_groups_component() ) && is_rtmedia_privacy_user_overide()
-			&& apply_filters( 'rtm_load_bp_activity_privacy_update_ui', true )
+			&& apply_filters( 'rtm_load_bp_activity_privacy_update_ui', true ) /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			&& isset( $activities_template->activity )
 			&& isset( $activities_template->activity->type )
 			&& ! in_array( $activities_template->activity->type, $rtmedia_activity_types, true )
@@ -118,12 +118,25 @@ class RTMediaPrivacy {
 		$activity_id = filter_input( INPUT_POST, 'activity_id', FILTER_SANITIZE_NUMBER_INT );
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_activity_privacy_nonce' ) ) {
-			$media_ids_of_activity = array();
-			$rtm_activity_model    = new RTMediaActivityModel();
-			$is_ac_privacy_exist   = $rtm_activity_model->check( $activity_id );
 
 			$privacy     = intval( $privacy );
 			$activity_id = intval( $activity_id );
+
+			// Nonce is a generic per-page token, so check the settings/ownership gates too.
+			if ( ! $this->rtm_current_user_can_change_activity_privacy( $activity_id ) ) {
+				echo esc_html( 'false' );
+				wp_die();
+			}
+
+			// Reject unknown levels outright rather than silently changing the activity.
+			if ( ! in_array( $privacy, rtmedia_get_allowed_privacy_levels(), true ) ) {
+				echo esc_html( 'false' );
+				wp_die();
+			}
+
+			$media_ids_of_activity = array();
+			$rtm_activity_model    = new RTMediaActivityModel();
+			$is_ac_privacy_exist   = $rtm_activity_model->check( $activity_id );
 
 			if ( ! $is_ac_privacy_exist ) {
 				// Very first privacy entry for this activity.
@@ -167,6 +180,60 @@ class RTMediaPrivacy {
 			echo esc_html( $status );
 			wp_die();
 		}
+	}
+
+	/**
+	 * Whether the current user may change an activity's privacy.
+	 *
+	 * Mirrors the gates the privacy UI (update_activity_privacy_option) applies:
+	 * the user-override setting, the rtm_load_bp_activity_privacy_update_ui filter,
+	 * non-group context, allowed activity type, and bp_activity_user_can_delete().
+	 *
+	 * @param int $activity_id Activity id.
+	 *
+	 * @return bool
+	 */
+	public function rtm_current_user_can_change_activity_privacy( $activity_id ) {
+		$current_user_id = get_current_user_id();
+
+		if ( ! $current_user_id || empty( $activity_id ) ) {
+			return false;
+		}
+
+		// Respect the privacy settings/filter that gate the UI.
+		$ui_allowed = apply_filters( 'rtm_load_bp_activity_privacy_update_ui', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name.
+		if ( ! is_rtmedia_privacy_user_overide() || ! $ui_allowed ) {
+			return false;
+		}
+
+		if ( ! function_exists( 'bp_activity_get_specific' ) ) {
+			return false;
+		}
+
+		$activity = bp_activity_get_specific( array( 'activity_ids' => array( intval( $activity_id ) ) ) );
+
+		if ( empty( $activity['activities'][0] ) ) {
+			return false;
+		}
+
+		$activity_obj = $activity['activities'][0];
+
+		// The UI hides the control for group activities and for rtMedia comment/like types.
+		if ( isset( $activity_obj->component ) && 'groups' === $activity_obj->component ) {
+			return false;
+		}
+		$excluded_types = array( 'rtmedia_comment_activity', 'rtmedia_like_activity', 'activity_comment' );
+		if ( isset( $activity_obj->type ) && in_array( $activity_obj->type, $excluded_types, true ) ) {
+			return false;
+		}
+
+		// Defer to BuddyPress — same check the privacy-change UI uses.
+		if ( function_exists( 'bp_activity_user_can_delete' ) ) {
+			return (bool) bp_activity_user_can_delete( $activity_obj );
+		}
+
+		// Fallback only if BuddyPress activity is unavailable: author or rtMedia admin.
+		return intval( $activity_obj->user_id ) === $current_user_id || ( function_exists( 'is_rt_admin' ) && is_rt_admin() );
 	}
 
 	/**
@@ -452,7 +519,7 @@ class RTMediaPrivacy {
 		}
 
 		// Load the template.
-		bp_core_load_template( apply_filters( 'bp_settings_screen_delete_account', 'members/single/plugins' ) );
+		bp_core_load_template( apply_filters( 'bp_settings_screen_delete_account', 'members/single/plugins' ) ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	}
 
 	/**
@@ -488,7 +555,7 @@ class RTMediaPrivacy {
 			}
 
 			bp_core_add_message( $feedback, $feedback_type );
-			do_action( 'bp_core_general_settings_after_save' );
+			do_action( 'bp_core_general_settings_after_save' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			bp_core_redirect( bp_displayed_user_domain() . bp_get_settings_slug() . '/privacy/' );
 		}
 	}

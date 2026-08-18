@@ -308,15 +308,43 @@ class RTMediaJsonApiFunctions {
 					$model = new RTMediaModel();
 					$media = $model->get_by_activity_id( $activities_template->activity->id );
 
-					if ( isset( $media['result'] ) && count( $media['result'] ) > 0 ) {
+					if ( ! empty( $media['result'] ) && is_array( $media['result'] ) && count( $media['result'] ) > 0 ) {
+						// Drop media the API user is not permitted to view. Privacy is
+						// otherwise enforced only by RTMediaQuery, which never runs in
+						// the API request lifecycle.
+						$viewable_media = array();
+						foreach ( $media['result'] as $media_row ) {
+							if ( ! isset( $rtmediajsonapi ) || ! is_a( $rtmediajsonapi, 'RTMediaJsonApi' )
+								|| ! $rtmediajsonapi->rtmedia_api_current_user_can_view_media( $media_row ) ) {
+								continue;
+							}
+							$viewable_media[] = $media_row;
+						}
+
+						if ( empty( $viewable_media ) ) {
+							unset( $activity_feed[ $i ] );
+							continue;
+						}
+
+						$viewable_media_ids = array();
+						foreach ( $viewable_media as $media_row ) {
+							// get_by_activity_id() returns ARRAY_A rows, but callers may pass objects.
+							$viewable_media_ids[] = intval( is_array( $media_row ) ? $media_row['id'] : $media_row->id );
+						}
+
+						$activity_text = bp_activity_get_meta( $activities_template->activity->id, 'bp_activity_text' );
+						$obj_activity  = new RTMediaActivity( $viewable_media_ids, 0, $activity_text );
+
+						$activity_feed[ $i ]['activity_content'] = $obj_activity->create_activity_html();
+
 						// Create media array.
-						$media = $this->rtmedia_api_media_details( $media['result'] );
+						$media = $this->rtmedia_api_media_details( $viewable_media );
 					} else {
 						$media = false;
 					}
 				}
 
-				if ( $activity_id ) {
+				if ( $activity_id && ! empty( $media ) && isset( $media[0]['id'] ) ) {
 					// Activity Comment Count.
 					$id                              = $media[0]['id'];
 					$activity_feed[ $i ]['comments'] = $this->rtmedia_api_get_media_comments( $id );
@@ -348,13 +376,14 @@ class RTMediaJsonApiFunctions {
 
 		$comments = get_comments(
 			array(
-				'comment_post_ID' => $id,
-				'number'          => 100,
+				'post_id' => $id,
+				'number'  => 100,
 			)
 		);
 
 		$media_comments = array();
 		if ( ! empty( $comments ) ) {
+			$media_comments['user'] = array();
 
 			foreach ( $comments as $comment ) {
 				$media_comments['comments'][] = array(
@@ -410,6 +439,8 @@ class RTMediaJsonApiFunctions {
 			return false;
 		}
 
+		global $rtmediajsonapi;
+
 		$rtmediamodel = new RTMediaModel();
 		$args         = array(
 			'album_id' => $album_id,
@@ -420,6 +451,13 @@ class RTMediaJsonApiFunctions {
 		if ( ! empty( $media_list ) && is_array( $media_list ) ) {
 
 			foreach ( $media_list as $media ) {
+				// Skip media the API user is not permitted to view. Privacy is
+				// otherwise enforced only by RTMediaQuery, which never runs in
+				// the API request lifecycle.
+				if ( ! isset( $rtmediajsonapi ) || ! is_a( $rtmediajsonapi, 'RTMediaJsonApi' )
+					|| ! $rtmediajsonapi->rtmedia_api_current_user_can_view_media( $media ) ) {
+					continue;
+				}
 				$media_data[] = array(
 					'id'           => $media->id,
 					'media_title'  => $media->media_title,

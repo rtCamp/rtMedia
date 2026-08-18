@@ -132,8 +132,18 @@ class RTMediaComment {
 			// get the current media from the comment_post_ID.
 			$media = $model->get( array( 'media_id' => $comment->comment_post_ID ) );
 
+			// media_id is not unique — several rtMedia rows can point at one attachment and
+			// so share a single comment thread — so check every matching row, not just the first.
+			$is_media_author = false;
+			foreach ( (array) $media as $media_row ) {
+				if ( isset( $media_row->media_author ) && intval( $media_row->media_author ) === get_current_user_id() ) {
+					$is_media_author = true;
+					break;
+				}
+			}
+
 			// if user is comment creator, or media uploader or admin, allow to delete.
-			if ( isset( $media[0]->media_author ) && ( is_rt_admin() || intval( $comment->user_id ) === get_current_user_id() || intval( $media[0]->media_author ) === get_current_user_id() ) ) {
+			if ( ! empty( $media ) && ( is_rt_admin() || intval( $comment->user_id ) === get_current_user_id() || $is_media_author ) ) {
 				$comment_deleted = $this->rtmedia_comment_model->delete( $id );
 				do_action( 'rtmedia_after_remove_comment', $id );
 
@@ -160,7 +170,7 @@ class RTMediaComment {
 		&& ( ( isset( $rtmedia_query->is_upload_shortcode ) && true === $rtmedia_query->is_upload_shortcode )
 				|| ( is_rtmedia_bp_profile() && is_rtmedia_profile_media_enable() )
 				|| ( is_rtmedia_bp_group() && is_rtmedia_group_media_enable() ) );
-		$flag = apply_filters( 'before_rtmedia_comment_uploader_display', $flag );
+		$flag = apply_filters( 'before_rtmedia_comment_uploader_display', $flag ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		return $flag;
 	}
 

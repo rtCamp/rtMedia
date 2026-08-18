@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Checks at any point of time any media is left to be processed in the db pool
  *
@@ -12,7 +16,7 @@
  *
  * @return bool
  */
-function have_rtmedia() {
+function have_rtmedia() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	global $rtmedia_query;
 	return $rtmedia_query->have_media();
 }
@@ -24,7 +28,7 @@ function have_rtmedia() {
  *
  * @return bool
  */
-function rewind_rtmedia() {
+function rewind_rtmedia() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query;
 
@@ -117,7 +121,7 @@ function rtmedia_album_name() {
  *
  * @return bool|string
  */
-function get_rtmedia_gallery_title() {
+function get_rtmedia_gallery_title() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query, $rtmedia;
 
@@ -146,7 +150,7 @@ function get_rtmedia_gallery_title() {
  *
  * @return string
  */
-function get_rtmedia_title( $id ) {
+function get_rtmedia_title( $id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$rtmedia_model = new RTMediaModel();
 	$title         = $rtmedia_model->get(
@@ -702,7 +706,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 			$thumbnail_id = ( isset( $media_object->cover_art ) && ( ( false !== filter_var( $media_object->cover_art, FILTER_VALIDATE_URL ) )
 					|| ( 0 !== intval( $media_object->cover_art ) ) ) )
 				? $media_object->cover_art : false;
-			$thumbnail_id = apply_filters( 'show_custom_album_cover', $thumbnail_id, $media_object->media_type, $media_object->id ); // for rtMedia pro users.
+			$thumbnail_id = apply_filters( 'show_custom_album_cover', $thumbnail_id, $media_object->media_type, $media_object->id ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ // for rtMedia pro users.
 		} elseif ( 'photo' === $media_object->media_type ) {
 			$thumbnail_id = $media_object->media_id;
 		} else {
@@ -1017,6 +1021,74 @@ function rtmedia_delete_allowed() {
 	$flag = apply_filters( 'rtmedia_media_delete_priv', $flag );
 
 	return $flag;
+}
+
+/**
+ * Whether the current user may manage (delete/move/merge) a media row.
+ *
+ * Owner, rtMedia admin, or the group's admin/mod for group media.
+ *
+ * @param object $media Media row from RTMediaModel::get().
+ *
+ * @return bool
+ */
+function rtmedia_current_user_can_manage_media( $media ) {
+	if ( empty( $media ) || ! is_object( $media ) || ! isset( $media->media_author ) ) {
+		return false;
+	}
+
+	$current_user_id = get_current_user_id();
+
+	if ( ! $current_user_id ) {
+		return false;
+	}
+
+	// Owner.
+	if ( intval( $media->media_author ) === intval( $current_user_id ) ) {
+		return true;
+	}
+
+	// rtMedia admin ( list_users, not delete_others_posts which also covers Editors ).
+	if ( ( function_exists( 'is_rt_admin' ) && is_rt_admin() ) || is_super_admin() ) {
+		return true;
+	}
+
+	// Group admin/mod, for group media only.
+	if ( isset( $media->context ) && 'group' === $media->context && isset( $media->context_id ) ) {
+		if ( function_exists( 'groups_is_user_admin' ) && groups_is_user_admin( $current_user_id, $media->context_id ) ) {
+			return true;
+		}
+		if ( function_exists( 'groups_is_user_mod' ) && groups_is_user_mod( $current_user_id, $media->context_id ) ) {
+			return true;
+		}
+	}
+
+	return (bool) apply_filters( 'rtmedia_current_user_can_manage_media', false, $media, $current_user_id );
+}
+
+/**
+ * Whether the current user may add media to an album (move/merge destination).
+ *
+ * Looser than managing it: reuses the upload rule, so global albums and group
+ * upload permissions apply just like when uploading.
+ *
+ * @param int $album_id Destination album's rtMedia id.
+ *
+ * @return bool
+ */
+function rtmedia_current_user_can_add_to_album( $album_id ) {
+	$album_id = intval( $album_id );
+	$user     = get_current_user_id();
+
+	if ( ! $album_id || ! $user || ! class_exists( 'RTMediaUploadModel' ) ) {
+		return false;
+	}
+
+	$upload_model                         = new RTMediaUploadModel();
+	$upload_model->upload['album_id']     = $album_id;
+	$upload_model->upload['media_author'] = $user;
+
+	return (bool) $upload_model->has_album_permissions();
 }
 
 /**
@@ -1337,7 +1409,7 @@ function rtmedia_actions() {
 		}
 	}
 
-	do_action( 'after_rtmedia_action_buttons' );
+	do_action( 'after_rtmedia_action_buttons' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 }
 
 /**
@@ -1361,8 +1433,9 @@ function rtmedia_comments( $echo = true ) {
 	if ( empty( $comment_media ) ) {
 
 		$html = sprintf(
-			'<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="%1$sdelete-comment/">',
-			esc_url( get_rtmedia_permalink( rtmedia_id() ) )
+			'<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="%1$sdelete-comment/" data-delete-nonce="%2$s">',
+			esc_url( get_rtmedia_permalink( rtmedia_id() ) ),
+			esc_attr( wp_create_nonce( 'rtmedia_delete_comment' ) )
 		);
 
 		$comments     = get_comments(
@@ -1414,7 +1487,7 @@ function rtmedia_comments( $echo = true ) {
  *
  * @return mixed|void
  */
-function rmedia_single_comment( $comment, $count = false, $i = false ) {
+function rmedia_single_comment( $comment, $count = false, $i = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$html  = '';
 	$class = '';
@@ -1462,7 +1535,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 
 	$comment_string = rtmedia_wp_kses_of_buddypress( $comment_content, $allowedtags );
 
-	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( apply_filters( 'bp_get_activity_content', $comment_string ) ) ) . '</div>';
+	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( apply_filters( 'bp_get_activity_content', $comment_string ) ) ) . '</div>'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$html .= '<div class="rtmedia-comment-extra">' . apply_filters( 'rtmedia_comment_extra', '', $comment ) . '</div>';
 
 	if ( is_rt_admin() || ( isset( $comment['user_id'] ) && ( get_current_user_id() === intval( $comment['user_id'] ) || intval( $rtmedia_media->media_author ) === get_current_user_id() ) ) || apply_filters( 'rtmedia_allow_comment_delete', false ) ) { // show delete button for comment author and admins.
@@ -1774,7 +1847,7 @@ function rtmedia_pagination_page_link( $page_no = '' ) {
 	$allowed_types = array( 'album' );
 
 	// get all allowed media type.
-	foreach ( $rtmedia->allowed_types as $type ) {
+	foreach ( (array) $rtmedia->allowed_types as $type ) {
 		$name            = strtoupper( $type['name'] );
 		$allowed_types[] = constant( 'RTMEDIA_' . $name . '_SLUG' );
 	}
@@ -1900,7 +1973,7 @@ function rtmedia_comments_enabled() {
  *
  * @return bool
  */
-function is_rtmedia_gallery() {
+function is_rtmedia_gallery() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query;
 
@@ -1918,7 +1991,7 @@ function is_rtmedia_gallery() {
  *
  * @return bool
  */
-function is_rtmedia_album_gallery() {
+function is_rtmedia_album_gallery() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query;
 
@@ -1936,7 +2009,7 @@ function is_rtmedia_album_gallery() {
  *
  * @return bool
  */
-function is_rtmedia_single() {
+function is_rtmedia_single() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query;
 
@@ -1956,7 +2029,7 @@ function is_rtmedia_single() {
  *
  * @return bool
  */
-function is_rtmedia_album( $album_id = false ) {
+function is_rtmedia_album( $album_id = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( $album_id ) {
 		$rtmedia_model = new RTMediaModel();
@@ -1989,7 +2062,7 @@ function is_rtmedia_album( $album_id = false ) {
  *
  * @return bool
  */
-function is_rtmedia_group_album() {
+function is_rtmedia_group_album() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query;
 
@@ -2007,7 +2080,7 @@ function is_rtmedia_group_album() {
  *
  * @return bool
  */
-function is_rtmedia_edit_allowed() {
+function is_rtmedia_edit_allowed() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query;
 
@@ -2030,7 +2103,7 @@ function is_rtmedia_edit_allowed() {
  *
  * @param int $id Media id.
  */
-function update_activity_after_thumb_set( $id ) {
+function update_activity_after_thumb_set( $id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$model       = new RTMediaModel();
 	$media_obj   = new RTMediaMedia();
 	$media       = $model->get(
@@ -2150,7 +2223,7 @@ function rtmedia_update_content_of_comment_media( $media_id, $activity_content )
  *
  * @return string
  */
-function update_video_poster( $html, $media, $activity = false ) {
+function update_video_poster( $html, $media, $activity = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( 'video' === $media->media_type ) {
 		$thumbnail_id = $media->cover_art;
@@ -2171,7 +2244,7 @@ function update_video_poster( $html, $media, $activity = false ) {
  *
  * @return array
  */
-function get_video_without_thumbs() {
+function get_video_without_thumbs() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $wpdb;
 
@@ -2211,7 +2284,7 @@ function rtmedia_comment_form() {
 /**
  * Disable the emoji's.
  */
-function rt_disable_emojis() {
+function rt_disable_emojis() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 }
 add_action( 'init', 'rt_disable_emojis' );
@@ -2345,7 +2418,7 @@ function rtmedia_gallery( $attr = '' ) {
  *
  * @return bool
  */
-function get_rtmedia_meta( $id = false, $key = false ) {
+function get_rtmedia_meta( $id = false, $key = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ) {
 		$rtmediameta = new RTMediaMeta();
@@ -2376,7 +2449,7 @@ function get_rtmedia_meta( $id = false, $key = false ) {
  *
  * @return bool|string
  */
-function add_rtmedia_meta( $id = false, $key = false, $value = false, $duplicate = false ) {
+function add_rtmedia_meta( $id = false, $key = false, $value = false, $duplicate = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ) {
 		$rtmediameta = new RTMediaMeta( $id, $key, $value, $duplicate );
@@ -2404,7 +2477,7 @@ function add_rtmedia_meta( $id = false, $key = false, $value = false, $duplicate
  *
  * @return bool|string
  */
-function update_rtmedia_meta( $id = false, $key = false, $value = false, $duplicate = false ) {
+function update_rtmedia_meta( $id = false, $key = false, $value = false, $duplicate = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ) {
 		$rtmediameta = new RTMediaMeta();
@@ -2430,7 +2503,7 @@ function update_rtmedia_meta( $id = false, $key = false, $value = false, $duplic
  *
  * @return array|bool
  */
-function delete_rtmedia_meta( $id = false, $key = false ) {
+function delete_rtmedia_meta( $id = false, $key = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ) {
 		$rtmediameta = new RTMediaMeta();
@@ -2637,9 +2710,9 @@ function rtmedia_group_album_list( $selected_album_id = false ) {
  *
  * @return bool
  */
-function rtm_is_album_create_allowed() {
+function rtm_is_album_create_allowed() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
-	return apply_filters( 'rtm_is_album_create_enable', true );
+	return apply_filters( 'rtm_is_album_create_enable', true ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 }
 
 /**
@@ -2649,7 +2722,7 @@ function rtm_is_album_create_allowed() {
  *
  * @return bool
  */
-function rtm_is_user_allowed_to_create_album( $user_id = false ) {
+function rtm_is_user_allowed_to_create_album( $user_id = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	return true;
 }
 
@@ -2702,7 +2775,7 @@ function rtmedia_sub_nav() {
  *
  * @return bool
  */
-function is_rtmedia_album_enable() {
+function is_rtmedia_album_enable() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -2735,7 +2808,7 @@ function rtmedia_load_template() {
  *
  * @return bool
  */
-function is_rtmedia_privacy_enable() {
+function is_rtmedia_privacy_enable() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -2753,7 +2826,7 @@ function is_rtmedia_privacy_enable() {
  *
  * @return bool
  */
-function is_rtmedia_privacy_user_overide() {
+function is_rtmedia_privacy_user_overide() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -2810,7 +2883,7 @@ function rtmedia_edit_media_privacy_ui() {
  *
  * @return int
  */
-function get_rtmedia_default_privacy() {
+function get_rtmedia_default_privacy() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -2822,13 +2895,92 @@ function get_rtmedia_default_privacy() {
 }
 
 /**
+ * Privacy levels a user is allowed to pick.
+ *
+ * Levels are not fixed: add-ons add their own via `rtmedia_privacy_levels`, and
+ * core drops 40 when the Friends component is off. Read them from the live
+ * settings rather than assuming a list. -1 and 80 are moderation states set
+ * internally, so they are never selectable.
+ *
+ * @return int[]
+ */
+function rtmedia_get_allowed_privacy_levels() {
+	global $rtmedia;
+
+	// Not initialised yet (early hooks, cron): let rtMedia rebuild them so the
+	// filter and the Friends check still apply.
+	if ( empty( $rtmedia->privacy_settings['levels'] ) && is_a( $rtmedia, 'RTMedia' ) ) {
+		$rtmedia->set_privacy();
+	}
+
+	if ( empty( $rtmedia->privacy_settings['levels'] ) || ! is_array( $rtmedia->privacy_settings['levels'] ) ) {
+		return array();
+	}
+
+	$levels = array_map( 'intval', array_keys( $rtmedia->privacy_settings['levels'] ) );
+
+	return array_values( array_diff( $levels, array( -1, 80 ) ) );
+}
+
+/**
+ * Privacy level for media uploaded into a group.
+ *
+ * Public groups map to 0, everything else to 20 so only members can see it.
+ * Anything we cannot positively confirm as public — a deleted group, a bad id,
+ * BuddyPress switched off — is treated as non-public rather than world readable.
+ *
+ * @param int $group_id Group id.
+ *
+ * @return int
+ */
+function rtmedia_get_group_privacy_level( $group_id ) {
+	$group_id = intval( $group_id );
+
+	if ( ! $group_id || ! function_exists( 'groups_get_group' ) ) {
+		return 20;
+	}
+
+	// Array form rather than a bare id: BuddyPress only started accepting the id
+	// directly in 2.9, and the rest of the plugin calls it this way.
+	$group = groups_get_group( array( 'group_id' => $group_id ) );
+
+	return ( isset( $group->status ) && 'public' === $group->status ) ? 0 : 20;
+}
+
+/**
+ * Validate a submitted privacy level, falling back to the site default.
+ *
+ * For uploads, where a bad value should be corrected. Callers that need to
+ * reject the request instead should check rtmedia_get_allowed_privacy_levels().
+ *
+ * @param mixed $privacy Submitted value.
+ *
+ * @return int
+ */
+function rtmedia_sanitize_privacy_level( $privacy ) {
+	$levels  = rtmedia_get_allowed_privacy_levels();
+	$default = intval( get_rtmedia_default_privacy() );
+
+	if ( empty( $levels ) ) {
+		return $default;
+	}
+
+	if ( in_array( intval( $privacy ), $levels, true ) ) {
+		return intval( $privacy );
+	}
+
+	// Guard against a stale default left over from a level that has since gone.
+	return in_array( $default, $levels, true ) ? $default : min( $levels );
+}
+
+/**
  * Checking if media is enabled in BuddyPress group
  *
  * @global RTMedia $rtmedia
  *
  * @return bool
  */
-function is_rtmedia_group_media_enable() {
+function is_rtmedia_group_media_enable() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -2846,7 +2998,7 @@ function is_rtmedia_group_media_enable() {
  *
  * @return bool
  */
-function is_rtmedia_profile_media_enable() {
+function is_rtmedia_profile_media_enable() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -2864,7 +3016,7 @@ function is_rtmedia_profile_media_enable() {
  *
  * @return bool
  */
-function is_rtmedia_bp_group() {
+function is_rtmedia_bp_group() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query;
 
@@ -2882,7 +3034,7 @@ function is_rtmedia_bp_group() {
  *
  * @return bool
  */
-function is_rtmedia_bp_profile() {
+function is_rtmedia_bp_profile() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query;
 
@@ -2898,7 +3050,7 @@ function is_rtmedia_bp_profile() {
  *
  * @return bool
  */
-function can_user_upload_in_group() {
+function can_user_upload_in_group() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$group        = groups_get_current_group();
 	$user_id      = get_current_user_id();
@@ -2908,7 +3060,7 @@ function can_user_upload_in_group() {
 		$display_flag = true;
 	}
 
-	return apply_filters( 'rtm_can_user_upload_in_group', $display_flag );
+	return apply_filters( 'rtm_can_user_upload_in_group', $display_flag ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 }
 
 /**
@@ -2919,7 +3071,7 @@ function can_user_upload_in_group() {
  *
  * @return      bool
  */
-function can_user_create_album_in_group( $group_id = false, $user_id = false ) {
+function can_user_create_album_in_group( $group_id = false, $user_id = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( false === $group_id ) {
 		$group    = groups_get_current_group();
@@ -2953,7 +3105,7 @@ function can_user_create_album_in_group( $group_id = false, $user_id = false ) {
 		}
 	}
 
-	return apply_filters( 'can_user_create_album_in_group', $display_flag );
+	return apply_filters( 'can_user_create_album_in_group', $display_flag ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 }
 
 /**
@@ -2963,7 +3115,7 @@ function can_user_create_album_in_group( $group_id = false, $user_id = false ) {
  *
  * @return bool
  */
-function is_rtmedia_upload_video_enabled() {
+function is_rtmedia_upload_video_enabled() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -2981,7 +3133,7 @@ function is_rtmedia_upload_video_enabled() {
  *
  * @return      bool
  */
-function is_rtmedia_upload_photo_enabled() {
+function is_rtmedia_upload_photo_enabled() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -2999,7 +3151,7 @@ function is_rtmedia_upload_photo_enabled() {
  *
  * @return      bool
  */
-function is_rtmedia_upload_music_enabled() {
+function is_rtmedia_upload_music_enabled() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -3017,14 +3169,14 @@ function is_rtmedia_upload_music_enabled() {
  *
  * @return string
  */
-function get_rtmedia_allowed_upload_type() {
+function get_rtmedia_allowed_upload_type() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
 	$allow_type_str = '';
 	$sep            = '';
 
-	foreach ( $rtmedia->allowed_types as $type ) {
+	foreach ( (array) $rtmedia->allowed_types as $type ) {
 		if ( function_exists( 'is_rtmedia_upload_' . $type['name'] . '_enabled' ) && call_user_func( 'is_rtmedia_upload_' . $type['name'] . '_enabled' ) ) {
 			foreach ( $type['extn'] as $extn ) {
 				$allow_type_str .= $sep . $extn;
@@ -3042,7 +3194,7 @@ function get_rtmedia_allowed_upload_type() {
  *
  * @return bool
  */
-function is_rt_admin() {
+function is_rt_admin() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	return current_user_can( 'list_users' );
 }
@@ -3052,7 +3204,7 @@ function is_rt_admin() {
  *
  * @return bool
  */
-function rtm_is_bp_group_admin() {
+function rtm_is_bp_group_admin() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	return function_exists( 'bp_group_is_admin' ) && bp_group_is_admin();
 }
 
@@ -3061,7 +3213,7 @@ function rtm_is_bp_group_admin() {
  *
  * @return bool
  */
-function rtm_is_bp_group_mod() {
+function rtm_is_bp_group_mod() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	return function_exists( 'bp_group_is_mod' ) && bp_group_is_mod();
 }
 
@@ -3073,7 +3225,7 @@ function rtm_is_bp_group_mod() {
  *
  * @return array|int
  */
-function get_rtmedia_like( $media_id = false ) {
+function get_rtmedia_like( $media_id = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$mediamodel = new RTMediaModel();
 	$actions    = $mediamodel->get(
@@ -3096,7 +3248,7 @@ function get_rtmedia_like( $media_id = false ) {
  *
  * @global RTMedia $rtmedia
  */
-function show_rtmedia_like_counts() {
+function show_rtmedia_like_counts() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -3211,7 +3363,7 @@ if ( ! function_exists( 'rtmedia_who_like_html' ) ) {
  *
  * @return string|bool Uploaded thumbnail URL | False.
  */
-function rtm_get_music_cover_art( $media_object ) {
+function rtm_get_music_cover_art( $media_object ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	// Return URL if cover_art already set.
 	$url = $media_object->cover_art;
@@ -3276,7 +3428,7 @@ if ( ! function_exists( 'get_music_cover_art' ) ) {
 	 *
 	 * @return bool
 	 */
-	function get_music_cover_art( $file, $id ) {
+	function get_music_cover_art( $file, $id ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 		// todo:delete if not used.
 		return false;
@@ -3290,7 +3442,7 @@ if ( ! function_exists( 'get_music_cover_art' ) ) {
  *
  * @return string
  */
-function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
+function get_rtmedia_privacy_symbol( $rtmedia_id = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$mediamodel = new RTMediaModel();
 	$actions    = $mediamodel->get(
@@ -3349,7 +3501,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
  *
  * @throws Exception Error while getting media date.
  */
-function get_rtmedia_date_gmt( $rtmedia_id = false ) {
+function get_rtmedia_date_gmt( $rtmedia_id = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$media     = get_post( rtmedia_media_id( rtmedia_id( $rtmedia_id ) ) );
 	$date_time = '';
@@ -3442,7 +3594,7 @@ function rtmedia_convert_date( $_date ) {
  *
  * @return array|void
  */
-function get_media_counts() {
+function get_media_counts() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia_query;
 
@@ -3494,7 +3646,7 @@ function rtmedia_is_edit_page( $new_edit = null ) {
  *
  * @return bool
  */
-function is_rtmedia_page() {
+function is_rtmedia_page() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( ! defined( 'RTMEDIA_MEDIA_SLUG' ) ) {
 		return false;
@@ -3693,7 +3845,7 @@ function rtmedia_is_uploader_view_allowed( $allow, $section = 'media_gallery' ) 
  *
  * @return string
  */
-function get_rtmedia_encoding_api_key() {
+function get_rtmedia_encoding_api_key() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	return get_site_option( 'rtmedia-encoding-api-key' );
 }
@@ -3710,7 +3862,7 @@ function get_rtmedia_encoding_api_key() {
  *
  * @return string
  */
-function rtm_filter_metaid_column_name( $q ) {
+function rtm_filter_metaid_column_name( $q ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	/**
 	 * Replace quoted content with __QUOTE__ to avoid false positives.
@@ -3742,7 +3894,7 @@ function rtm_filter_metaid_column_name( $q ) {
  *
  * @return string
  */
-function rtm_get_script_style_suffix() {
+function rtm_get_script_style_suffix() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) === true ) ? '' : '.min';
 
@@ -3856,7 +4008,7 @@ function rtmedia_add_multiple_meta( $media_id, $meta_key_val ) {
  *
  * @return string
  */
-function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_FULL_SPECIAL_CHARS' ) {
+function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_FULL_SPECIAL_CHARS' ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	$server_val = '';
 
@@ -3877,7 +4029,7 @@ function rtm_get_server_var( $server_key, $filter_type = 'FILTER_SANITIZE_FULL_S
  *
  * @return bool
  */
-function rtt_is_video_exists( $medias, $media_type = 'mp4' ) {
+function rtt_is_video_exists( $medias, $media_type = 'mp4' ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	if ( empty( $medias ) || empty( $media_type ) ) {
 		return false;
@@ -4311,7 +4463,7 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
  *
  * @return string
  */
-function rtm_select_user( $user ) {
+function rtm_select_user( $user ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$user_ids = array();
 
 	if ( ! empty( $user ) ) {
@@ -4339,7 +4491,7 @@ function rtm_select_user( $user ) {
  *
  * @return string $member_id
  */
-function rtm_fetch_user_by_member_type( $type ) {
+function rtm_fetch_user_by_member_type( $type ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$member_id = array();
 
 	// Search for uppercase also.
@@ -4371,7 +4523,7 @@ function rtm_fetch_user_by_member_type( $type ) {
  * @since  4.4
  * @return bool
  */
-function rtm_check_member_type() {
+function rtm_check_member_type() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$status = false;
 
 	if ( function_exists( 'buddypress' ) ) {
@@ -4410,7 +4562,7 @@ function rtmedia_media_search_enabled() {
  *
  * @return bool True if BuddyPress is activated or else False.
  */
-function rtm_is_buddypress_activate() {
+function rtm_is_buddypress_activate() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	// check if is_plugin_active exists or not.
 	if ( ! function_exists( 'is_plugin_active' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -4465,7 +4617,7 @@ function rtmedia_get_upload_url( $request_uri ) {
  *
  * @return bool
  */
-function is_rtmedia_upload_document_enabled() {
+function is_rtmedia_upload_document_enabled() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -4483,7 +4635,7 @@ function is_rtmedia_upload_document_enabled() {
  *
  * @return bool
  */
-function is_rtmedia_upload_other_enabled() {
+function is_rtmedia_upload_other_enabled() { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 	global $rtmedia;
 
@@ -5224,7 +5376,7 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 		$number
 	);
 
-	// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct query is required for custom table.
+	// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Direct query is required for custom table.
 	$items_removed = $wpdb->query( $query );
 
 	$done = ( $items_removed < $number );

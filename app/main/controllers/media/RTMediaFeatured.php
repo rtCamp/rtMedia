@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class to Handle users featured media related operations
  *
@@ -344,7 +348,7 @@ if ( ! function_exists( 'bp_media_featured' ) ) {
 	 *
 	 * @param bool|int $user_id User ID.
 	 */
-	function bp_media_featured( $user_id = false ) {
+	function bp_media_featured( $user_id = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		echo wp_kses( rtmedia_get_featured( $user_id ), RTMedia::expanded_allowed_tags() );
 	}
 
@@ -355,7 +359,7 @@ if ( ! function_exists( 'bp_media_featured' ) ) {
 	 *
 	 * @return bool|mixed|void
 	 */
-	function bp_media_get_featured( $user_id = false ) {
+	function bp_media_get_featured( $user_id = false ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		return rtmedia_get_featured( $user_id );
 	}
 }

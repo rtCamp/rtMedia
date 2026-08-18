@@ -6,6 +6,10 @@
  * @author  Malav Vasita <malav.vasita@rtcamp.com>
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * We will first check if rtmedia-upload-terms plugin is activate before putting this code in action.
  * RTMediaUploadTerms class would come in picture if and only if rtmedia-upload-terms plugin is deactivated.
@@ -85,7 +89,7 @@ if ( ! class_exists( 'RTMediaUploadTerms' ) && ! is_plugin_active( 'rtmedia-uplo
 		 * Loads translation
 		 */
 		public function load_translation() {
-			load_plugin_textdomain( 'rtmedia', false, basename( RTMEDIA_PATH ) . '/languages/' );
+			load_plugin_textdomain( 'rtmedia', false, basename( RTMEDIA_PATH ) . '/languages/' ); // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- Loads bundled translations from the plugin /languages directory.
 		}
 
 		/**

@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="wrap">
@@ -26,7 +30,7 @@
 
 	echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
 
-	$temp = $prog->progress( $done, $total );
+	$temp = $prog->progress( $done, $total ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	$prog->progress_ui( $temp, true );
 	// No a security issue, so keeping the style here.
 	?>

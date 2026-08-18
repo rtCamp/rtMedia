@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="rtm-pagination clearfix">
@@ -29,7 +33,7 @@
 	<div class="rtm-paginate">
 		<?php
 		if ( $paged > 1 && $showitems < $pages ) {
-			$page_url = ( ( rtmedia_page() - 1 ) === 1 ) ? '' : $page_base_url . ( rtmedia_page() - 1 );
+			$page_url = ( ( rtmedia_page() - 1 ) === 1 ) ? '' : $page_base_url . ( rtmedia_page() - 1 ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			?>
 			<a class="rtmedia-page-link" data-page-type="prev" href="<?php echo esc_url( $page_url ); ?>">
 				<i class='dashicons dashicons-arrow-left-alt2'></i>
@@ -38,7 +42,7 @@
 		}
 
 		if ( $paged > 2 && $paged > $range + 1 && $showitems < $pages ) {
-			$page_url = $page_base_url . '1';
+			$page_url = $page_base_url . '1'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			?>
 			<a class="rtmedia-page-link" data-page-type="page" data-page="1" href="<?php echo esc_url( $page_url ); ?>">1</a>
 			<?php if ( $paged > 3 ) { ?>
@@ -47,9 +51,9 @@
 			}
 		}
 
-		for ( $i = 1; $i <= $pages; $i++ ) {
+		for ( $i = 1; $i <= $pages; $i++ ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( 1 !== $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
-				$page_url = $page_base_url . $i;
+				$page_url = $page_base_url . $i; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 				if ( $paged === $i ) {
 					?>
@@ -66,7 +70,7 @@
 		}
 
 		if ( $paged < $pages - 1 && $paged + $range - 1 < $pages && $showitems < $pages ) {
-			$page_url = $page_base_url . $pages;
+			$page_url = $page_base_url . $pages; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			if ( $paged + 2 < $pages ) {
 				?>
@@ -81,7 +85,7 @@
 		}
 
 		if ( $paged < $pages && $showitems < $pages ) {
-			$page_url = $page_base_url . ( rtmedia_page() + 1 );
+			$page_url = $page_base_url . ( rtmedia_page() + 1 ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			?>
 			<a class="rtmedia-page-link" data-page-type="next" href="<?php echo esc_url( $page_url ); ?>">
 				<i class="dashicons dashicons-arrow-right-alt2"></i>

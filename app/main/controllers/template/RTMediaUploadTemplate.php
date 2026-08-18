@@ -61,7 +61,7 @@ class RTMediaUploadTemplate {
 			'container'           => 'bpm-file_upload-ui',
 			'drop_element'        => 'drag-drop-area',
 			'filters'             => apply_filters(
-				'bp_media_plupload_files_filter',
+				'bp_media_plupload_files_filter', /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				array(
 					array(
 						'title'      => 'Media Files',
@@ -76,7 +76,7 @@ class RTMediaUploadTemplate {
 			'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
 			'file_data_name'      => 'bp_media_file', // key passed to $_FILE.
 			'multi_selection'     => true,
-			'multipart_params'    => apply_filters( 'bp_media_multipart_params_filter', array( 'action' => 'wp_handle_upload' ) ),
+			'multipart_params'    => apply_filters( 'bp_media_multipart_params_filter', array( 'action' => 'wp_handle_upload' ) ), /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		);
 
 		foreach ( (array) $params as $key => $value ) {

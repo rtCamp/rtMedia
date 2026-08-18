@@ -91,7 +91,7 @@ class RTMediaModel extends RTDBModel {
 					} else {
 						$join .= " LEFT JOIN {$wpdb->prefix}{$this->meta_table_name} as {$tbl_alias} ON {$this->table_name}.id = {$tbl_alias}.media_id ";
 					}
-					$meta_query['compare'] = esc_sql( $meta_query['compare'] );
+					$meta_query['compare'] = $this->sanitize_sql_compare_operator( $meta_query['compare'], '=' );
 					if ( isset( $meta_query['value'] ) ) {
 						$where .= $wpdb->prepare( " AND  ({$tbl_alias}.meta_key = %s and  {$tbl_alias}.meta_value  {$meta_query["compare"]}  %s ) ", $meta_query['key'], $meta_query['value'] ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 					} else {
@@ -105,14 +105,15 @@ class RTMediaModel extends RTDBModel {
 					$compare = $colvalue['compare'];
 				}
 
+					$compare = $this->sanitize_sql_compare_operator( $compare );
+
 					$tmp_val          = isset( $colvalue['value'] ) ? $colvalue['value'] : $colvalue;
 					$col_val_comapare = ( is_array( $tmp_val ) ) ? implode( "','", esc_sql( $tmp_val ) ) : esc_sql( $tmp_val );
 
 				if ( 'IS NOT' === $compare ) {
-					$col_val_comapare = ! empty( $colvalue['value'] ) ? $colvalue['value'] : $col_val_comapare;
+					$col_val_comapare = ! empty( $colvalue['value'] ) ? esc_sql( $colvalue['value'] ) : $col_val_comapare;
 				}
 
-					$compare = esc_sql( $compare );
 					$where  .= " AND {$this->table_name}.{$colname} {$compare} ('{$col_val_comapare}')";
 			} else {
 				$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -280,8 +281,8 @@ class RTMediaModel extends RTDBModel {
 		$where = apply_filters( 'rtmedia-get-album-where-query', $where, $this->table_name ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
-		$order_by  = esc_sql( $order_by );
-		$qorder_by = " ORDER BY {$this->table_name}.$order_by ";
+		$order_by  = $this->qualify_order_by( $order_by, 'media_id desc' );
+		$qorder_by = " ORDER BY $order_by ";
 		$sql      .= $where . $qorder_by;
 
 		if ( false !== $offset ) {
@@ -339,8 +340,8 @@ class RTMediaModel extends RTDBModel {
 		if ( is_multisite() ) {
 			$sql .= $wpdb->prepare( " AND  {$this->table_name}.blog_id = %d ", get_current_blog_id() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
-		$order_by = esc_sql( $order_by );
-		$sql     .= " ORDER BY {$this->table_name}.$order_by";
+		$order_by = $this->qualify_order_by( $order_by, 'media_id desc' );
+		$sql     .= " ORDER BY $order_by";
 
 		if ( false !== $offset ) {
 			if ( ! is_integer( $offset ) ) {
@@ -380,7 +381,7 @@ class RTMediaModel extends RTDBModel {
 		global $wpdb, $rtmedia;
 
 		$query = "SELECT {$this->table_name}.privacy, ";
-		foreach ( $rtmedia->allowed_types as $type ) {
+		foreach ( (array) $rtmedia->allowed_types as $type ) {
 			$type['name'] = esc_sql( $type['name'] );
 			$query       .= $wpdb->prepare( "SUM(CASE WHEN {$this->table_name}.media_type LIKE %s THEN 1 ELSE 0 END) as {$type['name']}, ", $type['name'] ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
@@ -404,10 +405,10 @@ class RTMediaModel extends RTDBModel {
 						} else {
 							$compare = $colvalue['compare'];
 						}
+						$compare = $this->sanitize_sql_compare_operator( $compare );
 						if ( ! isset( $colvalue['value'] ) ) {
 							$colvalue['value'] = $colvalue;
 						}
-						$compare          = esc_sql( $compare );
 						$where_query_sql .= " AND {$this->table_name}.{$colname} {$compare} ('" . implode( "','", esc_sql( $colvalue['value'] ) ) . "')";
 					} else {
 						$where_query_sql .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared

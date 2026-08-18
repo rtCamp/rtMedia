@@ -220,7 +220,7 @@ class RTMediaNav {
 
 			global $rtmedia;
 
-			foreach ( $rtmedia->allowed_types as $type ) {
+			foreach ( (array) $rtmedia->allowed_types as $type ) {
 				if ( isset( $rtmedia->options[ 'allowedTypes_' . $type['name'] . '_enabled' ] ) ) {
 					if ( ! $rtmedia->options[ 'allowedTypes_' . $type['name'] . '_enabled' ] ) {
 						continue;
@@ -329,7 +329,7 @@ class RTMediaNav {
 			echo apply_filters( 'rtmedia_sub_nav_albums', $html_li ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
-		foreach ( $rtmedia->allowed_types as $type ) {
+		foreach ( (array) $rtmedia->allowed_types as $type ) {
 			if ( ! isset( $rtmedia->options[ 'allowedTypes_' . $type['name'] . '_enabled' ] ) ) {
 				continue;
 			}
@@ -388,7 +388,7 @@ class RTMediaNav {
 			echo apply_filters( 'rtmedia_sub_nav_' . $type['name'], $nav_li, $type['name'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
-		do_action( 'add_extra_sub_nav' );
+		do_action( 'add_extra_sub_nav' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 	}
 
 	/**

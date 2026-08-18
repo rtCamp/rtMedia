@@ -63,7 +63,7 @@ class RTMediaUploadShortcode {
 				|| ( is_rtmedia_bp_profile() && is_rtmedia_profile_media_enable() )
 				|| ( is_rtmedia_bp_group() && is_rtmedia_group_media_enable() ) );
 
-		$flag = apply_filters( 'before_rtmedia_uploader_display', $flag );
+		$flag = apply_filters( 'before_rtmedia_uploader_display', $flag ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 		return $flag;
 	}
 

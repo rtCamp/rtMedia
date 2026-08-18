@@ -5,11 +5,15 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 global $rtmedia_query, $rtmedia_media;
 
-$model = new RTMediaModel();
+$model = new RTMediaModel(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
-$media = $model->get_media( array( 'id' => $rtmedia_query->media_query['album_id'] ), false, false );
+$media = $model->get_media( array( 'id' => $rtmedia_query->media_query['album_id'] ), false, false ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 if ( ! isset( $media[0] ) ) {
 	return;
 }
@@ -57,7 +61,7 @@ $rtmedia_media = $media[0];
 						<div class="rtmedia-editor-description rtm-field-wrap">
 							<label for='description'><?php esc_html_e( 'Description: ', 'buddypress-media' ); ?></label>
 							<?php
-							$editor = false;
+							$editor = false; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 							rtmedia_description_input( $editor, true );
 							RTMediaMedia::media_nonce_generator( rtmedia_id(), true );
 							?>
@@ -96,7 +100,7 @@ $rtmedia_media = $media[0];
 								</p>
 
 								<p class="rtmedia-move-container">
-									<?php $global_albums = rtmedia_get_site_option( 'rtmedia-global-albums' ); ?>
+									<?php $global_albums = rtmedia_get_site_option( 'rtmedia-global-albums' ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */ ?>
 									<span><?php esc_html_e( 'Move selected media to the album : ', 'buddypress-media' ); ?></span>
 									<select name="album" class="rtmedia-user-album-list">
 										<?php
@@ -117,11 +121,11 @@ $rtmedia_media = $media[0];
 
 								<!-- these links will be handled by backbone -->
 								<?php
-								$display = '';
+								$display = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 								if ( 0 !== rtmedia_offset() ) {
-									$display = 'display:block;';
+									$display = 'display:block;'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 								} else {
-									$display = 'display:none;';
+									$display = 'display:none;'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 								}
 								?>
 
@@ -130,11 +134,11 @@ $rtmedia_media = $media[0];
 								</a>
 
 								<?php
-								$display = '';
+								$display = ''; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 								if ( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() ) {
-									$display = 'display:block;';
+									$display = 'display:block;'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 								} else {
-									$display = 'display:none;';
+									$display = 'display:none;'; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 								}
 								?>
 

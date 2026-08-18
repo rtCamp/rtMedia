@@ -5,6 +5,10 @@
  * @package    rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'rtForm' ) ) {
 
 	/**
@@ -69,7 +73,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 	 *
 	 * @author udit
 	 */
-	class rtForm { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace
+	class rtForm { // phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital, Generic.Classes.OpeningBraceSameLine.ContentAfterBrace, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons.
 
 		/**
 		 * Element ID.

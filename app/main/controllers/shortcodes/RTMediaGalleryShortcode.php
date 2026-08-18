@@ -74,7 +74,7 @@ class RTMediaGalleryShortcode {
 		if ( is_rtmedia_album_gallery() ) {
 
 			$album_template_args = apply_filters(
-				'album_template_args',
+				'album_template_args', /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				array(
 					'action'   => 'rtmedia_get_template',
 					'template' => 'album-gallery-item',
@@ -87,7 +87,7 @@ class RTMediaGalleryShortcode {
 		} else {
 
 			$media_template_args = apply_filters(
-				'media_template_args',
+				'media_template_args', /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				array(
 					'action'   => 'rtmedia_get_template',
 					'template' => apply_filters( 'rtmedia_backbone_template_filter', 'media-gallery-item' ),
@@ -167,7 +167,7 @@ class RTMediaGalleryShortcode {
 	public static function display_allowed() {
 		$flag = true;
 
-		$flag = apply_filters( 'before_rtmedia_gallery_display', $flag );
+		$flag = apply_filters( 'before_rtmedia_gallery_display', $flag ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 		return $flag;
 	}
@@ -244,7 +244,7 @@ class RTMediaGalleryShortcode {
 			if ( is_rtmedia_album_gallery() || ( isset( $attr['attr']['media_type'] ) && 'album' === $attr['attr']['media_type'] ) ) {
 
 				$album_template_args = apply_filters(
-					'album_template_args',
+					'album_template_args', /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					array(
 						'action'   => 'rtmedia_get_template',
 						'template' => 'album-gallery-item',
@@ -256,7 +256,7 @@ class RTMediaGalleryShortcode {
 			} else {
 
 				$media_template_args = apply_filters(
-					'media_template_args',
+					'media_template_args', /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					array(
 						'action'   => 'rtmedia_get_template',
 						'template' => apply_filters( 'rtmedia_backbone_template_filter', 'media-gallery-item' ),

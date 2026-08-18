@@ -2385,12 +2385,14 @@ jQuery(document).ready(function ($) {
     if (comment_id == "" || isNaN(comment_id)) {
       return false;
     }
-    var action = current_comment.closest("ul").data("action");
+    var comment_ul = current_comment.closest("ul");
+    var action = comment_ul.data("action");
+    var delete_nonce = comment_ul.attr("data-delete-nonce");
 
     jQuery.ajax({
       url: action,
       type: "post",
-      data: { comment_id: comment_id },
+      data: { comment_id: comment_id, rtmedia_delete_comment_nonce: delete_nonce },
       success: function (res) {
         if (res != "undefined" && res == 1) {
           current_comment.closest("li").hide(1000, function () {

@@ -6,6 +6,10 @@
  * @subpackage Admin
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 	/**
@@ -85,13 +89,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			add_action( 'wp_ajax_rtmedia_submit_request', array( $this->rtmedia_support, 'submit_request' ), 1 );
 
-			add_action( 'wp_ajax_rtmedia_linkback', array( $this, 'linkback' ), 1 ); // todo: is it being used ?
 			add_action( 'wp_ajax_rtmedia_rt_album_deactivate', 'BPMediaAlbumimporter::bp_album_deactivate', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_import', 'BPMediaAlbumimporter::bpmedia_ajax_import_callback', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_import_favorites', 'BPMediaAlbumimporter::bpmedia_ajax_import_favorites', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_import_step_favorites', 'BPMediaAlbumimporter::bpmedia_ajax_import_step_favorites', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_cleanup', 'BPMediaAlbumimporter::cleanup_after_install' );
-			add_action( 'wp_ajax_rtmedia_convert_videos_form', array( $this, 'convert_videos_mailchimp_send' ), 1 ); // todo: is it being used ?
 			add_action( 'wp_ajax_rtmedia_correct_upload_filetypes', array( $this, 'correct_upload_filetypes' ), 1 );
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_meta_premium_addon_link' ), 1, 2 );
 			add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widgets' ), 0 );
@@ -335,7 +337,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function rtmedia_premium_addon_notice() {
 			$site_option = rtmedia_get_site_option( 'rtmedia_premium_addon_notice' );
 
-			$premium_addon_notice = apply_filters( 'rt_premium_addon_notice', true );
+			$premium_addon_notice = apply_filters( 'rt_premium_addon_notice', true ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			if ( ( ! $site_option || 'hide' !== $site_option ) ) {
 				if ( true === $premium_addon_notice ) {
 					rtmedia_update_site_option( 'rtmedia_premium_addon_notice', 'show' );
@@ -1225,7 +1227,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				);
 			}
 
-			$tabs = apply_filters( 'media_add_tabs', $tabs );
+			$tabs = apply_filters( 'media_add_tabs', $tabs ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			// Loop through tabs and build navigation.
 			foreach ( $tabs as $tab_data ) {
@@ -1434,21 +1436,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Function to save linkback.
-		 *
-		 * @return bool
-		 */
-		public function linkback() {
-			// todo: remove code looks like old setting save code new code at app/helper/RTMediaSettings.php.
-			$linkback = filter_input( INPUT_POST, 'linkback' );
-			if ( isset( $linkback ) && $linkback ) {
-				return rtmedia_update_site_option( 'rtmedia-add-linkback', true );
-			} else {
-				return rtmedia_update_site_option( 'rtmedia-add-linkback', false );
-			}
-		}
-
-		/**
 		 * Export rtMedia Settings
 		 *
 		 * @access public
@@ -1537,39 +1524,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		}
 
 		/**
-		 * Ajax callback function Convert videos mailchimp.
-		 */
-		public function convert_videos_mailchimp_send() {
-			// todo: nonce required. -- Not required since this AJAX action is not being used anymore and will be removed in future version.
-
-			$interested = sanitize_text_field( filter_input( INPUT_POST, 'linkback', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-			$choice     = sanitize_text_field( filter_input( INPUT_POST, 'choice', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-			$url        = filter_input( INPUT_POST, 'url', FILTER_SANITIZE_URL );
-			$email      = filter_input( INPUT_POST, 'email', FILTER_SANITIZE_EMAIL );
-
-			if ( 'Yes' === $interested && ! empty( $choice ) ) {
-				wp_remote_get(
-					esc_url_raw(
-						add_query_arg(
-							array(
-								'rtmedia-convert-videos-form' => 1,
-								'choice' => $choice,
-								'url'    => $url,
-								'email'  => $email,
-							),
-							esc_url( 'https://rtmedia.io/' )
-						)
-					)
-				);
-			} else {
-				rtmedia_update_site_option( 'rtmedia-survey', 0 );
-			}
-
-			esc_html_e( 'Thank you for your time.', 'buddypress-media' );
-			wp_die();
-		}
-
-		/**
 		 * Function to save Video transcoding survey response.
 		 */
 		public function video_transcoding_survey_response() {
@@ -1615,6 +1569,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * Correct upload filetypes.
 		 */
 		public function correct_upload_filetypes() {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json( false );
+			}
+
 			if ( ! check_ajax_referer( '_rtm_file_type_error_', '_rtm_nonce' ) ) {
 				wp_send_json( false );
 			}

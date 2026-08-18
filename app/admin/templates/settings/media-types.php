@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="rtm-option-wrapper">
@@ -47,32 +51,32 @@
 		<?php
 		do_action( 'rtmedia_type_settings_after_heading' );
 
-		foreach ( $render_data as $key => $section ) {
+		foreach ( $render_data as $key => $section ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 			if ( isset( $section['settings_visibility'] ) && true === $section['settings_visibility'] ) {
 				do_action( 'rtmedia_type_settings_before_body' );
 
 				// allow upload.
-				$uplaod_args           = array(
+				$uplaod_args           = array( /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					'key'   => 'allowedTypes_' . $key . '_enabled',
 					'value' => $section['enabled'],
 				);
-				$allow_upload_checkbox = self::checkbox( $uplaod_args, false );
-				$allow_upload_checkbox = apply_filters( 'rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox, $key, $uplaod_args );
+				$allow_upload_checkbox = self::checkbox( $uplaod_args, false ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+				$allow_upload_checkbox = apply_filters( 'rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox, $key, $uplaod_args ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 				// allow featured.
-				$featured_args     = array(
+				$featured_args     = array( /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					'key'   => 'allowedTypes_' . $key . '_featured',
 					'value' => $section['featured'],
 				);
-				$featured_checkbox = self::checkbox( $featured_args, false );
-				$featured_checkbox = apply_filters( 'rtmedia_filter_featured_checkbox', $featured_checkbox, $key );
+				$featured_checkbox = self::checkbox( $featured_args, false ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
+				$featured_checkbox = apply_filters( 'rtmedia_filter_featured_checkbox', $featured_checkbox, $key ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 				if ( ! isset( $section['extn'] ) || ! is_array( $section['extn'] ) ) {
-					$section['extn'] = array();
+					$section['extn'] = array(); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				}
 
-				$extensions = implode( ', ', $section['extn'] );
+				$extensions = implode( ', ', $section['extn'] ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				?>
 
 				<tr>

@@ -160,7 +160,7 @@ class RTMediaTemplate {
 				global $rtaccount;
 
 				if ( ! isset( $rtaccount ) ) {
-					$rtaccount = 0;
+					$rtaccount = 0; /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				}
 
 				$include_uploader = false;
@@ -562,13 +562,24 @@ class RTMediaTemplate {
 				if ( ! empty( $selected_ids ) && is_array( $selected_ids ) ) {
 					$album_move_details = $model->get_media( array( 'id' => $album_move ), false, false );
 
-					foreach ( $selected_ids as $media_id ) {
-						$media_details             = $model->get_media( array( 'id' => $media_id ), false, false );
-						$post_array['ID']          = $media_details[0]->media_id;
-						$post_array['post_parent'] = $album_move_details[0]->media_id;
+					// Destination just needs to accept uploads (allows global albums).
+					$can_move_to_album = ! empty( $album_move_details ) && rtmedia_current_user_can_add_to_album( $album_move_details[0]->id );
 
-						wp_update_post( $post_array );
-						$media->update( $media_details[0]->id, array( 'album_id' => $album_move_details[0]->id ), $media_details[0]->media_id );
+					if ( $can_move_to_album ) {
+						foreach ( $selected_ids as $media_id ) {
+							$media_details = $model->get_media( array( 'id' => $media_id ), false, false );
+
+							// Only move media the user owns.
+							if ( empty( $media_details ) || ! rtmedia_current_user_can_manage_media( $media_details[0] ) ) {
+								continue;
+							}
+
+							$post_array['ID']          = $media_details[0]->media_id;
+							$post_array['post_parent'] = $album_move_details[0]->media_id;
+
+							wp_update_post( $post_array );
+							$media->update( $media_details[0]->id, array( 'album_id' => $album_move_details[0]->id ), $media_details[0]->media_id );
+						}
 					}
 				}
 			}
@@ -646,9 +657,15 @@ class RTMediaTemplate {
 		$_selected     = $_selected_arr['selected'];
 		if ( wp_verify_nonce( $nonce, 'rtmedia_bulk_delete_nonce' ) && ! empty( $_selected ) ) {
 
-			$ids = $_selected;
+			$ids   = $_selected;
+			$model = new RTMediaModel();
 
 			foreach ( $ids as $id ) {
+				// Only delete media the user owns.
+				$media_row = $model->get( array( 'id' => $id ) );
+				if ( empty( $media_row ) || ! rtmedia_current_user_can_manage_media( $media_row[0] ) ) {
+					continue;
+				}
 				$media->delete( $id );
 			}
 		}
@@ -772,18 +789,26 @@ class RTMediaTemplate {
 		if ( wp_verify_nonce( $nonce, 'rtmedia_merge_album_' . $rtmedia_query->media_query['album_id'] ) ) {
 			$media              = new RTMediaMedia();
 			$model              = new RTMediaModel();
-			$album_contents     = $model->get( array( 'album_id' => $rtmedia_query->media_query['album_id'] ), false, false );
+			$source_album       = $model->get( array( 'id' => $rtmedia_query->media_query['album_id'] ) );
 			$album_move_details = $model->get_media( array( 'id' => $album_id ), false, false );
 
-			foreach ( $album_contents as $album_media ) {
-				$post_array['ID']          = $album_media->media_id;
-				$post_array['post_parent'] = $album_move_details[0]->media_id;
+			// Must own the source album (it gets deleted); target just needs to accept uploads.
+			$can_merge = ! empty( $source_album ) && rtmedia_current_user_can_manage_media( $source_album[0] )
+				&& ! empty( $album_move_details ) && rtmedia_current_user_can_add_to_album( $album_move_details[0]->id );
 
-				wp_update_post( $post_array );
-				$media->update( $album_media->id, array( 'album_id' => $album_move_details[0]->id ), $album_media->media_id );
+			if ( $can_merge ) {
+				$album_contents = $model->get( array( 'album_id' => $rtmedia_query->media_query['album_id'] ), false, false );
+
+				foreach ( $album_contents as $album_media ) {
+					$post_array['ID']          = $album_media->media_id;
+					$post_array['post_parent'] = $album_move_details[0]->media_id;
+
+					wp_update_post( $post_array );
+					$media->update( $album_media->id, array( 'album_id' => $album_move_details[0]->id ), $album_media->media_id );
+				}
+
+				$media->delete( $rtmedia_query->media_query['album_id'] );
 			}
-
-			$media->delete( $rtmedia_query->media_query['album_id'] );
 		}
 
 		if ( isset( $rtmedia_query->media_query['context'] ) && 'group' === $rtmedia_query->media_query['context'] ) {
@@ -912,7 +937,7 @@ class RTMediaTemplate {
 							)
 						);
 
-						do_action( 'rtm_bp_activity_comment_posted', $comment_activity_id, $result[0] );
+						do_action( 'rtm_bp_activity_comment_posted', $comment_activity_id, $result[0] ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					}
 				}
 
@@ -958,8 +983,15 @@ class RTMediaTemplate {
 	public function check_delete_comments() {
 		global $rtmedia_query;
 
-		if ( ! empty( $rtmedia_query->action_query->action ) && 'delete-comment' !== $rtmedia_query->action_query->action ) {
+		// Only act on an explicit delete-comment request (guard was previously inverted).
+		if ( empty( $rtmedia_query->action_query->action ) || 'delete-comment' !== $rtmedia_query->action_query->action ) {
 			return;
+		}
+
+		// Nonce check.
+		$nonce = sanitize_text_field( filter_input( INPUT_POST, 'rtmedia_delete_comment_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'rtmedia_delete_comment' ) ) {
+			return false;
 		}
 
 		/**
@@ -971,9 +1003,63 @@ class RTMediaTemplate {
 			return false;
 		}
 
+		// Comment author, the media's author, or an admin only.
+		if ( ! $this->rtmedia_current_user_can_delete_comment( $_comment_id ) ) {
+			return false;
+		}
+
 		echo wp_kses( $this->rtmedia_delete_comment_and_activity( $_comment_id ), RTMedia::expanded_allowed_tags() );
 
 		exit;
+	}
+
+	/**
+	 * Whether the current user may delete a comment: admin, comment author, or media author.
+	 *
+	 * @param int $comment_id Comment id.
+	 *
+	 * @return bool
+	 */
+	public function rtmedia_current_user_can_delete_comment( $comment_id ) {
+		$current_user_id = get_current_user_id();
+
+		if ( ! $current_user_id ) {
+			return false;
+		}
+
+		if ( function_exists( 'is_rt_admin' ) && is_rt_admin() ) {
+			return true;
+		}
+
+		$comment = get_comment( $comment_id );
+		if ( empty( $comment ) ) {
+			return false;
+		}
+
+		// Comment author.
+		if ( intval( $comment->user_id ) === intval( $current_user_id ) ) {
+			return true;
+		}
+
+		// Author of the media the comment is on. media_id is not unique — several rtMedia
+		// rows can point at one attachment and so share a single comment thread — so every
+		// matching row must be checked, not just the first.
+		if ( ! empty( $comment->comment_post_ID ) && class_exists( 'RTMediaModel' ) ) {
+			$model = new RTMediaModel();
+			$media = $model->get( array( 'media_id' => $comment->comment_post_ID ) );
+			foreach ( (array) $media as $media_row ) {
+				if ( isset( $media_row->media_author ) && intval( $media_row->media_author ) === intval( $current_user_id ) ) {
+					return true;
+				}
+			}
+		}
+
+		// Same override hook the UI uses.
+		if ( apply_filters( 'rtmedia_allow_comment_delete', false ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -1073,7 +1159,7 @@ class RTMediaTemplate {
 
 		if ( isset( $attr['order_by'] ) ) {
 			$allowed_columns = array( 'date', 'views', 'downloads', 'ratings', 'likes', 'dislikes' );
-			$allowed_columns = apply_filters( 'filter_allowed_sorting_columns', $allowed_columns );
+			$allowed_columns = apply_filters( 'filter_allowed_sorting_columns', $allowed_columns ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			$flag            = $flag && in_array( $attr['order_by'], $allowed_columns, true );
 
 			if ( 'date' === strtolower( $attr['order_by'] ) ) {

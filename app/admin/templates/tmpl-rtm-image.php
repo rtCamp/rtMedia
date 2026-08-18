@@ -5,6 +5,10 @@
  * @package rtMedia
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <# if(data.class && '' !== data.class){ #>
 	<img class="bpm-ajax-loader" src="{{data.src}}" /> <strong>{{data.norefresh}}</strong>

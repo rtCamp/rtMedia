@@ -7,6 +7,10 @@
  * @author udit
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'RTDBModel' ) ) {
 	/**
 	 * Base class for any Database Model like Media, Album etc.
@@ -102,7 +106,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 					$page = $arguments[2];
 				}
 
-				$this->per_page         = apply_filters( 'rt_db_model_per_page', $this->per_page, $this->table_name );
+				$this->per_page         = apply_filters( 'rt_db_model_per_page', $this->per_page, $this->table_name ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 				$return_array           = array();
 				$return_array['result'] = false;
 
@@ -182,6 +186,24 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 		}
 
 		/**
+		 * Validate a SQL comparison operator against an allowlist.
+		 *
+		 * The operator is interpolated directly into query strings, so it must be
+		 * restricted to a fixed set of known-safe operators to prevent SQL injection.
+		 *
+		 * @param string $compare Operator supplied by the caller.
+		 * @param string $default Fallback operator when $compare is not allowed.
+		 *
+		 * @return string Safe SQL comparison operator.
+		 */
+		public function sanitize_sql_compare_operator( $compare, $default = 'IN' ) {
+			$allowed = array( '=', '!=', '<>', '>', '>=', '<', '<=', 'IN', 'NOT IN', 'LIKE', 'IS', 'IS NOT' );
+			$compare = strtoupper( trim( (string) $compare ) );
+
+			return in_array( $compare, $allowed, true ) ? $compare : $default;
+		}
+
+		/**
 		 * Get all the rows according to the columns set in $columns parameter.
 		 * offset and rows per page can also be passed for pagination.
 		 *
@@ -206,10 +228,11 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 					} else {
 						$compare = $colvalue['compare'];
 					}
+					$compare = $this->sanitize_sql_compare_operator( $compare );
 					if ( ! isset( $colvalue['value'] ) ) {
-						$colvalue['value'] = esc_sql( $colvalue );
+						$colvalue['value'] = $colvalue;
 					}
-					$col_val_comapare = ( is_array( $colvalue['value'] ) ) ? '(\'' . implode( "','", $colvalue['value'] ) . '\')' : '(\'' . $colvalue['value'] . '\')';
+					$col_val_comapare = ( is_array( $colvalue['value'] ) ) ? '(\'' . implode( "','", esc_sql( $colvalue['value'] ) ) . '\')' : '(\'' . esc_sql( $colvalue['value'] ) . '\')';
 					$where           .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
 				} else {
 					$where .= $wpdb->prepare( " AND {$this->table_name}.{$colname} = %s", $colvalue ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -217,7 +240,7 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 			}
 			$sql = $select . $where;
 
-			$sql .= " ORDER BY {$this->table_name}.$order_by";
+			$sql .= ' ORDER BY ' . $this->qualify_order_by( $order_by, 'id desc' );
 			if ( false !== $offset ) {
 				if ( ! is_integer( $offset ) ) {
 					$offset = 0;
@@ -236,6 +259,69 @@ if ( ! class_exists( 'RTDBModel' ) ) {
 
 			}
 			return $wpdb->get_results( $sql ); // phpcs:ignore
+		}
+
+		/**
+		 * Validate an ORDER BY clause against a safe pattern (defense-in-depth).
+		 *
+		 * `esc_sql()` does not neutralise SQL inside an ORDER BY clause, so allow
+		 * only comma-separated `column [asc|desc]` segments with identifier-only
+		 * column names. Anything else falls back to $default. This mirrors the
+		 * token allowlist used by RTMediaModel::get().
+		 *
+		 * @param string $order_by Raw order-by clause.
+		 * @param string $default  Fallback clause used when validation fails.
+		 *
+		 * @return string Validated order-by clause (identifiers/directions only).
+		 */
+		protected function sanitize_order_by( $order_by, $default = 'id desc' ) {
+			$segments  = explode( ',', (string) $order_by );
+			$sanitized = array();
+
+			foreach ( $segments as $segment ) {
+				$parts     = preg_split( '/\s+/', trim( $segment ) );
+				$column    = isset( $parts[0] ) ? $parts[0] : '';
+				$direction = isset( $parts[1] ) ? strtolower( $parts[1] ) : '';
+
+				if ( '' === $column
+					|| ! preg_match( '/^[a-zA-Z0-9_]+$/', $column )
+					|| ! in_array( $direction, array( 'asc', 'desc', '' ), true ) ) {
+					return $default;
+				}
+
+				$sanitized[] = trim( $column . ' ' . $direction );
+			}
+
+			return empty( $sanitized ) ? $default : implode( ', ', $sanitized );
+		}
+
+		/**
+		 * Qualify each validated ORDER BY segment with the model table name.
+		 *
+		 * @param string $order_by Raw order-by clause.
+		 * @param string $default  Fallback clause used when validation fails.
+		 *
+		 * @return string Validated and table-qualified order-by clause.
+		 */
+		protected function qualify_order_by( $order_by, $default = 'id desc' ) {
+			$segments  = explode( ',', $this->sanitize_order_by( $order_by, $default ) );
+			$qualified = array();
+
+			foreach ( $segments as $segment ) {
+				$parts     = preg_split( '/\s+/', trim( $segment ) );
+				$column    = isset( $parts[0] ) ? $parts[0] : '';
+				$direction = isset( $parts[1] ) ? strtolower( $parts[1] ) : '';
+
+				if ( '' === $column
+					|| ! preg_match( '/^[a-zA-Z0-9_]+$/', $column )
+					|| ! in_array( $direction, array( 'asc', 'desc', '' ), true ) ) {
+					continue;
+				}
+
+				$qualified[] = $this->table_name . '.' . trim( $column . ' ' . $direction );
+			}
+
+			return implode( ', ', $qualified );
 		}
 
 		/**

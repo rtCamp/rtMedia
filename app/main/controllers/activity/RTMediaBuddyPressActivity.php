@@ -403,9 +403,9 @@ class RTMediaBuddyPressActivity {
 		if ( ! is_main_site( $blog_id ) ) {
 			if ( ! empty( $activity_ids ) ) {
 				if ( current_filter() === 'bp_ajax_querystring' ) {
-					$query_string .= '&exclude=' . $activity_ids;
+					$query_string .= '&exclude=' . $activity_ids; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- BuddyPress activity-query exclude parameter, not a WP_Query.
 				} else {
-					$query_string['exclude'] = $activity_ids;
+					$query_string['exclude'] = $activity_ids; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- BuddyPress activity-query exclude parameter, not a WP_Query.
 				}
 			}
 		}
@@ -685,7 +685,7 @@ class RTMediaBuddyPressActivity {
 	public function manage_user_last_activity_update( $content, $user_id, $activity_id ) {
 		global $wpdb, $bp;
 		// do not proceed if not allowed.
-		if ( ! apply_filters( 'rtm_manage_user_last_activity_update', true, $activity_id ) ) {
+		if ( ! apply_filters( 'rtm_manage_user_last_activity_update', true, $activity_id ) ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 			return;
 		}
 		$rtm_activity_model = new RTMediaActivityModel();
@@ -719,7 +719,7 @@ class RTMediaBuddyPressActivity {
 					if ( empty( $activity_content ) ) {
 						$activity_content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$bp->activity->table_name} WHERE id = %d", $public_activity_id ) ); // phpcs:ignore
 					}
-					$activity_content = apply_filters( 'bp_activity_latest_update_content', $activity_content, $activity_content );
+					$activity_content = apply_filters( 'bp_activity_latest_update_content', $activity_content, $activity_content ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
 					// update user's latest update.
 					bp_update_user_meta(
@@ -1075,7 +1075,7 @@ class RTMediaBuddyPressActivity {
 						$action = sprintf( esc_html__( '%1$s liked %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
 					}
 
-					$action       = apply_filters( 'rtm_bp_like_activity_action', $action, $media_id, $user_id );
+					$action       = apply_filters( 'rtm_bp_like_activity_action', $action, $media_id, $user_id ); /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 					$primary_link = get_rtmedia_permalink( $media_id );
 
 					// generate activity arguments.
