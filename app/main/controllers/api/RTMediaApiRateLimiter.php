@@ -21,6 +21,34 @@ class RTMediaApiRateLimiter {
 	const CACHE_GROUP = 'rtmedia_api_rate_limit';
 
 	/**
+	 * Default rate-limit window in seconds.
+	 *
+	 * @var int
+	 */
+	const DEFAULT_WINDOW = 300;
+
+	/**
+	 * Default maximum login failures per IP address.
+	 *
+	 * @var int
+	 */
+	const DEFAULT_LOGIN_IP_LIMIT = 20;
+
+	/**
+	 * Default maximum login failures per identifier.
+	 *
+	 * @var int
+	 */
+	const DEFAULT_LOGIN_IDENTIFIER_LIMIT = 5;
+
+	/**
+	 * Default maximum invalid token submissions per IP address.
+	 *
+	 * @var int
+	 */
+	const DEFAULT_TOKEN_ATTEMPT_LIMIT = 20;
+
+	/**
 	 * Check whether a login attempt should be blocked.
 	 *
 	 * @param string $identifier Username or email address supplied for login.
@@ -76,7 +104,7 @@ class RTMediaApiRateLimiter {
 	 * @return int
 	 */
 	public function get_window() {
-		$window = (int) apply_filters( 'rtmedia_api_rate_limit_window', 5 * MINUTE_IN_SECONDS );
+		$window = (int) apply_filters( 'rtmedia_api_rate_limit_window', self::DEFAULT_WINDOW );
 
 		return max( MINUTE_IN_SECONDS, $window );
 	}
@@ -217,7 +245,7 @@ class RTMediaApiRateLimiter {
 	 * @return int
 	 */
 	private function get_login_ip_limit() {
-		return max( 1, (int) apply_filters( 'rtmedia_api_login_ip_limit', 20 ) );
+		return max( 1, (int) apply_filters( 'rtmedia_api_login_ip_limit', self::DEFAULT_LOGIN_IP_LIMIT ) );
 	}
 
 	/**
@@ -226,7 +254,7 @@ class RTMediaApiRateLimiter {
 	 * @return int
 	 */
 	private function get_login_identifier_limit() {
-		return max( 1, (int) apply_filters( 'rtmedia_api_login_identifier_limit', 5 ) );
+		return max( 1, (int) apply_filters( 'rtmedia_api_login_identifier_limit', self::DEFAULT_LOGIN_IDENTIFIER_LIMIT ) );
 	}
 
 	/**
@@ -235,6 +263,6 @@ class RTMediaApiRateLimiter {
 	 * @return int
 	 */
 	private function get_token_limit() {
-		return max( 1, (int) apply_filters( 'rtmedia_api_token_attempt_limit', 20 ) );
+		return max( 1, (int) apply_filters( 'rtmedia_api_token_attempt_limit', self::DEFAULT_TOKEN_ATTEMPT_LIMIT ) );
 	}
 }
