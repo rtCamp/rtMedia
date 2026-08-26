@@ -157,7 +157,7 @@ class RTMediaJsonApiFunctions {
 		}
 		$token_data = $this->rtmedia_api_validate_token( $token );
 		if ( empty( $token_data ) ) {
-				return false;
+			return false;
 		}
 
 		return $token_data[0]->user_id;
@@ -167,17 +167,25 @@ class RTMediaJsonApiFunctions {
 	 * Token processing for all data fetch/post requests
 	 */
 	public function rtmedia_api_verfiy_token() {
-		$rtmjsonapi = new RTMediaJsonApi();
-		$token      = sanitize_text_field( filter_input( INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$rtmjsonapi   = new RTMediaJsonApi();
+		$rate_limiter = new RTMediaApiRateLimiter();
+		$token        = sanitize_text_field( filter_input( INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( empty( $token ) ) {
 			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_token_missing, $rtmjsonapi->msg_token_missing ) );
+		}
+
+		if ( $rate_limiter->is_token_validation_blocked() ) {
+			header( 'Retry-After: ' . $rate_limiter->get_window() );
+			status_header( 429 );
+			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_rate_limit_exceeded, $rtmjsonapi->msg_rate_limit_exceeded ) );
 		}
 
 		// Validate token.
 		$token_valid = $this->rtmedia_api_validate_token( $token );
 
 		if ( ! $token_valid ) {
+			$rate_limiter->record_token_failure();
 			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_token_invalid, $rtmjsonapi->msg_token_invalid ) );
 		}
 	}
