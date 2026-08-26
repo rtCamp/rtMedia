@@ -148,8 +148,26 @@ class RTMediaApiRateLimiter {
 		}
 
 		// Transient fallback — see race-condition note in the docblock above.
-		$count = $this->get_attempts( $key ) + 1;
-		set_transient( $key, $count, $window );
+		$now    = time();
+		$bucket = get_transient( $key );
+
+		if (
+			! is_array( $bucket )
+			|| ! isset( $bucket['count'], $bucket['expires_at'] )
+			|| ! is_numeric( $bucket['count'] )
+			|| ! is_numeric( $bucket['expires_at'] )
+			|| (int) $bucket['expires_at'] <= $now
+		) {
+			$bucket = array(
+				'count'      => 0,
+				'expires_at' => $now + $window,
+			);
+		}
+
+		$count           = (int) $bucket['count'] + 1;
+		$bucket['count'] = $count;
+		$remaining       = max( 1, (int) $bucket['expires_at'] - time() );
+		set_transient( $key, $bucket, $remaining );
 
 		return $count;
 	}
@@ -168,7 +186,19 @@ class RTMediaApiRateLimiter {
 			return false === $count ? 0 : (int) $count;
 		}
 
-		return (int) get_transient( $key );
+		$bucket = get_transient( $key );
+
+		if (
+			! is_array( $bucket )
+			|| ! isset( $bucket['count'], $bucket['expires_at'] )
+			|| ! is_numeric( $bucket['count'] )
+			|| ! is_numeric( $bucket['expires_at'] )
+			|| (int) $bucket['expires_at'] <= time()
+		) {
+			return 0;
+		}
+
+		return (int) $bucket['count'];
 	}
 
 	/**
