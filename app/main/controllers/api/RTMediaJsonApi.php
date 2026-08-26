@@ -323,7 +323,7 @@ class RTMediaJsonApi {
 		$ec_invalid_credentials  = 200003;
 		$msg_invalid_credentials = esc_html__( 'invalid username or password', 'buddypress-media' );
 
-		$ec_login_rate_limited  = 200005;
+		$ec_login_rate_limited  = 200006;
 		$msg_login_rate_limited = esc_html__( 'too many login attempts; please try again later', 'buddypress-media' );
 
 		$ec_login_success  = 200004;
