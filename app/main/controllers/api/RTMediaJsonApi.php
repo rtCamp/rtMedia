@@ -138,6 +138,20 @@ class RTMediaJsonApi {
 	public $msg_api_disabled = 'API disabled by site administrator';
 
 	/**
+	 * Error code for rate-limited API requests.
+	 *
+	 * @var int
+	 */
+	public $ec_rate_limit_exceeded = 600010;
+
+	/**
+	 * Error message for rate-limited API requests.
+	 *
+	 * @var string
+	 */
+	public $msg_rate_limit_exceeded = 'too many requests; please try again later';
+
+	/**
 	 * Object of RTMediaJsonApiFunctions class to handle api requests.
 	 *
 	 * @var object
@@ -306,33 +320,37 @@ class RTMediaJsonApi {
 		$ec_user_pass_missing  = 200001;
 		$msg_user_pass_missing = esc_html__( 'username/password empty', 'buddypress-media' );
 
-		$ec_incorrect_username  = 200002;
-		$msg_incorrect_username = esc_html__( 'incorrect username', 'buddypress-media' );
+		$ec_invalid_credentials  = 200003;
+		$msg_invalid_credentials = esc_html__( 'invalid username or password', 'buddypress-media' );
 
-		$ec_incorrect_pass  = 200003;
-		$msg_incorrect_pass = esc_html__( 'incorrect password', 'buddypress-media' );
+		$ec_login_rate_limited  = 200005;
+		$msg_login_rate_limited = esc_html__( 'too many login attempts; please try again later', 'buddypress-media' );
 
 		$ec_login_success  = 200004;
 		$msg_login_success = esc_html__( 'login success', 'buddypress-media' );
-		$username          = sanitize_text_field( filter_input( INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-		$password          = sanitize_text_field( filter_input( INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$username          = filter_input( INPUT_POST, 'username', FILTER_UNSAFE_RAW );
+		$password          = filter_input( INPUT_POST, 'password', FILTER_UNSAFE_RAW );
+		$username          = is_string( $username ) ? sanitize_text_field( $username ) : '';
+		$password          = is_string( $password ) ? $password : '';
 
 		if ( empty( $username ) || empty( $password ) ) {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_user_pass_missing, $msg_user_pass_missing ) );
 		} else {
-			$user_login = wp_authenticate( trim( $username ), trim( $password ) );
+			$rate_limiter = new RTMediaApiRateLimiter();
+
+			if ( $rate_limiter->is_login_blocked( $username ) ) {
+				header( 'Retry-After: ' . $rate_limiter->get_window() );
+				status_header( 429 );
+				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_login_rate_limited, $msg_login_rate_limited ) );
+			}
+
+			$user_login = wp_authenticate( trim( $username ), $password );
 
 			if ( is_wp_error( $user_login ) ) {
-
-				$incorrect_password = ! empty( $user_login->errors['incorrect_password'] ) ? true : false;
-				$incorrect_username = ! empty( $user_login->errors['invalid_username'] ) ? true : false;
-
-				if ( $incorrect_password ) {
-					wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_incorrect_pass, $msg_incorrect_pass ) );
-				} elseif ( $incorrect_username ) {
-					wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_incorrect_username, $msg_incorrect_username ) );
-				}
+				$rate_limiter->record_login_failure( $username );
+				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_invalid_credentials, $msg_invalid_credentials ) );
 			} else {
+				$rate_limiter->clear_login_identifier( $username );
 
 				$access_token = $this->rtmediajsonapifunction->rtmedia_api_get_user_token( $user_login->ID, $user_login->data->user_login );
 				$data         = array(
