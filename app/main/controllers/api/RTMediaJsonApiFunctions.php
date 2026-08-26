@@ -28,9 +28,9 @@ class RTMediaJsonApiFunctions {
 		if ( empty( $user_id ) || empty( $user_login ) ) {
 			return false;
 		}
-		$string = '08~' . $user_id . '~' . $user_login . '~kumar';
 
-		return sha1( $string . current_time( 'timestamp' ) . wp_rand( 1, 9 ) );
+		// Generate an opaque 64 character long token for user login.
+		return wp_generate_password( 64, false, false );
 	}
 
 	/**
