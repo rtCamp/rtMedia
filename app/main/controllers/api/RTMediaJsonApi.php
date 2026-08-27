@@ -337,9 +337,10 @@ class RTMediaJsonApi {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_user_pass_missing, $msg_user_pass_missing ) );
 		} else {
 			$rate_limiter = new RTMediaApiRateLimiter();
+			$retry_after  = $rate_limiter->get_login_retry_after( $username );
 
-			if ( $rate_limiter->is_login_blocked( $username ) ) {
-				header( 'Retry-After: ' . $rate_limiter->get_window() );
+			if ( 0 < $retry_after ) {
+				header( 'Retry-After: ' . $retry_after );
 				status_header( 429 );
 				wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_login_rate_limited, $msg_login_rate_limited ) );
 			}

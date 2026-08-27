@@ -21,6 +21,13 @@ class RTMediaApiRateLimiter {
 	const CACHE_GROUP = 'rtmedia_api_rate_limit';
 
 	/**
+	 * Suffix used for object-cache bucket expiry metadata.
+	 *
+	 * @var string
+	 */
+	const EXPIRY_KEY_SUFFIX = '_expires_at';
+
+	/**
 	 * Default rate-limit window in seconds.
 	 *
 	 * @var int
@@ -56,8 +63,33 @@ class RTMediaApiRateLimiter {
 	 * @return bool
 	 */
 	public function is_login_blocked( $identifier ) {
-		return $this->get_attempts( $this->get_key( 'login_ip', $this->get_client_ip() ) ) >= $this->get_login_ip_limit()
-			|| $this->get_attempts( $this->get_key( 'login_id', $this->normalize_identifier( $identifier ) ) ) >= $this->get_login_identifier_limit();
+		return 0 < $this->get_login_retry_after( $identifier );
+	}
+
+	/**
+	 * Get the remaining time for blocked login buckets.
+	 *
+	 * When both the client IP and identifier buckets are blocking, the client
+	 * must wait until both have expired, so return the longer remaining TTL.
+	 *
+	 * @param string $identifier Username or email address supplied for login.
+	 *
+	 * @return int Remaining seconds, or zero when the login is not blocked.
+	 */
+	public function get_login_retry_after( $identifier ) {
+		$ip_key         = $this->get_key( 'login_ip', $this->get_client_ip() );
+		$identifier_key = $this->get_key( 'login_id', $this->normalize_identifier( $identifier ) );
+		$retry_after    = 0;
+
+		if ( $this->get_attempts( $ip_key ) >= $this->get_login_ip_limit() ) {
+			$retry_after = max( 1, $this->get_remaining_ttl( $ip_key ) );
+		}
+
+		if ( $this->get_attempts( $identifier_key ) >= $this->get_login_identifier_limit() ) {
+			$retry_after = max( $retry_after, 1, $this->get_remaining_ttl( $identifier_key ) );
+		}
+
+		return $retry_after;
 	}
 
 	/**
@@ -88,7 +120,22 @@ class RTMediaApiRateLimiter {
 	 * @return bool
 	 */
 	public function is_token_validation_blocked() {
-		return $this->get_attempts( $this->get_key( 'token_ip', $this->get_client_ip() ) ) >= $this->get_token_limit();
+		return 0 < $this->get_token_retry_after();
+	}
+
+	/**
+	 * Get the remaining time for a blocked token-validation bucket.
+	 *
+	 * @return int Remaining seconds, or zero when token validation is not blocked.
+	 */
+	public function get_token_retry_after() {
+		$key = $this->get_key( 'token_ip', $this->get_client_ip() );
+
+		if ( $this->get_attempts( $key ) < $this->get_token_limit() ) {
+			return 0;
+		}
+
+		return max( 1, $this->get_remaining_ttl( $key ) );
 	}
 
 	/**
@@ -130,10 +177,21 @@ class RTMediaApiRateLimiter {
 		$window = $this->get_window();
 
 		if ( wp_using_ext_object_cache() ) {
+			$now        = time();
+			$expiry_key = $this->get_expiry_key( $key );
+
 			// Seed the key only if absent; wp_cache_add() itself is atomic
 			// (no-op if the key already exists), so this never clobbers an
 			// in-flight counter from a concurrent request.
-			wp_cache_add( $key, 0, self::CACHE_GROUP, $window );
+			$counter_added = wp_cache_add( $key, 0, self::CACHE_GROUP, $window );
+
+			// WordPress does not expose a cached key's remaining TTL. Store
+			// the absolute expiry separately so Retry-After can be accurate.
+			if ( $counter_added ) {
+				wp_cache_set( $expiry_key, $now + $window, self::CACHE_GROUP, $window );
+			} else {
+				wp_cache_add( $expiry_key, $now + $window, self::CACHE_GROUP, $window );
+			}
 
 			$count = wp_cache_incr( $key, 1, self::CACHE_GROUP );
 
@@ -141,6 +199,7 @@ class RTMediaApiRateLimiter {
 			// the add() above and the incr() call. Reseed at 1 in that case.
 			if ( false === $count ) {
 				wp_cache_set( $key, 1, self::CACHE_GROUP, $window );
+				wp_cache_set( $expiry_key, $now + $window, self::CACHE_GROUP, $window );
 				$count = 1;
 			}
 
@@ -202,6 +261,39 @@ class RTMediaApiRateLimiter {
 	}
 
 	/**
+	 * Get the remaining lifetime of a bucket.
+	 *
+	 * @param string $key Bucket key.
+	 *
+	 * @return int Remaining seconds, or zero when no valid expiry is available.
+	 */
+	private function get_remaining_ttl( $key ) {
+		if ( wp_using_ext_object_cache() ) {
+			$expires_at = wp_cache_get( $this->get_expiry_key( $key ), self::CACHE_GROUP );
+
+			// Counters created before expiry metadata was introduced may remain
+			// active for one window. Use the full window as a safe fallback.
+			if ( false === $expires_at || ! is_numeric( $expires_at ) ) {
+				return $this->get_window();
+			}
+
+			return max( 0, (int) $expires_at - time() );
+		}
+
+		$bucket = get_transient( $key );
+
+		if (
+			! is_array( $bucket )
+			|| ! isset( $bucket['expires_at'] )
+			|| ! is_numeric( $bucket['expires_at'] )
+		) {
+			return 0;
+		}
+
+		return max( 0, (int) $bucket['expires_at'] - time() );
+	}
+
+	/**
 	 * Delete a bucket, regardless of backend.
 	 *
 	 * @param string $key Bucket key.
@@ -209,6 +301,7 @@ class RTMediaApiRateLimiter {
 	private function delete( $key ) {
 		if ( wp_using_ext_object_cache() ) {
 			wp_cache_delete( $key, self::CACHE_GROUP );
+			wp_cache_delete( $this->get_expiry_key( $key ), self::CACHE_GROUP );
 
 			return;
 		}
@@ -226,6 +319,17 @@ class RTMediaApiRateLimiter {
 	 */
 	private function get_key( $scope, $identifier ) {
 		return 'rtm_api_rl_' . $scope . '_' . substr( wp_hash( (string) $identifier, 'auth' ), 0, 32 );
+	}
+
+	/**
+	 * Get the companion object-cache key for a bucket's absolute expiry.
+	 *
+	 * @param string $key Bucket key.
+	 *
+	 * @return string
+	 */
+	private function get_expiry_key( $key ) {
+		return $key . self::EXPIRY_KEY_SUFFIX;
 	}
 
 	/**

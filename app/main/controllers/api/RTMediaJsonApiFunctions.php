@@ -175,8 +175,10 @@ class RTMediaJsonApiFunctions {
 			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_token_missing, $rtmjsonapi->msg_token_missing ) );
 		}
 
-		if ( $rate_limiter->is_token_validation_blocked() ) {
-			header( 'Retry-After: ' . $rate_limiter->get_window() );
+		$retry_after = $rate_limiter->get_token_retry_after();
+
+		if ( 0 < $retry_after ) {
+			header( 'Retry-After: ' . $retry_after );
 			status_header( 429 );
 			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_rate_limit_exceeded, $rtmjsonapi->msg_rate_limit_exceeded ) );
 		}
