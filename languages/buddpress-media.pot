@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.7.12\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.7.13\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/buddypress-media\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-17T13:32:53+00:00\n"
+"POT-Creation-Date: 2026-08-27T11:14:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: buddypress-media\n"
@@ -2261,217 +2261,217 @@ msgstr ""
 msgid "%1$s commented on %2$s's %3$s"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:307
+#: app/main/controllers/api/RTMediaJsonApi.php:321
 msgid "username/password empty"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:310
-msgid "incorrect username"
+#: app/main/controllers/api/RTMediaJsonApi.php:324
+msgid "invalid username or password"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:313
-msgid "incorrect password"
+#: app/main/controllers/api/RTMediaJsonApi.php:327
+msgid "too many login attempts; please try again later"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:316
+#: app/main/controllers/api/RTMediaJsonApi.php:330
 msgid "login success"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:365
+#: app/main/controllers/api/RTMediaJsonApi.php:384
 msgid "fields empty"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:368
+#: app/main/controllers/api/RTMediaJsonApi.php:387
 msgid "invalid email"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:371
+#: app/main/controllers/api/RTMediaJsonApi.php:390
 msgid "password do not match"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:374
+#: app/main/controllers/api/RTMediaJsonApi.php:393
 msgid "username already registered"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:377
+#: app/main/controllers/api/RTMediaJsonApi.php:396
 msgid "email already exists"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:380
+#: app/main/controllers/api/RTMediaJsonApi.php:399
 msgid "new user created"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:383
+#: app/main/controllers/api/RTMediaJsonApi.php:402
 msgid "user registration is not allowed"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:457
+#: app/main/controllers/api/RTMediaJsonApi.php:476
 msgid "email empty"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:460
+#: app/main/controllers/api/RTMediaJsonApi.php:479
 msgid "username/email not registered"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:463
+#: app/main/controllers/api/RTMediaJsonApi.php:482
 msgid "reset link sent"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:497
+#: app/main/controllers/api/RTMediaJsonApi.php:516
 msgid "Someone has asked to reset the password for the following site and username."
 msgstr ""
 
 #. translators: 1: Username.
-#: app/main/controllers/api/RTMediaJsonApi.php:501
+#: app/main/controllers/api/RTMediaJsonApi.php:520
 #, php-format
 msgid "Username: %s"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:502
+#: app/main/controllers/api/RTMediaJsonApi.php:521
 msgid "To reset your password visit the following address, otherwise just ignore this email and nothing will happen."
 msgstr ""
 
 #. translators: 1: Blog name.
-#: app/main/controllers/api/RTMediaJsonApi.php:507
+#: app/main/controllers/api/RTMediaJsonApi.php:526
 #, php-format
 msgid "[%s] Password Reset"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:523
+#: app/main/controllers/api/RTMediaJsonApi.php:542
 msgid "bp activities"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:526
+#: app/main/controllers/api/RTMediaJsonApi.php:545
 msgid "user activities"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:535
+#: app/main/controllers/api/RTMediaJsonApi.php:554
 msgid "no updates"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:558
+#: app/main/controllers/api/RTMediaJsonApi.php:577
 msgid "comment content missing"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:561
+#: app/main/controllers/api/RTMediaJsonApi.php:580
 msgid "comment posted"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:609
+#: app/main/controllers/api/RTMediaJsonApi.php:628
 msgid "unliked media"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:612
+#: app/main/controllers/api/RTMediaJsonApi.php:631
 msgid "liked media"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:704
+#: app/main/controllers/api/RTMediaJsonApi.php:723
 msgid "no comments"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:707
+#: app/main/controllers/api/RTMediaJsonApi.php:726
 msgid "media comments"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:771
+#: app/main/controllers/api/RTMediaJsonApi.php:790
 msgid "no likes"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:774
+#: app/main/controllers/api/RTMediaJsonApi.php:793
 msgid "media likes"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:835
+#: app/main/controllers/api/RTMediaJsonApi.php:854
 msgid "invalid comment/media id"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:838
+#: app/main/controllers/api/RTMediaJsonApi.php:857
 msgid "no comment id"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:841
+#: app/main/controllers/api/RTMediaJsonApi.php:860
 msgid "comment deleted"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:945
+#: app/main/controllers/api/RTMediaJsonApi.php:964
 msgid "no profile found"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:948
+#: app/main/controllers/api/RTMediaJsonApi.php:967
 msgid "profile fields"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1050
+#: app/main/controllers/api/RTMediaJsonApi.php:1069
 msgid "follow user id missing"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1053
+#: app/main/controllers/api/RTMediaJsonApi.php:1072
 msgid "started following"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1056
+#: app/main/controllers/api/RTMediaJsonApi.php:1075
 msgid "already following"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1089
+#: app/main/controllers/api/RTMediaJsonApi.php:1108
 msgid "unfollow id missing"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1092
+#: app/main/controllers/api/RTMediaJsonApi.php:1111
 msgid "stopped following"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1095
+#: app/main/controllers/api/RTMediaJsonApi.php:1114
 msgid "not following"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1128
+#: app/main/controllers/api/RTMediaJsonApi.php:1147
 msgid "name/location empty"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1131
+#: app/main/controllers/api/RTMediaJsonApi.php:1150
 msgid "profile updated"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1160
-#: app/main/controllers/api/RTMediaJsonApi.php:1188
+#: app/main/controllers/api/RTMediaJsonApi.php:1179
+#: app/main/controllers/api/RTMediaJsonApi.php:1207
 msgid "no file"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1163
-#: app/main/controllers/api/RTMediaJsonApi.php:1200
+#: app/main/controllers/api/RTMediaJsonApi.php:1182
+#: app/main/controllers/api/RTMediaJsonApi.php:1219
 msgid "upload failed, check size and file type"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1166
+#: app/main/controllers/api/RTMediaJsonApi.php:1185
 msgid "avatar updated"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1191
+#: app/main/controllers/api/RTMediaJsonApi.php:1210
 msgid "invalid file type. jpeg and png are allowed."
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1194
+#: app/main/controllers/api/RTMediaJsonApi.php:1213
 msgid "image type missing"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1197
+#: app/main/controllers/api/RTMediaJsonApi.php:1216
 msgid "no title"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1203
+#: app/main/controllers/api/RTMediaJsonApi.php:1222
 msgid "media updated"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1417
+#: app/main/controllers/api/RTMediaJsonApi.php:1436
 msgid "media list"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1420
+#: app/main/controllers/api/RTMediaJsonApi.php:1439
 msgid "no media found for requested media type"
 msgstr ""
 
-#: app/main/controllers/api/RTMediaJsonApi.php:1538
+#: app/main/controllers/api/RTMediaJsonApi.php:1557
 msgid "single media"
 msgstr ""
 

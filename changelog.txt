@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 4.7.13 [August 27, 2026] =
+
+* FIXED
+  * Fixed insecure API token generation, validation and expiration.
+  * Fixed insufficient brute-force protection for API authentication and token validation.
+  * Fixed username enumeration through API login error responses.
+
+
 = 4.7.12 [August 18, 2026] =
 
 * FIXED
