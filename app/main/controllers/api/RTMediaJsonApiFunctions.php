@@ -12,6 +12,13 @@
 class RTMediaJsonApiFunctions {
 
 	/**
+	 * Token lifetime in seconds.
+	 *
+	 * @var int
+	 */
+	public $token_lifetime = 2592000; // 30 days.
+
+	/**
 	 * RTMediaJsonApiFunctions constructor.
 	 */
 	public function __construct() {}
@@ -28,9 +35,20 @@ class RTMediaJsonApiFunctions {
 		if ( empty( $user_id ) || empty( $user_login ) ) {
 			return false;
 		}
-		$string = '08~' . $user_id . '~' . $user_login . '~kumar';
 
-		return sha1( $string . current_time( 'timestamp' ) . wp_rand( 1, 9 ) );
+		// Generate an opaque 64 character long token for user login.
+		return wp_generate_password( 64, false, false );
+	}
+
+	/**
+	 * Get the absolute API token lifetime in seconds.
+	 *
+	 * @return int
+	 */
+	public function rtmedia_api_get_token_lifetime() {
+		$token_lifetime = (int) apply_filters( 'rtmedia_api_token_lifetime', $this->token_lifetime );
+
+		return max( MINUTE_IN_SECONDS, $token_lifetime );
 	}
 
 	/**
@@ -96,6 +114,11 @@ class RTMediaJsonApiFunctions {
 			return false;
 		}
 
+		// Revoke predictable 40-character SHA-1 tokens issued by affected versions.
+		if ( 1 !== preg_match( '/^[A-Za-z0-9]{64}$/D', $token ) ) {
+			return false;
+		}
+
 		if ( class_exists( 'RTMediaApiLogin' ) ) {
 			$rtmediaapilogin = new RTMediaApiLogin();
 			$columns         = array(
@@ -103,6 +126,15 @@ class RTMediaJsonApiFunctions {
 			);
 			$token_data      = $rtmediaapilogin->get( $columns );
 			if ( empty( $token_data ) || 'FALSE' === $token_data[0]->status ) {
+				return false;
+			}
+
+			$issued_at  = isset( $token_data[0]->token_time ) ? (int) $token_data[0]->token_time : 0;
+			$expires_at = $issued_at + $this->rtmedia_api_get_token_lifetime();
+
+			if ( $issued_at <= 0 || time() >= $expires_at ) {
+				$rtmediaapilogin->update( array( 'status' => 'FALSE' ), array( 'id' => $token_data[0]->id ) );
+
 				return false;
 			}
 
@@ -124,6 +156,9 @@ class RTMediaJsonApiFunctions {
 			return false;
 		}
 		$token_data = $this->rtmedia_api_validate_token( $token );
+		if ( empty( $token_data ) ) {
+			return false;
+		}
 
 		return $token_data[0]->user_id;
 	}
@@ -132,17 +167,27 @@ class RTMediaJsonApiFunctions {
 	 * Token processing for all data fetch/post requests
 	 */
 	public function rtmedia_api_verfiy_token() {
-		$rtmjsonapi = new RTMediaJsonApi();
-		$token      = sanitize_text_field( filter_input( INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		$rtmjsonapi   = new RTMediaJsonApi();
+		$rate_limiter = new RTMediaApiRateLimiter();
+		$token        = sanitize_text_field( filter_input( INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
 		if ( empty( $token ) ) {
 			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_token_missing, $rtmjsonapi->msg_token_missing ) );
+		}
+
+		$retry_after = $rate_limiter->get_token_retry_after();
+
+		if ( 0 < $retry_after ) {
+			header( 'Retry-After: ' . $retry_after );
+			status_header( 429 );
+			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_rate_limit_exceeded, $rtmjsonapi->msg_rate_limit_exceeded ) );
 		}
 
 		// Validate token.
 		$token_valid = $this->rtmedia_api_validate_token( $token );
 
 		if ( ! $token_valid ) {
+			$rate_limiter->record_token_failure();
 			wp_send_json( $rtmjsonapi->rtmedia_api_response_object( 'FALSE', $rtmjsonapi->ec_token_invalid, $rtmjsonapi->msg_token_invalid ) );
 		}
 	}
