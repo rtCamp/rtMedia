@@ -49,7 +49,7 @@ jobs:
 
       - name: Archive HTML Report on failure
         if: failure()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: report
           path: ./tests/wp-e2e-playwright/playwright-report
