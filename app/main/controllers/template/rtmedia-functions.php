@@ -984,7 +984,9 @@ function rtmedia_sanitize_object( $data, $exceptions = array() ) {
 	$sanitized    = array();
 	foreach ( $data as $key => $value ) {
 		if ( in_array( $key, $allowed_keys, true ) ) {
-			if ( is_array( $value ) ) {
+			if ( 'privacy' === $key ) {
+				$sanitized[ $key ] = rtmedia_sanitize_privacy_level( $value );
+			} elseif ( is_array( $value ) ) {
 				$sanitized[ $key ] = rtmedia_sanitize_object( $value );
 			} elseif ( is_numeric( $value ) ) {
 				$sanitized[ $key ] = absint( $value );

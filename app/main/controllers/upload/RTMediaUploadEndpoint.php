@@ -267,6 +267,7 @@ class RTMediaUploadEndpoint {
 							if ( empty( $privacy ) ) {
 								$privacy = 0;
 							}
+							$privacy = rtmedia_sanitize_privacy_level( $privacy );
 							$obj_activity = new RTMediaActivity( $update_activity_media, $privacy, false );
 
 							if ( ! empty( $same_medias[0] ) && ! empty( $activity_id ) ) {
