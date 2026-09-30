@@ -249,10 +249,8 @@ class RTMediaUploadFile {
 			);
 			$allowed_types = explode( ',', $allowed_types[0]['extensions'] );
 
-			if ( false === in_array( strtolower( $file_data['ext'] ), $allowed_types, true ) ) {
-				if ( ! preg_match( '/' . implode( '|', $allowed_types ) . '/i', $file['type'], $result ) || ! isset( $result[0] ) ) {
-					throw new RTMediaUploadException( UPLOAD_ERR_EXTENSION );
-				}
+			if ( empty( $file_data['ext'] ) || false === in_array( strtolower( $file_data['ext'] ), $allowed_types, true ) ) {
+				throw new RTMediaUploadException( UPLOAD_ERR_EXTENSION );
 			}
 		} catch ( RTMediaUploadException $e ) {
 			echo esc_html( $e->getMessage() );
