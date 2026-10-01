@@ -72,7 +72,7 @@ class RTMediaUploadFile {
 		include_once ABSPATH . 'wp-admin/includes/file.php';
 		include_once ABSPATH . 'wp-admin/includes/image.php';
 
-		$upload_type = $this->fake ? 'wp_handle_sideload' : 'wp_handle_upload';
+		$upload_type = 'wp_handle_upload';
 
 		// todo why use $rt_set_filter_uplaod_dir global variable if we can remove filter for upload_dir after upload finish.
 		global $rt_set_filter_uplaod_dir;
@@ -173,16 +173,9 @@ class RTMediaUploadFile {
 	 */
 	public function set_file( $files ) {
 		/**
-		 * If files parameter is provided then take th file details from that object
+		 * Check for $_FILES global object from the form submitted
 		 */
-		if ( $files ) {
-
-			$this->fake = true;
-			$this->populate_file_array( (array) $this->uploaded['files'] );
-			/**
-			 * Otherwise check for $_FILES global object from the form submitted
-			 */
-		} elseif ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are just checking if the value exists over here.
+		if ( isset( $_FILES['rtmedia_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are just checking if the value exists over here.
 			$this->populate_file_array( array_map( 'sanitize_text_field', $_FILES['rtmedia_file'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- We are just checking if the value exists over here.
 			// The function populate_file_array is sanitizing string and integer values.
 		} else {
@@ -249,10 +242,8 @@ class RTMediaUploadFile {
 			);
 			$allowed_types = explode( ',', $allowed_types[0]['extensions'] );
 
-			if ( false === in_array( strtolower( $file_data['ext'] ), $allowed_types, true ) ) {
-				if ( ! preg_match( '/' . implode( '|', $allowed_types ) . '/i', $file['type'], $result ) || ! isset( $result[0] ) ) {
-					throw new RTMediaUploadException( UPLOAD_ERR_EXTENSION );
-				}
+			if ( empty( $file_data['ext'] ) || false === in_array( strtolower( $file_data['ext'] ), $allowed_types, true ) ) {
+				throw new RTMediaUploadException( UPLOAD_ERR_EXTENSION );
 			}
 		} catch ( RTMediaUploadException $e ) {
 			echo esc_html( $e->getMessage() );
