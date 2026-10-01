@@ -364,7 +364,7 @@ class RTMediaTemplate {
 			$data_array = array( 'media_title', 'description', 'privacy' );
 			$_album_id  = filter_input( INPUT_POST, 'album_id', FILTER_SANITIZE_NUMBER_INT );
 			// for medias except album and playlist, if album_is is found, then update album_id for the media also.
-			if ( ! empty( $_album_id ) ) {
+			if ( ! empty( $_album_id ) && rtmedia_current_user_can_add_to_album( $_album_id ) ) {
 				$data_array[] = 'album_id';
 
 				// check it has an media id.
@@ -373,6 +373,8 @@ class RTMediaTemplate {
 					// update the comment media album.
 					$comment->update_comment_media_album( $rtmedia_query->media[0]->media_id );
 				}
+			} else {
+				unset( $_POST['album_id'] );
 			}
 
 			$data  = rtmedia_sanitize_object( $_POST, $data_array ); // Properly Sanitized.
