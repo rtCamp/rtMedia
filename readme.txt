@@ -1,11 +1,11 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala, shobhit2412, vaishu.agola27, kapilpaul, opurockey, vkd007, pavanpatil1, pradeep1308, shardul200, sabbir1991, kamalahmed, ibnulk, harshbarach, Mukulsingh27, vishalkakadiya, elifvish, krupajnanda, utsavladani, krishana79, rohitmathur7, kuldipchaudhary, mchirag2002, vedantgandhi28, mohamedahamed, thehercules, suryakantupadhyay
+Contributors: rtcamp, mangeshp, sanket.parmar, pranalipatel, jignesh.nakrani, manishsongirkar36, kiranpotphode, yahil, 1naveengiri, bhargavbhandari90, raftaar1191, rittesh.patel, sagarjadhav, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores, chandrapatel, rahul3883, nomnom99, sayanchakraborty, milindmore22, thrijith, abhijitrakas, sid177, montu3366, jashwini, juhise, ravatparmar, dharmin16, malavvasita, pooja1210, krupajnanda, surajkumarsingh, kanumalivad, dishitpala, shobhit2412, vaishu.agola27, kapilpaul, opurockey, vkd007, pavanpatil1, pradeep1308, shardul200, sabbir1991, kamalahmed, ibnulk, harshbarach, Mukulsingh27, vishalkakadiya, elifvish, krupajnanda, utsavladani, krishana79, rohitmathur7, kuldipchaudhary, mchirag2002, vedantgandhi28, mohamedahamed, thehercules, suryakantupadhyay, intenzi
 Tags: BuddyPress, media, multimedia, album, audio, music, video, photo, upload, share, MediaElement.js, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.9.6
 Tested up to: 7.0
-Stable tag: 4.7.13
+Stable tag: 4.7.14
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -127,6 +127,16 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.14 [October 06, 2026] =
+
+* FIXED
+  * Fixed file upload handling to prevent arbitrary file sideloading.
+  * Fixed file extension validation to enforce allowed media extensions strictly.
+  * Fixed album permission checks when moving media to another album.
+  * Fixed media edit sanitization to prevent unauthorized attribute modifications.
+  * Fixed media privacy level validation against allowed values.
+  * Fixed privacy modification checks on single media and album edit forms.
 
 = 4.7.13 [August 27, 2026] =
 
@@ -1023,6 +1033,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 [See changelog for all versions](https://raw.githubusercontent.com/rtCamp/rtMedia/master/changelog.txt)
 
 == Upgrade Notice ==
+
+= 4.7.14 =
+This release includes important security improvements for media uploads, file extension validation and media edit authorization. We strongly recommend upgrading.
 
 = 4.7.13 =
 This release includes important security improvements for API authentication and tokens. Existing API users must log in again to receive a new token. We strongly recommend upgrading.

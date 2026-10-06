@@ -361,10 +361,24 @@ class RTMediaTemplate {
 
 			do_action( 'rtmedia_before_update_media', $rtmedia_query->action_query->id );
 
-			$data_array = array( 'media_title', 'description', 'privacy' );
+			// Privacy should not be editable for group media, moderated media and when privacy override is disabled.
+			if ( ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] )
+				|| ( isset( $rtmedia_query->media[0]->context ) && 'group' === $rtmedia_query->media[0]->context )
+				// Moderated media privacy is not editable.
+				|| ( isset( $rtmedia_query->media[0]->privacy ) && 80 === intval( $rtmedia_query->media[0]->privacy ) )
+				|| ! is_rtmedia_privacy_enable()
+				|| ! is_rtmedia_privacy_user_overide() ) {
+				unset( $_POST['privacy'] );
+			}
+
+			$data_array = array( 'media_title', 'description' );
+
+			if ( isset( $_POST['privacy'] ) ) {
+				$data_array[] = 'privacy';
+			}
 			$_album_id  = filter_input( INPUT_POST, 'album_id', FILTER_SANITIZE_NUMBER_INT );
 			// for medias except album and playlist, if album_is is found, then update album_id for the media also.
-			if ( ! empty( $_album_id ) ) {
+			if ( ! empty( $_album_id ) && rtmedia_current_user_can_add_to_album( $_album_id ) ) {
 				$data_array[] = 'album_id';
 
 				// check it has an media id.
@@ -373,6 +387,8 @@ class RTMediaTemplate {
 					// update the comment media album.
 					$comment->update_comment_media_album( $rtmedia_query->media[0]->media_id );
 				}
+			} else {
+				unset( $_POST['album_id'] );
 			}
 
 			$data  = rtmedia_sanitize_object( $_POST, $data_array ); // Properly Sanitized.
@@ -539,7 +555,8 @@ class RTMediaTemplate {
 			$_selected_arr = filter_input_array( INPUT_POST, $filters );
 			$_selected     = $_selected_arr['selected'];
 			if ( ! empty( $submit ) ) {
-				$data_array = array( 'media_title', 'description', 'privacy' );
+				$data_array = array( 'media_title', 'description' );
+				unset( $_POST['privacy'] );
 				$data       = rtmedia_sanitize_object( $_POST, $data_array ); // Properly Sanitized.
 				$album      = $model->get_media( array( 'id' => $rtmedia_query->media_query['album_id'] ), false, false );
 				$state      = $media->update( $album[0]->id, $data, $album[0]->media_id );
