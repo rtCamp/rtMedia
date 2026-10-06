@@ -128,7 +128,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 4.7.14 [October 01, 2026] =
+= 4.7.14 [October 06, 2026] =
 
 * FIXED
   * Fixed file upload handling to prevent arbitrary file sideloading.
