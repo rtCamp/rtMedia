@@ -136,6 +136,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
   * Fixed album permission checks when moving media to another album.
   * Fixed media edit sanitization to prevent unauthorized attribute modifications.
   * Fixed media privacy level validation against allowed values.
+  * Fixed privacy modification checks on single media and album edit forms.
 
 = 4.7.13 [August 27, 2026] =
 
