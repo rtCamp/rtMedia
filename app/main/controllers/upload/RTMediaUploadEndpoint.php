@@ -91,7 +91,7 @@ class RTMediaUploadEndpoint {
 				if ( -1 !== $_activity_id && ! empty( $_activity_id ) ) {
 					$can_attach = false;
 					// Query the activity to check if the activity belongs to the user.
-					if ( function_exists( 'bp_activity_get_specific' ) ) {
+					if ( is_user_logged_in() && function_exists( 'bp_activity_get_specific' ) ) {
 						$activity = bp_activity_get_specific( array( 'activity_ids' => array( intval( $_activity_id ) ) ) );
 						if ( ! empty( $activity['activities'][0] ) && intval( $activity['activities'][0]->user_id ) === get_current_user_id() ) {
 							$can_attach = true;
