@@ -506,7 +506,7 @@ class RTMediaBuddyPressActivity {
 		}
 
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) && rtmedia_is_media_owner( $rtmedia_attached_files[0] ) ) {
+		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) && rtmedia_is_media_owner( $rtmedia_attached_files ) ) {
 			$obj_activity = new RTMediaActivity( $rtmedia_attached_files, 0, $content );
 
 			// Remove action to fix duplication issue of comment content.
@@ -575,7 +575,7 @@ class RTMediaBuddyPressActivity {
 			// has media in comment.
 			$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 			// if the media is not empty.
-			if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) && class_exists( 'RTMediaActivity' ) && rtmedia_is_media_owner( $rtmedia_attached_files[0], $user_id ) ) {
+			if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) && rtmedia_is_media_owner( $rtmedia_attached_files, $user_id ) ) {
 				// create new html for comment content.
 				$obj_comment      = new RTMediaActivity( $rtmedia_attached_files[0], 0, $param['content'] );
 				$param['content'] = $obj_comment->create_activity_html( 'comment-media' );
@@ -1226,7 +1226,7 @@ class RTMediaBuddyPressActivity {
 						$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
 						// check media should be in array format and is not empty to.
-						if ( ! empty( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) && is_array( $rtmedia_attached_files ) && rtmedia_is_media_owner( $rtmedia_attached_files[0], $user_id ) ) {
+						if ( ! empty( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) && is_array( $rtmedia_attached_files ) && rtmedia_is_media_owner( $rtmedia_attached_files, $user_id ) ) {
 							$comment_media    = true;
 							$comment_media_id = $rtmedia_attached_files[0];
 							$obj_comment      = new RTMediaActivity( $rtmedia_attached_files[0], 0, $comment_content );
