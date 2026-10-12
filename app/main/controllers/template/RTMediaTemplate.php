@@ -893,7 +893,7 @@ class RTMediaTemplate {
 					$comment_content = bp_activity_at_name_filter( $comment_content );
 				}
 
-				if ( ! empty( $rtmedia_attached_files ) ) {
+				if ( ! empty( $rtmedia_attached_files ) && rtmedia_is_media_owner( $rtmedia_attached_files[0] ) ) {
 					// has media.
 					$comment_with_media = true;
 

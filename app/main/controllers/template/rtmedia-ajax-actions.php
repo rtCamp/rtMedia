@@ -214,6 +214,9 @@ function rtmedia_bp_activity_after_save_callback( $activity_data ) {
 
 		// check if class exits or not and it has any media in it.
 		if ( ! empty( $rtmedia_attached_files ) && isset( $activity_data->id ) && is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) && class_exists( 'RTMediaModel' ) ) {
+			if ( ! rtmedia_is_media_owner( $rtmedia_attached_files[0] ) ) {
+				return;
+			}
 
 			if ( function_exists( 'rtmedia_get_original_comment_media_content' ) ) {
 				// get the original content of media.
@@ -289,7 +292,7 @@ function rtmedia_bp_activity_comment_content_callback( $content ) {
 
 	if ( ! empty( $rtmedia_attached_files ) && ! empty( $comment_id ) && ! empty( $form_id ) ) {
 
-		if ( ! empty( $rtmedia_attached_files[0] ) && is_array( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) ) {
+		if ( ! empty( $rtmedia_attached_files[0] ) && is_array( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) && rtmedia_is_media_owner( $rtmedia_attached_files[0] ) ) {
 			$obj_comment = new RTMediaActivity( $rtmedia_attached_files[0], 0, $content );
 			$new_content = $obj_comment->create_activity_html();
 		}
