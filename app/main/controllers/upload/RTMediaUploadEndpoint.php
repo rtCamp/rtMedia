@@ -87,10 +87,20 @@ class RTMediaUploadEndpoint {
 				do_action( 'rtmedia_upload_set_post_object' );
 				$this->upload = $model->set_post_object();
 
-				if ( -1 !== $_activity_id ) {
-					$this->upload['activity_id'] = $_activity_id;
-					$activity_id                 = $_activity_id;
+				if ( -1 !== $_activity_id && ! empty( $_activity_id ) ) {
+					$can_attach = false;
+					// Query the activity to check if the activity belongs to the user.
+					if ( function_exists( 'bp_activity_get_specific' ) ) {
+						$activity = bp_activity_get_specific( array( 'activity_ids' => array( intval( $_activity_id ) ) ) );
+						if ( ! empty( $activity['activities'][0] ) && intval( $activity['activities'][0]->user_id ) === get_current_user_id() ) {
+							$can_attach = true;
+						}
+					}
 
+					if ( $can_attach ) {
+						$this->upload['activity_id'] = $_activity_id;
+						$activity_id                 = $_activity_id;
+					}
 				}
 
 				// Media uploaded into a group takes its privacy from that group.
