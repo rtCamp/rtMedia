@@ -86,6 +86,7 @@ class RTMediaUploadEndpoint {
 				$model = new RTMediaUploadModel();
 				do_action( 'rtmedia_upload_set_post_object' );
 				$this->upload = $model->set_post_object();
+				unset( $this->upload['activity_id'] );
 
 				if ( -1 !== $_activity_id && ! empty( $_activity_id ) ) {
 					$can_attach = false;
