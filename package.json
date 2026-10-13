@@ -6,7 +6,7 @@
   },
   "devDependencies": {
     "acorn": "^8.16.0",
-    "autoprefixer": "^10.4.24",
+    "autoprefixer": "^10.5.0",
     "grunt": "^1.6.1",
     "grunt-checktextdomain": "^1.0.1",
     "grunt-contrib-sass": "^2.0.0",
