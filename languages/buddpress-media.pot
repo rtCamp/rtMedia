@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.7.14\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.7.15\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/buddypress-media\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-01T07:41:26+00:00\n"
+"POT-Creation-Date: 2026-10-13T06:23:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: buddypress-media\n"
@@ -2220,7 +2220,7 @@ msgstr ""
 #. translators: 1: Username, 2: Number of medias, 3: Media slug.
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:988
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:991
-#: app/main/controllers/upload/RTMediaUploadEndpoint.php:283
+#: app/main/controllers/upload/RTMediaUploadEndpoint.php:294
 #, php-format
 msgid "%1$s added %2$d %3$s"
 msgstr ""
@@ -3019,18 +3019,18 @@ msgstr ""
 msgid "Invalid attribute passed for rtmedia_gallery shortcode."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:472
-#: app/main/controllers/template/RTMediaTemplate.php:612
-#: app/main/controllers/template/RTMediaTemplate.php:735
-#: app/main/controllers/template/RTMediaTemplate.php:975
+#: app/main/controllers/template/RTMediaTemplate.php:486
+#: app/main/controllers/template/RTMediaTemplate.php:627
+#: app/main/controllers/template/RTMediaTemplate.php:750
+#: app/main/controllers/template/RTMediaTemplate.php:995
 msgid "Ooops !!! Invalid access. No nonce was found !!"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:482
+#: app/main/controllers/template/RTMediaTemplate.php:496
 msgid "Media updated Successfully"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:501
+#: app/main/controllers/template/RTMediaTemplate.php:515
 msgid "Error in updating Media"
 msgstr ""
 

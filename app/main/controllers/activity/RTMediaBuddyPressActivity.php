@@ -506,7 +506,7 @@ class RTMediaBuddyPressActivity {
 		}
 
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
+		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) && rtmedia_is_media_owner( $rtmedia_attached_files ) ) {
 			$obj_activity = new RTMediaActivity( $rtmedia_attached_files, 0, $content );
 
 			// Remove action to fix duplication issue of comment content.
@@ -575,7 +575,7 @@ class RTMediaBuddyPressActivity {
 			// has media in comment.
 			$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 			// if the media is not empty.
-			if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) && class_exists( 'RTMediaActivity' ) ) {
+			if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) && rtmedia_is_media_owner( $rtmedia_attached_files, $user_id ) ) {
 				// create new html for comment content.
 				$obj_comment      = new RTMediaActivity( $rtmedia_attached_files[0], 0, $param['content'] );
 				$param['content'] = $obj_comment->create_activity_html( 'comment-media' );
@@ -622,13 +622,13 @@ class RTMediaBuddyPressActivity {
 		do_action( 'rtmedia_bp_before_activity_posted', $content, $user_id, $activity_id );
 
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( is_array( $rtmedia_attached_files ) ) {
+		if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files ) ) {
 			bp_activity_update_meta( $activity_id, 'bp_activity_text', bp_activity_filter_kses( $content ) );
 			$media_obj = new RTMediaModel();
 			// Credit faisal : https://gist.github.com/faishal/c4306ae7267fff976465.
 			$in_str_arr    = array_fill( 0, count( $rtmedia_attached_files ), '%d' );
 			$in_str        = join( ',', $in_str_arr );
-			$sql           = $wpdb->prepare( "update {$media_obj->table_name} set activity_id = %d where blog_id = %d and ", $activity_id, get_current_blog_id() ); // phpcs:ignore
+			$sql           = $wpdb->prepare( "update {$media_obj->table_name} set activity_id = %d where blog_id = %d and media_author = %d and ", $activity_id, get_current_blog_id(), $user_id ); // phpcs:ignore
 			$form_id_where = $wpdb->prepare( "id IN ($in_str)", $rtmedia_attached_files ); // phpcs:ignore
 			$sql          .= $form_id_where;
 			$wpdb->query( $sql ); // phpcs:ignore
@@ -1226,7 +1226,7 @@ class RTMediaBuddyPressActivity {
 						$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
 						// check media should be in array format and is not empty to.
-						if ( ! empty( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) && is_array( $rtmedia_attached_files ) ) {
+						if ( ! empty( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) && is_array( $rtmedia_attached_files ) && rtmedia_is_media_owner( $rtmedia_attached_files, $user_id ) ) {
 							$comment_media    = true;
 							$comment_media_id = $rtmedia_attached_files[0];
 							$obj_comment      = new RTMediaActivity( $rtmedia_attached_files[0], 0, $comment_content );

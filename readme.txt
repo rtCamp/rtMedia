@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.9.6
 Tested up to: 7.0
-Stable tag: 4.7.14
+Stable tag: 4.7.15
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -127,6 +127,13 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.15 [October 13, 2026] =
+
+* FIXED
+  * Fixed media ownership verification for activity updates with attached media.
+  * Fixed media ownership verification for comments on activities and single media.
+  * Fixed activity ownership verification and input sanitization on media upload endpoint.
 
 = 4.7.14 [October 06, 2026] =
 
@@ -1033,6 +1040,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 [See changelog for all versions](https://raw.githubusercontent.com/rtCamp/rtMedia/master/changelog.txt)
 
 == Upgrade Notice ==
+
+= 4.7.15 =
+This release includes important security improvements for media ownership verification and upload endpoint activity authorization. We strongly recommend upgrading.
 
 = 4.7.14 =
 This release includes important security improvements for media uploads, file extension validation and media edit authorization. We strongly recommend upgrading.

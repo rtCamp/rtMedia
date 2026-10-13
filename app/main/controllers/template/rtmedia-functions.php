@@ -5394,3 +5394,47 @@ function rtmedia_like_eraser( $email_address, $page = 1 ) {
 		'done'           => $done,
 	);
 }
+
+/**
+ * Check if the given user owns the specified media.
+ *
+ * @param int|array $media_id Media ID or array of Media IDs.
+ * @param int       $user_id  Optional. User ID. Defaults to current logged-in user.
+ *
+ * @return bool True if media exists and author matches user ID, false otherwise.
+ */
+function rtmedia_is_media_owner( $media_id, $user_id = 0 ) {
+	if ( empty( $media_id ) ) {
+		return false;
+	}
+
+	$user_id = ! empty( $user_id ) ? intval( $user_id ) : get_current_user_id();
+	if ( empty( $user_id ) ) {
+		return false;
+	}
+
+	// Normalize input to a unique array of valid integer IDs.
+	$media_ids = is_array( $media_id ) ? $media_id : array( $media_id );
+	$media_ids = array_filter( array_map( 'intval', $media_ids ) );
+	$media_ids = array_unique( $media_ids );
+
+	if ( empty( $media_ids ) ) {
+		return false;
+	}
+
+	$model = new RTMediaModel();
+	$media = $model->get( array( 'id' => $media_ids ) );
+
+	if ( count( $media ) !== count( $media_ids ) ) {
+		return false;
+	}
+
+	foreach ( $media as $item ) {
+		if ( intval( $item->media_author ) !== $user_id ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+

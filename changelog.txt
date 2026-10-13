@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 4.7.15 [October 13, 2026] =
+
+* FIXED
+  * Fixed media ownership verification for activity updates with attached media.
+  * Fixed media ownership verification for comments on activities and single media.
+  * Fixed activity ownership verification and input sanitization on media upload endpoint.
+
+
 = 4.7.14 [October 06, 2026] =
 
 * FIXED
