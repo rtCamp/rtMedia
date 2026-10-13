@@ -100,7 +100,7 @@ class RTMediaComment {
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
 		// add comment id in the rtmedia meta fields.
-		if ( ! empty( $rtmedia_attached_files ) && is_array( $rtmedia_attached_files ) ) {
+		if ( ! empty( $rtmedia_attached_files ) && is_array( $rtmedia_attached_files ) && function_exists( 'rtmedia_is_media_owner' ) && rtmedia_is_media_owner( $rtmedia_attached_files ) ) {
 			add_rtmedia_meta( $rtmedia_attached_files[0], 'rtmedia_comment_media_comment_id', $id );
 		}
 

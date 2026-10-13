@@ -214,23 +214,24 @@ function rtmedia_bp_activity_after_save_callback( $activity_data ) {
 
 		// check if class exits or not and it has any media in it.
 		if ( ! empty( $rtmedia_attached_files ) && isset( $activity_data->id ) && is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) && class_exists( 'RTMediaModel' ) ) {
+			if ( rtmedia_is_media_owner( $rtmedia_attached_files ) ) {
+				if ( function_exists( 'rtmedia_get_original_comment_media_content' ) ) {
+					// get the original content of media.
+					$original_content = rtmedia_get_original_comment_media_content();
+					// save the original content in the meta fields.
+					bp_activity_update_meta( $activity_data->id, 'bp_activity_text', $original_content );
+				}
 
-			if ( function_exists( 'rtmedia_get_original_comment_media_content' ) ) {
-				// get the original content of media.
-				$original_content = rtmedia_get_original_comment_media_content();
-				// save the original content in the meta fields.
-				bp_activity_update_meta( $activity_data->id, 'bp_activity_text', $original_content );
+				$rtmedia_model = new RTMediaModel();
+				$rtmedia_model->update(
+					array(
+						'activity_id' => $activity_data->id,
+					),
+					array(
+						'id' => $rtmedia_attached_files[0],
+					)
+				);
 			}
-
-			$rtmedia_model = new RTMediaModel();
-			$rtmedia_model->update(
-				array(
-					'activity_id' => $activity_data->id,
-				),
-				array(
-					'id' => $rtmedia_attached_files[0],
-				)
-			);
 
 			$privacy = -1;
 			$form_id = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_NUMBER_INT );
@@ -289,7 +290,7 @@ function rtmedia_bp_activity_comment_content_callback( $content ) {
 
 	if ( ! empty( $rtmedia_attached_files ) && ! empty( $comment_id ) && ! empty( $form_id ) ) {
 
-		if ( ! empty( $rtmedia_attached_files[0] ) && is_array( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) ) {
+		if ( ! empty( $rtmedia_attached_files[0] ) && is_array( $rtmedia_attached_files ) && class_exists( 'RTMediaActivity' ) && rtmedia_is_media_owner( $rtmedia_attached_files ) ) {
 			$obj_comment = new RTMediaActivity( $rtmedia_attached_files[0], 0, $content );
 			$new_content = $obj_comment->create_activity_html();
 		}

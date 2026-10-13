@@ -894,12 +894,17 @@ class RTMediaTemplate {
 				}
 
 				if ( ! empty( $rtmedia_attached_files ) ) {
-					// has media.
-					$comment_with_media = true;
+					if ( rtmedia_is_media_owner( $rtmedia_attached_files ) ) {
+						// has media.
+						$comment_with_media = true;
 
-					// create new html for comment content.
-					$obj_comment     = new RTMediaActivity( $rtmedia_attached_files[0], 0, $comment_content );
-					$comment_content = $obj_comment->create_activity_html( 'comment-media' );
+						// create new html for comment content.
+						$obj_comment     = new RTMediaActivity( $rtmedia_attached_files[0], 0, $comment_content );
+						$comment_content = $obj_comment->create_activity_html( 'comment-media' );
+					} else {
+						unset( $_POST['rtMedia_attached_files'] );
+						$rtmedia_attached_files = array();
+					}
 				}
 
 				$comment = new RTMediaComment();
