@@ -2,7 +2,7 @@
   "name": "rtMedia",
   "dependencies": {
     "cross-spawn": "^7.0.6",
-    "postcss": "^8.5.10"
+    "postcss": "^8.5.26"
   },
   "devDependencies": {
     "acorn": "^8.16.0",
