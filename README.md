@@ -147,6 +147,13 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.15
+
+* FIXED
+  * Fixed media ownership verification for activity updates with attached media.
+  * Fixed media ownership verification for comments on activities and single media.
+  * Fixed activity ownership verification and input sanitization on media upload endpoint.
+
 ### 4.7.14
 
 * FIXED
