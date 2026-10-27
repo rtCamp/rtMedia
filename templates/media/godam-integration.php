@@ -254,7 +254,12 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		);
 	}
 
+	// Activity updates render through bp_get_activity_content_body; activity
+	// comments render through bp_get_activity_content + bp_activity_comment_content
+	// and never hit the body filter. Hook both pipelines so comment-video
+	// placeholders are expanded too (otherwise they stay as empty <div>s).
 	add_filter( 'bp_get_activity_content_body', 'godam_rtmedia_expand_player_placeholders', PHP_INT_MAX );
+	add_filter( 'bp_activity_comment_content', 'godam_rtmedia_expand_player_placeholders', PHP_INT_MAX );
 
 	/**
 	 * Handle AJAX request for loading a single activity comment's HTML.
