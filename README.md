@@ -147,6 +147,11 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.16
+
+* FIXED
+  * Fixed GoDAM video player markup corruption in BuddyPress activity updates and comments caused by content filters.
+
 ### 4.7.15
 
 * FIXED
