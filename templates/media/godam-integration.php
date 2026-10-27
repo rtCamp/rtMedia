@@ -135,14 +135,14 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 			$godam_videos = '';
 
-			// Build Godam player shortcodes for videos.
+			// Build neutral placeholders for videos. The real player markup is
+			// injected later by godam_rtmedia_expand_player_placeholders(), after
+			// BuddyPress/theme content filters have run, so make_clickable, the
+			// hashtag linkifier and wpautop cannot corrupt the player attributes.
 			if ( ! empty( $grouped_media['video'] ) ) {
 				foreach ( $grouped_media['video'] as $index => $video ) {
 					$player_id     = 'godam-activity-' . esc_attr( $activity->id ) . '-' . $index;
-					$godam_videos .= do_shortcode(
-						'[godam_video id="' . esc_attr( $video->media_id ) .
-						'" context="buddypress" player_id="' . esc_attr( $player_id ) . '"]'
-					);
+					$godam_videos .= godam_rtmedia_build_player_placeholder( $video->media_id, $player_id );
 				}
 			}
 
@@ -159,9 +159,7 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 
 					foreach ( $child_media as $index => $video ) {
 						$player_id     = 'godam-comment-' . esc_attr( $child->id ) . '-' . $index;
-						$child_videos .= do_shortcode(
-							'[godam_video id="' . esc_attr( $video->media_id ) . '"]'
-						);
+						$child_videos .= godam_rtmedia_build_player_placeholder( $video->media_id, $player_id );
 					}
 
 					if ( $child_videos ) {
@@ -187,6 +185,81 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 		},
 		10
 	);
+
+	/**
+	 * Build a neutral placeholder for a GoDAM activity player.
+	 *
+	 * The placeholder deliberately carries no URL and no "#" so the activity
+	 * content filters (make_clickable, the hashtag linkifier, wpautop) leave it
+	 * untouched. It is swapped for the real player markup by
+	 * godam_rtmedia_expand_player_placeholders() on a final, late-priority pass.
+	 *
+	 * @param int|string $media_id  rtMedia media id for the video.
+	 * @param string     $player_id Unique player id for this activity/comment.
+	 * @param string     $context   Player context passed to the shortcode.
+	 * @return string Placeholder HTML.
+	 */
+	function godam_rtmedia_build_player_placeholder( $media_id, $player_id = '', $context = 'buddypress' ) {
+		return sprintf(
+			'<div class="godam-activity-player-placeholder" data-media-id="%s" data-player-id="%s" data-context="%s"></div>',
+			esc_attr( $media_id ),
+			esc_attr( $player_id ),
+			esc_attr( $context )
+		);
+	}
+
+	/**
+	 * Expand GoDAM player placeholders into real player markup.
+	 *
+	 * Runs at the last possible priority on bp_get_activity_content_body so every
+	 * other activity content filter (kses, make_clickable, the hashtag linkifier,
+	 * wptexturize, wpautop, nofollow, …) has already finished. The player HTML —
+	 * which carries #hex colours and URLs inside its data-* attributes — is
+	 * therefore never seen by those filters and cannot be corrupted into broken
+	 * tags. Surrounding activity text keeps its normal formatting.
+	 *
+	 * @param string $content Activity content, already fully filtered.
+	 * @return string Content with placeholders replaced by GoDAM players.
+	 */
+	function godam_rtmedia_expand_player_placeholders( $content ) {
+		if ( ! is_string( $content ) || false === strpos( $content, 'godam-activity-player-placeholder' ) ) {
+			return $content;
+		}
+
+		return preg_replace_callback(
+			'#<div[^>]*class="[^"]*godam-activity-player-placeholder[^"]*"[^>]*>\s*</div>#i',
+			function ( $matches ) {
+				$tag = $matches[0];
+
+				$media_id  = preg_match( '/data-media-id="([^"]*)"/', $tag, $m ) ? $m[1] : '';
+				$player_id = preg_match( '/data-player-id="([^"]*)"/', $tag, $m ) ? $m[1] : '';
+				$context   = preg_match( '/data-context="([^"]*)"/', $tag, $m ) ? $m[1] : '';
+
+				if ( '' === $media_id ) {
+					return '';
+				}
+
+				$shortcode = '[godam_video id="' . esc_attr( $media_id ) . '"';
+				if ( '' !== $context ) {
+					$shortcode .= ' context="' . esc_attr( $context ) . '"';
+				}
+				if ( '' !== $player_id ) {
+					$shortcode .= ' player_id="' . esc_attr( $player_id ) . '"';
+				}
+				$shortcode .= ']';
+
+				return do_shortcode( $shortcode );
+			},
+			$content
+		);
+	}
+
+	// Activity updates render through bp_get_activity_content_body; activity
+	// comments render through bp_get_activity_content + bp_activity_comment_content
+	// and never hit the body filter. Hook both pipelines so comment-video
+	// placeholders are expanded too (otherwise they stay as empty <div>s).
+	add_filter( 'bp_get_activity_content_body', 'godam_rtmedia_expand_player_placeholders', PHP_INT_MAX );
+	add_filter( 'bp_activity_comment_content', 'godam_rtmedia_expand_player_placeholders', PHP_INT_MAX );
 
 	/**
 	 * Handle AJAX request for loading a single activity comment's HTML.
