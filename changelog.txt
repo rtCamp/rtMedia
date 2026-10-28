@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.7.16 [October 27, 2026] =
+
+* FIXED
+  * Fixed GoDAM video player markup corruption in BuddyPress activity updates and comments caused by content filters.
+
 = 4.7.15 [October 13, 2026] =
 
 * FIXED
