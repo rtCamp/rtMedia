@@ -1532,6 +1532,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * Function to save Video transcoding survey response.
 		 */
 		public function video_transcoding_survey_response() {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
 			$survey_done = filter_input( INPUT_GET, 'survey-done', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( isset( $survey_done ) && ( md5( 'survey-done' ) === $survey_done ) ) {
 				rtmedia_update_site_option( 'rtmedia-survey', 0 );
