@@ -345,6 +345,19 @@ if ( defined( 'RTMEDIA_GODAM_ACTIVE' ) && RTMEDIA_GODAM_ACTIVE ) {
 			return true;
 		}
 
+		// If activity is an activity comment, inherit permission from parent activity.
+		if ( isset( $activity->type ) && 'activity_comment' === $activity->type && ! empty( $activity->item_id ) ) {
+			$parent_activity = new BP_Activity_Activity( $activity->item_id );
+			if ( ! empty( $parent_activity->id ) ) {
+				return rtmedia_user_can_view_activity( $parent_activity );
+			}
+			return false;
+		}
+
+		if ( function_exists( 'bp_activity_user_can_read' ) && ! bp_activity_user_can_read( $activity, $current_user_id ) ) {
+			return false;
+		}
+
 		// If activity is from a group, verify user is a member of non-public groups.
 		if ( isset( $activity->component ) && 'groups' === $activity->component ) {
 			// Check if BuddyPress groups component is active.
