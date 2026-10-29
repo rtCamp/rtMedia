@@ -33,9 +33,11 @@ class RTMediaMigration {
 		$hide = filter_input( INPUT_GET, 'hide', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		if ( isset( $page ) && 'rtmedia-migration' === $page && isset( $hide ) && 'true' === $hide ) {
-			$this->hide_migration_notice();
-			$http_referer = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
-			wp_safe_redirect( esc_url_raw( $http_referer ) );
+			if ( current_user_can( 'manage_options' ) && check_admin_referer( 'rtmedia_hide_migration_notice' ) ) {
+				$this->hide_migration_notice();
+				$http_referer = rtm_get_server_var( 'HTTP_REFERER', 'FILTER_SANITIZE_URL' );
+				wp_safe_redirect( esc_url_raw( $http_referer ) );
+			}
 		}
 		if ( false !== rtmedia_get_site_option( 'rt_migration_hide_notice' ) ) {
 			return true;
@@ -98,7 +100,7 @@ class RTMediaMigration {
 					esc_html__( 'Please Migrate your Database', 'buddypress-media' ),
 					esc_url( admin_url( 'admin.php?page=rtmedia-migration&force=true' ) ),
 					esc_html__( 'Click Here', 'buddypress-media' ),
-					esc_url( admin_url( 'admin.php?page=rtmedia-migration&hide=true' ) ),
+					esc_url( wp_nonce_url( admin_url( 'admin.php?page=rtmedia-migration&hide=true' ), 'rtmedia_hide_migration_notice' ) ),
 					esc_html__( 'Hide', 'buddypress-media' )
 				)
 			);
