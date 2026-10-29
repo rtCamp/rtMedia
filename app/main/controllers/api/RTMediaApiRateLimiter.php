@@ -115,6 +115,39 @@ class RTMediaApiRateLimiter {
 	}
 
 	/**
+	 * Get the remaining time for blocked password-reset buckets.
+	 *
+	 * @param string $identifier Username or email address supplied for reset.
+	 *
+	 * @return int Remaining seconds, or zero when not blocked.
+	 */
+	public function get_forgot_password_retry_after( $identifier ) {
+		$ip_key         = $this->get_key( 'pw_reset_ip', $this->get_client_ip() );
+		$identifier_key = $this->get_key( 'pw_reset_id', $this->normalize_identifier( $identifier ) );
+		$retry_after    = 0;
+
+		if ( $this->get_attempts( $ip_key ) >= $this->get_login_ip_limit() ) {
+			$retry_after = max( 1, $this->get_remaining_ttl( $ip_key ) );
+		}
+
+		if ( $this->get_attempts( $identifier_key ) >= $this->get_login_identifier_limit() ) {
+			$retry_after = max( $retry_after, 1, $this->get_remaining_ttl( $identifier_key ) );
+		}
+
+		return $retry_after;
+	}
+
+	/**
+	 * Record a password-reset request attempt.
+	 *
+	 * @param string $identifier Username or email address supplied for reset.
+	 */
+	public function record_forgot_password_attempt( $identifier ) {
+		$this->increment( $this->get_key( 'pw_reset_ip', $this->get_client_ip() ) );
+		$this->increment( $this->get_key( 'pw_reset_id', $this->normalize_identifier( $identifier ) ) );
+	}
+
+	/**
 	 * Check whether invalid token submissions should be blocked for this client.
 	 *
 	 * @return bool
