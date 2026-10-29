@@ -771,10 +771,6 @@ function rtmedia_search_fillter_where_query( $where, $table_name ) {
 			$author_id   = implode( ',', array_map( 'absint', array_filter( explode( ',', $author_id ) ) ) );
 			$member_type = implode( ',', array_map( 'absint', array_filter( explode( ',', $member_type ) ) ) );
 
-			if ( ! empty( $rtmedia_current_album ) ) {
-				$where = '';
-			}
-
 			$where .= ' AND ';
 			if ( ! empty( $search_by ) ) {
 
