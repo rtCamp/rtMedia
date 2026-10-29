@@ -1377,12 +1377,17 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return void
 		 */
 		public function save_multisite_options() {
-			global $rtmedia_admin;
-			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Nonce verification is handled by network_admin_edit_ action hook which requires valid nonce and proper capabilities.
+			if ( ! current_user_can( 'manage_network_options' ) ) {
+				wp_die( esc_html__( 'You do not have permission to access this page.', 'buddypress-media' ), '', array( 'response' => 403 ) );
+			}
+			check_admin_referer( 'rtmedia_settings', 'wp_nonce' );
 
-			$rtmedia_options = filter_input( INPUT_POST, 'rtmedia_options' );
-			if ( isset( $rtmedia_options ) ) {
-				// todo: How we can sanitize array?
+			global $rtmedia_admin;
+			do_action( 'rtmedia_sanitize_settings', wp_unslash( $_POST ) );
+
+			$rtmedia_options = filter_input( INPUT_POST, 'rtmedia_options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+			if ( ! empty( $rtmedia_options ) ) {
+				$rtmedia_options = $this->rtmedia_settings->sanitize_before_save_options( $rtmedia_options );
 				rtmedia_update_site_option( 'rtmedia_options', $rtmedia_options );
 
 				// redirect to settings page in network.
