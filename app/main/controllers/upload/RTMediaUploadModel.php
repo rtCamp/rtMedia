@@ -222,7 +222,8 @@ class RTMediaUploadModel {
 			$this->upload['context_id'] = $user;
 		} elseif ( 'group' === $this->upload['context'] ) {
 			// Only users who may post in the target group may upload into it.
-			if ( ! $this->can_user_upload_in_target_group( $user, intval( $this->upload['context_id'] ) ) ) {
+			$this->upload['context_id'] = absint( $this->upload['context_id'] );
+			if ( ! $this->can_user_upload_in_target_group( $user, $this->upload['context_id'] ) ) {
 				$this->fallback_to_profile_context( $user );
 			}
 		} elseif ( 'comment-media' === $this->upload['context'] ) {
