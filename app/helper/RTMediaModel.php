@@ -396,7 +396,24 @@ class RTMediaModel extends RTDBModel {
 		$where_query_sql = '';
 
 		if ( $where_query ) {
+			$allowed_columns = apply_filters(
+				'rtmedia_allowed_counts_columns',
+				array(
+					'context',
+					'context_id',
+					'media_author',
+					'album_id',
+					'media_type',
+					'privacy',
+					'meta_query',
+				)
+			);
+
 			foreach ( $where_query as $colname => $colvalue ) {
+				$colname = strtolower( trim( (string) $colname ) );
+				if ( ! in_array( $colname, $allowed_columns, true ) ) {
+					continue;
+				}
 				$colname = esc_sql( $colname );
 				if ( 'meta_query' !== strtolower( $colname ) ) {
 					if ( is_array( $colvalue ) ) {
