@@ -708,6 +708,11 @@ class RTMediaTemplate {
 			$media       = new RTMediaMedia();
 			$media_model = new RTMediaModel();
 			$media_obj   = $media_model->get( array( 'id' => $rtmedia_query->media[0]->id ) );
+
+			if ( empty( $media_obj ) || ! rtmedia_current_user_can_manage_media( $media_obj[0] ) ) {
+				wp_die( esc_html__( 'You do not have permission to delete this media.', 'buddypress-media' ), '', array( 'response' => 403 ) );
+			}
+
 			$media->delete( $rtmedia_query->media[0]->id );
 			$post    = get_post( $rtmedia_query->media[0] );
 			$context = '';
