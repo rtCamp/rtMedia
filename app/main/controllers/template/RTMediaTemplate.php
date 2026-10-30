@@ -916,12 +916,15 @@ class RTMediaTemplate {
 
 				$attr = $this->rtmedia_deep_sanitize_post( $_POST );
 
+				$attr['user_id']        = get_current_user_id();
+				$attr['comment_author'] = wp_get_current_user()->user_login;
+
 				$media_model = new RTMediaModel();
 				$result      = $media_model->get( array( 'id' => $rtmedia_query->action_query->id ) );
 
 				$attr['comment_content'] = $comment_content;
 
-				if ( ! isset( $attr['comment_post_ID'] ) ) {
+				if ( isset( $result[0]->media_id ) ) {
 					$attr['comment_post_ID'] = $result[0]->media_id;
 				}
 
