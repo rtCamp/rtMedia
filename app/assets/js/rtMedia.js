@@ -556,7 +556,9 @@ jQuery("document").ready(function ($) {
         .text(jQuery.trim(jQuery("#rtmedia_album_name").val()))
         .html();
       $album_description = jQuery("#rtmedia_album_description");
-      $context = jQuery.trim(jQuery("#rtmedia_album_context").val());
+      $context = jQuery("<span/>")
+        .text(jQuery.trim(jQuery("#rtmedia_album_context").val()))
+        .html();
       $context_id = jQuery.trim(jQuery("#rtmedia_album_context_id").val());
       $privacy = jQuery.trim(jQuery("#rtmedia_select_album_privacy").val());
       $create_album_nonce = jQuery.trim(

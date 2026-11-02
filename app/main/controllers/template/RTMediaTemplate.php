@@ -708,6 +708,11 @@ class RTMediaTemplate {
 			$media       = new RTMediaMedia();
 			$media_model = new RTMediaModel();
 			$media_obj   = $media_model->get( array( 'id' => $rtmedia_query->media[0]->id ) );
+
+			if ( empty( $media_obj ) || ! rtmedia_current_user_can_manage_media( $media_obj[0] ) ) {
+				wp_die( esc_html__( 'You do not have permission to delete this media.', 'buddypress-media' ), '', array( 'response' => 403 ) );
+			}
+
 			$media->delete( $rtmedia_query->media[0]->id );
 			$post    = get_post( $rtmedia_query->media[0] );
 			$context = '';
@@ -911,12 +916,15 @@ class RTMediaTemplate {
 
 				$attr = $this->rtmedia_deep_sanitize_post( $_POST );
 
+				$attr['user_id']        = get_current_user_id();
+				$attr['comment_author'] = wp_get_current_user()->user_login;
+
 				$media_model = new RTMediaModel();
 				$result      = $media_model->get( array( 'id' => $rtmedia_query->action_query->id ) );
 
 				$attr['comment_content'] = $comment_content;
 
-				if ( ! isset( $attr['comment_post_ID'] ) ) {
+				if ( isset( $result[0]->media_id ) ) {
 					$attr['comment_post_ID'] = $result[0]->media_id;
 				}
 
