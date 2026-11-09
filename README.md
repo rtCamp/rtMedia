@@ -147,6 +147,11 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.17
+
+* FIXED
+  * Escaped media description output and comment uploader attributes to prevent user-supplied content from being rendered as markup.
+
 ### 4.7.16
 
 * FIXED
