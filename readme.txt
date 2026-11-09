@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.9.6
 Tested up to: 7.0
-Stable tag: 4.7.16
+Stable tag: 4.7.17
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -127,6 +127,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.17 [November 9, 2026] =
+
+* FIXED
+  * Escaped media description output and comment uploader attributes to prevent user-supplied content from being rendered as markup.
 
 = 4.7.16 [October 27, 2026] =
 
@@ -1045,6 +1050,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 [See changelog for all versions](https://raw.githubusercontent.com/rtCamp/rtMedia/master/changelog.txt)
 
 == Upgrade Notice ==
+
+= 4.7.17 =
+This release includes escaping fixes for media descriptions and comment uploader attributes. We recommend upgrading.
 
 = 4.7.16 =
 This release fixes GoDAM video player markup corruption and playback issues in BuddyPress activity updates and comments. We recommend upgrading.

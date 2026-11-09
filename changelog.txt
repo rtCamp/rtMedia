@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.7.17 [November 9, 2026] =
+
+* FIXED
+  * Escaped media description output and comment uploader attributes to prevent user-supplied content from being rendered as markup.
+
 = 4.7.16 [October 27, 2026] =
 
 * FIXED
