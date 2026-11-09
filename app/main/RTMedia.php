@@ -2039,6 +2039,31 @@ class RTMedia {
 	}
 
 	/**
+	 * Allowed html for the uploader markup only.
+	 *
+	 * Shortcode attributes are printed inside this markup, so script tags are
+	 * not allowed here even though expanded_allowed_tags() keeps them for the
+	 * embed and social sync output.
+	 *
+	 * @return array
+	 */
+	public static function uploader_allowed_tags() {
+		$allowed = self::expanded_allowed_tags();
+
+		// Script tags in this markup must be enqueued, not passed through kses.
+		unset( $allowed['script'] );
+
+		// Uploader markup contains no embeds; an injected iframe is only a way
+		// to load foreign content inside the page.
+		unset( $allowed['iframe'] );
+
+		// Inline handlers are equivalent to script tags here.
+		unset( $allowed['input']['onclick'] );
+
+		return $allowed;
+	}
+
+	/**
 	 * Add extra inline allowed style.
 	 *
 	 * @param array $styles Allowed styles.

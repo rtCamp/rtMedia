@@ -1242,7 +1242,9 @@ function rtmedia_description( $echo = true ) {
 
 	if ( $echo ) {
 		// escape description for any html tags and reformat using `wpautop`.
-		echo wp_kses_post( rtmedia_get_media_description() );
+		// `[` is escaped to `&#91;` so stored shortcodes are not parsed a second
+		// time when this output is filtered as `the_content`.
+		echo wp_kses_post( str_replace( '[', '&#91;', rtmedia_get_media_description() ) );
 	} else {
 		return rtmedia_get_media_description();
 	}
