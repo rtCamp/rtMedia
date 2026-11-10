@@ -734,7 +734,20 @@ class RTMediaQuery {
 
 		$where .= " AND ({$table_name}.privacy is NULL OR {$table_name}.privacy=0";
 		if ( $user ) {
-			$where .= " OR ({$table_name}.privacy=20)";
+			if ( class_exists( 'BuddyPress' ) && function_exists( 'bp_is_active' ) && bp_is_active( 'groups' ) && function_exists( 'groups_get_user_groups' ) ) {
+				$user_groups = groups_get_user_groups( $user );
+				$group_ids   = ! empty( $user_groups['groups'] ) ? array_map( 'absint', $user_groups['groups'] ) : array();
+
+				if ( ! empty( $group_ids ) ) {
+					$group_ids_sql = implode( ',', $group_ids );
+					$where        .= " OR ({$table_name}.privacy=20 AND ({$table_name}.context IS NULL OR {$table_name}.context != 'group' OR {$table_name}.context_id IN ({$group_ids_sql})))";
+				} else {
+					$where .= " OR ({$table_name}.privacy=20 AND ({$table_name}.context IS NULL OR {$table_name}.context != 'group'))";
+				}
+			} else {
+				$where .= " OR ({$table_name}.privacy=20 AND ({$table_name}.context IS NULL OR {$table_name}.context != 'group'))";
+			}
+
 			$where .= " OR ({$table_name}.media_author={$user} AND {$table_name}.privacy>=40)";
 			if ( class_exists( 'BuddyPress' ) ) {
 				if ( bp_is_active( 'friends' ) ) {

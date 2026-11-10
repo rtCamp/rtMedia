@@ -486,12 +486,26 @@ class RTMediaJsonApi {
 			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_email_missing, $msg_email_missing ) );
 		}
 
+		$rate_limiter = new RTMediaApiRateLimiter();
+		$retry_after  = $rate_limiter->get_forgot_password_retry_after( $user_login );
+
+		if ( 0 < $retry_after ) {
+			header( 'Retry-After: ' . $retry_after );
+			status_header( 429 );
+			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $this->ec_rate_limit_exceeded, $this->msg_rate_limit_exceeded ) );
+		}
+
+		$rate_limiter->record_forgot_password_attempt( $user_login );
+
+		$user = null;
 		if ( username_exists( $user_login ) ) {
 			$user = get_user_by( 'login', sanitize_user( $user_login ) );
 		} elseif ( email_exists( $user_login ) ) { // Then, by e-mail address.
 			$user = get_user_by( 'email', sanitize_email( $user_login ) );
-		} else {
-			wp_send_json( $this->rtmedia_api_response_object( 'FALSE', $ec_username_email_not_registered, $msg_username_email_not_registered ) );
+		}
+
+		if ( empty( $user ) ) {
+			wp_send_json( $this->rtmedia_api_response_object( 'TRUE', $ec_email_sent, $msg_email_sent ) );
 		}
 
 		$user_login = $user->data->user_login;
