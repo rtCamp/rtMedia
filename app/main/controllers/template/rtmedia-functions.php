@@ -3872,29 +3872,16 @@ function get_rtmedia_encoding_api_key() { /* phpcs:ignore WordPress.NamingConven
  */
 function rtm_filter_metaid_column_name( $q ) { /* phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public naming retained for backward compatibility; renaming breaks dependent themes/add-ons. */
 
-	/**
-	 * Replace quoted content with __QUOTE__ to avoid false positives.
-	 * This regular expression will match nested quotes.
-	 */
-	$quoted_regex = "/'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'/s";
+	// Rename meta_id to id, skipping anything inside quotes so user data is never touched.
+	$rewritten = preg_replace_callback(
+		"/'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'|meta_id/s",
+		function ( $matches ) {
+			return 'meta_id' === $matches[0] ? 'id' : $matches[0];
+		},
+		$q
+	);
 
-	preg_match_all( $quoted_regex, $q, $quoted_matches );
-
-	$q = preg_replace( $quoted_regex, '__QUOTE__', $q );
-	$q = str_replace( 'meta_id', 'id', $q );
-
-	// Put quoted content back into the string.
-	if ( ! empty( $quoted_matches[0] ) ) {
-		$count = count( $quoted_matches[0] );
-
-		for ( $i = 0; $i < $count; $i++ ) {
-			$quote_pos = strpos( $q, '__QUOTE__' );
-			$q         = substr_replace( $q, $quoted_matches[0][ $i ], $quote_pos, 9 );
-			$count     = count( $quoted_matches[0] );
-		}
-	}
-
-	return $q;
+	return null === $rewritten ? $q : $rewritten;
 }
 
 /**
