@@ -147,6 +147,11 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.18
+
+* FIXED
+  * Hardened the query filter that renames the meta_id column for the media meta table.
+
 ### 4.7.17
 
 * FIXED

@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.9.6
 Tested up to: 7.0
-Stable tag: 4.7.17
+Stable tag: 4.7.18
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -127,6 +127,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.18 [November 16, 2026] =
+
+* FIXED
+  * Hardened the query filter that renames the meta_id column for the media meta table.
 
 = 4.7.17 [November 9, 2026] =
 
@@ -1050,6 +1055,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 [See changelog for all versions](https://raw.githubusercontent.com/rtCamp/rtMedia/master/changelog.txt)
 
 == Upgrade Notice ==
+
+= 4.7.18 =
+This release includes security improvements to rtMedia's media upload queries. We recommend upgrading.
 
 = 4.7.17 =
 This release includes escaping fixes for media descriptions and comment uploader attributes. We recommend upgrading.
