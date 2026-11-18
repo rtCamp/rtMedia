@@ -286,6 +286,11 @@ class RTMediaTemplate {
 				$media_array[ $key ]->duration     = rtmedia_duration( $media->id );
 				$media_array[ $key ]->media_class  = $media_class;
 				$media_array[ $key ]               = apply_filters( 'rtmedia_media_array_backbone', $media_array[ $key ] );
+
+				// wp_kses() stores entities on save; decode so the template escapes once.
+				$media_array[ $key ]->media_title  = html_entity_decode( (string) $media_array[ $key ]->media_title, ENT_QUOTES, 'UTF-8' );
+				$media_array[ $key ]->guid         = html_entity_decode( (string) $media_array[ $key ]->guid, ENT_QUOTES, 'UTF-8' );
+				$media_array[ $key ]->rt_permalink = html_entity_decode( (string) $media_array[ $key ]->rt_permalink, ENT_QUOTES, 'UTF-8' );
 			}
 
 			// Add back all filters used for search functionality.
