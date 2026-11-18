@@ -153,14 +153,14 @@ $rand_id = wp_rand( 0, 1000 ); /* phpcs:ignore WordPress.NamingConventions.Prefi
 <script id="rtmedia-gallery-item-template" type="text/template">
 	<div class="rtmedia-item-thumbnail">
 		<a href="media/<%= id %>">
-			<img src="<%= guid %>">
+			<img src="<%- guid %>">
 		</a>
 	</div>
 
 	<div class="rtmedia-item-title">
-		<h4 title="<%= media_title %>">
+		<h4 title="<%- media_title %>">
 			<a href="media/<%= id %>">
-				<%= media_title %>
+				<%- media_title %>
 			</a>
 		</h4>
 	</div>

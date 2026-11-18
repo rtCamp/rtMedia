@@ -83,7 +83,7 @@ function rtmedia_title() {
 	global $rtmedia_backbone;
 
 	if ( ! empty( $rtmedia_backbone['backbone'] ) ) {
-		echo '<%= media_title %>';
+		echo '<%- media_title %>';
 	} else {
 		global $rtmedia_media;
 
@@ -533,7 +533,7 @@ function rtmedia_permalink( $media_id = null ) {
 	global $rtmedia_backbone;
 
 	if ( ! empty( $rtmedia_backbone['backbone'] ) ) {
-		echo '<%= rt_permalink %>';
+		echo '<%- rt_permalink %>';
 	} else {
 		echo esc_url( get_rtmedia_permalink( rtmedia_id( $media_id ) ) );
 	}
@@ -668,7 +668,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $echo = true,
 	global $rtmedia;
 
 	if ( ! empty( $rtmedia_backbone['backbone'] ) ) {
-		echo '<%= guid %>';
+		echo '<%- guid %>';
 
 		return;
 	}
