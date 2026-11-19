@@ -147,6 +147,11 @@ https://www.youtube.com/watch?v=dJrykKQGDcs
 
 ## Changelog ##
 
+### 4.7.19
+
+* FIXED
+  * Escaped media titles and thumbnail URLs in gallery items loaded in the browser.
+
 ### 4.7.18
 
 * FIXED
