@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.7.19 [November 19, 2026] =
+
+* FIXED
+  * Escaped media titles and thumbnail URLs in gallery items loaded in the browser.
+
 = 4.7.18 [November 16, 2026] =
 
 * FIXED

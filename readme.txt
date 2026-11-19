@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.9.6
 Tested up to: 7.0
-Stable tag: 4.7.18
+Stable tag: 4.7.19
 
 Add albums, photo, audio/video upload, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -127,6 +127,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 4.7.19 [November 19, 2026] =
+
+* FIXED
+  * Escaped media titles and thumbnail URLs in gallery items loaded in the browser.
 
 = 4.7.18 [November 16, 2026] =
 
@@ -1055,6 +1060,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 [See changelog for all versions](https://raw.githubusercontent.com/rtCamp/rtMedia/master/changelog.txt)
 
 == Upgrade Notice ==
+
+= 4.7.19 =
+This release includes security improvements to rtMedia's gallery item rendering. We recommend upgrading.
 
 = 4.7.18 =
 This release includes security improvements to rtMedia's media upload queries. We recommend upgrading.
