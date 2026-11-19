@@ -133,6 +133,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * FIXED
   * Escaped media titles and thumbnail URLs in gallery items loaded in the browser.
 
+* NOTE
+  * Themes that override the gallery item template should use `<%- media_title %>` instead of `<%= media_title %>`.
+
 = 4.7.18 [November 16, 2026] =
 
 * FIXED
