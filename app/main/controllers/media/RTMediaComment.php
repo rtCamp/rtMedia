@@ -84,14 +84,24 @@ class RTMediaComment {
 		global $allowedtags;
 		do_action( 'rtmedia_before_add_comment', $attr );
 
-		$defaults                = array(
-			'user_id'        => $this->get_current_id(),
-			'comment_author' => $this->get_current_author(),
-			'comment_date'   => current_time( 'mysql' ),
+		$content = isset( $attr['comment_content'] ) ? rtmedia_wp_kses_of_buddypress( $attr['comment_content'], $allowedtags ) : '';
+		$post_id = isset( $attr['comment_post_ID'] ) ? absint( $attr['comment_post_ID'] ) : 0;
+		$user_id = isset( $attr['user_id'] ) ? absint( $attr['user_id'] ) : $this->get_current_id();
+		$author  = ! empty( $attr['comment_author'] ) ? sanitize_text_field( $attr['comment_author'] ) : $this->get_current_author();
+
+		$params = array(
+			'comment_post_ID' => $post_id,
+			'comment_content' => $content,
+			'user_id'         => $user_id,
+			'comment_author'  => $author,
+			'comment_date'    => current_time( 'mysql' ),
 		);
-		$attr['comment_content'] = rtmedia_wp_kses_of_buddypress( $attr['comment_content'], $allowedtags );
-		$params                  = wp_parse_args( $attr, $defaults );
-		$id                      = $this->rtmedia_comment_model->insert( $params );
+
+		if ( isset( $attr['comment_parent'] ) ) {
+			$params['comment_parent'] = absint( $attr['comment_parent'] );
+		}
+
+		$id = $this->rtmedia_comment_model->insert( $params );
 
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = rtmedia_id( $params['comment_post_ID'] );

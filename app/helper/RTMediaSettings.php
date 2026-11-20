@@ -223,8 +223,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$options          = $this->sanitize_options( $options );
 			$rtmedia->options = $options;
 			// Save Settings first then proceed.
-			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since it is the responsibility of caller function to verify nonce.
+			$rtmedia_option_save = filter_input( INPUT_POST, 'rtmedia-options-save', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( isset( $rtmedia_option_save ) && current_user_can( 'manage_options' ) ) {
+				check_admin_referer( 'rtmedia_settings', 'wp_nonce' );
 				// Sanitization not required since it is being sanitized in sanitize_before_save_options function.
 				$options               = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.NonceVerification.Missing -- Not required since it is the responsibility of caller function to verify nonce.
 				$options               = $this->sanitize_before_save_options( $options );
